@@ -53,7 +53,7 @@ public:
   Standard_EXPORT math_Crout(const math_Matrix& A, const double MinPivot = 1.0e-20);
 
   //! Destructor
-  ~math_Crout();
+  Standard_EXPORT ~math_Crout();
 
   //! Copy constructor is deleted to prevent double-free of internal Eigen decomposition
   math_Crout(const math_Crout&) = delete;
