@@ -20,7 +20,7 @@
 !/dox/
 !/src/
 !/tests/
-!/tools/
+!/test_results/
 !/.github/
 
 # data/ level: Ignore everything except tracked subdirectories
@@ -104,7 +104,6 @@ win64
 /stamp*
 /build*
 /install*
-/tools/build*
 
 # Coding agents instructions (keep .github/copilot-instructions.md)
 /.CLAUDE.md
