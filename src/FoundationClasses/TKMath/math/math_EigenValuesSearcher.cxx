@@ -16,179 +16,17 @@
 #include <math_EigenValuesSearcher.hxx>
 
 #include <StdFail_NotDone.hxx>
+#include <Standard_OutOfRange.hxx>
 
-namespace
-{
-// Maximum number of QR iterations before convergence failure
-const int MAX_ITERATIONS = 30;
-
-// Computes sqrt(x*x + y*y) avoiding overflow and underflow
-double computeHypotenuseLength(const double theX, const double theY)
-{
-  return std::sqrt(theX * theX + theY * theY);
-}
-
-// Shifts subdiagonal elements for QL algorithm initialization
-void shiftSubdiagonalElements(NCollection_Array1<double>& theSubdiagWork, const int theSize)
-{
-  for (int anIdx = 2; anIdx <= theSize; anIdx++)
-    theSubdiagWork(anIdx - 1) = theSubdiagWork(anIdx);
-  theSubdiagWork(theSize) = 0.0;
-}
-
-// Finds the end of the current unreduced submatrix using deflation
-int findSubmatrixEnd(const NCollection_Array1<double>& theDiagWork,
-                     const NCollection_Array1<double>& theSubdiagWork,
-                     const int                         theStart,
-                     const int                         theSize)
-{
-  int aSubmatrixEnd;
-  for (aSubmatrixEnd = theStart; aSubmatrixEnd <= theSize - 1; aSubmatrixEnd++)
-  {
-    const double aDiagSum =
-      std::abs(theDiagWork(aSubmatrixEnd)) + std::abs(theDiagWork(aSubmatrixEnd + 1));
-
-    // Deflation test: Check if subdiagonal element is negligible
-    // The condition |e[i]| + (|d[i]| + |d[i+1]|) == |d[i]| + |d[i+1]|
-    // tests whether the subdiagonal element e[i] is smaller than machine epsilon
-    // relative to the adjacent diagonal elements. This is more robust than
-    // checking e[i] == 0.0 because it accounts for finite precision arithmetic.
-    // When this condition is true in floating-point arithmetic, the subdiagonal
-    // element can be treated as zero for convergence purposes.
-    if (std::abs(theSubdiagWork(aSubmatrixEnd)) + aDiagSum == aDiagSum)
-      break;
-  }
-  return aSubmatrixEnd;
-}
-
-// Computes Wilkinson's shift for accelerated convergence
-double computeWilkinsonShift(const NCollection_Array1<double>& theDiagWork,
-                             const NCollection_Array1<double>& theSubdiagWork,
-                             const int                         theStart,
-                             const int                         theEnd)
-{
-  double aShift =
-    (theDiagWork(theStart + 1) - theDiagWork(theStart)) / (2.0 * theSubdiagWork(theStart));
-  const double aRadius = computeHypotenuseLength(1.0, aShift);
-
-  if (aShift < 0.0)
-    aShift =
-      theDiagWork(theEnd) - theDiagWork(theStart) + theSubdiagWork(theStart) / (aShift - aRadius);
-  else
-    aShift =
-      theDiagWork(theEnd) - theDiagWork(theStart) + theSubdiagWork(theStart) / (aShift + aRadius);
-
-  return aShift;
-}
-
-// Performs a single QL step with implicit shift
-bool performQLStep(NCollection_Array1<double>& theDiagWork,
-                   NCollection_Array1<double>& theSubdiagWork,
-                   NCollection_Array2<double>& theEigenVecWork,
-                   const int                   theStart,
-                   const int                   theEnd,
-                   const double                theShift,
-                   const int                   theSize)
-{
-  double aSine     = 1.0;
-  double aCosine   = 1.0;
-  double aPrevDiag = 0.0;
-  double aShift    = theShift;
-  double aRadius   = 0.0;
-
-  int aRowIdx;
-  for (aRowIdx = theEnd - 1; aRowIdx >= theStart; aRowIdx--)
-  {
-    const double aTempVal       = aSine * theSubdiagWork(aRowIdx);
-    const double aSubdiagTemp   = aCosine * theSubdiagWork(aRowIdx);
-    aRadius                     = computeHypotenuseLength(aTempVal, aShift);
-    theSubdiagWork(aRowIdx + 1) = aRadius;
-
-    if (aRadius == 0.0)
-    {
-      theDiagWork(aRowIdx + 1) -= aPrevDiag;
-      theSubdiagWork(theEnd) = 0.0;
-      break;
-    }
-
-    aSine   = aTempVal / aRadius;
-    aCosine = aShift / aRadius;
-    aShift  = theDiagWork(aRowIdx + 1) - aPrevDiag;
-    const double aRadiusTemp =
-      (theDiagWork(aRowIdx) - aShift) * aSine + 2.0 * aCosine * aSubdiagTemp;
-    aPrevDiag                = aSine * aRadiusTemp;
-    theDiagWork(aRowIdx + 1) = aShift + aPrevDiag;
-    aShift                   = aCosine * aRadiusTemp - aSubdiagTemp;
-
-    // Update eigenvector matrix
-    for (int aVecIdx = 1; aVecIdx <= theSize; aVecIdx++)
-    {
-      const double aTempVec = theEigenVecWork(aVecIdx, aRowIdx + 1);
-      theEigenVecWork(aVecIdx, aRowIdx + 1) =
-        aSine * theEigenVecWork(aVecIdx, aRowIdx) + aCosine * aTempVec;
-      theEigenVecWork(aVecIdx, aRowIdx) =
-        aCosine * theEigenVecWork(aVecIdx, aRowIdx) - aSine * aTempVec;
-    }
-  }
-
-  // Handle special case and update final elements
-  if (aRadius == 0.0 && aRowIdx >= 1)
-    return true;
-
-  theDiagWork(theStart) -= aPrevDiag;
-  theSubdiagWork(theStart) = aShift;
-  theSubdiagWork(theEnd)   = 0.0;
-
-  return true;
-}
-
-// Performs the complete QL algorithm iteration
-bool performQLAlgorithm(NCollection_Array1<double>& theDiagWork,
-                        NCollection_Array1<double>& theSubdiagWork,
-                        NCollection_Array2<double>& theEigenVecWork,
-                        const int                   theSize)
-{
-  for (int aSubmatrixStart = 1; aSubmatrixStart <= theSize; aSubmatrixStart++)
-  {
-    int aIterCount = 0;
-    int aSubmatrixEnd;
-
-    do
-    {
-      aSubmatrixEnd = findSubmatrixEnd(theDiagWork, theSubdiagWork, aSubmatrixStart, theSize);
-
-      if (aSubmatrixEnd != aSubmatrixStart)
-      {
-        if (aIterCount++ == MAX_ITERATIONS)
-          return false;
-
-        const double aShift =
-          computeWilkinsonShift(theDiagWork, theSubdiagWork, aSubmatrixStart, aSubmatrixEnd);
-
-        if (!performQLStep(theDiagWork,
-                           theSubdiagWork,
-                           theEigenVecWork,
-                           aSubmatrixStart,
-                           aSubmatrixEnd,
-                           aShift,
-                           theSize))
-          return false;
-      }
-    } while (aSubmatrixEnd != aSubmatrixStart);
-  }
-
-  return true;
-}
-
-} // anonymous namespace
+// Eigen includes
+#include <Eigen/Core>
+#include <Eigen/Eigenvalues>
 
 //=======================================================================
 
 math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<double>& theDiagonal,
                                                    const NCollection_Array1<double>& theSubdiagonal)
-    : myDiagonal(theDiagonal),
-      mySubdiagonal(theSubdiagonal),
-      myIsDone(false),
+    : myIsDone(Standard_False),
       myN(theDiagonal.Length()),
       myEigenValues(1, theDiagonal.Length()),
       myEigenVectors(1, theDiagonal.Length(), 1, theDiagonal.Length())
@@ -198,33 +36,74 @@ math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<doub
     return;
   }
 
-  // Move lower bounds to 1 for consistent indexing
-  myDiagonal.UpdateLowerBound(1);
-  mySubdiagonal.UpdateLowerBound(1);
-
-  // Use internal arrays directly as working arrays
-  shiftSubdiagonalElements(mySubdiagonal, myN);
-
-  // Initialize eigenvector matrix as identity matrix
-  for (int aRowIdx = 1; aRowIdx <= myN; aRowIdx++)
-    for (int aColIdx = 1; aColIdx <= myN; aColIdx++)
-      myEigenVectors(aRowIdx, aColIdx) = (aRowIdx == aColIdx) ? 1.0 : 0.0;
-
-  bool isConverged = true;
-
-  if (myN != 1)
+  if (myN == 0)
   {
-    isConverged = performQLAlgorithm(myDiagonal, mySubdiagonal, myEigenVectors, myN);
+    myIsDone = Standard_True;
+    return;
   }
 
-  // Store results directly in myEigenValues (myDiagonal contains eigenvalues after QL algorithm)
-  if (isConverged)
+  // Handle N=1 case separately
+  if (myN == 1)
   {
-    for (int anIdx = 1; anIdx <= myN; anIdx++)
-      myEigenValues(anIdx) = myDiagonal(anIdx);
+    myEigenValues(1) = theDiagonal(theDiagonal.Lower());
+    myEigenVectors(1, 1) = 1.0;
+    myIsDone = Standard_True;
+    return;
   }
 
-  myIsDone = isConverged;
+  // Prepare data for Eigen
+  // Eigen expects subdiagonal of size N-1
+  // OCCT 'theSubdiagonal' input stores relevant data in indices 2..N (corresponding to connections 1-2, 2-3, etc)
+  // which generally corresponds to input indices [Lower+1, Lower+N-1].
+  
+  Eigen::VectorXd aDiag(myN);
+  Eigen::VectorXd aSubDiag(myN - 1);
+
+  const Standard_Integer aDiagLower = theDiagonal.Lower();
+  for (Standard_Integer i = 0; i < myN; ++i)
+  {
+    aDiag[i] = theDiagonal(aDiagLower + i);
+  }
+
+  const Standard_Integer aSubDiagLower = theSubdiagonal.Lower();
+  for (Standard_Integer i = 0; i < myN - 1; ++i)
+  {
+    // We skip the first element of the subdiagonal array relative to the loop,
+    // matching the original logic where input[Lower] was effectively unused/dummy
+    // and input[Lower+1] corresponded to the first subdiagonal element.
+    aSubDiag[i] = theSubdiagonal(aSubDiagLower + i + 1);
+  }
+
+  // Compute using Eigen
+  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> anEigenSolver;
+  anEigenSolver.computeFromTridiagonal(aDiag, aSubDiag, Eigen::ComputeEigenvectors);
+
+  if (anEigenSolver.info() != Eigen::Success)
+  {
+    myIsDone = Standard_False;
+    return;
+  }
+
+  // Store results
+  // Eigen returns eigenvalues in increasing order
+  const Eigen::VectorXd& aResValues = anEigenSolver.eigenvalues();
+  const Eigen::MatrixXd& aResVectors = anEigenSolver.eigenvectors();
+
+  for (Standard_Integer i = 0; i < myN; ++i)
+  {
+    myEigenValues(i + 1) = aResValues[i];
+  }
+
+  for (Standard_Integer aRow = 0; aRow < myN; ++aRow)
+  {
+    for (Standard_Integer aCol = 0; aCol < myN; ++aCol)
+    {
+      // Eigen vectors are stored as columns
+      myEigenVectors(aRow + 1, aCol + 1) = aResVectors(aRow, aCol);
+    }
+  }
+
+  myIsDone = Standard_True;
 }
 
 //=======================================================================
@@ -245,6 +124,9 @@ int math_EigenValuesSearcher::Dimension() const
 
 double math_EigenValuesSearcher::EigenValue(const int theIndex) const
 {
+  StdFail_NotDone_Raise_if(!myIsDone, "math_EigenValuesSearcher::EigenValue() - computation is not done");
+  Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > myN,
+                               "math_EigenValuesSearcher::EigenValue() - index out of range");
   return myEigenValues(theIndex);
 }
 
@@ -252,6 +134,9 @@ double math_EigenValuesSearcher::EigenValue(const int theIndex) const
 
 math_Vector math_EigenValuesSearcher::EigenVector(const int theIndex) const
 {
+  StdFail_NotDone_Raise_if(!myIsDone, "math_EigenValuesSearcher::EigenVector() - computation is not done");
+  Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > myN,
+                               "math_EigenValuesSearcher::EigenVector() - index out of range");
   math_Vector aVector(1, myN);
 
   for (int anIdx = 1; anIdx <= myN; anIdx++)

@@ -72,12 +72,10 @@ public:
   Standard_EXPORT math_Vector EigenVector(const int theIndex) const;
 
 private:
-  NCollection_Array1<double> myDiagonal;     //!< Copy of input diagonal elements
-  NCollection_Array1<double> mySubdiagonal;  //!< Copy of input subdiagonal elements
-  bool                       myIsDone;       //!< Computation success flag
-  int                        myN;            //!< Matrix dimension
-  NCollection_Array1<double> myEigenValues;  //!< Computed eigenvalues
-  NCollection_Array2<double> myEigenVectors; //!< Computed eigenvectors stored column-wise
+  Standard_Boolean                  myIsDone;       //!< Computation success flag
+  Standard_Integer                  myN;            //!< Matrix dimension
+  NCollection_Array1<Standard_Real> myEigenValues;  //!< Computed eigenvalues
+  NCollection_Array2<Standard_Real> myEigenVectors; //!< Computed eigenvectors stored column-wise
 };
 
 #endif // _math_EigenValuesSearcher_HeaderFile

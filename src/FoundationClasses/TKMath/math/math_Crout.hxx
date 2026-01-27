@@ -55,6 +55,12 @@ public:
   //! Destructor
   ~math_Crout();
 
+  //! Copy constructor is deleted to prevent double-free of internal Eigen decomposition
+  math_Crout(const math_Crout&) = delete;
+
+  //! Assignment operator is deleted to prevent double-free of internal Eigen decomposition
+  math_Crout& operator=(const math_Crout&) = delete;
+
   //! Returns True if all has been correctly done.
   bool IsDone() const;
 
