@@ -16,93 +16,191 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
 // #endif
 
-#include <math_Matrix.hxx>
-#include <math_Recipes.hxx>
 #include <math_SVD.hxx>
+#include <math_Matrix.hxx>
 #include <Standard_DimensionError.hxx>
 #include <Standard_NotImplemented.hxx>
 #include <StdFail_NotDone.hxx>
 
+#include <Standard_WarningsDisable.hxx>
+#include <Eigen/Dense>
+#include <Eigen/SVD>
+#include <Standard_WarningsRestore.hxx>
+
+#include <algorithm>
+
 math_SVD::math_SVD(const math_Matrix& A)
-    : U(1, std::max(A.RowNumber(), A.ColNumber()), 1, A.ColNumber()),
-      V(1, A.ColNumber(), 1, A.ColNumber()),
-      Diag(1, A.ColNumber())
+    : U(1, A.RowNumber(), 1, std::min(A.RowNumber(), A.ColNumber())),
+      V(1, A.ColNumber(), 1, std::min(A.RowNumber(), A.ColNumber())),
+      Diag(1, std::min(A.RowNumber(), A.ColNumber())),
+      RowA(A.RowNumber())
 {
-  U.Init(0.0);
-  RowA = A.RowNumber();
-  U.Set(1, A.RowNumber(), 1, A.ColNumber(), A);
-  int Error = SVD_Decompose(U, Diag, V);
-  Done      = Error == 0;
+    // Use Thin SVD: A = U * S * V^T
+    // U is M x K, S is K, V is N x K where K = min(M, N)
+    
+    const Standard_Integer aRows = A.RowNumber();
+    const Standard_Integer aCols = A.ColNumber();
+
+    // Copy input matrix A to Eigen matrix (safe approach, avoids memory layout issues)
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> aMatA(aRows, aCols);
+    for (Standard_Integer i = 0; i < aRows; ++i) {
+        for (Standard_Integer j = 0; j < aCols; ++j) {
+            aMatA(i, j) = A(A.LowerRow() + i, A.LowerCol() + j);
+        }
+    }
+
+    // Compute SVD
+    Eigen::BDCSVD<Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> 
+        aSVD(aMatA, Eigen::ComputeThinU | Eigen::ComputeThinV);
+
+    // Note: BDCSVD always succeeds for real matrices, no need for info() check
+
+    // Store results in member variables
+    const auto& aU = aSVD.matrixU();
+    const auto& aV = aSVD.matrixV();
+    const auto& aS = aSVD.singularValues();
+
+    // Copy U
+    for (Standard_Integer i = 0; i < static_cast<Standard_Integer>(aU.rows()); ++i) {
+        for (Standard_Integer j = 0; j < static_cast<Standard_Integer>(aU.cols()); ++j) {
+            U(i + 1, j + 1) = aU(i, j);
+        }
+    }
+
+    // Copy V
+    for (Standard_Integer i = 0; i < static_cast<Standard_Integer>(aV.rows()); ++i) {
+        for (Standard_Integer j = 0; j < static_cast<Standard_Integer>(aV.cols()); ++j) {
+            V(i + 1, j + 1) = aV(i, j);
+        }
+    }
+
+    // Copy Singular Values
+    for (Standard_Integer i = 0; i < static_cast<Standard_Integer>(aS.size()); ++i) {
+        Diag(i + 1) = aS(i);
+    }
+
+    Done = Standard_True;
 }
 
 void math_SVD::Solve(const math_Vector& B, math_Vector& X, const double Eps)
 {
-  StdFail_NotDone_Raise_if(!Done, " ");
-  Standard_DimensionError_Raise_if((RowA != B.Length()) || (X.Length() != Diag.Length()), " ");
+    StdFail_NotDone_Raise_if(!Done, "math_SVD::Solve");
+    Standard_DimensionError_Raise_if((RowA != B.Length()) || (X.Length() != V.RowNumber()), 
+        "math_SVD::Solve: dimensions mismatch");
 
-  math_Vector BB(1, U.RowNumber());
-  BB.Init(0.0);
-  BB.Set(1, B.Length(), B);
-  double wmin = Eps * Diag(Diag.Max());
-  for (int I = 1; I <= Diag.Upper(); I++)
-  {
-    if (Diag(I) < wmin)
-      Diag(I) = 0.0;
-  }
+    // Solution X = V * S_inv * U^T * B
 
-  // Handle custom bounds in X vector - SVD_Solve expects 1-based indexing
-  if (X.Lower() != 1)
-  {
-    math_Vector anXTemp(&X.Value(X.Lower()), 1, X.Length());
-    SVD_Solve(U, Diag, V, BB, anXTemp);
-  }
-  else
-  {
-    SVD_Solve(U, Diag, V, BB, X);
-  }
+    const Standard_Integer nRows = U.RowNumber();
+    const Standard_Integer nCols = V.RowNumber();
+    const Standard_Integer nRank = Diag.Length();
+
+    // Copy U, V, Diag to Eigen matrices for computation
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> matU(nRows, nRank);
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> matV(nCols, nRank);
+    Eigen::VectorXd vecS(nRank);
+    Eigen::VectorXd vecB(B.Length());
+
+    for (Standard_Integer i = 0; i < nRows; ++i) {
+        for (Standard_Integer j = 0; j < nRank; ++j) {
+            matU(i, j) = U(i + 1, j + 1);
+        }
+    }
+
+    for (Standard_Integer i = 0; i < nCols; ++i) {
+        for (Standard_Integer j = 0; j < nRank; ++j) {
+            matV(i, j) = V(i + 1, j + 1);
+        }
+    }
+
+    for (Standard_Integer i = 0; i < nRank; ++i) {
+        vecS(i) = Diag(i + 1);
+    }
+
+    for (Standard_Integer i = 0; i < B.Length(); ++i) {
+        vecB(i) = B(B.Lower() + i);
+    }
+
+    // Apply tolerance: set small singular values to zero
+    Standard_Real wmin = Eps * vecS.maxCoeff();
+    Eigen::VectorXd vecSInv = Eigen::VectorXd::Zero(nRank);
+    for (Standard_Integer i = 0; i < nRank; ++i) {
+        if (vecS(i) > wmin) {
+            vecSInv(i) = 1.0 / vecS(i);
+        }
+    }
+
+    // Compute X = V * S_inv * U^T * B
+    Eigen::VectorXd utb = matU.transpose() * vecB;
+    Eigen::VectorXd sutb = vecSInv.asDiagonal() * utb;
+    Eigen::VectorXd vecX = matV * sutb;
+
+    // Copy result back to X
+    for (Standard_Integer i = 0; i < X.Length(); ++i) {
+        X(X.Lower() + i) = vecX(i);
+    }
 }
 
 void math_SVD::PseudoInverse(math_Matrix& Result, const double Eps)
 {
-  int i, j;
+    StdFail_NotDone_Raise_if(!Done, "math_SVD::PseudoInverse");
+    Standard_DimensionError_Raise_if(Result.RowNumber() != V.RowNumber() || Result.ColNumber() != U.RowNumber(),
+        "math_SVD::PseudoInverse: Result matrix dimensions mismatch");
 
-  StdFail_NotDone_Raise_if(!Done, " ");
+    const Standard_Integer nRows = U.RowNumber(); // M
+    const Standard_Integer nCols = V.RowNumber(); // N
+    const Standard_Integer nRank = Diag.Length();
 
-  double wmin = Eps * Diag(Diag.Max());
-  for (i = 1; i <= Diag.Upper(); i++)
-  {
-    if (Diag(i) < wmin)
-      Diag(i) = 0.0;
-  }
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> matU(nRows, nRank);
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> matV(nCols, nRank);
+    Eigen::VectorXd vecS(nRank);
 
-  int         ColA = Diag.Length();
-  math_Vector VNorme(1, U.RowNumber());
-  math_Vector Column(1, ColA);
+    for (Standard_Integer i = 0; i < nRows; ++i) {
+        for (Standard_Integer j = 0; j < nRank; ++j) {
+            matU(i, j) = U(i + 1, j + 1);
+        }
+    }
 
-  for (j = 1; j <= RowA; j++)
-  {
-    for (i = 1; i <= VNorme.Upper(); i++)
-      VNorme(i) = 0.0;
-    VNorme(j) = 1.0;
-    SVD_Solve(U, Diag, V, VNorme, Column);
-    for (i = 1; i <= ColA; i++)
-      Result(i, j) = Column(i);
-  }
+    for (Standard_Integer i = 0; i < nCols; ++i) {
+        for (Standard_Integer j = 0; j < nRank; ++j) {
+            matV(i, j) = V(i + 1, j + 1);
+        }
+    }
+
+    for (Standard_Integer i = 0; i < nRank; ++i) {
+        vecS(i) = Diag(i + 1);
+    }
+
+    Standard_Real wmin = Eps * vecS.maxCoeff();
+    Eigen::VectorXd vecSInv = Eigen::VectorXd::Zero(nRank);
+    for (Standard_Integer i = 0; i < nRank; ++i) {
+        if (vecS(i) > wmin) {
+            vecSInv(i) = 1.0 / vecS(i);
+        }
+    }
+
+    // PseudoInv = V * S_inv * U^T
+    Eigen::Matrix<Standard_Real, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> inv 
+        = matV * vecSInv.asDiagonal() * matU.transpose();
+
+    for (Standard_Integer i = 0; i < Result.RowNumber(); ++i) {
+        for (Standard_Integer j = 0; j < Result.ColNumber(); ++j) {
+            Result(Result.LowerRow() + i, Result.LowerCol() + j) = inv(i, j);
+        }
+    }
 }
 
 void math_SVD::Dump(Standard_OStream& o) const
 {
-
-  o << "math_SVD";
-  if (Done)
-  {
-    o << " Status = Done \n";
-  }
-  else
-  {
-    o << " Status = not Done \n";
-  }
+    o << "math_SVD";
+    if (Done)
+    {
+        o << " Status = Done \n";
+        o << " Singular values: " << Diag << "\n";
+    }
+    else
+    {
+        o << " Status = not Done \n";
+    }
 }
