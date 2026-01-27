@@ -25,26 +25,35 @@
 #include <math_Vector.hxx>
 #include <Standard_OStream.hxx>
 
+
+
 //! This class implements the Crout algorithm used to solve a
 //! system A*X = B where A is a symmetric matrix. It can be used to
 //! invert a symmetric matrix.
-//! This algorithm is similar to Gauss but is faster than Gauss.
-//! Only the inferior triangle of A and the diagonal can be given.
+//! This implementation uses Eigen's LDLT decomposition for improved performance.
+//! A can be decomposed like this:
+//! A = L * D * T(L) where L is triangular inferior and D is
+//! diagonal.
+//! If one element of A is less than MinPivot, A is
+//! considered as singular.
+//! Exception NotSquare is raised if A is not a square matrix.
 class math_Crout
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Given an input matrix A, this algorithm inverts A by the
-  //! Crout algorithm. The user can give only the inferior
-  //! triangle for the implementation.
+  //! Given an input matrix A, this algorithm performs LDLT decomposition
+  //! using Eigen's optimized implementation.
+  //! The user can give only the inferior triangle for the implementation.
   //! A can be decomposed like this:
-  //! A = L * D * T(L) where L is triangular inferior and D is
-  //! diagonal.
+  //! A = L * D * T(L) where L is triangular inferior and D is diagonal.
   //! If one element of A is less than MinPivot, A is
   //! considered as singular.
   //! Exception NotSquare is raised if A is not a square matrix.
   Standard_EXPORT math_Crout(const math_Matrix& A, const double MinPivot = 1.0e-20);
+
+  //! Destructor
+  ~math_Crout();
 
   //! Returns True if all has been correctly done.
   bool IsDone() const;
@@ -57,17 +66,17 @@ public:
   //! not equal to the rowrange of A.
   Standard_EXPORT void Solve(const math_Vector& B, math_Vector& X) const;
 
-  //! returns the inverse matrix of A. Only the inferior
+  //! Returns the inverse matrix of A. Only the inferior
   //! triangle is returned.
   //! Exception NotDone is raised if NotDone.
   const math_Matrix& Inverse() const;
 
-  //! returns in Inv the inverse matrix of A. Only the inferior
+  //! Returns in Inv the inverse matrix of A. Only the inferior
   //! triangle is returned.
   //! Exception NotDone is raised if NotDone.
   void Invert(math_Matrix& Inv) const;
 
-  //! Returns the value of the determinant of the previously LU
+  //! Returns the value of the determinant of the previously LDLT
   //! decomposed matrix A. Zero is returned if the matrix A is considered as singular.
   //! Exceptions
   //! StdFail_NotDone if the algorithm fails (and IsDone returns false).
@@ -78,11 +87,21 @@ public:
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
 private:
+  // Eigen decomposition result (opaque pointer to avoid including Eigen headers in public API)
+  void* myLDLT;
+  // Cached inverse matrix for backward compatibility
   math_Matrix InvA;
-  bool        Done;
-  double      Det;
+  // Decomposition status
+  Standard_Boolean Done;
+  // Cached determinant
+  Standard_Real Det;
+  // Matrix dimension (for validation)
+  Standard_Integer myDim;
+  // Flag indicating which implementation is used
+  // true = hand-written Crout (for small matrices), false = Eigen LDLT (for large matrices)
+  Standard_Boolean UseHandCrout;
 };
 
-#include <math_Crout.lxx>
+#include "math_Crout.lxx"
 
 #endif // _math_Crout_HeaderFile
