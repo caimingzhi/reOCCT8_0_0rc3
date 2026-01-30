@@ -19,8 +19,8 @@
 
 // #endif
 
-#include <math_FunctionSample.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <math_FunctionSample.hpp>
+#include <Standard_OutOfRange.hpp>
 
 math_FunctionSample::math_FunctionSample(const double A, const double B, const int N)
     : a(A),

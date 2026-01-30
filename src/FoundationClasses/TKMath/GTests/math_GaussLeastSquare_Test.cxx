@@ -12,11 +12,11 @@
 // commercial license or contractual agreement.
 
 #include <gtest/gtest.h>
-#include <math_GaussLeastSquare.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_DimensionError.hxx>
+#include <math_GaussLeastSquare.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DimensionError.hpp>
 
 namespace
 {

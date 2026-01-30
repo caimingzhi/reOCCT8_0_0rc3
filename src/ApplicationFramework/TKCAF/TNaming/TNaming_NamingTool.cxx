@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamingTool.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamingTool.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
 
 #ifdef OCCT_DEBUG_DESC
-  #include <TCollection_AsciiString.hxx>
-  #include <TDF_Tool.hxx>
-  #include <BRepTools.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <TDF_Tool.hpp>
+  #include <BRepTools.hpp>
 
 static void WriteS(const TopoDS_Shape& shape, const char* filename)
 {

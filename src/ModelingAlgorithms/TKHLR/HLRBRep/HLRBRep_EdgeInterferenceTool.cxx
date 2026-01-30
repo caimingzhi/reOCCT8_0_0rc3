@@ -18,8 +18,8 @@
   #define No_Exception
 #endif
 
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_EdgeInterferenceTool.hxx>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_EdgeInterferenceTool.hpp>
 
 //=================================================================================================
 

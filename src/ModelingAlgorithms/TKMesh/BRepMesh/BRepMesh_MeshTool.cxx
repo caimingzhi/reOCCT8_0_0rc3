@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_MeshTool.hxx>
-#include <BRepMesh_SelectorOfDataStructureOfDelaun.hxx>
+#include <BRepMesh_MeshTool.hpp>
+#include <BRepMesh_SelectorOfDataStructureOfDelaun.hpp>
 #include <stack>
 
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRep_Builder.hxx>
-#include <TopoDS_Compound.hxx>
-#include <BRepTools.hxx>
-#include <gp_Pln.hxx>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRep_Builder.hpp>
+#include <TopoDS_Compound.hpp>
+#include <BRepTools.hpp>
+#include <gp_Pln.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_MeshTool, Standard_Transient)
 

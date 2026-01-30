@@ -2,49 +2,49 @@
 set(OCCT_TopoDS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopoDS_FILES
-  TopoDS.hxx
-  TopoDS_AlertAttribute.hxx
+  TopoDS.hpp
+  TopoDS_AlertAttribute.hpp
   TopoDS_AlertAttribute.cxx
   TopoDS_Builder.cxx
-  TopoDS_Builder.hxx
-  TopoDS_Builder.lxx
-  TopoDS_Compound.hxx
-  TopoDS_CompSolid.hxx
-  TopoDS_Edge.hxx
-  TopoDS_Face.hxx
-  TopoDS_FrozenShape.hxx
+  TopoDS_Builder.hpp
+  TopoDS_Builder_1.hpp
+  TopoDS_Compound.hpp
+  TopoDS_CompSolid.hpp
+  TopoDS_Edge.hpp
+  TopoDS_Face.hpp
+  TopoDS_FrozenShape.hpp
   TopoDS_HShape.cxx
-  TopoDS_HShape.hxx
-  TopoDS_HShape.lxx
+  TopoDS_HShape.hpp
+  TopoDS_HShape_1.hpp
   TopoDS_Iterator.cxx
-  TopoDS_Iterator.hxx
+  TopoDS_Iterator.hpp
 
-  TopoDS_LockedShape.hxx
+  TopoDS_LockedShape.hpp
   TopoDS_Shape.cxx
-  TopoDS_Shape.hxx
-  TopoDS_Shell.hxx
-  TopoDS_Solid.hxx
+  TopoDS_Shape.hpp
+  TopoDS_Shell.hpp
+  TopoDS_Solid.hpp
   TopoDS_TCompound.cxx
-  TopoDS_TCompound.hxx
+  TopoDS_TCompound.hpp
   TopoDS_TCompSolid.cxx
-  TopoDS_TCompSolid.hxx
+  TopoDS_TCompSolid.hpp
   TopoDS_TEdge.cxx
-  TopoDS_TEdge.hxx
+  TopoDS_TEdge.hpp
   TopoDS_TFace.cxx
-  TopoDS_TFace.hxx
+  TopoDS_TFace.hpp
   TopoDS_TShape.cxx
-  TopoDS_TShape.hxx
+  TopoDS_TShape.hpp
   TopoDS_TShell.cxx
-  TopoDS_TShell.hxx
+  TopoDS_TShell.hpp
   TopoDS_TSolid.cxx
-  TopoDS_TSolid.hxx
+  TopoDS_TSolid.hpp
   TopoDS_TVertex.cxx
-  TopoDS_TVertex.hxx
+  TopoDS_TVertex.hpp
   TopoDS_TWire.cxx
-  TopoDS_TWire.hxx
-  TopoDS_UnCompatibleShapes.hxx
-  TopoDS_Vertex.hxx
-  TopoDS_Wire.hxx
+  TopoDS_TWire.hpp
+  TopoDS_UnCompatibleShapes.hpp
+  TopoDS_Vertex.hpp
+  TopoDS_Wire.hpp
   TopoDS_AlertWithShape.cxx
-  TopoDS_AlertWithShape.hxx
+  TopoDS_AlertWithShape.hpp
 )

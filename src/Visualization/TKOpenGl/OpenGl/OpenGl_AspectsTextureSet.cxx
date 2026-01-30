@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_AspectsTextureSet.hxx>
+#include <OpenGl_AspectsTextureSet.hpp>
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_PointSprite.hxx>
-#include <OpenGl_TextureSet.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_PointSprite.hpp>
+#include <OpenGl_TextureSet.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
+#include <Graphic3d_TextureParams.hpp>
 
 //=================================================================================================
 

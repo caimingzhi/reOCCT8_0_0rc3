@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEBREP_ConfigurationNode.hxx>
+#include <DEBREP_ConfigurationNode.hpp>
 
-#include <DEBREP_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <NCollection_Buffer.hxx>
+#include <DEBREP_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <NCollection_Buffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEBREP_ConfigurationNode, DE_ConfigurationNode)
 

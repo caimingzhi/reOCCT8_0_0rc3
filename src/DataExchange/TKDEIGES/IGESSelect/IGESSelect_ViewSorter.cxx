@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_PacketList.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <IGESSelect_ViewSorter.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_PacketList.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <IGESSelect_ViewSorter.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_ViewSorter, Standard_Transient)
 

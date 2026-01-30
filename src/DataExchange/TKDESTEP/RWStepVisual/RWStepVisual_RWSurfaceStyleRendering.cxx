@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWSurfaceStyleRendering.pxx"
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_SurfaceStyleRendering.hxx>
-#include <StepVisual_ShadingSurfaceMethod.hxx>
-#include <StepVisual_Colour.hxx>
+#include "RWStepVisual_RWSurfaceStyleRendering.hpp"
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_SurfaceStyleRendering.hpp>
+#include <StepVisual_ShadingSurfaceMethod.hpp>
+#include <StepVisual_Colour.hpp>
 
 //=================================================================================================
 

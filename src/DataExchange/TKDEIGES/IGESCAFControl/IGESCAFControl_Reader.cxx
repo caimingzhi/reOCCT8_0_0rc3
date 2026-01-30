@@ -13,36 +13,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESCAFControl.hxx>
-#include <IGESCAFControl_Reader.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESGraph_Color.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Quantity_Color.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_LayerTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <UnitsMethods.hxx>
+#include <BRep_Builder.hpp>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESCAFControl.hpp>
+#include <IGESCAFControl_Reader.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESGraph_Color.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Quantity_Color.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_LayerTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <UnitsMethods.hpp>
 
 //=================================================================================================
 

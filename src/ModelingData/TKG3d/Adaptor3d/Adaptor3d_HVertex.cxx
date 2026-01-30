@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_HVertex.hxx>
+#include <Adaptor3d_HVertex.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <ElCLib.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <ElCLib.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Adaptor3d_HVertex, Standard_Transient)
 

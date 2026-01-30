@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_PerpenPresentation.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeDir.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_Text.hxx>
+#include <DsgPrs_PerpenPresentation.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeDir.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_Text.hpp>
 
 void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,

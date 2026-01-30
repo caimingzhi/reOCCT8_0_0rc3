@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_BackgroundArray.hxx>
+#include <OpenGl_BackgroundArray.hpp>
 
-#include <Aspect_FillMethod.hxx>
-#include <OpenGl_Texture.hxx>
-#include <OpenGl_View.hxx>
+#include <Aspect_FillMethod.hpp>
+#include <OpenGl_Texture.hpp>
+#include <OpenGl_View.hpp>
 
 #ifndef M_SQRT2
   #define M_SQRT2 1.41421356237309504880168872420969808

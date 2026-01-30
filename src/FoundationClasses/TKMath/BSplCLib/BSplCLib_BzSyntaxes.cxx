@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
+#include <BSplCLib.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <NCollection_Array1.hpp>
 
-#include "BSplCLib_CurveComputation.pxx"
+#include "BSplCLib_CurveComputation.hpp"
 
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange

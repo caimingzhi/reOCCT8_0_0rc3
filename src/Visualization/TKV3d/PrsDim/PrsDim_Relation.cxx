@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_Relation.hxx>
+#include <PrsDim_Relation.hpp>
 
-#include <PrsDim.hxx>
-#include <AIS_GraphicTool.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Quantity_Color.hxx>
-#include <StdPrs_Point.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <AIS_GraphicTool.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Quantity_Color.hpp>
+#include <StdPrs_Point.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Relation, AIS_InteractiveObject)
 

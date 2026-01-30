@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_Interpretor.hxx>
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccEnt.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeometryTest.hxx>
-#include <GeometryTest_DrawableQualifiedCurve2d.hxx>
-#include <Message.hxx>
-#include <Precision.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_Interpretor.hpp>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccEnt.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeometryTest.hpp>
+#include <GeometryTest_DrawableQualifiedCurve2d.hpp>
+#include <Message.hpp>
+#include <Precision.hpp>
+#include <TCollection_AsciiString.hpp>
 #include <cstdio>
 
 //=======================================================================

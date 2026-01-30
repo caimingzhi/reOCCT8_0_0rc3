@@ -12,37 +12,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_WireEdgeSet.hxx>
-#include <BOPAlgo_WireSplitter.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_WireEdgeSet.hpp>
+#include <BOPAlgo_WireSplitter.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
 
 typedef NCollection_DataMap<TopoDS_Shape, bool, TopTools_ShapeMapHasher> MyDataMapOfShapeBoolean;
 //

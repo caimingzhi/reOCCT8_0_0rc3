@@ -3,30 +3,30 @@ set(OCCT_MAT_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_MAT_FILES
   MAT_Arc.cxx
-  MAT_Arc.hxx
+  MAT_Arc.hpp
   MAT_BasicElt.cxx
-  MAT_BasicElt.hxx
+  MAT_BasicElt.hpp
   MAT_Bisector.cxx
-  MAT_Bisector.hxx
+  MAT_Bisector.hpp
 
   MAT_Edge.cxx
-  MAT_Edge.hxx
+  MAT_Edge.hpp
   MAT_Graph.cxx
-  MAT_Graph.hxx
-  MAT_ListOfBisector.hxx
+  MAT_Graph.hpp
+  MAT_ListOfBisector.hpp
   MAT_ListOfBisector_0.cxx
-  MAT_ListOfEdge.hxx
+  MAT_ListOfEdge.hpp
   MAT_ListOfEdge_0.cxx
   MAT_Node.cxx
-  MAT_Node.hxx
+  MAT_Node.hpp
 
-  MAT_Side.hxx
-  MAT_TList.gxx
-  MAT_TList.lxx
-  MAT_TListNodeOfListOfBisector.hxx
+  MAT_Side.hpp
+  MAT_TList.hpp
+  MAT_TList_1.hpp
+  MAT_TListNodeOfListOfBisector.hpp
   MAT_TListNodeOfListOfBisector_0.cxx
-  MAT_TListNodeOfListOfEdge.hxx
+  MAT_TListNodeOfListOfEdge.hpp
   MAT_TListNodeOfListOfEdge_0.cxx
   MAT_Zone.cxx
-  MAT_Zone.hxx
+  MAT_Zone.hpp
 )

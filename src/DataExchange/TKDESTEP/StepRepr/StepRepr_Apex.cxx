@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_Apex.hxx>
+#include <StepRepr_Apex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_Apex, StepRepr_DerivedShapeAspect)
 

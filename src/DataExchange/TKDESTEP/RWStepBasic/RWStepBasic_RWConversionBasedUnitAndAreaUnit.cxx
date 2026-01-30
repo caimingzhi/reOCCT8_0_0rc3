@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWConversionBasedUnitAndAreaUnit.pxx"
-#include <StepBasic_ConversionBasedUnitAndAreaUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWConversionBasedUnitAndAreaUnit.hpp"
+#include <StepBasic_ConversionBasedUnitAndAreaUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWConversionBasedUnitAndAreaUnit::RWStepBasic_RWConversionBasedUnitAndAreaUnit() =
   default;

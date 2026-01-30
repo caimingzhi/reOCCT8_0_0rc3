@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
-#include <TopoDS_Builder.hxx>
-#include <TopoDS_FrozenShape.hxx>
-#include <NCollection_List.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_TShape.hxx>
-#include <TopoDS_TWire.hxx>
-#include <TopoDS_UnCompatibleShapes.hxx>
+#include <Standard_NullObject.hpp>
+#include <TopoDS_Builder.hpp>
+#include <TopoDS_FrozenShape.hpp>
+#include <NCollection_List.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_TShape.hpp>
+#include <TopoDS_TWire.hpp>
+#include <TopoDS_UnCompatibleShapes.hpp>
 class TopoDS_Shape;
 
 //=======================================================================

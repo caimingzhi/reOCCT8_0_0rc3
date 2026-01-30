@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_FaceBuilder.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_FaceBuilder.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #ifdef OCCT_DEBUG
 extern void* GFABUMAKEFACEPWES_DEB;
@@ -1384,7 +1384,7 @@ void TopOpeBRepBuild_Builder::GSplitEdge(const TopoDS_Shape&                   E
 } // GSplitEdge
 
 // modified by NIZNHY-PKV Mon Mar 19 16:50:33 2001 f
-#include <BRepClass3d_SolidClassifier.hxx>
+#include <BRepClass3d_SolidClassifier.hpp>
 
 //=================================================================================================
 

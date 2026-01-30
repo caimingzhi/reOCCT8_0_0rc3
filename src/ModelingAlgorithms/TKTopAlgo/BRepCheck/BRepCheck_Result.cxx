@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepCheck_Result.hxx>
+#include <BRepCheck_Result.hpp>
 
-#include <BRepCheck.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepCheck.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepCheck_Result, Standard_Transient)
 

@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_Texture.hxx>
+#include <Image_Texture.hpp>
 
-#include <Image_AlienPixMap.hxx>
-#include <Image_DDSParser.hxx>
-#include <Image_SupportedFormats.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_FileSystem.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <Image_DDSParser.hpp>
+#include <Image_SupportedFormats.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_FileSystem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_Texture, Standard_Transient)
 

@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_EditForm.hxx>
-#include <Interface_TypedValue.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <STEPConstruct_Part.hxx>
-#include <StepData_StepModel.hxx>
-#include <STEPEdit_EditSDR.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFSelect_EditForm.hpp>
+#include <Interface_TypedValue.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <STEPConstruct_Part.hpp>
+#include <StepData_StepModel.hpp>
+#include <STEPEdit_EditSDR.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPEdit_EditSDR, IFSelect_Editor)
 

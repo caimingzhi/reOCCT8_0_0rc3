@@ -22,16 +22,16 @@
 //              Correction de la methode D2 (faute de frappe dans le code)
 //              Correction de la methode D1 (D0 inutile)
 
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <GeomPlate_Surface.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XY.hxx>
-#include <Plate_Plate.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <GeomPlate_Surface.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XY.hpp>
+#include <Plate_Plate.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomPlate_Surface, Geom_Surface)
 

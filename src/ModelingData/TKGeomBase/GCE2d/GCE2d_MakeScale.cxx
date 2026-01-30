@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCE2d_MakeScale.hxx>
-#include <Geom2d_Transformation.hxx>
-#include <gp_Pnt2d.hxx>
+#include <GCE2d_MakeScale.hpp>
+#include <Geom2d_Transformation.hpp>
+#include <gp_Pnt2d.hpp>
 
 //=========================================================================
 //   Creation d un homothetie de gp de centre Point et de rapport Scale.  +

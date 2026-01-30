@@ -15,23 +15,23 @@
 
 // AGV 150202: Changed prototype LDOM_Node::getOwnerDocument()
 
-#include <BRepTools.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <LDOM_OSStream.hxx>
-#include <LDOM_Text.hxx>
-#include <Standard_SStream.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XmlMNaming_NamedShapeDriver.hxx>
-#include <XmlMNaming_Shape1.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Array1.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <BRepTools.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <LDOM_OSStream.hpp>
+#include <LDOM_Text.hpp>
+#include <Standard_SStream.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XmlMNaming_NamedShapeDriver.hpp>
+#include <XmlMNaming_Shape1.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Array1.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMNaming_NamedShapeDriver, XmlMDF_ADriver)
 

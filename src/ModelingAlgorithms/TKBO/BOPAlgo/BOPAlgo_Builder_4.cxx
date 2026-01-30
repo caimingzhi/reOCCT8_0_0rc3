@@ -15,12 +15,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_Builder.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

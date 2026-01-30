@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
+#include <BRepTest.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <BRepTest_DrawableHistory.hxx>
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_DrawableHistory.hpp>
+#include <BRepTest_Objects.hpp>
 
-#include <Draw.hxx>
-#include <DBRep.hxx>
+#include <Draw.hpp>
+#include <DBRep.hpp>
 
-#include <TopoDS.hxx>
+#include <TopoDS.hpp>
 
 static int SetFillHistory(Draw_Interpretor&, int, const char**);
 static int SaveHistory(Draw_Interpretor&, int, const char**);

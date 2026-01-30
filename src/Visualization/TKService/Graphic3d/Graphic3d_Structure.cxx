@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Structure.hxx>
+#include <Graphic3d_Structure.hpp>
 
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_Group.hxx>
-#include <NCollection_Map.hxx>
-#include <Graphic3d_PriorityDefinitionError.hxx>
-#include <Graphic3d_StructureDefinitionError.hxx>
-#include <Graphic3d_StructureManager.hxx>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_Group.hpp>
+#include <NCollection_Map.hpp>
+#include <Graphic3d_PriorityDefinitionError.hpp>
+#include <Graphic3d_StructureDefinitionError.hpp>
+#include <Graphic3d_StructureManager.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 #include <cstdio>
 class Graphic3d_Structure;

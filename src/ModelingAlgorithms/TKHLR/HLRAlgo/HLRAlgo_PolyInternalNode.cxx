@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_PolyInternalNode.hxx>
-#include <Standard_Type.hxx>
+#include <HLRAlgo_PolyInternalNode.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyInternalNode, Standard_Transient)

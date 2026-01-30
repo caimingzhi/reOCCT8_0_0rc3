@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEGLTF_Provider.hxx>
+#include <DEGLTF_Provider.hpp>
 
-#include <DE_ValidationUtils.hxx>
-#include <Message.hxx>
-#include <RWGltf_CafWriter.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <DE_ValidationUtils.hpp>
+#include <Message.hpp>
+#include <RWGltf_CafWriter.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 namespace
 {

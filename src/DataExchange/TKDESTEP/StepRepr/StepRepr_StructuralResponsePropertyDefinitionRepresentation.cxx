@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepRepr_StructuralResponsePropertyDefinitionRepresentation.hxx>
+#include <StepRepr_StructuralResponsePropertyDefinitionRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_StructuralResponsePropertyDefinitionRepresentation,
                            StepRepr_PropertyDefinitionRepresentation)

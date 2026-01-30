@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DelaunayBaseMeshAlgo.hxx>
-#include <BRepMesh_MeshTool.hxx>
-#include <BRepMesh_Delaun.hxx>
+#include <BRepMesh_DelaunayBaseMeshAlgo.hpp>
+#include <BRepMesh_MeshTool.hpp>
+#include <BRepMesh_Delaun.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DelaunayBaseMeshAlgo, BRepMesh_ConstrainedBaseMeshAlgo)
 

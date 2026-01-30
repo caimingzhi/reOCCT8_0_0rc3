@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Bnd_Box2d.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Hatch_Hatcher.hxx>
-#include <Precision.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <StdPrs_DeflectionCurve.hxx>
-#include <StdPrs_ToolRFace.hxx>
-#include <StdPrs_WFDeflectionRestrictedFace.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Bnd_Box2d.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Hatch_Hatcher.hpp>
+#include <Precision.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <StdPrs_DeflectionCurve.hpp>
+#include <StdPrs_ToolRFace.hpp>
+#include <StdPrs_WFDeflectionRestrictedFace.hpp>
+#include <NCollection_Sequence.hpp>
 
 #ifdef OCCT_DEBUG_MESH
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 extern OSD_Chronometer FFaceTimer1, FFaceTimer2, FFaceTimer3, FFaceTimer4;
 #endif
 

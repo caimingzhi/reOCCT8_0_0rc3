@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_RectangularCompositeSurface.hxx>
-#include <StepGeom_SurfacePatch.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_RectangularCompositeSurface.hpp>
+#include <StepGeom_SurfacePatch.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_RectangularCompositeSurface, StepGeom_BoundedSurface)
 

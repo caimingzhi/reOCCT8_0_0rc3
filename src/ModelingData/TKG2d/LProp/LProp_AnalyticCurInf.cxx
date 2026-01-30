@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <LProp_AnalyticCurInf.hxx>
-#include <LProp_CurAndInf.hxx>
+#include <ElCLib.hpp>
+#include <LProp_AnalyticCurInf.hpp>
+#include <LProp_CurAndInf.hpp>
 
 //=================================================================================================
 

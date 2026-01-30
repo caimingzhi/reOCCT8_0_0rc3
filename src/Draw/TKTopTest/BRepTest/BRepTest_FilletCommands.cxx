@@ -14,36 +14,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <BRepTest_Objects.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <BiTgte_Blend.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
+#include <BRepTest.hpp>
+#include <BRepTest_Objects.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <BRepFilletAPI_MakeFillet.hpp>
+#include <BiTgte_Blend.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <BOPAlgo_PaveFiller.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
 
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Section.hxx>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Section.hpp>
 
-#include <FilletSurf_Builder.hxx>
-#include <ChFi3d_FilletShape.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <NCollection_List.hxx>
-#include <FilletSurf_StatusType.hxx>
-#include <FilletSurf_ErrorTypeStatus.hxx>
-#include <DrawTrSurf.hxx>
-#include <Message.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <FilletSurf_Builder.hpp>
+#include <ChFi3d_FilletShape.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <NCollection_List.hpp>
+#include <FilletSurf_StatusType.hpp>
+#include <FilletSurf_ErrorTypeStatus.hpp>
+#include <DrawTrSurf.hpp>
+#include <Message.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
 #include <cstdio>
 

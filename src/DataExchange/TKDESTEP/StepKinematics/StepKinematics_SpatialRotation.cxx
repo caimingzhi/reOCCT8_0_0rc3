@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_SpatialRotation.hxx>
-#include <StepKinematics_RotationAboutDirection.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepKinematics_SpatialRotation.hpp>
+#include <StepKinematics_RotationAboutDirection.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

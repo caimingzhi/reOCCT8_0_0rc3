@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <DDF.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DDataStd.hpp>
+#include <DDF.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
 
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
 
-#include <TopoDS_Vertex.hxx>
+#include <TopoDS_Vertex.hpp>
 
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Pln.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Pln.hpp>
 
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Plane.hxx>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Plane.hpp>
 
-#include <TNaming_Builder.hxx>
+#include <TNaming_Builder.hpp>
 
-#include <DDataStd_DrawPresentation.hxx>
+#include <DDataStd_DrawPresentation.hpp>
 
 //=======================================================================
 // function : DDataStd_SetPoint

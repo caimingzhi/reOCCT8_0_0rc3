@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepGeom_Pcurve.hxx>
-#include <StepShape_SeamEdge.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Pcurve.hpp>
+#include <StepShape_SeamEdge.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_SeamEdge, StepShape_OrientedEdge)
 

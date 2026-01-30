@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DataStructureOfDelaun.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepMesh_Edge.hxx>
+#include <BRepMesh_DataStructureOfDelaun.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepMesh_Edge.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DataStructureOfDelaun, Standard_Transient)
 

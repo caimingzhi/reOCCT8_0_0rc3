@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeFix.hxx>
+#include <ShapeFix.hpp>
 //: k2 abv 16.12.98: eliminating code duplication
 // pdn     18.12.98: checking deviation for SP edges
 //:   abv 22.02.99: method FillFace() removed since PRO13123 is fixed
@@ -21,49 +21,49 @@
 // szv#9:S4244:19Aug99: Added method FixWireGaps
 // szv#10:S4244:23Aug99: Added method FixFaceGaps
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
 
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Face.hxx>
-#include <Geom_Surface.hxx>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Face.hpp>
+#include <Geom_Surface.hpp>
 
 //: i2
-#include <gp_Pnt.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <ShapeAnalysis_Surface.hxx>
+#include <gp_Pnt.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <ShapeAnalysis_Surface.hpp>
 
-#include <ShapeFix_Edge.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <ShapeFix_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <BRepLib.hxx>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <ShapeFix_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <BRepLib.hpp>
 
-#include <ShapeBuild_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopExp.hxx>
+#include <ShapeBuild_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopExp.hpp>
 
-#include <Message_ProgressScope.hxx>
-#include <Message_Msg.hxx>
-#include <ShapeExtend_BasicMsgRegistrator.hxx>
+#include <Message_ProgressScope.hpp>
+#include <Message_Msg.hpp>
+#include <ShapeExtend_BasicMsgRegistrator.hpp>
 
 //=================================================================================================
 

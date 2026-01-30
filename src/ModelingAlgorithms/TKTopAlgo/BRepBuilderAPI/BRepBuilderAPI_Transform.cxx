@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <gp_Trsf.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <gp_Trsf.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

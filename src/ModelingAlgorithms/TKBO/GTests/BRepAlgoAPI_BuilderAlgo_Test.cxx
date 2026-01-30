@@ -15,13 +15,13 @@
 
 #include <type_traits>
 
-#include <BRepAlgoAPI_BuilderAlgo.hxx>
-#include <BRepAlgoAPI_BooleanOperation.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepAlgoAPI_Common.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <BRepAlgoAPI_Splitter.hxx>
+#include <BRepAlgoAPI_BuilderAlgo.hpp>
+#include <BRepAlgoAPI_BooleanOperation.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepAlgoAPI_Common.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <BRepAlgoAPI_Splitter.hpp>
 
 //==================================================================================================
 // BRepAlgoAPI_BuilderAlgo Non-Copyability Tests

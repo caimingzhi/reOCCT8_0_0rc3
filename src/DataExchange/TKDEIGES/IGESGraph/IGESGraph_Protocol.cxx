@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESGraph_Protocol.hxx>
+#include <IGESGraph_Protocol.hpp>
 
-#include <IGESBasic.hxx>
-#include <IGESBasic_Protocol.hxx>
-#include <IGESGraph_Color.hxx>
-#include <IGESGraph_DefinitionLevel.hxx>
-#include <IGESGraph_DrawingSize.hxx>
-#include <IGESGraph_DrawingUnits.hxx>
-#include <IGESGraph_HighLight.hxx>
-#include <IGESGraph_IntercharacterSpacing.hxx>
-#include <IGESGraph_LineFontDefPattern.hxx>
-#include <IGESGraph_LineFontDefTemplate.hxx>
-#include <IGESGraph_LineFontPredefined.hxx>
-#include <IGESGraph_NominalSize.hxx>
-#include <IGESGraph_Pick.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <IGESGraph_TextFontDef.hxx>
-#include <IGESGraph_UniformRectGrid.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic.hpp>
+#include <IGESBasic_Protocol.hpp>
+#include <IGESGraph_Color.hpp>
+#include <IGESGraph_DefinitionLevel.hpp>
+#include <IGESGraph_DrawingSize.hpp>
+#include <IGESGraph_DrawingUnits.hpp>
+#include <IGESGraph_HighLight.hpp>
+#include <IGESGraph_IntercharacterSpacing.hpp>
+#include <IGESGraph_LineFontDefPattern.hpp>
+#include <IGESGraph_LineFontDefTemplate.hpp>
+#include <IGESGraph_LineFontPredefined.hpp>
+#include <IGESGraph_NominalSize.hpp>
+#include <IGESGraph_Pick.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <IGESGraph_TextFontDef.hpp>
+#include <IGESGraph_UniformRectGrid.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_Protocol, IGESData_Protocol)
 

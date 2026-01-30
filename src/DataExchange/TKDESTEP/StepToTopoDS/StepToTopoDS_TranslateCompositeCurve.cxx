@@ -17,29 +17,29 @@
 //: o3 abv 17.02.99: r0301_db.stp #57082: apply FixReorder to composite curve
 //: s5 abv 22.04.99  Adding debug printouts in catch {} blocks
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <Precision.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepGeom_CompositeCurve.hxx>
-#include <StepGeom_CompositeCurveSegment.hxx>
-#include <StepGeom_Pcurve.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepGeom_SurfaceCurve.hxx>
-#include <StepToGeom.hxx>
-#include <StepToTopoDS_TranslateCompositeCurve.hxx>
-#include <StepToTopoDS_TranslateEdge.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <Precision.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepGeom_CompositeCurve.hpp>
+#include <StepGeom_CompositeCurveSegment.hpp>
+#include <StepGeom_Pcurve.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepGeom_SurfaceCurve.hpp>
+#include <StepToGeom.hpp>
+#include <StepToTopoDS_TranslateCompositeCurve.hpp>
+#include <StepToTopoDS_TranslateEdge.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 //=================================================================================================
 

@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomToStep_Root.hxx>
+#include <GeomToStep_Root.hpp>
 
 bool GeomToStep_Root::IsDone() const
 {

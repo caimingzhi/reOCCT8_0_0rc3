@@ -14,12 +14,12 @@
 #include <gtest/gtest.h>
 
 // New API
-#include <MathInteg_Gauss.hxx>
-#include <MathInteg_Kronrod.hxx>
+#include <MathInteg_Gauss.hpp>
+#include <MathInteg_Kronrod.hpp>
 
 // Old API
-#include <math_Function.hxx>
-#include <math_GaussSingleIntegration.hxx>
+#include <math_Function.hpp>
+#include <math_GaussSingleIntegration.hpp>
 
 #include <cmath>
 

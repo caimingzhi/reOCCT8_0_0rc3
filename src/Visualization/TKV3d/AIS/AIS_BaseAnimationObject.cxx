@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_BaseAnimationObject.hxx>
+#include <AIS_BaseAnimationObject.hpp>
 
-#include <V3d_View.hxx>
+#include <V3d_View.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_BaseAnimationObject, AIS_Animation)
 

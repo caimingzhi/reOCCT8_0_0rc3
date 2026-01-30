@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dGcc_Circ2d2TanOn.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GccEnt.hxx>
-#include <NCollection_List.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dGcc_Circ2d2TanOn.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GccEnt.hpp>
+#include <NCollection_List.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec2d.hpp>
 
 #include <gtest/gtest.h>
 

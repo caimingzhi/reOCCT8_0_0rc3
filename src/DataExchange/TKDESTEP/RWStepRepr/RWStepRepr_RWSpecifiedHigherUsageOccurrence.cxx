@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWSpecifiedHigherUsageOccurrence.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepRepr_SpecifiedHigherUsageOccurrence.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWSpecifiedHigherUsageOccurrence.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepRepr_SpecifiedHigherUsageOccurrence.hpp>
 
 //=================================================================================================
 

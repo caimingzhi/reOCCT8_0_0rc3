@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include "RWStepGeom_RWToroidalSurface.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_ToroidalSurface.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include "RWStepGeom_RWToroidalSurface.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_ToroidalSurface.hpp>
 
 RWStepGeom_RWToroidalSurface::RWStepGeom_RWToroidalSurface() = default;
 

@@ -15,13 +15,13 @@
 
 #include <d3d9.h>
 
-#include <D3DHost_View.hxx>
+#include <D3DHost_View.hpp>
 
-#include <D3DHost_GraphicDriver.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <OpenGl_Window.hxx>
+#include <D3DHost_GraphicDriver.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <OpenGl_Window.hpp>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(D3DHost_View, OpenGl_View)
 

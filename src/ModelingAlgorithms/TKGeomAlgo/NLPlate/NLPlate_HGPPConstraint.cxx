@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NLPlate_HGPPConstraint.hxx>
-#include <Plate_D1.hxx>
-#include <Plate_D2.hxx>
-#include <Plate_D3.hxx>
-#include <Standard_Type.hxx>
+#include <NLPlate_HGPPConstraint.hpp>
+#include <Plate_D1.hpp>
+#include <Plate_D2.hpp>
+#include <Plate_D3.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(NLPlate_HGPPConstraint, Standard_Transient)
 

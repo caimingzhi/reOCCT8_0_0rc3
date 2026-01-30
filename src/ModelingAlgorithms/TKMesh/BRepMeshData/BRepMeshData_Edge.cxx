@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_Edge.hxx>
-#include <BRepMeshData_PCurve.hxx>
-#include <BRepMeshData_Curve.hxx>
+#include <BRepMeshData_Edge.hpp>
+#include <BRepMeshData_PCurve.hpp>
+#include <BRepMeshData_Curve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Edge, IMeshData_Edge)
 

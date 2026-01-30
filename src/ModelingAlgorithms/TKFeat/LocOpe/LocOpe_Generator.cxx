@@ -14,44 +14,44 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LocOpe_Generator.hxx>
+#include <LocOpe_Generator.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAlgo_Loop.hxx>
-#include <BRepTools.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomProjLib.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pln.hxx>
-#include <LocOpe_BuildShape.hxx>
-#include <LocOpe_GeneratedShape.hxx>
-#include <Precision.hxx>
-#include <Standard_NullObject.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAlgo_Loop.hpp>
+#include <BRepTools.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomProjLib.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pln.hpp>
+#include <LocOpe_BuildShape.hpp>
+#include <LocOpe_GeneratedShape.hpp>
+#include <Precision.hpp>
+#include <Standard_NullObject.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
 
 static bool ToFuse(const TopoDS_Face&, const TopoDS_Face&);
 

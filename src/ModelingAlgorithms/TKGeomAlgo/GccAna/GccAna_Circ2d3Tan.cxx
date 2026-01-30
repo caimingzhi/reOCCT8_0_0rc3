@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
 
 //=========================================================================
 //   Creation of a circle tangent to three circles.                        +

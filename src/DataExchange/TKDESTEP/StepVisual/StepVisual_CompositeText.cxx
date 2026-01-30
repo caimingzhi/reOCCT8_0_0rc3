@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CompositeText.hxx>
-#include <StepVisual_TextOrCharacter.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_CompositeText.hpp>
+#include <StepVisual_TextOrCharacter.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CompositeText, StepGeom_GeometricRepresentationItem)
 

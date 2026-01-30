@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Naming.hxx>
-#include <XmlMNaming_NamingDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Naming.hpp>
+#include <XmlMNaming_NamingDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMNaming_NamingDriver, XmlMDF_ADriver)
 

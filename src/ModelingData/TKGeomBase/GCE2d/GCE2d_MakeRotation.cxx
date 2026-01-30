@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCE2d_MakeRotation.hxx>
-#include <Geom2d_Transformation.hxx>
-#include <gp_Pnt2d.hxx>
+#include <GCE2d_MakeRotation.hpp>
+#include <Geom2d_Transformation.hpp>
+#include <gp_Pnt2d.hpp>
 
 //=========================================================================
 //   Creation d une rotation 3d de gp d angle Angle par rapport a une     +

@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWDraughtingModel.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepVisual_DraughtingModel.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWDraughtingModel.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepVisual_DraughtingModel.hpp>
 
 //=================================================================================================
 

@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_NullStyleMember.hxx>
-#include <StepData_EnumTool.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <StepVisual_NullStyleMember.hpp>
+#include <StepData_EnumTool.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_NullStyleMember, StepData_SelectInt)
 

@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Contract.hxx>
-#include <StepBasic_ContractAssignment.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Contract.hpp>
+#include <StepBasic_ContractAssignment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ContractAssignment, Standard_Transient)
 

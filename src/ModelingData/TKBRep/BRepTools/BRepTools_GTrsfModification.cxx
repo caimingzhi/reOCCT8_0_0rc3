@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepTools_GTrsfModification.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomLib.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Quaternion.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools_GTrsfModification.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomLib.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Quaternion.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_GTrsfModification, BRepTools_Modification)
 

@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_DichoCutting.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Approx_SweepApproximation.hxx>
-#include <Approx_SweepFunction.hxx>
-#include <BSplCLib.hxx>
-#include <Standard_DomainError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XYZ.hxx>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_DichoCutting.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Approx_SweepApproximation.hpp>
+#include <Approx_SweepFunction.hpp>
+#include <BSplCLib.hpp>
+#include <Standard_DomainError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XYZ.hpp>
 
 //=================================================================================================
 

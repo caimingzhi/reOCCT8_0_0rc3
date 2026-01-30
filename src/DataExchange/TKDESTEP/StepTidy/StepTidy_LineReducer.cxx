@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_LineReducer.pxx>
+#include <StepTidy_LineReducer.hpp>
 
-#include <Interface_Graph.hxx>
-#include <StepShape_EdgeCurve.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
-#include <StepGeom_SurfaceCurve.hxx>
-#include <StepRepr_DefinitionalRepresentation.hxx>
-#include <StepGeom_SeamCurve.hxx>
+#include <Interface_Graph.hpp>
+#include <StepShape_EdgeCurve.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <StepGeom_SurfaceCurve.hpp>
+#include <StepRepr_DefinitionalRepresentation.hpp>
+#include <StepGeom_SeamCurve.hpp>
 
 //==================================================================================================
 

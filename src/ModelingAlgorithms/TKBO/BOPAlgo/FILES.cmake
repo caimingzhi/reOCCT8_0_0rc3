@@ -3,47 +3,47 @@ set(OCCT_BOPAlgo_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BOPAlgo_FILES
   BOPAlgo_Algo.cxx
-  BOPAlgo_Algo.hxx
+  BOPAlgo_Algo.hpp
   BOPAlgo_ArgumentAnalyzer.cxx
-  BOPAlgo_ArgumentAnalyzer.hxx
-  BOPAlgo_ArgumentAnalyzer.lxx
+  BOPAlgo_ArgumentAnalyzer.hpp
+  BOPAlgo_ArgumentAnalyzer_1.hpp
   BOPAlgo_ToolsProvider.cxx
-  BOPAlgo_ToolsProvider.hxx
+  BOPAlgo_ToolsProvider.hpp
   BOPAlgo_BOP.cxx
-  BOPAlgo_BOP.hxx
+  BOPAlgo_BOP.hpp
   BOPAlgo_Builder.cxx
-  BOPAlgo_Builder.hxx
+  BOPAlgo_Builder.hpp
   BOPAlgo_Builder_1.cxx
   BOPAlgo_Builder_2.cxx
   BOPAlgo_Builder_3.cxx
   BOPAlgo_Builder_4.cxx
   BOPAlgo_BuilderArea.cxx
-  BOPAlgo_BuilderArea.hxx
+  BOPAlgo_BuilderArea.hpp
   BOPAlgo_BuilderFace.cxx
-  BOPAlgo_BuilderFace.hxx
-  BOPAlgo_BuilderShape.hxx
+  BOPAlgo_BuilderFace.hpp
+  BOPAlgo_BuilderShape.hpp
   BOPAlgo_BuilderSolid.cxx
-  BOPAlgo_BuilderSolid.hxx
+  BOPAlgo_BuilderSolid.hpp
   BOPAlgo_CheckerSI.cxx
-  BOPAlgo_CheckerSI.hxx
+  BOPAlgo_CheckerSI.hpp
   BOPAlgo_CheckerSI_1.cxx
   BOPAlgo_CheckResult.cxx
-  BOPAlgo_CheckResult.hxx
-  BOPAlgo_CheckStatus.hxx
+  BOPAlgo_CheckResult.hpp
+  BOPAlgo_CheckStatus.hpp
 
   BOPAlgo_MakeConnected.cxx
-  BOPAlgo_MakeConnected.hxx
+  BOPAlgo_MakeConnected.hpp
   BOPAlgo_MakePeriodic.cxx
-  BOPAlgo_MakePeriodic.hxx
+  BOPAlgo_MakePeriodic.hpp
   BOPAlgo_MakerVolume.cxx
-  BOPAlgo_MakerVolume.hxx
-  BOPAlgo_MakerVolume.lxx
-  BOPAlgo_Operation.hxx
+  BOPAlgo_MakerVolume.hpp
+  BOPAlgo_MakerVolume_1.hpp
+  BOPAlgo_Operation.hpp
   BOPAlgo_Options.cxx
-  BOPAlgo_Options.hxx
-  BOPAlgo_PArgumentAnalyzer.hxx
+  BOPAlgo_Options.hpp
+  BOPAlgo_PArgumentAnalyzer.hpp
   BOPAlgo_PaveFiller.cxx
-  BOPAlgo_PaveFiller.hxx
+  BOPAlgo_PaveFiller.hpp
   BOPAlgo_PaveFiller_1.cxx
   BOPAlgo_PaveFiller_2.cxx
   BOPAlgo_PaveFiller_3.cxx
@@ -55,31 +55,31 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_PaveFiller_9.cxx
   BOPAlgo_PaveFiller_10.cxx
   BOPAlgo_PaveFiller_11.cxx
-  BOPAlgo_PBOP.hxx
-  BOPAlgo_PBuilder.hxx
-  BOPAlgo_PPaveFiller.hxx
-  BOPAlgo_PSection.hxx
-  BOPAlgo_PWireEdgeSet.hxx
+  BOPAlgo_PBOP.hpp
+  BOPAlgo_PBuilder.hpp
+  BOPAlgo_PPaveFiller.hpp
+  BOPAlgo_PSection.hpp
+  BOPAlgo_PWireEdgeSet.hpp
   BOPAlgo_RemoveFeatures.cxx
-  BOPAlgo_RemoveFeatures.hxx
+  BOPAlgo_RemoveFeatures.hpp
   BOPAlgo_Section.cxx
-  BOPAlgo_Section.hxx
-  BOPAlgo_SectionAttribute.hxx
+  BOPAlgo_Section.hpp
+  BOPAlgo_SectionAttribute.hpp
   BOPAlgo_ShellSplitter.cxx
-  BOPAlgo_ShellSplitter.hxx
+  BOPAlgo_ShellSplitter.hpp
   BOPAlgo_Tools.cxx
-  BOPAlgo_Tools.hxx
-  BOPAlgo_WireEdgeSet.hxx
-  BOPAlgo_WireEdgeSet.lxx
+  BOPAlgo_Tools.hpp
+  BOPAlgo_WireEdgeSet.hpp
+  BOPAlgo_WireEdgeSet_1.hpp
   BOPAlgo_WireSplitter.cxx
-  BOPAlgo_WireSplitter.hxx
-  BOPAlgo_WireSplitter.lxx
+  BOPAlgo_WireSplitter.hpp
+  BOPAlgo_WireSplitter_1.hpp
   BOPAlgo_WireSplitter_1.cxx
   BOPAlgo_CellsBuilder.cxx
-  BOPAlgo_CellsBuilder.hxx
-  BOPAlgo_GlueEnum.hxx
-  BOPAlgo_Splitter.hxx
+  BOPAlgo_CellsBuilder.hpp
+  BOPAlgo_GlueEnum.hpp
+  BOPAlgo_Splitter.hpp
   BOPAlgo_Splitter.cxx
-  BOPAlgo_Alerts.hxx
-  BOPAlgo_BOPAlgo_msg.pxx
+  BOPAlgo_Alerts.hpp
+  BOPAlgo_BOPAlgo_msg.hpp
 )

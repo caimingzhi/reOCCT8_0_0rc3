@@ -16,18 +16,18 @@
 
 #define No_Standard_OutOfRange
 
-#include <BSplCLib.hxx>
-#include <Convert_ConicToBSplineCurve.hxx>
-#include <Convert_CosAndSinEvalFunction.hxx>
-#include <Convert_PolynomialCosAndSin.hxx>
-#include <gp_Pnt2d.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <Convert_ConicToBSplineCurve.hpp>
+#include <Convert_CosAndSinEvalFunction.hpp>
+#include <Convert_PolynomialCosAndSin.hpp>
+#include <gp_Pnt2d.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

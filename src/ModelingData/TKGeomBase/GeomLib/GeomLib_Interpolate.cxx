@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomLib_Interpolate.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomLib_Interpolate.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

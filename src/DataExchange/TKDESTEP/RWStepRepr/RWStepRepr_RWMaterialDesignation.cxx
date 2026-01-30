@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWMaterialDesignation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_MaterialDesignation.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWMaterialDesignation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_MaterialDesignation.hpp>
 
 RWStepRepr_RWMaterialDesignation::RWStepRepr_RWMaterialDesignation() = default;
 

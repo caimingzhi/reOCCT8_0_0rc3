@@ -15,17 +15,17 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWCurve3dElementProperty.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFEA_Curve3dElementProperty.hxx>
-#include <StepFEA_CurveElementEndOffset.hxx>
-#include <StepFEA_CurveElementEndRelease.hxx>
-#include <StepFEA_CurveElementInterval.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWCurve3dElementProperty.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFEA_Curve3dElementProperty.hpp>
+#include <StepFEA_CurveElementEndOffset.hpp>
+#include <StepFEA_CurveElementEndRelease.hpp>
+#include <StepFEA_CurveElementInterval.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

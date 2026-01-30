@@ -13,17 +13,17 @@
 
 //: k4 abv 30.11.98: TR9: warnings for BWV
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include "RWStepShape_RWBrepWithVoids.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_BrepWithVoids.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_OrientedClosedShell.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include "RWStepShape_RWBrepWithVoids.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_BrepWithVoids.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_OrientedClosedShell.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 RWStepShape_RWBrepWithVoids::RWStepShape_RWBrepWithVoids() = default;
 

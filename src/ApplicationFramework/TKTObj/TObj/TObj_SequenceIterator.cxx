@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_SequenceIterator.hxx>
+#include <TObj_SequenceIterator.hpp>
 
-#include <TObj_Object.hxx>
+#include <TObj_Object.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_SequenceIterator, TObj_ObjectIterator)
 

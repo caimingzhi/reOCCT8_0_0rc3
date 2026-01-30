@@ -13,18 +13,18 @@
 
 // 25.12.98 pdn: adding empty constructor
 
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

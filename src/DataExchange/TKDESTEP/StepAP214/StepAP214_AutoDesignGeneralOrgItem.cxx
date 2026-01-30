@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AutoDesignDocumentReference.hxx>
-#include <StepAP214_AutoDesignGeneralOrgItem.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepBasic_ProductDefinitionWithAssociatedDocuments.hxx>
-#include <StepRepr_ExternallyDefinedRepresentation.hxx>
-#include <StepRepr_Representation.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AutoDesignDocumentReference.hpp>
+#include <StepAP214_AutoDesignGeneralOrgItem.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepBasic_ProductDefinitionWithAssociatedDocuments.hpp>
+#include <StepRepr_ExternallyDefinedRepresentation.hpp>
+#include <StepRepr_Representation.hpp>
 
 StepAP214_AutoDesignGeneralOrgItem::StepAP214_AutoDesignGeneralOrgItem() = default;
 

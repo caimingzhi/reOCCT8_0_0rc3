@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_SweptSurface.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade.hxx>
-#include <ShapeUpgrade_SplitCurve3dContinuity.hxx>
-#include <ShapeUpgrade_SplitSurfaceContinuity.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_SweptSurface.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade.hpp>
+#include <ShapeUpgrade_SplitCurve3dContinuity.hpp>
+#include <ShapeUpgrade_SplitSurfaceContinuity.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitSurfaceContinuity, ShapeUpgrade_SplitSurface)
 

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_ConfigurationContext.hxx>
+#include <DE_ConfigurationContext.hpp>
 
-#include <Message.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <OSD_StreamBuffer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Message.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <OSD_StreamBuffer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_ConfigurationContext, Standard_Transient)
 

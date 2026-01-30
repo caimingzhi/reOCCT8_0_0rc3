@@ -21,27 +21,27 @@
 //                               facilement approchable ont de petites erreurs.
 // Modified     PMN 15/04/1997 : Gestion fine de la continuite aux lieux de decoupes
 
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_DichoCutting.hxx>
-#include <AdvApprox_EvaluatorFunction.hxx>
-#include <AdvApprox_SimpleApprox.hxx>
-#include <BSplCLib.hxx>
-#include <Convert_CompPolynomialToPoles.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Vector.hxx>
-#include <PLib.hxx>
-#include <PLib_JacobiPolynomial.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_DichoCutting.hpp>
+#include <AdvApprox_EvaluatorFunction.hpp>
+#include <AdvApprox_SimpleApprox.hpp>
+#include <BSplCLib.hpp>
+#include <Convert_CompPolynomialToPoles.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Vector.hpp>
+#include <PLib.hpp>
+#include <PLib_JacobiPolynomial.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
 #ifdef OCCT_DEBUG
 

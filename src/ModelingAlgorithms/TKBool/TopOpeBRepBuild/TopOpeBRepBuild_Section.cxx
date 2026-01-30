@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_TrimmedCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_EdgeBuilder.hxx>
-#include <TopOpeBRepBuild_GTool.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_SolidBuilder.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_EdgeBuilder.hpp>
+#include <TopOpeBRepBuild_GTool.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_SolidBuilder.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define MGhc3 occ::handle<Geom_Curve>
 #define MGhc2 occ::handle<Geom2d_Curve>
@@ -78,9 +78,9 @@ extern bool TopOpeBRepTool_GettraceC2D();
 // Standard_IMPORT void FUN_tool_ttranslate(const gp_Vec2d& tvector, const TopoDS_Face& fF,
 // TopoDS_Edge& fyE);
 
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
 //---------------------------------------------
 static bool FUN_periodicS(const TopoDS_Shape& F)
 //---------------------------------------------
@@ -194,8 +194,8 @@ static bool FUN_PinE(const gp_Pnt& P, const TopoDS_Edge& E)
   return PinE;
 }
 
-#include <BRep_Tool.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
+#include <BRep_Tool.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
 //-----------------------------------------------------------------------
 static bool FUN_EstaEE(const TopoDS_Edge& E, const TopAbs_State sta, const TopoDS_Edge& EE)
 //-----------------------------------------------------------------------

@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveObject.hxx>
+#include <AIS_InteractiveObject.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Graphic3d_CStructure.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <PrsMgr_PresentationManager.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Graphic3d_CStructure.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <PrsMgr_PresentationManager.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_InteractiveObject, SelectMgr_SelectableObject)
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StepData_Field.hxx>
-#include <StepData_FieldList.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StepData_Field.hpp>
+#include <StepData_FieldList.hpp>
 
 static StepData_Field nulfild;
 

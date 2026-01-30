@@ -23,25 +23,25 @@
 //                 + bon appel a LocateParameter (PRO6973).
 // RBD : 15/10/98 ; Le cache est desormais defini sur [-1,1] (pro15537).
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_RangeError.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Array1.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_RangeError.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Array1.hpp>
 
 #define POLES (poles->Array2())
 #define WEIGHTS (weights->Array2())

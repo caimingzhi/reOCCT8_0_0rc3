@@ -15,27 +15,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_FaceInfo.hxx>
-#include <BOPDS_Pave.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <BOPDS_ShapeInfo.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntTools_Context.hxx>
-#include <Precision.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_FaceInfo.hpp>
+#include <BOPDS_Pave.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <BOPDS_ShapeInfo.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntTools_Context.hpp>
+#include <Precision.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 static void MakeSplitEdge1(const TopoDS_Edge&   aE,
                            const TopoDS_Face&   aF,

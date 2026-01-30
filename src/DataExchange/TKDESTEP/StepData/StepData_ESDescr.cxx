@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_ESDescr.hxx>
-#include <StepData_PDescr.hxx>
-#include <StepData_Simple.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_ESDescr.hpp>
+#include <StepData_PDescr.hpp>
+#include <StepData_Simple.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_ESDescr, StepData_EDescr)
 

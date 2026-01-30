@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hxx>
+#include <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hpp>
 
-#include <IntCurve_IConicTool.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
+#include <IntCurve_IConicTool.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
 
-#include <gp_Vec2d.hxx>
+#include <gp_Vec2d.hpp>
 
 Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter::
   Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter(const IntCurve_IConicTool& ITool,

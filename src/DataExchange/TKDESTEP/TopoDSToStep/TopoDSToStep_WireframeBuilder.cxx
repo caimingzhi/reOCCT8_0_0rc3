@@ -17,40 +17,40 @@
 // - fixed trimming of circles and ellipses (radians used instead of degrees)
 // szv#4 S4163
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <GeomToStep_MakeCurve.hxx>
-#include <GeomToStep_MakeLine.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NullObject.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Line.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
-#include <StepGeom_TrimmingSelect.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <TopoDSToStep_WireframeBuilder.hxx>
-#include <Transfer_FinderProcess.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <GeomToStep_MakeCurve.hpp>
+#include <GeomToStep_MakeLine.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NullObject.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Line.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <StepGeom_TrimmingSelect.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <TopoDSToStep_WireframeBuilder.hpp>
+#include <Transfer_FinderProcess.hpp>
 
 //=================================================================================================
 

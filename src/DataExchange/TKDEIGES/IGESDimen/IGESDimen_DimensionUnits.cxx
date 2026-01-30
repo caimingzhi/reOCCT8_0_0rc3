@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESDimen_DimensionUnits.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESDimen_DimensionUnits.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_DimensionUnits, IGESData_IGESEntity)
 

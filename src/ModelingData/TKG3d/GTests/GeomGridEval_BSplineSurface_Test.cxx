@@ -13,13 +13,13 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomGridEval_BSplineSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomGridEval_BSplineSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

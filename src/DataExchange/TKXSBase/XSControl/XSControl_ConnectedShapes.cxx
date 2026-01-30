@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
-#include <XSControl_ConnectedShapes.hxx>
-#include <XSControl_TransferReader.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
+#include <XSControl_ConnectedShapes.hpp>
+#include <XSControl_TransferReader.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_ConnectedShapes, IFSelect_SelectExplore)
 

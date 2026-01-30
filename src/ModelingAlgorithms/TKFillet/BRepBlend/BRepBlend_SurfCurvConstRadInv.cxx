@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BRepBlend_SurfCurvConstRadInv.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BRepBlend_SurfCurvConstRadInv.hpp>
+#include <math_Matrix.hpp>
 
 //=================================================================================================
 

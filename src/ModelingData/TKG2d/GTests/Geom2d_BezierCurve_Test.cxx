@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom2d_BezierCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 class Geom2d_BezierCurve_Test : public ::testing::Test
 {

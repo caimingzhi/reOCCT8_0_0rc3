@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepShape_QualifiedRepresentationItem.hxx>
-#include <StepRepr_ReprItemAndMeasureWithUnitAndQRI.hxx>
+#include <Standard_Type.hpp>
+#include <StepShape_QualifiedRepresentationItem.hpp>
+#include <StepRepr_ReprItemAndMeasureWithUnitAndQRI.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ReprItemAndMeasureWithUnitAndQRI,
                            StepRepr_ReprItemAndMeasureWithUnit)

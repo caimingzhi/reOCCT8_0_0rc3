@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_AppSurf.hxx>
+#include <BRepBlend_AppSurf.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Blend_AppFunction.hxx>
-#include <BRepBlend_Line.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Blend_AppFunction.hpp>
+#include <BRepBlend_Line.hpp>
 
 #define TheSectionGenerator Blend_AppFunction
-#define TheSectionGenerator_hxx <Blend_AppFunction.hxx>
+#define TheSectionGenerator_hxx <Blend_AppFunction.hpp>
 #define Handle_TheLine occ::handle<BRepBlend_Line>
 #define TheLine BRepBlend_Line
-#define TheLine_hxx <BRepBlend_Line.hxx>
+#define TheLine_hxx <BRepBlend_Line.hpp>
 #define AppBlend_AppSurf BRepBlend_AppSurf
-#define AppBlend_AppSurf_hxx <BRepBlend_AppSurf.hxx>
-#include <AppBlend_AppSurf.gxx>
+#define AppBlend_AppSurf_hxx <BRepBlend_AppSurf.hpp>
+#include <AppBlend_AppSurf.hpp>

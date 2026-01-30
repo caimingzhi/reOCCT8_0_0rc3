@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ShaderProgram.hxx>
+#include <Graphic3d_ShaderProgram.hpp>
 
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_ShaderObject.hxx>
-#include <Graphic3d_TextureSetBits.hxx>
-#include <OSD_Directory.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Path.hxx>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_ShaderObject.hpp>
+#include <Graphic3d_TextureSetBits.hpp>
+#include <OSD_Directory.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Path.hpp>
 
 #include <atomic>
 

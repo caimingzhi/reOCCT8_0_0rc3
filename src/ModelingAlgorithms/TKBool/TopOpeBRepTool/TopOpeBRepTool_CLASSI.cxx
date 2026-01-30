@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepClass3d_SolidExplorer.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <NCollection_Array2.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_CLASSI.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_face.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <Bnd_Box2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepClass3d_SolidExplorer.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <NCollection_Array2.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_CLASSI.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_face.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define SAME (-1)
 #define DIFF (-2)

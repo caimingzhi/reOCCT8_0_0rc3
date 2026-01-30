@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GCE2d_MakeLine.hxx>
-#include <GCE2d_MakeSegment.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GCE2d_MakeLine.hpp>
+#include <GCE2d_MakeSegment.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <StdFail_NotDone.hpp>
 
 GCE2d_MakeSegment::GCE2d_MakeSegment(const gp_Pnt2d& P1, const gp_Dir2d& V, const gp_Pnt2d& P2)
 {

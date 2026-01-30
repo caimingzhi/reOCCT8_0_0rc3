@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <GeomToStep_MakeCurve.hxx>
-#include <GeomToStep_MakeSurfaceOfLinearExtrusion.hxx>
-#include <GeomToStep_MakeVector.hxx>
-#include <gp_Vec.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_SurfaceOfLinearExtrusion.hxx>
-#include <StepGeom_Vector.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <GeomToStep_MakeCurve.hpp>
+#include <GeomToStep_MakeSurfaceOfLinearExtrusion.hpp>
+#include <GeomToStep_MakeVector.hpp>
+#include <gp_Vec.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_SurfaceOfLinearExtrusion.hpp>
+#include <StepGeom_Vector.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' une surface_of_linear_extrusion de prostep a partir d' une

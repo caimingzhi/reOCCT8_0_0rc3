@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_Curve2dTool.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Precision.hxx>
-#include <GCPnts_TangentialDeflection.hxx>
+#include <Extrema_Curve2dTool.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Precision.hpp>
+#include <GCPnts_TangentialDeflection.hpp>
 
 //=================================================================================================
 

@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_Classifier.hxx>
+#include <BRepMesh_Classifier.hpp>
 
-#include <Precision.hxx>
-#include <gp_Pnt2d.hxx>
-#include <CSLib_Class2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Precision.hpp>
+#include <gp_Pnt2d.hpp>
+#include <CSLib_Class2d.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Classifier, Standard_Transient)
 

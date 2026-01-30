@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_BracketMinimum.hxx>
-#include <math_Function.hxx>
+#include <math_BracketMinimum.hpp>
+#include <math_Function.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Precision.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Precision.hpp>
 
 #include <cmath>
 

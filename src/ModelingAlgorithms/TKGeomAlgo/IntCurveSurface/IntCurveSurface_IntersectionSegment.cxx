@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_IntersectionSegment.hxx>
+#include <IntCurveSurface_IntersectionSegment.hpp>
 
 IntCurveSurface_IntersectionSegment::IntCurveSurface_IntersectionSegment() = default;
 

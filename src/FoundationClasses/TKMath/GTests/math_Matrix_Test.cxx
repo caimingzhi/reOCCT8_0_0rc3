@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_Matrix.hxx>
+#include <math_Matrix.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
 
 namespace
 {

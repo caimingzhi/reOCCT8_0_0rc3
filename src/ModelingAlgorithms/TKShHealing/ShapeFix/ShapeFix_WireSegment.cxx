@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_WireSegment.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_WireSegment.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

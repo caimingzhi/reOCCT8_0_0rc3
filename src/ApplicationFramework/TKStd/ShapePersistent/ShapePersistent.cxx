@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapePersistent.hxx>
-#include <StdObjMgt_MapOfInstantiators.hxx>
+#include <ShapePersistent.hpp>
+#include <StdObjMgt_MapOfInstantiators.hpp>
 
-#include <ShapePersistent_HSequence.hxx>
-#include <ShapePersistent_Geom2d_Curve.hxx>
-#include <ShapePersistent_Geom.hxx>
-#include <ShapePersistent_Geom_Curve.hxx>
-#include <ShapePersistent_Geom_Surface.hxx>
-#include <ShapePersistent_BRep.hxx>
+#include <ShapePersistent_HSequence.hpp>
+#include <ShapePersistent_Geom2d_Curve.hpp>
+#include <ShapePersistent_Geom.hpp>
+#include <ShapePersistent_Geom_Curve.hpp>
+#include <ShapePersistent_Geom_Surface.hpp>
+#include <ShapePersistent_BRep.hpp>
 
 //=================================================================================================
 

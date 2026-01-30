@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_ReferenceDesignator.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESAppli_ReferenceDesignator.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_ReferenceDesignator, IGESData_IGESEntity)
 

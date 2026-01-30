@@ -14,41 +14,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepClass_FaceExplorer.hxx>
-#include <BRepLib_MakeWire.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom2d_Curve.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <LocOpe.hxx>
-#include <LocOpe_SplitShape.hxx>
-#include <Precision.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Standard_Integer.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepClass_FaceExplorer.hpp>
+#include <BRepLib_MakeWire.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom2d_Curve.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <LocOpe.hpp>
+#include <LocOpe_SplitShape.hpp>
+#include <Precision.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Standard_Integer.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
 
 static bool IsInside(const TopoDS_Face&, const TopoDS_Wire&, const TopoDS_Wire&);
 

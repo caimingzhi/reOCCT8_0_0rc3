@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Convert_CompBezierCurves2dToBSplineCurve2d.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <PLib.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <Convert_CompBezierCurves2dToBSplineCurve2d.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <PLib.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

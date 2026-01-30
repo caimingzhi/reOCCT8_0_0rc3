@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDimTolObjects_Tool.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <XCAFDoc_DimTolTool.hxx>
-#include <XCAFDoc_Dimension.hxx>
-#include <XCAFDoc_GeomTolerance.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_Datum.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Sequence.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <TDocStd_Document.hxx>
-#include <NCollection_DataMap.hxx>
-#include <XCAFDimTolObjects_GeomToleranceObject.hxx>
-#include <XCAFDimTolObjects_DatumObject.hxx>
+#include <XCAFDimTolObjects_Tool.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <XCAFDoc_DimTolTool.hpp>
+#include <XCAFDoc_Dimension.hpp>
+#include <XCAFDoc_GeomTolerance.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_Datum.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Sequence.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <TDocStd_Document.hpp>
+#include <NCollection_DataMap.hpp>
+#include <XCAFDimTolObjects_GeomToleranceObject.hpp>
+#include <XCAFDimTolObjects_DatumObject.hpp>
 class XCAFDimTolObjects_GeomToleranceObject;
 
 class XCAFDimTolObjects_DimensionObject;

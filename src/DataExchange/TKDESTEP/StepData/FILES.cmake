@@ -3,80 +3,80 @@ set(OCCT_StepData_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepData_FILES
   StepData.cxx
-  StepData.hxx
+  StepData.hpp
 
   StepData_DefaultGeneral.cxx
-  StepData_DefaultGeneral.hxx
+  StepData_DefaultGeneral.hpp
   StepData_Described.cxx
-  StepData_Described.hxx
+  StepData_Described.hpp
   StepData_ECDescr.cxx
-  StepData_ECDescr.hxx
+  StepData_ECDescr.hpp
   StepData_EDescr.cxx
-  StepData_EDescr.hxx
+  StepData_EDescr.hpp
   StepData_EnumTool.cxx
-  StepData_EnumTool.hxx
+  StepData_EnumTool.hpp
   StepData_ESDescr.cxx
-  StepData_ESDescr.hxx
+  StepData_ESDescr.hpp
   StepData_Factors.cxx
-  StepData_Factors.hxx
+  StepData_Factors.hpp
   StepData_Field.cxx
-  StepData_Field.hxx
+  StepData_Field.hpp
   StepData_FieldList.cxx
-  StepData_FieldList.hxx
+  StepData_FieldList.hpp
   StepData_FieldList1.cxx
-  StepData_FieldList1.hxx
+  StepData_FieldList1.hpp
   StepData_FieldListD.cxx
-  StepData_FieldListD.hxx
+  StepData_FieldListD.hpp
   StepData_FieldListN.cxx
-  StepData_FieldListN.hxx
+  StepData_FieldListN.hpp
   StepData_FileProtocol.cxx
-  StepData_FileProtocol.hxx
-  StepData_FileRecognizer.hxx
+  StepData_FileProtocol.hpp
+  StepData_FileRecognizer.hpp
   StepData_FileRecognizer_0.cxx
   StepData_FreeFormEntity.cxx
-  StepData_FreeFormEntity.hxx
+  StepData_FreeFormEntity.hpp
   StepData_GeneralModule.cxx
-  StepData_GeneralModule.hxx
-  StepData_GlobalNodeOfWriterLib.hxx
+  StepData_GeneralModule.hpp
+  StepData_GlobalNodeOfWriterLib.hpp
   StepData_GlobalNodeOfWriterLib_0.cxx
 
-  StepData_Logical.hxx
-  StepData_NodeOfWriterLib.hxx
+  StepData_Logical.hpp
+  StepData_NodeOfWriterLib.hpp
   StepData_NodeOfWriterLib_0.cxx
   StepData_PDescr.cxx
-  StepData_PDescr.hxx
+  StepData_PDescr.hpp
   StepData_Plex.cxx
-  StepData_Plex.hxx
+  StepData_Plex.hpp
   StepData_Protocol.cxx
-  StepData_Protocol.hxx
+  StepData_Protocol.hpp
   StepData_ReadWriteModule.cxx
-  StepData_ReadWriteModule.hxx
+  StepData_ReadWriteModule.hpp
   StepData_SelectArrReal.cxx
-  StepData_SelectArrReal.hxx
+  StepData_SelectArrReal.hpp
   StepData_SelectInt.cxx
-  StepData_SelectInt.hxx
+  StepData_SelectInt.hpp
   StepData_SelectMember.cxx
-  StepData_SelectMember.hxx
+  StepData_SelectMember.hpp
   StepData_SelectNamed.cxx
-  StepData_SelectNamed.hxx
+  StepData_SelectNamed.hpp
   StepData_SelectReal.cxx
-  StepData_SelectReal.hxx
+  StepData_SelectReal.hpp
   StepData_SelectType.cxx
-  StepData_SelectType.hxx
+  StepData_SelectType.hpp
   StepData_Simple.cxx
-  StepData_Simple.hxx
+  StepData_Simple.hpp
   StepData_StepDumper.cxx
-  StepData_StepDumper.hxx
+  StepData_StepDumper.hpp
   StepData_StepModel.cxx
-  StepData_StepModel.hxx
+  StepData_StepModel.hpp
   StepData_StepReaderData.cxx
-  StepData_StepReaderData.hxx
+  StepData_StepReaderData.hpp
   StepData_StepReaderTool.cxx
-  StepData_StepReaderTool.hxx
+  StepData_StepReaderTool.hpp
   StepData_StepWriter.cxx
-  StepData_StepWriter.hxx
+  StepData_StepWriter.hpp
   StepData_UndefinedEntity.cxx
-  StepData_UndefinedEntity.hxx
-  StepData_WriterLib.hxx
+  StepData_UndefinedEntity.hpp
+  StepData_WriterLib.hpp
   StepData_WriterLib_0.cxx
 )

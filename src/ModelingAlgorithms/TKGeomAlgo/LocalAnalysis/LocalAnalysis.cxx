@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LocalAnalysis.hxx>
-#include <LocalAnalysis_CurveContinuity.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
+#include <LocalAnalysis.hpp>
+#include <LocalAnalysis_CurveContinuity.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
 
 /*********************************************************************************/
 /*********************************************************************************/

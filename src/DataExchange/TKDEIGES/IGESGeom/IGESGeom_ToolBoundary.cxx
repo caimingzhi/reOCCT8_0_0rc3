@@ -16,27 +16,27 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESData_Status.hxx>
-#include <IGESGeom_Boundary.hxx>
-#include <IGESGeom_ToolBoundary.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Message_Msg.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Integer.hxx>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESData_Status.hpp>
+#include <IGESGeom_Boundary.hpp>
+#include <IGESGeom_ToolBoundary.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Message_Msg.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Integer.hpp>
 
 #include <cstdio>
 

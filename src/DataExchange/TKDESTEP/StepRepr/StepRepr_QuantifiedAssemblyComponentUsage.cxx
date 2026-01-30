@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepRepr_QuantifiedAssemblyComponentUsage.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepRepr_QuantifiedAssemblyComponentUsage.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_QuantifiedAssemblyComponentUsage,
                            StepRepr_AssemblyComponentUsage)

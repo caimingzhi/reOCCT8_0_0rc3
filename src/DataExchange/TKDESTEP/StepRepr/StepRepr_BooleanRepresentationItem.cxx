@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_BooleanRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_BooleanRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_BooleanRepresentationItem, StepRepr_RepresentationItem)
 

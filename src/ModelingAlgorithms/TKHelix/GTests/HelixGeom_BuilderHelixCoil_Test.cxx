@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <Geom_Curve.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <Geom_Curve.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
 
 class HelixGeom_BuilderHelixCoil_Test : public ::testing::Test
 {

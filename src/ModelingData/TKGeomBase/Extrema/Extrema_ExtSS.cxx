@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtSS.hxx>
-#include <Extrema_GenExtSS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtSS.hpp>
+#include <Extrema_GenExtSS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 Extrema_ExtSS::Extrema_ExtSS()
     : myS2(nullptr),

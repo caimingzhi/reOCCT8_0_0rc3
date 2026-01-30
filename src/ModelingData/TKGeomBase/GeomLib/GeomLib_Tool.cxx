@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomLib_Tool.hxx>
+#include <GeomLib_Tool.hpp>
 
-#include <ElCLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_ExtPC2d.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <math_PSO.hxx>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_ExtPC2d.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <math_PSO.hpp>
 
 // The functions Parameter(s) are used to compute parameter(s) of point
 // on curves and surfaces. The main rule is that tested point must lied

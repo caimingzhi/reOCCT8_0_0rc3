@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_AssocGroupType.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESBasic_AssocGroupType.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_AssocGroupType, IGESData_IGESEntity)
 

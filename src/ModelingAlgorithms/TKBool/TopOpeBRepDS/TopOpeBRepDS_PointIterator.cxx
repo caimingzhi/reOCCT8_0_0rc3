@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
 
 //=================================================================================================
 

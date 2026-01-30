@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_GuideTrihedronPlan.hxx>
+#include <GeomFill_GuideTrihedronPlan.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_Frenet.hxx>
-#include <GeomFill_PlanFunc.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <math_FunctionRoot.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_Frenet.hpp>
+#include <GeomFill_PlanFunc.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <math_FunctionRoot.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_GuideTrihedronPlan, GeomFill_TrihedronWithGuide)
 
-// #include <gp_Trsf2d.hxx>
-// #include <Bnd_Box2d.hxx>
+// #include <gp_Trsf2d.hpp>
+// #include <Bnd_Box2d.hpp>
 
 #ifdef OCCT_DEBUG
 static void TracePlan(const occ::handle<Geom_Surface>& /*Plan*/)

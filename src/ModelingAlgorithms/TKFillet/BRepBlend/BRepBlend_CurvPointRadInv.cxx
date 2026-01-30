@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <BRepBlend_CurvPointRadInv.hxx>
-#include <gp_Pnt.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BRepBlend_CurvPointRadInv.hpp>
+#include <gp_Pnt.hpp>
+#include <math_Matrix.hpp>
 
 //=================================================================================================
 

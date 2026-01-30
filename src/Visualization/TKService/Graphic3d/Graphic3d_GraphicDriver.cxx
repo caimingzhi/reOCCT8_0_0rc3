@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_GraphicDriver.hxx>
+#include <Graphic3d_GraphicDriver.hpp>
 
-#include <Graphic3d_Layer.hxx>
+#include <Graphic3d_Layer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_GraphicDriver, Standard_Transient)
 

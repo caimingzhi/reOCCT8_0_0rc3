@@ -14,22 +14,22 @@
 // performance of this software, and specifically disclaims any responsibility
 // for any damages, special or consequential, connected with its use.
 
-#include <Geom2dConvert_ApproxArcsSegments.hxx>
+#include <Geom2dConvert_ApproxArcsSegments.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <ElCLib.hxx>
-#include <GCE2d_MakeArcOfCircle.hxx>
-#include <GCE2d_MakeSegment.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <Precision.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <ElCLib.hpp>
+#include <GCE2d_MakeArcOfCircle.hpp>
+#include <GCE2d_MakeSegment.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <Precision.hpp>
 #include <Standard_Version.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Lin2d.hxx>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Lin2d.hpp>
 
 static const int    MAXPOINTS            = 100;
 static const double MyCurvatureTolerance = 0.0001;

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_mkTondgE.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_mkTondgE.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define M_FORWARD(sta) (sta == TopAbs_FORWARD)
 #define M_REVERSED(sta) (sta == TopAbs_REVERSED)

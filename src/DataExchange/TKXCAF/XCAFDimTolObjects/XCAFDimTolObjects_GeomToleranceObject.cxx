@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDimTolObjects_GeomToleranceObject.hxx>
+#include <XCAFDimTolObjects_GeomToleranceObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDimTolObjects_GeomToleranceObject, Standard_Transient)
 

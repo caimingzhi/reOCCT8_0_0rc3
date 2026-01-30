@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <gp_Lin.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <gp_Lin.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Axis, TDataStd_GenericEmpty)
 

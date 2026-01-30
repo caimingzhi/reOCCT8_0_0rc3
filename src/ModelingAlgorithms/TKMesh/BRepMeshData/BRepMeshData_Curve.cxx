@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <BRepMesh_Vertex.hxx>
+#include <BRepMeshData_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <BRepMesh_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Curve, IMeshData_Curve)
 

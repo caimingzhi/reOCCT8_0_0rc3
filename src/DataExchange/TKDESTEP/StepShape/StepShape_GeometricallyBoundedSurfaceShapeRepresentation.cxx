@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepShape_GeometricallyBoundedSurfaceShapeRepresentation.hxx>
+#include <Standard_Type.hpp>
+#include <StepShape_GeometricallyBoundedSurfaceShapeRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_GeometricallyBoundedSurfaceShapeRepresentation,
                            StepShape_ShapeRepresentation)

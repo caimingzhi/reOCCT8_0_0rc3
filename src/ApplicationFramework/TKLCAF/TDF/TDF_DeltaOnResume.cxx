@@ -18,12 +18,12 @@
 // Version	Date		Purpose
 //		0.0	Jul  6 1998	Creation
 
-#include <TDF_DeltaOnResume.hxx>
+#include <TDF_DeltaOnResume.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnResume, TDF_AttributeDelta)
 

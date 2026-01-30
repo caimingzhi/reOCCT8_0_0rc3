@@ -14,11 +14,11 @@
 #include <gtest/gtest.h>
 
 // New API
-#include <MathOpt_Brent.hxx>
+#include <MathOpt_Brent.hpp>
 
 // Old API
-#include <math_BrentMinimum.hxx>
-#include <math_Function.hxx>
+#include <math_BrentMinimum.hpp>
+#include <math_Function.hpp>
 
 #include <cmath>
 

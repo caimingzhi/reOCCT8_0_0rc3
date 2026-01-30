@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtCC.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_ExtCC.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
-// #include <Extrema_POnCurv.hxx>
+// #include <Extrema_POnCurv.hpp>
 //=================================================================================================
 
 GeomAPI_ExtremaCurveCurve::GeomAPI_ExtremaCurveCurve()

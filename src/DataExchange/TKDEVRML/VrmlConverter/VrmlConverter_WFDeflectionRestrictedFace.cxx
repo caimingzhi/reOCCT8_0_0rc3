@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Bnd_Box.hxx>
-#include <Bnd_Box2d.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Hatch_Hatcher.hxx>
-#include <Precision.hxx>
-#include <StdPrs_ToolRFace.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlConverter_DeflectionCurve.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
-#include <VrmlConverter_WFDeflectionRestrictedFace.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Bnd_Box.hpp>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Hatch_Hatcher.hpp>
+#include <Precision.hpp>
+#include <StdPrs_ToolRFace.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlConverter_DeflectionCurve.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
+#include <VrmlConverter_WFDeflectionRestrictedFace.hpp>
 
 //=================================================================================================
 

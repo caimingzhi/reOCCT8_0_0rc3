@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BlendFunc_ConstThroat.hxx>
-#include <ElCLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <BlendFunc_ConstThroat.hpp>
+#include <ElCLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <Standard_NotImplemented.hpp>
 
 #define Eps 1.e-15
 

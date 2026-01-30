@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductContext.pxx"
-#include <StepBasic_ApplicationContext.hxx>
-#include <StepBasic_ProductContext.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductContext.hpp"
+#include <StepBasic_ApplicationContext.hpp>
+#include <StepBasic_ProductContext.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWProductContext::RWStepBasic_RWProductContext() = default;
 

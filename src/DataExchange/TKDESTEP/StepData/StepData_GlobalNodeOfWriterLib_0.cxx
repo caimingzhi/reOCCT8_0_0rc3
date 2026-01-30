@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData_GlobalNodeOfWriterLib.hxx>
+#include <StepData_GlobalNodeOfWriterLib.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <StepData_ReadWriteModule.hxx>
-#include <StepData_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_WriterLib.hxx>
-#include <StepData_NodeOfWriterLib.hxx>
+#include <StepData_ReadWriteModule.hpp>
+#include <StepData_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_WriterLib.hpp>
+#include <StepData_NodeOfWriterLib.hpp>
 
 StepData_GlobalNodeOfWriterLib::StepData_GlobalNodeOfWriterLib() = default;
 

@@ -17,9 +17,9 @@
 // modified by Edward AGAPOV (eap) Thu Feb 14 2002 (occ139)
 // Add Prepend(), replace array with sequence
 
-#include <IntPolyh_SectionLine.hxx>
-#include <IntPolyh_StartPoint.hxx>
-#include <IntPolyh_Triangle.hxx>
+#include <IntPolyh_SectionLine.hpp>
+#include <IntPolyh_StartPoint.hpp>
+#include <IntPolyh_Triangle.hpp>
 
 #include <cstdio>
 

@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPolyh_Intersection.hxx>
+#include <IntPolyh_Intersection.hpp>
 
-#include <Adaptor3d_Surface.hxx>
+#include <Adaptor3d_Surface.hpp>
 
-#include <IntPolyh_Couple.hxx>
-#include <IntPolyh_MaillageAffinage.hxx>
-#include <IntPolyh_SectionLine.hxx>
-#include <IntPolyh_StartPoint.hxx>
-#include <IntPolyh_Tools.hxx>
-#include <IntPolyh_Triangle.hxx>
+#include <IntPolyh_Couple.hpp>
+#include <IntPolyh_MaillageAffinage.hpp>
+#include <IntPolyh_SectionLine.hpp>
+#include <IntPolyh_StartPoint.hpp>
+#include <IntPolyh_Tools.hpp>
+#include <IntPolyh_Triangle.hpp>
 
-#include <NCollection_Map.hxx>
+#include <NCollection_Map.hpp>
 
 static int ComputeIntersection(IntPolyh_PMaillageAffinage& theMaillage);
 

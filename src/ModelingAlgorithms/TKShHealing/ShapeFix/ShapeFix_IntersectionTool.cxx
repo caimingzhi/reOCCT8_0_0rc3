@@ -11,39 +11,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BndLib_Add2dCurve.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <IntRes2d_Position.hxx>
-#include <NCollection_Sequence.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <ShapeAnalysis_TransferParametersProj.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_IntersectionTool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BndLib_Add2dCurve.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <IntRes2d_Position.hpp>
+#include <NCollection_Sequence.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <ShapeAnalysis_TransferParametersProj.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_IntersectionTool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
 
 // gka 06.09.04 BUG 6555 shape is modified always independently either intersection was fixed or not
 //=================================================================================================

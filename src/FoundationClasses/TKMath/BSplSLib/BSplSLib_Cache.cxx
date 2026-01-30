@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplSLib_Cache.hxx>
-#include <BSplSLib.hxx>
+#include <BSplSLib_Cache.hpp>
+#include <BSplSLib.hpp>
 
-#include <NCollection_LocalArray.hxx>
+#include <NCollection_LocalArray.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 #include <utility>
 

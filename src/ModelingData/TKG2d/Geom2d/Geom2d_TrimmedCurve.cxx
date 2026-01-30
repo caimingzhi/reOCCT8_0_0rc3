@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <ElCLib.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_TrimmedCurve, Geom2d_BoundedCurve)
 

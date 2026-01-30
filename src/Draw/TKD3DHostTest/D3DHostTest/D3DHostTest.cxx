@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <D3DHostTest.hxx>
+#include <D3DHostTest.hpp>
 
-#include <Draw_PluginMacro.hxx>
-#include <D3DHost_GraphicDriverFactory.hxx>
+#include <Draw_PluginMacro.hpp>
+#include <D3DHost_GraphicDriverFactory.hpp>
 
 //=================================================================================================
 

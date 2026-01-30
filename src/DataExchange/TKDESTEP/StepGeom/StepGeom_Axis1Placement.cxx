@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Direction.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Direction.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_Axis1Placement, StepGeom_Placement)
 

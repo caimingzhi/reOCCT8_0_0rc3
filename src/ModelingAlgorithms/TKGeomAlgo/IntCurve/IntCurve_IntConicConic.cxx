@@ -16,20 +16,20 @@
 
 // Modified:    OFV Thu Nov  6 17:03:52 2003
 
-#include <ElCLib.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <IntCurve_IConicTool.hxx>
-#include <IntCurve_IntConicConic.hxx>
-#include <IntCurve_PConic.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <Precision.hxx>
+#include <ElCLib.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <IntCurve_IConicTool.hpp>
+#include <IntCurve_IntConicConic.hpp>
+#include <IntCurve_PConic.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <Precision.hpp>
 
 //=======================================================================
 // Perform() for

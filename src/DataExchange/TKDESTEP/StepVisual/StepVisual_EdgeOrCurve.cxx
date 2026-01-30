@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_EdgeOrCurve.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepShape_Edge.hxx>
+#include <StepVisual_EdgeOrCurve.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepShape_Edge.hpp>
 
 //=================================================================================================
 

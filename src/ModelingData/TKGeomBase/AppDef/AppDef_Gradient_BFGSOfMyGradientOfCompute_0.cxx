@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_Gradient_BFGSOfMyGradientOfCompute.hxx>
+#include <AppDef_Gradient_BFGSOfMyGradientOfCompute.hpp>
 
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_MyLineTool.hxx>
-#include <AppDef_MyGradientOfCompute.hxx>
-#include <AppDef_ParLeastSquareOfMyGradientOfCompute.hxx>
-#include <AppDef_ResConstraintOfMyGradientOfCompute.hxx>
-#include <AppDef_ParFunctionOfMyGradientOfCompute.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_MyLineTool.hpp>
+#include <AppDef_MyGradientOfCompute.hpp>
+#include <AppDef_ParLeastSquareOfMyGradientOfCompute.hpp>
+#include <AppDef_ResConstraintOfMyGradientOfCompute.hpp>
+#include <AppDef_ParFunctionOfMyGradientOfCompute.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
 
 AppDef_Gradient_BFGSOfMyGradientOfCompute::AppDef_Gradient_BFGSOfMyGradientOfCompute(
   math_MultipleVarFunctionWithGradient& F,

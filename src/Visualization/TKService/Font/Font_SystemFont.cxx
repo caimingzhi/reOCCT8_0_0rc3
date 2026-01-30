@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Font_SystemFont.hxx>
+#include <Font_SystemFont.hpp>
 
-#include <Font_FontMgr.hxx>
-#include <OSD_Path.hxx>
+#include <Font_FontMgr.hpp>
+#include <OSD_Path.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Font_SystemFont, Standard_Transient)
 

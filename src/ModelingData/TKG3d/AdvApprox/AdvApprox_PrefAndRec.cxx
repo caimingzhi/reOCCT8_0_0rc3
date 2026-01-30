@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
 
 AdvApprox_PrefAndRec::AdvApprox_PrefAndRec(const NCollection_Array1<double>& RecCut,
                                            const NCollection_Array1<double>& PrefCut,

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineCurve.hxx>
-#include <GeomLib_CheckBSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomLib_CheckBSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

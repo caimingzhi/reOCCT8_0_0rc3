@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Group.hxx>
+#include <OpenGl_Group.hpp>
 
-#include <OpenGl_Flipper.hxx>
-#include <OpenGl_PrimitiveArray.hxx>
-#include <OpenGl_SceneGeometry.hxx>
-#include <OpenGl_StencilTest.hxx>
-#include <OpenGl_Structure.hxx>
-#include <OpenGl_Text.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_Flipper.hpp>
+#include <OpenGl_PrimitiveArray.hpp>
+#include <OpenGl_SceneGeometry.hpp>
+#include <OpenGl_StencilTest.hpp>
+#include <OpenGl_Structure.hpp>
+#include <OpenGl_Text.hpp>
+#include <OpenGl_Workspace.hpp>
 
-#include <Graphic3d_ArrayOfPrimitives.hxx>
-#include <Graphic3d_GroupDefinitionError.hxx>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
+#include <Graphic3d_GroupDefinitionError.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Group, Graphic3d_Group)
 

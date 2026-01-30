@@ -3,98 +3,98 @@ set(OCCT_Vrml_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Vrml_FILES
   Vrml.cxx
-  Vrml.hxx
+  Vrml.hpp
   Vrml_AsciiText.cxx
-  Vrml_AsciiText.hxx
-  Vrml_AsciiTextJustification.hxx
+  Vrml_AsciiText.hpp
+  Vrml_AsciiTextJustification.hpp
   Vrml_Cone.cxx
-  Vrml_Cone.hxx
-  Vrml_ConeParts.hxx
+  Vrml_Cone.hpp
+  Vrml_ConeParts.hpp
 
   Vrml_Coordinate3.cxx
-  Vrml_Coordinate3.hxx
+  Vrml_Coordinate3.hpp
   Vrml_Cube.cxx
-  Vrml_Cube.hxx
+  Vrml_Cube.hpp
   Vrml_Cylinder.cxx
-  Vrml_Cylinder.hxx
-  Vrml_CylinderParts.hxx
+  Vrml_Cylinder.hpp
+  Vrml_CylinderParts.hpp
   Vrml_DirectionalLight.cxx
-  Vrml_DirectionalLight.hxx
-  Vrml_FaceType.hxx
+  Vrml_DirectionalLight.hpp
+  Vrml_FaceType.hpp
   Vrml_FontStyle.cxx
-  Vrml_FontStyle.hxx
-  Vrml_FontStyleFamily.hxx
-  Vrml_FontStyleStyle.hxx
+  Vrml_FontStyle.hpp
+  Vrml_FontStyleFamily.hpp
+  Vrml_FontStyleStyle.hpp
   Vrml_Group.cxx
-  Vrml_Group.hxx
+  Vrml_Group.hpp
   Vrml_IndexedFaceSet.cxx
-  Vrml_IndexedFaceSet.hxx
+  Vrml_IndexedFaceSet.hpp
   Vrml_IndexedLineSet.cxx
-  Vrml_IndexedLineSet.hxx
+  Vrml_IndexedLineSet.hpp
   Vrml_Info.cxx
-  Vrml_Info.hxx
+  Vrml_Info.hpp
   Vrml_Instancing.cxx
-  Vrml_Instancing.hxx
+  Vrml_Instancing.hpp
   Vrml_LOD.cxx
-  Vrml_LOD.hxx
+  Vrml_LOD.hpp
   Vrml_Material.cxx
-  Vrml_Material.hxx
+  Vrml_Material.hpp
   Vrml_MaterialBinding.cxx
-  Vrml_MaterialBinding.hxx
-  Vrml_MaterialBindingAndNormalBinding.hxx
+  Vrml_MaterialBinding.hpp
+  Vrml_MaterialBindingAndNormalBinding.hpp
   Vrml_MatrixTransform.cxx
-  Vrml_MatrixTransform.hxx
+  Vrml_MatrixTransform.hpp
   Vrml_Normal.cxx
-  Vrml_Normal.hxx
+  Vrml_Normal.hpp
   Vrml_NormalBinding.cxx
-  Vrml_NormalBinding.hxx
+  Vrml_NormalBinding.hpp
   Vrml_OrthographicCamera.cxx
-  Vrml_OrthographicCamera.hxx
+  Vrml_OrthographicCamera.hpp
   Vrml_PerspectiveCamera.cxx
-  Vrml_PerspectiveCamera.hxx
+  Vrml_PerspectiveCamera.hpp
   Vrml_PointLight.cxx
-  Vrml_PointLight.hxx
+  Vrml_PointLight.hpp
   Vrml_PointSet.cxx
-  Vrml_PointSet.hxx
+  Vrml_PointSet.hpp
 
   Vrml_Rotation.cxx
-  Vrml_Rotation.hxx
+  Vrml_Rotation.hpp
   Vrml_Scale.cxx
-  Vrml_Scale.hxx
+  Vrml_Scale.hpp
   Vrml_Separator.cxx
-  Vrml_Separator.hxx
-  Vrml_SeparatorRenderCulling.hxx
+  Vrml_Separator.hpp
+  Vrml_SeparatorRenderCulling.hpp
   Vrml_SFImage.cxx
-  Vrml_SFImage.hxx
-  Vrml_SFImageNumber.hxx
+  Vrml_SFImage.hpp
+  Vrml_SFImageNumber.hpp
   Vrml_SFRotation.cxx
-  Vrml_SFRotation.hxx
+  Vrml_SFRotation.hpp
   Vrml_ShapeHints.cxx
-  Vrml_ShapeHints.hxx
-  Vrml_ShapeType.hxx
+  Vrml_ShapeHints.hpp
+  Vrml_ShapeType.hpp
   Vrml_Sphere.cxx
-  Vrml_Sphere.hxx
+  Vrml_Sphere.hpp
   Vrml_SpotLight.cxx
-  Vrml_SpotLight.hxx
+  Vrml_SpotLight.hpp
   Vrml_Switch.cxx
-  Vrml_Switch.hxx
+  Vrml_Switch.hpp
   Vrml_Texture2.cxx
-  Vrml_Texture2.hxx
+  Vrml_Texture2.hpp
   Vrml_Texture2Transform.cxx
-  Vrml_Texture2Transform.hxx
-  Vrml_Texture2Wrap.hxx
+  Vrml_Texture2Transform.hpp
+  Vrml_Texture2Wrap.hpp
   Vrml_TextureCoordinate2.cxx
-  Vrml_TextureCoordinate2.hxx
+  Vrml_TextureCoordinate2.hpp
   Vrml_Transform.cxx
-  Vrml_Transform.hxx
+  Vrml_Transform.hpp
   Vrml_TransformSeparator.cxx
-  Vrml_TransformSeparator.hxx
+  Vrml_TransformSeparator.hpp
   Vrml_Translation.cxx
-  Vrml_Translation.hxx
-  Vrml_VertexOrdering.hxx
+  Vrml_Translation.hpp
+  Vrml_VertexOrdering.hpp
   Vrml_WWWAnchor.cxx
-  Vrml_WWWAnchor.hxx
-  Vrml_WWWAnchorMap.hxx
+  Vrml_WWWAnchor.hpp
+  Vrml_WWWAnchorMap.hpp
   Vrml_WWWInline.cxx
-  Vrml_WWWInline.hxx
+  Vrml_WWWInline.hpp
 )

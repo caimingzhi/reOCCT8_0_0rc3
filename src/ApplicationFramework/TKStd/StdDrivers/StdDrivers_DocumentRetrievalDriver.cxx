@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdDrivers_DocumentRetrievalDriver.hxx>
-#include <StdDrivers.hxx>
+#include <StdDrivers_DocumentRetrievalDriver.hpp>
+#include <StdDrivers.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdDrivers_DocumentRetrievalDriver, StdLDrivers_DocumentRetrievalDriver)
 

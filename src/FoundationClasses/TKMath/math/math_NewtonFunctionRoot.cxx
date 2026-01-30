@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_FunctionWithDerivative.hxx>
-#include <math_NewtonFunctionRoot.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_FunctionWithDerivative.hpp>
+#include <math_NewtonFunctionRoot.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_NewtonFunctionRoot::math_NewtonFunctionRoot(math_FunctionWithDerivative& F,
                                                  const double                 Guess,

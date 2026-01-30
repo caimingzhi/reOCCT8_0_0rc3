@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Failure.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_EdgesIntersector.hxx>
-#include <TopOpeBRep_Point2d.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Failure.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_EdgesIntersector.hpp>
+#include <TopOpeBRep_Point2d.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 //=================================================================================================
 

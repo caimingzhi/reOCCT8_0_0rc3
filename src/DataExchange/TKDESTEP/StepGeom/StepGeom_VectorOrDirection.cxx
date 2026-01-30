@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepGeom_Direction.hxx>
-#include <StepGeom_Vector.hxx>
-#include <StepGeom_VectorOrDirection.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepGeom_Direction.hpp>
+#include <StepGeom_Vector.hpp>
+#include <StepGeom_VectorOrDirection.hpp>
 
 StepGeom_VectorOrDirection::StepGeom_VectorOrDirection() = default;
 

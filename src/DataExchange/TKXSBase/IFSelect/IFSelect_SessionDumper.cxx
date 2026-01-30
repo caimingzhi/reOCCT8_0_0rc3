@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_BasicDumper.hxx>
-#include <IFSelect_SessionDumper.hxx>
-#include <IFSelect_SessionFile.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_BasicDumper.hpp>
+#include <IFSelect_SessionDumper.hpp>
+#include <IFSelect_SessionFile.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SessionDumper, Standard_Transient)
 

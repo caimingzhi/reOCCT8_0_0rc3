@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Type.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_FeatureForDatumTargetRelationship.hxx>
+#include <Standard_Type.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_FeatureForDatumTargetRelationship.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_FeatureForDatumTargetRelationship,
                            StepRepr_ShapeAspectRelationship)

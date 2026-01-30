@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWIdentificationRole.pxx"
-#include <StepBasic_IdentificationRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWIdentificationRole.hpp"
+#include <StepBasic_IdentificationRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

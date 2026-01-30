@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWDateAndTime.pxx"
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_LocalTime.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWDateAndTime.hpp"
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_LocalTime.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWDateAndTime::RWStepBasic_RWDateAndTime() = default;
 

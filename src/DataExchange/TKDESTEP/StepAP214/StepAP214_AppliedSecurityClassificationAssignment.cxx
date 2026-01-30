@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AppliedSecurityClassificationAssignment.hxx>
-#include <StepAP214_SecurityClassificationItem.hxx>
-#include <StepBasic_SecurityClassification.hxx>
+#include <StepAP214_AppliedSecurityClassificationAssignment.hpp>
+#include <StepAP214_SecurityClassificationItem.hpp>
+#include <StepBasic_SecurityClassification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedSecurityClassificationAssignment,
                            StepBasic_SecurityClassificationAssignment)

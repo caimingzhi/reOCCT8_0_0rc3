@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hxx>
+#include <IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IGESDefs_HArray1OfHArray1OfTextDisplayTemplate::IGESDefs_HArray1OfHArray1OfTextDisplayTemplate(
   const int low,

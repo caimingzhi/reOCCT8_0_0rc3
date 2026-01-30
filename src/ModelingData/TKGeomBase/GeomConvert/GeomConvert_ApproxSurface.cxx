@@ -12,20 +12,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomConvert_ApproxSurface.hxx>
+#include <GeomConvert_ApproxSurface.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <AdvApp2Var_ApproxAFunc2Var.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Precision.hxx>
-#include <Standard_Real.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <AdvApp2Var_ApproxAFunc2Var.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Precision.hpp>
+#include <Standard_Real.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 class GeomConvert_ApproxSurface_Eval : public AdvApp2Var_EvaluatorFunc2Var
 {

@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaModel.hxx>
-#include <StepFEA_NodeGroup.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaModel.hpp>
+#include <StepFEA_NodeGroup.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeGroup, StepFEA_FeaGroup)
 

@@ -18,12 +18,12 @@
 
   #include <windows.h>
 
-  #include <Draw_Window.hxx>
-  #include <Draw_Appli.hxx>
-  #include <TCollection_AsciiString.hxx>
+  #include <Draw_Window.hpp>
+  #include <Draw_Appli.hpp>
+  #include <TCollection_AsciiString.hpp>
 
-  #include "Draw_WNTMainWindow.pxx"
-  #include "Draw_WNTCommandWindow.pxx"
+  #include "Draw_WNTMainWindow.hpp"
+  #include "Draw_WNTCommandWindow.hpp"
 
   #define CLIENTWND 0
 

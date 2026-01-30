@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_MSG.hxx>
-#include <NCollection_DataMap.hxx>
-#include <OSD_Process.hxx>
-#include <Quantity_Date.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Macro.hxx>
+#include <Interface_MSG.hpp>
+#include <NCollection_DataMap.hpp>
+#include <OSD_Process.hpp>
+#include <Quantity_Date.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 #include <cstdio>
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<TCollection_HAsciiString>> thedic;

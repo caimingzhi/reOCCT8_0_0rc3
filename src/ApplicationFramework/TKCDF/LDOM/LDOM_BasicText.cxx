@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_BasicText.hxx>
-#include <LDOM_MemManager.hxx>
-#include <LDOM_CharacterData.hxx>
+#include <LDOM_BasicText.hpp>
+#include <LDOM_MemManager.hpp>
+#include <LDOM_CharacterData.hpp>
 
 //=================================================================================================
 

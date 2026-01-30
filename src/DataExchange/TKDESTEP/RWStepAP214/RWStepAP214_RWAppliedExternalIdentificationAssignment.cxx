@@ -15,17 +15,17 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWAppliedExternalIdentificationAssignment.pxx"
-#include <StepAP214_AppliedExternalIdentificationAssignment.hxx>
-#include <StepAP214_ExternalIdentificationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_IdentificationRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWAppliedExternalIdentificationAssignment.hpp"
+#include <StepAP214_AppliedExternalIdentificationAssignment.hpp>
+#include <StepAP214_ExternalIdentificationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_IdentificationRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

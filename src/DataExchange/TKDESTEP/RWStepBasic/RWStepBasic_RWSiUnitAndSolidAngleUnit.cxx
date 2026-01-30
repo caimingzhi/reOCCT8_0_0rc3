@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWSiUnitAndSolidAngleUnit.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiPrefix.hxx>
-#include <StepBasic_SiUnitAndSolidAngleUnit.hxx>
-#include <StepBasic_SiUnitName.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWSiUnitAndSolidAngleUnit.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiPrefix.hpp>
+#include <StepBasic_SiUnitAndSolidAngleUnit.hpp>
+#include <StepBasic_SiUnitName.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
-#include "RWStepBasic_RWSiUnitName.pxx"
-#include "RWStepBasic_RWSiPrefix.pxx"
+#include "RWStepBasic_RWSiUnitName.hpp"
+#include "RWStepBasic_RWSiPrefix.hpp"
 
 RWStepBasic_RWSiUnitAndSolidAngleUnit::RWStepBasic_RWSiUnitAndSolidAngleUnit() = default;
 

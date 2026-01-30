@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SessionPilot.hxx>
-#include <IFSelect_SignCounter.hxx>
-#include <IFSelect_WorkLibrary.hxx>
-#include <IFSelect_WorkSession.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Standard_Macro.hxx>
+#include <IFSelect_SessionPilot.hpp>
+#include <IFSelect_SignCounter.hpp>
+#include <IFSelect_WorkLibrary.hpp>
+#include <IFSelect_WorkSession.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SessionPilot, IFSelect_Activator)

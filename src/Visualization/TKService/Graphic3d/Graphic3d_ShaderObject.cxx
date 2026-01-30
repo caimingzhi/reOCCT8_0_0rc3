@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ShaderObject.hxx>
+#include <Graphic3d_ShaderObject.hpp>
 
-#include <Graphic3d_GraphicDriver.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Protection.hxx>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Protection.hpp>
 
 #include <atomic>
 

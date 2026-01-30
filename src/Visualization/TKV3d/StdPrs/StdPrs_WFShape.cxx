@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_WFShape.hxx>
+#include <StdPrs_WFShape.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <OSD_Parallel.hxx>
-#include <StdPrs_Isolines.hxx>
-#include <StdPrs_ShapeTool.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <OSD_Parallel.hpp>
+#include <StdPrs_Isolines.hpp>
+#include <StdPrs_ShapeTool.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 #include <mutex>
 

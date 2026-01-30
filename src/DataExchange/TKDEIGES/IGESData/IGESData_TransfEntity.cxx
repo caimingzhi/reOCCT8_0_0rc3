@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_GTrsf.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_TransfEntity, IGESData_IGESEntity)
 

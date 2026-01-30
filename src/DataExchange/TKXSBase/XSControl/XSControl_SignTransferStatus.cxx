@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSControl_SignTransferStatus.hxx>
-#include <XSControl_TransferReader.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSControl_SignTransferStatus.hpp>
+#include <XSControl_TransferReader.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_SignTransferStatus, IFSelect_Signature)
 

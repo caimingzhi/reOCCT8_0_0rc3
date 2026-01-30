@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepFill_LocationLaw.hxx>
-#include <BRepFill_SectionPlacement.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_SectionPlacement.hxx>
-#include <gp_Trsf.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepFill_LocationLaw.hpp>
+#include <BRepFill_SectionPlacement.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomConvert_CompCurveToBSplineCurve.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_SectionPlacement.hpp>
+#include <gp_Trsf.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 static double SearchParam(const occ::handle<BRepFill_LocationLaw>& Law,
                           const int                                Ind,

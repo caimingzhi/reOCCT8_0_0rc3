@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTools_History.hxx>
+#include <BRepTools_History.hpp>
 
-#include <TopExp.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <TopExp.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 // Implement the OCCT RTTI for the type.
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_History, Standard_Transient)

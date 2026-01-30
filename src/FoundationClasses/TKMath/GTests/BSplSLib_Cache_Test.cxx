@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplSLib.hxx>
-#include <BSplSLib_Cache.hxx>
+#include <BSplSLib.hpp>
+#include <BSplSLib_Cache.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
 
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <gtest/gtest.h>
 

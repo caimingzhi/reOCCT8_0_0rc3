@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <IGESGraph_TextFontDef.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <IGESGraph_TextFontDef.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_TextDisplayTemplate, IGESData_IGESEntity)
 

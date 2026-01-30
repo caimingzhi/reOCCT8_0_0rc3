@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepGProp.hxx>
-#include <GProp_GProps.hxx>
-#include <Message_Msg.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeFix_FixSmallSolid.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Builder.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepGProp.hpp>
+#include <GProp_GProps.hpp>
+#include <Message_Msg.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeFix_FixSmallSolid.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Builder.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_FixSmallSolid, ShapeFix_Root)
 

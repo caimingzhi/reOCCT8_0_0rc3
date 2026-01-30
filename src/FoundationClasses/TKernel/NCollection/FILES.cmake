@@ -3,76 +3,76 @@ set(OCCT_NCollection_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_NCollection_FILES
   NCollection_AccAllocator.cxx
-  NCollection_AccAllocator.hxx
-  NCollection_AliasedArray.hxx
+  NCollection_AccAllocator.hpp
+  NCollection_AliasedArray.hpp
   NCollection_AlignedAllocator.cxx
-  NCollection_AlignedAllocator.hxx
-  NCollection_Allocator.hxx
-  NCollection_Array1.hxx
-  NCollection_Array2.hxx
+  NCollection_AlignedAllocator.hpp
+  NCollection_Allocator.hpp
+  NCollection_Array1.hpp
+  NCollection_Array2.hpp
   NCollection_BaseAllocator.cxx
-  NCollection_BaseAllocator.hxx
+  NCollection_BaseAllocator.hpp
   NCollection_BaseList.cxx
-  NCollection_BaseList.hxx
+  NCollection_BaseList.hpp
   NCollection_BaseMap.cxx
-  NCollection_BaseMap.hxx
+  NCollection_BaseMap.hpp
   NCollection_BasePointerVector.cxx
-  NCollection_BasePointerVector.hxx
+  NCollection_BasePointerVector.hpp
   NCollection_BaseSequence.cxx
-  NCollection_BaseSequence.hxx
-  NCollection_Buffer.hxx
-  NCollection_CellFilter.hxx
-  NCollection_DataMap.hxx
-  NCollection_DefaultHasher.hxx
-  NCollection_DefineAlloc.hxx
-  NCollection_DefineHasher.hxx
-  NCollection_DoubleMap.hxx
-  NCollection_DynamicArray.hxx
-  NCollection_EBTree.hxx
+  NCollection_BaseSequence.hpp
+  NCollection_Buffer.hpp
+  NCollection_CellFilter.hpp
+  NCollection_DataMap.hpp
+  NCollection_DefaultHasher.hpp
+  NCollection_DefineAlloc.hpp
+  NCollection_DefineHasher.hpp
+  NCollection_DoubleMap.hpp
+  NCollection_DynamicArray.hpp
+  NCollection_EBTree.hpp
   NCollection_Haft.h
-  NCollection_Handle.hxx
-  NCollection_HArray1.hxx
-  NCollection_HArray2.hxx
+  NCollection_Handle.hpp
+  NCollection_HArray1.hpp
+  NCollection_HArray2.hpp
   NCollection_HeapAllocator.cxx
-  NCollection_HeapAllocator.hxx
-  NCollection_HSequence.hxx
+  NCollection_HeapAllocator.hpp
+  NCollection_HSequence.hpp
   NCollection_IncAllocator.cxx
-  NCollection_IncAllocator.hxx
-  NCollection_IndexedDataMap.hxx
-  NCollection_IndexedIterator.hxx
-  NCollection_IndexedMap.hxx
-  NCollection_Iterator.hxx
-  NCollection_Lerp.hxx
-  NCollection_List.hxx
-  NCollection_ListNode.hxx
-  NCollection_LocalArray.hxx
-  NCollection_Map.hxx
-  NCollection_MapAlgo.hxx
-  NCollection_Mat3.hxx
-  NCollection_Mat4.hxx
-  NCollection_OccAllocator.hxx
+  NCollection_IncAllocator.hpp
+  NCollection_IndexedDataMap.hpp
+  NCollection_IndexedIterator.hpp
+  NCollection_IndexedMap.hpp
+  NCollection_Iterator.hpp
+  NCollection_Lerp.hpp
+  NCollection_List.hpp
+  NCollection_ListNode.hpp
+  NCollection_LocalArray.hpp
+  NCollection_Map.hpp
+  NCollection_MapAlgo.hpp
+  NCollection_Mat3.hpp
+  NCollection_Mat4.hpp
+  NCollection_OccAllocator.hpp
   NCollection_Primes.cxx
-  NCollection_Primes.hxx
-  NCollection_Sequence.hxx
-  NCollection_Shared.hxx
-  NCollection_SparseArray.hxx
+  NCollection_Primes.hpp
+  NCollection_Sequence.hpp
+  NCollection_Shared.hpp
+  NCollection_SparseArray.hpp
   NCollection_SparseArrayBase.cxx
-  NCollection_SparseArrayBase.hxx
-  NCollection_StlIterator.hxx
-  NCollection_String.hxx
-  NCollection_TListIterator.hxx
-  NCollection_TListNode.hxx
-  NCollection_UBTree.hxx
-  NCollection_UBTreeFiller.hxx
-  NCollection_UtfIterator.hxx
-  NCollection_UtfIterator.lxx
-  NCollection_UtfString.hxx
-  NCollection_UtfString.lxx
+  NCollection_SparseArrayBase.hpp
+  NCollection_StlIterator.hpp
+  NCollection_String.hpp
+  NCollection_TListIterator.hpp
+  NCollection_TListNode.hpp
+  NCollection_UBTree.hpp
+  NCollection_UBTreeFiller.hpp
+  NCollection_UtfIterator.hpp
+  NCollection_UtfIterator_1.hpp
+  NCollection_UtfString.hpp
+  NCollection_UtfString_1.hpp
   NCollection_UtfString.cxx
-  NCollection_Vec2.hxx
-  NCollection_Vec3.hxx
-  NCollection_Vec4.hxx
-  NCollection_Vector.hxx
+  NCollection_Vec2.hpp
+  NCollection_Vec3.hpp
+  NCollection_Vec4.hpp
+  NCollection_Vector.hpp
   NCollection_WinHeapAllocator.cxx
-  NCollection_WinHeapAllocator.hxx
+  NCollection_WinHeapAllocator.hpp
 )

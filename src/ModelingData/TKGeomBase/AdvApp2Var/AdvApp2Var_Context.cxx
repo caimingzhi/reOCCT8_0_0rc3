@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_ApproxF2var.hxx>
-#include <AdvApp2Var_Context.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <AdvApp2Var_ApproxF2var.hpp>
+#include <AdvApp2Var_Context.hpp>
+#include <Standard_ConstructionError.hpp>
 
 // Calculation of parameters
 static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& nbpnts, int& ndgjac)

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Shape.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Shape.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Shape, TDataStd_GenericEmpty)
 

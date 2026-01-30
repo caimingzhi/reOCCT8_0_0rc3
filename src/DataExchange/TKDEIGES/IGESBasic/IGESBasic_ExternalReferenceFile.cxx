@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_ExternalReferenceFile.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESBasic_ExternalReferenceFile.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_ExternalReferenceFile, IGESData_IGESEntity)
 

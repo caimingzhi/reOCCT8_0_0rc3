@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_ChildIterator.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Identifier.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_NameType.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamingTool.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_Selector.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_List.hxx>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Identifier.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_NameType.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamingTool.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_Selector.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_List.hpp>
 
 // #define MDTV_DEB_SEL
 #ifdef OCCT_DEBUG_SEL
   // #define MDTV_DEB_BNP
-  #include <TopExp_Explorer.hxx>
-  #include <TCollection_AsciiString.hxx>
-  #include <TNaming_Tool.hxx>
-  #include <BRep_Tool.hxx>
-  #include <TopoDS.hxx>
-  #include <TNaming_UsedShapes.hxx>
+  #include <TopExp_Explorer.hpp>
+  #include <TCollection_AsciiString.hpp>
+  #include <TNaming_Tool.hpp>
+  #include <BRep_Tool.hpp>
+  #include <TopoDS.hpp>
+  #include <TNaming_UsedShapes.hpp>
 
 void PrintEntry(const TDF_Label& label, const bool allLevels)
 {
@@ -59,7 +59,7 @@ void PrintEntry(const TDF_Label& label, const bool allLevels)
   }
 }
 
-  #include <BRepTools.hxx>
+  #include <BRepTools.hpp>
 
 static void Write(const TopoDS_Shape& shape, const char* filename)
 {
@@ -90,10 +90,10 @@ static void Write(const TopoDS_Shape& shape, const char* filename)
 
 #define ORIENTATION_DSOPT
 #ifdef ORIENTATION_DSOPT
-  #include <NCollection_Map.hxx>
-  #include <TDF_ChildIDIterator.hxx>
-  #include <TNaming_Tool.hxx>
-  #include <TNaming_Iterator.hxx>
+  #include <NCollection_Map.hpp>
+  #include <TDF_ChildIDIterator.hpp>
+  #include <TNaming_Tool.hpp>
+  #include <TNaming_Iterator.hpp>
 
 //==========================================================================================
 inline static void MapOfOrientedShapes(const TopoDS_Shape& S, NCollection_Map<TopoDS_Shape>& M)

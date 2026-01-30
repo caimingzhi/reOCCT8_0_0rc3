@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Tensor.hxx>
-#include <math_Matrix.hxx>
+#include <GeomFill_Tensor.hpp>
+#include <math_Matrix.hpp>
 
 GeomFill_Tensor::GeomFill_Tensor(const int NbRow, const int NbCol, const int NbMat)
     : Tab(1, NbRow * NbMat * NbCol),

@@ -19,10 +19,10 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <gp_Ax3.hxx>
-#include <gp_Trsf.hxx>
-#include <IntAna_Quadric.hxx>
-#include <ElSLib.hxx>
+#include <gp_Ax3.hpp>
+#include <gp_Trsf.hpp>
+#include <IntAna_Quadric.hpp>
+#include <ElSLib.hpp>
 
 //----------------------------------------------------------------------
 //--

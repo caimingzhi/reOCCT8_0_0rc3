@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtkTools_ShapePicker.hxx>
-#include <IVtkTools_ShapeObject.hxx>
-#include <IVtkVTK_View.hxx>
+#include <IVtkTools_ShapePicker.hpp>
+#include <IVtkTools_ShapeObject.hpp>
+#include <IVtkVTK_View.hpp>
 
 // prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER

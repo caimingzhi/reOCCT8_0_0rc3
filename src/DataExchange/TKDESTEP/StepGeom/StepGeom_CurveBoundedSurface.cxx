@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepGeom_CurveBoundedSurface.hxx>
-#include <StepGeom_Surface.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_CurveBoundedSurface.hpp>
+#include <StepGeom_Surface.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_CurveBoundedSurface, StepGeom_BoundedSurface)
 

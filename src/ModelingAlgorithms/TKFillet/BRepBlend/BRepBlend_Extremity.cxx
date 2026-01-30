@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_Extremity.hxx>
+#include <BRepBlend_Extremity.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <BRepBlend_PointOnRst.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntSurf_Transition.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <BRepBlend_PointOnRst.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntSurf_Transition.hpp>
 
 BRepBlend_Extremity::BRepBlend_Extremity()
     : pt(gp_Pnt(0, 0, 0)),

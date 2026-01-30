@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_NoteComment.hxx>
+#include <XCAFDoc_NoteComment.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_NoteComment, XCAFDoc_Note)
 

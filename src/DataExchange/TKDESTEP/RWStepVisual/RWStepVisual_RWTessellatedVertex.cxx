@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWTessellatedVertex.pxx"
-#include <StepVisual_TessellatedVertex.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepVisual_CoordinatesList.hxx>
-#include <StepShape_VertexPoint.hxx>
-#include <Standard_Integer.hxx>
+#include "RWStepVisual_RWTessellatedVertex.hpp"
+#include <StepVisual_TessellatedVertex.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepVisual_CoordinatesList.hpp>
+#include <StepShape_VertexPoint.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

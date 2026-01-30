@@ -18,16 +18,16 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_Vec.hxx>
+#include <gp_Vec.hpp>
 
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_OutOfRange.hpp>
 
 bool gp_Vec::IsEqual(const gp_Vec& theOther,
                      const double  theLinearTolerance,

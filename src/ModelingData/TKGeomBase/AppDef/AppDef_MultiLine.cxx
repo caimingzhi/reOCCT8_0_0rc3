@@ -14,11 +14,11 @@
 
 // Lpa, le 3/12/91
 
-#include <AppDef_MultiPointConstraint.hxx>
-#include <NCollection_Array1.hxx>
-#include <AppDef_MultiLine.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <AppDef_MultiPointConstraint.hpp>
+#include <NCollection_Array1.hpp>
+#include <AppDef_MultiLine.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
 
 AppDef_MultiLine::AppDef_MultiLine() = default;
 

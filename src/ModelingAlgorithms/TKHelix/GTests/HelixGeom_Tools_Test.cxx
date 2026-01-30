@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixGeom_Tools.hxx>
-#include <HelixGeom_HelixCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
+#include <HelixGeom_Tools.hpp>
+#include <HelixGeom_HelixCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
 
 class HelixGeom_Tools_Test : public ::testing::Test
 {

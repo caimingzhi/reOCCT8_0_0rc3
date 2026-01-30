@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -22,46 +22,46 @@
 
 #include <fstream>
 
-#include <BRepTest.hxx>
+#include <BRepTest.hpp>
 
-#include <DBRep.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Box.hxx>
+#include <DBRep.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Box.hpp>
 
-#include <BRepBuilderAPI.hxx>
-#include <BRepBuilderAPI_FindPlane.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepBuilderAPI_GTransform.hxx>
-#include <BRepBuilderAPI_NurbsConvert.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Mat.hxx>
-#include <gp_GTrsf.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <BRepOffsetAPI_NormalProjection.hxx>
-#include <BRepLib.hxx>
-#include <BRepBndLib.hxx>
-#include <Bnd_Box.hxx>
-#include <Bnd_Box2d.hxx>
-#include <Message.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <BRepTools_WireExplorer.hxx>
+#include <BRepBuilderAPI.hpp>
+#include <BRepBuilderAPI_FindPlane.hpp>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepBuilderAPI_GTransform.hpp>
+#include <BRepBuilderAPI_NurbsConvert.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Mat.hpp>
+#include <gp_GTrsf.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <BRepOffsetAPI_NormalProjection.hpp>
+#include <BRepLib.hpp>
+#include <BRepBndLib.hpp>
+#include <Bnd_Box.hpp>
+#include <Bnd_Box2d.hpp>
+#include <Message.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <BRepTools_WireExplorer.hpp>
 
-#include <GCPnts_QuasiUniformAbscissa.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <ProjLib_ComputeApproxOnPolarSurface.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom_Plane.hxx>
+#include <GCPnts_QuasiUniformAbscissa.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <ProjLib_ComputeApproxOnPolarSurface.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom_Plane.hpp>
 
-#include <Draw_Segment3D.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_MarkerShape.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepTools_PurgeLocations.hxx>
-#include <BRepTools.hxx>
-#include <Standard_Dump.hxx>
+#include <Draw_Segment3D.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_MarkerShape.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepTools_PurgeLocations.hpp>
+#include <BRepTools.hpp>
+#include <Standard_Dump.hpp>
 
 Standard_IMPORT Draw_Viewer dout;
 
@@ -858,10 +858,10 @@ static int IsBoxesInterfered(Draw_Interpretor& theDI, int theNArg, const char** 
 
 //=================================================================================================
 
-#include <BndLib_AddSurface.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <Draw_Segment2D.hxx>
+#include <BndLib_AddSurface.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <Draw_Segment2D.hpp>
 
 static int gbounding(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1003,7 +1003,7 @@ static int precision(Draw_Interpretor& di, int n, const char** a)
 // function : reperage shape (Int lin Shape) + pointe double click   + maxtol
 // purpose  :
 //=======================================================================
-#include <IntCurvesFace_ShapeIntersector.hxx>
+#include <IntCurvesFace_ShapeIntersector.hpp>
 
 static int reperageshape(Draw_Interpretor& di, int narg, const char** a)
 {
@@ -1279,8 +1279,8 @@ static int vecdc(Draw_Interpretor& di, int, const char**)
 // nproject
 //=======================================================================
 
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
 
 static int nproject(Draw_Interpretor& di, int n, const char** a)
 {

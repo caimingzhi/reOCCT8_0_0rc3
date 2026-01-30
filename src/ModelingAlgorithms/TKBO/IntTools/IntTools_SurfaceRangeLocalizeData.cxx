@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_List.hxx>
-#include <IntTools_SurfaceRangeLocalizeData.hxx>
-#include <IntTools_SurfaceRangeSample.hxx>
-#include <Precision.hxx>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_List.hpp>
+#include <IntTools_SurfaceRangeLocalizeData.hpp>
+#include <IntTools_SurfaceRangeSample.hpp>
+#include <Precision.hpp>
 
 IntTools_SurfaceRangeLocalizeData::IntTools_SurfaceRangeLocalizeData()
 {

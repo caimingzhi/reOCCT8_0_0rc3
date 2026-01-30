@@ -13,41 +13,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESCAFControl.hxx>
-#include <IGESCAFControl_Writer.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESGraph_Color.hxx>
-#include <IGESGraph_DefinitionLevel.hxx>
-#include <IGESSolid_Face.hxx>
-#include <IGESBasic_Name.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TCollection_HExtendedString.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Transfer_TransientListBinder.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_LayerTool.hxx>
-#include <XCAFDoc_LengthUnit.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs.hxx>
-#include <XCAFPrs_Style.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <UnitsMethods.hxx>
+#include <IGESCAFControl.hpp>
+#include <IGESCAFControl_Writer.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESGraph_Color.hpp>
+#include <IGESGraph_DefinitionLevel.hpp>
+#include <IGESSolid_Face.hpp>
+#include <IGESBasic_Name.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TCollection_HExtendedString.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Transfer_TransientListBinder.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_LayerTool.hpp>
+#include <XCAFDoc_LengthUnit.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs.hpp>
+#include <XCAFPrs_Style.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <UnitsMethods.hpp>
 
 namespace
 {

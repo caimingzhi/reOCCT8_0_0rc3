@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TPrsStd_AxisDriver.hxx>
-#include <TPrsStd_ConstraintDriver.hxx>
-#include <TPrsStd_Driver.hxx>
-#include <TPrsStd_DriverTable.hxx>
-#include <TPrsStd_GeometryDriver.hxx>
-#include <TPrsStd_NamedShapeDriver.hxx>
-#include <TPrsStd_PlaneDriver.hxx>
-#include <TPrsStd_PointDriver.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TPrsStd_AxisDriver.hpp>
+#include <TPrsStd_ConstraintDriver.hpp>
+#include <TPrsStd_Driver.hpp>
+#include <TPrsStd_DriverTable.hpp>
+#include <TPrsStd_GeometryDriver.hpp>
+#include <TPrsStd_NamedShapeDriver.hpp>
+#include <TPrsStd_PlaneDriver.hpp>
+#include <TPrsStd_PointDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_DriverTable, Standard_Transient)
 

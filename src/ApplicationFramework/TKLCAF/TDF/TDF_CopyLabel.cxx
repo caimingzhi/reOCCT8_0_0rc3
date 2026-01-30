@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_ClosureMode.hxx>
-#include <TDF_ClosureTool.hxx>
-#include <TDF_CopyLabel.hxx>
-#include <TDF_CopyTool.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_ClosureMode.hpp>
+#include <TDF_ClosureTool.hpp>
+#include <TDF_CopyLabel.hpp>
+#include <TDF_CopyTool.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
 
 // The bug concerns the COPY operation of some attributes of a non-self-contained label.
 // The attributes making the label non-self-contained are not involved by the operation.

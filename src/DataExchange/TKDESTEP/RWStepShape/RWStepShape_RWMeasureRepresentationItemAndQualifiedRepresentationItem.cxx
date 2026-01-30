@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWMeasureRepresentationItemAndQualifiedRepresentationItem.pxx"
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_Unit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem.hxx>
-#include <StepShape_ValueQualifier.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWMeasureRepresentationItemAndQualifiedRepresentationItem.hpp"
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_Unit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem.hpp>
+#include <StepShape_ValueQualifier.hpp>
 
 RWStepShape_RWMeasureRepresentationItemAndQualifiedRepresentationItem::
   RWStepShape_RWMeasureRepresentationItemAndQualifiedRepresentationItem() = default;

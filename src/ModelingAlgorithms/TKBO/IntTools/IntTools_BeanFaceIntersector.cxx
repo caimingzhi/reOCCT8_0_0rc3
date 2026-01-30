@@ -11,45 +11,45 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_BeanFaceIntersector.hxx>
+#include <IntTools_BeanFaceIntersector.hpp>
 
-#include <BndLib_Add3dCurve.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtCS.hxx>
-#include <Extrema_GenExtCS.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomInt.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_IntersectionSegment.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_CurveRangeLocalizeData.hxx>
-#include <IntTools_CurveRangeSample.hxx>
-#include <Bnd_Box.hxx>
-#include <NCollection_List.hxx>
-#include <IntTools_SurfaceRangeSample.hxx>
-#include <IntTools_SurfaceRangeLocalizeData.hxx>
-#include <IntTools_Tools.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BndLib_Add3dCurve.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtCS.hpp>
+#include <Extrema_GenExtCS.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomInt.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_IntersectionSegment.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_CurveRangeLocalizeData.hpp>
+#include <IntTools_CurveRangeSample.hpp>
+#include <Bnd_Box.hpp>
+#include <NCollection_List.hpp>
+#include <IntTools_SurfaceRangeSample.hpp>
+#include <IntTools_SurfaceRangeLocalizeData.hpp>
+#include <IntTools_Tools.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 static bool SetEmptyResultRange(const double theParameter, IntTools_MarkedRangeSet& theMarkedRange);
 

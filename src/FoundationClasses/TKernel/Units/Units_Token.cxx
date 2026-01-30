@@ -20,13 +20,13 @@
 //			      to AsciiString.
 //		because the compiler try to destroies the handle of HAsciiString to early
 //		due to inline use probably.
-//		See also Units_Token.lxx
+//		See also Units_Token_1.hpp
 //		Mauvaise construction d'un token par copie
 //		plantatoire sur HP.
 
-#include <Standard_Type.hxx>
-#include <Units_Operators.hxx>
-#include <Units_Token.hxx>
+#include <Standard_Type.hpp>
+#include <Units_Operators.hpp>
+#include <Units_Token.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Token, Standard_Transient)
 

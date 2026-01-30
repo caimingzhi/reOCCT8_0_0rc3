@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Msg.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeFix_Root.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Message_Msg.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeFix_Root.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Root, Standard_Transient)
 

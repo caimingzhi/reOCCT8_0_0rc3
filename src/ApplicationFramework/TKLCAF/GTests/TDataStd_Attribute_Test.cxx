@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_BooleanArray.hxx>
-#include <TDataStd_BooleanList.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDataStd_ExtStringList.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_IntegerList.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_RealList.hxx>
-#include <TDataStd_ReferenceArray.hxx>
-#include <TDataStd_ReferenceList.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDF_Label.hxx>
-#include <Standard_GUID.hxx>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_BooleanArray.hpp>
+#include <TDataStd_BooleanList.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDataStd_ExtStringList.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_IntegerList.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_RealList.hpp>
+#include <TDataStd_ReferenceArray.hpp>
+#include <TDataStd_ReferenceList.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDF_Label.hpp>
+#include <Standard_GUID.hpp>
 
 #include <gtest/gtest.h>
 

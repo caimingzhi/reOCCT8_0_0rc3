@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWNamedUnit.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_NamedUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWNamedUnit.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_NamedUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWNamedUnit::RWStepBasic_RWNamedUnit() = default;
 

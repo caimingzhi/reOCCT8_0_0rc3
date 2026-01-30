@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill.hxx>
-#include <BRepOffsetAPI_MakeEvolved.hxx>
-#include <gp_Ax3.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS.hxx>
+#include <BRepFill.hpp>
+#include <BRepOffsetAPI_MakeEvolved.hpp>
+#include <gp_Ax3.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS.hpp>
 
 static const NCollection_List<TopoDS_Shape> anEmptyList;
 

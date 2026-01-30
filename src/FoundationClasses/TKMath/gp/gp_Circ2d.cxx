@@ -14,11 +14,11 @@
 
 // modif JCV 10/01/91 suite a la deuxieme revue de projet toolkit geometry
 
-#include <gp_Circ2d.hxx>
+#include <gp_Circ2d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Pnt2d.hpp>
 
 void gp_Circ2d::Mirror(const gp_Pnt2d& P) noexcept
 {

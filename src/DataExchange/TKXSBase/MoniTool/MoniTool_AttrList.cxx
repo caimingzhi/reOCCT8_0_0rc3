@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_AttrList.hxx>
-#include <MoniTool_IntVal.hxx>
-#include <MoniTool_RealVal.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <MoniTool_AttrList.hpp>
+#include <MoniTool_IntVal.hpp>
+#include <MoniTool_RealVal.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 MoniTool_AttrList::MoniTool_AttrList() = default;
 

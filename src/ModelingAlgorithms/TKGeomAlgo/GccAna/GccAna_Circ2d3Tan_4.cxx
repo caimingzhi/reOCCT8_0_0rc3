@@ -14,22 +14,22 @@
 
 // cas de 2 cercles concentriques JCT 28/11/97
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccAna_Circ2dBisec.hxx>
-#include <GccAna_CircPnt2dBisec.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccInt_BElips.hxx>
-#include <GccInt_IType.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <NCollection_Array1.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccAna_Circ2dBisec.hpp>
+#include <GccAna_CircPnt2dBisec.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccInt_BElips.hpp>
+#include <GccInt_IType.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <NCollection_Array1.hpp>
 
 static int MaxSol = 20;
 

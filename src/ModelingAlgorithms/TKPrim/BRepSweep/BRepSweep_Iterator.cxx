@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepSweep_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepSweep_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

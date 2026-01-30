@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d.hxx>
-#include <BRepClass3d_SolidExplorer.hxx>
-#include <BRepTools.hxx>
-#include <gp_Pnt.hxx>
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_GTool.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_kpresu.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepTool.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <BRepClass3d.hpp>
+#include <BRepClass3d_SolidExplorer.hpp>
+#include <BRepTools.hpp>
+#include <gp_Pnt.hpp>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_GTool.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_kpresu.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepTool.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceKPB();

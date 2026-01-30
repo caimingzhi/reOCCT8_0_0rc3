@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HeaderSection.hxx>
-#include <HeaderSection_FileDescription.hxx>
-#include <HeaderSection_FileName.hxx>
-#include <HeaderSection_FileSchema.hxx>
-#include <HeaderSection_Protocol.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <RWHeaderSection_GeneralModule.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_UndefinedEntity.hxx>
+#include <HeaderSection.hpp>
+#include <HeaderSection_FileDescription.hpp>
+#include <HeaderSection_FileName.hpp>
+#include <HeaderSection_FileSchema.hpp>
+#include <HeaderSection_Protocol.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <RWHeaderSection_GeneralModule.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_UndefinedEntity.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWHeaderSection_GeneralModule, StepData_GeneralModule)
 

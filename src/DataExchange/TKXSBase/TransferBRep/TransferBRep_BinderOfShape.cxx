@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TransferBRep_BinderOfShape.hxx>
-#include <TransferBRep_ShapeInfo.hxx>
+#include <TransferBRep_BinderOfShape.hpp>
+#include <TransferBRep_ShapeInfo.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TransferBRep_BinderOfShape, Transfer_Binder)
 

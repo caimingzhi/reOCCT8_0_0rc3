@@ -3,15 +3,15 @@ set(OCCT_GeomAdaptor_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomAdaptor_FILES
   GeomAdaptor.cxx
-  GeomAdaptor.hxx
+  GeomAdaptor.hpp
   GeomAdaptor_Curve.cxx
-  GeomAdaptor_Curve.hxx
+  GeomAdaptor_Curve.hpp
   GeomAdaptor_Surface.cxx
-  GeomAdaptor_Surface.hxx
+  GeomAdaptor_Surface.hpp
   GeomAdaptor_SurfaceOfLinearExtrusion.cxx
-  GeomAdaptor_SurfaceOfLinearExtrusion.hxx
+  GeomAdaptor_SurfaceOfLinearExtrusion.hpp
   GeomAdaptor_SurfaceOfRevolution.cxx
-  GeomAdaptor_SurfaceOfRevolution.hxx
+  GeomAdaptor_SurfaceOfRevolution.hpp
   GeomAdaptor_TransformedSurface.cxx
-  GeomAdaptor_TransformedSurface.hxx
+  GeomAdaptor_TransformedSurface.hpp
 )

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_IntParam.hxx>
-#include <Interface_Static.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_IntParam.hpp>
+#include <Interface_Static.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_IntParam, Standard_Transient)
 

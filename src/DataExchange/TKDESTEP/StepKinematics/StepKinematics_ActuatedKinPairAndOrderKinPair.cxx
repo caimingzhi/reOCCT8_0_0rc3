@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_ActuatedKinPairAndOrderKinPair.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepKinematics_KinematicPair.hxx>
-#include <StepKinematics_ActuatedKinematicPair.hxx>
+#include <StepKinematics_ActuatedKinPairAndOrderKinPair.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepKinematics_KinematicPair.hpp>
+#include <StepKinematics_ActuatedKinematicPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ActuatedKinPairAndOrderKinPair,
                            StepKinematics_KinematicPair)

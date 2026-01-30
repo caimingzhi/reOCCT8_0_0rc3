@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
+#include <DDocStd.hpp>
 
-#include <BinDrivers_DocumentStorageDriver.hxx>
-#include <DDF.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TDF_Reference.hxx>
-#include <TDocStd_Modified.hxx>
-#include <TDF_Label.hxx>
-#include <TDocStd_XLink.hxx>
-#include <TDocStd_XLinkIterator.hxx>
-#include <TDocStd_Application.hxx>
-#include <Draw.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF_Tool.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <AIS_InteractiveContext.hxx>
+#include <BinDrivers_DocumentStorageDriver.hpp>
+#include <DDF.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TDF_Reference.hpp>
+#include <TDocStd_Modified.hpp>
+#include <TDF_Label.hpp>
+#include <TDocStd_XLink.hpp>
+#include <TDocStd_XLinkIterator.hpp>
+#include <TDocStd_Application.hpp>
+#include <Draw.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF_Tool.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <AIS_InteractiveContext.hpp>
 // pour propagate
-#include <TDocStd_XLinkTool.hxx>
+#include <TDocStd_XLinkTool.hpp>
 
 // typedef int (* DFBROWSER_CALL)(const occ::handle<TDocStd_Document>&);
 // static DFBROWSER_CALL gDFunc = 0;

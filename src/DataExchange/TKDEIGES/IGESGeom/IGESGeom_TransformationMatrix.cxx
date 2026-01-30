@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <IGESGeom_TransformationMatrix.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <IGESGeom_TransformationMatrix.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_TransformationMatrix, IGESData_TransfEntity)
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_LocalFileSystem.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <Standard_Assert.hxx>
+#include <OSD_LocalFileSystem.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_LocalFileSystem, OSD_FileSystem)
 

@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units.hxx>
+#include <Units.hpp>
 
-#include <Units_Measurement.hxx>
-#include <Units_Quantity.hxx>
-#include <Units_Dimensions.hxx>
-#include <Units_Unit.hxx>
-#include <Units_Lexicon.hxx>
-#include <Units_UnitsLexicon.hxx>
-#include <Units_UnitsDictionary.hxx>
-#include <Units_UnitsSystem.hxx>
-#include <Units_UnitSentence.hxx>
-#include <Units_ShiftedToken.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Units_Operators.hxx>
+#include <Units_Measurement.hpp>
+#include <Units_Quantity.hpp>
+#include <Units_Dimensions.hpp>
+#include <Units_Unit.hpp>
+#include <Units_Lexicon.hpp>
+#include <Units_UnitsLexicon.hpp>
+#include <Units_UnitsDictionary.hpp>
+#include <Units_UnitsSystem.hpp>
+#include <Units_UnitSentence.hpp>
+#include <Units_ShiftedToken.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Units_Operators.hpp>
 
 #include <cstdlib>
 

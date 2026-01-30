@@ -14,12 +14,12 @@
 
 #ifndef _WIN32
 
-  #include <OSD_Directory.hxx>
-  #include <OSD_DirectoryIterator.hxx>
-  #include <OSD_OSDError.hxx>
-  #include <OSD_Path.hxx>
-  #include <OSD_WhoAmI.hxx>
-  #include <TCollection_AsciiString.hxx>
+  #include <OSD_Directory.hpp>
+  #include <OSD_DirectoryIterator.hpp>
+  #include <OSD_OSDError.hpp>
+  #include <OSD_Path.hpp>
+  #include <OSD_WhoAmI.hpp>
+  #include <TCollection_AsciiString.hpp>
 
   #include <dirent.h>
   #include <cstdio>
@@ -199,10 +199,10 @@ int OSD_DirectoryIterator::Error() const
 
   #include <windows.h>
 
-  #include <OSD_DirectoryIterator.hxx>
-  #include <OSD_Path.hxx>
-  #include <TCollection_AsciiString.hxx>
-  #include <TCollection_ExtendedString.hxx>
+  #include <OSD_DirectoryIterator.hpp>
+  #include <OSD_Path.hpp>
+  #include <TCollection_AsciiString.hpp>
+  #include <TCollection_ExtendedString.hpp>
 
   #define _FD ((PWIN32_FIND_DATAW)myData)
 

@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWCurveElementLocation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFEA_CurveElementLocation.hxx>
-#include <StepFEA_FeaParametricPoint.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWCurveElementLocation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFEA_CurveElementLocation.hpp>
+#include <StepFEA_FeaParametricPoint.hpp>
 
 //=================================================================================================
 

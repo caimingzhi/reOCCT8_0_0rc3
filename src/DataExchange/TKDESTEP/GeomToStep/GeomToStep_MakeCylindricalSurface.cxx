@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_CylindricalSurface.hxx>
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <GeomToStep_MakeCylindricalSurface.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_CylindricalSurface.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom_CylindricalSurface.hpp>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <GeomToStep_MakeCylindricalSurface.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_CylindricalSurface.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' une conical_surface de prostep a partir d' une

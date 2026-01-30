@@ -15,15 +15,15 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Standard_Transient.hxx>
-#include <StepBasic_CharacterizedObject.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepRepr_CharacterizedDefinition.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
+#include <Standard_Transient.hpp>
+#include <StepBasic_CharacterizedObject.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepRepr_CharacterizedDefinition.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
 
 //=================================================================================================
 

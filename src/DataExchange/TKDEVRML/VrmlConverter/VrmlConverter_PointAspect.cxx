@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Material.hxx>
-#include <VrmlConverter_PointAspect.hxx>
+#include <Vrml_Material.hpp>
+#include <VrmlConverter_PointAspect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlConverter_PointAspect, Standard_Transient)
 

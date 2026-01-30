@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepVisual_CameraUsage.hxx>
+#include <Standard_Type.hpp>
+#include <StepVisual_CameraUsage.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CameraUsage, StepRepr_RepresentationMap)
 

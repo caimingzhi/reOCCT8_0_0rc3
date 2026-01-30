@@ -3,74 +3,74 @@ set(OCCT_BRepFill_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepFill_FILES
   BRepFill.cxx
-  BRepFill.hxx
+  BRepFill.hpp
   BRepFill_ACRLaw.cxx
-  BRepFill_ACRLaw.hxx
+  BRepFill_ACRLaw.hpp
   BRepFill_AdvancedEvolved.cxx
-  BRepFill_AdvancedEvolved.hxx
+  BRepFill_AdvancedEvolved.hpp
   BRepFill_ApproxSeewing.cxx
-  BRepFill_ApproxSeewing.hxx
+  BRepFill_ApproxSeewing.hpp
   BRepFill_CompatibleWires.cxx
-  BRepFill_CompatibleWires.hxx
-  BRepFill_ComputeCLine.hxx
+  BRepFill_CompatibleWires.hpp
+  BRepFill_ComputeCLine.hpp
   BRepFill_ComputeCLine_0.cxx
   BRepFill_CurveConstraint.cxx
-  BRepFill_CurveConstraint.hxx
+  BRepFill_CurveConstraint.hpp
 
   BRepFill_Draft.cxx
-  BRepFill_Draft.hxx
+  BRepFill_Draft.hpp
   BRepFill_DraftLaw.cxx
-  BRepFill_DraftLaw.hxx
+  BRepFill_DraftLaw.hpp
   BRepFill_Edge3DLaw.cxx
-  BRepFill_Edge3DLaw.hxx
+  BRepFill_Edge3DLaw.hpp
   BRepFill_EdgeFaceAndOrder.cxx
-  BRepFill_EdgeFaceAndOrder.hxx
+  BRepFill_EdgeFaceAndOrder.hpp
   BRepFill_EdgeOnSurfLaw.cxx
-  BRepFill_EdgeOnSurfLaw.hxx
+  BRepFill_EdgeOnSurfLaw.hpp
   BRepFill_Evolved.cxx
-  BRepFill_Evolved.hxx
+  BRepFill_Evolved.hpp
   BRepFill_FaceAndOrder.cxx
-  BRepFill_FaceAndOrder.hxx
+  BRepFill_FaceAndOrder.hpp
   BRepFill_Filling.cxx
-  BRepFill_Filling.hxx
+  BRepFill_Filling.hpp
   BRepFill_Generator.cxx
-  BRepFill_Generator.hxx
-  BRepFill_Generator.lxx
+  BRepFill_Generator.hpp
+  BRepFill_Generator_1.hpp
 
   BRepFill_LocationLaw.cxx
-  BRepFill_LocationLaw.hxx
+  BRepFill_LocationLaw.hpp
   BRepFill_MultiLine.cxx
-  BRepFill_MultiLine.hxx
+  BRepFill_MultiLine.hpp
   BRepFill_NSections.cxx
-  BRepFill_NSections.hxx
+  BRepFill_NSections.hpp
   BRepFill_OffsetAncestors.cxx
-  BRepFill_OffsetAncestors.hxx
+  BRepFill_OffsetAncestors.hpp
   BRepFill_OffsetWire.cxx
-  BRepFill_OffsetWire.hxx
+  BRepFill_OffsetWire.hpp
   BRepFill_Pipe.cxx
-  BRepFill_Pipe.hxx
+  BRepFill_Pipe.hpp
   BRepFill_PipeShell.cxx
-  BRepFill_PipeShell.hxx
+  BRepFill_PipeShell.hpp
   BRepFill_Section.cxx
-  BRepFill_Section.hxx
-  BRepFill_Section.lxx
+  BRepFill_Section.hpp
+  BRepFill_Section_1.hpp
   BRepFill_SectionLaw.cxx
-  BRepFill_SectionLaw.hxx
+  BRepFill_SectionLaw.hpp
   BRepFill_SectionPlacement.cxx
-  BRepFill_SectionPlacement.hxx
+  BRepFill_SectionPlacement.hpp
 
   BRepFill_ShapeLaw.cxx
-  BRepFill_ShapeLaw.hxx
-  BRepFill_ShapeLaw.lxx
+  BRepFill_ShapeLaw.hpp
+  BRepFill_ShapeLaw_1.hpp
   BRepFill_Sweep.cxx
-  BRepFill_Sweep.hxx
-  BRepFill_ThruSectionErrorStatus.hxx
-  BRepFill_TransitionStyle.hxx
+  BRepFill_Sweep.hpp
+  BRepFill_ThruSectionErrorStatus.hpp
+  BRepFill_TransitionStyle.hpp
   BRepFill_TrimEdgeTool.cxx
-  BRepFill_TrimEdgeTool.hxx
+  BRepFill_TrimEdgeTool.hpp
   BRepFill_TrimShellCorner.cxx
-  BRepFill_TrimShellCorner.hxx
+  BRepFill_TrimShellCorner.hpp
   BRepFill_TrimSurfaceTool.cxx
-  BRepFill_TrimSurfaceTool.hxx
-  BRepFill_TypeOfContact.hxx
+  BRepFill_TrimSurfaceTool.hpp
+  BRepFill_TypeOfContact.hpp
 )

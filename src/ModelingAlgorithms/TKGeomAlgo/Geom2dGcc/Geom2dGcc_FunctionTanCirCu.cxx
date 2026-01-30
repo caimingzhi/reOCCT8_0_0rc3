@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_FunctionTanCirCu.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_FunctionTanCirCu.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
 
 //=========================================================================
 //  soit P1 le point sur la courbe Geom2dAdaptor_Curve d abscisse u.      +

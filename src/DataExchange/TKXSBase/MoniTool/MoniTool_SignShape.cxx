@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_SignShape.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_HShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <MoniTool_SignShape.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_HShape.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_SignShape, MoniTool_SignText)
 

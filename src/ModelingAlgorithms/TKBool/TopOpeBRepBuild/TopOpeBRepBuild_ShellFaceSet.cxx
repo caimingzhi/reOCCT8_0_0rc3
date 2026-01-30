@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_ShellFaceSet.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_ShellFaceSet.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceCHK();

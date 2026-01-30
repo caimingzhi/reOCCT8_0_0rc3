@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_DefaultDeltaOnModification.hxx>
-#include <TDF_DefaultDeltaOnRemoval.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TDataXtd_Presentation.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <TPrsStd_DriverTable.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_DefaultDeltaOnModification.hpp>
+#include <TDF_DefaultDeltaOnRemoval.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TDataXtd_Presentation.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <TPrsStd_DriverTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_AISPresentation, TDF_Attribute)
 

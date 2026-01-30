@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_Workspace.hpp>
 
-#include <OpenGl_Aspects.hxx>
-#include <OpenGl_Element.hxx>
-#include <OpenGl_GlCore15.hxx>
-#include <OpenGl_RenderFilter.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_Window.hxx>
+#include <OpenGl_Aspects.hpp>
+#include <OpenGl_Element.hpp>
+#include <OpenGl_GlCore15.hpp>
+#include <OpenGl_RenderFilter.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_Window.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Workspace, Standard_Transient)
 

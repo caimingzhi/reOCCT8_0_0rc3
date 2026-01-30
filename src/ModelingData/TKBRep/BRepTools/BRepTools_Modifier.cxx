@@ -16,35 +16,35 @@
 
 // IFV 04.06.99 - PRO18974 - processing of INTERNAL shapes.
 
-#include <BRepTools_Modification.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRepTools_Modification.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
-#include <Geom2d_Line.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <BRepTools.hxx>
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <gp_Pnt.hxx>
+#include <Geom2d_Line.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <BRepTools.hpp>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <gp_Pnt.hpp>
 
-#include <gp.hxx>
+#include <gp.hpp>
 
-#include <Standard_NullObject.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Geom_Surface.hxx>
+#include <Standard_NullObject.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Geom_Surface.hpp>
 
 static void SetShapeFlags(const TopoDS_Shape& theInSh, TopoDS_Shape& theOutSh);
 

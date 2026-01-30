@@ -16,13 +16,13 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDimen_NewGeneralNote.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDimen_NewGeneralNote.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_NewGeneralNote, IGESData_IGESEntity)
 

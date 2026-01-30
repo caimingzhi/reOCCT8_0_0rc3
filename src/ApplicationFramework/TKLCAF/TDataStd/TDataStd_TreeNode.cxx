@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_TreeNode.hxx>
+#include <TDataStd_TreeNode.hpp>
 
-#include <TDF_Label.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
+#include <TDF_Label.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_TreeNode, TDF_Attribute)
 

@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_Dimension.hxx>
+#include <XCAFDoc_Dimension.hpp>
 
-#include <TDF_RelocationTable.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <XCAFDoc.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TNaming_Builder.hxx>
-#include <TopoDS.hxx>
-#include <XCAFDimTolObjects_DimensionObject.hxx>
-#include <TNaming_Tool.hxx>
-#include <TDataStd_Name.hxx>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <XCAFDoc.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TNaming_Builder.hpp>
+#include <TopoDS.hpp>
+#include <XCAFDimTolObjects_DimensionObject.hpp>
+#include <TNaming_Tool.hpp>
+#include <TDataStd_Name.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(XCAFDoc_Dimension, TDataStd_GenericEmpty)
 

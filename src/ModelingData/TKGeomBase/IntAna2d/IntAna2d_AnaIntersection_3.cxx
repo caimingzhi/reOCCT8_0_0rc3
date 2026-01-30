@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
+#include <ElCLib.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
 
 //=================================================================================================
 

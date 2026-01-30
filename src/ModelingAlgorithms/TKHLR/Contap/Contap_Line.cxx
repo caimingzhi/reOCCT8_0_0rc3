@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Contap_Line.hxx>
-#include <Contap_Point.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <IntSurf_LineOn2S.hxx>
-#include <Standard_DomainError.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Contap_Line.hpp>
+#include <Contap_Point.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <IntSurf_LineOn2S.hpp>
+#include <Standard_DomainError.hpp>
 
 Contap_Line::Contap_Line()
 {

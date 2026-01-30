@@ -3,11 +3,11 @@ set(OCCT_BinMFunction_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMFunction_FILES
   BinMFunction.cxx
-  BinMFunction.hxx
+  BinMFunction.hpp
   BinMFunction_FunctionDriver.cxx
-  BinMFunction_FunctionDriver.hxx
+  BinMFunction_FunctionDriver.hpp
   BinMFunction_GraphNodeDriver.cxx
-  BinMFunction_GraphNodeDriver.hxx
+  BinMFunction_GraphNodeDriver.hpp
   BinMFunction_ScopeDriver.cxx
-  BinMFunction_ScopeDriver.hxx
+  BinMFunction_ScopeDriver.hpp
 )

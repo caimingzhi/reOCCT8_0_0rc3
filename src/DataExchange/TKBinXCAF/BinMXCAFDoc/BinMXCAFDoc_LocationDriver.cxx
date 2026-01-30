@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd.hxx>
-#include <BinMXCAFDoc_LocationDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinTools_LocationSet.hxx>
-#include <BinTools_ShapeReader.hxx>
-#include <BinTools_ShapeWriter.hxx>
-#include <Message_Messenger.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TopLoc_Datum3D.hxx>
-#include <TopLoc_Location.hxx>
-#include <XCAFDoc_Location.hxx>
+#include <BinMDataStd.hpp>
+#include <BinMXCAFDoc_LocationDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinTools_LocationSet.hpp>
+#include <BinTools_ShapeReader.hpp>
+#include <BinTools_ShapeWriter.hpp>
+#include <Message_Messenger.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TopLoc_Datum3D.hpp>
+#include <TopLoc_Location.hpp>
+#include <XCAFDoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_LocationDriver, BinMDF_ADriver)
 
-// #include <Precision.hxx>
+// #include <Precision.hpp>
 //=================================================================================================
 
 BinMXCAFDoc_LocationDriver::BinMXCAFDoc_LocationDriver(

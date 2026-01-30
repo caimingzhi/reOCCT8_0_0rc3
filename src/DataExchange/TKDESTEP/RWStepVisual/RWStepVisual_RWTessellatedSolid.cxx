@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWTessellatedSolid.pxx"
-#include <StepVisual_TessellatedSolid.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepVisual_TessellatedStructuredItem.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepShape_ManifoldSolidBrep.hxx>
+#include "RWStepVisual_RWTessellatedSolid.hpp"
+#include <StepVisual_TessellatedSolid.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepVisual_TessellatedStructuredItem.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepShape_ManifoldSolidBrep.hpp>
 
 //=================================================================================================
 

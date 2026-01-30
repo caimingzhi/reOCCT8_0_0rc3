@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLProp.hxx>
+#include <BRepLProp.hpp>
 
-#include <BRepLProp_CLProps.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopoDS_Edge.hxx>
+#include <BRepLProp_CLProps.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopoDS_Edge.hpp>
 
 //=================================================================================================
 

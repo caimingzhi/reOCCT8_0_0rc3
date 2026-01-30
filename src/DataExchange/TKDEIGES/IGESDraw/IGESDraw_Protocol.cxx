@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESDraw_Protocol.hxx>
+#include <IGESDraw_Protocol.hpp>
 
-#include <IGESDimen.hxx>
-#include <IGESDimen_Protocol.hxx>
-#include <IGESDraw_CircArraySubfigure.hxx>
-#include <IGESDraw_Drawing.hxx>
-#include <IGESDraw_DrawingWithRotation.hxx>
-#include <IGESDraw_LabelDisplay.hxx>
-#include <IGESDraw_NetworkSubfigure.hxx>
-#include <IGESDraw_NetworkSubfigureDef.hxx>
-#include <IGESDraw_PerspectiveView.hxx>
-#include <IGESDraw_Planar.hxx>
-#include <IGESDraw_RectArraySubfigure.hxx>
-#include <IGESDraw_SegmentedViewsVisible.hxx>
-#include <IGESDraw_View.hxx>
-#include <IGESDraw_ViewsVisible.hxx>
-#include <IGESDraw_ViewsVisibleWithAttr.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDimen.hpp>
+#include <IGESDimen_Protocol.hpp>
+#include <IGESDraw_CircArraySubfigure.hpp>
+#include <IGESDraw_Drawing.hpp>
+#include <IGESDraw_DrawingWithRotation.hpp>
+#include <IGESDraw_LabelDisplay.hpp>
+#include <IGESDraw_NetworkSubfigure.hpp>
+#include <IGESDraw_NetworkSubfigureDef.hpp>
+#include <IGESDraw_PerspectiveView.hpp>
+#include <IGESDraw_Planar.hpp>
+#include <IGESDraw_RectArraySubfigure.hpp>
+#include <IGESDraw_SegmentedViewsVisible.hpp>
+#include <IGESDraw_View.hpp>
+#include <IGESDraw_ViewsVisible.hpp>
+#include <IGESDraw_ViewsVisibleWithAttr.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_Protocol, IGESData_Protocol)
 

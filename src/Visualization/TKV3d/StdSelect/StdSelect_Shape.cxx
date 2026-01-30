@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdSelect_Shape.hxx>
+#include <StdSelect_Shape.hpp>
 
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_Shape, PrsMgr_PresentableObject)
 

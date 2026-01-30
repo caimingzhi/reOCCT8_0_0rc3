@@ -14,28 +14,28 @@
 // abv 06.01.99 fix of misprint
 //: p6 abv 26.02.99: make ConvertToPeriodic() return Null if nothing done
 
-#include <ShapeCustom_Surface.hxx>
+#include <ShapeCustom_Surface.hpp>
 
-#include <ElSLib.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <ShapeAnalysis_Geom.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
+#include <ElSLib.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <ShapeAnalysis_Geom.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

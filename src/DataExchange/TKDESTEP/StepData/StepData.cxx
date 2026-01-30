@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData.hxx>
+#include <StepData.hpp>
 
-#include <MoniTool_Macros.hxx>
-#include <Interface_Statics.hxx>
-#include <StepData_DefaultGeneral.hxx>
-#include <StepData_FileProtocol.hxx>
-#include <StepData_Protocol.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Statics.hpp>
+#include <StepData_DefaultGeneral.hpp>
+#include <StepData_FileProtocol.hpp>
+#include <StepData_Protocol.hpp>
 
 StaticHandle(StepData_Protocol, proto);
 // svv #2: StaticHandle(StepData_DefaultGeneral,stmod);

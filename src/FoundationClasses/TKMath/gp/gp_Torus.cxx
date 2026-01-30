@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Torus.hxx>
+#include <gp_Torus.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_DimensionError.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_DimensionError.hpp>
 
 void gp_Torus::Coefficients(NCollection_Array1<double>& theCoef) const
 {

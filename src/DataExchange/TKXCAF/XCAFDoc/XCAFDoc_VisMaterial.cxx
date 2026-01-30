@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_VisMaterial.hxx>
+#include <XCAFDoc_VisMaterial.hpp>
 
-#include <Graphic3d_Aspects.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <Standard_GUID.hxx>
-#include <TDF_Label.hxx>
-#include <XCAFPrs_Texture.hxx>
+#include <Graphic3d_Aspects.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <Standard_GUID.hpp>
+#include <TDF_Label.hpp>
+#include <XCAFPrs_Texture.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_VisMaterial, TDF_Attribute)
 

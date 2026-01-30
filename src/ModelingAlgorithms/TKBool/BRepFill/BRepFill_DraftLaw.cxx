@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill_DraftLaw.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomFill_LocationDraft.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRepFill_DraftLaw.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomFill_LocationDraft.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_DraftLaw, BRepFill_Edge3DLaw)
 

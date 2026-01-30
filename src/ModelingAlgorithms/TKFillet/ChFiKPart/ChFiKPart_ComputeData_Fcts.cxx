@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiKPart_ComputeData_Fcts.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <gp_Pnt2d.hxx>
+#include <ChFiKPart_ComputeData_Fcts.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <gp_Pnt2d.hpp>
 
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
 
-#include <Standard_NotImplemented.hxx>
+#include <Standard_NotImplemented.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
 
 //=================================================================================================
 

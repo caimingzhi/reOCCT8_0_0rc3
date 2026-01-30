@@ -14,6 +14,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApprox_Cutting.hxx>
+#include <AdvApprox_Cutting.hpp>
 
 AdvApprox_Cutting::~AdvApprox_Cutting() = default;

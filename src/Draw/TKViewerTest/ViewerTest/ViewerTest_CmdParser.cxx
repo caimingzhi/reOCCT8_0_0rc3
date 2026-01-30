@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest_CmdParser.hxx>
+#include <ViewerTest_CmdParser.hpp>
 
-#include <Draw.hxx>
-#include <Message.hxx>
-#include <ViewerTest.hxx>
+#include <Draw.hpp>
+#include <Message.hpp>
+#include <ViewerTest.hpp>
 
 #include <algorithm>
 #include <iostream>

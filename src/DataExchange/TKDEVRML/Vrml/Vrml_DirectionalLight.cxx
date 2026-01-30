@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_DirectionalLight.hxx>
+#include <Vrml_DirectionalLight.hpp>
 
 Vrml_DirectionalLight::Vrml_DirectionalLight()
     : myOnOff(true),

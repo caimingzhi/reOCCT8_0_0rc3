@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_ModelHealer.hxx>
-#include <BRepMesh_Deflection.hxx>
-#include <BRepMesh_FaceChecker.hxx>
-#include <BRepMesh_EdgeDiscret.hxx>
-#include <IMeshData_Face.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <OSD_Parallel.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRepMesh_ModelHealer.hpp>
+#include <BRepMesh_Deflection.hpp>
+#include <BRepMesh_FaceChecker.hpp>
+#include <BRepMesh_EdgeDiscret.hpp>
+#include <IMeshData_Face.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <OSD_Parallel.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Vertex.hpp>
 
 #ifdef DEBUG_HEALER
-  #include <BRepBuilderAPI_MakePolygon.hxx>
-  #include <BRepTools.hxx>
-  #include <BRep_Builder.hxx>
-  #include <TopoDS_Compound.hxx>
+  #include <BRepBuilderAPI_MakePolygon.hpp>
+  #include <BRepTools.hpp>
+  #include <BRep_Builder.hpp>
+  #include <TopoDS_Compound.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelHealer, IMeshTools_ModelAlgo)

@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_EigenValuesSearcher.hxx>
+#include <math_EigenValuesSearcher.hpp>
 
-#include <StdFail_NotDone.hxx>
+#include <StdFail_NotDone.hpp>
 
 namespace
 {

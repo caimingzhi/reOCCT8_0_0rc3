@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepFill_ShapeLaw.hxx>
-#include <BRepLProp.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#include <GeomFill_EvolvedSection.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomFill_UniformSection.hxx>
-#include <Law_Function.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Integer.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepFill_ShapeLaw.hpp>
+#include <BRepLProp.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert_CompCurveToBSplineCurve.hpp>
+#include <GeomFill_EvolvedSection.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomFill_UniformSection.hpp>
+#include <Law_Function.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Integer.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_ShapeLaw, BRepFill_SectionLaw)
 

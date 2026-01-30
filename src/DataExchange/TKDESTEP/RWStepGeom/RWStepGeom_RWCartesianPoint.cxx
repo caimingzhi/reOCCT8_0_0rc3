@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include "RWStepGeom_RWCartesianPoint.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include "RWStepGeom_RWCartesianPoint.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 // #include <NCollection_HArray1<double>.hxx>
 RWStepGeom_RWCartesianPoint::RWStepGeom_RWCartesianPoint() = default;

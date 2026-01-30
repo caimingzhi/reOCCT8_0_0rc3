@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRepTools.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TNaming_CopyShape.hxx>
-#include <TNaming_Translator.hxx>
-#include <TopLoc_Datum3D.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_TCompound.hxx>
-#include <TopoDS_TCompSolid.hxx>
-#include <TopoDS_TShape.hxx>
-#include <TopoDS_TShell.hxx>
-#include <TopoDS_TSolid.hxx>
-#include <TopoDS_TWire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRepTools.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TNaming_CopyShape.hpp>
+#include <TNaming_Translator.hpp>
+#include <TopLoc_Datum3D.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_TCompound.hpp>
+#include <TopoDS_TCompSolid.hpp>
+#include <TopoDS_TShape.hpp>
+#include <TopoDS_TShell.hpp>
+#include <TopoDS_TSolid.hpp>
+#include <TopoDS_TWire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 //=================================================================================================
 

@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Quantity_ColorRGBA.hxx>
+#include <Quantity_ColorRGBA.hpp>
 
-#include <NCollection_Vec4.hxx>
-#include <Standard_Dump.hxx>
+#include <NCollection_Vec4.hpp>
+#include <Standard_Dump.hpp>
 
 #include <algorithm>
 

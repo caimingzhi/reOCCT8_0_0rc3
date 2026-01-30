@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_TileSampler.hxx>
-#include <Graphic3d_RenderingParams.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_TileSampler.hpp>
+#include <Graphic3d_RenderingParams.hpp>
 
 // define to debug algorithm values
 // #define RAY_TRACE_PRINT_DEBUG_INFO

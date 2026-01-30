@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT_Arc.hxx>
-#include <MAT_Node.hxx>
-#include <NCollection_Sequence.hxx>
-#include <MAT_Zone.hxx>
-#include <Standard_Type.hxx>
+#include <MAT_Arc.hpp>
+#include <MAT_Node.hpp>
+#include <NCollection_Sequence.hpp>
+#include <MAT_Zone.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Zone, Standard_Transient)
 

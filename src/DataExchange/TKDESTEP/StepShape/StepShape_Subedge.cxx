@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepShape_Subedge.hxx>
-#include <StepShape_Vertex.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_Subedge.hpp>
+#include <StepShape_Vertex.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_Subedge, StepShape_Edge)
 

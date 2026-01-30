@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc_VisMaterialToolDriver.hxx>
+#include <BinMXCAFDoc_VisMaterialToolDriver.hpp>
 
-#include <XCAFDoc_VisMaterialTool.hxx>
+#include <XCAFDoc_VisMaterialTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_VisMaterialToolDriver, BinMDF_ADriver)
 

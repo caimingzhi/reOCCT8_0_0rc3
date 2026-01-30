@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_TypedValue.hxx>
-#include <OSD_Path.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <Interface_TypedValue.hpp>
+#include <OSD_Path.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(Interface_TypedValue, MoniTool_TypedValue)

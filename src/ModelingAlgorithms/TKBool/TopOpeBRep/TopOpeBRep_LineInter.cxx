@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRep_LineInter.hxx>
+#include <TopOpeBRep_LineInter.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_ALineToWLine.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_IType.hxx>
-#include <IntPatch_Line.hxx>
-#include <IntPatch_RLine.hxx>
-#include <NCollection_Sequence.hxx>
-#include <IntPatch_WLine.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep.hxx>
-#include <TopOpeBRep_Bipoint.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRep_WPointInter.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_ALineToWLine.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_IType.hpp>
+#include <IntPatch_Line.hpp>
+#include <IntPatch_RLine.hpp>
+#include <NCollection_Sequence.hpp>
+#include <IntPatch_WLine.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep.hpp>
+#include <TopOpeBRep_Bipoint.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRep_WPointInter.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
-#include <BRepAdaptor_Surface.hxx>
+#include <BRepAdaptor_Surface.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRep_GetcontextALWLNBP(int&);

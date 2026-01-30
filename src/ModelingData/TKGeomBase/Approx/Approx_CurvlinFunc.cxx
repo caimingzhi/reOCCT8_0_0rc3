@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_CurvlinFunc.hxx>
+#include <Approx_CurvlinFunc.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GeomLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GeomLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Approx_CurvlinFunc, Standard_Transient)
 
 #ifdef OCCT_DEBUG_CHRONO
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 static OSD_Chronometer chr_uparam;
 Standard_EXPORT int    uparam_count;
 Standard_EXPORT double t_uparam;

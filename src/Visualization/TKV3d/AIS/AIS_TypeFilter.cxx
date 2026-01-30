@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_TypeFilter.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_Type.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_TypeFilter.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TypeFilter, SelectMgr_Filter)
 

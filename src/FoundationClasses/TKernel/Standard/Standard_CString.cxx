@@ -18,9 +18,9 @@
 //          resizing of a Map or copying an item from a Map to another Map.
 //        - three methods of HashCoding of strings converted to uppercase.
 
-#include <Standard_CLocaleSentry.hxx>
-#include <Standard_CString.hxx>
-#include <Standard_Type.hxx>
+#include <Standard_CLocaleSentry.hpp>
+#include <Standard_CString.hpp>
+#include <Standard_Type.hpp>
 #include <cstring>
 #include <cstdarg>
 

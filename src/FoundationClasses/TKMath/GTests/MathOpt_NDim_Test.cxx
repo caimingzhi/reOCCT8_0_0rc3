@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_Powell.hxx>
-#include <MathOpt_BFGS.hxx>
+#include <MathOpt_Powell.hpp>
+#include <MathOpt_BFGS.hpp>
 
 #include <cmath>
 

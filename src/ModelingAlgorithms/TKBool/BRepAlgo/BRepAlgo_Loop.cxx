@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRepAlgo_FaceRestrictor.hxx>
-#include <BRepAlgo_Loop.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Ax2.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_Sequence.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRepAlgo_FaceRestrictor.hpp>
+#include <BRepAlgo_Loop.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Ax2.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_Sequence.hpp>
 
 #include <cstdio>
 // #define OCCT_DEBUG_ALGO

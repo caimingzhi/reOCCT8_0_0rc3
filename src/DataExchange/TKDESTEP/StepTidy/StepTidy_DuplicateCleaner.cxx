@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_DuplicateCleaner.hxx>
+#include <StepTidy_DuplicateCleaner.hpp>
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <StepTidy_Axis2Placement3dReducer.pxx>
-#include <StepTidy_CartesianPointReducer.pxx>
-#include <StepTidy_DirectionReducer.pxx>
-#include <StepTidy_LineReducer.pxx>
-#include <StepTidy_VectorReducer.pxx>
-#include <StepTidy_PlaneReducer.pxx>
-#include <StepTidy_CircleReducer.pxx>
-#include <StepData_StepModel.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <StepTidy_Axis2Placement3dReducer.hpp>
+#include <StepTidy_CartesianPointReducer.hpp>
+#include <StepTidy_DirectionReducer.hpp>
+#include <StepTidy_LineReducer.hpp>
+#include <StepTidy_VectorReducer.hpp>
+#include <StepTidy_PlaneReducer.hpp>
+#include <StepTidy_CircleReducer.hpp>
+#include <StepData_StepModel.hpp>
 #include <utility>
 
 //==================================================================================================

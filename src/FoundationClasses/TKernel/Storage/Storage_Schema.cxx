@@ -12,24 +12,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Type.hxx>
-#include <Storage.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_Data.hxx>
-#include <Storage_DefaultCallBack.hxx>
-#include <Storage_CallBack.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_Root.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Storage_Schema.hxx>
-#include <Storage_StreamWriteError.hxx>
-#include <Storage_TypeData.hxx>
-#include <Storage_TypedCallBack.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Type.hpp>
+#include <Storage.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_Data.hpp>
+#include <Storage_DefaultCallBack.hpp>
+#include <Storage_CallBack.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_Root.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Storage_Schema.hpp>
+#include <Storage_StreamWriteError.hpp>
+#include <Storage_TypeData.hpp>
+#include <Storage_TypedCallBack.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(Storage_Schema, Standard_Transient)
@@ -37,11 +37,11 @@ IMPLEMENT_STANDARD_RTTIEXT(Storage_Schema, Standard_Transient)
 #define DATATYPE_MIGRATION
 
 #ifdef DATATYPE_MIGRATION
-  #include <NCollection_DataMap.hxx>
-  #include <OSD_File.hxx>
-  #include <OSD_Path.hxx>
-  #include <OSD_Protection.hxx>
-  #include <OSD_Environment.hxx>
+  #include <NCollection_DataMap.hpp>
+  #include <OSD_File.hpp>
+  #include <OSD_Path.hpp>
+  #include <OSD_Protection.hpp>
+  #include <OSD_Environment.hpp>
 
 typedef NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>
   DataMapOfAStringAString;

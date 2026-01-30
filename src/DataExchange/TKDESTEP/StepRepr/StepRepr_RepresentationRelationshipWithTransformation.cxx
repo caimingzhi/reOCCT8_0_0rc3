@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationRelationshipWithTransformation.hxx>
-#include <StepRepr_Transformation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationRelationshipWithTransformation.hpp>
+#include <StepRepr_Transformation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_RepresentationRelationshipWithTransformation,
                            StepRepr_ShapeRepresentationRelationship)

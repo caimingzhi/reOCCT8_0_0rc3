@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_FrameStatsPrs.hxx>
+#include <OpenGl_FrameStatsPrs.hpp>
 
-#include <OpenGl_View.hxx>
-#include <OpenGl_IndexBuffer.hxx>
-#include <OpenGl_VertexBuffer.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_View.hpp>
+#include <OpenGl_IndexBuffer.hpp>
+#include <OpenGl_VertexBuffer.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_Workspace.hpp>
 
-#include <Graphic3d_ArrayOfTriangles.hxx>
+#include <Graphic3d_ArrayOfTriangles.hpp>
 
 namespace
 {

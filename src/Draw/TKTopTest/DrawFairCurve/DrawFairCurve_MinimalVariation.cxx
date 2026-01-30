@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawFairCurve_MinimalVariation.hxx>
-#include <FairCurve_MinimalVariation.hxx>
-#include <Standard_Type.hxx>
+#include <DrawFairCurve_MinimalVariation.hpp>
+#include <FairCurve_MinimalVariation.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawFairCurve_MinimalVariation, DrawFairCurve_Batten)
 

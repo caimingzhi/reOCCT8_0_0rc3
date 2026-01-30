@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_RunoutZoneOrientation.hxx>
+#include <StepDimTol_RunoutZoneOrientation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_RunoutZoneOrientation, Standard_Transient)
 

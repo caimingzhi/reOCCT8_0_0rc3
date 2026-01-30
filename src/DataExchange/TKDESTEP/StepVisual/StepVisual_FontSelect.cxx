@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_ExternallyDefinedTextFont.hxx>
-#include <StepVisual_FontSelect.hxx>
-#include <StepVisual_PreDefinedTextFont.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_ExternallyDefinedTextFont.hpp>
+#include <StepVisual_FontSelect.hpp>
+#include <StepVisual_PreDefinedTextFont.hpp>
 
 StepVisual_FontSelect::StepVisual_FontSelect() = default;
 

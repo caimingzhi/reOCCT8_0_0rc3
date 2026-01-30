@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_ProductType.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_ProductType.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductType, StepBasic_ProductRelatedProductCategory)
 

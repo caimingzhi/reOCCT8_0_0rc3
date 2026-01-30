@@ -15,17 +15,17 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Application.hxx>
+#include <TObj_Application.hpp>
 
-#include <Standard_SStream.hxx>
-#include <Standard_Dump.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Message_Msg.hxx>
-#include <Message_MsgFile.hxx>
-#include <Resource_Manager.hxx>
+#include <Standard_SStream.hpp>
+#include <Standard_Dump.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Message_Msg.hpp>
+#include <Message_MsgFile.hpp>
+#include <Resource_Manager.hpp>
 #include <cstdio>
 
-#include "TObj_TObj_msg.pxx"
+#include "TObj_TObj_msg.hpp"
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_Application, TDocStd_Application)
 

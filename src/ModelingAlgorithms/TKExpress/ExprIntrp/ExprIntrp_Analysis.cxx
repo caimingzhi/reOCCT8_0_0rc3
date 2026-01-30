@@ -16,10 +16,10 @@
 
 #define _ExprIntrp_Analysis_SourceFile
 
-#include <Expr_NamedUnknown.hxx>
-#include <ExprIntrp_Analysis.hxx>
-#include <ExprIntrp_Generator.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_NamedUnknown.hpp>
+#include <ExprIntrp_Analysis.hpp>
+#include <ExprIntrp_Generator.hpp>
+#include <TCollection_AsciiString.hpp>
 
 ExprIntrp_Analysis::ExprIntrp_Analysis() = default;
 

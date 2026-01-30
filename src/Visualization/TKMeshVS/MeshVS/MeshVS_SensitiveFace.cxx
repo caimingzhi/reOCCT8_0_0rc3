@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_SensitiveFace.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <MeshVS_SensitiveFace.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveFace, Select3D_SensitiveFace)
 

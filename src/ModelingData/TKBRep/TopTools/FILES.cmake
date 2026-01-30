@@ -3,15 +3,15 @@ set(OCCT_TopTools_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopTools_FILES
   TopTools.cxx
-  TopTools.hxx
+  TopTools.hpp
 
-  TopTools_FormatVersion.hxx
+  TopTools_FormatVersion.hpp
 
   TopTools_LocationSet.cxx
-  TopTools_LocationSet.hxx
-  TopTools_LocationSetPtr.hxx
+  TopTools_LocationSet.hpp
+  TopTools_LocationSetPtr.hpp
 
-  TopTools_ShapeMapHasher.hxx
+  TopTools_ShapeMapHasher.hpp
   TopTools_ShapeSet.cxx
-  TopTools_ShapeSet.hxx
+  TopTools_ShapeSet.hpp
 )

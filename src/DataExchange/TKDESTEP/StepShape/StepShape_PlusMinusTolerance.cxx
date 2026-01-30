@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_PlusMinusTolerance.hxx>
-#include <StepShape_ToleranceMethodDefinition.hxx>
+#include <StepShape_PlusMinusTolerance.hpp>
+#include <StepShape_ToleranceMethodDefinition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_PlusMinusTolerance, Standard_Transient)
 

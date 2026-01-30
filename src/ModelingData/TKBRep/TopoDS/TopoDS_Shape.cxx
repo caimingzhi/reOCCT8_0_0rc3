@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_Shape.hxx>
+#include <TopoDS_Shape.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Dump.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_TShape.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Dump.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_TShape.hpp>
 
 //=================================================================================================
 

@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_ApproxLine.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntSurf_LineOn2S.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Standard_Type.hxx>
+#include <BRepApprox_ApproxLine.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntSurf_LineOn2S.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepApprox_ApproxLine, Standard_Transient)
 

@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_SelfIntersection.hxx>
+#include <BRepExtrema_SelfIntersection.hpp>
 
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
 
 //=================================================================================================
 

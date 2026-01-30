@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaMoistureAbsorption.hxx>
-#include <StepFEA_SymmetricTensor23d.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaMoistureAbsorption.hpp>
+#include <StepFEA_SymmetricTensor23d.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaMoistureAbsorption,
                            StepFEA_FeaMaterialPropertyRepresentationItem)

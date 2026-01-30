@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_SlidingCurvePair.hxx>
+#include <StepKinematics_SlidingCurvePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_SlidingCurvePair, StepKinematics_PlanarCurvePair)
 

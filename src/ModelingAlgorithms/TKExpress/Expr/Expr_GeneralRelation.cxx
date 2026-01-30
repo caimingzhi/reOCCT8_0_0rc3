@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_GeneralRelation.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_GeneralRelation.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_GeneralRelation, Standard_Transient)

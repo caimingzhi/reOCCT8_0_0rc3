@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDimen_FlagNote.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDimen_FlagNote.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_FlagNote, IGESData_IGESEntity)
 

@@ -20,31 +20,31 @@
   #define GL_SILENCE_DEPRECATION
 #endif
 
-#include <OpenGl_Context.hxx>
+#include <OpenGl_Context.hpp>
 
-#include <OpenGl_ArbTBO.hxx>
-#include <OpenGl_ArbIns.hxx>
-#include <OpenGl_ArbDbg.hxx>
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_ExtGS.hxx>
-#include <OpenGl_ArbSamplerObject.hxx>
-#include <OpenGl_ArbTexBindless.hxx>
-#include <OpenGl_GlCore46.hxx>
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_FrameStats.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_TextureSetPairIterator.hxx>
-#include <OpenGl_Workspace.hxx>
-#include <OpenGl_Aspects.hxx>
+#include <OpenGl_ArbTBO.hpp>
+#include <OpenGl_ArbIns.hpp>
+#include <OpenGl_ArbDbg.hpp>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_ExtGS.hpp>
+#include <OpenGl_ArbSamplerObject.hpp>
+#include <OpenGl_ArbTexBindless.hpp>
+#include <OpenGl_GlCore46.hpp>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_FrameStats.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_TextureSetPairIterator.hpp>
+#include <OpenGl_Workspace.hpp>
+#include <OpenGl_Aspects.hpp>
 
-#include <Aspect_Handle.hxx>
-#include <Graphic3d_TransformUtils.hxx>
-#include <Graphic3d_RenderingParams.hxx>
-#include <Image_SupportedFormats.hxx>
-#include <Message_Messenger.hxx>
-#include <NCollection_Vector.hxx>
-#include <Standard_ProgramError.hxx>
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Aspect_Handle.hpp>
+#include <Graphic3d_TransformUtils.hpp>
+#include <Graphic3d_RenderingParams.hpp>
+#include <Image_SupportedFormats.hpp>
+#include <Message_Messenger.hpp>
+#include <NCollection_Vector.hpp>
+#include <Standard_ProgramError.hpp>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 #if defined(_WIN32) && defined(max)
   #undef max

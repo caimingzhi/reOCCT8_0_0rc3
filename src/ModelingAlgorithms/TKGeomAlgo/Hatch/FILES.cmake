@@ -3,12 +3,12 @@ set(OCCT_Hatch_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Hatch_FILES
   Hatch_Hatcher.cxx
-  Hatch_Hatcher.hxx
-  Hatch_Hatcher.lxx
+  Hatch_Hatcher.hpp
+  Hatch_Hatcher_1.hpp
   Hatch_Line.cxx
-  Hatch_Line.hxx
-  Hatch_LineForm.hxx
+  Hatch_Line.hpp
+  Hatch_LineForm.hpp
   Hatch_Parameter.cxx
-  Hatch_Parameter.hxx
+  Hatch_Parameter.hpp
 
 )

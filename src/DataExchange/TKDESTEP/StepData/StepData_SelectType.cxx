@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_TypeMismatch.hxx>
-#include <StepData_PDescr.hxx>
-#include <StepData_SelectInt.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepData_SelectNamed.hxx>
-#include <StepData_SelectReal.hxx>
-#include <StepData_SelectType.hxx>
-#include <StepData_UndefinedEntity.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_TypeMismatch.hpp>
+#include <StepData_PDescr.hpp>
+#include <StepData_SelectInt.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepData_SelectNamed.hpp>
+#include <StepData_SelectReal.hpp>
+#include <StepData_SelectType.hpp>
+#include <StepData_UndefinedEntity.hpp>
 
 bool StepData_SelectType::Matches(const occ::handle<Standard_Transient>& ent) const
 {

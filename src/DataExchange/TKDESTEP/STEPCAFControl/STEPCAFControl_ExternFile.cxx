@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPCAFControl_ExternFile.hxx>
-#include <TDF_Label.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <STEPCAFControl_ExternFile.hpp>
+#include <TDF_Label.hpp>
+#include <XSControl_WorkSession.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPCAFControl_ExternFile, Standard_Transient)
 

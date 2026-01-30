@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_CommonPoint.hxx>
-#include <Standard_DomainError.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <ChFiDS_CommonPoint.hpp>
+#include <Standard_DomainError.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

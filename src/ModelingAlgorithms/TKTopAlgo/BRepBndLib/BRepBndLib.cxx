@@ -12,38 +12,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBndLib.hxx>
-#include <Geom_Surface.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <BRepTools.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Plane.hxx>
-#include <Extrema_ExtSS.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBndLib.hpp>
+#include <Geom_Surface.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <BRepTools.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Plane.hpp>
+#include <Extrema_ExtSS.hpp>
+#include <GeomAdaptor_Surface.hpp>
 //
 static bool CanUseEdges(const Adaptor3d_Surface& BS);
 //

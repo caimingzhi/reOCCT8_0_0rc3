@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurve_MyImpParToolOfIntImpConicParConic.hxx>
+#include <IntCurve_MyImpParToolOfIntImpConicParConic.hpp>
 
-#include <IntCurve_IConicTool.hxx>
-#include <IntCurve_PConic.hxx>
-#include <IntCurve_PConicTool.hxx>
+#include <IntCurve_IConicTool.hpp>
+#include <IntCurve_PConic.hpp>
+#include <IntCurve_PConicTool.hpp>
 
-#include <gp_Vec2d.hxx>
+#include <gp_Vec2d.hpp>
 
 IntCurve_MyImpParToolOfIntImpConicParConic::IntCurve_MyImpParToolOfIntImpConicParConic(
   const IntCurve_IConicTool& ITool,

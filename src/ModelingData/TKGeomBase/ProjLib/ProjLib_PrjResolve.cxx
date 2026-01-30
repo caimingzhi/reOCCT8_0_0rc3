@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <ProjLib_PrjFunc.hxx>
-#include <ProjLib_PrjResolve.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <ProjLib_PrjFunc.hpp>
+#include <ProjLib_PrjResolve.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 ProjLib_PrjResolve::ProjLib_PrjResolve(const Adaptor3d_Curve&   C,
                                        const Adaptor3d_Surface& S,

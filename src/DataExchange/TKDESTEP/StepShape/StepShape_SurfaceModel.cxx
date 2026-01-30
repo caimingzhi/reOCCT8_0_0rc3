@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepShape_FaceBasedSurfaceModel.hxx>
-#include <StepShape_ShellBasedSurfaceModel.hxx>
-#include <StepShape_SurfaceModel.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepShape_FaceBasedSurfaceModel.hpp>
+#include <StepShape_ShellBasedSurfaceModel.hpp>
+#include <StepShape_SurfaceModel.hpp>
 
 StepShape_SurfaceModel::StepShape_SurfaceModel() = default;
 

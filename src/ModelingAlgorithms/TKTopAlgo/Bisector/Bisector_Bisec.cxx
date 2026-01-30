@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bisector.hxx>
-#include <Bisector_Bisec.hxx>
-#include <Bisector_BisecAna.hxx>
-#include <Bisector_BisecCC.hxx>
-#include <Bisector_BisecPC.hxx>
-#include <Bisector_Curve.hxx>
-#include <GCE2d_MakeSegment.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Point.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Bisector.hpp>
+#include <Bisector_Bisec.hpp>
+#include <Bisector_BisecAna.hpp>
+#include <Bisector_BisecCC.hpp>
+#include <Bisector_BisecPC.hpp>
+#include <Bisector_Curve.hpp>
+#include <GCE2d_MakeSegment.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Point.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
 
 #ifdef OCCT_DEBUG
 #endif

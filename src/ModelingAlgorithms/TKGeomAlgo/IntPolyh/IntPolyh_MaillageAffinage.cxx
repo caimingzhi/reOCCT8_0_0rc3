@@ -23,27 +23,27 @@
 //  Modified by skv - Thu Sep 25 17:42:42 2003 OCC567
 //  modified by ofv Thu Apr  8 14:58:13 2004 fip
 
-#include <Adaptor3d_Surface.hxx>
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Bnd_Tools.hxx>
-#include <BVH_BoxSet.hxx>
-#include <BVH_LinearBuilder.hxx>
-#include <BVH_Traverse.hxx>
-#include <gp_Pnt.hxx>
-#include <IntPolyh_MaillageAffinage.hxx>
-#include <IntPolyh_Point.hxx>
-#include <IntPolyh_SectionLine.hxx>
-#include <IntPolyh_StartPoint.hxx>
-#include <IntPolyh_Tools.hxx>
-#include <IntPolyh_Triangle.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Bnd_Tools.hpp>
+#include <BVH_BoxSet.hpp>
+#include <BVH_LinearBuilder.hpp>
+#include <BVH_Traverse.hpp>
+#include <gp_Pnt.hpp>
+#include <IntPolyh_MaillageAffinage.hpp>
+#include <IntPolyh_Point.hpp>
+#include <IntPolyh_SectionLine.hpp>
+#include <IntPolyh_StartPoint.hpp>
+#include <IntPolyh_Tools.hpp>
+#include <IntPolyh_Triangle.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
 #include <algorithm>
-#include <NCollection_IndexedDataMap.hxx>
+#include <NCollection_IndexedDataMap.hpp>
 
 typedef NCollection_IndexedDataMap<int, NCollection_List<int>>
   IntPolyh_IndexedDataMapOfIntegerListOfInteger;

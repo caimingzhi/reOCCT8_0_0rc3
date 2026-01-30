@@ -15,14 +15,14 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWNonManifoldSurfaceShapeRepresentation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepShape_NonManifoldSurfaceShapeRepresentation.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWNonManifoldSurfaceShapeRepresentation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepShape_NonManifoldSurfaceShapeRepresentation.hpp>
 
 //=================================================================================================
 

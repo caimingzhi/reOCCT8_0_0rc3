@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_LineReducer.pxx>
+#include <StepTidy_LineReducer.hpp>
 
-#include <StepShape_EdgeCurve.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
-#include <StepGeom_SurfaceCurve.hxx>
-#include <StepRepr_DefinitionalRepresentation.hxx>
-#include <StepGeom_SeamCurve.hxx>
-#include <StepRepr_RepresentationContext.hxx>
+#include <StepShape_EdgeCurve.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <StepGeom_SurfaceCurve.hpp>
+#include <StepRepr_DefinitionalRepresentation.hpp>
+#include <StepGeom_SeamCurve.hpp>
+#include <StepRepr_RepresentationContext.hpp>
 
 class StepTidy_LineReducerTest : public StepTidy_BaseTestFixture
 {

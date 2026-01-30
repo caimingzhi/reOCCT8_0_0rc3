@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_GeometricToleranceWithMaximumTolerance.hxx>
+#include <StepDimTol_GeometricToleranceWithMaximumTolerance.hpp>
 
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepDimTol_GeometricToleranceTarget.hxx>
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithMaximumTolerance,
                            StepDimTol_GeometricToleranceWithModifiers)

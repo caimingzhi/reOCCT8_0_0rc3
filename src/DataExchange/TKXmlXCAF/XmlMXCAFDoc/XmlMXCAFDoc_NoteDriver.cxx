@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <XCAFDoc_Note.hxx>
-#include <XmlMXCAFDoc_NoteDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <XCAFDoc_Note.hpp>
+#include <XmlMXCAFDoc_NoteDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(UserName, "user_name")

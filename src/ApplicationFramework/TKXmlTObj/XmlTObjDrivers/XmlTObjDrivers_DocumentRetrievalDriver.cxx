@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <XmlTObjDrivers_DocumentRetrievalDriver.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlTObjDrivers.hxx>
+#include <XmlTObjDrivers_DocumentRetrievalDriver.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlTObjDrivers.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_DocumentRetrievalDriver,
                            XmlLDrivers_DocumentRetrievalDriver)

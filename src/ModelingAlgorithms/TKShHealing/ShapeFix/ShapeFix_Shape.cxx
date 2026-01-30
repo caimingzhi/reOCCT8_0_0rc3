@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <Message_ProgressScope.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeFix.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <ShapeFix_Shell.hxx>
-#include <ShapeFix_Solid.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <Standard_Type.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <Message_ProgressScope.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeFix.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <ShapeFix_Shell.hpp>
+#include <ShapeFix_Solid.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_Type.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Shape, ShapeFix_Root)
 

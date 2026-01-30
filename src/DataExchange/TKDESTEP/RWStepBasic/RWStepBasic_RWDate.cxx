@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWDate.pxx"
-#include <StepBasic_Date.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWDate.hpp"
+#include <StepBasic_Date.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWDate::RWStepBasic_RWDate() = default;
 

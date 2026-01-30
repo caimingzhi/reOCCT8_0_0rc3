@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_ExternalSources.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_ExternalSources.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
 
 // ExternalSources exploits the results stored in the Graph on Sharings
 // Either the "Sharings" of entities noted by GetFromEntity and GetFromIter

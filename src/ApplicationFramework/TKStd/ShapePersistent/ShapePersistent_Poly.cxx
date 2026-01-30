@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapePersistent_Poly.hxx>
-#include <ShapePersistent_HArray1.hxx>
+#include <ShapePersistent_Poly.hpp>
+#include <ShapePersistent_HArray1.hpp>
 
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
 
 void ShapePersistent_Poly::pPolygon2D::PChildren(
   StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const

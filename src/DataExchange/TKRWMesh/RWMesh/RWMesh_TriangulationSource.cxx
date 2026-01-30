@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_TriangulationSource.hxx>
+#include <RWMesh_TriangulationSource.hpp>
 
-#include <RWMesh_TriangulationReader.hxx>
+#include <RWMesh_TriangulationReader.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_TriangulationSource, Poly_Triangulation)
 

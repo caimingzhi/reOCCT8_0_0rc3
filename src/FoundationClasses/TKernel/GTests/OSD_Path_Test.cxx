@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Path.hxx>
-#include <OSD_Process.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_Path.hpp>
+#include <OSD_Process.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 

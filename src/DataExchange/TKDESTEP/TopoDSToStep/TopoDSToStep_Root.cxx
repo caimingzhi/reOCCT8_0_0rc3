@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDSToStep_Root.hxx>
+#include <TopoDSToStep_Root.hpp>
 
 TopoDSToStep_Root::TopoDSToStep_Root()
 {

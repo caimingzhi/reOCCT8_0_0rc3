@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData_SelectArrReal.hxx>
+#include <StepData_SelectArrReal.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_SelectArrReal, StepData_SelectNamed)
 

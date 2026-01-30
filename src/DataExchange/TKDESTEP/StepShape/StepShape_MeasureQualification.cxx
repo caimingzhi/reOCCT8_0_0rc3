@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepShape_MeasureQualification.hxx>
-#include <StepShape_ValueQualifier.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepShape_MeasureQualification.hpp>
+#include <StepShape_ValueQualifier.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_MeasureQualification, Standard_Transient)
 

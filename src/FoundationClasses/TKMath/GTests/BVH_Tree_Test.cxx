@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_BinaryTree.hxx>
-#include <BVH_Box.hxx>
-#include <Precision.hxx>
+#include <BVH_BinaryTree.hpp>
+#include <BVH_Box.hpp>
+#include <Precision.hpp>
 
 TEST(BVH_TreeTest, DefaultConstructor)
 {

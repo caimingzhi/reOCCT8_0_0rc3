@@ -17,14 +17,14 @@
 //--------------------------------------------------------------------
 // rln 11.05.2000 BUC60660
 
-#include <IGESDefs_GenericData.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDefs_GenericData.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_GenericData, IGESData_IGESEntity)
 

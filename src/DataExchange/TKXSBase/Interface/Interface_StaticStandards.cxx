@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Static.hxx>
+#include <Interface_Static.hpp>
 
-#include <Message_MsgFile.hxx>
+#include <Message_MsgFile.hpp>
 
-#include "../XSMessage/XSMessage_XSTEP_us.pxx"
+#include "../XSMessage/XSMessage_XSTEP_us.hpp"
 
 static int THE_Interface_Static_deja = 0;
 

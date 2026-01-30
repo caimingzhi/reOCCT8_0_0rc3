@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWCalendarDate.pxx"
-#include <StepBasic_CalendarDate.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWCalendarDate.hpp"
+#include <StepBasic_CalendarDate.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWCalendarDate::RWStepBasic_RWCalendarDate() = default;
 

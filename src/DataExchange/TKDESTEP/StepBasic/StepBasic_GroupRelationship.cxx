@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_Group.hxx>
-#include <StepBasic_GroupRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_Group.hpp>
+#include <StepBasic_GroupRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_GroupRelationship, Standard_Transient)
 

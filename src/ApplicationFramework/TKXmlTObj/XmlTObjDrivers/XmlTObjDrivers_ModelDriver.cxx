@@ -15,16 +15,16 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include "XmlTObjDrivers_ModelDriver.hxx"
+#include "XmlTObjDrivers_ModelDriver.hpp"
 
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
-#include <XmlObjMgt.hxx>
-#include <Standard_GUID.hxx>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
+#include <XmlObjMgt.hpp>
+#include <Standard_GUID.hpp>
 
-#include <TObj_TModel.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_Assistant.hxx>
+#include <TObj_TModel.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_Assistant.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_ModelDriver, XmlMDF_ADriver)
 

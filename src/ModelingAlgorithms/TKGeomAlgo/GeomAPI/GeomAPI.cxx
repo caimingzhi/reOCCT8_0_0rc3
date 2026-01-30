@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomAPI.hxx>
+#include <GeomAPI.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Pln.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Pln.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

@@ -3,32 +3,32 @@ set(OCCT_GeomLib_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomLib_FILES
   GeomLib.cxx
-  GeomLib.hxx
+  GeomLib.hpp
 
   GeomLib_Check2dBSplineCurve.cxx
-  GeomLib_Check2dBSplineCurve.hxx
-  GeomLib_Check2dBSplineCurve.lxx
+  GeomLib_Check2dBSplineCurve.hpp
+  GeomLib_Check2dBSplineCurve_1.hpp
   GeomLib_CheckCurveOnSurface.cxx
-  GeomLib_CheckCurveOnSurface.hxx
+  GeomLib_CheckCurveOnSurface.hpp
   GeomLib_CheckBSplineCurve.cxx
-  GeomLib_CheckBSplineCurve.hxx
-  GeomLib_CheckBSplineCurve.lxx
+  GeomLib_CheckBSplineCurve.hpp
+  GeomLib_CheckBSplineCurve_1.hpp
   GeomLib_DenominatorMultiplier.cxx
-  GeomLib_DenominatorMultiplier.hxx
-  GeomLib_DenominatorMultiplierPtr.hxx
+  GeomLib_DenominatorMultiplier.hpp
+  GeomLib_DenominatorMultiplierPtr.hpp
   GeomLib_Interpolate.cxx
-  GeomLib_Interpolate.hxx
-  GeomLib_Interpolate.lxx
-  GeomLib_InterpolationErrors.hxx
+  GeomLib_Interpolate.hpp
+  GeomLib_Interpolate_1.hpp
+  GeomLib_InterpolationErrors.hpp
   GeomLib_IsPlanarSurface.cxx
-  GeomLib_IsPlanarSurface.hxx
+  GeomLib_IsPlanarSurface.hpp
   GeomLib_LogSample.cxx
-  GeomLib_LogSample.hxx
+  GeomLib_LogSample.hpp
   GeomLib_MakeCurvefromApprox.cxx
-  GeomLib_MakeCurvefromApprox.hxx
-  GeomLib_MakeCurvefromApprox.lxx
+  GeomLib_MakeCurvefromApprox.hpp
+  GeomLib_MakeCurvefromApprox_1.hpp
   GeomLib_PolyFunc.cxx
-  GeomLib_PolyFunc.hxx
+  GeomLib_PolyFunc.hpp
   GeomLib_Tool.cxx
-  GeomLib_Tool.hxx
+  GeomLib_Tool.hpp
 )

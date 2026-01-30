@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomConvert_FuncConeLSDist.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Ax3.hxx>
-#include <math_Vector.hxx>
-#include <ElSLib.hxx>
+#include <GeomConvert_FuncConeLSDist.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Ax3.hpp>
+#include <math_Vector.hpp>
+#include <ElSLib.hpp>
 
 //=================================================================================================
 

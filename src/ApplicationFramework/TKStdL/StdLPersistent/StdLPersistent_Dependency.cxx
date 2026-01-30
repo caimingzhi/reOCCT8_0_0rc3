@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_Dependency.hxx>
+#include <StdLPersistent_Dependency.hpp>
 
 static void ImportName(const occ::handle<TDataStd_Expression>& theAttribute,
                        const TCollection_ExtendedString&       theName)

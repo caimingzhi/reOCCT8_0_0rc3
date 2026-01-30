@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dConvert_BSplineCurveToBezierCurve.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dConvert_BSplineCurveToBezierCurve.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

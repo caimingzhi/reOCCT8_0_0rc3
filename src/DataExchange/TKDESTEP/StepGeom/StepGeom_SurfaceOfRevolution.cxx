@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_SurfaceOfRevolution.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_SurfaceOfRevolution.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_SurfaceOfRevolution, StepGeom_SweptSurface)
 

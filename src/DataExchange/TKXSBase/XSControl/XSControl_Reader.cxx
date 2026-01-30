@@ -14,27 +14,27 @@
 // pdn 26.02.99 added initializing of compound in function OneShape
 //:   gka 14.04.99: S4136: apply scaling
 
-#include <BRep_Builder.hxx>
-#include <IFSelect_Functions.hxx>
-#include <Interface_ShareFlags.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <Standard_Transient.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Transfer_IteratorOfProcessForTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <Transfer_ActorOfTransientProcess.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_Reader.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <BRep_Builder.hpp>
+#include <IFSelect_Functions.hpp>
+#include <Interface_ShareFlags.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <Standard_Transient.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <Transfer_ActorOfTransientProcess.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_Reader.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_WorkSession.hpp>
 
-// #include <ShapeCustom.hxx>
-// #include <ShapeAlgo.hxx>
-// #include <ShapeAlgo_AlgoContainer.hxx>
+// #include <ShapeCustom.hpp>
+// #include <ShapeAlgo.hpp>
+// #include <ShapeAlgo_AlgoContainer.hpp>
 //=================================================================================================
 
 XSControl_Reader::XSControl_Reader()

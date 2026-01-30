@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData.hxx>
-#include <IGESData_DefaultGeneral.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_FreeFormatEntity.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Interface_UndefinedContent.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IGESData.hpp>
+#include <IGESData_DefaultGeneral.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_FreeFormatEntity.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Interface_UndefinedContent.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_DefaultGeneral, IGESData_GeneralModule)
 

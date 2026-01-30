@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
 #include <iomanip>
 
 #include <fstream>
-#include <BRepTest.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <DBRep.hxx>
-#include <BRepGProp.hxx>
-#include <TopoDS_Shape.hxx>
-#include <GProp_PrincipalProps.hxx>
+#include <BRepTest.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <DBRep.hpp>
+#include <BRepGProp.hpp>
+#include <TopoDS_Shape.hpp>
+#include <GProp_PrincipalProps.hpp>
 
-#include <Draw_Axis3D.hxx>
-#include <Precision.hxx>
+#include <Draw_Axis3D.hpp>
+#include <Precision.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

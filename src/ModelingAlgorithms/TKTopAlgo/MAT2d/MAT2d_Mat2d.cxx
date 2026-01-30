@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT2d_Mat2d.hxx>
-#include <MAT2d_Tool2d.hxx>
-#include <MAT_Bisector.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <MAT_Edge.hxx>
-#include <MAT_ListOfBisector.hxx>
-#include <MAT_ListOfEdge.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
+#include <MAT2d_Mat2d.hpp>
+#include <MAT2d_Tool2d.hpp>
+#include <MAT_Bisector.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <MAT_Edge.hpp>
+#include <MAT_ListOfBisector.hpp>
+#include <MAT_ListOfEdge.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

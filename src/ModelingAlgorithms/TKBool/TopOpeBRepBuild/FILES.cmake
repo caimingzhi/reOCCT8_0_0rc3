@@ -3,118 +3,118 @@ set(OCCT_TopOpeBRepBuild_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopOpeBRepBuild_FILES
   TopOpeBRepBuild_Area1dBuilder.cxx
-  TopOpeBRepBuild_Area1dBuilder.hxx
+  TopOpeBRepBuild_Area1dBuilder.hpp
   TopOpeBRepBuild_Area2dBuilder.cxx
-  TopOpeBRepBuild_Area2dBuilder.hxx
+  TopOpeBRepBuild_Area2dBuilder.hpp
   TopOpeBRepBuild_Area3dBuilder.cxx
-  TopOpeBRepBuild_Area3dBuilder.hxx
+  TopOpeBRepBuild_Area3dBuilder.hpp
   TopOpeBRepBuild_AreaBuilder.cxx
-  TopOpeBRepBuild_AreaBuilder.hxx
+  TopOpeBRepBuild_AreaBuilder.hpp
   TopOpeBRepBuild_BlockBuilder.cxx
-  TopOpeBRepBuild_BlockBuilder.hxx
+  TopOpeBRepBuild_BlockBuilder.hpp
   TopOpeBRepBuild_BlockIterator.cxx
-  TopOpeBRepBuild_BlockIterator.hxx
-  TopOpeBRepBuild_BlockIterator.lxx
+  TopOpeBRepBuild_BlockIterator.hpp
+  TopOpeBRepBuild_BlockIterator_1.hpp
   TopOpeBRepBuild_BuildEdges.cxx
   TopOpeBRepBuild_Builder.cxx
-  TopOpeBRepBuild_Builder.hxx
+  TopOpeBRepBuild_Builder.hpp
   TopOpeBRepBuild_Builder1.cxx
-  TopOpeBRepBuild_Builder1.hxx
+  TopOpeBRepBuild_Builder1.hpp
   TopOpeBRepBuild_Builder1_1.cxx
   TopOpeBRepBuild_Builder1_2.cxx
   TopOpeBRepBuild_BuilderON.cxx
-  TopOpeBRepBuild_BuilderON.hxx
+  TopOpeBRepBuild_BuilderON.hpp
   TopOpeBRepBuild_BuilderON2d.cxx
   TopOpeBRepBuild_BuildFaces.cxx
   TopOpeBRepBuild_BuildVertices.cxx
   TopOpeBRepBuild_CompositeClassifier.cxx
-  TopOpeBRepBuild_CompositeClassifier.hxx
+  TopOpeBRepBuild_CompositeClassifier.hpp
   TopOpeBRepBuild_CorrectFace2d.cxx
-  TopOpeBRepBuild_CorrectFace2d.hxx
+  TopOpeBRepBuild_CorrectFace2d.hpp
 
-  TopOpeBRepBuild_define.hxx
+  TopOpeBRepBuild_define.hpp
   TopOpeBRepBuild_EdgeBuilder.cxx
-  TopOpeBRepBuild_EdgeBuilder.hxx
+  TopOpeBRepBuild_EdgeBuilder.hpp
   TopOpeBRepBuild_End.cxx
   TopOpeBRepBuild_FaceAreaBuilder.cxx
-  TopOpeBRepBuild_FaceAreaBuilder.hxx
+  TopOpeBRepBuild_FaceAreaBuilder.hpp
   TopOpeBRepBuild_FaceBuilder.cxx
-  TopOpeBRepBuild_FaceBuilder.hxx
+  TopOpeBRepBuild_FaceBuilder.hpp
   TopOpeBRepBuild_fctwes.cxx
   TopOpeBRepBuild_ffsfs.cxx
   TopOpeBRepBuild_ffwesk.cxx
   TopOpeBRepBuild_FREGU.cxx
   TopOpeBRepBuild_FuseFace.cxx
-  TopOpeBRepBuild_FuseFace.hxx
-  TopOpeBRepBuild_FuseFace.lxx
+  TopOpeBRepBuild_FuseFace.hpp
+  TopOpeBRepBuild_FuseFace_1.hpp
   TopOpeBRepBuild_GIter.cxx
-  TopOpeBRepBuild_GIter.hxx
+  TopOpeBRepBuild_GIter.hpp
   TopOpeBRepBuild_Grid.cxx
   TopOpeBRepBuild_Griddump.cxx
   TopOpeBRepBuild_GridEE.cxx
   TopOpeBRepBuild_GridFF.cxx
   TopOpeBRepBuild_GridSS.cxx
   TopOpeBRepBuild_GTool.cxx
-  TopOpeBRepBuild_GTool.hxx
+  TopOpeBRepBuild_GTool.hpp
   TopOpeBRepBuild_GTopo.cxx
-  TopOpeBRepBuild_GTopo.hxx
+  TopOpeBRepBuild_GTopo.hpp
   TopOpeBRepBuild_HBuilder.cxx
-  TopOpeBRepBuild_HBuilder.hxx
+  TopOpeBRepBuild_HBuilder.hpp
 
   TopOpeBRepBuild_keep.cxx
   TopOpeBRepBuild_KPart.cxx
   TopOpeBRepBuild_kpkole.cxx
-  TopOpeBRepBuild_kpresu.hxx
+  TopOpeBRepBuild_kpresu.hpp
 
   TopOpeBRepBuild_Loop.cxx
-  TopOpeBRepBuild_Loop.hxx
+  TopOpeBRepBuild_Loop.hpp
   TopOpeBRepBuild_LoopClassifier.cxx
-  TopOpeBRepBuild_LoopClassifier.hxx
-  TopOpeBRepBuild_LoopEnum.hxx
+  TopOpeBRepBuild_LoopClassifier.hpp
+  TopOpeBRepBuild_LoopEnum.hpp
   TopOpeBRepBuild_LoopSet.cxx
-  TopOpeBRepBuild_LoopSet.hxx
+  TopOpeBRepBuild_LoopSet.hpp
   TopOpeBRepBuild_makeedges.cxx
   TopOpeBRepBuild_makefaces.cxx
   TopOpeBRepBuild_makesolids.cxx
   TopOpeBRepBuild_Merge.cxx
   TopOpeBRepBuild_on.cxx
   TopOpeBRepBuild_Pave.cxx
-  TopOpeBRepBuild_Pave.hxx
+  TopOpeBRepBuild_Pave.hpp
   TopOpeBRepBuild_PaveClassifier.cxx
-  TopOpeBRepBuild_PaveClassifier.hxx
+  TopOpeBRepBuild_PaveClassifier.hpp
   TopOpeBRepBuild_PaveSet.cxx
-  TopOpeBRepBuild_PaveSet.hxx
-  TopOpeBRepBuild_PBuilder.hxx
-  TopOpeBRepBuild_PGTopo.hxx
-  TopOpeBRepBuild_PWireEdgeSet.hxx
+  TopOpeBRepBuild_PaveSet.hpp
+  TopOpeBRepBuild_PBuilder.hpp
+  TopOpeBRepBuild_PGTopo.hpp
+  TopOpeBRepBuild_PWireEdgeSet.hpp
   TopOpeBRepBuild_Section.cxx
   TopOpeBRepBuild_ShapeListOfShape.cxx
-  TopOpeBRepBuild_ShapeListOfShape.hxx
+  TopOpeBRepBuild_ShapeListOfShape.hpp
   TopOpeBRepBuild_ShapeSet.cxx
-  TopOpeBRepBuild_ShapeSet.hxx
+  TopOpeBRepBuild_ShapeSet.hpp
   TopOpeBRepBuild_ShellFaceClassifier.cxx
-  TopOpeBRepBuild_ShellFaceClassifier.hxx
+  TopOpeBRepBuild_ShellFaceClassifier.hpp
   TopOpeBRepBuild_ShellFaceSet.cxx
-  TopOpeBRepBuild_ShellFaceSet.hxx
+  TopOpeBRepBuild_ShellFaceSet.hpp
   TopOpeBRepBuild_ShellToSolid.cxx
-  TopOpeBRepBuild_ShellToSolid.hxx
+  TopOpeBRepBuild_ShellToSolid.hpp
   TopOpeBRepBuild_SolidAreaBuilder.cxx
-  TopOpeBRepBuild_SolidAreaBuilder.hxx
+  TopOpeBRepBuild_SolidAreaBuilder.hpp
   TopOpeBRepBuild_SolidBuilder.cxx
-  TopOpeBRepBuild_SolidBuilder.hxx
+  TopOpeBRepBuild_SolidBuilder.hpp
   TopOpeBRepBuild_SREGU.cxx
   TopOpeBRepBuild_Tools.cxx
-  TopOpeBRepBuild_Tools.hxx
+  TopOpeBRepBuild_Tools.hpp
   TopOpeBRepBuild_Tools2d.cxx
-  TopOpeBRepBuild_Tools2d.hxx
+  TopOpeBRepBuild_Tools2d.hpp
   TopOpeBRepBuild_Tools_1.cxx
   TopOpeBRepBuild_trace.cxx
   TopOpeBRepBuild_VertexInfo.cxx
-  TopOpeBRepBuild_VertexInfo.hxx
+  TopOpeBRepBuild_VertexInfo.hpp
   TopOpeBRepBuild_WireEdgeClassifier.cxx
-  TopOpeBRepBuild_WireEdgeClassifier.hxx
+  TopOpeBRepBuild_WireEdgeClassifier.hpp
   TopOpeBRepBuild_WireEdgeSet.cxx
-  TopOpeBRepBuild_WireEdgeSet.hxx
+  TopOpeBRepBuild_WireEdgeSet.hpp
   TopOpeBRepBuild_WireToFace.cxx
-  TopOpeBRepBuild_WireToFace.hxx
+  TopOpeBRepBuild_WireToFace.hpp
 )

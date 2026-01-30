@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomConvert_FuncCylinderLSDist.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_Vector.hxx>
+#include <GeomConvert_FuncCylinderLSDist.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_Vector.hpp>
 
 //=================================================================================================
 

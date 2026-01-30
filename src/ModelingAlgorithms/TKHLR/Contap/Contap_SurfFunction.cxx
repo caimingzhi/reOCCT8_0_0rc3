@@ -16,15 +16,15 @@
 
 // jag 940616 Tolpetit = 1.e-16
 
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Contap_HContTool.hxx>
-#include <Contap_SurfFunction.hxx>
-#include <Contap_SurfProps.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Contap_HContTool.hpp>
+#include <Contap_SurfFunction.hpp>
+#include <Contap_SurfProps.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
 
 Contap_SurfFunction::Contap_SurfFunction()
     : myMean(1.),

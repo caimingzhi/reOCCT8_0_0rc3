@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CurveStyle.hxx>
-#include <StepVisual_SurfaceStyleSegmentationCurve.hxx>
+#include <StepVisual_CurveStyle.hpp>
+#include <StepVisual_SurfaceStyleSegmentationCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_SurfaceStyleSegmentationCurve, Standard_Transient)
 

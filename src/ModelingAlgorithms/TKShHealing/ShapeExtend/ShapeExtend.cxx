@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeExtend.hxx>
+#include <ShapeExtend.hpp>
 
-#include <Message_MsgFile.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Message_MsgFile.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "../SHMessage/SHMessage_SHAPE_us.pxx"
+#include "../SHMessage/SHMessage_SHAPE_us.hpp"
 
 //=================================================================================================
 

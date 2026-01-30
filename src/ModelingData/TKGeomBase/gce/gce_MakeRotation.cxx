@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gce_MakeRotation.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
+#include <gce_MakeRotation.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
 
 //=========================================================================
 //   Creation d une rotation 3d de gp d angle Angle par rapport a une     +

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_Dispatch.hxx>
-#include <IFSelect_GeneralModifier.hxx>
-#include <IFSelect_Selection.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_Dispatch.hpp>
+#include <IFSelect_GeneralModifier.hpp>
+#include <IFSelect_Selection.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_GeneralModifier, Standard_Transient)
 

@@ -14,38 +14,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_FaceBuilder.hxx>
-#include <TopOpeBRepBuild_Loop.hxx>
-#include <TopOpeBRepBuild_LoopSet.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
-#include <TopOpeBRepBuild_WireEdgeClassifier.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_FaceBuilder.hpp>
+#include <TopOpeBRepBuild_Loop.hpp>
+#include <TopOpeBRepBuild_LoopSet.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
+#include <TopOpeBRepBuild_WireEdgeClassifier.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
 
-// #include <BRepAdaptor_Curve2d.hxx>
+// #include <BRepAdaptor_Curve2d.hpp>
 #undef RM_HANGING
 // MSV: RM_HANGING behaviour: when state of wire is UNCLOSEDW we do not
 // remove the whole wire but remove the chains of hanging edges. This would
 // produce a good result in some cases. But :-( it gives regressions on grid
 // tests (1cto 021 W4,X4). Therefore I leaved this code not active.
 #ifdef RM_HANGING
-  #include <Standard_Integer.hxx>
+  #include <Standard_Integer.hpp>
 #endif
 
 #ifdef OCCT_DEBUG

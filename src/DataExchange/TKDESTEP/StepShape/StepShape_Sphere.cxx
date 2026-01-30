@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Point.hxx>
-#include <StepShape_Sphere.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Point.hpp>
+#include <StepShape_Sphere.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_Sphere, StepGeom_GeometricRepresentationItem)
 

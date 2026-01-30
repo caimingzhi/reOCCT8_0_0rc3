@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr.hxx>
-#include <Expr_ArgSinh.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_Operators.hxx>
-#include <Expr_Sinh.hxx>
-#include <Expr_Square.hxx>
-#include <Expr_SquareRoot.hxx>
-#include <Expr_Sum.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr.hpp>
+#include <Expr_ArgSinh.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_Operators.hpp>
+#include <Expr_Sinh.hpp>
+#include <Expr_Square.hpp>
+#include <Expr_SquareRoot.hpp>
+#include <Expr_Sum.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_ArgSinh, Expr_UnaryExpression)
 

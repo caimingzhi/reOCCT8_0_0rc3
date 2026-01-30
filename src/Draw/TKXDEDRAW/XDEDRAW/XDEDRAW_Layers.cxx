@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <Draw.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_LayerTool.hxx>
-#include <XDEDRAW_Layers.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <Draw.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_LayerTool.hpp>
+#include <XDEDRAW_Layers.hpp>
 
 //=======================================================================
 // Section: Work with layers

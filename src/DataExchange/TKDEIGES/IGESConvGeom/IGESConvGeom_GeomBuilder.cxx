@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESConvGeom_GeomBuilder.hxx>
-#include <IGESGeom_CopiousData.hxx>
-#include <IGESGeom_TransformationMatrix.hxx>
-#include <Standard_DomainError.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESConvGeom_GeomBuilder.hpp>
+#include <IGESGeom_CopiousData.hpp>
+#include <IGESGeom_TransformationMatrix.hpp>
+#include <Standard_DomainError.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 static double epsl = 1.E-10;
 static double epsa = 1.E-10;

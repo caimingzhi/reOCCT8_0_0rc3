@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <StdFail_NotDone.hpp>
 
 void IntAna2d_AnaIntersection::Perform(const gp_Lin2d& L1, const gp_Lin2d& L2)
 {

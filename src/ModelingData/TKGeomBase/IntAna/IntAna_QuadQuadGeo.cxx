@@ -24,38 +24,38 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XYZ.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gce_MakePln.hxx>
-#include <ProjLib.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XYZ.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gce_MakePln.hpp>
+#include <ProjLib.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
 
 #ifdef DEBUGLINES
-  #include <Geom2d_Line.hxx>
+  #include <Geom2d_Line.hpp>
 #endif
 
 static gp_Ax2 DirToAx2(const gp_Pnt& P, const gp_Dir& D);

@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductDefinitionFormationRelationship.pxx"
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductDefinitionFormationRelationship.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductDefinitionFormationRelationship.hpp"
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductDefinitionFormationRelationship.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

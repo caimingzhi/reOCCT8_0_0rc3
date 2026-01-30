@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_PathParser.hxx>
+#include <TDocStd_PathParser.hpp>
 
-#include <TCollection_ExtendedString.hxx>
+#include <TCollection_ExtendedString.hpp>
 
 TDocStd_PathParser::TDocStd_PathParser(const TCollection_ExtendedString& path)
 {

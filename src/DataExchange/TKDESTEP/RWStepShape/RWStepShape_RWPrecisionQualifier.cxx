@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepShape_RWPrecisionQualifier.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_PrecisionQualifier.hxx>
+#include "RWStepShape_RWPrecisionQualifier.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_PrecisionQualifier.hpp>
 
 RWStepShape_RWPrecisionQualifier::RWStepShape_RWPrecisionQualifier() = default;
 

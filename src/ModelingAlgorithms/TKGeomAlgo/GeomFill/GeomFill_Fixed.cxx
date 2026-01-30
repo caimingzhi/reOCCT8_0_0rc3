@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Fixed.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
+#include <GeomFill_Fixed.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_Fixed, GeomFill_TrihedronLaw)
 

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT_Bisector.hxx>
-#include <MAT_Edge.hxx>
-#include <Standard_Type.hxx>
+#include <MAT_Bisector.hpp>
+#include <MAT_Edge.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Edge, Standard_Transient)
 

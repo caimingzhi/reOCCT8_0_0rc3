@@ -14,17 +14,17 @@
 
 // JCV 16/10/91
 
-#include <Convert_CircleToBSplineCurve.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Convert_CircleToBSplineCurve.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 // Attention :
 // To avoid use of persistent tables in the fields

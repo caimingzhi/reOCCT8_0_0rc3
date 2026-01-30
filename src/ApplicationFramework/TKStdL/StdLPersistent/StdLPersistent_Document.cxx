@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_Document.hxx>
-#include <StdLPersistent_Data.hxx>
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_WriteData.hxx>
+#include <StdLPersistent_Document.hpp>
+#include <StdLPersistent_Data.hpp>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_WriteData.hpp>
 
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Owner.hxx>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Owner.hpp>
 
 //=======================================================================
 // function : Read

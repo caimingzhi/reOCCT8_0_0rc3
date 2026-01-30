@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepGProp.hxx>
-#include <BRepGProp_Cinert.hxx>
-#include <BRepGProp_Sinert.hxx>
-#include <BRepGProp_Vinert.hxx>
-#include <BRepGProp_MeshProps.hxx>
-#include <BRepGProp_MeshCinert.hxx>
-#include <BRepGProp_VinertGK.hxx>
-#include <BRepGProp_Face.hxx>
-#include <BRepGProp_Domain.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepGProp.hpp>
+#include <BRepGProp_Cinert.hpp>
+#include <BRepGProp_Sinert.hpp>
+#include <BRepGProp_Vinert.hpp>
+#include <BRepGProp_MeshProps.hpp>
+#include <BRepGProp_MeshCinert.hpp>
+#include <BRepGProp_VinertGK.hpp>
+#include <BRepGProp_Face.hpp>
+#include <BRepGProp_Domain.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
-#include <BRep_Tool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <BRepCheck_Shell.hxx>
+#include <BRep_Tool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <BRepCheck_Shell.hpp>
 
 #ifdef OCCT_DEBUG
 static int AffichEps = 0;

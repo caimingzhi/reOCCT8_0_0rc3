@@ -17,18 +17,18 @@
   #include <windows.h>
 #endif
 
-#include <WNT_Window.hxx>
+#include <WNT_Window.hpp>
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
 
-  #include <Aspect_ScrollDelta.hxx>
-  #include <Aspect_WindowDefinitionError.hxx>
-  #include <Aspect_WindowInputListener.hxx>
-  #include <Message.hxx>
-  #include <NCollection_LocalArray.hxx>
-  #include <TCollection_ExtendedString.hxx>
-  #include <WNT_WClass.hxx>
-  #include <WNT_HIDSpaceMouse.hxx>
+  #include <Aspect_ScrollDelta.hpp>
+  #include <Aspect_WindowDefinitionError.hpp>
+  #include <Aspect_WindowInputListener.hpp>
+  #include <Message.hpp>
+  #include <NCollection_LocalArray.hpp>
+  #include <TCollection_ExtendedString.hpp>
+  #include <WNT_WClass.hpp>
+  #include <WNT_HIDSpaceMouse.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(WNT_Window, Aspect_Window)
 

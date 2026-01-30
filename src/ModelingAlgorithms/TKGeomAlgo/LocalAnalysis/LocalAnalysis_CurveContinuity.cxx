@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Curve.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <LocalAnalysis_CurveContinuity.hxx>
-#include <LocalAnalysis_StatusErrorType.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Geom_Curve.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <LocalAnalysis_CurveContinuity.hpp>
+#include <LocalAnalysis_StatusErrorType.hpp>
+#include <StdFail_NotDone.hpp>
 
 /***********************************************************************/
 void LocalAnalysis_CurveContinuity::CurvC0(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)

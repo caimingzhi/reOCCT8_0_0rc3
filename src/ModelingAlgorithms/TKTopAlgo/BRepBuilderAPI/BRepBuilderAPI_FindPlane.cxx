@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_FindPlane.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_FindPlane.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

@@ -14,10 +14,10 @@
 
 //      	-------------
 
-#include <TDocStd_CompoundDelta.hxx>
+#include <TDocStd_CompoundDelta.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDocStd_Document.hxx>
+#include <Standard_Type.hpp>
+#include <TDocStd_Document.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_CompoundDelta, TDF_Delta)
 

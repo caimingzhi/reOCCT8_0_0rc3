@@ -16,22 +16,22 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDimen_SectionedArea.hxx>
-#include <IGESDimen_ToolSectionedArea.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Standard_DomainError.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDimen_SectionedArea.hpp>
+#include <IGESDimen_ToolSectionedArea.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Standard_DomainError.hpp>
 
 IGESDimen_ToolSectionedArea::IGESDimen_ToolSectionedArea() = default;
 

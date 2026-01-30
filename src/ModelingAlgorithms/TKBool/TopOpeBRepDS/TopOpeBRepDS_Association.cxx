@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_Association.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
+#include <TopOpeBRepDS_Association.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Association, Standard_Transient)
 

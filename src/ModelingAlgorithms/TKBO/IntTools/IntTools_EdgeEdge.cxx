@@ -12,26 +12,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <ElCLib.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <IntTools_EdgeEdge.hxx>
-#include <IntTools_Range.hxx>
-#include <IntTools_Tools.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <ElCLib.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <IntTools_EdgeEdge.hpp>
+#include <IntTools_Range.hpp>
+#include <IntTools_Tools.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
 
 static void   BndBuildBox(const BRepAdaptor_Curve& theBAC,
                           const double             aT1,

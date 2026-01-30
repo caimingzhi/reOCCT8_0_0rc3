@@ -16,19 +16,19 @@
 
 // Modified by isg, Thu Mar 17 09:21:31 1994
 
-#include <BRep_Tool.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ElCLib.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ElCLib.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_Spine, Standard_Transient)
 

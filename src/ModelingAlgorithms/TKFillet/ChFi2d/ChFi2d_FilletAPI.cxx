@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi2d_FilletAPI.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS.hxx>
+#include <ChFi2d_FilletAPI.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS.hpp>
 
 // An empty constructor of the fillet algorithm.
 // Call a method Init() to initialize the algorithm

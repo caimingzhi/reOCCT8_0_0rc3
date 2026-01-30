@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_SameParameter.hxx>
+#include <Approx_SameParameter.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <Geom2dAdaptor.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomLib_MakeCurvefromApprox.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <Geom2dAdaptor.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomLib_MakeCurvefromApprox.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

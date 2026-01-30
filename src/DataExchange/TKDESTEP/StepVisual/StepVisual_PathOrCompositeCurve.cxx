@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_PathOrCompositeCurve.hxx>
-#include <StepGeom_CompositeCurve.hxx>
-#include <StepShape_Path.hxx>
+#include <StepVisual_PathOrCompositeCurve.hpp>
+#include <StepGeom_CompositeCurve.hpp>
+#include <StepShape_Path.hpp>
 
 //=================================================================================================
 

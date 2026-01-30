@@ -16,37 +16,37 @@
 
 // Modified by xpu, Wed May 20 10:47:38 1998
 
-#include <gp_Pnt2d.hxx>
-#include <TopoDS.hxx>
-#include <BRepTools.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Precision.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
+#include <gp_Pnt2d.hpp>
+#include <TopoDS.hpp>
+#include <BRepTools.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Precision.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
 
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_makeTransition.hxx>
-#include <Standard_ProgramError.hxx>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_makeTransition.hpp>
+#include <Standard_ProgramError.hpp>
 
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <TopOpeBRepDS_TOOL.hxx>
-#include <TopOpeBRepDS_define.hxx>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <TopOpeBRepDS_TOOL.hpp>
+#include <TopOpeBRepDS_define.hpp>
 
 #define M_IN(st) (st == TopAbs_IN)
 #define M_ON(st) (st == TopAbs_ON)

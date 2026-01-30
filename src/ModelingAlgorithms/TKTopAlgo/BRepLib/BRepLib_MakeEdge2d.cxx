@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeEdge2d.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtPC2d.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <gp.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeEdge2d.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtPC2d.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <gp.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=======================================================================
 // function : Point

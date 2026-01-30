@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AutoDesignPresentedItem.hxx>
-#include <StepAP214_AutoDesignPresentedItemSelect.hxx>
+#include <StepAP214_AutoDesignPresentedItem.hpp>
+#include <StepAP214_AutoDesignPresentedItemSelect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignPresentedItem, StepVisual_PresentedItem)
 

@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsMgr_PresentationManager.hxx>
+#include <PrsMgr_PresentationManager.hpp>
 
-#include <TopLoc_Datum3D.hxx>
-#include <Prs3d_PresentationShadow.hxx>
-#include <PrsMgr_PresentableObject.hxx>
-#include <PrsMgr_Presentation.hxx>
-#include <NCollection_Sequence.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
+#include <TopLoc_Datum3D.hpp>
+#include <Prs3d_PresentationShadow.hpp>
+#include <PrsMgr_PresentableObject.hpp>
+#include <PrsMgr_Presentation.hpp>
+#include <NCollection_Sequence.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
 class PrsMgr_Presentation;
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsMgr_PresentationManager, Standard_Transient)

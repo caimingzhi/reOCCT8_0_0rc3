@@ -17,18 +17,18 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Media_BufferPool.hxx>
+#include <Media_BufferPool.hpp>
 
-#include <Media_Frame.hxx>
+#include <Media_Frame.hpp>
 
 #ifdef HAVE_FFMPEG
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 extern "C"
 {
   #include <libavcodec/avcodec.h>
   #include <libavutil/imgutils.h>
 };
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_BufferPool, Standard_Transient)

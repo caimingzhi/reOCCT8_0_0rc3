@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_FunctionGuide.hxx>
+#include <GeomFill_FunctionGuide.hpp>
 
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
 
-// #include <Standard_NotImplemented.hxx>
+// #include <Standard_NotImplemented.hpp>
 //==============================================
 //    Calcul de la valeur de la fonction :
 //                       G(w) - S(teta,v) = 0

@@ -13,29 +13,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_ColoredShape.hxx>
+#include <AIS_ColoredShape.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_StructureManager.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <StdSelect_BRepSelectionTool.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_StructureManager.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <StdSelect_BRepSelectionTool.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ColoredShape, AIS_Shape)
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ColoredDrawer, Prs3d_Drawer)

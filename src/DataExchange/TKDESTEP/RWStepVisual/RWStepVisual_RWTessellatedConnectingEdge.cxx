@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWTessellatedConnectingEdge.pxx"
-#include <StepVisual_TessellatedConnectingEdge.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepVisual_CoordinatesList.hxx>
-#include <StepVisual_EdgeOrCurve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepData_Logical.hxx>
-#include <StepVisual_TessellatedFace.hxx>
+#include "RWStepVisual_RWTessellatedConnectingEdge.hpp"
+#include <StepVisual_TessellatedConnectingEdge.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepVisual_CoordinatesList.hpp>
+#include <StepVisual_EdgeOrCurve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepData_Logical.hpp>
+#include <StepVisual_TessellatedFace.hpp>
 
 //=================================================================================================
 

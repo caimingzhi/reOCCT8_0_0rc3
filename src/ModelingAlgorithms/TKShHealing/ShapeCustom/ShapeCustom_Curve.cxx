@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeCustom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeCustom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 ShapeCustom_Curve::ShapeCustom_Curve() = default;
 

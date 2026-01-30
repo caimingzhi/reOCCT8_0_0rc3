@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CSLib.hxx>
-#include <CSLib_NormalPolyDef.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <math_FunctionRoots.hxx>
-#include <PLib.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
+#include <CSLib.hpp>
+#include <CSLib_NormalPolyDef.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <math_FunctionRoots.hpp>
+#include <PLib.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <algorithm>
 #include <cmath>

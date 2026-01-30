@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_AxisPlacement.hxx>
-#include <Geom_Axis1Placement.hxx>
-#include <GeomToStep_MakeAxis1Placement.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <GeomToStep_MakeDirection.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Direction.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_AxisPlacement.hpp>
+#include <Geom_Axis1Placement.hpp>
+#include <GeomToStep_MakeAxis1Placement.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <GeomToStep_MakeDirection.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Direction.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' un axis1_placement de prostep a partir d' un Ax1 de gp
@@ -35,7 +35,7 @@ GeomToStep_MakeAxis1Placement::GeomToStep_MakeAxis1Placement(
   const gp_Ax1&           A,
   const StepData_Factors& theLocalFactors)
 {
-#include "GeomToStep_MakeAxis1Placement_gen.pxx"
+#include "GeomToStep_MakeAxis1Placement_gen.hpp"
 }
 
 //=============================================================================
@@ -46,7 +46,7 @@ GeomToStep_MakeAxis1Placement::GeomToStep_MakeAxis1Placement(
   const gp_Ax2d&          A,
   const StepData_Factors& theLocalFactors)
 {
-#include "GeomToStep_MakeAxis1Placement_gen.pxx"
+#include "GeomToStep_MakeAxis1Placement_gen.hpp"
 }
 
 //=============================================================================
@@ -60,7 +60,7 @@ GeomToStep_MakeAxis1Placement::GeomToStep_MakeAxis1Placement(
 {
   gp_Ax1 A;
   A = Axis1->Ax1();
-#include "GeomToStep_MakeAxis1Placement_gen.pxx"
+#include "GeomToStep_MakeAxis1Placement_gen.hpp"
 }
 
 //=============================================================================
@@ -74,7 +74,7 @@ GeomToStep_MakeAxis1Placement::GeomToStep_MakeAxis1Placement(
 {
   gp_Ax2d A;
   A = Axis1->Ax2d();
-#include "GeomToStep_MakeAxis1Placement_gen.pxx"
+#include "GeomToStep_MakeAxis1Placement_gen.hpp"
 }
 
 //=============================================================================

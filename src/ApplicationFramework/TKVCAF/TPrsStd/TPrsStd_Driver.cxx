@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveObject.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Label.hxx>
-#include <TPrsStd_Driver.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Label.hpp>
+#include <TPrsStd_Driver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_Driver, Standard_Transient)
 

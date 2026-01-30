@@ -13,7 +13,7 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_BuildQueue.hxx>
+#include <BVH_BuildQueue.hpp>
 
 #include <thread>
 #include <vector>

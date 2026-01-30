@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_Point.hxx>
-#include <BlendFunc.hxx>
-#include <BlendFunc_Ruled.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Blend_Point.hpp>
+#include <BlendFunc.hpp>
+#include <BlendFunc_Ruled.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
 
 BlendFunc_Ruled::BlendFunc_Ruled(const occ::handle<Adaptor3d_Surface>& S1,
                                  const occ::handle<Adaptor3d_Surface>& S2,

@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_repvg.hxx>
-#include <TopoDS.hxx>
+#include <TopOpeBRepDS_repvg.hpp>
+#include <TopoDS.hpp>
 
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_makeTransition.hxx>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_makeTransition.hpp>
 
-#include <TopOpeBRepDS_EdgeInterferenceTool.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_define.hxx>
+#include <TopOpeBRepDS_EdgeInterferenceTool.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_define.hpp>
 
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_DataMap.hpp>
 #define MDSdmoiloi                                                                                 \
   NCollection_DataMap<int, NCollection_List<occ::handle<TopOpeBRepDS_Interference>>>
 #define MDSdmiodmoiloi                                                                             \

@@ -16,32 +16,32 @@
 
 // modified by NIZHNY-OFV  Thu Jan 20 11:04:19 2005
 
-#include <ProjLib_ComputeApprox.hxx>
-#include <ProjLib.hxx>
+#include <ProjLib_ComputeApprox.hpp>
+#include <ProjLib.hpp>
 
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <Convert_CompBezierCurves2dToBSplineCurve2d.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Trsf.hxx>
-#include <Precision.hxx>
-#include <Approx_FitAndDivide2d.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Integer.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <Convert_CompBezierCurves2dToBSplineCurve2d.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Trsf.hpp>
+#include <Precision.hpp>
+#include <Approx_FitAndDivide2d.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Integer.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
 
 #ifdef OCCT_DEBUG
 // static bool AffichValue = false;

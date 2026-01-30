@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_ClippingPlaneTool.hxx>
+#include <XCAFDoc_ClippingPlaneTool.hpp>
 
-#include <TCollection_HAsciiString.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <XCAFDoc.hxx>
+#include <TCollection_HAsciiString.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <XCAFDoc.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_ClippingPlaneTool,
                                       TDataStd_GenericEmpty,

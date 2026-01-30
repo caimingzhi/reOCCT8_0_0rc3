@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hxx>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductDefinitionReferenceWithLocalRepresentation,
                            StepBasic_ProductDefinition)

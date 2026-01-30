@@ -3,105 +3,105 @@ set(OCCT_BRepMesh_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepMesh_FILES
   BRepMesh_BaseMeshAlgo.cxx
-  BRepMesh_BaseMeshAlgo.hxx
-  BRepMesh_ConstrainedBaseMeshAlgo.hxx
+  BRepMesh_BaseMeshAlgo.hpp
+  BRepMesh_ConstrainedBaseMeshAlgo.hpp
   BRepMesh_ConstrainedBaseMeshAlgo.cxx
-  BRepMesh_BoundaryParamsRangeSplitter.hxx
-  BRepMesh_Circle.hxx
-  BRepMesh_CircleInspector.hxx
+  BRepMesh_BoundaryParamsRangeSplitter.hpp
+  BRepMesh_Circle.hpp
+  BRepMesh_CircleInspector.hpp
   BRepMesh_CircleTool.cxx
-  BRepMesh_CircleTool.hxx
+  BRepMesh_CircleTool.hpp
   BRepMesh_Classifier.cxx
-  BRepMesh_Classifier.hxx
+  BRepMesh_Classifier.hpp
   BRepMesh_ConeRangeSplitter.cxx
-  BRepMesh_ConeRangeSplitter.hxx
+  BRepMesh_ConeRangeSplitter.hpp
   BRepMesh_Context.cxx
-  BRepMesh_Context.hxx
+  BRepMesh_Context.hpp
   BRepMesh_CurveTessellator.cxx
-  BRepMesh_CurveTessellator.hxx
+  BRepMesh_CurveTessellator.hpp
   BRepMesh_CylinderRangeSplitter.cxx
-  BRepMesh_CylinderRangeSplitter.hxx
+  BRepMesh_CylinderRangeSplitter.hpp
   BRepMesh_DataStructureOfDelaun.cxx
-  BRepMesh_DataStructureOfDelaun.hxx
+  BRepMesh_DataStructureOfDelaun.hpp
   BRepMesh_DefaultRangeSplitter.cxx
-  BRepMesh_DefaultRangeSplitter.hxx
+  BRepMesh_DefaultRangeSplitter.hpp
   BRepMesh_Deflection.cxx
-  BRepMesh_Deflection.hxx
-  BRepMesh_DegreeOfFreedom.hxx
+  BRepMesh_Deflection.hpp
+  BRepMesh_DegreeOfFreedom.hpp
   BRepMesh_Delaun.cxx
-  BRepMesh_Delaun.hxx
+  BRepMesh_Delaun.hpp
   BRepMesh_DelaunayBaseMeshAlgo.cxx
-  BRepMesh_DelaunayBaseMeshAlgo.hxx
-  BRepMesh_DelaunayDeflectionControlMeshAlgo.hxx
-  BRepMesh_DelaunayNodeInsertionMeshAlgo.hxx
+  BRepMesh_DelaunayBaseMeshAlgo.hpp
+  BRepMesh_DelaunayDeflectionControlMeshAlgo.hpp
+  BRepMesh_DelaunayNodeInsertionMeshAlgo.hpp
   BRepMesh_DiscretFactory.cxx
-  BRepMesh_DiscretFactory.hxx
+  BRepMesh_DiscretFactory.hpp
   BRepMesh_DiscretRoot.cxx
-  BRepMesh_DiscretRoot.hxx
-  BRepMesh_Edge.hxx
+  BRepMesh_DiscretRoot.hpp
+  BRepMesh_Edge.hpp
   BRepMesh_EdgeDiscret.cxx
-  BRepMesh_EdgeDiscret.hxx
-  BRepMesh_EdgeParameterProvider.hxx
+  BRepMesh_EdgeDiscret.hpp
+  BRepMesh_EdgeParameterProvider.hpp
   BRepMesh_EdgeTessellationExtractor.cxx
-  BRepMesh_EdgeTessellationExtractor.hxx
+  BRepMesh_EdgeTessellationExtractor.hpp
   BRepMesh_ExtrusionRangeSplitter.cxx
-  BRepMesh_ExtrusionRangeSplitter.hxx
+  BRepMesh_ExtrusionRangeSplitter.hpp
   BRepMesh_FaceChecker.cxx
-  BRepMesh_FaceChecker.hxx
+  BRepMesh_FaceChecker.hpp
   BRepMesh_FaceDiscret.cxx
-  BRepMesh_FaceDiscret.hxx
-  BRepMesh_FactoryError.hxx
-  BRepMesh_FastDiscret.hxx
+  BRepMesh_FaceDiscret.hpp
+  BRepMesh_FactoryError.hpp
+  BRepMesh_FastDiscret.hpp
   BRepMesh_GeomTool.cxx
-  BRepMesh_GeomTool.hxx
+  BRepMesh_GeomTool.hpp
   BRepMesh_IncrementalMesh.cxx
-  BRepMesh_IncrementalMesh.hxx
+  BRepMesh_IncrementalMesh.hpp
   BRepMesh_MeshAlgoFactory.cxx
-  BRepMesh_MeshAlgoFactory.hxx
+  BRepMesh_MeshAlgoFactory.hpp
   BRepMesh_MeshTool.cxx
-  BRepMesh_MeshTool.hxx
+  BRepMesh_MeshTool.hpp
   BRepMesh_ModelBuilder.cxx
-  BRepMesh_ModelBuilder.hxx
+  BRepMesh_ModelBuilder.hpp
   BRepMesh_ModelHealer.cxx
-  BRepMesh_ModelHealer.hxx
+  BRepMesh_ModelHealer.hpp
   BRepMesh_ModelPostProcessor.cxx
-  BRepMesh_ModelPostProcessor.hxx
+  BRepMesh_ModelPostProcessor.hpp
   BRepMesh_ModelPreProcessor.cxx
-  BRepMesh_ModelPreProcessor.hxx
+  BRepMesh_ModelPreProcessor.hpp
   BRepMesh_NURBSRangeSplitter.cxx
-  BRepMesh_NURBSRangeSplitter.hxx
-  BRepMesh_NodeInsertionMeshAlgo.hxx
-  BRepMesh_OrientedEdge.hxx
-  BRepMesh_PairOfIndex.hxx
-  BRepMesh_PluginEntryType.hxx
-  BRepMesh_PluginMacro.hxx
+  BRepMesh_NURBSRangeSplitter.hpp
+  BRepMesh_NodeInsertionMeshAlgo.hpp
+  BRepMesh_OrientedEdge.hpp
+  BRepMesh_PairOfIndex.hpp
+  BRepMesh_PluginEntryType.hpp
+  BRepMesh_PluginMacro.hpp
   BRepMesh_SelectorOfDataStructureOfDelaun.cxx
-  BRepMesh_SelectorOfDataStructureOfDelaun.hxx
+  BRepMesh_SelectorOfDataStructureOfDelaun.hpp
   BRepMesh_ShapeTool.cxx
-  BRepMesh_ShapeTool.hxx
+  BRepMesh_ShapeTool.hpp
   BRepMesh_ShapeVisitor.cxx
-  BRepMesh_ShapeVisitor.hxx
+  BRepMesh_ShapeVisitor.hpp
   BRepMesh_SphereRangeSplitter.cxx
-  BRepMesh_SphereRangeSplitter.hxx
+  BRepMesh_SphereRangeSplitter.hpp
   BRepMesh_TorusRangeSplitter.cxx
-  BRepMesh_TorusRangeSplitter.hxx
-  BRepMesh_Triangle.hxx
+  BRepMesh_TorusRangeSplitter.hpp
+  BRepMesh_Triangle.hpp
   BRepMesh_UndefinedRangeSplitter.cxx
-  BRepMesh_UndefinedRangeSplitter.hxx
-  BRepMesh_UVParamRangeSplitter.hxx
-  BRepMesh_Vertex.hxx
-  BRepMesh_VertexInspector.hxx
+  BRepMesh_UndefinedRangeSplitter.hpp
+  BRepMesh_UVParamRangeSplitter.hpp
+  BRepMesh_Vertex.hpp
+  BRepMesh_VertexInspector.hpp
   BRepMesh_VertexTool.cxx
-  BRepMesh_VertexTool.hxx
-  BRepMesh_CustomBaseMeshAlgo.hxx
+  BRepMesh_VertexTool.hpp
+  BRepMesh_CustomBaseMeshAlgo.hpp
   BRepMesh_CustomBaseMeshAlgo.cxx
-  BRepMesh_CustomDelaunayBaseMeshAlgo.hxx
-  delabella.pxx
+  BRepMesh_CustomDelaunayBaseMeshAlgo.hpp
+  delabella.hpp
   delabella.cpp
-  BRepMesh_DelabellaBaseMeshAlgo.hxx
+  BRepMesh_DelabellaBaseMeshAlgo.hpp
   BRepMesh_DelabellaBaseMeshAlgo.cxx
-  BRepMesh_DelabellaMeshAlgoFactory.hxx
+  BRepMesh_DelabellaMeshAlgoFactory.hpp
   BRepMesh_DelabellaMeshAlgoFactory.cxx
   BRepMesh_Triangulator.cxx
-  BRepMesh_Triangulator.hxx
+  BRepMesh_Triangulator.hpp
 )

@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_Line.hxx>
-#include <IntPatch_LineConstructor.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_WLine.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_Line.hpp>
+#include <IntPatch_LineConstructor.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_WLine.hpp>
 
 #define XPU1009 1
 
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <ElCLib.hxx>
-#include <Geom2dInt_TheProjPCurOfGInter.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Array1.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <ElCLib.hpp>
+#include <Geom2dInt_TheProjPCurOfGInter.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

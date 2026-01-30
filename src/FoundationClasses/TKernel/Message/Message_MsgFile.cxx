@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_MsgFile.hxx>
+#include <Message_MsgFile.hpp>
 
-#include <NCollection_Buffer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <OSD_Environment.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <OSD_OpenFile.hxx>
+#include <NCollection_Buffer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <OSD_Environment.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <OSD_OpenFile.hpp>
 
 #include <cstdlib>
 #include <cstdio>

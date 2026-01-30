@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntSurf_QuadricTool.hxx>
+#include <IntSurf_QuadricTool.hpp>
 
 double IntSurf_QuadricTool::Tolerance(const IntSurf_Quadric& Q)
 {

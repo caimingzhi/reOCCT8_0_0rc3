@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveCurve.hxx>
+#include <Select3D_SensitiveCurve.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCurve, Select3D_SensitivePoly)
 

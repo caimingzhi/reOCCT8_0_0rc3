@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Alert.hxx>
-#include <Standard_Dump.hxx>
+#include <Message_Alert.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_Alert, Standard_Transient)
 

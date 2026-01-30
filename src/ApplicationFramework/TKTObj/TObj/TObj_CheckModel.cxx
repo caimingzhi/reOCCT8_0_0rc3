@@ -15,10 +15,10 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_CheckModel.hxx>
+#include <TObj_CheckModel.hpp>
 
-#include <TObj_ObjectIterator.hxx>
-#include <Message_Status.hxx>
+#include <TObj_ObjectIterator.hpp>
+#include <Message_Status.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_CheckModel, Message_Algorithm)
 

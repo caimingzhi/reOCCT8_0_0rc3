@@ -16,41 +16,41 @@
 //  sln 11.06.2002 OCC448 : Initialize "read.onlyvisiable" parameter  to control transferring
 //  invisible sub entities which logically depend on the grouping entities
 
-#include <BRep_Builder.hxx>
-#include <BRepLib.hxx>
-#include <DEIGES_Parameters.hxx>
-#include <IGESAppli.hxx>
-#include <IGESAppli_Protocol.hxx>
-#include <IGESData_FileProtocol.hxx>
-#include <IGESData_GlobalSection.hxx>
-#include <IGESFile_Read.hxx>
-#include <IGESSolid.hxx>
-#include <IGESSolid_Protocol.hxx>
-#include <IGESToBRep_Actor.hxx>
-#include <IGESToBRep_CurveAndSurface.hxx>
-#include <IGESToBRep_Reader.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CheckTool.hxx>
-#include <Interface_ShareFlags.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Message_ProgressScope.hxx>
-#include <OSD_Timer.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Transfer_TransferOutput.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib.hpp>
+#include <DEIGES_Parameters.hpp>
+#include <IGESAppli.hpp>
+#include <IGESAppli_Protocol.hpp>
+#include <IGESData_FileProtocol.hpp>
+#include <IGESData_GlobalSection.hpp>
+#include <IGESFile_Read.hpp>
+#include <IGESSolid.hpp>
+#include <IGESSolid_Protocol.hpp>
+#include <IGESToBRep_Actor.hpp>
+#include <IGESToBRep_CurveAndSurface.hpp>
+#include <IGESToBRep_Reader.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CheckTool.hpp>
+#include <Interface_ShareFlags.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Message_ProgressScope.hpp>
+#include <OSD_Timer.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Transfer_TransferOutput.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 #include <cstdio>
-// #include <ShapeCustom.hxx>
+// #include <ShapeCustom.hpp>
 #ifdef _MSC_VER
   #include <stdlib.h>
 #else

@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Action.hxx>
-#include <StepBasic_ActionAssignment.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Action.hpp>
+#include <StepBasic_ActionAssignment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ActionAssignment, Standard_Transient)
 

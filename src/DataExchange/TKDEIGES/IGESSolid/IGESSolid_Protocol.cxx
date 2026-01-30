@@ -11,35 +11,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESSolid_Protocol.hxx>
+#include <IGESSolid_Protocol.hpp>
 
-#include <IGESGeom.hxx>
-#include <IGESGeom_Protocol.hxx>
-#include <IGESSolid_Block.hxx>
-#include <IGESSolid_BooleanTree.hxx>
-#include <IGESSolid_ConeFrustum.hxx>
-#include <IGESSolid_ConicalSurface.hxx>
-#include <IGESSolid_Cylinder.hxx>
-#include <IGESSolid_CylindricalSurface.hxx>
-#include <IGESSolid_EdgeList.hxx>
-#include <IGESSolid_Ellipsoid.hxx>
-#include <IGESSolid_Loop.hxx>
-#include <IGESSolid_ManifoldSolid.hxx>
-#include <IGESSolid_PlaneSurface.hxx>
-#include <IGESSolid_RightAngularWedge.hxx>
-#include <IGESSolid_SelectedComponent.hxx>
-#include <IGESSolid_Shell.hxx>
-#include <IGESSolid_SolidAssembly.hxx>
-#include <IGESSolid_SolidInstance.hxx>
-#include <IGESSolid_SolidOfLinearExtrusion.hxx>
-#include <IGESSolid_SolidOfRevolution.hxx>
-#include <IGESSolid_Sphere.hxx>
-#include <IGESSolid_SphericalSurface.hxx>
-#include <IGESSolid_ToroidalSurface.hxx>
-#include <IGESSolid_Torus.hxx>
-#include <IGESSolid_VertexList.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom.hpp>
+#include <IGESGeom_Protocol.hpp>
+#include <IGESSolid_Block.hpp>
+#include <IGESSolid_BooleanTree.hpp>
+#include <IGESSolid_ConeFrustum.hpp>
+#include <IGESSolid_ConicalSurface.hpp>
+#include <IGESSolid_Cylinder.hpp>
+#include <IGESSolid_CylindricalSurface.hpp>
+#include <IGESSolid_EdgeList.hpp>
+#include <IGESSolid_Ellipsoid.hpp>
+#include <IGESSolid_Loop.hpp>
+#include <IGESSolid_ManifoldSolid.hpp>
+#include <IGESSolid_PlaneSurface.hpp>
+#include <IGESSolid_RightAngularWedge.hpp>
+#include <IGESSolid_SelectedComponent.hpp>
+#include <IGESSolid_Shell.hpp>
+#include <IGESSolid_SolidAssembly.hpp>
+#include <IGESSolid_SolidInstance.hpp>
+#include <IGESSolid_SolidOfLinearExtrusion.hpp>
+#include <IGESSolid_SolidOfRevolution.hpp>
+#include <IGESSolid_Sphere.hpp>
+#include <IGESSolid_SphericalSurface.hpp>
+#include <IGESSolid_ToroidalSurface.hpp>
+#include <IGESSolid_Torus.hpp>
+#include <IGESSolid_VertexList.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_Protocol, IGESData_Protocol)
 

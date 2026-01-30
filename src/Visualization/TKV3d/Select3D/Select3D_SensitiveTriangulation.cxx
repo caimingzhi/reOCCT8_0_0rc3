@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveTriangulation.hxx>
+#include <Select3D_SensitiveTriangulation.hpp>
 
-#include <Poly.hxx>
-#include <Poly_Connect.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <Select3D_SensitiveTriangle.hxx>
-#include <Select3D_TypeOfSensitivity.hxx>
+#include <Poly.hpp>
+#include <Poly_Connect.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <Select3D_SensitiveTriangle.hpp>
+#include <Select3D_TypeOfSensitivity.hpp>
 
 #include <algorithm>
 

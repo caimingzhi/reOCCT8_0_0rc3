@@ -15,27 +15,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_BuilderSolid.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_ShapeInfo.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <IntTools_Context.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_BuilderSolid.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_ShapeInfo.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <IntTools_Context.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_ToolRFace.hxx>
+#include <StdPrs_ToolRFace.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <TopoDS.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <TopoDS.hpp>
 
 //=================================================================================================
 

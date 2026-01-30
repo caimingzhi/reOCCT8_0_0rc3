@@ -2,42 +2,42 @@
 set(OCCT_VrmlData_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_VrmlData_FILES
-  VrmlData_Appearance.hxx
-  VrmlData_ArrayVec3d.hxx
-  VrmlData_Box.hxx
-  VrmlData_Color.hxx
-  VrmlData_Cone.hxx
-  VrmlData_Coordinate.hxx
-  VrmlData_Cylinder.hxx
+  VrmlData_Appearance.hpp
+  VrmlData_ArrayVec3d.hpp
+  VrmlData_Box.hpp
+  VrmlData_Color.hpp
+  VrmlData_Cone.hpp
+  VrmlData_Coordinate.hpp
+  VrmlData_Cylinder.hpp
 
-  VrmlData_ErrorStatus.hxx
-  VrmlData_Faceted.hxx
+  VrmlData_ErrorStatus.hpp
+  VrmlData_Faceted.hpp
   VrmlData_Geometry.cxx
-  VrmlData_Geometry.hxx
+  VrmlData_Geometry.hpp
   VrmlData_Group.cxx
-  VrmlData_Group.hxx
-  VrmlData_ImageTexture.hxx
-  VrmlData_InBuffer.hxx
+  VrmlData_Group.hpp
+  VrmlData_ImageTexture.hpp
+  VrmlData_InBuffer.hpp
   VrmlData_IndexedFaceSet.cxx
-  VrmlData_IndexedFaceSet.hxx
+  VrmlData_IndexedFaceSet.hpp
   VrmlData_IndexedLineSet.cxx
-  VrmlData_IndexedLineSet.hxx
+  VrmlData_IndexedLineSet.hpp
 
   VrmlData_Material.cxx
-  VrmlData_Material.hxx
+  VrmlData_Material.hpp
   VrmlData_Node.cxx
-  VrmlData_Node.hxx
-  VrmlData_Normal.hxx
+  VrmlData_Node.hpp
+  VrmlData_Normal.hpp
   VrmlData_Scene.cxx
-  VrmlData_Scene.hxx
+  VrmlData_Scene.hpp
   VrmlData_ShapeConvert.cxx
-  VrmlData_ShapeConvert.hxx
-  VrmlData_ShapeNode.hxx
-  VrmlData_Sphere.hxx
-  VrmlData_Texture.hxx
-  VrmlData_TextureCoordinate.hxx
-  VrmlData_TextureTransform.hxx
-  VrmlData_UnknownNode.hxx
+  VrmlData_ShapeConvert.hpp
+  VrmlData_ShapeNode.hpp
+  VrmlData_Sphere.hpp
+  VrmlData_Texture.hpp
+  VrmlData_TextureCoordinate.hpp
+  VrmlData_TextureTransform.hpp
+  VrmlData_UnknownNode.hpp
   VrmlData_WorldInfo.cxx
-  VrmlData_WorldInfo.hxx
+  VrmlData_WorldInfo.hpp
 )

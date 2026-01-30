@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool_box.hxx>
+#include <TopOpeBRepTool_box.hpp>
 
-#include <TopOpeBRepTool_HBoxTool.hxx>
-#include <Bnd_Box.hxx>
+#include <TopOpeBRepTool_HBoxTool.hpp>
+#include <Bnd_Box.hpp>
 
 Standard_EXPORT void FBOX_Prepare()
 {

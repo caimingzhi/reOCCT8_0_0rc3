@@ -12,32 +12,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Geometry, TDF_Attribute)
 

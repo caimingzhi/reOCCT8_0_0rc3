@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <StdFail_NotDone.hpp>
 
 IntAna2d_AnaIntersection::IntAna2d_AnaIntersection()
     : done(false),

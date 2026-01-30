@@ -15,15 +15,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_SectionAttribute.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <IntTools_Context.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_SectionAttribute.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <IntTools_Context.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
 namespace
 {

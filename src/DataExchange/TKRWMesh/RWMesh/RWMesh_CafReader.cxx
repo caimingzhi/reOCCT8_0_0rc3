@@ -12,26 +12,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_CafReader.hxx>
+#include <RWMesh_CafReader.hpp>
 
-#include <XCAFPrs_DocumentExplorer.hxx>
+#include <XCAFPrs_DocumentExplorer.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <BRep_Builder.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Timer.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_ColorType.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeMapTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <BRep_Builder.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Timer.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_ColorType.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeMapTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_CafReader, Standard_Transient)
 

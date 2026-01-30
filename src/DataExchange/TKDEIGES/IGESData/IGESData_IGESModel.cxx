@@ -15,17 +15,17 @@
 // #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
 // #13 smh 13.01.2000 : Parsing long year date
 
-#include <IGESData_BasicEditor.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Msg.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData_BasicEditor.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Msg.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_IGESModel, Interface_InterfaceModel)

@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_VideoRecorder.hxx>
-#include "../Media/Media_FFmpegCompatibility.pxx"
+#include <Image_VideoRecorder.hpp>
+#include "../Media/Media_FFmpegCompatibility.hpp"
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
 #ifdef HAVE_FFMPEG
   // Suppress deprecation warnings - it is difficult to provide compatibility with old and new API

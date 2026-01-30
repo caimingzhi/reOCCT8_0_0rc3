@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_FunctionTanCuCuCu.hxx>
-#include <gp.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <ElCLib.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_FunctionTanCuCuCu.hpp>
+#include <gp.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_ConstructionError.hpp>
 
 void Geom2dGcc_FunctionTanCuCuCu::InitDerivative(const math_Vector& X,
                                                  gp_Pnt2d&          Point1,

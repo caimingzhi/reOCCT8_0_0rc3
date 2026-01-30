@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade_SplitCurve3d.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade_SplitCurve3d.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitCurve3d, ShapeUpgrade_SplitCurve)
 

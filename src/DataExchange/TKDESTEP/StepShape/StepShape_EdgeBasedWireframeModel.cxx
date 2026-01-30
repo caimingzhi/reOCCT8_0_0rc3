@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepShape_EdgeBasedWireframeModel.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_EdgeBasedWireframeModel.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_EdgeBasedWireframeModel, StepGeom_GeometricRepresentationItem)
 

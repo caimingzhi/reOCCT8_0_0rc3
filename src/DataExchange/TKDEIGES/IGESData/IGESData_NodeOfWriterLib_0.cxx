@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_NodeOfWriterLib.hxx>
+#include <IGESData_NodeOfWriterLib.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <IGESData_GlobalNodeOfWriterLib.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_ReadWriteModule.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_WriterLib.hxx>
+#include <IGESData_GlobalNodeOfWriterLib.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_ReadWriteModule.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_WriterLib.hpp>
 
 IGESData_NodeOfWriterLib::IGESData_NodeOfWriterLib() = default;
 

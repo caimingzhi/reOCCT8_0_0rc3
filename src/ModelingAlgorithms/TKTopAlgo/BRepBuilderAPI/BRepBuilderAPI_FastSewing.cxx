@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_FastSewing.hxx>
+#include <BRepBuilderAPI_FastSewing.hpp>
 
-#include <BRepTools_Quilt.hxx>
-#include <Bnd_Box.hxx>
+#include <BRepTools_Quilt.hpp>
+#include <Bnd_Box.hpp>
 
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <Standard_NullObject.hxx>
+#include <Standard_NullObject.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBuilderAPI_FastSewing, Standard_Transient)
 

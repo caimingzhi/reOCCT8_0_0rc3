@@ -13,39 +13,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntTools_CommonPrt.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <IntTools_Range.hxx>
-#include <IntTools_Tools.hxx>
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <Bnd_Box.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntTools_CommonPrt.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <IntTools_Range.hpp>
+#include <IntTools_Tools.hpp>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 static void ParabolaTolerance(const occ::handle<Geom_Curve>&,
                               const double,
@@ -463,10 +463,10 @@ double IntTools_Tools::CurveTolerance(const occ::handle<Geom_Curve>& aC3D, const
   return aTolReached;
 }
 
-#include <Geom_Parabola.hxx>
-#include <gp_Parab.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BRepLib_CheckCurveOnSurface.hxx>
+#include <Geom_Parabola.hpp>
+#include <gp_Parab.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BRepLib_CheckCurveOnSurface.hpp>
 
 //=================================================================================================
 

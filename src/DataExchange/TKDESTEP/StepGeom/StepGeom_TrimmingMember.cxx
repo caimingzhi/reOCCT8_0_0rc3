@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepGeom_TrimmingMember.hxx>
+#include <Standard_Type.hpp>
+#include <StepGeom_TrimmingMember.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_TrimmingMember, StepData_SelectReal)
 

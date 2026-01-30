@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepElement_ElementMaterial.hxx>
-#include <StepElement_Surface3dElementDescriptor.hxx>
-#include <StepElement_SurfaceElementProperty.hxx>
-#include <StepFEA_FeaModel3d.hxx>
-#include <StepFEA_Surface3dElementRepresentation.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepElement_ElementMaterial.hpp>
+#include <StepElement_Surface3dElementDescriptor.hpp>
+#include <StepElement_SurfaceElementProperty.hpp>
+#include <StepFEA_FeaModel3d.hpp>
+#include <StepFEA_Surface3dElementRepresentation.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_Surface3dElementRepresentation, StepFEA_ElementRepresentation)
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass_Edge.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopExp.hxx>
+#include <BRepClass_Edge.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopExp.hpp>
 
 //=================================================================================================
 

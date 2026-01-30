@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent.hxx>
-#include <StdObjMgt_MapOfInstantiators.hxx>
+#include <StdLPersistent.hpp>
+#include <StdObjMgt_MapOfInstantiators.hpp>
 
-#include <StdLPersistent_Document.hxx>
-#include <StdLPersistent_Data.hxx>
-#include <StdLPersistent_HArray1.hxx>
-#include <StdLPersistent_Void.hxx>
-#include <StdLPersistent_Real.hxx>
-#include <StdLPersistent_Value.hxx>
-#include <StdLPersistent_Collection.hxx>
-#include <StdLPersistent_Dependency.hxx>
-#include <StdLPersistent_Variable.hxx>
-#include <StdLPersistent_XLink.hxx>
-#include <StdLPersistent_Function.hxx>
-#include <StdLPersistent_TreeNode.hxx>
-#include <StdLPersistent_NamedData.hxx>
+#include <StdLPersistent_Document.hpp>
+#include <StdLPersistent_Data.hpp>
+#include <StdLPersistent_HArray1.hpp>
+#include <StdLPersistent_Void.hpp>
+#include <StdLPersistent_Real.hpp>
+#include <StdLPersistent_Value.hpp>
+#include <StdLPersistent_Collection.hpp>
+#include <StdLPersistent_Dependency.hpp>
+#include <StdLPersistent_Variable.hpp>
+#include <StdLPersistent_XLink.hpp>
+#include <StdLPersistent_Function.hpp>
+#include <StdLPersistent_TreeNode.hpp>
+#include <StdLPersistent_NamedData.hpp>
 
 //=================================================================================================
 

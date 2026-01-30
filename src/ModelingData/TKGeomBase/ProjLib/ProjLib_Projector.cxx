@@ -16,18 +16,18 @@
 
 //  Modified by skv - Wed Aug 11 15:45:58 2004 OCC6272
 
-#include <ElCLib.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab.hxx>
-#include <ProjLib_Projector.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <ElCLib.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab.hpp>
+#include <ProjLib_Projector.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

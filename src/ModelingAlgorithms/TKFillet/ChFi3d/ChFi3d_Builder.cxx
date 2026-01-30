@@ -14,47 +14,47 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Blend_FuncInv.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepLib.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <ChFi3d_Builder.hxx>
-#include <ChFi3d_Builder_0.hxx>
-#include <ChFiDS_CommonPoint.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <ChFiDS_Stripe.hxx>
-#include <NCollection_List.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <Geom2d_Curve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <ShapeFix.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Blend_FuncInv.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepLib.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <ChFi3d_Builder.hpp>
+#include <ChFi3d_Builder_0.hpp>
+#include <ChFiDS_CommonPoint.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <ChFiDS_Stripe.hpp>
+#include <NCollection_List.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <Geom2d_Curve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <ShapeFix.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 
 // variables for performances
 

@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS.hxx>
-#include <DBRep.hxx>
-#include <BRep_Tool.hxx>
-#include <GeomInt_IntSS.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
+#include <QABugs.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS.hpp>
+#include <DBRep.hpp>
+#include <BRep_Tool.hpp>
+#include <GeomInt_IntSS.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
 
 #include <fstream>
 
@@ -68,10 +68,10 @@ static int BUC60623(Draw_Interpretor& di, int argc, const char** a)
   return 0;
 }
 
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <PrsDim_LengthDimension.hxx>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <PrsDim_LengthDimension.hpp>
 
 static int BUC60632(Draw_Interpretor& di, int /*n*/, const char** a)
 {
@@ -111,7 +111,7 @@ static int BUC60632(Draw_Interpretor& di, int /*n*/, const char** a)
   return 0;
 }
 
-#include <BRepTools.hxx>
+#include <BRepTools.hpp>
 
 static int BUC60652(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -127,24 +127,24 @@ static int BUC60652(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
 
-#include <BRepAlgoAPI_Fuse.hxx>
+#include <BRepAlgoAPI_Fuse.hpp>
 
-#include <V3d_View.hxx>
+#include <V3d_View.hpp>
 
-#include <Bnd_BoundSortBox.hxx>
-#include <BRepBndLib.hxx>
-#include <TopExp_Explorer.hxx>
+#include <Bnd_BoundSortBox.hpp>
+#include <BRepBndLib.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <gp_Circ.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomAPI.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <Geom2d_Circle.hxx>
-#include <ProjLib.hxx>
+#include <gp_Circ.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomAPI.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <Geom2d_Circle.hpp>
+#include <ProjLib.hpp>
 
 static int BUC60792(Draw_Interpretor& di, int /*argc*/, const char** argv)
 {
@@ -203,15 +203,15 @@ static int BUC60792(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <BRepFilletAPI_MakeFillet2d.hxx>
-#include <GeomProjLib.hxx>
-#include <Geom_TrimmedCurve.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <BRepFilletAPI_MakeFillet2d.hpp>
+#include <GeomProjLib.hpp>
+#include <Geom_TrimmedCurve.hpp>
 
 static int BUC60811(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -354,7 +354,7 @@ static int BUC60811(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <GeomAPI_ExtremaCurveCurve.hxx>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
 
 static int BUC60825(Draw_Interpretor& di, int argc, const char** argv)
 
@@ -378,10 +378,10 @@ static int BUC60825(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
 
-#include <GC_MakeTrimmedCone.hxx>
+#include <GC_MakeTrimmedCone.hpp>
 
 static int BUC60856(Draw_Interpretor& di, int /*argc*/, const char** argv)
 {
@@ -489,8 +489,8 @@ static int BUC60876_(Draw_Interpretor& di, int argc, const char** argv)
 
 //=================================================================================================
 
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakeCone.hpp>
 
 static int TestCMD(Draw_Interpretor& di, int argc, const char** argv)
 
@@ -555,12 +555,12 @@ static int TestCMD(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <NCollection_DataMap.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <NCollection_DataMap.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Iterator.hpp>
 
 //---------------------------------------------------------------------------------------
 
@@ -655,7 +655,7 @@ static int statface(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <BRepBuilderAPI_Transform.hxx>
+#include <BRepBuilderAPI_Transform.hpp>
 
 static int BUC60841(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -699,7 +699,7 @@ static int BUC60841(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <ShapeBuild_Edge.hxx>
+#include <ShapeBuild_Edge.hpp>
 
 static int BUC60874(Draw_Interpretor& /*di*/, int /*argc*/, const char** argv)
 {
@@ -709,22 +709,22 @@ static int BUC60874(Draw_Interpretor& /*di*/, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <TDF_Label.hxx>
-#include <TDataStd_TreeNode.hxx>
+#include <TDF_Label.hpp>
+#include <TDataStd_TreeNode.hpp>
 
-#include <DDocStd.hxx>
+#include <DDocStd.hpp>
 
-#include <DDF.hxx>
+#include <DDF.hpp>
 
-#include <TDocStd_Modified.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDF_Delta.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <TDocStd_Modified.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDF_Delta.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamedShape.hpp>
 
 static int BUC60831_1(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1143,8 +1143,8 @@ static int BUC60921(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-#include <IGESControl_Reader.hxx>
-#include <BRepPrimAPI_MakeHalfSpace.hxx>
+#include <IGESControl_Reader.hpp>
+#include <BRepPrimAPI_MakeHalfSpace.hpp>
 
 static int BUC60951_(Draw_Interpretor& di, int argc, const char** a)
 {

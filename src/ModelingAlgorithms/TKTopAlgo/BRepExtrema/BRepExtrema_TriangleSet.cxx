@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_TriangleSet.hxx>
+#include <BRepExtrema_TriangleSet.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BVH_LinearBuilder.hxx>
-#include <Poly_Triangulation.hxx>
-#include <TopoDS.hxx>
+#include <BRep_Tool.hpp>
+#include <BVH_LinearBuilder.hpp>
+#include <Poly_Triangulation.hpp>
+#include <TopoDS.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepExtrema_TriangleSet, BVH_PrimitiveSet3d)
 

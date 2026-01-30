@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_SweepFunction.hxx>
-#include <BRepBlend_AppSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
+#include <Approx_SweepFunction.hpp>
+#include <BRepBlend_AppSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
 
 BRepBlend_AppSurface::BRepBlend_AppSurface(const occ::handle<Approx_SweepFunction>& Func,
                                            const double                             First,

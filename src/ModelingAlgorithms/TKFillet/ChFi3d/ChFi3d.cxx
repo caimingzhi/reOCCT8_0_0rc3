@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi3d.hxx>
+#include <ChFi3d.hpp>
 
-#include <BRep_Tool.hxx>
-#include <ChFi3d_Builder_0.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <BRepTools.hxx>
-#include <IntTools_Tools.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <ChFi3d_Builder_0.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <BRepTools.hpp>
+#include <IntTools_Tools.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 static void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d);
 

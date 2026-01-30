@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_GTrsf.hxx>
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESReaderTool.hxx>
-#include <IGESData_IGESType.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_NameEntity.hxx>
-#include <IGESData_SingleParentEntity.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_EntityList.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_PCharacter.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_GTrsf.hpp>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESReaderTool.hpp>
+#include <IGESData_IGESType.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_NameEntity.hpp>
+#include <IGESData_SingleParentEntity.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_EntityList.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_PCharacter.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_IGESEntity, Standard_Transient)

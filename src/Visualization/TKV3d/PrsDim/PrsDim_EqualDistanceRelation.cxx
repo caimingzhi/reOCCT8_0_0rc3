@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_EqualDistanceRelation.hxx>
+#include <PrsDim_EqualDistanceRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <PrsDim_LengthDimension.hxx>
-#include <Bnd_Box.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <DsgPrs_EqualDistancePresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitivePoly.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <PrsDim_LengthDimension.hpp>
+#include <Bnd_Box.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <DsgPrs_EqualDistancePresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitivePoly.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EqualDistanceRelation, PrsDim_Relation)
 

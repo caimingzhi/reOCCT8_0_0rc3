@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box2d.hxx>
-#include <gp.hxx>
-#include <gp_Vec.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_Tool.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Bnd_Box2d.hpp>
+#include <gp.hpp>
+#include <gp_Vec.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_Tool.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_DataSource, Standard_Transient)
 

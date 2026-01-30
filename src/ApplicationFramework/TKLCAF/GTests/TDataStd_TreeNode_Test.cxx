@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
 
 // Test BUC60817: TDataStd_TreeNode descendant relationship
 TEST(TDataStd_TreeNode_Test, BUC60817_DescendantRelationship)

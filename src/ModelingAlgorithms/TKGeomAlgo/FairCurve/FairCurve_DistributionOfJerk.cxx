@@ -21,12 +21,12 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <BSplCLib.hxx>
-#include <FairCurve_DistributionOfJerk.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <BSplCLib.hpp>
+#include <FairCurve_DistributionOfJerk.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 FairCurve_DistributionOfJerk::FairCurve_DistributionOfJerk(
   const int                                         BSplOrder,

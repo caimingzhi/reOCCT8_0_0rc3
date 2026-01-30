@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGraph_IntercharacterSpacing.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGraph_IntercharacterSpacing.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_IntercharacterSpacing, IGESData_IGESEntity)
 

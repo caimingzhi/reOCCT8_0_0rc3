@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_TFace.hxx>
-#include <Geom_Surface.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_TFace.hpp>
+#include <Geom_Surface.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_TFace, TopoDS_TFace)
 

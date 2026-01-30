@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_CappingAlgo.hxx>
-#include <OpenGl_GlCore11.hxx>
-#include <OpenGl_ClippingIterator.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_StructureShadow.hxx>
-#include <OpenGl_Vec.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_CappingAlgo.hpp>
+#include <OpenGl_GlCore11.hpp>
+#include <OpenGl_ClippingIterator.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_StructureShadow.hpp>
+#include <OpenGl_Vec.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_Workspace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Structure, Graphic3d_CStructure)
 

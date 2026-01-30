@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
+#include <DBRep.hpp>
 
-#include <BRep_TEdge.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepGProp.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_ShapeSet.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <BinTools.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Message_ProgressRange.hxx>
-#include <Draw_Segment3D.hxx>
-#include <GProp_GProps.hxx>
-#include <NCollection_Vector.hxx>
-#include <OSD_FileSystem.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_TEdge.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepGProp.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_ShapeSet.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <BinTools.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Message_ProgressRange.hpp>
+#include <Draw_Segment3D.hpp>
+#include <GProp_GProps.hpp>
+#include <NCollection_Vector.hpp>
+#include <OSD_FileSystem.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 #include <cstdio>
 // memory management
@@ -874,7 +874,7 @@ static int orientation(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-#include <TCollection_AsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
 
 //=======================================================================
 // numshapes same as nbshapes but the output is cout

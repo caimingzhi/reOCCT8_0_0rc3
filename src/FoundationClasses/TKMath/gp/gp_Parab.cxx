@@ -14,11 +14,11 @@
 
 // Modif jcv 14/12/90 suite a la premiere revue de projet
 
-#include <gp_Parab.hxx>
+#include <gp_Parab.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
 
 void gp_Parab::Mirror(const gp_Pnt& P) noexcept
 {

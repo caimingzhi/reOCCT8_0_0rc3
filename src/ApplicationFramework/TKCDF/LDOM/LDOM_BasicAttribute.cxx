@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_BasicAttribute.hxx>
-#include <LDOM_MemManager.hxx>
-#include <LDOM_Attr.hxx>
+#include <LDOM_BasicAttribute.hpp>
+#include <LDOM_MemManager.hpp>
+#include <LDOM_Attr.hpp>
 
 //=================================================================================================
 

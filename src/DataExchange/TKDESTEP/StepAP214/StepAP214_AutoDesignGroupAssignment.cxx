@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AutoDesignGroupAssignment.hxx>
-#include <StepAP214_AutoDesignGroupedItem.hxx>
-#include <StepBasic_Group.hxx>
+#include <StepAP214_AutoDesignGroupAssignment.hpp>
+#include <StepAP214_AutoDesignGroupedItem.hpp>
+#include <StepBasic_Group.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignGroupAssignment, StepBasic_GroupAssignment)
 

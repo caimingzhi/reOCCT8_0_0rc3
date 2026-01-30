@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_Curve3dElementProperty.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_Curve3dElementProperty.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_Curve3dElementProperty, Standard_Transient)
 

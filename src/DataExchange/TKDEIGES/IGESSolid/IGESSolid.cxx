@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESSolid.hxx>
+#include <IGESSolid.hpp>
 
-#include <IGESData_SpecificLib.hxx>
-#include <IGESData_WriterLib.hxx>
-#include <IGESGeom.hxx>
-#include <IGESSolid_GeneralModule.hxx>
-#include <IGESSolid_Protocol.hxx>
-#include <IGESSolid_ReadWriteModule.hxx>
-#include <IGESSolid_SpecificModule.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_ReaderLib.hxx>
+#include <IGESData_SpecificLib.hpp>
+#include <IGESData_WriterLib.hpp>
+#include <IGESGeom.hpp>
+#include <IGESSolid_GeneralModule.hpp>
+#include <IGESSolid_Protocol.hpp>
+#include <IGESSolid_ReadWriteModule.hpp>
+#include <IGESSolid_SpecificModule.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_ReaderLib.hpp>
 
 //  Ancillary data to work on a Package of IGES Entities with a Protocol
 //  (Modules are created and loaded in appropriate libraries, once by Init)

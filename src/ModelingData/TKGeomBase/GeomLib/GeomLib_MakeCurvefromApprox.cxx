@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomLib_MakeCurvefromApprox.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomLib_MakeCurvefromApprox.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

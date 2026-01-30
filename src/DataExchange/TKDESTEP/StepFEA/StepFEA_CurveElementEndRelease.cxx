@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_CurveElementEndRelease.hxx>
+#include <StepFEA_CurveElementEndRelease.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_CurveElementEndRelease, Standard_Transient)
 

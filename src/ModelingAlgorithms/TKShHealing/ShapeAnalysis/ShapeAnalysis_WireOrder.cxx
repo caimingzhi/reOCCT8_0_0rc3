@@ -16,16 +16,16 @@
 // szv#4 S4163
 //    pdn 09.05.99: S4174: preserve order of edges for complete torus
 
-#include <gp_Pnt.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_WireOrder.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Standard_Transient.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_WireOrder.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Standard_Transient.hpp>
 
 //=================================================================================================
 

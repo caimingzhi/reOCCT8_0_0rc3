@@ -15,43 +15,43 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Object.hxx>
+#include <TObj_Object.hpp>
 
-#include <TObj_Assistant.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_ObjectIterator.hxx>
-#include <TObj_OcafObjectIterator.hxx>
-#include <TObj_Persistence.hxx>
-#include <TObj_ReferenceIterator.hxx>
-#include <TObj_SequenceIterator.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TObj_TModel.hxx>
-#include <TObj_TNameContainer.hxx>
-#include <TObj_TObject.hxx>
-#include <TObj_TReference.hxx>
+#include <TObj_Assistant.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_ObjectIterator.hpp>
+#include <TObj_OcafObjectIterator.hpp>
+#include <TObj_Persistence.hpp>
+#include <TObj_ReferenceIterator.hpp>
+#include <TObj_SequenceIterator.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TObj_TModel.hpp>
+#include <TObj_TNameContainer.hpp>
+#include <TObj_TObject.hpp>
+#include <TObj_TReference.hpp>
 
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_CopyLabel.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDF_TagSource.hxx>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_CopyLabel.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDF_TagSource.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_Object, Standard_Transient)
 

@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_VideoRecorder.hxx>
-#include <Image_PixMap.hxx>
+#include <Image_VideoRecorder.hpp>
+#include <Image_PixMap.hpp>
 
 #include <gtest/gtest.h>
 

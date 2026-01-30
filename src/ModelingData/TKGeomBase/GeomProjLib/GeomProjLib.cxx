@@ -16,36 +16,36 @@
 
 //  Modified by skv - Wed Aug 11 17:26:03 2004 OCC6272
 
-#include <GeomProjLib.hxx>
+#include <GeomProjLib.hpp>
 
-#include <Approx_CurveOnSurface.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <Precision.hxx>
-#include <ProjLib_CompProjectedCurve.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <ProjLib_ProjectOnPlane.hxx>
+#include <Approx_CurveOnSurface.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <Precision.hpp>
+#include <ProjLib_CompProjectedCurve.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <ProjLib_ProjectOnPlane.hpp>
 
 #include <cstdio>
 

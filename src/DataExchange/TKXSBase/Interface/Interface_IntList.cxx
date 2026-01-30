@@ -13,7 +13,7 @@
 
 // szv#4 S4163
 
-#include <Interface_IntList.hxx>
+#include <Interface_IntList.hpp>
 
 //   Data organization :
 //   theents value : 0 no reference

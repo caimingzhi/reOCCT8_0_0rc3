@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_Curve2dTool.hxx>
-#include <Extrema_ECC2d.hxx>
-#include <Extrema_ExtCC2d.hxx>
-#include <Extrema_ExtElC2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
-#include <NCollection_Sequence.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_MemoryUtils.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_Curve2dTool.hpp>
+#include <Extrema_ECC2d.hpp>
+#include <Extrema_ExtCC2d.hpp>
+#include <Extrema_ExtElC2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
+#include <NCollection_Sequence.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_MemoryUtils.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 Extrema_ExtCC2d::Extrema_ExtCC2d()
     : myIsFindSingleSolution(false),

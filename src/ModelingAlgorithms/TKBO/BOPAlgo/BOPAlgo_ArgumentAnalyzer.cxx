@@ -12,35 +12,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_ArgumentAnalyzer.hxx>
-#include <BOPAlgo_BuilderFace.hxx>
-#include <BOPAlgo_CheckerSI.hxx>
-#include <BOPAlgo_Operation.hxx>
-#include <BOPDS_DS.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_Pair.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_CommonPrt.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_EdgeEdge.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <NCollection_Array2.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Sequence.hxx>
+#include <BOPAlgo_ArgumentAnalyzer.hpp>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <BOPAlgo_CheckerSI.hpp>
+#include <BOPAlgo_Operation.hpp>
+#include <BOPDS_DS.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_Pair.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_CommonPrt.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_EdgeEdge.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <NCollection_Array2.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

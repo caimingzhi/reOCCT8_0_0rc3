@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomTools.hxx>
+#include <GeomTools.hpp>
 
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <GeomTools_UndefinedTypeHandler.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <GeomTools_UndefinedTypeHandler.hpp>
 
 static occ::handle<GeomTools_UndefinedTypeHandler> theActiveHandler =
   new GeomTools_UndefinedTypeHandler;

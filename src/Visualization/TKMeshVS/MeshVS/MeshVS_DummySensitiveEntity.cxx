@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_DummySensitiveEntity.hxx>
+#include <MeshVS_DummySensitiveEntity.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_DummySensitiveEntity, Select3D_SensitiveEntity)
 

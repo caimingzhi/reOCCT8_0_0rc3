@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox.hxx>
+#include <BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepApprox_SurfaceTool.hxx>
-#include <BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepApprox_SurfaceTool.hpp>
+#include <BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
 
 #define ThePSurface BRepAdaptor_Surface
-#define ThePSurface_hxx <BRepAdaptor_Surface.hxx>
+#define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
-#define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hxx>
+#define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>
 #define IntImp_TheFunction BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox
-#define IntImp_TheFunction_hxx <BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox.hxx>
+#define IntImp_TheFunction_hxx <BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox.hpp>
 #define IntImp_Int2S BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox
-#define IntImp_Int2S_hxx <BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox.hxx>
-#include <IntImp_Int2S.gxx>
+#define IntImp_Int2S_hxx <BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox.hpp>
+#include <IntImp_Int2S.hpp>

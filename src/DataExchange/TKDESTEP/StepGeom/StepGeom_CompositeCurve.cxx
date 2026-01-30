@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_CompositeCurve.hxx>
-#include <StepGeom_CompositeCurveSegment.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_CompositeCurve.hpp>
+#include <StepGeom_CompositeCurveSegment.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_CompositeCurve, StepGeom_BoundedCurve)
 

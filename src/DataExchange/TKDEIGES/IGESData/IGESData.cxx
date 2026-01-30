@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData.hxx>
-#include <IGESData_DefaultGeneral.hxx>
-#include <IGESData_DefaultSpecific.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_Protocol.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Static.hxx>
-#include <Interface_Version.hxx>
-#include <OSD_Process.hxx>
-#include <Quantity_Date.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Real.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData.hpp>
+#include <IGESData_DefaultGeneral.hpp>
+#include <IGESData_DefaultSpecific.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_Protocol.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Static.hpp>
+#include <Interface_Version.hpp>
+#include <OSD_Process.hpp>
+#include <Quantity_Date.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Real.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 static occ::handle<IGESData_Protocol> proto;

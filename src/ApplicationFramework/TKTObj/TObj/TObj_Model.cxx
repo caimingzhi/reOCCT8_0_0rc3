@@ -15,26 +15,26 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Model.hxx>
+#include <TObj_Model.hpp>
 
-#include <OSD_File.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Owner.hxx>
+#include <OSD_File.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Owner.hpp>
 
-#include <TObj_Assistant.hxx>
-#include <TObj_Application.hxx>
-#include <TObj_CheckModel.hxx>
-#include <TObj_HiddenPartition.hxx>
-#include <TObj_LabelIterator.hxx>
-#include <TObj_ModelIterator.hxx>
-#include <TObj_Object.hxx>
-#include <TObj_Partition.hxx>
-#include <TObj_TObject.hxx>
-#include <TObj_TModel.hxx>
-#include <TObj_TNameContainer.hxx>
-#include <Message_Msg.hxx>
-#include <OSD_OpenFile.hxx>
+#include <TObj_Assistant.hpp>
+#include <TObj_Application.hpp>
+#include <TObj_CheckModel.hpp>
+#include <TObj_HiddenPartition.hpp>
+#include <TObj_LabelIterator.hpp>
+#include <TObj_ModelIterator.hpp>
+#include <TObj_Object.hpp>
+#include <TObj_Partition.hpp>
+#include <TObj_TObject.hpp>
+#include <TObj_TModel.hpp>
+#include <TObj_TNameContainer.hpp>
+#include <Message_Msg.hpp>
+#include <OSD_OpenFile.hpp>
 #include <utility>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_Model, Standard_Transient)

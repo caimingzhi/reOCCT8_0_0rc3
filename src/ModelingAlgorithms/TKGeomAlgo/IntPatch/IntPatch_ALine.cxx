@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pnt.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_Point.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_Point.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntPatch_ALine, IntPatch_Line)
 

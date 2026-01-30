@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_WindowInputListener.hxx>
+#include <Aspect_WindowInputListener.hpp>
 
-#include <WNT_HIDSpaceMouse.hxx>
+#include <WNT_HIDSpaceMouse.hpp>
 
 //=================================================================================================
 

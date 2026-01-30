@@ -12,20 +12,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
 
-#include <Draw.hxx>
-#include <TopoDS_Shape.hxx>
-#include <DBRep.hxx>
+#include <Draw.hpp>
+#include <TopoDS_Shape.hpp>
+#include <DBRep.hpp>
 
-#include <BOPDS_DS.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_CellsBuilder.hxx>
+#include <BOPDS_DS.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_CellsBuilder.hpp>
 
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_Objects.hpp>
 
-#include <Draw_ProgressIndicator.hxx>
+#include <Draw_ProgressIndicator.hpp>
 
 static int bcbuild(Draw_Interpretor&, int, const char**);
 static int bcaddall(Draw_Interpretor&, int, const char**);

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_FileSystem.hxx>
-#include <OSD_FileSystemSelector.hxx>
-#include <OSD_LocalFileSystem.hxx>
+#include <OSD_FileSystem.hpp>
+#include <OSD_FileSystemSelector.hpp>
+#include <OSD_LocalFileSystem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_FileSystem, Standard_Transient)
 

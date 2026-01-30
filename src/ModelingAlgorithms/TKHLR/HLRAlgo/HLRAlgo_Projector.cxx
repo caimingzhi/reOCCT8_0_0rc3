@@ -18,15 +18,15 @@
 // #define No_Exception
 #endif
 
-#include <gp_Ax3.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <HLRAlgo_Projector.hxx>
-#include <Precision.hxx>
+#include <gp_Ax3.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <HLRAlgo_Projector.hpp>
+#include <Precision.hpp>
 
 // formula for derivating a perspective, from Mathematica
 //        X'[t]      X[t] Z'[t]
@@ -107,7 +107,7 @@ void HLRAlgo_Projector::Set(const gp_Trsf& T, const bool Persp, const double Foc
 
 //=================================================================================================
 
-#include <gp_Mat.hxx>
+#include <gp_Mat.hpp>
 
 static int TrsfType(const gp_Trsf& Trsf)
 {

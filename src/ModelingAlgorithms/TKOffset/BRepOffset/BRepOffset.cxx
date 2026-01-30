@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepOffset.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRepOffset.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

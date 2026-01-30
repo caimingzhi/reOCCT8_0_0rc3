@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_CappingPlaneResource.hxx>
+#include <OpenGl_CappingPlaneResource.hpp>
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Vec.hxx>
-#include <OpenGl_ShaderManager.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Vec.hpp>
+#include <OpenGl_ShaderManager.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_CappingPlaneResource, OpenGl_Resource)
 

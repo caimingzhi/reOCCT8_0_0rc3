@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Geometry.hxx>
-#include <Geom_Vector.hxx>
-#include <Geom_VectorWithMagnitude.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Geometry.hpp>
+#include <Geom_Vector.hpp>
+#include <Geom_VectorWithMagnitude.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_VectorWithMagnitude, Geom_Vector)
 

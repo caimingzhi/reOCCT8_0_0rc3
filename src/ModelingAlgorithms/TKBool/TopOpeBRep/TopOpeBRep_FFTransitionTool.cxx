@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Vec.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Vec.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 //=================================================================================================
 

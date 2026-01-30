@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <QABugs_PresentableObject.hxx>
-#include <Standard_Type.hxx>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <QABugs_PresentableObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(QABugs_PresentableObject, AIS_InteractiveObject)
 

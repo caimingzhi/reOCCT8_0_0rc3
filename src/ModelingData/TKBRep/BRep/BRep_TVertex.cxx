@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_TVertex.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_TVertex.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_TVertex, TopoDS_TVertex)
 

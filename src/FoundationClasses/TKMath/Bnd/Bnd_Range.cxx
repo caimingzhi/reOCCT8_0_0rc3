@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Range.hxx>
-#include <Standard_Dump.hxx>
+#include <Bnd_Range.hpp>
+#include <Standard_Dump.hpp>
 
 //=================================================================================================
 

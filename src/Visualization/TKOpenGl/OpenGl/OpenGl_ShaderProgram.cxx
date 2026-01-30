@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_File.hxx>
-#include <OSD_Environment.hxx>
+#include <OSD_File.hpp>
+#include <OSD_Environment.hpp>
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ArbTexBindless.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ArbTexBindless.hpp>
 
-#include <OpenGl_GlCore32.hxx>
+#include <OpenGl_GlCore32.hpp>
 
-#include "../../TKService/Shaders/Shaders_DeclarationsImpl_glsl.pxx"
-#include "../../TKService/Shaders/Shaders_Declarations_glsl.pxx"
+#include "../../TKService/Shaders/Shaders_DeclarationsImpl_glsl.hpp"
+#include "../../TKService/Shaders/Shaders_Declarations_glsl.hpp"
 
 #ifdef _WIN32
   #include <malloc.h> // for alloca()

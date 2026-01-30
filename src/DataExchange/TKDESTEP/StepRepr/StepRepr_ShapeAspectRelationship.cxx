@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ShapeAspectRelationship, Standard_Transient)
 

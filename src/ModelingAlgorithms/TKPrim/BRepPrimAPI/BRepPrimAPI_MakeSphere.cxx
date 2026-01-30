@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
+#include <BRepBuilderAPI.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
 
 //=================================================================================================
 

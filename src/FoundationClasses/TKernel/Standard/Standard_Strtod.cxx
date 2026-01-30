@@ -29,7 +29,7 @@
 
 */
 
-#include <Standard_CString.hxx>
+#include <Standard_CString.hpp>
 
 #define IEEE_8087 1
 #define DISABLE_DTOA

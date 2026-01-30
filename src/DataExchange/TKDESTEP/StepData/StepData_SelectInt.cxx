@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepData_SelectInt.hxx>
+#include <Standard_Type.hpp>
+#include <StepData_SelectInt.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_SelectInt, StepData_SelectMember)
 

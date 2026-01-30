@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AppliedOrganizationAssignment.hxx>
-#include <StepAP214_AppliedSecurityClassificationAssignment.hxx>
-#include <StepAP214_PersonAndOrganizationItem.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepBasic_SecurityClassification.hxx>
-#include <StepRepr_AssemblyComponentUsageSubstitute.hxx>
-#include <StepRepr_MaterialDesignation.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hxx>
-#include <StepVisual_PresentationArea.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AppliedOrganizationAssignment.hpp>
+#include <StepAP214_AppliedSecurityClassificationAssignment.hpp>
+#include <StepAP214_PersonAndOrganizationItem.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepBasic_SecurityClassification.hpp>
+#include <StepRepr_AssemblyComponentUsageSubstitute.hpp>
+#include <StepRepr_MaterialDesignation.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp>
+#include <StepVisual_PresentationArea.hpp>
 
 StepAP214_PersonAndOrganizationItem::StepAP214_PersonAndOrganizationItem() = default;
 

@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <Contap_ContAna.hxx>
-#include <Contap_Contour.hxx>
-#include <Contap_HContTool.hxx>
-#include <Contap_HCurve2dTool.hxx>
-#include <Contap_Line.hxx>
-#include <Contap_SurfFunction.hxx>
-#include <Contap_SurfProps.hxx>
-#include <Contap_TheIWalking.hxx>
-#include <Contap_ThePathPointOfTheSearch.hxx>
-#include <Contap_TheSegmentOfTheSearch.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_InteriorPoint.hxx>
-#include <IntSurf_PathPoint.hxx>
-#include <NCollection_Sequence.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopTrans_CurveTransition.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <Contap_ContAna.hpp>
+#include <Contap_Contour.hpp>
+#include <Contap_HContTool.hpp>
+#include <Contap_HCurve2dTool.hpp>
+#include <Contap_Line.hpp>
+#include <Contap_SurfFunction.hpp>
+#include <Contap_SurfProps.hpp>
+#include <Contap_TheIWalking.hpp>
+#include <Contap_ThePathPointOfTheSearch.hpp>
+#include <Contap_TheSegmentOfTheSearch.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_InteriorPoint.hpp>
+#include <IntSurf_PathPoint.hpp>
+#include <NCollection_Sequence.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopTrans_CurveTransition.hpp>
 
 static const double Tolpetit = 1.e-10; // for squared distance
 

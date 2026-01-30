@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dHatch_Hatching.hxx>
-#include <gp_Pnt2d.hxx>
-#include <HatchGen_Domain.hxx>
-#include <HatchGen_PointOnElement.hxx>
-#include <HatchGen_PointOnHatching.hxx>
+#include <Geom2dHatch_Hatching.hpp>
+#include <gp_Pnt2d.hpp>
+#include <HatchGen_Domain.hpp>
+#include <HatchGen_PointOnElement.hpp>
+#include <HatchGen_PointOnHatching.hpp>
 
 #define RAISE_IF_NOSUCHOBJECT 0
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
 //=================================================================================================
 

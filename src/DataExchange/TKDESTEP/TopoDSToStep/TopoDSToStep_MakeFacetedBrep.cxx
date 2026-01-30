@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d.hxx>
-#include <Message_ProgressScope.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_FacetedBrep.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <StepVisual_TessellatedShell.hxx>
-#include <StepVisual_TessellatedSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDSToStep.hxx>
-#include <TopoDSToStep_Builder.hxx>
-#include <TopoDSToStep_MakeFacetedBrep.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRepClass3d.hpp>
+#include <Message_ProgressScope.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_FacetedBrep.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <StepVisual_TessellatedShell.hpp>
+#include <StepVisual_TessellatedSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDSToStep.hpp>
+#include <TopoDSToStep_Builder.hpp>
+#include <TopoDSToStep_MakeFacetedBrep.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 //=============================================================================
 // Create a FacetedBrep of StepShape from a Shell of TopoDS

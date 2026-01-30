@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_PointLine.hxx>
+#include <IntPatch_PointLine.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Precision.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Precision.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntPatch_PointLine, IntPatch_Line)
 
@@ -80,7 +80,7 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
 
   {
     // This algorithm is described in NonSingularProcessing() function
-    // in ApproxInt_ImpPrmSvSurfaces.gxx file
+    // in ApproxInt_ImpPrmSvSurfaces.hpp file
     double aSqNMagn = aN1.SquareMagnitude();
     gp_Vec aTgU(aCTan.Crossed(aDU1)), aTgV(aCTan.Crossed(aDV1));
     double aDeltaU = aTgV.SquareMagnitude() / aSqNMagn;

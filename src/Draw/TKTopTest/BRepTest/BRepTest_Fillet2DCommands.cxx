@@ -19,29 +19,29 @@
 //              status = ChFi2d_NotAuthorized if edges are not
 //              lines or circles  (BUC60288) + partial_result
 
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <BRepFilletAPI_MakeFillet2d.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <BRepFilletAPI_MakeFillet2d.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
-#include <ChFi2d_FilletAPI.hxx>
-#include <ChFi2d_ChamferAPI.hxx>
+#include <ChFi2d_FilletAPI.hpp>
+#include <ChFi2d_ChamferAPI.hpp>
 
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_FindPlane.hxx>
-#include <BRep_Builder.hxx>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_FindPlane.hpp>
+#include <BRep_Builder.hpp>
 
 //=======================================================================
 // function : chfi2d

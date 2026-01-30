@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWRepresentationMap.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_RepresentationMap.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWRepresentationMap.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_RepresentationMap.hpp>
 
 RWStepRepr_RWRepresentationMap::RWStepRepr_RWRepresentationMap() = default;
 

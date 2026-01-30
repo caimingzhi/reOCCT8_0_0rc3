@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_DocumentStorageDriver.hxx>
-#include <BinLDrivers.hxx>
-#include <BinTObjDrivers.hxx>
+#include <BinTObjDrivers_DocumentStorageDriver.hpp>
+#include <BinLDrivers.hpp>
+#include <BinTObjDrivers.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_DocumentStorageDriver, BinLDrivers_DocumentStorageDriver)
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_PolyAlgo.hxx>
+#include <HLRAlgo_PolyAlgo.hpp>
 
-#include <HLRAlgo_BiPoint.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <NCollection_List.hxx>
-#include <HLRAlgo_PolyShellData.hxx>
-#include <HLRAlgo_PolyMask.hxx>
-#include <Precision.hxx>
+#include <HLRAlgo_BiPoint.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <NCollection_List.hpp>
+#include <HLRAlgo_PolyShellData.hpp>
+#include <HLRAlgo_PolyMask.hpp>
+#include <Precision.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyAlgo, Standard_Transient)
 

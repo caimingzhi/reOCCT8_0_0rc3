@@ -15,18 +15,18 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWFeaModel.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFEA_FeaModel.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWFeaModel.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFEA_FeaModel.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TCollection_AsciiString.hpp>
 
 //=================================================================================================
 

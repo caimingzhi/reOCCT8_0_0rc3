@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESDefs_MacroDef.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESDefs_MacroDef.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_MacroDef, IGESData_IGESEntity)
 

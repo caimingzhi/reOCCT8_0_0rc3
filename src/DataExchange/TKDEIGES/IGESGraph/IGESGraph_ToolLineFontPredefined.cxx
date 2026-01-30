@@ -16,17 +16,17 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESGraph_LineFontPredefined.hxx>
-#include <IGESGraph_ToolLineFontPredefined.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESGraph_LineFontPredefined.hpp>
+#include <IGESGraph_ToolLineFontPredefined.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
 
 IGESGraph_ToolLineFontPredefined::IGESGraph_ToolLineFontPredefined() = default;
 

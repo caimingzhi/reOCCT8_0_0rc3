@@ -17,25 +17,25 @@
 
 //
 
-#include <BOPAlgo_CheckerSI.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPDS_IteratorSI.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_Pair.hxx>
-#include <BOPDS_PIteratorSI.hxx>
-#include <NCollection_Vector.hxx>
-#include <BRep_Tool.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_FaceFace.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
+#include <BOPAlgo_CheckerSI.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPDS_IteratorSI.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_Pair.hpp>
+#include <BOPDS_PIteratorSI.hpp>
+#include <NCollection_Vector.hpp>
+#include <BRep_Tool.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_FaceFace.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
 
 //=================================================================================================
 

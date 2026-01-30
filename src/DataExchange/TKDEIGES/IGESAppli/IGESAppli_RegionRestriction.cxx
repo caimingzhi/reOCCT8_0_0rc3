@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_RegionRestriction.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_RegionRestriction.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_RegionRestriction, IGESData_IGESEntity)
 

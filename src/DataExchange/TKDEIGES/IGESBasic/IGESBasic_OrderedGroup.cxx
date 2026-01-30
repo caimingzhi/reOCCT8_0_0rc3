@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_OrderedGroup.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_OrderedGroup.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_OrderedGroup, IGESBasic_Group)
 

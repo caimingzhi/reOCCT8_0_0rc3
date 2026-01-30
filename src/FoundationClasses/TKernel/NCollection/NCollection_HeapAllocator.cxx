@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_HeapAllocator.hxx>
-#include <Standard_OutOfMemory.hxx>
+#include <NCollection_HeapAllocator.hpp>
+#include <Standard_OutOfMemory.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(NCollection_HeapAllocator, NCollection_BaseAllocator)
 

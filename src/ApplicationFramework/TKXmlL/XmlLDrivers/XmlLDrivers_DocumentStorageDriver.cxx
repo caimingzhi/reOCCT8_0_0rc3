@@ -13,31 +13,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Application.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <LDOM_XmlWriter.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileSystem.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_Data.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDocStd_Document.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlLDrivers_DocumentStorageDriver.hxx>
-#include <XmlLDrivers_NamespaceDef.hxx>
-#include <XmlMDF.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_SRelocationTable.hxx>
+#include <CDM_Application.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <LDOM_XmlWriter.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileSystem.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_Data.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDocStd_Document.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlLDrivers_DocumentStorageDriver.hpp>
+#include <XmlLDrivers_NamespaceDef.hpp>
+#include <XmlMDF.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_SRelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentStorageDriver, PCDM_StorageDriver)
 

@@ -13,39 +13,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepLib.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Precision.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeCustom_BSplineRestriction.hxx>
-#include <ShapeCustom_ConvertToBSpline.hxx>
-#include <ShapeCustom_ConvertToRevolution.hxx>
-#include <ShapeCustom_DirectModification.hxx>
-#include <ShapeCustom_RestrictionParameters.hxx>
-#include <ShapeCustom_SweptToElementary.hxx>
-#include <ShapeExtend_MsgRegistrator.hxx>
-#include <ShapeFix.hxx>
-#include <ShapeFix_FixSmallFace.hxx>
-#include <ShapeFix_FixSmallSolid.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <ShapeFix_SplitCommonVertex.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <ShapeFix_Wireframe.hxx>
-#include <ShapeProcess.hxx>
-#include <ShapeProcess_OperLibrary.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <ShapeProcess_UOperator.hxx>
-#include <ShapeUpgrade_ShapeConvertToBezier.hxx>
-#include <ShapeUpgrade_ShapeDivideAngle.hxx>
-#include <ShapeUpgrade_ShapeDivideClosed.hxx>
-#include <ShapeUpgrade_ShapeDivideClosedEdges.hxx>
-#include <ShapeUpgrade_ShapeDivideContinuity.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Precision.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeCustom_BSplineRestriction.hpp>
+#include <ShapeCustom_ConvertToBSpline.hpp>
+#include <ShapeCustom_ConvertToRevolution.hpp>
+#include <ShapeCustom_DirectModification.hpp>
+#include <ShapeCustom_RestrictionParameters.hpp>
+#include <ShapeCustom_SweptToElementary.hpp>
+#include <ShapeExtend_MsgRegistrator.hpp>
+#include <ShapeFix.hpp>
+#include <ShapeFix_FixSmallFace.hpp>
+#include <ShapeFix_FixSmallSolid.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <ShapeFix_SplitCommonVertex.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <ShapeFix_Wireframe.hpp>
+#include <ShapeProcess.hpp>
+#include <ShapeProcess_OperLibrary.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <ShapeProcess_UOperator.hpp>
+#include <ShapeUpgrade_ShapeConvertToBezier.hpp>
+#include <ShapeUpgrade_ShapeDivideAngle.hpp>
+#include <ShapeUpgrade_ShapeDivideClosed.hpp>
+#include <ShapeUpgrade_ShapeDivideClosedEdges.hpp>
+#include <ShapeUpgrade_ShapeDivideContinuity.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=======================================================================
 // function : ApplyModifier

@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <MathRoot_Multiple.hxx>
-#include <MathUtils_FunctorScalar.hxx>
+#include <MathRoot_Multiple.hpp>
+#include <MathUtils_FunctorScalar.hpp>
 
 #include <cmath>
 

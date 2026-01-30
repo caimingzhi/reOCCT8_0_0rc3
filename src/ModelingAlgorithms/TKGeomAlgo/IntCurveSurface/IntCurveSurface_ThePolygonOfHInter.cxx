@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_ThePolygonOfHInter.hxx>
+#include <IntCurveSurface_ThePolygonOfHInter.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
-#include "IntCurveSurface_PolygonUtils.pxx"
-#include <IntCurveSurface_TheHCurveTool.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
+#include "IntCurveSurface_PolygonUtils.hpp"
+#include <IntCurveSurface_TheHCurveTool.hpp>
+#include <Standard_OutOfRange.hpp>
 
 //==================================================================================================
 

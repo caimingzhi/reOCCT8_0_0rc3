@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <StdPrs_ToolVertex.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <StdPrs_ToolVertex.hpp>
+#include <TopoDS_Vertex.hpp>
 
 void StdPrs_ToolVertex::Coord(const TopoDS_Vertex& aVertex, double& X, double& Y, double& Z)
 {

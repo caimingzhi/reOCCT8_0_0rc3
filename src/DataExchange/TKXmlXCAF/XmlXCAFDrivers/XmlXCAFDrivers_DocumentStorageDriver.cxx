@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <XmlDrivers.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMXCAFDoc.hxx>
-#include <XmlXCAFDrivers_DocumentStorageDriver.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <XmlDrivers.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMXCAFDoc.hpp>
+#include <XmlXCAFDrivers_DocumentStorageDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlXCAFDrivers_DocumentStorageDriver, XmlDrivers_DocumentStorageDriver)
 

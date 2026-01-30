@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Certification.hxx>
-#include <StepBasic_CertificationAssignment.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Certification.hpp>
+#include <StepBasic_CertificationAssignment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_CertificationAssignment, Standard_Transient)
 

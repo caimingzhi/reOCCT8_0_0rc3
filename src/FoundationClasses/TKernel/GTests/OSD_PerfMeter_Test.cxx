@@ -12,8 +12,8 @@
 // commercial license or contractual agreement.
 
 #include <gtest/gtest.h>
-#include <OSD_PerfMeter.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_PerfMeter.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <chrono>
 #include <thread>

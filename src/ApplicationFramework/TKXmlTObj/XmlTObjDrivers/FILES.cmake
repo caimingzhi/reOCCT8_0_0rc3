@@ -3,19 +3,19 @@ set(OCCT_XmlTObjDrivers_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XmlTObjDrivers_FILES
   XmlTObjDrivers.cxx
-  XmlTObjDrivers.hxx
+  XmlTObjDrivers.hpp
   XmlTObjDrivers_DocumentRetrievalDriver.cxx
-  XmlTObjDrivers_DocumentRetrievalDriver.hxx
+  XmlTObjDrivers_DocumentRetrievalDriver.hpp
   XmlTObjDrivers_DocumentStorageDriver.cxx
-  XmlTObjDrivers_DocumentStorageDriver.hxx
+  XmlTObjDrivers_DocumentStorageDriver.hpp
   XmlTObjDrivers_IntSparseArrayDriver.cxx
-  XmlTObjDrivers_IntSparseArrayDriver.hxx
+  XmlTObjDrivers_IntSparseArrayDriver.hpp
   XmlTObjDrivers_ModelDriver.cxx
-  XmlTObjDrivers_ModelDriver.hxx
+  XmlTObjDrivers_ModelDriver.hpp
   XmlTObjDrivers_ObjectDriver.cxx
-  XmlTObjDrivers_ObjectDriver.hxx
+  XmlTObjDrivers_ObjectDriver.hpp
   XmlTObjDrivers_ReferenceDriver.cxx
-  XmlTObjDrivers_ReferenceDriver.hxx
+  XmlTObjDrivers_ReferenceDriver.hpp
   XmlTObjDrivers_XYZDriver.cxx
-  XmlTObjDrivers_XYZDriver.hxx
+  XmlTObjDrivers_XYZDriver.hpp
 )

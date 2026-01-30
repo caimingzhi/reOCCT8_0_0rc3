@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_CurveOnClosedSurface.hxx>
-#include <BRep_CurveOnSurface.hxx>
-#include <BRep_CurveRepresentation.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <NCollection_List.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <BRep_Polygon3D.hxx>
-#include <BRep_PolygonOnTriangulation.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_ShapeSet.hxx>
-#include <GeomTools.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard_Macro.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_CurveOnClosedSurface.hpp>
+#include <BRep_CurveOnSurface.hpp>
+#include <BRep_CurveRepresentation.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <NCollection_List.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <BRep_Polygon3D.hpp>
+#include <BRep_PolygonOnTriangulation.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_ShapeSet.hpp>
+#include <GeomTools.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 // Modified:    02 Nov 2000: BUC60769. JMB, PTV.  In order to be able to read BRep
 //              files that came from a platform different from where CasCade

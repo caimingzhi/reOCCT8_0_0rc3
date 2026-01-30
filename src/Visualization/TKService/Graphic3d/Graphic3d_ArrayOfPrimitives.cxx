@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfPrimitives.hxx>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
 
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_ArrayOfTriangleStrips.hxx>
-#include <Graphic3d_ArrayOfTriangleFans.hxx>
-#include <Graphic3d_ArrayOfQuadrangles.hxx>
-#include <Graphic3d_ArrayOfQuadrangleStrips.hxx>
-#include <Graphic3d_ArrayOfPolygons.hxx>
-#include <Graphic3d_AttribBuffer.hxx>
-#include <Graphic3d_MutableIndexBuffer.hxx>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_ArrayOfTriangleStrips.hpp>
+#include <Graphic3d_ArrayOfTriangleFans.hpp>
+#include <Graphic3d_ArrayOfQuadrangles.hpp>
+#include <Graphic3d_ArrayOfQuadrangleStrips.hpp>
+#include <Graphic3d_ArrayOfPolygons.hpp>
+#include <Graphic3d_AttribBuffer.hpp>
+#include <Graphic3d_MutableIndexBuffer.hpp>
 
-#include <TCollection_AsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 #include <cstdlib>

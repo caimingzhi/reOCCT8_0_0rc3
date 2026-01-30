@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Plate_SampledCurveConstraint.hxx>
-#include <Plate_PinpointConstraint.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_DimensionMismatch.hxx>
+#include <Plate_SampledCurveConstraint.hpp>
+#include <Plate_PinpointConstraint.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_DimensionMismatch.hpp>
 
 static inline double B0(double t)
 {

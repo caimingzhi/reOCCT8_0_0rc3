@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWManifoldSolidBrep.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_ManifoldSolidBrep.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWManifoldSolidBrep.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_ManifoldSolidBrep.hpp>
 
 RWStepShape_RWManifoldSolidBrep::RWStepShape_RWManifoldSolidBrep() = default;
 

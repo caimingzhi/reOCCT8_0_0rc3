@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_ElementarySurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <GeomToStep_MakeConicalSurface.hxx>
-#include <GeomToStep_MakeCylindricalSurface.hxx>
-#include <GeomToStep_MakeElementarySurface.hxx>
-#include <GeomToStep_MakePlane.hxx>
-#include <GeomToStep_MakeSphericalSurface.hxx>
-#include <GeomToStep_MakeToroidalSurface.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_ConicalSurface.hxx>
-#include <StepGeom_CylindricalSurface.hxx>
-#include <StepGeom_ElementarySurface.hxx>
-#include <StepGeom_Plane.hxx>
-#include <StepGeom_SphericalSurface.hxx>
-#include <StepGeom_ToroidalSurface.hxx>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_ElementarySurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <GeomToStep_MakeConicalSurface.hpp>
+#include <GeomToStep_MakeCylindricalSurface.hpp>
+#include <GeomToStep_MakeElementarySurface.hpp>
+#include <GeomToStep_MakePlane.hpp>
+#include <GeomToStep_MakeSphericalSurface.hpp>
+#include <GeomToStep_MakeToroidalSurface.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_ConicalSurface.hpp>
+#include <StepGeom_CylindricalSurface.hpp>
+#include <StepGeom_ElementarySurface.hpp>
+#include <StepGeom_Plane.hpp>
+#include <StepGeom_SphericalSurface.hpp>
+#include <StepGeom_ToroidalSurface.hpp>
 
 //=============================================================================
 // Creation d' une ElementarySurface de prostep a partir d' une

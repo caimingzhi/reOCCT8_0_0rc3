@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_GTransform.hxx>
-#include <BRepBuilderAPI_NurbsConvert.hxx>
-#include <BRepTools_GTrsfModification.hxx>
-#include <BRepTools_NurbsConvertModification.hxx>
-#include <gp_GTrsf.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_GTransform.hpp>
+#include <BRepBuilderAPI_NurbsConvert.hpp>
+#include <BRepTools_GTrsfModification.hpp>
+#include <BRepTools_NurbsConvertModification.hpp>
+#include <gp_GTrsf.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

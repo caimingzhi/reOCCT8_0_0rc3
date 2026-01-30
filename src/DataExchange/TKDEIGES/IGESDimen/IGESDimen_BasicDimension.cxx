@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <IGESDimen_BasicDimension.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <IGESDimen_BasicDimension.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_BasicDimension, IGESData_IGESEntity)
 

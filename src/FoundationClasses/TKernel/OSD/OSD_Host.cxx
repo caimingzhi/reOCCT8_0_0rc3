@@ -14,12 +14,12 @@
 
 #ifndef _WIN32
 
-  #include <OSD_Host.hxx>
-  #include <OSD_OSDError.hxx>
-  #include <OSD_WhoAmI.hxx>
-  #include <Standard_ConstructionError.hxx>
-  #include <Standard_NullObject.hxx>
-  #include <TCollection_AsciiString.hxx>
+  #include <OSD_Host.hpp>
+  #include <OSD_OSDError.hpp>
+  #include <OSD_WhoAmI.hpp>
+  #include <Standard_ConstructionError.hpp>
+  #include <Standard_NullObject.hpp>
+  #include <TCollection_AsciiString.hpp>
 
 const OSD_WhoAmI Iam = OSD_WHost;
 
@@ -217,7 +217,7 @@ int OSD_Host::Error() const
 
   #include <windows.h>
 
-  #include <OSD_Host.hxx>
+  #include <OSD_Host.hpp>
 
 void _osd_wnt_set_error(OSD_Error&, int, ...);
 

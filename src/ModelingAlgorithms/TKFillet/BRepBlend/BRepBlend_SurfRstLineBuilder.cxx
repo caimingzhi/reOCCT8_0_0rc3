@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <Blend_FuncInv.hxx>
-#include <Blend_SurfCurvFuncInv.hxx>
-#include <Blend_SurfPointFuncInv.hxx>
-#include <Blend_SurfRstFunction.hxx>
-#include <BRepBlend_BlendTool.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepBlend_SurfRstLineBuilder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_Transition.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <TopAbs.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <Blend_FuncInv.hpp>
+#include <Blend_SurfCurvFuncInv.hpp>
+#include <Blend_SurfPointFuncInv.hpp>
+#include <Blend_SurfRstFunction.hpp>
+#include <BRepBlend_BlendTool.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepBlend_SurfRstLineBuilder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_Transition.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <TopAbs.hpp>
 
 #include <cstdio>
 #ifdef OCCT_DEBUG
-  #include <Standard_Integer.hxx>
-  #include <NCollection_Array1.hxx>
-  #include <Geom_BSplineCurve.hxx>
+  #include <Standard_Integer.hpp>
+  #include <NCollection_Array1.hpp>
+  #include <Geom_BSplineCurve.hpp>
 static int  IndexOfSection = 0;
 extern bool Blend_GettraceDRAWSECT();
   #ifdef OCCT_DEBUG_BBPP_N_TRDERIV

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_TVertex.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <ShapeCustom_TrsfModification.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_TVertex.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <ShapeCustom_TrsfModification.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_TrsfModification, BRepTools_TrsfModification)
 

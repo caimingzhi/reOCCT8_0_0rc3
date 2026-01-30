@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Trihedron.hxx>
+#include <AIS_Trihedron.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_TrihedronOwner.hxx>
-#include <AIS_TrihedronSelectionMode.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_TrihedronOwner.hpp>
+#include <AIS_TrihedronSelectionMode.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
 
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Prs3d_ToolSphere.hxx>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Prs3d_ToolSphere.hpp>
 
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <Select3D_SensitiveTriangle.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_Type.hxx>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <Select3D_SensitiveTriangle.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Trihedron, AIS_InteractiveObject)
 

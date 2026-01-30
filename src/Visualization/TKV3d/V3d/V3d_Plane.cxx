@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_Plane.hxx>
+#include <V3d_Plane.hpp>
 
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_ArrayOfQuadrangles.hxx>
-#include <gp_Pln.hxx>
-#include <V3d_Viewer.hxx>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_ArrayOfQuadrangles.hpp>
+#include <gp_Pln.hpp>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_Plane, Standard_Transient)
 

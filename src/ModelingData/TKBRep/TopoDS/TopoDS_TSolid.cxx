@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TopoDS_TSolid.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Standard_Type.hpp>
+#include <TopoDS_TSolid.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_TSolid, TopoDS_TShape)
 

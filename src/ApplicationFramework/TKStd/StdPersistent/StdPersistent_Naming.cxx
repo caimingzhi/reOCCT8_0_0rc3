@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPersistent_Naming.hxx>
-#include <StdObjMgt_ReadData.hxx>
+#include <StdPersistent_Naming.hpp>
+#include <StdObjMgt_ReadData.hpp>
 
-#include <TNaming_Name.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Iterator.hxx>
+#include <TNaming_Name.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Iterator.hpp>
 
 //=======================================================================
 // function : Import

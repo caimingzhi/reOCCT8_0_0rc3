@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWHeaderSection.hxx>
+#include <RWHeaderSection.hpp>
 
-#include <HeaderSection.hxx>
-#include <HeaderSection_Protocol.hxx>
-#include <RWHeaderSection_GeneralModule.hxx>
-#include <RWHeaderSection_ReadWriteModule.hxx>
-#include <StepData.hxx>
+#include <HeaderSection.hpp>
+#include <HeaderSection_Protocol.hpp>
+#include <RWHeaderSection_GeneralModule.hpp>
+#include <RWHeaderSection_ReadWriteModule.hpp>
+#include <StepData.hpp>
 
-/// #include <EuclidStandard.hxx>
+/// #include <EuclidStandard.hpp>
 static occ::handle<RWHeaderSection_ReadWriteModule> rwm;
 static occ::handle<RWHeaderSection_GeneralModule>   rwg;
 

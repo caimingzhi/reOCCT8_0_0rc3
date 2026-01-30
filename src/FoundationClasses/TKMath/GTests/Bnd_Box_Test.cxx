@@ -13,13 +13,13 @@
 
 #include <gtest/gtest.h>
 
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_Dump.hxx>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_Dump.hpp>
 
 #include <cmath>
 #include <limits>

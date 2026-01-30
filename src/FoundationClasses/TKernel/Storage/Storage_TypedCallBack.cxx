@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Storage_CallBack.hxx>
-#include <Storage_TypedCallBack.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Storage_CallBack.hpp>
+#include <Storage_TypedCallBack.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Storage_TypedCallBack, Standard_Transient)
 

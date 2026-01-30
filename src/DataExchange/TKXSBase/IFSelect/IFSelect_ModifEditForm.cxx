@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextModif.hxx>
-#include <IFSelect_EditForm.hxx>
-#include <IFSelect_ModifEditForm.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_ContextModif.hpp>
+#include <IFSelect_EditForm.hpp>
+#include <IFSelect_ModifEditForm.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_ModifEditForm, IFSelect_Modifier)
 

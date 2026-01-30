@@ -15,54 +15,54 @@
 
 #include <cstdio>
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Geom2d_Line.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <Geom2d_Circle.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <gp_Lin.hxx>
-#include <BRepFeat_SplitShape.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <Draw.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomAPI_Interpolate.hxx>
-#include <Precision.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <OSD_Path.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <ShapeAnalysis_WireOrder.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <TopExp.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <BRep_Tool.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <V3d_View.hxx>
-#include <TDF_Label.hxx>
-#include <TDataStd_Expression.hxx>
+#include <Geom2d_Line.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <Geom2d_Circle.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <gp_Lin.hpp>
+#include <BRepFeat_SplitShape.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <Draw.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomAPI_Interpolate.hpp>
+#include <Precision.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <OSD_Path.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <ShapeAnalysis_WireOrder.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <TopExp.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <BRep_Tool.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <V3d_View.hpp>
+#include <TDF_Label.hpp>
+#include <TDataStd_Expression.hpp>
 
 static int BUC60897(Draw_Interpretor& di, int /*argc*/, const char** /*argv*/)
 {
@@ -653,7 +653,7 @@ static int BUC60920(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <LDOMParser.hxx>
+#include <LDOMParser.hpp>
 
 static int OCC983(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -904,8 +904,8 @@ static int OCC1919_set(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <DDF.hxx>
-#include <TDataStd_Real.hxx>
+#include <DDF.hpp>
+#include <TDataStd_Real.hpp>
 
 static int OCC1919_real(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -930,7 +930,7 @@ static int OCC1919_real(Draw_Interpretor& di, int argc, const char** argv)
   return 1;
 }
 
-#include <TDataStd_UAttribute.hxx>
+#include <TDataStd_UAttribute.hpp>
 
 static int OCC2932_SetIDUAttribute(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -985,7 +985,7 @@ static int OCC2932_SetTag(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <TDataStd_Current.hxx>
+#include <TDataStd_Current.hpp>
 
 static int OCC2932_SetCurrent(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1021,7 +1021,7 @@ static int OCC2932_SetExpression(Draw_Interpretor& di, int argc, const char** ar
   return 0;
 }
 
-#include <TDataStd_Relation.hxx>
+#include <TDataStd_Relation.hpp>
 
 static int OCC2932_SetRelation(Draw_Interpretor& di, int argc, const char** argv)
 {

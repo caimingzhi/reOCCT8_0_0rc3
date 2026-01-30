@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinObjMgt_Persistent.hxx>
-#include <BinObjMgt_Position.hxx>
-#include <Standard_GUID.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <FSD_BinaryFile.hxx>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinObjMgt_Position.hpp>
+#include <Standard_GUID.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <FSD_BinaryFile.hpp>
 
 #define BP_INTSIZE ((int)sizeof(int))
 #define BP_EXTCHARSIZE ((int)sizeof(char16_t))

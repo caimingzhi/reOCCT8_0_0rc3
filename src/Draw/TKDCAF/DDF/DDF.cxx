@@ -18,14 +18,14 @@
 // Version	Date		Purpose
 //		0.0	Feb 10 1997	Creation
 
-#include <DDF.hxx>
-#include <DDF_Data.hxx>
-#include <Draw.hxx>
-#include <Standard_GUID.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <DDF.hpp>
+#include <DDF_Data.hpp>
+#include <Draw.hpp>
+#include <Standard_GUID.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 //=================================================================================================
 

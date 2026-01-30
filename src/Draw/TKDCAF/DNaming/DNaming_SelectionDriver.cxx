@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DNaming_SelectionDriver.hxx>
-#include <ModelDefinitions.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDF_Label.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Selector.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
+#include <DNaming_SelectionDriver.hpp>
+#include <ModelDefinitions.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDF_Label.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Selector.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_SelectionDriver, TFunction_Driver)
 
 // #define SEL_DEB 1
 #ifdef OCCT_DEBUG
-  #include <TDF_Tool.hxx>
-  #include <NCollection_Map.hxx>
+  #include <TDF_Tool.hpp>
+  #include <NCollection_Map.hpp>
 #endif
 //=================================================================================================
 
@@ -53,7 +53,7 @@ bool DNaming_SelectionDriver::MustExecute(const occ::handle<TFunction_Logbook>&)
 }
 
 #ifdef OCCT_DEBUG
-  #include <BRepTools.hxx>
+  #include <BRepTools.hpp>
 
 static void Write(const TopoDS_Shape& shape, const char* filename)
 {
@@ -70,12 +70,12 @@ static void Write(const TopoDS_Shape& shape, const char* filename)
 // purpose  : Execute the function and push in <theLog> the impacted
 //           labels (see method SetImpacted).
 //=======================================================================
-#include <TNaming_NamedShape.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_Handle.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_Map.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <TNaming_NamedShape.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_Handle.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_Map.hpp>
+#include <TCollection_AsciiString.hpp>
 
 int DNaming_SelectionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {

@@ -13,13 +13,13 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductDefinition.pxx"
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductDefinition.hpp"
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWProductDefinition::RWStepBasic_RWProductDefinition() = default;
 

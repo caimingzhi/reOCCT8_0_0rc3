@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Hatch_Hatcher.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <Precision.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <StdPrs_WFRestrictedFace.hxx>
-#include <StdPrs_ToolRFace.hxx>
-#include <StdPrs_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <NCollection_List.hxx>
+#include <Hatch_Hatcher.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <Precision.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <StdPrs_WFRestrictedFace.hpp>
+#include <StdPrs_ToolRFace.hpp>
+#include <StdPrs_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

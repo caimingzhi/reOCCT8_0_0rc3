@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_SparseArrayBase.hxx>
-#include <Standard_ProgramError.hxx>
-#include <Standard.hxx>
+#include <NCollection_SparseArrayBase.hpp>
+#include <Standard_ProgramError.hpp>
+#include <Standard.hpp>
 
 #include <algorithm>
 #include <cstring>

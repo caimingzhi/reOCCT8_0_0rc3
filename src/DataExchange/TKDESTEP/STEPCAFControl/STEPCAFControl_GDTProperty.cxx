@@ -13,31 +13,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <ShapeConstruct_Curve.hxx>
-#include <STEPCAFControl_GDTProperty.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepDimTol_CylindricityTolerance.hxx>
-#include <StepDimTol_FlatnessTolerance.hxx>
-#include <StepDimTol_LineProfileTolerance.hxx>
-#include <StepDimTol_PositionTolerance.hxx>
-#include <StepDimTol_RoundnessTolerance.hxx>
-#include <StepDimTol_StraightnessTolerance.hxx>
-#include <StepDimTol_SurfaceProfileTolerance.hxx>
-#include <StepRepr_DescriptiveRepresentationItem.hxx>
-#include <StepVisual_ComplexTriangulatedSurfaceSet.hxx>
-#include <StepVisual_TessellatedCurveSet.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <XCAFDimTolObjects_DatumSingleModif.hxx>
-#include <XCAFDimTolObjects_DatumModifWithValue.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <ShapeConstruct_Curve.hpp>
+#include <STEPCAFControl_GDTProperty.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepDimTol_CylindricityTolerance.hpp>
+#include <StepDimTol_FlatnessTolerance.hpp>
+#include <StepDimTol_LineProfileTolerance.hpp>
+#include <StepDimTol_PositionTolerance.hpp>
+#include <StepDimTol_RoundnessTolerance.hpp>
+#include <StepDimTol_StraightnessTolerance.hpp>
+#include <StepDimTol_SurfaceProfileTolerance.hpp>
+#include <StepRepr_DescriptiveRepresentationItem.hpp>
+#include <StepVisual_ComplexTriangulatedSurfaceSet.hpp>
+#include <StepVisual_TessellatedCurveSet.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <XCAFDimTolObjects_DatumSingleModif.hpp>
+#include <XCAFDimTolObjects_DatumModifWithValue.hpp>
 
 namespace
 {

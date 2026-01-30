@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Application.hxx>
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Dump.hxx>
-#include <CDF_Application.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <OSD_Thread.hxx>
+#include <CDM_Application.hpp>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Dump.hpp>
+#include <CDF_Application.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <OSD_Thread.hpp>
 class CDM_MetaData;
 
 IMPLEMENT_STANDARD_RTTIEXT(CDM_MetaData, Standard_Transient)

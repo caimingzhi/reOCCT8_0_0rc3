@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_ValidationUtils.hxx>
+#include <DE_ValidationUtils.hpp>
 
-#include <Message.hxx>
-#include <NCollection_Buffer.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Protection.hxx>
+#include <Message.hpp>
+#include <NCollection_Buffer.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Protection.hpp>
 #include <fstream>
 
 //=================================================================================================

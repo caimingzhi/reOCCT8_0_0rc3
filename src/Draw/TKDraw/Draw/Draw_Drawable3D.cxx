@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Drawable3D.hxx>
+#include <Draw_Drawable3D.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <Draw_Display.hxx>
-#include <Standard_CStringHasher.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Draw_Display.hpp>
+#include <Standard_CStringHasher.hpp>
+#include <Standard_NotImplemented.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Drawable3D, Standard_Transient)
 

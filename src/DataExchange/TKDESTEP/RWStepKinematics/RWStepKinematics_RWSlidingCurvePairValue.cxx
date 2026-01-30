@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWSlidingCurvePairValue.pxx"
+#include "RWStepKinematics_RWSlidingCurvePairValue.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_SlidingCurvePairValue.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepKinematics_KinematicPair.hxx>
-#include <StepGeom_PointOnCurve.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_SlidingCurvePairValue.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepKinematics_KinematicPair.hpp>
+#include <StepGeom_PointOnCurve.hpp>
 
 //=================================================================================================
 

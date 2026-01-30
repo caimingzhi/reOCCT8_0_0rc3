@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWAddress.pxx"
-#include <StepBasic_Address.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWAddress.hpp"
+#include <StepBasic_Address.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWAddress::RWStepBasic_RWAddress() = default;
 

@@ -14,18 +14,18 @@
 
 //-----------------------------------------------------------------
 
-#include <ElCLib.hxx>
-#include <Extrema_ExtPExtS.hxx>
-#include <Extrema_ExtPRevS.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_GenExtPS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAbs_IsoType.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPExtS.hpp>
+#include <Extrema_ExtPRevS.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_GenExtPS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAbs_IsoType.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

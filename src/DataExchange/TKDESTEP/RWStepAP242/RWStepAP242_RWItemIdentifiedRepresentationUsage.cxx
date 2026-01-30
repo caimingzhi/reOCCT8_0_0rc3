@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepAP242_RWItemIdentifiedRepresentationUsage.pxx"
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepAP242_ItemIdentifiedRepresentationUsage.hxx>
-#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
+#include "RWStepAP242_RWItemIdentifiedRepresentationUsage.hpp"
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepAP242_ItemIdentifiedRepresentationUsage.hpp>
+#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
 
 RWStepAP242_RWItemIdentifiedRepresentationUsage::RWStepAP242_RWItemIdentifiedRepresentationUsage() =
   default;

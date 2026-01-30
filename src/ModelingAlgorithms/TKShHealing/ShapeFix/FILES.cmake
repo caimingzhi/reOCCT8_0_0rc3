@@ -3,58 +3,58 @@ set(OCCT_ShapeFix_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeFix_FILES
   ShapeFix.cxx
-  ShapeFix.hxx
+  ShapeFix.hpp
   ShapeFix_ComposeShell.cxx
-  ShapeFix_ComposeShell.hxx
+  ShapeFix_ComposeShell.hpp
 
   ShapeFix_Edge.cxx
-  ShapeFix_Edge.hxx
+  ShapeFix_Edge.hpp
   ShapeFix_EdgeConnect.cxx
-  ShapeFix_EdgeConnect.hxx
+  ShapeFix_EdgeConnect.hpp
   ShapeFix_EdgeProjAux.cxx
-  ShapeFix_EdgeProjAux.hxx
+  ShapeFix_EdgeProjAux.hpp
   ShapeFix_Face.cxx
-  ShapeFix_Face.hxx
-  ShapeFix_Face.lxx
+  ShapeFix_Face.hpp
+  ShapeFix_Face_1.hpp
   ShapeFix_FaceConnect.cxx
-  ShapeFix_FaceConnect.hxx
+  ShapeFix_FaceConnect.hpp
   ShapeFix_FixSmallFace.cxx
-  ShapeFix_FixSmallFace.hxx
+  ShapeFix_FixSmallFace.hpp
   ShapeFix_FixSmallSolid.cxx
-  ShapeFix_FixSmallSolid.hxx
+  ShapeFix_FixSmallSolid.hpp
   ShapeFix_FreeBounds.cxx
-  ShapeFix_FreeBounds.hxx
-  ShapeFix_FreeBounds.lxx
+  ShapeFix_FreeBounds.hpp
+  ShapeFix_FreeBounds_1.hpp
   ShapeFix_IntersectionTool.cxx
-  ShapeFix_IntersectionTool.hxx
-  ShapeFix_IntersectionTool.lxx
+  ShapeFix_IntersectionTool.hpp
+  ShapeFix_IntersectionTool_1.hpp
   ShapeFix_Root.cxx
-  ShapeFix_Root.hxx
-  ShapeFix_Root.lxx
+  ShapeFix_Root.hpp
+  ShapeFix_Root_1.hpp
 
   ShapeFix_Shape.cxx
-  ShapeFix_Shape.hxx
-  ShapeFix_Shape.lxx
+  ShapeFix_Shape.hpp
+  ShapeFix_Shape_1.hpp
   ShapeFix_ShapeTolerance.cxx
-  ShapeFix_ShapeTolerance.hxx
+  ShapeFix_ShapeTolerance.hpp
   ShapeFix_Shell.cxx
-  ShapeFix_Shell.hxx
-  ShapeFix_Shell.lxx
+  ShapeFix_Shell.hpp
+  ShapeFix_Shell_1.hpp
   ShapeFix_Solid.cxx
-  ShapeFix_Solid.hxx
+  ShapeFix_Solid.hpp
   ShapeFix_SplitCommonVertex.cxx
-  ShapeFix_SplitCommonVertex.hxx
+  ShapeFix_SplitCommonVertex.hpp
   ShapeFix_SplitTool.cxx
-  ShapeFix_SplitTool.hxx
+  ShapeFix_SplitTool.hpp
   ShapeFix_Wire.cxx
-  ShapeFix_Wire.hxx
-  ShapeFix_Wire.lxx
+  ShapeFix_Wire.hpp
+  ShapeFix_Wire_1.hpp
   ShapeFix_Wire_1.cxx
   ShapeFix_Wireframe.cxx
-  ShapeFix_Wireframe.hxx
-  ShapeFix_Wireframe.lxx
+  ShapeFix_Wireframe.hpp
+  ShapeFix_Wireframe_1.hpp
   ShapeFix_WireSegment.cxx
-  ShapeFix_WireSegment.hxx
+  ShapeFix_WireSegment.hpp
   ShapeFix_WireVertex.cxx
-  ShapeFix_WireVertex.hxx
+  ShapeFix_WireVertex.hpp
 )

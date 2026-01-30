@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <ProjLib_Torus.hxx>
+#include <gp.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <ProjLib_Torus.hpp>
 
 //=================================================================================================
 

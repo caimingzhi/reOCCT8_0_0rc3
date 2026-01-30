@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_MaterialMap.hxx>
+#include <RWMesh_MaterialMap.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_Directory.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Label.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_Directory.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_MaterialMap, Standard_Transient)
 

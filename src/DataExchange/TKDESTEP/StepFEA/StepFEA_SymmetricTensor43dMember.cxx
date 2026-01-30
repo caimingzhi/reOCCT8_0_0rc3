@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepFEA_SymmetricTensor43dMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_SymmetricTensor43dMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_SymmetricTensor43dMember, StepData_SelectArrReal)
 

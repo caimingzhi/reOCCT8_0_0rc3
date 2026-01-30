@@ -13,36 +13,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pln.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepGProp.hxx>
-#include <BRepOffsetAPI_MakePipeShell.hxx>
-#include <GC_MakeArcOfCircle.hxx>
-#include <Geom_Plane.hxx>
-#include <Law_Linear.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <GProp_GProps.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pln.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepGProp.hpp>
+#include <BRepOffsetAPI_MakePipeShell.hpp>
+#include <GC_MakeArcOfCircle.hpp>
+#include <Geom_Plane.hpp>
+#include <Law_Linear.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <GProp_GProps.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #ifndef M_SQRT2
   #define M_SQRT2 1.41421356237309504880168872420969808
@@ -398,9 +398,9 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <gce_MakePln.hxx>
-#include <BRepOffsetAPI_Sewing.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
+#include <gce_MakePln.hpp>
+#include <BRepOffsetAPI_Sewing.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
 
 //=================================================================================================
 
@@ -783,13 +783,13 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepBndLib.hxx>
-#include <NCollection_Array1.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Common.hxx>
-#include <Precision.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepBndLib.hpp>
+#include <NCollection_Array1.hpp>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Common.hpp>
+#include <Precision.hpp>
 
 static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
 {

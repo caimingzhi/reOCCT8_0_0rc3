@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFeat_Gluer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <BRepFeat_Gluer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

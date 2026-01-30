@@ -15,12 +15,12 @@
 //============================================ IntAna2d_AnaIntersection_5.cxx
 //============================================================================
 
-#include <gp_Circ2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <IntAna2d_Outils.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gp_Circ2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <IntAna2d_Outils.hpp>
+#include <StdFail_NotDone.hpp>
 
 void IntAna2d_AnaIntersection::Perform(const gp_Circ2d& Circle, const IntAna2d_Conic& Conic)
 {

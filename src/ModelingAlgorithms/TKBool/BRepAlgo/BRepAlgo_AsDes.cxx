@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgo_AsDes.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Map.hxx>
+#include <BRepAlgo_AsDes.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAlgo_AsDes, Standard_Transient)
 

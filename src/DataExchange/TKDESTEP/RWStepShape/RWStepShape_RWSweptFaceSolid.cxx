@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWSweptFaceSolid.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_SweptFaceSolid.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWSweptFaceSolid.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_SweptFaceSolid.hpp>
 
 RWStepShape_RWSweptFaceSolid::RWStepShape_RWSweptFaceSolid() = default;
 

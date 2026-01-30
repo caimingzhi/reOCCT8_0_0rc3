@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Quantity_ColorRGBA.hxx>
-#include <Quantity_Color.hxx>
+#include <Quantity_ColorRGBA.hpp>
+#include <Quantity_Color.hpp>
 
 #include <gtest/gtest.h>
 #include <cmath>

@@ -3,44 +3,44 @@ set(OCCT_BRepLib_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepLib_FILES
   BRepLib.cxx
-  BRepLib.hxx
+  BRepLib.hpp
   BRepLib_1.cxx
   BRepLib_CheckCurveOnSurface.cxx
-  BRepLib_CheckCurveOnSurface.hxx
+  BRepLib_CheckCurveOnSurface.hpp
   BRepLib_Command.cxx
-  BRepLib_Command.hxx
-  BRepLib_EdgeError.hxx
-  BRepLib_FaceError.hxx
+  BRepLib_Command.hpp
+  BRepLib_EdgeError.hpp
+  BRepLib_FaceError.hpp
   BRepLib_FindSurface.cxx
-  BRepLib_FindSurface.hxx
+  BRepLib_FindSurface.hpp
   BRepLib_FuseEdges.cxx
-  BRepLib_FuseEdges.hxx
+  BRepLib_FuseEdges.hpp
   BRepLib_MakeEdge.cxx
-  BRepLib_MakeEdge.hxx
+  BRepLib_MakeEdge.hpp
   BRepLib_MakeEdge2d.cxx
-  BRepLib_MakeEdge2d.hxx
+  BRepLib_MakeEdge2d.hpp
   BRepLib_MakeFace.cxx
-  BRepLib_MakeFace.hxx
+  BRepLib_MakeFace.hpp
   BRepLib_MakePolygon.cxx
-  BRepLib_MakePolygon.hxx
+  BRepLib_MakePolygon.hpp
   BRepLib_MakeShape.cxx
-  BRepLib_MakeShape.hxx
+  BRepLib_MakeShape.hpp
   BRepLib_MakeShell.cxx
-  BRepLib_MakeShell.hxx
+  BRepLib_MakeShell.hpp
   BRepLib_MakeSolid.cxx
-  BRepLib_MakeSolid.hxx
+  BRepLib_MakeSolid.hpp
   BRepLib_MakeVertex.cxx
-  BRepLib_MakeVertex.hxx
+  BRepLib_MakeVertex.hpp
   BRepLib_MakeWire.cxx
-  BRepLib_MakeWire.hxx
+  BRepLib_MakeWire.hpp
   BRepLib_MakeWire_1.cxx
-  BRepLib_PointCloudShape.hxx
+  BRepLib_PointCloudShape.hpp
   BRepLib_PointCloudShape.cxx
-  BRepLib_ShapeModification.hxx
-  BRepLib_ShellError.hxx
-  BRepLib_ToolTriangulatedShape.hxx
+  BRepLib_ShapeModification.hpp
+  BRepLib_ShellError.hpp
+  BRepLib_ToolTriangulatedShape.hpp
   BRepLib_ToolTriangulatedShape.cxx
   BRepLib_ValidateEdge.cxx
-  BRepLib_ValidateEdge.hxx
-  BRepLib_WireError.hxx
+  BRepLib_ValidateEdge.hpp
+  BRepLib_WireError.hpp
 )

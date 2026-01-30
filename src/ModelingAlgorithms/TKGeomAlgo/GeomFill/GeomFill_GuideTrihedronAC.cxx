@@ -15,18 +15,18 @@
 
 // Created:	Tue Jun 23 15:39:24 1998
 
-#include <Adaptor3d_Curve.hxx>
-#include <Approx_CurvlinFunc.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomFill_Frenet.hxx>
-#include <GeomFill_GuideTrihedronAC.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Approx_CurvlinFunc.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomFill_Frenet.hpp>
+#include <GeomFill_GuideTrihedronAC.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_GuideTrihedronAC, GeomFill_TrihedronWithGuide)
 

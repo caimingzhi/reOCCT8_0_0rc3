@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <DBRep.hxx>
-#include <DDF.hxx>
-#include <gp_Pnt.hxx>
-#include <QADNaming.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <DBRep.hpp>
+#include <DDF.hpp>
+#include <gp_Pnt.hpp>
+#include <QADNaming.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 #include <cstdio>
 

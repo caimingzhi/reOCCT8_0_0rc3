@@ -15,25 +15,25 @@
 // skl 29.01.2003 - deleted one space symbol at the beginning
 //                 of strings from Header Section
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_InterfaceMismatch.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_ESDescr.hxx>
-#include <StepData_FieldList.hxx>
-#include <StepData_PDescr.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_ReadWriteModule.hxx>
-#include <StepData_SelectArrReal.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepData_UndefinedEntity.hxx>
-#include <StepData_WriterLib.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_InterfaceMismatch.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_ESDescr.hpp>
+#include <StepData_FieldList.hpp>
+#include <StepData_PDescr.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_ReadWriteModule.hpp>
+#include <StepData_SelectArrReal.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepData_UndefinedEntity.hpp>
+#include <StepData_WriterLib.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 #define StepLong 72

@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Contap_ContAna.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Contap_ContAna.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 static const double Tolpetit = 1.e-8;
 

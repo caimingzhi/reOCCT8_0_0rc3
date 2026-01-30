@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_Face.hxx>
-#include <BRepMeshData_Wire.hxx>
-#include <BRepMesh_Vertex.hxx>
+#include <BRepMeshData_Face.hpp>
+#include <BRepMeshData_Wire.hpp>
+#include <BRepMesh_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Face, IMeshData_Face)
 

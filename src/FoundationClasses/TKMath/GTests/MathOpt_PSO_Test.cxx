@@ -13,10 +13,10 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_PSO.hxx>
-#include <math_PSO.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_Vector.hxx>
+#include <MathOpt_PSO.hpp>
+#include <math_PSO.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_Vector.hpp>
 
 #include <cmath>
 

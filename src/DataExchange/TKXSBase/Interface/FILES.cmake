@@ -4,112 +4,112 @@ set(OCCT_Interface_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Interface_FILES
 
   Interface_BitMap.cxx
-  Interface_BitMap.hxx
+  Interface_BitMap.hpp
   Interface_Category.cxx
-  Interface_Category.hxx
+  Interface_Category.hpp
   Interface_Check.cxx
-  Interface_Check.hxx
-  Interface_CheckFailure.hxx
+  Interface_Check.hpp
+  Interface_CheckFailure.hpp
   Interface_CheckIterator.cxx
-  Interface_CheckIterator.hxx
-  Interface_CheckStatus.hxx
+  Interface_CheckIterator.hpp
+  Interface_CheckStatus.hpp
   Interface_CheckTool.cxx
-  Interface_CheckTool.hxx
+  Interface_CheckTool.hpp
   Interface_CopyControl.cxx
-  Interface_CopyControl.hxx
+  Interface_CopyControl.hpp
   Interface_CopyMap.cxx
-  Interface_CopyMap.hxx
+  Interface_CopyMap.hpp
   Interface_CopyTool.cxx
-  Interface_CopyTool.hxx
+  Interface_CopyTool.hpp
 
-  Interface_DataState.hxx
+  Interface_DataState.hpp
   Interface_EntityCluster.cxx
-  Interface_EntityCluster.hxx
+  Interface_EntityCluster.hpp
   Interface_EntityIterator.cxx
-  Interface_EntityIterator.hxx
+  Interface_EntityIterator.hpp
   Interface_EntityList.cxx
-  Interface_EntityList.hxx
+  Interface_EntityList.hpp
   Interface_FileParameter.cxx
-  Interface_FileParameter.hxx
+  Interface_FileParameter.hpp
   Interface_FileReaderData.cxx
-  Interface_FileReaderData.hxx
+  Interface_FileReaderData.hpp
   Interface_FileReaderTool.cxx
-  Interface_FileReaderTool.hxx
+  Interface_FileReaderTool.hpp
   Interface_FloatWriter.cxx
-  Interface_FloatWriter.hxx
-  Interface_GeneralLib.hxx
+  Interface_FloatWriter.hpp
+  Interface_GeneralLib.hpp
   Interface_GeneralLib_0.cxx
   Interface_GeneralModule.cxx
-  Interface_GeneralModule.hxx
-  Interface_GlobalNodeOfGeneralLib.hxx
+  Interface_GeneralModule.hpp
+  Interface_GlobalNodeOfGeneralLib.hpp
   Interface_GlobalNodeOfGeneralLib_0.cxx
-  Interface_GlobalNodeOfReaderLib.hxx
+  Interface_GlobalNodeOfReaderLib.hpp
   Interface_GlobalNodeOfReaderLib_0.cxx
   Interface_Graph.cxx
-  Interface_Graph.hxx
+  Interface_Graph.hpp
   Interface_GraphContent.cxx
-  Interface_GraphContent.hxx
+  Interface_GraphContent.hpp
   Interface_GTool.cxx
-  Interface_GTool.hxx
+  Interface_GTool.hpp
 
   Interface_HGraph.cxx
-  Interface_HGraph.hxx
+  Interface_HGraph.hpp
 
-  Interface_InterfaceError.hxx
-  Interface_InterfaceMismatch.hxx
+  Interface_InterfaceError.hpp
+  Interface_InterfaceMismatch.hpp
   Interface_InterfaceModel.cxx
-  Interface_InterfaceModel.hxx
+  Interface_InterfaceModel.hpp
   Interface_IntList.cxx
-  Interface_IntList.hxx
+  Interface_IntList.hpp
   Interface_IntVal.cxx
-  Interface_IntVal.hxx
+  Interface_IntVal.hpp
   Interface_LineBuffer.cxx
-  Interface_LineBuffer.hxx
+  Interface_LineBuffer.hpp
 
   Interface_MSG.cxx
-  Interface_MSG.hxx
-  Interface_NodeOfGeneralLib.hxx
+  Interface_MSG.hpp
+  Interface_NodeOfGeneralLib.hpp
   Interface_NodeOfGeneralLib_0.cxx
-  Interface_NodeOfReaderLib.hxx
+  Interface_NodeOfReaderLib.hpp
   Interface_NodeOfReaderLib_0.cxx
   Interface_ParamList.cxx
-  Interface_ParamList.hxx
-  Interface_ParamList.lxx
+  Interface_ParamList.hpp
+  Interface_ParamList_1.hpp
   Interface_ParamSet.cxx
-  Interface_ParamSet.hxx
-  Interface_ParamType.hxx
+  Interface_ParamSet.hpp
+  Interface_ParamType.hpp
   Interface_Protocol.cxx
-  Interface_Protocol.hxx
-  Interface_ReaderLib.hxx
+  Interface_Protocol.hpp
+  Interface_ReaderLib.hpp
   Interface_ReaderLib_0.cxx
   Interface_ReaderModule.cxx
-  Interface_ReaderModule.hxx
-  Interface_Recognizer.gxx
+  Interface_ReaderModule.hpp
+  Interface_Recognizer.hpp
   Interface_ReportEntity.cxx
-  Interface_ReportEntity.hxx
+  Interface_ReportEntity.hpp
 
   Interface_ShareFlags.cxx
-  Interface_ShareFlags.hxx
+  Interface_ShareFlags.hpp
   Interface_ShareTool.cxx
-  Interface_ShareTool.hxx
+  Interface_ShareTool.hpp
   Interface_SignLabel.cxx
-  Interface_SignLabel.hxx
+  Interface_SignLabel.hpp
   Interface_SignType.cxx
-  Interface_SignType.hxx
+  Interface_SignType.hpp
   Interface_STAT.cxx
-  Interface_STAT.hxx
+  Interface_STAT.hpp
   Interface_Static.cxx
-  Interface_Static.hxx
-  Interface_Statics.hxx
-  Interface_StaticSatisfies.hxx
+  Interface_Static.hpp
+  Interface_Statics.hpp
+  Interface_StaticSatisfies.hpp
   Interface_StaticStandards.cxx
-  Interface_Translates.hxx
+  Interface_Translates.hpp
   Interface_TypedValue.cxx
-  Interface_TypedValue.hxx
+  Interface_TypedValue.hpp
   Interface_UndefinedContent.cxx
-  Interface_UndefinedContent.hxx
-  Interface_ValueInterpret.hxx
-  Interface_ValueSatisfies.hxx
+  Interface_UndefinedContent.hpp
+  Interface_ValueInterpret.hpp
+  Interface_ValueSatisfies.hpp
 
-  Interface_Version.hxx
+  Interface_Version.hpp
 )

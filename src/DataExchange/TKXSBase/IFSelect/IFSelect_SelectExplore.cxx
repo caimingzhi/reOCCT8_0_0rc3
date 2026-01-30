@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SelectExplore.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <IFSelect_SelectExplore.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectExplore, IFSelect_SelectDeduct)

@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
 
-#include <BRepOffsetAPI_DraftAngle.hxx>
-#include <BRepOffsetAPI_MakeDraft.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Dir.hxx>
+#include <BRepOffsetAPI_DraftAngle.hpp>
+#include <BRepOffsetAPI_MakeDraft.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Dir.hpp>
 
 static void Print(Draw_Interpretor& di, const Draft_ErrorStatus St)
 {

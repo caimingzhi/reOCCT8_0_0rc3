@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_DisplayConnection.hxx>
+#include <Aspect_DisplayConnection.hpp>
 
-#include <Aspect_DisplayConnectionDefinitionError.hxx>
-#include <OSD_Environment.hxx>
+#include <Aspect_DisplayConnectionDefinitionError.hpp>
+#include <OSD_Environment.hpp>
 
 #if defined(HAVE_XLIB)
   #include <X11/Xlib.h>

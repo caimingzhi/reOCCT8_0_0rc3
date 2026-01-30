@@ -13,34 +13,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_MidPointRelation.hxx>
+#include <PrsDim_MidPointRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_MidPointPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveCurve.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_MidPointPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveCurve.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_MidPointRelation, PrsDim_Relation)
 

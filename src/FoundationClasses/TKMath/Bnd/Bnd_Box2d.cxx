@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box2d.hxx>
+#include <Bnd_Box2d.hpp>
 
-#include <gp_Dir2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Macro.hxx>
+#include <gp_Dir2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

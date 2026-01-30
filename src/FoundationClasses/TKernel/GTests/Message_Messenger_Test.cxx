@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Message_Printer.hxx>
-#include <Message.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Message_Messenger.hpp>
+#include <Message_Printer.hpp>
+#include <Message.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 

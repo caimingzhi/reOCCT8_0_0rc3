@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgoAPI_BuilderAlgo.hxx>
+#include <BRepAlgoAPI_BuilderAlgo.hpp>
 
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPDS_DS.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPDS_DS.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

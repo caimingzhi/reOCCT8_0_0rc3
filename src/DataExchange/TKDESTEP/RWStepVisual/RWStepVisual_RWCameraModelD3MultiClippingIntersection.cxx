@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWCameraModelD3MultiClippingIntersection.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_CameraModelD3MultiClippingIntersection.hxx>
-#include <StepVisual_CameraModelD3MultiClippingInterectionSelect.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWCameraModelD3MultiClippingIntersection.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_CameraModelD3MultiClippingIntersection.hpp>
+#include <StepVisual_CameraModelD3MultiClippingInterectionSelect.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

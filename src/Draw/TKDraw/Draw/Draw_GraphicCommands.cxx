@@ -17,16 +17,16 @@
 // **************************************************************
 // Modif : DFO 05/11/96
 
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Draw_Grid.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Draw_Text2D.hxx>
-#include <Draw_Text3D.hxx>
-#include <Message.hxx>
-#include <Standard_Macro.hxx>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Draw_Grid.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Draw_Text2D.hpp>
+#include <Draw_Text3D.hpp>
+#include <Message.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

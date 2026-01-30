@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPEdit.hxx>
+#include <STEPEdit.hpp>
 
-#include <IFSelect_SelectModelEntities.hxx>
-#include <IFSelect_SelectModelRoots.hxx>
-#include <IFSelect_SelectSignature.hxx>
-#include <StepAP214.hxx>
-#include <StepAP214_Protocol.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepSelect_StepType.hxx>
+#include <IFSelect_SelectModelEntities.hpp>
+#include <IFSelect_SelectModelRoots.hpp>
+#include <IFSelect_SelectSignature.hpp>
+#include <StepAP214.hpp>
+#include <StepAP214_Protocol.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepSelect_StepType.hpp>
 
 #include <mutex>
 

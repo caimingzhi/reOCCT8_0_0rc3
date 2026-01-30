@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_HCurve2dTool.hxx>
+#include <IntPatch_HCurve2dTool.hpp>
 
 //============================================================
 int IntPatch_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,

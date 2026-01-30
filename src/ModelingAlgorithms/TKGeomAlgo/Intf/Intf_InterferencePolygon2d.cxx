@@ -15,14 +15,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Intf_InterferencePolygon2d.hxx>
-#include <Intf_Polygon2d.hxx>
-#include <Intf_SectionPoint.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Intf_TangentZone.hxx>
-#include <Precision.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
+#include <Intf_InterferencePolygon2d.hpp>
+#include <Intf_Polygon2d.hpp>
+#include <Intf_SectionPoint.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Intf_TangentZone.hpp>
+#include <Precision.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
 
 // Angular precision (sinus) below that value two right segments
 // are considered as having a potential zone of tangency.

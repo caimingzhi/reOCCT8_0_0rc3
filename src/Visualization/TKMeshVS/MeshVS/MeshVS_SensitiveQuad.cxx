@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_SensitiveQuad.hxx>
+#include <MeshVS_SensitiveQuad.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveQuad, Select3D_SensitiveEntity)
 

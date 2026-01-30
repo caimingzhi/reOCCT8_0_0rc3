@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_TrihedronWithGuide.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
+#include <GeomFill_TrihedronWithGuide.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_TrihedronWithGuide, GeomFill_TrihedronLaw)
 

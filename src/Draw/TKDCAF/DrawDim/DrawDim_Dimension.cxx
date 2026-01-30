@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Display.hxx>
-#include <DrawDim_Dimension.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Draw_Display.hpp>
+#include <DrawDim_Dimension.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Dimension, Draw_Drawable3D)
 

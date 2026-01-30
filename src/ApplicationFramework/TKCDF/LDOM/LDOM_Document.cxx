@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_Document.hxx>
-#include <LDOM_MemManager.hxx>
-#include <LDOM_BasicElement.hxx>
-#include <LDOM_BasicText.hxx>
+#include <LDOM_Document.hpp>
+#include <LDOM_MemManager.hpp>
+#include <LDOM_BasicElement.hpp>
+#include <LDOM_BasicText.hpp>
 
 #define MEMORY_GRANULE 10000
 

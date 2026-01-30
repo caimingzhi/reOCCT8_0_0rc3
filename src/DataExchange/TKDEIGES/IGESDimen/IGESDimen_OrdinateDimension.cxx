@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <IGESDimen_OrdinateDimension.hxx>
-#include <IGESDimen_WitnessLine.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <IGESDimen_OrdinateDimension.hpp>
+#include <IGESDimen_WitnessLine.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_OrdinateDimension, IGESData_IGESEntity)
 

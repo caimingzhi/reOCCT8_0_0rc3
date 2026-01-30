@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Disk.hxx>
+#include <OSD_Disk.hpp>
 
-#include <OSD_Path.hxx>
-#include <OSD_WhoAmI.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <OSD_Path.hpp>
+#include <OSD_WhoAmI.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #ifdef _WIN32
   #include <windows.h>

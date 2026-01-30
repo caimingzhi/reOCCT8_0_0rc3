@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepGProp_EdgeTool.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepGProp_EdgeTool.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
 
 double BRepGProp_EdgeTool::FirstParameter(const BRepAdaptor_Curve& C)
 {

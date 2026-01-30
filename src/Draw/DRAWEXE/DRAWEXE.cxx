@@ -13,35 +13,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <Message.hxx>
-#include <Message_PrinterOStream.hxx>
-#include <Message_PrinterSystemLog.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <OSD.hxx>
-#include <OSD_Thread.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <Message.hpp>
+#include <Message_PrinterOStream.hpp>
+#include <Message_PrinterSystemLog.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <OSD.hpp>
+#include <OSD_Thread.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #ifdef OCCT_NO_PLUGINS
-  #include <BOPTest.hxx>
-  #include <DPrsStd.hxx>
+  #include <BOPTest.hpp>
+  #include <DPrsStd.hpp>
   #if defined(HAVE_OPENGL) || defined(HAVE_GLES2)
-    #include <OpenGlTest.hxx>
+    #include <OpenGlTest.hpp>
   #endif
-  #include <TObjDRAW.hxx>
-  #include <ViewerTest.hxx>
-  #include <XDEDRAW.hxx>
-  #include <XSDRAW.hxx>
-  #include <XSDRAWDE.hxx>
-  #include <XSDRAWGLTF.hxx>
-  #include <XSDRAWIGES.hxx>
-  #include <XSDRAWOBJ.hxx>
-  #include <XSDRAWPLY.hxx>
-  #include <XSDRAWSTEP.hxx>
-  #include <XSDRAWSTL.hxx>
-  #include <XSDRAWVRML.hxx>
+  #include <TObjDRAW.hpp>
+  #include <ViewerTest.hpp>
+  #include <XDEDRAW.hpp>
+  #include <XSDRAW.hpp>
+  #include <XSDRAWDE.hpp>
+  #include <XSDRAWGLTF.hpp>
+  #include <XSDRAWIGES.hpp>
+  #include <XSDRAWOBJ.hpp>
+  #include <XSDRAWPLY.hpp>
+  #include <XSDRAWSTEP.hpp>
+  #include <XSDRAWSTL.hpp>
+  #include <XSDRAWVRML.hpp>
 #endif
 
 Standard_IMPORT bool Draw_Interprete(const char* theCommand);
@@ -294,5 +294,5 @@ void Draw_InitAppli(Draw_Interpretor& theDI)
 #endif
 }
 
-#include <Draw_Main.hxx>
+#include <Draw_Main.hpp>
 DRAW_MAIN

@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDimen_DiameterDimension.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDimen_DiameterDimension.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_DiameterDimension, IGESData_IGESEntity)
 

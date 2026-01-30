@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Surface.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Surface.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_FaceSurface, StepShape_Face)
 

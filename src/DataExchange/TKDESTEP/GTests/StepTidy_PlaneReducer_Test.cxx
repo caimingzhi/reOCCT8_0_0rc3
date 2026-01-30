@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_PlaneReducer.pxx>
+#include <StepTidy_PlaneReducer.hpp>
 
-#include <StepShape_AdvancedFace.hxx>
-#include <StepGeom_Pcurve.hxx>
-#include <StepRepr_DefinitionalRepresentation.hxx>
+#include <StepShape_AdvancedFace.hpp>
+#include <StepGeom_Pcurve.hpp>
+#include <StepRepr_DefinitionalRepresentation.hpp>
 
 class StepTidy_PlaneReducerTest : public StepTidy_BaseTestFixture
 {

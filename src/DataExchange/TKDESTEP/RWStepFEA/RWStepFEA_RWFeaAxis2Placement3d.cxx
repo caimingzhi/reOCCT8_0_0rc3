@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWFeaAxis2Placement3d.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFEA_FeaAxis2Placement3d.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Direction.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWFeaAxis2Placement3d.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFEA_FeaAxis2Placement3d.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Direction.hpp>
 
 //=================================================================================================
 

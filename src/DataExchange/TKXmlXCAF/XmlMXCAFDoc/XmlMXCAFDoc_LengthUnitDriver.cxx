@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMXCAFDoc_LengthUnitDriver.hxx>
+#include <XmlMXCAFDoc_LengthUnitDriver.hpp>
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <XCAFDoc_LengthUnit.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <XCAFDoc_LengthUnit.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_LengthUnitDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(UnitScaleValue, "value")

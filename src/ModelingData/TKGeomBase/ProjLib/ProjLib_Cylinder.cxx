@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ProjLib_Cylinder.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ProjLib_Cylinder.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

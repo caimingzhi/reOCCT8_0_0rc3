@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Boundary.hxx>
-#include <GeomFill_CoonsAlgPatch.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Law_Linear.hxx>
-#include <Standard_Type.hxx>
+#include <GeomFill_Boundary.hpp>
+#include <GeomFill_CoonsAlgPatch.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Law_Linear.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CoonsAlgPatch, Standard_Transient)
 

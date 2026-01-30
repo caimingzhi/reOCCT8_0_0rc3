@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepGeom_RationalBSplineSurface.hxx>
-#include <StepGeom_UniformSurface.hxx>
-#include <StepGeom_UniformSurfaceAndRationalBSplineSurface.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Type.hpp>
+#include <StepGeom_RationalBSplineSurface.hpp>
+#include <StepGeom_UniformSurface.hpp>
+#include <StepGeom_UniformSurfaceAndRationalBSplineSurface.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_UniformSurfaceAndRationalBSplineSurface,
                            StepGeom_BSplineSurface)

@@ -16,14 +16,14 @@
 // JCV 1/10/90 Changement de nom du package vgeom -> gp
 // JCV 12/12/90 modifs suite a la premiere revue de projet
 
-#include <gp_Lin.hxx>
+#include <gp_Lin.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
 
 double gp_Lin::Distance(const gp_Lin& Other) const
 {

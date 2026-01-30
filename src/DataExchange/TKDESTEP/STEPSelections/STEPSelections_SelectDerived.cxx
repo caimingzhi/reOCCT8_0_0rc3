@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include "../RWStepAP214/RWStepAP214_GeneralModule.pxx"
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_ReadWriteModule.hxx>
-#include <STEPSelections_SelectDerived.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include "../RWStepAP214/RWStepAP214_GeneralModule.hpp"
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_ReadWriteModule.hpp>
+#include <STEPSelections_SelectDerived.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_SelectDerived, StepSelect_StepType)
 

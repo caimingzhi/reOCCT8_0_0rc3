@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GlCore11.hxx>
+#include <OpenGl_GlCore11.hpp>
 
-#include <OpenGl_LineAttributes.hxx>
-#include <OpenGl_Context.hxx>
+#include <OpenGl_LineAttributes.hpp>
+#include <OpenGl_Context.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_LineAttributes, OpenGl_Resource)
 

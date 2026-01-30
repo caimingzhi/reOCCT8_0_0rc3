@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dGcc_Circ2d3Tan.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dGcc.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <Precision.hxx>
+#include <Geom2dGcc_Circ2d3Tan.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dGcc.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <Precision.hpp>
 
 #include <gtest/gtest.h>
 

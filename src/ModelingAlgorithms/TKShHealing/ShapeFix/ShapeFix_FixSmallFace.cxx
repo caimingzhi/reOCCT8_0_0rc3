@@ -11,47 +11,47 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomLib.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <Message_Msg.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <ShapeFix_FixSmallFace.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <Standard_Type.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Builder.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomLib.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <Message_Msg.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeFix_FixSmallFace.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_Type.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Builder.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_FixSmallFace, ShapeFix_Root)
 
-// #include <GeomLProp_SLProps.hxx>
+// #include <GeomLProp_SLProps.hpp>
 // #include <NCollection_Array2<double>.hxx>
 // #include <NCollection_Array1<double>.hxx>
 ShapeFix_FixSmallFace::ShapeFix_FixSmallFace()

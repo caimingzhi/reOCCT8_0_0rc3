@@ -17,38 +17,38 @@
 // Modified:	Wed Oct 23 09:17:47 1996
 //		check ponctuallity (PRO4896)
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=======================================================================
 // function : Project

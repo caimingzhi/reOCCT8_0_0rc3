@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepDimTol_DatumTarget.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepDimTol_DatumTarget.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumTarget, StepRepr_ShapeAspect)
 

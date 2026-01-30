@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <ElCLib.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_Circle, Geom2d_Conic)
 

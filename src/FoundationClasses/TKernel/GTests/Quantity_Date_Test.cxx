@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Quantity_Date.hxx>
-#include <Quantity_Period.hxx>
+#include <Quantity_Date.hpp>
+#include <Quantity_Period.hpp>
 
 #include <gtest/gtest.h>
 

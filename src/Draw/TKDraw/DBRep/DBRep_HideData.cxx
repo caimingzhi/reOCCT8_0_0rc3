@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep_HideData.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <gp_Trsf.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRBRep_BiPoint.hxx>
-#include <NCollection_List.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <TopoDS_Shape.hxx>
+#include <DBRep_HideData.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <gp_Trsf.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRBRep_BiPoint.hpp>
+#include <NCollection_List.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <TopoDS_Shape.hpp>
 
 #define PntX1 ((double*)Coordinates)[0]
 #define PntY1 ((double*)Coordinates)[1]

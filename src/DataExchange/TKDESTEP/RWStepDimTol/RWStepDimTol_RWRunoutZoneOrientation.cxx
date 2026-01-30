@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepDimTol_RWRunoutZoneOrientation.pxx"
+#include "RWStepDimTol_RWRunoutZoneOrientation.hpp"
 
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_RunoutZoneOrientation.hxx>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_RunoutZoneOrientation.hpp>
 
 //=================================================================================================
 

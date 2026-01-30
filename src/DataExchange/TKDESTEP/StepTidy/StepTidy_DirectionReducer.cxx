@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_DirectionReducer.pxx>
+#include <StepTidy_DirectionReducer.hpp>
 
-#include <Interface_Graph.hxx>
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_Vector.hxx>
+#include <Interface_Graph.hpp>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_Vector.hpp>
 
 //==================================================================================================
 

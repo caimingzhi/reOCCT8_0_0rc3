@@ -15,25 +15,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_CheckerSI.hxx>
+#include <BOPAlgo_CheckerSI.hpp>
 
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPDS_IteratorSI.hxx>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPDS_IteratorSI.hpp>
 
-#include <BOPTools_Parallel.hxx>
+#include <BOPTools_Parallel.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
 
-#include <IntTools_Context.hxx>
+#include <IntTools_Context.hpp>
 
-#include <gp_Pnt.hxx>
+#include <gp_Pnt.hpp>
 
-#include <NCollection_Vector.hxx>
-#include <TopAbs_State.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Solid.hxx>
+#include <NCollection_Vector.hpp>
+#include <TopAbs_State.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Solid.hpp>
 
 /////////////////////////////////////////////////////////////////////////
 //=================================================================================================

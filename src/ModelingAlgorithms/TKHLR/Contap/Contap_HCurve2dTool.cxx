@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Contap_HCurve2dTool.hxx>
-#include <Geom2d_BezierCurve.hxx>
+#include <Contap_HCurve2dTool.hpp>
+#include <Geom2d_BezierCurve.hpp>
 
 //============================================================
 int Contap_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,

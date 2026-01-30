@@ -13,7 +13,7 @@
 
 // #52 rln 23.12.98
 
-#include <Interface_FloatWriter.hxx>
+#include <Interface_FloatWriter.hpp>
 
 Interface_FloatWriter::Interface_FloatWriter(const int chars)
 {

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransferFailure.hxx>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransferFailure.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_SimpleBinderOfTransient, Transfer_Binder)
 

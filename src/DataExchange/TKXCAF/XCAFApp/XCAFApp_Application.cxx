@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Resource_Manager.hxx>
-#include <Standard_Dump.hxx>
-#include <TDF_Label.hxx>
-#include <TPrsStd_DriverTable.hxx>
-#include <XCAFApp_Application.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFPrs_Driver.hxx>
+#include <Resource_Manager.hpp>
+#include <Standard_Dump.hpp>
+#include <TDF_Label.hpp>
+#include <TPrsStd_DriverTable.hpp>
+#include <XCAFApp_Application.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFPrs_Driver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFApp_Application, TDocStd_Application)
 

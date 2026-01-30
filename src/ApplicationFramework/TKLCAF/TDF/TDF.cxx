@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF.hxx>
+#include <TDF.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_DoubleMap.hxx>
+#include <Standard_GUID.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_DoubleMap.hpp>
 
 static NCollection_DoubleMap<Standard_GUID, TCollection_ExtendedString> guidprogidmap;
 

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Precision.hxx>
-#include <VrmlData_Appearance.hxx>
-#include <VrmlData_ImageTexture.hxx>
-#include <VrmlData_Material.hxx>
-#include <VrmlData_ShapeNode.hxx>
-#include <VrmlData_UnknownNode.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_Geometry.hxx>
-#include <VrmlData_TextureTransform.hxx>
-#include <VrmlData_Texture.hxx>
+#include <Precision.hpp>
+#include <VrmlData_Appearance.hpp>
+#include <VrmlData_ImageTexture.hpp>
+#include <VrmlData_Material.hpp>
+#include <VrmlData_ShapeNode.hpp>
+#include <VrmlData_UnknownNode.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_Geometry.hpp>
+#include <VrmlData_TextureTransform.hpp>
+#include <VrmlData_Texture.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Node, Standard_Transient)
 

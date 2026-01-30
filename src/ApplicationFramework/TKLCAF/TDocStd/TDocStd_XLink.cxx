@@ -18,21 +18,21 @@
 // Version	Date		Purpose
 //		0.0	Sep 15 1997	Creation
 
-#include <TDocStd_XLink.hxx>
+#include <TDocStd_XLink.hpp>
 
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_XLinkRoot.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_XLinkRoot.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_XLink, TDF_Attribute)
 

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_DerivedUnit.hxx>
-#include <StepBasic_NamedUnit.hxx>
-#include <StepBasic_Unit.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_DerivedUnit.hpp>
+#include <StepBasic_NamedUnit.hpp>
+#include <StepBasic_Unit.hpp>
 
 //=================================================================================================
 

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepDS_PointData.hxx>
-#include <TopOpeBRepDS_ShapeData.hxx>
-#include <TopOpeBRepDS_ShapeWithState.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
-#include <TopOpeBRepDS_SurfaceData.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepDS_PointData.hpp>
+#include <TopOpeBRepDS_ShapeData.hpp>
+#include <TopOpeBRepDS_ShapeWithState.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
+#include <TopOpeBRepDS_SurfaceData.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 //=================================================================================================
 

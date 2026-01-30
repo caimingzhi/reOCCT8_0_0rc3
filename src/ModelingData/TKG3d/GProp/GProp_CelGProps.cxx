@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <GProp.hxx>
-#include <GProp_CelGProps.hxx>
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <ElCLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <GProp.hpp>
+#include <GProp_CelGProps.hpp>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Standard_NotImplemented.hpp>
 
 GProp_CelGProps::GProp_CelGProps() = default;
 

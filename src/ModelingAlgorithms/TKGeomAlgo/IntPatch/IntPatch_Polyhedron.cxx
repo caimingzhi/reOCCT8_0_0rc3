@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <IntCurveSurface_PolyhedronUtils.pxx>
-#include <IntPatch_HInterTool.hxx>
-#include <IntPatch_Polyhedron.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <IntCurveSurface_PolyhedronUtils.hpp>
+#include <IntPatch_HInterTool.hpp>
+#include <IntPatch_Polyhedron.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
 
 #include <cstdio>
 #define MSG_DEBUG 0

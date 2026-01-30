@@ -12,20 +12,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BRepAlgoAPI_Common.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <BRepAlgoAPI_Splitter.hxx>
-#include <BRepTest_Objects.hxx>
-#include <DBRep.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BRepAlgoAPI_Common.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <BRepAlgoAPI_Splitter.hpp>
+#include <BRepTest_Objects.hpp>
+#include <DBRep.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
-#include <Draw_ProgressIndicator.hxx>
+#include <Draw_ProgressIndicator.hpp>
 
 #include <cstdio>
 

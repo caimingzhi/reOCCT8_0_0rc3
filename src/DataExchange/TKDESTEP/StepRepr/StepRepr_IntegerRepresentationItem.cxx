@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_IntegerRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_IntegerRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_IntegerRepresentationItem, StepRepr_RepresentationItem)
 

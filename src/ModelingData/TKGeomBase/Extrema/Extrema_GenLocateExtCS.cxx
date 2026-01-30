@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_FuncExtCS.hxx>
-#include <Extrema_GenLocateExtCS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_Vector.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_FuncExtCS.hpp>
+#include <Extrema_GenLocateExtCS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_Vector.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

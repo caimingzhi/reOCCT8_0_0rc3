@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <IntTools_ShrunkRange.hxx>
-#include <Precision.hxx>
+#include <BRepLib.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <IntTools_ShrunkRange.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

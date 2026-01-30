@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Stretch.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <NCollection_Array1.hxx>
+#include <GeomFill_Stretch.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

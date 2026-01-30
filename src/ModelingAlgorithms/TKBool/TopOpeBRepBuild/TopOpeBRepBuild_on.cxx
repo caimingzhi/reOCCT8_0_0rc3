@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_BuilderON.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
+#include <TopOpeBRepBuild_BuilderON.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
 
 // Standard_IMPORT extern bool GLOBAL_faces2d;
 extern bool GLOBAL_faces2d;

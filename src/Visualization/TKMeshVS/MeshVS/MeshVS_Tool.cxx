@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Font_NameOfFont.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_AspectText3d.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_Tool.hxx>
-#include <Precision.hxx>
+#include <Font_NameOfFont.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_AspectText3d.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_Tool.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

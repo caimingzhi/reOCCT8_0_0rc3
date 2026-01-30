@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement
 
-#include <math_GlobOptMin.hxx>
+#include <math_GlobOptMin.hpp>
 
-#include <math_BFGS.hxx>
-#include <math_MultipleVarFunctionWithHessian.hxx>
-#include <math_NewtonMinimum.hxx>
-#include <math_Powell.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Real.hxx>
-#include <Precision.hxx>
+#include <math_BFGS.hpp>
+#include <math_MultipleVarFunctionWithHessian.hpp>
+#include <math_NewtonMinimum.hpp>
+#include <math_Powell.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Real.hpp>
+#include <Precision.hpp>
 
 #ifndef M_SQRT2
   #define M_SQRT2 1.41421356237309504880168872420969808

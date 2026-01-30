@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepRepr_RWContinuosShapeAspect.pxx"
+#include "RWStepRepr_RWContinuosShapeAspect.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepRepr_ContinuosShapeAspect.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepRepr_ContinuosShapeAspect.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 //=================================================================================================
 

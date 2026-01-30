@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsMgr_Presentation.hxx>
+#include <PrsMgr_Presentation.hpp>
 
-#include <PrsMgr_PresentableObject.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Graphic3d_CView.hxx>
+#include <PrsMgr_PresentableObject.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Graphic3d_CView.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsMgr_Presentation, Graphic3d_Structure)
 

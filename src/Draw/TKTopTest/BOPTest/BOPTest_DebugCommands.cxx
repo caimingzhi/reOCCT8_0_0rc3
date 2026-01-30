@@ -12,36 +12,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BOPTest_DrawableShape.hxx>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BOPTest_DrawableShape.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Color.hxx>
+#include <Draw.hpp>
+#include <Draw_Color.hpp>
 
-#include <DBRep.hxx>
+#include <DBRep.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <TopoDS_Compound.hxx>
+#include <TopoDS_Compound.hpp>
 
-#include <TopExp_Explorer.hxx>
+#include <TopExp_Explorer.hpp>
 
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_CommonBlock.hxx>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_CommonBlock.hpp>
 
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_BuilderFace.hxx>
-#include <BOPAlgo_BuilderSolid.hxx>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <BOPAlgo_BuilderSolid.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
 
-#include <IntTools_Context.hxx>
+#include <IntTools_Context.hpp>
 
 static void GetTypeByName(const char* theName, TopAbs_ShapeEnum& theType);
 static void GetNameByType(const TopAbs_ShapeEnum& theType, char* theName);

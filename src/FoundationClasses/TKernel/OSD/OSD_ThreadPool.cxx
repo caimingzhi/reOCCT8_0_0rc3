@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_ThreadPool.hxx>
+#include <OSD_ThreadPool.hpp>
 
-#include <OSD.hxx>
-#include <OSD_Parallel.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD.hpp>
+#include <OSD_Parallel.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_ThreadPool, Standard_Transient)
 

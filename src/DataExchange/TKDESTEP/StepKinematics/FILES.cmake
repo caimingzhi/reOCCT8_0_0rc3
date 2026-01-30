@@ -2,175 +2,175 @@
 set(OCCT_StepKinematics_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepKinematics_FILES
-  StepKinematics_ActuatedDirection.hxx
+  StepKinematics_ActuatedDirection.hpp
   StepKinematics_ActuatedKinematicPair.cxx
-  StepKinematics_ActuatedKinematicPair.hxx
+  StepKinematics_ActuatedKinematicPair.hpp
   StepKinematics_ContextDependentKinematicLinkRepresentation.cxx
-  StepKinematics_ContextDependentKinematicLinkRepresentation.hxx
+  StepKinematics_ContextDependentKinematicLinkRepresentation.hpp
   StepKinematics_CylindricalPair.cxx
-  StepKinematics_CylindricalPair.hxx
+  StepKinematics_CylindricalPair.hpp
   StepKinematics_CylindricalPairValue.cxx
-  StepKinematics_CylindricalPairValue.hxx
+  StepKinematics_CylindricalPairValue.hpp
   StepKinematics_CylindricalPairWithRange.cxx
-  StepKinematics_CylindricalPairWithRange.hxx
+  StepKinematics_CylindricalPairWithRange.hpp
   StepKinematics_FullyConstrainedPair.cxx
-  StepKinematics_FullyConstrainedPair.hxx
+  StepKinematics_FullyConstrainedPair.hpp
   StepKinematics_GearPair.cxx
-  StepKinematics_GearPair.hxx
+  StepKinematics_GearPair.hpp
   StepKinematics_GearPairValue.cxx
-  StepKinematics_GearPairValue.hxx
+  StepKinematics_GearPairValue.hpp
   StepKinematics_GearPairWithRange.cxx
-  StepKinematics_GearPairWithRange.hxx
+  StepKinematics_GearPairWithRange.hpp
   StepKinematics_HighOrderKinematicPair.cxx
-  StepKinematics_HighOrderKinematicPair.hxx
+  StepKinematics_HighOrderKinematicPair.hpp
   StepKinematics_HomokineticPair.cxx
-  StepKinematics_HomokineticPair.hxx
+  StepKinematics_HomokineticPair.hpp
   StepKinematics_KinematicJoint.cxx
-  StepKinematics_KinematicJoint.hxx
+  StepKinematics_KinematicJoint.hpp
   StepKinematics_KinematicLink.cxx
-  StepKinematics_KinematicLink.hxx
+  StepKinematics_KinematicLink.hpp
   StepKinematics_KinematicLinkRepresentation.cxx
-  StepKinematics_KinematicLinkRepresentation.hxx
+  StepKinematics_KinematicLinkRepresentation.hpp
   StepKinematics_KinematicLinkRepresentationAssociation.cxx
-  StepKinematics_KinematicLinkRepresentationAssociation.hxx
+  StepKinematics_KinematicLinkRepresentationAssociation.hpp
   StepKinematics_KinematicPair.cxx
-  StepKinematics_KinematicPair.hxx
+  StepKinematics_KinematicPair.hpp
   StepKinematics_ActuatedKinPairAndOrderKinPair.cxx
-  StepKinematics_ActuatedKinPairAndOrderKinPair.hxx
+  StepKinematics_ActuatedKinPairAndOrderKinPair.hpp
   StepKinematics_KinematicPropertyDefinitionRepresentation.cxx
-  StepKinematics_KinematicPropertyDefinitionRepresentation.hxx
+  StepKinematics_KinematicPropertyDefinitionRepresentation.hpp
   StepKinematics_KinematicPropertyMechanismRepresentation.cxx
-  StepKinematics_KinematicPropertyMechanismRepresentation.hxx
+  StepKinematics_KinematicPropertyMechanismRepresentation.hpp
   StepKinematics_KinematicTopologyStructure.cxx
-  StepKinematics_KinematicTopologyStructure.hxx
+  StepKinematics_KinematicTopologyStructure.hpp
   StepKinematics_LinearFlexibleAndPinionPair.cxx
-  StepKinematics_LinearFlexibleAndPinionPair.hxx
+  StepKinematics_LinearFlexibleAndPinionPair.hpp
   StepKinematics_LinearFlexibleAndPlanarCurvePair.cxx
-  StepKinematics_LinearFlexibleAndPlanarCurvePair.hxx
+  StepKinematics_LinearFlexibleAndPlanarCurvePair.hpp
   StepKinematics_LinearFlexibleLinkRepresentation.cxx
-  StepKinematics_LinearFlexibleLinkRepresentation.hxx
+  StepKinematics_LinearFlexibleLinkRepresentation.hpp
   StepKinematics_LowOrderKinematicPair.cxx
-  StepKinematics_LowOrderKinematicPair.hxx
+  StepKinematics_LowOrderKinematicPair.hpp
   StepKinematics_LowOrderKinematicPairValue.cxx
-  StepKinematics_LowOrderKinematicPairValue.hxx
+  StepKinematics_LowOrderKinematicPairValue.hpp
   StepKinematics_LowOrderKinematicPairWithMotionCoupling.cxx
-  StepKinematics_LowOrderKinematicPairWithMotionCoupling.hxx
+  StepKinematics_LowOrderKinematicPairWithMotionCoupling.hpp
   StepKinematics_LowOrderKinematicPairWithRange.cxx
-  StepKinematics_LowOrderKinematicPairWithRange.hxx
+  StepKinematics_LowOrderKinematicPairWithRange.hpp
   StepKinematics_MechanismRepresentation.cxx
-  StepKinematics_MechanismRepresentation.hxx
+  StepKinematics_MechanismRepresentation.hpp
   StepKinematics_MechanismStateRepresentation.cxx
-  StepKinematics_MechanismStateRepresentation.hxx
+  StepKinematics_MechanismStateRepresentation.hpp
   StepKinematics_OrientedJoint.cxx
-  StepKinematics_OrientedJoint.hxx
+  StepKinematics_OrientedJoint.hpp
   StepKinematics_PairRepresentationRelationship.cxx
-  StepKinematics_PairRepresentationRelationship.hxx
+  StepKinematics_PairRepresentationRelationship.hpp
   StepKinematics_PairValue.cxx
-  StepKinematics_PairValue.hxx
+  StepKinematics_PairValue.hpp
   StepKinematics_PlanarCurvePair.cxx
-  StepKinematics_PlanarCurvePair.hxx
+  StepKinematics_PlanarCurvePair.hpp
   StepKinematics_PlanarCurvePairRange.cxx
-  StepKinematics_PlanarCurvePairRange.hxx
+  StepKinematics_PlanarCurvePairRange.hpp
   StepKinematics_PlanarPair.cxx
-  StepKinematics_PlanarPair.hxx
+  StepKinematics_PlanarPair.hpp
   StepKinematics_PlanarPairValue.cxx
-  StepKinematics_PlanarPairValue.hxx
+  StepKinematics_PlanarPairValue.hpp
   StepKinematics_PlanarPairWithRange.cxx
-  StepKinematics_PlanarPairWithRange.hxx
+  StepKinematics_PlanarPairWithRange.hpp
   StepKinematics_PointOnPlanarCurvePair.cxx
-  StepKinematics_PointOnPlanarCurvePair.hxx
+  StepKinematics_PointOnPlanarCurvePair.hpp
   StepKinematics_PointOnPlanarCurvePairValue.cxx
-  StepKinematics_PointOnPlanarCurvePairValue.hxx
+  StepKinematics_PointOnPlanarCurvePairValue.hpp
   StepKinematics_PointOnPlanarCurvePairWithRange.cxx
-  StepKinematics_PointOnPlanarCurvePairWithRange.hxx
+  StepKinematics_PointOnPlanarCurvePairWithRange.hpp
   StepKinematics_PointOnSurfacePair.cxx
-  StepKinematics_PointOnSurfacePair.hxx
+  StepKinematics_PointOnSurfacePair.hpp
   StepKinematics_PointOnSurfacePairValue.cxx
-  StepKinematics_PointOnSurfacePairValue.hxx
+  StepKinematics_PointOnSurfacePairValue.hpp
   StepKinematics_PointOnSurfacePairWithRange.cxx
-  StepKinematics_PointOnSurfacePairWithRange.hxx
+  StepKinematics_PointOnSurfacePairWithRange.hpp
   StepKinematics_PrismaticPair.cxx
-  StepKinematics_PrismaticPair.hxx
+  StepKinematics_PrismaticPair.hpp
   StepKinematics_PrismaticPairValue.cxx
-  StepKinematics_PrismaticPairValue.hxx
+  StepKinematics_PrismaticPairValue.hpp
   StepKinematics_PrismaticPairWithRange.cxx
-  StepKinematics_PrismaticPairWithRange.hxx
+  StepKinematics_PrismaticPairWithRange.hpp
   StepKinematics_ProductDefinitionKinematics.cxx
-  StepKinematics_ProductDefinitionKinematics.hxx
+  StepKinematics_ProductDefinitionKinematics.hpp
   StepKinematics_ProductDefinitionRelationshipKinematics.cxx
-  StepKinematics_ProductDefinitionRelationshipKinematics.hxx
+  StepKinematics_ProductDefinitionRelationshipKinematics.hpp
   StepKinematics_RackAndPinionPair.cxx
-  StepKinematics_RackAndPinionPair.hxx
+  StepKinematics_RackAndPinionPair.hpp
   StepKinematics_RackAndPinionPairValue.cxx
-  StepKinematics_RackAndPinionPairValue.hxx
+  StepKinematics_RackAndPinionPairValue.hpp
   StepKinematics_RackAndPinionPairWithRange.cxx
-  StepKinematics_RackAndPinionPairWithRange.hxx
+  StepKinematics_RackAndPinionPairWithRange.hpp
   StepKinematics_RevolutePair.cxx
-  StepKinematics_RevolutePair.hxx
+  StepKinematics_RevolutePair.hpp
   StepKinematics_RevolutePairValue.cxx
-  StepKinematics_RevolutePairValue.hxx
+  StepKinematics_RevolutePairValue.hpp
   StepKinematics_RevolutePairWithRange.cxx
-  StepKinematics_RevolutePairWithRange.hxx
+  StepKinematics_RevolutePairWithRange.hpp
   StepKinematics_RigidLinkRepresentation.cxx
-  StepKinematics_RigidLinkRepresentation.hxx
+  StepKinematics_RigidLinkRepresentation.hpp
   StepKinematics_RigidPlacement.cxx
-  StepKinematics_RigidPlacement.hxx
+  StepKinematics_RigidPlacement.hpp
   StepKinematics_RollingCurvePair.cxx
-  StepKinematics_RollingCurvePair.hxx
+  StepKinematics_RollingCurvePair.hpp
   StepKinematics_RollingCurvePairValue.cxx
-  StepKinematics_RollingCurvePairValue.hxx
+  StepKinematics_RollingCurvePairValue.hpp
   StepKinematics_RollingSurfacePair.cxx
-  StepKinematics_RollingSurfacePair.hxx
+  StepKinematics_RollingSurfacePair.hpp
   StepKinematics_RollingSurfacePairValue.cxx
-  StepKinematics_RollingSurfacePairValue.hxx
+  StepKinematics_RollingSurfacePairValue.hpp
   StepKinematics_RotationAboutDirection.cxx
-  StepKinematics_RotationAboutDirection.hxx
+  StepKinematics_RotationAboutDirection.hpp
   StepKinematics_ScrewPair.cxx
-  StepKinematics_ScrewPair.hxx
+  StepKinematics_ScrewPair.hpp
   StepKinematics_ScrewPairValue.cxx
-  StepKinematics_ScrewPairValue.hxx
+  StepKinematics_ScrewPairValue.hpp
   StepKinematics_ScrewPairWithRange.cxx
-  StepKinematics_ScrewPairWithRange.hxx
+  StepKinematics_ScrewPairWithRange.hpp
   StepKinematics_SlidingCurvePair.cxx
-  StepKinematics_SlidingCurvePair.hxx
+  StepKinematics_SlidingCurvePair.hpp
   StepKinematics_SlidingCurvePairValue.cxx
-  StepKinematics_SlidingCurvePairValue.hxx
+  StepKinematics_SlidingCurvePairValue.hpp
   StepKinematics_SlidingSurfacePair.cxx
-  StepKinematics_SlidingSurfacePair.hxx
+  StepKinematics_SlidingSurfacePair.hpp
   StepKinematics_SlidingSurfacePairValue.cxx
-  StepKinematics_SlidingSurfacePairValue.hxx
+  StepKinematics_SlidingSurfacePairValue.hpp
   StepKinematics_SpatialRotation.cxx
-  StepKinematics_SpatialRotation.hxx
+  StepKinematics_SpatialRotation.hpp
   StepKinematics_SphericalPair.cxx
-  StepKinematics_SphericalPair.hxx
+  StepKinematics_SphericalPair.hpp
   StepKinematics_SphericalPairSelect.cxx
-  StepKinematics_SphericalPairSelect.hxx
+  StepKinematics_SphericalPairSelect.hpp
   StepKinematics_SphericalPairValue.cxx
-  StepKinematics_SphericalPairValue.hxx
+  StepKinematics_SphericalPairValue.hpp
   StepKinematics_SphericalPairWithPin.cxx
-  StepKinematics_SphericalPairWithPin.hxx
+  StepKinematics_SphericalPairWithPin.hpp
   StepKinematics_SphericalPairWithPinAndRange.cxx
-  StepKinematics_SphericalPairWithPinAndRange.hxx
+  StepKinematics_SphericalPairWithPinAndRange.hpp
   StepKinematics_SphericalPairWithRange.cxx
-  StepKinematics_SphericalPairWithRange.hxx
+  StepKinematics_SphericalPairWithRange.hpp
   StepKinematics_SurfacePair.cxx
-  StepKinematics_SurfacePair.hxx
+  StepKinematics_SurfacePair.hpp
   StepKinematics_SurfacePairWithRange.cxx
-  StepKinematics_SurfacePairWithRange.hxx
+  StepKinematics_SurfacePairWithRange.hpp
   StepKinematics_KinematicTopologyDirectedStructure.cxx
-  StepKinematics_KinematicTopologyDirectedStructure.hxx
+  StepKinematics_KinematicTopologyDirectedStructure.hpp
   StepKinematics_KinematicTopologyNetworkStructure.cxx
-  StepKinematics_KinematicTopologyNetworkStructure.hxx
+  StepKinematics_KinematicTopologyNetworkStructure.hpp
   StepKinematics_KinematicTopologyRepresentationSelect.cxx
-  StepKinematics_KinematicTopologyRepresentationSelect.hxx
+  StepKinematics_KinematicTopologyRepresentationSelect.hpp
   StepKinematics_UnconstrainedPair.cxx
-  StepKinematics_UnconstrainedPair.hxx
+  StepKinematics_UnconstrainedPair.hpp
   StepKinematics_UnconstrainedPairValue.cxx
-  StepKinematics_UnconstrainedPairValue.hxx
+  StepKinematics_UnconstrainedPairValue.hpp
   StepKinematics_UniversalPair.cxx
-  StepKinematics_UniversalPair.hxx
+  StepKinematics_UniversalPair.hpp
   StepKinematics_UniversalPairValue.cxx
-  StepKinematics_UniversalPairValue.hxx
+  StepKinematics_UniversalPairValue.hpp
   StepKinematics_UniversalPairWithRange.cxx
-  StepKinematics_UniversalPairWithRange.hxx
+  StepKinematics_UniversalPairWithRange.hpp
 )

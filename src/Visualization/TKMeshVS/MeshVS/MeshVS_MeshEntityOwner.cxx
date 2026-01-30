@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshEntityOwner.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <Standard_Type.hxx>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshEntityOwner.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_MeshEntityOwner, SelectMgr_EntityOwner)
 
 #ifndef MeshVS_PRSBUILDERHXX
-  #include <MeshVS_PrsBuilder.hxx>
+  #include <MeshVS_PrsBuilder.hpp>
 #endif
 
 //=================================================================================================

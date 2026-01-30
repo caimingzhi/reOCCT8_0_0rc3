@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_CView.hxx>
+#include <Graphic3d_CView.hpp>
 
-#include <Aspect_NeutralWindow.hxx>
-#include <Aspect_OpenVRSession.hxx>
-#include <Graphic3d_CubeMapPacked.hxx>
-#include <Graphic3d_Layer.hxx>
-#include <NCollection_Map.hxx>
-#include <Graphic3d_StructureManager.hxx>
+#include <Aspect_NeutralWindow.hpp>
+#include <Aspect_OpenVRSession.hpp>
+#include <Graphic3d_CubeMapPacked.hpp>
+#include <Graphic3d_Layer.hpp>
+#include <NCollection_Map.hpp>
+#include <Graphic3d_StructureManager.hpp>
 class Graphic3d_Structure;
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CView, Graphic3d_DataStructureManager)

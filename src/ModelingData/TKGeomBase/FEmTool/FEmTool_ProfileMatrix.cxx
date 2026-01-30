@@ -18,12 +18,12 @@
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
 
-#include <FEmTool_ProfileMatrix.hxx>
-#include <gp.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <StdFail_NotDone.hxx>
+#include <FEmTool_ProfileMatrix.hpp>
+#include <gp.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <StdFail_NotDone.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_ProfileMatrix, FEmTool_SparseMatrix)
 

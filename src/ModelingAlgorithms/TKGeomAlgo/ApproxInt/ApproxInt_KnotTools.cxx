@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ApproxInt_KnotTools.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_WLApprox.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Vector.hxx>
-#include <PLib.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <math_Vector.hxx>
+#include <ApproxInt_KnotTools.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_WLApprox.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Vector.hpp>
+#include <PLib.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <math_Vector.hpp>
 
 static const double aSinCoeff2   = 0.09549150281252627; // aSinCoeff^2 = (3. - std::sqrt(5.)) / 8.
 static const int    aMaxPntCoeff = 15;

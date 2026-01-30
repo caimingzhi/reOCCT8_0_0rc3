@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtElSS.hxx>
-#include <Extrema_ExtPElS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_ExtElSS.hpp>
+#include <Extrema_ExtPElS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 Extrema_ExtElSS::Extrema_ExtElSS()
 {

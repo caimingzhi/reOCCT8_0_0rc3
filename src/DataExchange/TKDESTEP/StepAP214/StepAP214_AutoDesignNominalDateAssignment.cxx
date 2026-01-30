@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AutoDesignNominalDateAssignment.hxx>
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DateRole.hxx>
+#include <StepAP214_AutoDesignNominalDateAssignment.hpp>
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DateRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignNominalDateAssignment, StepBasic_DateAssignment)
 

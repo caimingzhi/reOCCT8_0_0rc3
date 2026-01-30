@@ -13,7 +13,7 @@
 
 #include <gtest/gtest.h>
 
-#include <MathRoot_Trig.hxx>
+#include <MathRoot_Trig.hpp>
 
 #include <cmath>
 

@@ -16,26 +16,26 @@
 
 //    gka  01.06.99 S4205: changing order of splitting surface/curves for converting to bezier
 
-#include <Bnd_Box2d.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeExtend_CompositeSurface.hxx>
-#include <ShapeFix_ComposeShell.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_SplitSurface.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Bnd_Box2d.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeExtend_CompositeSurface.hpp>
+#include <ShapeFix_ComposeShell.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_SplitSurface.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_FaceDivide, ShapeUpgrade_Tool)
 

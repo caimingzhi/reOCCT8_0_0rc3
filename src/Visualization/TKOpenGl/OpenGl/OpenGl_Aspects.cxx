@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Aspects.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_Aspects.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Workspace.hpp>
 
-#include <Graphic3d_TypeOfReflection.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
+#include <Graphic3d_TypeOfReflection.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
 
 namespace
 {

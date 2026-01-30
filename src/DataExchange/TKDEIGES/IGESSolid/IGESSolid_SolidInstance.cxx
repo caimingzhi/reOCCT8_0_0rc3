@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESSolid_SolidInstance.hxx>
-#include <Standard_Type.hxx>
+#include <IGESSolid_SolidInstance.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_SolidInstance, IGESData_IGESEntity)
 

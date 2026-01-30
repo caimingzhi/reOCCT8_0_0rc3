@@ -18,12 +18,12 @@
 
   #include <windows.h>
 
-  #include <Draw_Window.hxx>
+  #include <Draw_Window.hpp>
 
-  #include "Draw_WNTCommandWindow.pxx"
-  #include "Draw_WNTInit.pxx"
-  #include "Draw_WNTMainWindow.pxx"
-  #include "Draw_WNTRessource.pxx"
+  #include "Draw_WNTCommandWindow.hpp"
+  #include "Draw_WNTInit.hpp"
+  #include "Draw_WNTMainWindow.hpp"
+  #include "Draw_WNTRessource.hpp"
 
 bool        Draw_Interprete(const char* command); // Implemented in Draw.cxx
 extern bool Draw_IsConsoleSubsystem;

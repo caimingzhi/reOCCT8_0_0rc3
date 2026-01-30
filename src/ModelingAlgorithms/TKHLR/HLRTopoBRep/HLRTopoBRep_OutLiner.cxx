@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Contap_Contour.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <HLRAlgo_Projector.hxx>
-#include <HLRTopoBRep_DSFiller.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <Contap_Contour.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <HLRAlgo_Projector.hpp>
+#include <HLRTopoBRep_DSFiller.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTopoBRep_OutLiner, Standard_Transient)
 

@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Aspects.hxx>
-#include <Standard_Dump.hxx>
+#include <Graphic3d_Aspects.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Aspects, Standard_Transient)
 

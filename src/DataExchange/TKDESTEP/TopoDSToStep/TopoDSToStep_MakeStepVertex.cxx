@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepShape_VertexPoint.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TopoDSToStep_MakeStepVertex.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRep_Tool.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepShape_VertexPoint.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TopoDSToStep_MakeStepVertex.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 // Processing of non-manifold topology (ssv; 11.11.2010)
 

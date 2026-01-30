@@ -15,17 +15,17 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinLDrivers.hxx>
-#include <BinTObjDrivers.hxx>
-#include <BinTObjDrivers_DocumentStorageDriver.hxx>
-#include <BinTObjDrivers_DocumentRetrievalDriver.hxx>
-#include <BinTObjDrivers_IntSparseArrayDriver.hxx>
-#include <BinTObjDrivers_ModelDriver.hxx>
-#include <BinTObjDrivers_ObjectDriver.hxx>
-#include <BinTObjDrivers_ReferenceDriver.hxx>
-#include <BinTObjDrivers_XYZDriver.hxx>
-#include <Plugin_Macro.hxx>
-#include <TDocStd_Application.hxx>
+#include <BinLDrivers.hpp>
+#include <BinTObjDrivers.hpp>
+#include <BinTObjDrivers_DocumentStorageDriver.hpp>
+#include <BinTObjDrivers_DocumentRetrievalDriver.hpp>
+#include <BinTObjDrivers_IntSparseArrayDriver.hpp>
+#include <BinTObjDrivers_ModelDriver.hpp>
+#include <BinTObjDrivers_ObjectDriver.hpp>
+#include <BinTObjDrivers_ReferenceDriver.hpp>
+#include <BinTObjDrivers_XYZDriver.hpp>
+#include <Plugin_Macro.hpp>
+#include <TDocStd_Application.hpp>
 
 static Standard_GUID BinStorageDriver("f78ff4a2-a779-11d5-aab4-0050044b1af1");
 static Standard_GUID BinRetrievalDriver("f78ff4a3-a779-11d5-aab4-0050044b1af1");

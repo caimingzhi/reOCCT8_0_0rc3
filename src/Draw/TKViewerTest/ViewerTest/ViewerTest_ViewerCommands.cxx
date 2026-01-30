@@ -18,96 +18,96 @@
   #include <windows.h>
 #endif
 
-#include <ViewerTest.hxx>
+#include <ViewerTest.hpp>
 
-#include <AIS_AnimationAxisRotation.hxx>
-#include <AIS_AnimationCamera.hxx>
-#include <AIS_AnimationObject.hxx>
-#include <AIS_Axis.hxx>
-#include <AIS_CameraFrustum.hxx>
-#include <AIS_ColorScale.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_LightSource.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <NCollection_List.hxx>
-#include <AIS_Manipulator.hxx>
-#include <AIS_ViewCube.hxx>
-#include <AIS_Shape.hxx>
-#include <AIS_Point.hxx>
-#include <Aspect_DisplayConnection.hxx>
-#include <Aspect_Grid.hxx>
-#include <Aspect_TypeOfLine.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_ClipPlane.hxx>
-#include <Graphic3d_CubeMapPacked.hxx>
-#include <Graphic3d_CubeMapSeparate.hxx>
-#include <Graphic3d_GraduatedTrihedron.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_GraphicDriverFactory.hxx>
-#include <Graphic3d_NameOfTextureEnv.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Graphic3d_TextureEnv.hxx>
-#include <Graphic3d_TextureParams.hxx>
-#include <Graphic3d_TypeOfTextureFilter.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <Image_Diff.hxx>
-#include <Image_VideoRecorder.hxx>
-#include <Message.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <OSD_Parallel.hxx>
-#include <OSD_Timer.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Standard_Integer.hxx>
-#include <ViewerTest_AutoUpdater.hxx>
-#include <ViewerTest_ContinuousRedrawer.hxx>
-#include <ViewerTest_EventManager.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <ViewerTest_CmdParser.hxx>
-#include <ViewerTest_V3dView.hxx>
-#include <V3d_AmbientLight.hxx>
-#include <V3d_DirectionalLight.hxx>
-#include <V3d_PositionalLight.hxx>
-#include <V3d_SpotLight.hxx>
-#include <V3d_Trihedron.hxx>
-#include <V3d_Viewer.hxx>
-#include <UnitsAPI.hxx>
+#include <AIS_AnimationAxisRotation.hpp>
+#include <AIS_AnimationCamera.hpp>
+#include <AIS_AnimationObject.hpp>
+#include <AIS_Axis.hpp>
+#include <AIS_CameraFrustum.hpp>
+#include <AIS_ColorScale.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_LightSource.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <NCollection_List.hpp>
+#include <AIS_Manipulator.hpp>
+#include <AIS_ViewCube.hpp>
+#include <AIS_Shape.hpp>
+#include <AIS_Point.hpp>
+#include <Aspect_DisplayConnection.hpp>
+#include <Aspect_Grid.hpp>
+#include <Aspect_TypeOfLine.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_ClipPlane.hpp>
+#include <Graphic3d_CubeMapPacked.hpp>
+#include <Graphic3d_CubeMapSeparate.hpp>
+#include <Graphic3d_GraduatedTrihedron.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_GraphicDriverFactory.hpp>
+#include <Graphic3d_NameOfTextureEnv.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Graphic3d_TextureEnv.hpp>
+#include <Graphic3d_TextureParams.hpp>
+#include <Graphic3d_TypeOfTextureFilter.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <Image_Diff.hpp>
+#include <Image_VideoRecorder.hpp>
+#include <Message.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <OSD_Parallel.hpp>
+#include <OSD_Timer.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Standard_Integer.hpp>
+#include <ViewerTest_AutoUpdater.hpp>
+#include <ViewerTest_ContinuousRedrawer.hpp>
+#include <ViewerTest_EventManager.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <ViewerTest_CmdParser.hpp>
+#include <ViewerTest_V3dView.hpp>
+#include <V3d_AmbientLight.hpp>
+#include <V3d_DirectionalLight.hpp>
+#include <V3d_PositionalLight.hpp>
+#include <V3d_SpotLight.hpp>
+#include <V3d_Trihedron.hpp>
+#include <V3d_Viewer.hpp>
+#include <UnitsAPI.hpp>
 
 #include <tcl.h>
 
 #if defined(_WIN32)
-  #include <WNT_WClass.hxx>
-  #include <WNT_Window.hxx>
+  #include <WNT_WClass.hpp>
+  #include <WNT_Window.hpp>
 #elif defined(HAVE_XLIB)
-  #include <Xw_Window.hxx>
+  #include <Xw_Window.hpp>
   #include <X11/Xlib.h>
   #include <X11/Xutil.h>
 #elif defined(__APPLE__)
-  #include <Cocoa_Window.hxx>
+  #include <Cocoa_Window.hpp>
 #elif defined(__EMSCRIPTEN__)
-  #include <Wasm_Window.hxx>
+  #include <Wasm_Window.hpp>
   #include <emscripten/emscripten.h>
 #else
-  #include <Aspect_NeutralWindow.hxx>
+  #include <Aspect_NeutralWindow.hpp>
 
 class AIS_InteractiveObject;
 #endif

@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <Standard_Transient.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepElement_MeasureOrUnspecifiedValue.hxx>
-#include <StepElement_MeasureOrUnspecifiedValueMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Transient.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepElement_MeasureOrUnspecifiedValue.hpp>
+#include <StepElement_MeasureOrUnspecifiedValueMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 static const char* aCDM = "CONTEXT_DEPENDENT_MEASURE";
 static const char* anUV = "UNSPECIFIED_VALUE";

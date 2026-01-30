@@ -3,6 +3,6 @@ set(OCCT_BRepBndLib_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepBndLib_FILES
   BRepBndLib.cxx
-  BRepBndLib.hxx
+  BRepBndLib.hpp
   BRepBndLib_1.cxx
 )

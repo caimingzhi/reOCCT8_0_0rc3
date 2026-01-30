@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepLib_MakeSolid.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_CompSolid.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib_MakeSolid.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_CompSolid.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

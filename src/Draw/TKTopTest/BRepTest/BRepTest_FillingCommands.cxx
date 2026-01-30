@@ -24,56 +24,56 @@
 // Modified:	Mon Nov  3 10:24:07 1997
 //		utilisation de BRepFill_CurveConstraint
 
-#include <GeometryTest.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <DrawTrSurf.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <GeometryTest.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <DrawTrSurf.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <BRepLib.hxx>
-#include <BRep_Builder.hxx>
-#include <GeomPlate_Surface.hxx>
+#include <BRepLib.hpp>
+#include <BRep_Builder.hpp>
+#include <GeomPlate_Surface.hpp>
 
-#include <GeomPlate_MakeApprox.hxx>
-#include <GeomPlate_PlateG0Criterion.hxx>
-#include <GeomPlate_PlateG1Criterion.hxx>
-#include <BRepFill_CurveConstraint.hxx>
-#include <Geom_Surface.hxx>
+#include <GeomPlate_MakeApprox.hpp>
+#include <GeomPlate_PlateG0Criterion.hpp>
+#include <GeomPlate_PlateG1Criterion.hpp>
+#include <BRepFill_CurveConstraint.hpp>
+#include <Geom_Surface.hpp>
 
-#include <TopoDS_Wire.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
+#include <TopoDS_Wire.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
 
-#include <AdvApp2Var_ApproxAFunc2Var.hxx>
+#include <AdvApp2Var_ApproxAFunc2Var.hpp>
 
-#include <Geom_BSplineSurface.hxx>
+#include <Geom_BSplineSurface.hpp>
 
-#include <gp_XY.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_XYZ.hxx>
+#include <gp_XY.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_XYZ.hpp>
 
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepAdaptor_Curve.hpp>
 
-#include <BRepOffsetAPI_MakeFilling.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <BRepOffsetAPI_MakeFilling.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_Objects.hpp>
 
 #include <cstdio>
-#include <gp_Pnt.hxx>
+#include <gp_Pnt.hpp>
 
 // pour mes tests
 #ifdef OCCT_DEBUG
-  #include <OSD_Chronometer.hxx>
-  #include <Geom_Line.hxx>
+  #include <OSD_Chronometer.hpp>
+  #include <Geom_Line.hpp>
 #endif
 
 const int    defDegree      = 3;

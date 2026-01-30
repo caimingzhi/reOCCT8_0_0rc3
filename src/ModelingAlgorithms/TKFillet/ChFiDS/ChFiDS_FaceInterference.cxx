@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_FaceInterference.hxx>
-#include <Geom2d_Curve.hxx>
+#include <ChFiDS_FaceInterference.hpp>
+#include <Geom2d_Curve.hpp>
 
 //=================================================================================================
 

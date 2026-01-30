@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESAppli.hxx>
-#include <IGESAppli_GeneralModule.hxx>
-#include <IGESAppli_Protocol.hxx>
-#include <IGESAppli_ReadWriteModule.hxx>
-#include <IGESAppli_SpecificModule.hxx>
-#include <IGESData_SpecificLib.hxx>
-#include <IGESData_WriterLib.hxx>
-#include <IGESDefs.hxx>
-#include <IGESDraw.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_ReaderLib.hxx>
+#include <IGESAppli.hpp>
+#include <IGESAppli_GeneralModule.hpp>
+#include <IGESAppli_Protocol.hpp>
+#include <IGESAppli_ReadWriteModule.hpp>
+#include <IGESAppli_SpecificModule.hpp>
+#include <IGESData_SpecificLib.hpp>
+#include <IGESData_WriterLib.hpp>
+#include <IGESDefs.hpp>
+#include <IGESDraw.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_ReaderLib.hpp>
 
 //  Ancillary data to work on a Package of IGES Entities with a Protocol
 //  (Modules are created and loaded in appropriate libraries, once by Init)

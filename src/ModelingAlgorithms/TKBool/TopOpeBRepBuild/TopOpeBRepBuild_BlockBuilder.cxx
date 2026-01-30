@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_BlockBuilder.hxx>
-#include <TopOpeBRepBuild_BlockIterator.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
+#include <TopOpeBRepBuild_BlockBuilder.hpp>
+#include <TopOpeBRepBuild_BlockIterator.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
 
 //=================================================================================================
 

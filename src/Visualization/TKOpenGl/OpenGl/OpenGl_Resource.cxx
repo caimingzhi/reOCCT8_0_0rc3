@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Resource.hxx>
-#include <OpenGl_NamedResource.hxx>
+#include <OpenGl_Resource.hpp>
+#include <OpenGl_NamedResource.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Resource, Standard_Transient)
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_NamedResource, OpenGl_Resource)

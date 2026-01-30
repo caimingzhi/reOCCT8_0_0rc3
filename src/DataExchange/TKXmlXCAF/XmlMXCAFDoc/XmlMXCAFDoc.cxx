@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMXCAFDoc.hxx>
+#include <XmlMXCAFDoc.hpp>
 
-#include <Message_Messenger.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMNaming_NamedShapeDriver.hxx>
-#include <XmlMXCAFDoc_AssemblyItemRefDriver.hxx>
-#include <XmlMXCAFDoc_CentroidDriver.hxx>
-#include <XmlMXCAFDoc_ColorDriver.hxx>
-#include <XmlMXCAFDoc_DatumDriver.hxx>
-#include <XmlMXCAFDoc_DimTolDriver.hxx>
-#include <XmlMXCAFDoc_GraphNodeDriver.hxx>
-#include <XmlMXCAFDoc_LengthUnitDriver.hxx>
-#include <XmlMXCAFDoc_LocationDriver.hxx>
-#include <XmlMXCAFDoc_MaterialDriver.hxx>
-#include <XmlMXCAFDoc_VisMaterialDriver.hxx>
-#include <XmlMXCAFDoc_NoteCommentDriver.hxx>
-#include <XmlMXCAFDoc_NoteBinDataDriver.hxx>
-#include <XmlMXCAFDoc_VisMaterialToolDriver.hxx>
+#include <Message_Messenger.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMNaming_NamedShapeDriver.hpp>
+#include <XmlMXCAFDoc_AssemblyItemRefDriver.hpp>
+#include <XmlMXCAFDoc_CentroidDriver.hpp>
+#include <XmlMXCAFDoc_ColorDriver.hpp>
+#include <XmlMXCAFDoc_DatumDriver.hpp>
+#include <XmlMXCAFDoc_DimTolDriver.hpp>
+#include <XmlMXCAFDoc_GraphNodeDriver.hpp>
+#include <XmlMXCAFDoc_LengthUnitDriver.hpp>
+#include <XmlMXCAFDoc_LocationDriver.hpp>
+#include <XmlMXCAFDoc_MaterialDriver.hpp>
+#include <XmlMXCAFDoc_VisMaterialDriver.hpp>
+#include <XmlMXCAFDoc_NoteCommentDriver.hpp>
+#include <XmlMXCAFDoc_NoteBinDataDriver.hpp>
+#include <XmlMXCAFDoc_VisMaterialToolDriver.hpp>
 
 //=================================================================================================
 

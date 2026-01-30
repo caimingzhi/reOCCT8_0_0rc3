@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgoAPI_Splitter.hxx>
+#include <BRepAlgoAPI_Splitter.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_Splitter.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_Splitter.hpp>
 
 //=================================================================================================
 

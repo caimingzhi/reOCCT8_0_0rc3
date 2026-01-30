@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_MakeEdge2d.hxx>
-#include <Geom2d_Curve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRepBuilderAPI_MakeEdge2d.hpp>
+#include <Geom2d_Curve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

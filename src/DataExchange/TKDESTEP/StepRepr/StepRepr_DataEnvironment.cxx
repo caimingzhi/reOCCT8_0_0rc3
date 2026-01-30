@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepRepr_DataEnvironment.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_DataEnvironment.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_DataEnvironment, Standard_Transient)
 

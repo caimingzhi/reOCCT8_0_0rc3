@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_ElementarySurface.hxx>
+#include <Geom_ElementarySurface.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_ElementarySurface, Geom_Surface)
 

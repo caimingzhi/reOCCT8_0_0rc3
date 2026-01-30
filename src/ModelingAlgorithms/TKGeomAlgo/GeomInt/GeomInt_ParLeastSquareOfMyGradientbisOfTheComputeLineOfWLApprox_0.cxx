@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_ParLeastSquareOfMyGradientbisOfTheComputeLineOfWLApprox.hxx>
+#include <GeomInt_ParLeastSquareOfMyGradientbisOfTheComputeLineOfWLApprox.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_TheMultiLineToolOfWLApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
-#include <math_Matrix.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_TheMultiLineToolOfWLApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
+#include <math_Matrix.hpp>
 
 #define MultiLine GeomInt_TheMultiLineOfWLApprox
-#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hxx>
+#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hpp>
 #define ToolLine GeomInt_TheMultiLineToolOfWLApprox
-#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hxx>
+#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hpp>
 #define AppParCurves_LeastSquare GeomInt_ParLeastSquareOfMyGradientbisOfTheComputeLineOfWLApprox
 #define AppParCurves_LeastSquare_hxx                                                               \
-  <GeomInt_ParLeastSquareOfMyGradientbisOfTheComputeLineOfWLApprox.hxx>
-#include <AppParCurves_LeastSquare.gxx>
+  <GeomInt_ParLeastSquareOfMyGradientbisOfTheComputeLineOfWLApprox.hpp>
+#include <AppParCurves_LeastSquare.hpp>

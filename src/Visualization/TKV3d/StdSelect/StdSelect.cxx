@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdSelect.hxx>
+#include <StdSelect.hpp>
 
-#include <SelectMgr_Selection.hxx>
-#include <StdSelect_BRepOwner.hxx>
+#include <SelectMgr_Selection.hpp>
+#include <StdSelect_BRepOwner.hpp>
 
 //=================================================================================================
 

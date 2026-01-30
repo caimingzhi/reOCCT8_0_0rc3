@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_LineInter.hxx>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_LineInter.hpp>
 
-#include <IntPatch_LineConstructor.hxx>
-#include <TopOpeBRep_TypeLineCurve.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <Precision.hxx>
-#include <Geom_Curve.hxx>
-#include <Standard_ProgramError.hxx>
-#include <BRepTools.hxx>
-#include <TopOpeBRepTool_tol.hxx>
+#include <IntPatch_LineConstructor.hpp>
+#include <TopOpeBRep_TypeLineCurve.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <Precision.hpp>
+#include <Geom_Curve.hpp>
+#include <Standard_ProgramError.hpp>
+#include <BRepTools.hpp>
+#include <TopOpeBRepTool_tol.hpp>
 
 Standard_EXPORT double GLOBAL_tolFF = 1.e-7;
 
 #ifdef OCCT_DEBUG
-  #include <TopAbs.hxx>
+  #include <TopAbs.hpp>
 extern bool TopOpeBRep_GettraceFI();
 extern bool TopOpeBRep_GettraceFITOL();
 extern bool TopOpeBRep_GettraceSAVFF();
@@ -61,7 +61,7 @@ static void SAVFF(const TopoDS_Face& F1, const TopoDS_Face& F2)
 }
 
 extern bool TopOpeBRepTool_GettraceKRO();
-  #include <TopOpeBRepTool_KRO.hxx>
+  #include <TopOpeBRepTool_KRO.hpp>
 Standard_EXPORT TOPKRO KRO_DSFILLER_INTFF("intersection face/face");
 
 #endif
@@ -71,14 +71,14 @@ Standard_EXPORT TOPKRO KRO_DSFILLER_INTFF("intersection face/face");
 // NYI
 
 // modified by NIZHNY-MKK  Mon Apr  2 12:14:32 2001.BEGIN
-#include <IntPatch_WLine.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_Point.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_TheProjPCurOfGInter.hxx>
+#include <IntPatch_WLine.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_Point.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_TheProjPCurOfGInter.hpp>
 
 static bool TestWLineAlongRestriction(const occ::handle<IntPatch_WLine>&      theWLine,
                                       const int                               theRank,
@@ -107,13 +107,13 @@ static void TestWLinesToAnArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& 
 // modified by NIZHNY-MKK  Mon Apr  2 12:14:38 2001.END
 
 // modified by NIZHNY-OFV  Fri Mar 29 12:37:21 2002.BEGIN
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAdaptor_Curve.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAdaptor_Curve.hpp>
 static void MergeWLinesIfAllSegmentsAlongRestriction(
   NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
   const occ::handle<Adaptor3d_Surface>&             theSurface1,

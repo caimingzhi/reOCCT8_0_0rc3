@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_GenId.hxx>
-#include <Aspect_IdentDefinitionError.hxx>
+#include <Aspect_GenId.hpp>
+#include <Aspect_IdentDefinitionError.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 //=================================================================================================
 

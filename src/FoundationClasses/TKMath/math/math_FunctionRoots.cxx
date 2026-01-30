@@ -19,11 +19,11 @@
 
 // #endif
 
-#include <math_DirectPolynomialRoots.hxx>
-#include <math_FunctionRoots.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <math_BracketedRoot.hxx>
-#include <NCollection_Array1.hxx>
+#include <math_DirectPolynomialRoots.hpp>
+#include <math_FunctionRoots.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <math_BracketedRoot.hpp>
+#include <NCollection_Array1.hpp>
 
 #define ITMAX 100
 #define EPS 1e-14

@@ -13,17 +13,17 @@
 
 // last modified by SRN 01/08/2000
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Shape.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopLoc_Location.hxx>
-#include <TPrsStd_DriverTable.hxx>
-#include <TPrsStd_NamedShapeDriver.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Shape.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopLoc_Location.hpp>
+#include <TPrsStd_DriverTable.hpp>
+#include <TPrsStd_NamedShapeDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_NamedShapeDriver, TPrsStd_Driver)
 

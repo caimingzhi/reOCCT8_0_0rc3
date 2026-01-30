@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Circ.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_Point.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Circ.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_Point.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntPatch_GLine, IntPatch_Line)
 
@@ -29,7 +29,7 @@ IMPLEMENT_STANDARD_RTTIEXT(IntPatch_GLine, IntPatch_Line)
 //-- Precision::PConfusion()*1000.0  -> 1e-6
 // #define PrecisionPConfusion ( Precision::PConfusion()*1000.0 )
 
-#include <gp_Pln.hxx>
+#include <gp_Pln.hpp>
 
 //=======================================================================
 // function : IntPatch_GLine

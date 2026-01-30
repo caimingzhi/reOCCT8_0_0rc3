@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Resource_Manager.hxx>
-#include <ShapeProcess.hxx>
-#include <ShapeProcess_OperLibrary.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <ShapeProcessAPI_ApplySequence.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Resource_Manager.hpp>
+#include <ShapeProcess.hpp>
+#include <ShapeProcess_OperLibrary.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <ShapeProcessAPI_ApplySequence.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

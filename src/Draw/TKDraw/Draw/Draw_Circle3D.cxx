@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Circle3D.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <gp_Circ.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Circle3D.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <gp_Circ.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Circle3D, Draw_Drawable3D)
 

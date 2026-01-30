@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 #ifdef OCCT_DEBUG
 extern int GLOBAL_iexE;

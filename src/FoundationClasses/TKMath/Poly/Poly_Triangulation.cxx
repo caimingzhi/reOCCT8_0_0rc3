@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly_Triangulation.hxx>
+#include <Poly_Triangulation.hpp>
 
-#include <gp_Pnt.hxx>
-#include <OSD_FileSystem.hxx>
-#include <Poly_Triangle.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt.hpp>
+#include <OSD_FileSystem.hpp>
+#include <Poly_Triangle.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_Triangulation, Standard_Transient)
 

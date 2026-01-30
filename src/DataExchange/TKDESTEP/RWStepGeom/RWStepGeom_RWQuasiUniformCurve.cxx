@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWQuasiUniformCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_QuasiUniformCurve.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWQuasiUniformCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_QuasiUniformCurve.hpp>
 
-#include "RWStepGeom_RWBSplineCurveForm.pxx"
+#include "RWStepGeom_RWBSplineCurveForm.hpp"
 
 RWStepGeom_RWQuasiUniformCurve::RWStepGeom_RWQuasiUniformCurve() = default;
 

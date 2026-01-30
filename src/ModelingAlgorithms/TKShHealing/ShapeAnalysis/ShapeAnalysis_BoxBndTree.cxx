@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeAnalysis_BoxBndTree.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS.hxx>
-#include <ShapeAnalysis.hxx>
-#include <gp_Pnt.hxx>
-#include <BRep_Tool.hxx>
+#include <ShapeAnalysis_BoxBndTree.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS.hpp>
+#include <ShapeAnalysis.hpp>
+#include <gp_Pnt.hpp>
+#include <BRep_Tool.hpp>
 
 //=================================================================================================
 

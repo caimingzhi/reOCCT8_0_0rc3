@@ -12,11 +12,11 @@
 // commercial license or contractual agreement.
 
 #include <gtest/gtest.h>
-#include <math_FunctionAllRoots.hxx>
-#include <math_FunctionSample.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_DimensionError.hxx>
+#include <math_FunctionAllRoots.hpp>
+#include <math_FunctionSample.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DimensionError.hpp>
 
 namespace
 {

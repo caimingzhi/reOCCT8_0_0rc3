@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdObject_Shape.hxx>
+#include <StdObject_Shape.hpp>
 
 //=======================================================================
 // function : Import

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomLProp_SLProps.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomLProp_SLProps.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
+#include <StdFail_NotDone.hpp>
 
 /*********************************************************************************/
 /*********************************************************************************/

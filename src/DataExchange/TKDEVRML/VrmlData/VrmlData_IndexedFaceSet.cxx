@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_IndexedFaceSet.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_UnknownNode.hxx>
-#include <BRep_TFace.hxx>
-#include <BRepMesh_Triangulator.hxx>
-#include <VrmlData_Coordinate.hxx>
-#include <VrmlData_Color.hxx>
-#include <VrmlData_Normal.hxx>
-#include <VrmlData_TextureCoordinate.hxx>
-#include <VrmlData_Scene.hxx>
-#include <Precision.hxx>
-#include <NCollection_Vector.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Poly.hxx>
-#include <Standard_ShortReal.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Integer.hxx>
+#include <VrmlData_IndexedFaceSet.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_UnknownNode.hpp>
+#include <BRep_TFace.hpp>
+#include <BRepMesh_Triangulator.hpp>
+#include <VrmlData_Coordinate.hpp>
+#include <VrmlData_Color.hpp>
+#include <VrmlData_Normal.hpp>
+#include <VrmlData_TextureCoordinate.hpp>
+#include <VrmlData_Scene.hpp>
+#include <Precision.hpp>
+#include <NCollection_Vector.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Poly.hpp>
+#include <Standard_ShortReal.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Integer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_IndexedFaceSet, VrmlData_Faceted)
 

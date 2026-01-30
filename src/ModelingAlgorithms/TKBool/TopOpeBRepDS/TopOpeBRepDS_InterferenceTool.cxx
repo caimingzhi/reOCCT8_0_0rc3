@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_FaceEdgeInterference.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_SolidSurfaceInterference.hxx>
-#include <TopOpeBRepDS_SurfaceCurveInterference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <Geom2d_Curve.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_FaceEdgeInterference.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_SolidSurfaceInterference.hpp>
+#include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 //=================================================================================================
 

@@ -16,8 +16,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignApproval.hxx>
-#include <StepBasic_Approval.hxx>
+#include <StepAP203_CcDesignApproval.hpp>
+#include <StepBasic_Approval.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignApproval, StepBasic_ApprovalAssignment)
 

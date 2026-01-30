@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_PrmPrmIntersection_T3Bits.hxx>
+#include <IntPatch_PrmPrmIntersection_T3Bits.hpp>
 
 IntPatch_PrmPrmIntersection_T3Bits::IntPatch_PrmPrmIntersection_T3Bits(const int size)
 {

@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWShapeAspectRelationship.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWShapeAspectRelationship.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
 
 //=================================================================================================
 

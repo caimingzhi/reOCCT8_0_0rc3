@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Ax2.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gce_MakeCirc.hxx>
-#include <gp_Circ.hxx>
-#include <GC_MakeArcOfCircle.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Ax2.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gce_MakeCirc.hpp>
+#include <gp_Circ.hpp>
+#include <GC_MakeArcOfCircle.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
 
 //=======================================================================
 //  OCC895

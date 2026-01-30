@@ -18,17 +18,17 @@
 // Version	Date		Purpose
 //		0.0	Mar 11 1997	Creation
 
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_CopyTool.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <Standard_TypeMismatch.hxx>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_CopyTool.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <Standard_TypeMismatch.hpp>
 
 //=================================================================================================
 

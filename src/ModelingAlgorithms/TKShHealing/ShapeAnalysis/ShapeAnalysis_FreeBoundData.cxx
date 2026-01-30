@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeAnalysis_FreeBoundData.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <ShapeAnalysis_FreeBoundData.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_FreeBoundData, Standard_Transient)
 

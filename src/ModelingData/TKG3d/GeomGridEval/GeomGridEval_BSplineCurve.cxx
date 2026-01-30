@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_BSplineCurve.hxx>
+#include <GeomGridEval_BSplineCurve.hpp>
 
-#include <BSplCLib.hxx>
-#include <BSplCLib_Cache.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <BSplCLib.hpp>
+#include <BSplCLib_Cache.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 namespace
 {

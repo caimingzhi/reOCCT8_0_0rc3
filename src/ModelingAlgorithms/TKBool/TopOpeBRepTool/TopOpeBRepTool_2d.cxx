@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Vec2d.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <Geom_Surface.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepTool_C2DF.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopOpeBRepTool_tol.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <gp_Vec2d.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <Geom_Surface.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepTool_C2DF.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopOpeBRepTool_tol.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #ifdef OCCT_DEBUG
 void debc2dnull(void) {}

@@ -3,68 +3,68 @@ set(OCCT_Transfer_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Transfer_FILES
   Transfer_ActorDispatch.cxx
-  Transfer_ActorDispatch.hxx
+  Transfer_ActorDispatch.hpp
   Transfer_ActorOfFinderProcess.cxx
-  Transfer_ActorOfFinderProcess.hxx
-  Transfer_ActorOfProcessForFinder.hxx
+  Transfer_ActorOfFinderProcess.hpp
+  Transfer_ActorOfProcessForFinder.hpp
   Transfer_ActorOfProcessForFinder_0.cxx
-  Transfer_ActorOfProcessForTransient.hxx
+  Transfer_ActorOfProcessForTransient.hpp
   Transfer_ActorOfProcessForTransient_0.cxx
   Transfer_ActorOfTransientProcess.cxx
-  Transfer_ActorOfTransientProcess.hxx
+  Transfer_ActorOfTransientProcess.hpp
   Transfer_Binder.cxx
-  Transfer_Binder.hxx
+  Transfer_Binder.hpp
   Transfer_BinderOfTransientInteger.cxx
-  Transfer_BinderOfTransientInteger.hxx
+  Transfer_BinderOfTransientInteger.hpp
   Transfer_DataInfo.cxx
-  Transfer_DataInfo.hxx
+  Transfer_DataInfo.hpp
   Transfer_DispatchControl.cxx
-  Transfer_DispatchControl.hxx
+  Transfer_DispatchControl.hpp
   Transfer_Finder.cxx
-  Transfer_Finder.hxx
+  Transfer_Finder.hpp
   Transfer_FinderProcess.cxx
-  Transfer_FinderProcess.hxx
-  Transfer_FindHasher.hxx
+  Transfer_FinderProcess.hpp
+  Transfer_FindHasher.hpp
 
-  Transfer_IteratorOfProcessForFinder.hxx
+  Transfer_IteratorOfProcessForFinder.hpp
   Transfer_IteratorOfProcessForFinder_0.cxx
-  Transfer_IteratorOfProcessForTransient.hxx
+  Transfer_IteratorOfProcessForTransient.hpp
   Transfer_IteratorOfProcessForTransient_0.cxx
   Transfer_MapContainer.cxx
-  Transfer_MapContainer.hxx
+  Transfer_MapContainer.hpp
   Transfer_MultipleBinder.cxx
-  Transfer_MultipleBinder.hxx
-  Transfer_ProcessForFinder.hxx
+  Transfer_MultipleBinder.hpp
+  Transfer_ProcessForFinder.hpp
   Transfer_ProcessForFinder_0.cxx
-  Transfer_ProcessForTransient.hxx
+  Transfer_ProcessForTransient.hpp
   Transfer_ProcessForTransient_0.cxx
   Transfer_ResultFromModel.cxx
-  Transfer_ResultFromModel.hxx
+  Transfer_ResultFromModel.hpp
   Transfer_ResultFromTransient.cxx
-  Transfer_ResultFromTransient.hxx
+  Transfer_ResultFromTransient.hpp
 
   Transfer_SimpleBinderOfTransient.cxx
-  Transfer_SimpleBinderOfTransient.hxx
-  Transfer_StatusExec.hxx
-  Transfer_StatusResult.hxx
-  Transfer_TransferDeadLoop.hxx
+  Transfer_SimpleBinderOfTransient.hpp
+  Transfer_StatusExec.hpp
+  Transfer_StatusResult.hpp
+  Transfer_TransferDeadLoop.hpp
   Transfer_TransferDispatch.cxx
-  Transfer_TransferDispatch.hxx
-  Transfer_TransferFailure.hxx
+  Transfer_TransferDispatch.hpp
+  Transfer_TransferFailure.hpp
   Transfer_TransferInput.cxx
-  Transfer_TransferInput.hxx
+  Transfer_TransferInput.hpp
   Transfer_TransferIterator.cxx
-  Transfer_TransferIterator.hxx
+  Transfer_TransferIterator.hpp
 
   Transfer_TransferOutput.cxx
-  Transfer_TransferOutput.hxx
+  Transfer_TransferOutput.hpp
   Transfer_TransientListBinder.cxx
-  Transfer_TransientListBinder.hxx
-  Transfer_TransientMapper.hxx
+  Transfer_TransientListBinder.hpp
+  Transfer_TransientMapper.hpp
   Transfer_TransientMapper_0.cxx
   Transfer_TransientProcess.cxx
-  Transfer_TransientProcess.hxx
-  Transfer_UndefMode.hxx
+  Transfer_TransientProcess.hpp
+  Transfer_UndefMode.hpp
   Transfer_VoidBinder.cxx
-  Transfer_VoidBinder.hxx
+  Transfer_VoidBinder.hpp
 )

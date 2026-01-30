@@ -18,17 +18,17 @@
 //   CREATION of the BISSECTICE between a CIRCLE and a STRAIGHT LINE.     +
 //=========================================================================
 
-#include <GccAna_CircLin2dBisec.hxx>
-#include <GccInt_BLine.hxx>
-#include <GccInt_BParab.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccAna_CircLin2dBisec.hpp>
+#include <GccInt_BLine.hpp>
+#include <GccInt_BParab.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 GccAna_CircLin2dBisec::GccAna_CircLin2dBisec(const gp_Circ2d& Circle, const gp_Lin2d& Line)

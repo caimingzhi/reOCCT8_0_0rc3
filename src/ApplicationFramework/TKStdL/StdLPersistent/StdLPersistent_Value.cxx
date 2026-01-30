@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_Value.hxx>
+#include <StdLPersistent_Value.hpp>
 
-#include <TCollection_HExtendedString.hxx>
-#include <Standard_GUID.hxx>
+#include <TCollection_HExtendedString.hpp>
+#include <Standard_GUID.hpp>
 
 //=======================================================================
 // function : ImportAttribute

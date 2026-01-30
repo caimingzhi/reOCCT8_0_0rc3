@@ -3,71 +3,71 @@ set(OCCT_IGESDraw_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESDraw_FILES
   IGESDraw.cxx
-  IGESDraw.hxx
+  IGESDraw.hpp
 
   IGESDraw_CircArraySubfigure.cxx
-  IGESDraw_CircArraySubfigure.hxx
+  IGESDraw_CircArraySubfigure.hpp
   IGESDraw_ConnectPoint.cxx
-  IGESDraw_ConnectPoint.hxx
+  IGESDraw_ConnectPoint.hpp
   IGESDraw_Drawing.cxx
-  IGESDraw_Drawing.hxx
+  IGESDraw_Drawing.hpp
   IGESDraw_DrawingWithRotation.cxx
-  IGESDraw_DrawingWithRotation.hxx
+  IGESDraw_DrawingWithRotation.hpp
   IGESDraw_GeneralModule.cxx
-  IGESDraw_GeneralModule.hxx
+  IGESDraw_GeneralModule.hpp
 
   IGESDraw_LabelDisplay.cxx
-  IGESDraw_LabelDisplay.hxx
+  IGESDraw_LabelDisplay.hpp
   IGESDraw_NetworkSubfigure.cxx
-  IGESDraw_NetworkSubfigure.hxx
+  IGESDraw_NetworkSubfigure.hpp
   IGESDraw_NetworkSubfigureDef.cxx
-  IGESDraw_NetworkSubfigureDef.hxx
+  IGESDraw_NetworkSubfigureDef.hpp
   IGESDraw_PerspectiveView.cxx
-  IGESDraw_PerspectiveView.hxx
+  IGESDraw_PerspectiveView.hpp
   IGESDraw_Planar.cxx
-  IGESDraw_Planar.hxx
+  IGESDraw_Planar.hpp
   IGESDraw_Protocol.cxx
-  IGESDraw_Protocol.hxx
+  IGESDraw_Protocol.hpp
   IGESDraw_ReadWriteModule.cxx
-  IGESDraw_ReadWriteModule.hxx
+  IGESDraw_ReadWriteModule.hpp
   IGESDraw_RectArraySubfigure.cxx
-  IGESDraw_RectArraySubfigure.hxx
+  IGESDraw_RectArraySubfigure.hpp
   IGESDraw_SegmentedViewsVisible.cxx
-  IGESDraw_SegmentedViewsVisible.hxx
+  IGESDraw_SegmentedViewsVisible.hpp
   IGESDraw_SpecificModule.cxx
-  IGESDraw_SpecificModule.hxx
+  IGESDraw_SpecificModule.hpp
   IGESDraw_ToolCircArraySubfigure.cxx
-  IGESDraw_ToolCircArraySubfigure.hxx
+  IGESDraw_ToolCircArraySubfigure.hpp
   IGESDraw_ToolConnectPoint.cxx
-  IGESDraw_ToolConnectPoint.hxx
+  IGESDraw_ToolConnectPoint.hpp
   IGESDraw_ToolDrawing.cxx
-  IGESDraw_ToolDrawing.hxx
+  IGESDraw_ToolDrawing.hpp
   IGESDraw_ToolDrawingWithRotation.cxx
-  IGESDraw_ToolDrawingWithRotation.hxx
+  IGESDraw_ToolDrawingWithRotation.hpp
   IGESDraw_ToolLabelDisplay.cxx
-  IGESDraw_ToolLabelDisplay.hxx
+  IGESDraw_ToolLabelDisplay.hpp
   IGESDraw_ToolNetworkSubfigure.cxx
-  IGESDraw_ToolNetworkSubfigure.hxx
+  IGESDraw_ToolNetworkSubfigure.hpp
   IGESDraw_ToolNetworkSubfigureDef.cxx
-  IGESDraw_ToolNetworkSubfigureDef.hxx
+  IGESDraw_ToolNetworkSubfigureDef.hpp
   IGESDraw_ToolPerspectiveView.cxx
-  IGESDraw_ToolPerspectiveView.hxx
+  IGESDraw_ToolPerspectiveView.hpp
   IGESDraw_ToolPlanar.cxx
-  IGESDraw_ToolPlanar.hxx
+  IGESDraw_ToolPlanar.hpp
   IGESDraw_ToolRectArraySubfigure.cxx
-  IGESDraw_ToolRectArraySubfigure.hxx
+  IGESDraw_ToolRectArraySubfigure.hpp
   IGESDraw_ToolSegmentedViewsVisible.cxx
-  IGESDraw_ToolSegmentedViewsVisible.hxx
+  IGESDraw_ToolSegmentedViewsVisible.hpp
   IGESDraw_ToolView.cxx
-  IGESDraw_ToolView.hxx
+  IGESDraw_ToolView.hpp
   IGESDraw_ToolViewsVisible.cxx
-  IGESDraw_ToolViewsVisible.hxx
+  IGESDraw_ToolViewsVisible.hpp
   IGESDraw_ToolViewsVisibleWithAttr.cxx
-  IGESDraw_ToolViewsVisibleWithAttr.hxx
+  IGESDraw_ToolViewsVisibleWithAttr.hpp
   IGESDraw_View.cxx
-  IGESDraw_View.hxx
+  IGESDraw_View.hpp
   IGESDraw_ViewsVisible.cxx
-  IGESDraw_ViewsVisible.hxx
+  IGESDraw_ViewsVisible.hpp
   IGESDraw_ViewsVisibleWithAttr.cxx
-  IGESDraw_ViewsVisibleWithAttr.hxx
+  IGESDraw_ViewsVisibleWithAttr.hpp
 )

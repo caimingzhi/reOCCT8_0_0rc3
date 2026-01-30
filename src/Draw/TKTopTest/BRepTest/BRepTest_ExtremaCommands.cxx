@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <BRepTest.hxx>
-#include <BRepExtrema_Poly.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepExtrema_ShapeProximity.hxx>
-#include <BRepExtrema_SelfIntersection.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <TopoDS_Builder.hxx>
-#include <TopoDS_Compound.hxx>
-#include <Draw.hxx>
-#include <Message.hxx>
-#include <OSD_Timer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Precision.hxx>
+#include <DBRep.hpp>
+#include <BRepTest.hpp>
+#include <BRepExtrema_Poly.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepExtrema_ShapeProximity.hpp>
+#include <BRepExtrema_SelfIntersection.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <TopoDS_Builder.hpp>
+#include <TopoDS_Compound.hpp>
+#include <Draw.hpp>
+#include <Message.hpp>
+#include <OSD_Timer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Precision.hpp>
 
 #include <cstdio>
 

@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_ShapeVisitor.hxx>
-#include <TopExp.hxx>
-#include <ShapeAnalysis.hxx>
-#include <TopExp_Explorer.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshData_Face.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <ShapeAnalysis_WireOrder.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <Precision.hxx>
-#include <IMeshData_Status.hxx>
-#include <IMeshTools_Context.hxx>
-#include <BRepTools.hxx>
+#include <BRepMesh_ShapeVisitor.hpp>
+#include <TopExp.hpp>
+#include <ShapeAnalysis.hpp>
+#include <TopExp_Explorer.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshData_Face.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <ShapeAnalysis_WireOrder.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <Precision.hpp>
+#include <IMeshData_Status.hpp>
+#include <IMeshTools_Context.hpp>
+#include <BRepTools.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ShapeVisitor, IMeshTools_ShapeVisitor)
 

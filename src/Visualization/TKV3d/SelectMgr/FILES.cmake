@@ -3,70 +3,70 @@ set(OCCT_SelectMgr_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_SelectMgr_FILES
   SelectMgr.cxx
-  SelectMgr.hxx
+  SelectMgr.hpp
   SelectMgr_AndFilter.cxx
-  SelectMgr_AndFilter.hxx
+  SelectMgr_AndFilter.hpp
   SelectMgr_AndOrFilter.cxx
-  SelectMgr_AndOrFilter.hxx
+  SelectMgr_AndOrFilter.hpp
   SelectMgr_AxisIntersector.cxx
-  SelectMgr_AxisIntersector.hxx
+  SelectMgr_AxisIntersector.hpp
   SelectMgr_BaseIntersector.cxx
-  SelectMgr_BaseIntersector.hxx
+  SelectMgr_BaseIntersector.hpp
   SelectMgr_BaseFrustum.cxx
-  SelectMgr_BaseFrustum.hxx
+  SelectMgr_BaseFrustum.hpp
   SelectMgr_BVHThreadPool.cxx
-  SelectMgr_BVHThreadPool.hxx
+  SelectMgr_BVHThreadPool.hpp
   SelectMgr_CompositionFilter.cxx
-  SelectMgr_CompositionFilter.hxx
+  SelectMgr_CompositionFilter.hpp
   SelectMgr_EntityOwner.cxx
-  SelectMgr_EntityOwner.hxx
+  SelectMgr_EntityOwner.hpp
   SelectMgr_Filter.cxx
-  SelectMgr_Filter.hxx
-  SelectMgr_FilterType.hxx
-  SelectMgr_Frustum.hxx
-  SelectMgr_Frustum.lxx
+  SelectMgr_Filter.hpp
+  SelectMgr_FilterType.hpp
+  SelectMgr_Frustum.hpp
+  SelectMgr_Frustum_1.hpp
   SelectMgr_FrustumBuilder.cxx
-  SelectMgr_FrustumBuilder.hxx
+  SelectMgr_FrustumBuilder.hpp
 
 
   SelectMgr_OrFilter.cxx
-  SelectMgr_OrFilter.hxx
-  SelectMgr_PickingStrategy.hxx
+  SelectMgr_OrFilter.hpp
+  SelectMgr_PickingStrategy.hpp
   SelectMgr_RectangularFrustum.cxx
-  SelectMgr_RectangularFrustum.hxx
+  SelectMgr_RectangularFrustum.hpp
   SelectMgr_SelectableObject.cxx
-  SelectMgr_SelectableObject.hxx
+  SelectMgr_SelectableObject.hpp
   SelectMgr_SelectableObjectSet.cxx
-  SelectMgr_SelectableObjectSet.hxx
+  SelectMgr_SelectableObjectSet.hpp
   SelectMgr_SelectingVolumeManager.cxx
-  SelectMgr_SelectingVolumeManager.hxx
+  SelectMgr_SelectingVolumeManager.hpp
   SelectMgr_Selection.cxx
-  SelectMgr_Selection.hxx
+  SelectMgr_Selection.hpp
   SelectMgr_SelectionImageFiller.cxx
-  SelectMgr_SelectionImageFiller.hxx
+  SelectMgr_SelectionImageFiller.hpp
   SelectMgr_SelectionManager.cxx
-  SelectMgr_SelectionManager.hxx
-  SelectMgr_SelectionType.hxx
+  SelectMgr_SelectionManager.hpp
+  SelectMgr_SelectionType.hpp
   SelectMgr_SensitiveEntity.cxx
-  SelectMgr_SensitiveEntity.hxx
+  SelectMgr_SensitiveEntity.hpp
   SelectMgr_SensitiveEntitySet.cxx
-  SelectMgr_SensitiveEntitySet.hxx
+  SelectMgr_SensitiveEntitySet.hpp
 
-  SelectMgr_SortCriterion.hxx
-  SelectMgr_StateOfSelection.hxx
-  SelectMgr_ToleranceMap.hxx
+  SelectMgr_SortCriterion.hpp
+  SelectMgr_StateOfSelection.hpp
+  SelectMgr_ToleranceMap.hpp
   SelectMgr_ToleranceMap.cxx
   SelectMgr_TriangularFrustum.cxx
-  SelectMgr_TriangularFrustum.hxx
+  SelectMgr_TriangularFrustum.hpp
   SelectMgr_TriangularFrustumSet.cxx
-  SelectMgr_TriangularFrustumSet.hxx
-  SelectMgr_TypeOfBVHUpdate.hxx
-  SelectMgr_TypeOfDepthTolerance.hxx
-  SelectMgr_TypeOfUpdate.hxx
+  SelectMgr_TriangularFrustumSet.hpp
+  SelectMgr_TypeOfBVHUpdate.hpp
+  SelectMgr_TypeOfDepthTolerance.hpp
+  SelectMgr_TypeOfUpdate.hpp
 
   SelectMgr_ViewClipRange.cxx
-  SelectMgr_ViewClipRange.hxx
+  SelectMgr_ViewClipRange.hpp
   SelectMgr_ViewerSelector.cxx
-  SelectMgr_ViewerSelector.hxx
+  SelectMgr_ViewerSelector.hpp
 
 )

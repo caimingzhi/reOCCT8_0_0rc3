@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <ElSLib.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntTools_TopolTool.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ElSLib.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntTools_TopolTool.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntTools_TopolTool, Adaptor3d_TopolTool)
 

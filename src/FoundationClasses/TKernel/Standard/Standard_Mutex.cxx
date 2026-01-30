@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Mutex.hxx>
+#include <Standard_Mutex.hpp>
 
 //=============================================
 // Standard_Mutex::Standard_Mutex

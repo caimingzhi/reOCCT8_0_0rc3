@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XDEDRAW_Views.hxx>
+#include <XDEDRAW_Views.hpp>
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom_Plane.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_Label.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_ClippingPlaneTool.hxx>
-#include <XCAFDoc_DimTolTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_View.hxx>
-#include <XCAFDoc_ViewTool.hxx>
-#include <XCAFView_Object.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom_Plane.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_Label.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_ClippingPlaneTool.hpp>
+#include <XCAFDoc_DimTolTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_View.hpp>
+#include <XCAFDoc_ViewTool.hpp>
+#include <XCAFView_Object.hpp>
 
 //=================================================================================================
 

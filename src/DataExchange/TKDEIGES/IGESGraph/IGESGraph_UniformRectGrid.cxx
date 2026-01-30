@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <IGESGraph_UniformRectGrid.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <IGESGraph_UniformRectGrid.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_UniformRectGrid, IGESData_IGESEntity)
 

@@ -15,8 +15,8 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Persistence.hxx>
-#include <TObj_Object.hxx>
+#include <TObj_Persistence.hpp>
+#include <TObj_Object.hpp>
 
 //=======================================================================
 // function : getMapOfTypes

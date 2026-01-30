@@ -17,11 +17,11 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <FEmTool_Curve.hxx>
-#include <PLib.hxx>
-#include <PLib_HermitJacobi.hxx>
-#include <PLib_JacobiPolynomial.hxx>
-#include <Standard_Type.hxx>
+#include <FEmTool_Curve.hpp>
+#include <PLib.hpp>
+#include <PLib_HermitJacobi.hpp>
+#include <PLib_JacobiPolynomial.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_Curve, Standard_Transient)
 

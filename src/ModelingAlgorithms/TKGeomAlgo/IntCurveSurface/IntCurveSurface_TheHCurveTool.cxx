@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_TheHCurveTool.hxx>
+#include <IntCurveSurface_TheHCurveTool.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <NCollection_Array1.hxx>
-#include <gce_MakeLin.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <NCollection_Array1.hpp>
+#include <gce_MakeLin.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
 
 #define myMinPnts 5
 

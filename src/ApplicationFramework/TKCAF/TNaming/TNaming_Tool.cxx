@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Localizer.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Localizer.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 
@@ -570,7 +570,7 @@ void TNamingTool_DumpLabel(const TopoDS_Shape& S, const TDF_Label& Acces)
   std::cout << std::endl;
 }
 
-  #include <BRepTools.hxx>
+  #include <BRepTools.hpp>
 
 //=================================================================================================
 

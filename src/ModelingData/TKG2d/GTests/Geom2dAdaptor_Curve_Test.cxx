@@ -13,15 +13,15 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
 
 //==================================================================================================
 // Test fixture for Geom2dAdaptor_Curve degenerated curve handling

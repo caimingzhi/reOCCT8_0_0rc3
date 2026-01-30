@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomTools_UndefinedTypeHandler.hxx>
-#include <Standard_Type.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomTools_UndefinedTypeHandler.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomTools_UndefinedTypeHandler, Standard_Transient)
 

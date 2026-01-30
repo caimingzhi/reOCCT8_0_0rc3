@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Parabola.hxx>
+#include <GeomGridEval_Parabola.hpp>
 
-#include <gp_Parab.hxx>
+#include <gp_Parab.hpp>
 
 #include <cmath>
 

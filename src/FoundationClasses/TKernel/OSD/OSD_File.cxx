@@ -16,19 +16,19 @@
   #include <windows.h>
 #endif
 
-#include <OSD_File.hxx>
+#include <OSD_File.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <OSD.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <OSD_WhoAmI.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <NCollection_Array1.hpp>
+#include <OSD.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <OSD_WhoAmI.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #ifdef _WIN32
 
-  #include <OSD_WNT.hxx>
+  #include <OSD_WNT.hpp>
 
   #include <strsafe.h>
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepGeom_RWSurface.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Surface.hxx>
+#include "RWStepGeom_RWSurface.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Surface.hpp>
 
 RWStepGeom_RWSurface::RWStepGeom_RWSurface() = default;
 

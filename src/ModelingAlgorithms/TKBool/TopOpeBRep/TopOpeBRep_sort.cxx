@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_TKI.hxx>
+#include <TopOpeBRepDS_TKI.hpp>
 #include <cstdlib>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
 
 typedef NCollection_List<occ::handle<TopOpeBRepDS_Interference>>* BOA_t;
 

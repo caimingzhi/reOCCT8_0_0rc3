@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_List.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <Standard_Integer.hxx>
+#include <NCollection_List.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <Standard_Integer.hpp>
 
 #include <gtest/gtest.h>
 #include <algorithm>

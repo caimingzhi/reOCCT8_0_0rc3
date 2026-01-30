@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGraph_DrawingSize.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGraph_DrawingSize.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_DrawingSize, IGESData_IGESEntity)
 

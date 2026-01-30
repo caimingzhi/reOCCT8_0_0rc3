@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_ObjMaterialMap.hxx>
+#include <RWObj_ObjMaterialMap.hpp>
 
-#include <Message.hxx>
-#include <OSD_OpenFile.hxx>
+#include <Message.hpp>
+#include <OSD_OpenFile.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWObj_ObjMaterialMap, RWMesh_MaterialMap)
 

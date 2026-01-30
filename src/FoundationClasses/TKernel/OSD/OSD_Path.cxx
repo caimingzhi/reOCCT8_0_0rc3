@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Path.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_Path.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <TCollection_AsciiString.hpp>
 
 static OSD_SysType whereAmI()
 {
@@ -54,10 +54,10 @@ static OSD_SysType whereAmI()
 
 #if !(defined(_WIN32) || defined(__WIN32__))
 
-  #include <Standard_NumericError.hxx>
-  #include <Standard_NullObject.hxx>
-  #include <Standard_ProgramError.hxx>
-  #include <OSD_WhoAmI.hxx>
+  #include <Standard_NumericError.hpp>
+  #include <Standard_NullObject.hpp>
+  #include <Standard_ProgramError.hpp>
+  #include <OSD_WhoAmI.hpp>
 
 OSD_Path::OSD_Path()
 {
@@ -912,7 +912,7 @@ void OSD_Path::SetExtension(const TCollection_AsciiString& aName)
 //-------------------  Windows sources for OSD_Path -------------------
 //------------------------------------------------------------------------
 
-  #include <Standard_ProgramError.hxx>
+  #include <Standard_ProgramError.hpp>
 
   #include <windows.h>
   #include <stdlib.h>

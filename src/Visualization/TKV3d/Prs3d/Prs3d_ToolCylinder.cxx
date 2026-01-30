@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_ToolCylinder.hxx>
+#include <Prs3d_ToolCylinder.hpp>
 
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <Prs3d_ToolQuadric.hxx>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <Prs3d_ToolQuadric.hpp>
 
 //=================================================================================================
 

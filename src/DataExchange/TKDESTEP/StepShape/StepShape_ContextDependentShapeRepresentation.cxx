@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeRepresentationRelationship.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeRepresentationRelationship.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ContextDependentShapeRepresentation, Standard_Transient)
 

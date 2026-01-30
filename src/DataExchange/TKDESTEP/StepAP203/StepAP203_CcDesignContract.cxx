@@ -16,8 +16,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignContract.hxx>
-#include <StepBasic_Contract.hxx>
+#include <StepAP203_CcDesignContract.hpp>
+#include <StepBasic_Contract.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignContract, StepBasic_ContractAssignment)
 

@@ -18,13 +18,13 @@
 
 // #define LDOM_PARSER_TRACE
 
-#include <LDOMParser.hxx>
-#include <LDOM_MemManager.hxx>
-#include <LDOM_XmlReader.hxx>
-#include <LDOM_BasicText.hxx>
-#include <LDOM_CharReference.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <OSD_FileSystem.hxx>
+#include <LDOMParser.hpp>
+#include <LDOM_MemManager.hpp>
+#include <LDOM_XmlReader.hpp>
+#include <LDOM_BasicText.hpp>
+#include <LDOM_CharReference.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <OSD_FileSystem.hpp>
 
 #ifdef _MSC_VER
   #include <io.h>

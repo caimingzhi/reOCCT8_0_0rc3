@@ -3,18 +3,18 @@ set(OCCT_HLRTest_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_HLRTest_FILES
   HLRTest.cxx
-  HLRTest.hxx
+  HLRTest.hpp
   HLRTest_DrawableEdgeTool.cxx
-  HLRTest_DrawableEdgeTool.hxx
+  HLRTest_DrawableEdgeTool.hpp
   HLRTest_DrawablePolyEdgeTool.cxx
-  HLRTest_DrawablePolyEdgeTool.hxx
-  HLRTest_DrawablePolyEdgeTool.lxx
+  HLRTest_DrawablePolyEdgeTool.hpp
+  HLRTest_DrawablePolyEdgeTool_1.hpp
   HLRTest_OutLiner.cxx
-  HLRTest_OutLiner.hxx
-  HLRTest_OutLiner.lxx
+  HLRTest_OutLiner.hpp
+  HLRTest_OutLiner_1.hpp
   HLRTest_Projector.cxx
-  HLRTest_Projector.hxx
+  HLRTest_Projector.hpp
   HLRTest_ShapeData.cxx
-  HLRTest_ShapeData.hxx
-  HLRTest_ShapeData.lxx
+  HLRTest_ShapeData.hpp
+  HLRTest_ShapeData_1.hpp
 )

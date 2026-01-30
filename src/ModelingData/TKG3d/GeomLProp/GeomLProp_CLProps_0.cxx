@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomLProp_CLProps.hxx>
+#include <GeomLProp_CLProps.hpp>
 
-#include <Geom_Curve.hxx>
-#include <LProp_BadContinuity.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <LProp_NotDefined.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <GeomLProp_CurveTool.hxx>
+#include <Geom_Curve.hpp>
+#include <LProp_BadContinuity.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <LProp_NotDefined.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <GeomLProp_CurveTool.hpp>
 
 #define Curve occ::handle<Geom_Curve>
-#define Curve_hxx <Geom_Curve.hxx>
+#define Curve_hxx <Geom_Curve.hpp>
 #define Vec gp_Vec
-#define Vec_hxx <gp_Vec.hxx>
+#define Vec_hxx <gp_Vec.hpp>
 #define Pnt gp_Pnt
-#define Pnt_hxx <gp_Pnt.hxx>
+#define Pnt_hxx <gp_Pnt.hpp>
 #define Dir gp_Dir
-#define Dir_hxx <gp_Dir.hxx>
+#define Dir_hxx <gp_Dir.hpp>
 #define Tool GeomLProp_CurveTool
-#define Tool_hxx <GeomLProp_CurveTool.hxx>
+#define Tool_hxx <GeomLProp_CurveTool.hpp>
 #define LProp_CLProps GeomLProp_CLProps
-#define LProp_CLProps_hxx <GeomLProp_CLProps.hxx>
-#include <LProp_CLProps.gxx>
+#define LProp_CLProps_hxx <GeomLProp_CLProps.hpp>
+#include <LProp_CLProps.hpp>

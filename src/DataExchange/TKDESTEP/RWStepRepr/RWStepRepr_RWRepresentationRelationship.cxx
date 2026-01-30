@@ -13,12 +13,12 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWRepresentationRelationship.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationRelationship.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWRepresentationRelationship.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationRelationship.hpp>
 
 RWStepRepr_RWRepresentationRelationship::RWStepRepr_RWRepresentationRelationship() = default;
 

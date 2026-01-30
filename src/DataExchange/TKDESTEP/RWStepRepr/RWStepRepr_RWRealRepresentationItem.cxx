@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepRepr_RWRealRepresentationItem.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_RealRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include "RWStepRepr_RWRealRepresentationItem.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_RealRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepRepr_RWRealRepresentationItem::RWStepRepr_RWRealRepresentationItem() = default;
 

@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_Curve2d.hxx>
+#include <DrawTrSurf_Curve2d.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <gp.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <gp.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Curve2d, DrawTrSurf_Drawable)
 

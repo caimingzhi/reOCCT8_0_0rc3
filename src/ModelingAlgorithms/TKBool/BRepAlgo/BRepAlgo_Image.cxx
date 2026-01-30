@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgo_Image.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Map.hxx>
+#include <BRepAlgo_Image.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

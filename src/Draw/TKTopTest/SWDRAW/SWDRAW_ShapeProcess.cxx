@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <ShapeProcess.hxx>
-#include <ShapeProcess_OperLibrary.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <SWDRAW.hxx>
-#include <SWDRAW_ShapeProcess.hxx>
-#include <TopoDS_Shape.hxx>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <ShapeProcess.hpp>
+#include <ShapeProcess_OperLibrary.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <SWDRAW.hpp>
+#include <SWDRAW_ShapeProcess.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_BSplineKnotSplitting.hxx>
-#include <Standard_RangeError.hxx>
+#include <BSplCLib.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_BSplineKnotSplitting.hpp>
+#include <Standard_RangeError.hpp>
 
 typedef NCollection_Array1<int>  Array1OfInteger;
 typedef NCollection_HArray1<int> HArray1OfInteger;

@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Text.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_TextPrsBuilder.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Text.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_TextPrsBuilder.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_TextPrsBuilder, MeshVS_PrsBuilder)
 

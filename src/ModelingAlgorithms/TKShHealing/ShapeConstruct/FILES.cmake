@@ -3,11 +3,11 @@ set(OCCT_ShapeConstruct_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeConstruct_FILES
   ShapeConstruct.cxx
-  ShapeConstruct.hxx
+  ShapeConstruct.hpp
   ShapeConstruct_Curve.cxx
-  ShapeConstruct_Curve.hxx
+  ShapeConstruct_Curve.hpp
   ShapeConstruct_MakeTriangulation.cxx
-  ShapeConstruct_MakeTriangulation.hxx
+  ShapeConstruct_MakeTriangulation.hpp
   ShapeConstruct_ProjectCurveOnSurface.cxx
-  ShapeConstruct_ProjectCurveOnSurface.hxx
+  ShapeConstruct_ProjectCurveOnSurface.hpp
 )

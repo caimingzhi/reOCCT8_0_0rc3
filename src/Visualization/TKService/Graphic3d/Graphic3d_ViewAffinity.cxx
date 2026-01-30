@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ViewAffinity.hxx>
+#include <Graphic3d_ViewAffinity.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ViewAffinity, Standard_Transient)
 

@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
+#include <Adaptor3d_Surface.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_NotImplemented.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Adaptor3d_Surface, Standard_Transient)
 

@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <StdPrs_PoleCurve.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <StdPrs_PoleCurve.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Display.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_EdgeData.hxx>
-#include <HLRBRep_ShapeBounds.hxx>
-#include <HLRTest_DrawableEdgeTool.hxx>
-#include <HLRTest_ShapeData.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Display.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_EdgeData.hpp>
+#include <HLRBRep_ShapeBounds.hpp>
+#include <HLRTest_DrawableEdgeTool.hpp>
+#include <HLRTest_ShapeData.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_DrawableEdgeTool, Draw_Drawable3D)
 

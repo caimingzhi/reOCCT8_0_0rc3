@@ -20,40 +20,40 @@
 //    gka 21.06.99 S4208: adding method NextProject(Adaptor_Curve)
 //    msv 30.05.00 correct IsPlanar for a conic curve
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Box2d.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BoundedCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BoundedCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeExtend_ComplexCurve.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Box2d.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BoundedCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BoundedCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeExtend_ComplexCurve.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

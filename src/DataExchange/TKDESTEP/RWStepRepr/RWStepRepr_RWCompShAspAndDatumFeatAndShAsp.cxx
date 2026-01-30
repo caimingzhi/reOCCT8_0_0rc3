@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWCompShAspAndDatumFeatAndShAsp.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_CompShAspAndDatumFeatAndShAsp.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWCompShAspAndDatumFeatAndShAsp.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_CompShAspAndDatumFeatAndShAsp.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 //=================================================================================================
 

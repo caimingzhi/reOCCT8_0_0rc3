@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDF_Attribute.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XmlMDataXtd_ConstraintDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDF_Attribute.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XmlMDataXtd_ConstraintDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_ConstraintDriver, XmlMDF_ADriver)
 

@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTopAdaptor_HVertex.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTopAdaptor_HVertex.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTopAdaptor_HVertex, Adaptor3d_HVertex)
 

@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Vector.hxx>
-#include <Geom_Vector.hxx>
-#include <GeomToStep_MakeDirection.hxx>
-#include <GeomToStep_MakeVector.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Vector.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_Vector.hpp>
+#include <Geom_Vector.hpp>
+#include <GeomToStep_MakeDirection.hpp>
+#include <GeomToStep_MakeVector.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Vector.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' un vector de prostep a partir d' un Vec de gp
@@ -35,7 +35,7 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec&           V,
 {
   gp_Dir D       = gp_Dir(V);
   double lFactor = theLocalFactors.LengthFactor();
-#include "GeomToStep_MakeVector_gen.pxx"
+#include "GeomToStep_MakeVector_gen.hpp"
 }
 
 //=============================================================================
@@ -48,7 +48,7 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec2d&         V,
   (void)theLocalFactors;
   gp_Dir2d D       = gp_Dir2d(V);
   double   lFactor = 1.;
-#include "GeomToStep_MakeVector_gen.pxx"
+#include "GeomToStep_MakeVector_gen.hpp"
 }
 
 //=============================================================================
@@ -62,7 +62,7 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom_Vector>& GVe
   V              = GVector->Vec();
   gp_Dir D       = gp_Dir(V);
   double lFactor = theLocalFactors.LengthFactor();
-#include "GeomToStep_MakeVector_gen.pxx"
+#include "GeomToStep_MakeVector_gen.hpp"
 }
 
 //=============================================================================
@@ -77,7 +77,7 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom2d_Vector>& G
   V                = GVector->Vec2d();
   gp_Dir2d D       = gp_Dir2d(V);
   double   lFactor = 1.;
-#include "GeomToStep_MakeVector_gen.pxx"
+#include "GeomToStep_MakeVector_gen.hpp"
 }
 
 //=============================================================================

@@ -18,15 +18,15 @@
 // Version	Date		Purpose
 //		0.0	Feb 10 1997	Creation
 
-#include <DDF.hxx>
-#include <DDF_Data.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <DDF.hpp>
+#include <DDF_Data.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDF_Data, Draw_Drawable3D)
 

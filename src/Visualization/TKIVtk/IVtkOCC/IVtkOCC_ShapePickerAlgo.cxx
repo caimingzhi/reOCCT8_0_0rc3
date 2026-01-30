@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtk_Types.hxx>
-#include <IVtkOCC_ShapePickerAlgo.hxx>
-#include <IVtkOCC_Shape.hxx>
-#include <IVtkOCC_SelectableObject.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <StdSelect_BRepOwner.hxx>
+#include <IVtk_Types.hpp>
+#include <IVtkOCC_ShapePickerAlgo.hpp>
+#include <IVtkOCC_Shape.hpp>
+#include <IVtkOCC_SelectableObject.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <StdSelect_BRepOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_ShapePickerAlgo, IVtk_IShapePickerAlgo)
 

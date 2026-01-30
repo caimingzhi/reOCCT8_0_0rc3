@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESSolid_ManifoldSolid.hxx>
-#include <IGESSolid_Shell.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESSolid_ManifoldSolid.hpp>
+#include <IGESSolid_Shell.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_ManifoldSolid, IGESData_IGESEntity)
 

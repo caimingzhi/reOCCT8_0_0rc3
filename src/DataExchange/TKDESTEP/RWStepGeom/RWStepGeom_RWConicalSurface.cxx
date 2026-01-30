@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWConicalSurface.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_ConicalSurface.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWConicalSurface.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_ConicalSurface.hpp>
 
 RWStepGeom_RWConicalSurface::RWStepGeom_RWConicalSurface() = default;
 

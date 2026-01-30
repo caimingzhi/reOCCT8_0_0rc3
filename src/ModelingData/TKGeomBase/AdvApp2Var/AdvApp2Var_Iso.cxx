@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_Iso.hxx>
+#include <AdvApp2Var_Iso.hpp>
 
-#include <AdvApp2Var_ApproxF2var.hxx>
-#include <AdvApp2Var_Context.hxx>
-#include <AdvApp2Var_Node.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <AdvApp2Var_ApproxF2var.hpp>
+#include <AdvApp2Var_Context.hpp>
+#include <AdvApp2Var_Node.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AdvApp2Var_Iso, Standard_Transient)
 

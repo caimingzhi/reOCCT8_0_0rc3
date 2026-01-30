@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <GeomFill_BezierCurves.hxx>
-#include <GeomFill_Coons.hxx>
-#include <GeomFill_Curved.hxx>
-#include <GeomFill_Filling.hxx>
-#include <GeomFill_Stretch.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <GeomFill_BezierCurves.hpp>
+#include <GeomFill_Coons.hpp>
+#include <GeomFill_Curved.hpp>
+#include <GeomFill_Filling.hpp>
+#include <GeomFill_Stretch.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
 
 //=======================================================================
 // function : SetSameWeights

@@ -15,9 +15,9 @@
   #include <windows.h>
 #endif
 
-#include <Message_PrinterSystemLog.hxx>
+#include <Message_PrinterSystemLog.hpp>
 
-#include <TCollection_ExtendedString.hxx>
+#include <TCollection_ExtendedString.hpp>
 
 #if defined(OCCT_UWP)
 //

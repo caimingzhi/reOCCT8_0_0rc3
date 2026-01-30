@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_OutOfRange.hxx>
-#include <StepData_FieldList1.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <StepData_FieldList1.hpp>
 
 StepData_FieldList1::StepData_FieldList1() = default;
 

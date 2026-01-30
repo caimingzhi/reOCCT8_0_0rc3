@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DDataStd.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <DDF.hxx>
+#include <DDF.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
 
 // ATTRIBUTES
 
-#include <TDataStd_Name.hxx>
+#include <TDataStd_Name.hpp>
 
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_List.hxx>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_List.hpp>
 
 //=======================================================================
 // function : DDataStd_SetName

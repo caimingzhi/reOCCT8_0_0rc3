@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_GeometricCurveSet.hxx>
+#include <StepShape_GeometricCurveSet.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_GeometricCurveSet, StepShape_GeometricSet)
 

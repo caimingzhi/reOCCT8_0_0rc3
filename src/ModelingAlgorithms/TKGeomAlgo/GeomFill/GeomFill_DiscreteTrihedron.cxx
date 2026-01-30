@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_DiscreteTrihedron.hxx>
+#include <GeomFill_DiscreteTrihedron.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomFill_Frenet.hxx>
-#include <gp_Ax2.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomFill_Frenet.hpp>
+#include <gp_Ax2.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_DiscreteTrihedron, GeomFill_TrihedronLaw)
 

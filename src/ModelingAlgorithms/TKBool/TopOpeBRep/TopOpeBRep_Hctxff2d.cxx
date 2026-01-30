@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRep_Hctxff2d.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRep_Hctxff2d.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRep_Hctxff2d, Standard_Transient)
 

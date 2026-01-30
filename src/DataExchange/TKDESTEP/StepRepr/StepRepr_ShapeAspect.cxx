@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ShapeAspect, Standard_Transient)
 

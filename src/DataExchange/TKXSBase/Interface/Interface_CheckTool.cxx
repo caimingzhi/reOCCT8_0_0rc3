@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckFailure.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CheckTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_GTool.hxx>
-#include <Interface_HGraph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckFailure.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CheckTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_GTool.hpp>
+#include <Interface_HGraph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #ifdef _WIN32
-  #include <OSD_Exception.hxx>
+  #include <OSD_Exception.hpp>
 #else
-  #include <OSD_Signal.hxx>
+  #include <OSD_Signal.hpp>
 #endif
 #include <cstdio>
 

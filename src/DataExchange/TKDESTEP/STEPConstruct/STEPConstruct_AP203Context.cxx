@@ -14,51 +14,51 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP203_CcDesignApproval.hxx>
-#include <StepAP203_CcDesignDateAndTimeAssignment.hxx>
-#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hxx>
-#include <StepAP203_CcDesignSecurityClassification.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_ApprovalDateTime.hxx>
-#include <StepBasic_ApprovalPersonOrganization.hxx>
-#include <StepBasic_ApprovalRole.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_DateTimeRole.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepBasic_PersonAndOrganizationRole.hxx>
-#include <StepBasic_ProductCategoryRelationship.hxx>
-#include <StepBasic_SecurityClassificationLevel.hxx>
-#include <STEPConstruct_AP203Context.hxx>
-#include <STEPConstruct_Part.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
+#include <StepAP203_CcDesignApproval.hpp>
+#include <StepAP203_CcDesignDateAndTimeAssignment.hpp>
+#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hpp>
+#include <StepAP203_CcDesignSecurityClassification.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_ApprovalDateTime.hpp>
+#include <StepBasic_ApprovalPersonOrganization.hpp>
+#include <StepBasic_ApprovalRole.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_DateTimeRole.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepBasic_PersonAndOrganizationRole.hpp>
+#include <StepBasic_ProductCategoryRelationship.hpp>
+#include <StepBasic_SecurityClassificationLevel.hpp>
+#include <STEPConstruct_AP203Context.hpp>
+#include <STEPConstruct_Part.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
 
-#include <OSD_Host.hxx>
-#include <OSD_Process.hxx>
-#include <Quantity_Date.hxx>
+#include <OSD_Host.hpp>
+#include <OSD_Process.hpp>
+#include <Quantity_Date.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
 
-#include <StepBasic_CalendarDate.hxx>
-#include <StepBasic_LocalTime.hxx>
-#include <StepBasic_ApprovalStatus.hxx>
-#include <StepBasic_CoordinatedUniversalTimeOffset.hxx>
-#include <StepBasic_AheadOrBehind.hxx>
-#include <StepBasic_Person.hxx>
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_SecurityClassification.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductRelatedProductCategory.hxx>
-#include <StepAP203_PersonOrganizationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepAP203_ClassifiedItem.hxx>
-#include <StepAP203_DateTimeItem.hxx>
-#include <StepAP203_ApprovedItem.hxx>
-#include <StepBasic_ProductCategory.hxx>
+#include <StepBasic_CalendarDate.hpp>
+#include <StepBasic_LocalTime.hpp>
+#include <StepBasic_ApprovalStatus.hpp>
+#include <StepBasic_CoordinatedUniversalTimeOffset.hpp>
+#include <StepBasic_AheadOrBehind.hpp>
+#include <StepBasic_Person.hpp>
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_SecurityClassification.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductRelatedProductCategory.hpp>
+#include <StepAP203_PersonOrganizationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepAP203_ClassifiedItem.hpp>
+#include <StepAP203_DateTimeItem.hpp>
+#include <StepAP203_ApprovedItem.hpp>
+#include <StepBasic_ProductCategory.hpp>
 
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
   #include <pwd.h>

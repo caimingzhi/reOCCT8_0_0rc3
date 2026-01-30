@@ -2,44 +2,44 @@
 set(OCCT_Select3D_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Select3D_FILES
-  Select3D_BndBox3d.hxx
-  Select3D_BVHBuilder3d.hxx
-  Select3D_BVHIndexBuffer.hxx
+  Select3D_BndBox3d.hpp
+  Select3D_BVHBuilder3d.hpp
+  Select3D_BVHIndexBuffer.hpp
   Select3D_InteriorSensitivePointSet.cxx
-  Select3D_InteriorSensitivePointSet.hxx
-  Select3D_Pnt.hxx
-  Select3D_PointData.hxx
+  Select3D_InteriorSensitivePointSet.hpp
+  Select3D_Pnt.hpp
+  Select3D_PointData.hpp
   Select3D_SensitiveBox.cxx
-  Select3D_SensitiveBox.hxx
+  Select3D_SensitiveBox.hpp
   Select3D_SensitiveCircle.cxx
-  Select3D_SensitiveCircle.hxx
+  Select3D_SensitiveCircle.hpp
   Select3D_SensitiveCurve.cxx
-  Select3D_SensitiveCurve.hxx
+  Select3D_SensitiveCurve.hpp
   Select3D_SensitiveCylinder.cxx
-  Select3D_SensitiveCylinder.hxx
+  Select3D_SensitiveCylinder.hpp
   Select3D_SensitiveEntity.cxx
-  Select3D_SensitiveEntity.hxx
+  Select3D_SensitiveEntity.hpp
   Select3D_SensitiveFace.cxx
-  Select3D_SensitiveFace.hxx
+  Select3D_SensitiveFace.hpp
   Select3D_SensitiveGroup.cxx
-  Select3D_SensitiveGroup.hxx
+  Select3D_SensitiveGroup.hpp
   Select3D_SensitivePoint.cxx
-  Select3D_SensitivePoint.hxx
+  Select3D_SensitivePoint.hpp
   Select3D_SensitivePoly.cxx
-  Select3D_SensitivePoly.hxx
+  Select3D_SensitivePoly.hpp
   Select3D_SensitivePrimitiveArray.cxx
-  Select3D_SensitivePrimitiveArray.hxx
+  Select3D_SensitivePrimitiveArray.hpp
   Select3D_SensitiveSegment.cxx
-  Select3D_SensitiveSegment.hxx
+  Select3D_SensitiveSegment.hpp
   Select3D_SensitiveSet.cxx
-  Select3D_SensitiveSet.hxx
+  Select3D_SensitiveSet.hpp
   Select3D_SensitiveSphere.cxx
-  Select3D_SensitiveSphere.hxx
+  Select3D_SensitiveSphere.hpp
   Select3D_SensitiveTriangle.cxx
-  Select3D_SensitiveTriangle.hxx
+  Select3D_SensitiveTriangle.hpp
   Select3D_SensitiveTriangulation.cxx
-  Select3D_SensitiveTriangulation.hxx
+  Select3D_SensitiveTriangulation.hpp
   Select3D_SensitiveWire.cxx
-  Select3D_SensitiveWire.hxx
-  Select3D_TypeOfSensitivity.hxx
+  Select3D_SensitiveWire.hpp
+  Select3D_TypeOfSensitivity.hpp
 )

@@ -12,43 +12,43 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomConvert.hxx>
+#include <GeomConvert.hpp>
 
-#include <Convert_ConeToBSplineSurface.hxx>
-#include <Convert_CylinderToBSplineSurface.hxx>
-#include <Convert_ElementarySurfaceToBSplineSurface.hxx>
-#include <Convert_SphereToBSplineSurface.hxx>
-#include <Convert_TorusToBSplineSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomConvert_ApproxSurface.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
+#include <Convert_ConeToBSplineSurface.hpp>
+#include <Convert_CylinderToBSplineSurface.hpp>
+#include <Convert_ElementarySurfaceToBSplineSurface.hpp>
+#include <Convert_SphereToBSplineSurface.hpp>
+#include <Convert_TorusToBSplineSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomConvert_ApproxSurface.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
 
 typedef Geom_Surface               Surface;
 typedef Geom_BSplineSurface        BSplineSurface;

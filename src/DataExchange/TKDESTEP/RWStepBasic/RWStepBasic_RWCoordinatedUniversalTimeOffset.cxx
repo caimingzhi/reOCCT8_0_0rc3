@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWCoordinatedUniversalTimeOffset.pxx"
-#include <StepBasic_CoordinatedUniversalTimeOffset.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_AsciiString.hxx>
+#include "RWStepBasic_RWCoordinatedUniversalTimeOffset.hpp"
+#include <StepBasic_CoordinatedUniversalTimeOffset.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepBasic_RWAheadOrBehind.pxx"
+#include "RWStepBasic_RWAheadOrBehind.hpp"
 
 RWStepBasic_RWCoordinatedUniversalTimeOffset::RWStepBasic_RWCoordinatedUniversalTimeOffset() =
   default;

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <DDF.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Viewer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <gp_Pnt.hxx>
-#include <TNaming_Tool.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDataXtd_Point.hxx>
+#include <DDataStd.hpp>
+#include <DDF.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Viewer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <gp_Pnt.hpp>
+#include <TNaming_Tool.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDataXtd_Point.hpp>
 
-#include <DDataStd_DrawPresentation.hxx>
-#include <Message.hxx>
+#include <DDataStd_DrawPresentation.hpp>
+#include <Message.hpp>
 
 #ifndef _WIN32
 extern Draw_Viewer dout;

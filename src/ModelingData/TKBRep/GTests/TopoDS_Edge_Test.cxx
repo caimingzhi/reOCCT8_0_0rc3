@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS_Edge.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS_Edge.hpp>
 
 // Test BUC60828: TopoDS_Edge Infinite flag getter/setter
 // Migrated from QABugs_16.cxx

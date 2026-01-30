@@ -16,57 +16,57 @@
 
 // Modified:    MPS :  (10-04-97) portage WNT pour GetFilletShape
 
-#include <Adaptor3d_TopolTool.hxx>
-#include <BRepBlend_ConstRad.hxx>
-#include <BRepBlend_ConstRadInv.hxx>
-#include <BRepBlend_CurvPointRadInv.hxx>
-#include <BRepBlend_EvolRad.hxx>
-#include <BRepBlend_EvolRadInv.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepBlend_RstRstConstRad.hxx>
-#include <BRepBlend_RstRstEvolRad.hxx>
-#include <BRepBlend_SurfCurvConstRadInv.hxx>
-#include <BRepBlend_SurfCurvEvolRadInv.hxx>
-#include <BRepBlend_SurfPointConstRadInv.hxx>
-#include <BRepBlend_SurfPointEvolRadInv.hxx>
-#include <BRepBlend_SurfRstConstRad.hxx>
-#include <BRepBlend_SurfRstEvolRad.hxx>
-#include <BRepBlend_Walking.hxx>
-#include <ChFi3d_Builder_0.hxx>
-#include <ChFi3d_FilBuilder.hxx>
-#include <ChFi3d_SearchSing.hxx>
-#include <ChFiDS_ErrorStatus.hxx>
-#include <ChFiDS_FilSpine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <ChFiDS_ElSpine.hxx>
-#include <ChFiDS_Regul.hxx>
-#include <NCollection_List.hxx>
-#include <ChFiDS_Stripe.hxx>
-#include <ChFiDS_CircSection.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ElSLib.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_XY.hxx>
-#include <Law_Composite.hxx>
-#include <Law_Function.hxx>
-#include <math_FunctionRoot.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Failure.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
+#include <Adaptor3d_TopolTool.hpp>
+#include <BRepBlend_ConstRad.hpp>
+#include <BRepBlend_ConstRadInv.hpp>
+#include <BRepBlend_CurvPointRadInv.hpp>
+#include <BRepBlend_EvolRad.hpp>
+#include <BRepBlend_EvolRadInv.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepBlend_RstRstConstRad.hpp>
+#include <BRepBlend_RstRstEvolRad.hpp>
+#include <BRepBlend_SurfCurvConstRadInv.hpp>
+#include <BRepBlend_SurfCurvEvolRadInv.hpp>
+#include <BRepBlend_SurfPointConstRadInv.hpp>
+#include <BRepBlend_SurfPointEvolRadInv.hpp>
+#include <BRepBlend_SurfRstConstRad.hpp>
+#include <BRepBlend_SurfRstEvolRad.hpp>
+#include <BRepBlend_Walking.hpp>
+#include <ChFi3d_Builder_0.hpp>
+#include <ChFi3d_FilBuilder.hpp>
+#include <ChFi3d_SearchSing.hpp>
+#include <ChFiDS_ErrorStatus.hpp>
+#include <ChFiDS_FilSpine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <ChFiDS_ElSpine.hpp>
+#include <ChFiDS_Regul.hpp>
+#include <NCollection_List.hpp>
+#include <ChFiDS_Stripe.hpp>
+#include <ChFiDS_CircSection.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ElSLib.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_XY.hpp>
+#include <Law_Composite.hpp>
+#include <Law_Function.hpp>
+#include <math_FunctionRoot.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Failure.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 extern bool   ChFi3d_GettraceCHRON();
 extern double t_computedata, t_completedata;
 

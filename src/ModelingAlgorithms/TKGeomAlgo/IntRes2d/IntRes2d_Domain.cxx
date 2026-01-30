@@ -18,8 +18,8 @@
 //  --- limit infinite points and parameters in order to make
 //  --- arithmetic operation on them safe
 
-#include <IntRes2d_Domain.hxx>
-#include <Precision.hxx>
+#include <IntRes2d_Domain.hpp>
+#include <Precision.hpp>
 
 const double infVal = Precision::Infinite();
 

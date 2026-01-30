@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGeom_Line.hxx>
-#include <IGESGeom_SurfaceOfRevolution.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom_Line.hpp>
+#include <IGESGeom_SurfaceOfRevolution.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_SurfaceOfRevolution, IGESData_IGESEntity)
 

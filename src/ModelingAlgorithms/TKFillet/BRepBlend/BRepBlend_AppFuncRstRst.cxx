@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_RstRstFunction.hxx>
-#include <BRepBlend_AppFuncRstRst.hxx>
-#include <BRepBlend_Line.hxx>
-#include <Standard_Type.hxx>
+#include <Blend_RstRstFunction.hpp>
+#include <BRepBlend_AppFuncRstRst.hpp>
+#include <BRepBlend_Line.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBlend_AppFuncRstRst, BRepBlend_AppFuncRoot)
 

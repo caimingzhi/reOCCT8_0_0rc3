@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_AppFunction.hxx>
-#include <BRepBlend_AppFuncRoot.hxx>
-#include <BRepBlend_Line.hxx>
-#include <gp_Pnt.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <Standard_Type.hxx>
+#include <Blend_AppFunction.hpp>
+#include <BRepBlend_AppFuncRoot.hpp>
+#include <BRepBlend_Line.hpp>
+#include <gp_Pnt.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBlend_AppFuncRoot, Approx_SweepFunction)
 

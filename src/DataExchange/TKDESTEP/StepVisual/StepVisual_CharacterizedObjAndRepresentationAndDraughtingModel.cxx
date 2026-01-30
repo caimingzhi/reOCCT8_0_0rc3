@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.hxx>
+#include <StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel,
                            StepVisual_DraughtingModel)

@@ -12,31 +12,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_BuilderSolid.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BOPTools_Set.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopoDS_Shape.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_BuilderSolid.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BOPTools_Set.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopoDS_Shape.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 static TopAbs_ShapeEnum TypeToExplore(const int theDim);
 //

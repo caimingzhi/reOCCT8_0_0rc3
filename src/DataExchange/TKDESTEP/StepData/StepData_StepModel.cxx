@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(StepData_StepModel, Interface_InterfaceModel)

@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDF_ADriverTable.hxx>
-#include <BinXCAFDrivers.hxx>
-#include <BinXCAFDrivers_DocumentRetrievalDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinXCAFDrivers.hpp>
+#include <BinXCAFDrivers_DocumentRetrievalDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinXCAFDrivers_DocumentRetrievalDriver,
                            BinDrivers_DocumentRetrievalDriver)

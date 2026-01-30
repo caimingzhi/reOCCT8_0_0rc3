@@ -17,15 +17,15 @@
 //  Modified by skv - Thu Jul 13 17:42:58 2006 OCC12627
 //  Total rewriting of the method Segment; add the method OtherSegment.
 
-#include <BRep_Tool.hxx>
-#include <BRepClass_Edge.hxx>
-#include <BRepClass_FaceExplorer.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepClass_Edge.hpp>
+#include <BRepClass_FaceExplorer.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
 
 static const double Probing_Start = 0.123;
 static const double Probing_End   = 0.7;

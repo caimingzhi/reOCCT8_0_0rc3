@@ -22,16 +22,16 @@
 //                                                  Circle.               +
 //=========================================================================
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d2TanOn.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d2TanOn.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
 
 //=========================================================================
 //   Creation of a circle passing by  : 2 points Point1 and Point2.        +

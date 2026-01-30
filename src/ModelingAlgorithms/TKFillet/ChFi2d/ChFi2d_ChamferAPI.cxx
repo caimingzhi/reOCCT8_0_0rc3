@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi2d_ChamferAPI.hxx>
+#include <ChFi2d_ChamferAPI.hpp>
 
-#include <gp_Pnt.hxx>
-#include <GC_MakeLine.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS.hxx>
+#include <gp_Pnt.hpp>
+#include <GC_MakeLine.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS.hpp>
 
 // An empty constructor.
 ChFi2d_ChamferAPI::ChFi2d_ChamferAPI()

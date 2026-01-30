@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <StepElement_SurfaceElementPurposeMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepElement_SurfaceElementPurposeMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_SurfaceElementPurposeMember, StepData_SelectNamed)
 

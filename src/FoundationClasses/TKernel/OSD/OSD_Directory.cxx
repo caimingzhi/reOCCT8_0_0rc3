@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Directory.hxx>
+#include <OSD_Directory.hpp>
 
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <OSD_WhoAmI.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <OSD_WhoAmI.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #ifdef _WIN32
-  #include <OSD_WNT.hxx>
+  #include <OSD_WNT.hpp>
   #include <stdio.h>
 
   #ifndef _INC_TCHAR

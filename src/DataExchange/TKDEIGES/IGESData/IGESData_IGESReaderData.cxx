@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_DirPart.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESType.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_ParamSet.hxx>
-#include <Interface_ParamType.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData_DirPart.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESType.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_ParamSet.hpp>
+#include <Interface_ParamType.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_IGESReaderData, Interface_FileReaderData)
 

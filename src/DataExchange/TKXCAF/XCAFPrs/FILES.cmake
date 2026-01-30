@@ -3,18 +3,18 @@ set(OCCT_XCAFPrs_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XCAFPrs_FILES
   XCAFPrs.cxx
-  XCAFPrs.hxx
+  XCAFPrs.hpp
   XCAFPrs_AISObject.cxx
-  XCAFPrs_AISObject.hxx
+  XCAFPrs_AISObject.hpp
 
   XCAFPrs_DocumentExplorer.cxx
-  XCAFPrs_DocumentExplorer.hxx
-  XCAFPrs_DocumentIdIterator.hxx
-  XCAFPrs_DocumentNode.hxx
+  XCAFPrs_DocumentExplorer.hpp
+  XCAFPrs_DocumentIdIterator.hpp
+  XCAFPrs_DocumentNode.hpp
   XCAFPrs_Driver.cxx
-  XCAFPrs_Driver.hxx
+  XCAFPrs_Driver.hpp
   XCAFPrs_Style.cxx
-  XCAFPrs_Style.hxx
+  XCAFPrs_Style.hpp
   XCAFPrs_Texture.cxx
-  XCAFPrs_Texture.hxx
+  XCAFPrs_Texture.hpp
 )

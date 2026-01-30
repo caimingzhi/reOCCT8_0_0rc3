@@ -3,7 +3,7 @@ set(OCCT_QABugs_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_QABugs_FILES
   QABugs.cxx
-  QABugs.hxx
+  QABugs.hpp
   QABugs_1.cxx
   QABugs_2.cxx
   QABugs_3.cxx
@@ -25,5 +25,5 @@ set(OCCT_QABugs_FILES
   QABugs_20.cxx
   QABugs_BVH.cxx
   QABugs_PresentableObject.cxx
-  QABugs_PresentableObject.hxx
+  QABugs_PresentableObject.hpp
 )

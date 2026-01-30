@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_IndexedLineSet.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_UnknownNode.hxx>
-#include <BRep_Builder.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
-#include <VrmlData_Color.hxx>
-#include <VrmlData_Coordinate.hxx>
+#include <VrmlData_IndexedLineSet.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_UnknownNode.hpp>
+#include <BRep_Builder.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
+#include <VrmlData_Color.hpp>
+#include <VrmlData_Coordinate.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_IndexedLineSet, VrmlData_Geometry)
 

@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_NurbsConvert.hxx>
-#include <BRepLib.hxx>
-#include <BRepTools_NurbsConvertModification.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_NurbsConvert.hpp>
+#include <BRepLib.hpp>
+#include <BRepTools_NurbsConvertModification.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
-// #include <gp.hxx>
+// #include <gp.hpp>
 //=================================================================================================
 
 BRepBuilderAPI_NurbsConvert::BRepBuilderAPI_NurbsConvert()

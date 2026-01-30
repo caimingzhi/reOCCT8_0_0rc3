@@ -3,34 +3,34 @@ set(OCCT_RWGltf_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWGltf_FILES
   RWGltf_CafReader.cxx
-  RWGltf_CafReader.hxx
+  RWGltf_CafReader.hpp
   RWGltf_CafWriter.cxx
-  RWGltf_CafWriter.hxx
+  RWGltf_CafWriter.hpp
 
-  RWGltf_DracoParameters.hxx
-  RWGltf_GltfAccessor.hxx
-  RWGltf_GltfAccessorCompType.hxx
-  RWGltf_GltfAccessorLayout.hxx
-  RWGltf_GltfAlphaMode.hxx
-  RWGltf_GltfArrayType.hxx
-  RWGltf_GltfBufferView.hxx
-  RWGltf_GltfBufferViewTarget.hxx
-  RWGltf_GltfFace.hxx
+  RWGltf_DracoParameters.hpp
+  RWGltf_GltfAccessor.hpp
+  RWGltf_GltfAccessorCompType.hpp
+  RWGltf_GltfAccessorLayout.hpp
+  RWGltf_GltfAlphaMode.hpp
+  RWGltf_GltfArrayType.hpp
+  RWGltf_GltfBufferView.hpp
+  RWGltf_GltfBufferViewTarget.hpp
+  RWGltf_GltfFace.hpp
   RWGltf_GltfJsonParser.cxx
-  RWGltf_GltfJsonParser.hxx
+  RWGltf_GltfJsonParser.hpp
   RWGltf_GltfLatePrimitiveArray.cxx
-  RWGltf_GltfLatePrimitiveArray.hxx
+  RWGltf_GltfLatePrimitiveArray.hpp
   RWGltf_GltfMaterialMap.cxx
-  RWGltf_GltfMaterialMap.hxx
-  RWGltf_GltfOStreamWriter.hxx
-  RWGltf_GltfPrimArrayData.hxx
-  RWGltf_GltfPrimitiveMode.hxx
-  RWGltf_GltfRootElement.hxx
-  RWGltf_GltfSceneNodeMap.hxx
-  RWGltf_MaterialCommon.hxx
-  RWGltf_MaterialMetallicRoughness.hxx
+  RWGltf_GltfMaterialMap.hpp
+  RWGltf_GltfOStreamWriter.hpp
+  RWGltf_GltfPrimArrayData.hpp
+  RWGltf_GltfPrimitiveMode.hpp
+  RWGltf_GltfRootElement.hpp
+  RWGltf_GltfSceneNodeMap.hpp
+  RWGltf_MaterialCommon.hpp
+  RWGltf_MaterialMetallicRoughness.hpp
 
   RWGltf_TriangulationReader.cxx
-  RWGltf_TriangulationReader.hxx
-  RWGltf_WriterTrsfFormat.hxx
+  RWGltf_TriangulationReader.hpp
+  RWGltf_WriterTrsfFormat.hpp
 )

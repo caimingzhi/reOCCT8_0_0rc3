@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_InterfaceMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_ECDescr.hxx>
-#include <StepData_Plex.hxx>
-#include <StepData_Simple.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_InterfaceMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_ECDescr.hpp>
+#include <StepData_Plex.hpp>
+#include <StepData_Simple.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_Plex, StepData_Described)
 

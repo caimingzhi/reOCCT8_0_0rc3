@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_PrsBuilder.hxx>
+#include <MeshVS_PrsBuilder.hpp>
 
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveEntity.hxx>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveEntity.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_PrsBuilder, Standard_Transient)
 

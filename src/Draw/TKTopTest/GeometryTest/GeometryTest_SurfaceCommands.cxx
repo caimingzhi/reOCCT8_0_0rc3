@@ -19,30 +19,30 @@
 //		option -NS dans la commande tuyau pour distinguer les tuyaux
 //		a section evolutive des tuyaux a N sections avec N = 2
 
-#include <GeometryTest.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Display.hxx>
+#include <GeometryTest.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Display.hpp>
 
-#include <GeomAbs_Shape.hxx>
+#include <GeomAbs_Shape.hpp>
 
-#include <Geom_BSplineSurface.hxx>
-#include <GeomConvert.hxx>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomConvert.hpp>
 
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <GeomFill.hxx>
-#include <GeomFill_BSplineCurves.hxx>
-#include <GeomFill_Pipe.hxx>
-#include <GeomFill_SectionGenerator.hxx>
-#include <GeomFill_Line.hxx>
-#include <GeomFill_AppSurf.hxx>
+#include <GeomFill.hpp>
+#include <GeomFill_BSplineCurves.hpp>
+#include <GeomFill_Pipe.hpp>
+#include <GeomFill_SectionGenerator.hpp>
+#include <GeomFill_Line.hpp>
+#include <GeomFill_AppSurf.hpp>
 
 #ifdef _MSC_VER
   #include <stdio.h>

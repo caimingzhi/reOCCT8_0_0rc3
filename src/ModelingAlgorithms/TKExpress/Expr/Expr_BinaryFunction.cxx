@@ -19,17 +19,17 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <Expr.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <NCollection_Array1.hxx>
-#include <Expr_BinaryFunction.hxx>
-#include <Expr_GeneralFunction.hxx>
-#include <Expr_InvalidFunction.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_Operators.hxx>
-#include <Expr_Sum.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <NCollection_Array1.hpp>
+#include <Expr_BinaryFunction.hpp>
+#include <Expr_GeneralFunction.hpp>
+#include <Expr_InvalidFunction.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_Operators.hpp>
+#include <Expr_Sum.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 class Expr_NamedUnknown;
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_BinaryFunction, Expr_BinaryExpression)

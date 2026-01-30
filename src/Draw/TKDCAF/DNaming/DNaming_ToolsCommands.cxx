@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <DNaming.hxx>
-#include <BRepTools.hxx>
-#include <BRep_Builder.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TNaming_CopyShape.hxx>
-#include <TNaming_Translator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <DBRep.hpp>
+#include <DNaming.hpp>
+#include <BRepTools.hpp>
+#include <BRep_Builder.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TNaming_CopyShape.hpp>
+#include <TNaming_Translator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_Map.hpp>
 
 //=======================================================================
 // function : DNaming_CheckHasSame

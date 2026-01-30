@@ -2,15 +2,15 @@
 set(OCCT_TCollection_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TCollection_FILES
-  TCollection.hxx
+  TCollection.hpp
   TCollection_AsciiString.cxx
-  TCollection_AsciiString.hxx
-  TCollection_AsciiString.lxx
+  TCollection_AsciiString.hpp
+  TCollection_AsciiString_1.hpp
   TCollection_ExtendedString.cxx
-  TCollection_ExtendedString.hxx
+  TCollection_ExtendedString.hpp
   TCollection_HAsciiString.cxx
-  TCollection_HAsciiString.hxx
-  TCollection_HAsciiString.lxx
+  TCollection_HAsciiString.hpp
+  TCollection_HAsciiString_1.hpp
   TCollection_HExtendedString.cxx
-  TCollection_HExtendedString.hxx
+  TCollection_HExtendedString.hpp
 )

@@ -18,6 +18,7 @@
 !/cmake/
 !/data/
 !/dox/
+!/scripts/
 !/src/
 !/tests/
 !/test_results/
@@ -25,12 +26,17 @@
 
 # data/ level: Ignore everything except tracked subdirectories
 /data/*
+!/data/brep/
+!/data/geom/
 !/data/iges/
 !/data/images/
+!/data/msv/
 !/data/occ/
+!/data/others/
 !/data/step/
 !/data/stl/
 !/data/vrml/
+!/data/xbf/
 
 # src/ level: Ignore everything except tracked items
 /src/*

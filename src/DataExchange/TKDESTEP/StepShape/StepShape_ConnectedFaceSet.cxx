@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_Face.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_Face.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ConnectedFaceSet, StepShape_TopologicalRepresentationItem)
 

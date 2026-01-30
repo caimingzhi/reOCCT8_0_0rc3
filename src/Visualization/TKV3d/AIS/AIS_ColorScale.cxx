@@ -12,24 +12,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_ColorScale.hxx>
+#include <AIS_ColorScale.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Aspect_TypeOfColorScaleData.hxx>
-#include <Aspect_TypeOfColorScalePosition.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectText3d.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_Text.hxx>
-#include <Prs3d_Text.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <StdPrs_Curve.hxx>
-#include <V3d_View.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Aspect_TypeOfColorScaleData.hpp>
+#include <Aspect_TypeOfColorScalePosition.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectText3d.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_Text.hpp>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <StdPrs_Curve.hpp>
+#include <V3d_View.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ColorScale, AIS_InteractiveObject)
 

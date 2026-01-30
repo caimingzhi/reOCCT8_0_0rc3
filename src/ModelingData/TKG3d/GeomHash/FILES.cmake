@@ -3,36 +3,36 @@ set(OCCT_GeomHash_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomHash_FILES
   # Foundational Hashers
-  GeomHash_PointHasher.pxx
-  GeomHash_DirectionHasher.pxx
-  GeomHash_VectorHasher.pxx
-  GeomHash_AxisPlacement.pxx
+  GeomHash_PointHasher.hpp
+  GeomHash_DirectionHasher.hpp
+  GeomHash_VectorHasher.hpp
+  GeomHash_AxisPlacement.hpp
 
   # Surface Hashers
-  GeomHash_PlaneHasher.pxx
-  GeomHash_CylindricalSurfaceHasher.pxx
-  GeomHash_ConicalSurfaceHasher.pxx
-  GeomHash_SphericalSurfaceHasher.pxx
-  GeomHash_ToroidalSurfaceHasher.pxx
-  GeomHash_SurfaceOfRevolutionHasher.pxx
-  GeomHash_SurfaceOfLinearExtrusionHasher.pxx
-  GeomHash_BezierSurfaceHasher.pxx
-  GeomHash_BSplineSurfaceHasher.pxx
-  GeomHash_RectangularTrimmedSurfaceHasher.pxx
-  GeomHash_OffsetSurfaceHasher.pxx
-  GeomHash_SurfaceHasher.hxx
+  GeomHash_PlaneHasher.hpp
+  GeomHash_CylindricalSurfaceHasher.hpp
+  GeomHash_ConicalSurfaceHasher.hpp
+  GeomHash_SphericalSurfaceHasher.hpp
+  GeomHash_ToroidalSurfaceHasher.hpp
+  GeomHash_SurfaceOfRevolutionHasher.hpp
+  GeomHash_SurfaceOfLinearExtrusionHasher.hpp
+  GeomHash_BezierSurfaceHasher.hpp
+  GeomHash_BSplineSurfaceHasher.hpp
+  GeomHash_RectangularTrimmedSurfaceHasher.hpp
+  GeomHash_OffsetSurfaceHasher.hpp
+  GeomHash_SurfaceHasher.hpp
   GeomHash_SurfaceHasher.cxx
 
   # Curve Hashers
-  GeomHash_LineHasher.pxx
-  GeomHash_CircleHasher.pxx
-  GeomHash_EllipseHasher.pxx
-  GeomHash_HyperbolaHasher.pxx
-  GeomHash_ParabolaHasher.pxx
-  GeomHash_BezierCurveHasher.pxx
-  GeomHash_BSplineCurveHasher.pxx
-  GeomHash_TrimmedCurveHasher.pxx
-  GeomHash_OffsetCurveHasher.pxx
-  GeomHash_CurveHasher.hxx
+  GeomHash_LineHasher.hpp
+  GeomHash_CircleHasher.hpp
+  GeomHash_EllipseHasher.hpp
+  GeomHash_HyperbolaHasher.hpp
+  GeomHash_ParabolaHasher.hpp
+  GeomHash_BezierCurveHasher.hpp
+  GeomHash_BSplineCurveHasher.hpp
+  GeomHash_TrimmedCurveHasher.hpp
+  GeomHash_OffsetCurveHasher.hpp
+  GeomHash_CurveHasher.hpp
   GeomHash_CurveHasher.cxx
 )

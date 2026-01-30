@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_FileSystemSelector.hxx>
+#include <OSD_FileSystemSelector.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_FileSystemSelector, OSD_FileSystem)
 

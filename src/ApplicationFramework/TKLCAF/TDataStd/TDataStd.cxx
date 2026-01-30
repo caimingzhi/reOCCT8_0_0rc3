@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd.hxx>
+#include <TDataStd.hpp>
 
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_TagSource.hxx>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_TagSource.hpp>
 
 //=================================================================================================
 

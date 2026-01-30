@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESAppli_Node.hxx>
-#include <IGESGeom_TransformationMatrix.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESAppli_Node.hpp>
+#include <IGESGeom_TransformationMatrix.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_Node, IGESData_IGESEntity)
 

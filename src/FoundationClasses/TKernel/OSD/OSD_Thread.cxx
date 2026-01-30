@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Thread.hxx>
+#include <OSD_Thread.hpp>
 
 //=============================================
 // OSD_Thread::OSD_Thread

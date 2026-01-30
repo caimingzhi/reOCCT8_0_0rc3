@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_Diff.hxx>
+#include <Image_Diff.hpp>
 
-#include <Image_AlienPixMap.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 #include <cstdlib>
 

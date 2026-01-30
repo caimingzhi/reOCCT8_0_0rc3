@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomConvert_BSplineSurfaceToBezierSurface.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomConvert_BSplineSurfaceToBezierSurface.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
 
 //=================================================================================================
 

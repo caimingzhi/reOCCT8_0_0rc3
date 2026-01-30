@@ -18,12 +18,12 @@
 // Version	Date		Purpose
 //		0.0	Mar 11 1997	Creation
 
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_Handle.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_Map.hxx>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_Handle.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DataSet, Standard_Transient)
 

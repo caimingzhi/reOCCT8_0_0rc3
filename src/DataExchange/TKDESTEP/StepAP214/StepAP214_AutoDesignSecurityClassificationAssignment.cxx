@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepAP214_AutoDesignSecurityClassificationAssignment.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_SecurityClassification.hxx>
+#include <Standard_Type.hpp>
+#include <StepAP214_AutoDesignSecurityClassificationAssignment.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_SecurityClassification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignSecurityClassificationAssignment,
                            StepBasic_SecurityClassificationAssignment)

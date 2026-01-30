@@ -3,23 +3,23 @@ set(OCCT_CDF_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_CDF_FILES
   CDF_Application.cxx
-  CDF_Application.hxx
+  CDF_Application.hpp
   CDF_Directory.cxx
-  CDF_Directory.hxx
+  CDF_Directory.hpp
   CDF_DirectoryIterator.cxx
-  CDF_DirectoryIterator.hxx
+  CDF_DirectoryIterator.hpp
   CDF_FWOSDriver.cxx
-  CDF_FWOSDriver.hxx
+  CDF_FWOSDriver.hpp
   CDF_MetaDataDriver.cxx
-  CDF_MetaDataDriver.hxx
+  CDF_MetaDataDriver.hpp
   CDF_MetaDataDriverFactory.cxx
-  CDF_MetaDataDriverFactory.hxx
+  CDF_MetaDataDriverFactory.hpp
   CDF_Store.cxx
-  CDF_Store.hxx
+  CDF_Store.hpp
   CDF_StoreList.cxx
-  CDF_StoreList.hxx
-  CDF_StoreSetNameStatus.hxx
-  CDF_SubComponentStatus.hxx
-  CDF_TryStoreStatus.hxx
-  CDF_TypeOfActivation.hxx
+  CDF_StoreList.hpp
+  CDF_StoreSetNameStatus.hpp
+  CDF_SubComponentStatus.hpp
+  CDF_TryStoreStatus.hpp
+  CDF_TypeOfActivation.hpp
 )

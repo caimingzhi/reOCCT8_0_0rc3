@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWDimensionalExponents.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWDimensionalExponents.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWDimensionalExponents::RWStepBasic_RWDimensionalExponents() = default;
 

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Vrml_Material.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
-#include <VrmlConverter_LineAspect.hxx>
-#include <VrmlConverter_PointAspect.hxx>
-#include <VrmlConverter_ShadingAspect.hxx>
+#include <Standard_Type.hpp>
+#include <Vrml_Material.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
+#include <VrmlConverter_LineAspect.hpp>
+#include <VrmlConverter_PointAspect.hpp>
+#include <VrmlConverter_ShadingAspect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlConverter_Drawer, Standard_Transient)
 

@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_ArrowAspect.hxx>
+#include <Prs3d_ArrowAspect.hpp>
 
-#include <Prs3d_InvalidAngle.hxx>
-#include <Standard_Dump.hxx>
+#include <Prs3d_InvalidAngle.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_ArrowAspect, Prs3d_BasicAspect)
 

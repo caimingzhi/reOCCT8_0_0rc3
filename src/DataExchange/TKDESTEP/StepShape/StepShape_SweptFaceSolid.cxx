@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_SweptFaceSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_SweptFaceSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_SweptFaceSolid, StepShape_SolidModel)
 

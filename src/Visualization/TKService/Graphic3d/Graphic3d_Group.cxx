@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Group.hxx>
+#include <Graphic3d_Group.hpp>
 
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPrimitives.hxx>
-#include <Graphic3d_GroupDefinitionError.hxx>
-#include <Graphic3d_StructureManager.hxx>
-#include <Graphic3d_Text.hxx>
-#include <NCollection_String.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
+#include <Graphic3d_GroupDefinitionError.hpp>
+#include <Graphic3d_StructureManager.hpp>
+#include <Graphic3d_Text.hpp>
+#include <NCollection_String.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Group, Standard_Transient)
 

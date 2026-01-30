@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Color.hxx>
-#include <HLRTest_ShapeData.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Color.hpp>
+#include <HLRTest_ShapeData.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_ShapeData, Standard_Transient)
 

@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_Drawer.hxx>
+#include <Prs3d_Drawer.hpp>
 
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PlaneAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Standard_Dump.hxx>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PlaneAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_Drawer, Graphic3d_PresentationAttributes)
 

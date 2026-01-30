@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAppli_ReflectLines.hxx>
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_HLRToShape.hxx>
-#include <gp_Ax3.hxx>
-#include <BRepLib.hxx>
+#include <HLRAppli_ReflectLines.hpp>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_HLRToShape.hpp>
+#include <gp_Ax3.hpp>
+#include <BRepLib.hpp>
 
 //=================================================================================================
 

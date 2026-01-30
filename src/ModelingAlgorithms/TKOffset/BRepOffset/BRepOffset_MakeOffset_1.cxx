@@ -17,50 +17,50 @@
 // to work in mode Complete and Join Type Intersection.
 // Currently only the Planar cases are supported.
 
-#include <BRepOffset_MakeOffset.hxx>
+#include <BRepOffset_MakeOffset.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <BRepAlgo_AsDes.hxx>
-#include <BRepAlgo_Image.hxx>
+#include <BRepAlgo_AsDes.hpp>
+#include <BRepAlgo_Image.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
 
-#include <BRepLib.hxx>
-#include <BRepTools.hxx>
+#include <BRepLib.hpp>
+#include <BRepTools.hpp>
 
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepAdaptor_Curve.hpp>
 
-#include <BRepOffset_Tool.hxx>
+#include <BRepOffset_Tool.hpp>
 
-#include <BRepClass3d_SolidClassifier.hxx>
+#include <BRepClass3d_SolidClassifier.hpp>
 
-#include <BOPDS_DS.hxx>
+#include <BOPDS_DS.hpp>
 
-#include <BOPAlgo_BuilderFace.hxx>
-#include <BOPAlgo_MakerVolume.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Section.hxx>
-#include <BOPAlgo_Splitter.hxx>
-#include <BOPAlgo_BOP.hxx>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <BOPAlgo_MakerVolume.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Section.hpp>
+#include <BOPAlgo_Splitter.hpp>
+#include <BOPAlgo_BOP.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
 
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_Set.hxx>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_Set.hpp>
 
-#include <IntTools_Context.hxx>
-#include <IntTools_ShrunkRange.hxx>
+#include <IntTools_Context.hpp>
+#include <IntTools_ShrunkRange.hpp>
 
 #ifdef OFFSET_DEBUG
-  #include <BRepAlgoAPI_Check.hxx>
+  #include <BRepAlgoAPI_Check.hpp>
 #endif
 
 typedef NCollection_DataMap<TopoDS_Shape,

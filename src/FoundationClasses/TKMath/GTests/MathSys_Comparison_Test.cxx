@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <MathSys_Newton.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
+#include <MathSys_Newton.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
 
 #include <cmath>
 

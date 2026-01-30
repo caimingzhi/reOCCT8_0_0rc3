@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_Poly.hxx>
+#include <BRepExtrema_Poly.hpp>
 
-#include <BRep_Tool.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Precision.hxx>
-#include <Poly_Triangulation.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <BRep_Tool.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Precision.hpp>
+#include <Poly_Triangulation.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

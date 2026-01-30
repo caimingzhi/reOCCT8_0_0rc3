@@ -16,7 +16,7 @@
   #include <share.h>
 #endif
 
-#include <OSD_OpenFile.hxx>
+#include <OSD_OpenFile.hpp>
 
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_CameraFrustum.hxx>
+#include <AIS_CameraFrustum.hpp>
 
-#include <AIS_DisplayMode.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Select3D_SensitiveGroup.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
+#include <AIS_DisplayMode.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Select3D_SensitiveGroup.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_CameraFrustum, AIS_InteractiveObject)
 

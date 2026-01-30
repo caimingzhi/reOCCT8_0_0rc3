@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NoSuchObject.hxx>
-#include <TopLoc_ItemLocation.hxx>
-#include <TopLoc_SListNodeOfItemLocation.hxx>
-#include <TopLoc_SListOfItemLocation.hxx>
+#include <Standard_NoSuchObject.hpp>
+#include <TopLoc_ItemLocation.hpp>
+#include <TopLoc_SListNodeOfItemLocation.hpp>
+#include <TopLoc_SListOfItemLocation.hpp>
 
 //=================================================================================================
 

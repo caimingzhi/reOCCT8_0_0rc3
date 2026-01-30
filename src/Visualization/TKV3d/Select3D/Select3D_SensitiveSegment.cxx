@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveSegment.hxx>
-#include <gp_Vec.hxx>
-#include <TopLoc_Location.hxx>
+#include <Select3D_SensitiveSegment.hpp>
+#include <gp_Vec.hpp>
+#include <TopLoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSegment, Select3D_SensitiveEntity)
 

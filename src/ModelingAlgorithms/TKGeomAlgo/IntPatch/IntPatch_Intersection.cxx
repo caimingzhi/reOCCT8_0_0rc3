@@ -13,25 +13,25 @@
 // commercial license or contractual agreement.
 
 #include <cstdio>
-#include <IntPatch_Intersection.hxx>
+#include <IntPatch_Intersection.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_ALineToWLine.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_ImpImpIntersection.hxx>
-#include <IntPatch_ImpPrmIntersection.hxx>
-#include <IntPatch_PrmPrmIntersection.hxx>
-#include <IntPatch_WLineTool.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_ALineToWLine.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_ImpImpIntersection.hpp>
+#include <IntPatch_ImpPrmIntersection.hpp>
+#include <IntPatch_PrmPrmIntersection.hpp>
+#include <IntPatch_WLineTool.hpp>
 
-#include <ProjLib_ProjectOnPlane.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <ProjLib.hxx>
+#include <ProjLib_ProjectOnPlane.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <ProjLib.hpp>
 
 //======================================================================
 // function: SequenceOfLine
@@ -229,20 +229,20 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   S1,
 //  c.) OffsetSurface.                                                     //
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
-#include <gp_XYZ.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <GeomProjLib.hxx>
-#include <ElCLib.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
+#include <gp_XYZ.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <GeomProjLib.hpp>
+#include <ElCLib.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
 
 //===============================================================
 // function: FUN_GetMinMaxXYZPnt

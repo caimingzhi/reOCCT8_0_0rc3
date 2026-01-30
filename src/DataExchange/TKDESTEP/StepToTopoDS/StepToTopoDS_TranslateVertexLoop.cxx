@@ -16,21 +16,21 @@
 
 //:   gka 09.04.99: S4136: eliminate BRepAPI::Precision()
 
-#include <BRep_Builder.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepShape_Vertex.hxx>
-#include <StepShape_VertexLoop.hxx>
-#include <StepToTopoDS_NMTool.hxx>
-#include <StepToTopoDS_Tool.hxx>
-#include <StepToTopoDS_TranslateVertex.hxx>
-#include <StepToTopoDS_TranslateVertexLoop.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <BRep_Builder.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepShape_Vertex.hpp>
+#include <StepShape_VertexLoop.hpp>
+#include <StepToTopoDS_NMTool.hpp>
+#include <StepToTopoDS_Tool.hpp>
+#include <StepToTopoDS_TranslateVertex.hpp>
+#include <StepToTopoDS_TranslateVertexLoop.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 // #include <BRepAPI.hxx>
 //=================================================================================================

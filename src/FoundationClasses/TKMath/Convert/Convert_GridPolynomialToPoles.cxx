@@ -19,12 +19,12 @@
 //              Condition d'extraction corrigee
 //              + positionnement par EvalPoly2Var
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <Convert_GridPolynomialToPoles.hxx>
-#include <PLib.hxx>
-#include <Standard_DomainError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <Convert_GridPolynomialToPoles.hpp>
+#include <PLib.hpp>
+#include <Standard_DomainError.hpp>
+#include <StdFail_NotDone.hpp>
 
 Convert_GridPolynomialToPoles::Convert_GridPolynomialToPoles(
   const int                                       MaxUDegree,

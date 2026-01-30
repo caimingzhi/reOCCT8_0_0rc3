@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_WireToFace.hxx>
-#include <TopOpeBRepTool.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_WireToFace.hpp>
+#include <TopOpeBRepTool.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GetcontextNOREGUFA();

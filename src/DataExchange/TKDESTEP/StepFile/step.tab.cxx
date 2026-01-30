@@ -57,7 +57,7 @@
 // Take the name prefix into account.
 #define yylex steplex
 
-#include "step.tab.hxx"
+#include "step.tab.hpp"
 
 // Unqualified %code blocks.
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWPly_PlyWriterContext.hxx>
+#include <RWPly_PlyWriterContext.hpp>
 
-#include <Message.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <OSD_FileSystem.hxx>
+#include <Message.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <OSD_FileSystem.hpp>
 
 //=================================================================================================
 

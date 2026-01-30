@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_CurveRangeSample.hxx>
-#include <IntTools_Range.hxx>
+#include <IntTools_CurveRangeSample.hpp>
+#include <IntTools_Range.hpp>
 
 IntTools_CurveRangeSample::IntTools_CurveRangeSample()
 {

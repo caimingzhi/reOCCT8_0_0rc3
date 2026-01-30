@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Vec.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Vec.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <StdFail_NotDone.hpp>
 
 // ============================================================
 IntSurf_Quadric::IntSurf_Quadric()

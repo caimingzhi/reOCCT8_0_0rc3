@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <StepShape_PrecisionQualifier.hxx>
-#include <StepShape_TypeQualifier.hxx>
-#include <StepShape_ValueFormatTypeQualifier.hxx>
-#include <StepShape_ValueQualifier.hxx>
+#include <Standard_Transient.hpp>
+#include <StepShape_PrecisionQualifier.hpp>
+#include <StepShape_TypeQualifier.hpp>
+#include <StepShape_ValueFormatTypeQualifier.hpp>
+#include <StepShape_ValueQualifier.hpp>
 
 StepShape_ValueQualifier::StepShape_ValueQualifier() = default;
 

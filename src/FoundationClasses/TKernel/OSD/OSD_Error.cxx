@@ -14,10 +14,10 @@
 
 #ifndef _WIN32
 
-  #include <OSD_Error.hxx>
-  #include <OSD_ErrorList.hxx>
-  #include <OSD_OSDError.hxx>
-  #include <TCollection_AsciiString.hxx>
+  #include <OSD_Error.hpp>
+  #include <OSD_ErrorList.hpp>
+  #include <OSD_OSDError.hpp>
+  #include <TCollection_AsciiString.hpp>
 
   #include <cstdio>
 
@@ -471,9 +471,9 @@ void OSD_Error::Perror()
 //-------------------  Windows NT sources for OSD_Error ------------------
 //------------------------------------------------------------------------
 
-  #include <OSD_Error.hxx>
-  #include <OSD_ErrorList.hxx>
-  #include <TCollection_ExtendedString.hxx>
+  #include <OSD_Error.hpp>
+  #include <OSD_ErrorList.hpp>
+  #include <TCollection_ExtendedString.hpp>
 
   #include <windows.h>
   #include <strsafe.h>

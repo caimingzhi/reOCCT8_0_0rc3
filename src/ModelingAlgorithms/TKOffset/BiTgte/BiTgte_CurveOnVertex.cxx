@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BiTgte_CurveOnVertex.hxx>
+#include <BiTgte_CurveOnVertex.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BiTgte_CurveOnVertex, Adaptor3d_Curve)
 

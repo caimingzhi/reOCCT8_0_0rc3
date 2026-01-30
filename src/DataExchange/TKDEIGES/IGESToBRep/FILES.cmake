@@ -3,30 +3,30 @@ set(OCCT_IGESToBRep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESToBRep_FILES
   IGESToBRep.cxx
-  IGESToBRep.hxx
+  IGESToBRep.hpp
   IGESToBRep_Actor.cxx
-  IGESToBRep_Actor.hxx
+  IGESToBRep_Actor.hpp
   IGESToBRep_AlgoContainer.cxx
-  IGESToBRep_AlgoContainer.hxx
-  IGESToBRep_AlgoContainer.lxx
+  IGESToBRep_AlgoContainer.hpp
+  IGESToBRep_AlgoContainer_1.hpp
   IGESToBRep_BasicCurve.cxx
-  IGESToBRep_BasicCurve.hxx
+  IGESToBRep_BasicCurve.hpp
   IGESToBRep_BasicSurface.cxx
-  IGESToBRep_BasicSurface.hxx
+  IGESToBRep_BasicSurface.hpp
   IGESToBRep_BRepEntity.cxx
-  IGESToBRep_BRepEntity.hxx
+  IGESToBRep_BRepEntity.hpp
   IGESToBRep_CurveAndSurface.cxx
-  IGESToBRep_CurveAndSurface.hxx
-  IGESToBRep_CurveAndSurface.lxx
+  IGESToBRep_CurveAndSurface.hpp
+  IGESToBRep_CurveAndSurface_1.hpp
   IGESToBRep_IGESBoundary.cxx
-  IGESToBRep_IGESBoundary.hxx
-  IGESToBRep_IGESBoundary.lxx
+  IGESToBRep_IGESBoundary.hpp
+  IGESToBRep_IGESBoundary_1.hpp
   IGESToBRep_Reader.cxx
-  IGESToBRep_Reader.hxx
+  IGESToBRep_Reader.hpp
   IGESToBRep_ToolContainer.cxx
-  IGESToBRep_ToolContainer.hxx
+  IGESToBRep_ToolContainer.hpp
   IGESToBRep_TopoCurve.cxx
-  IGESToBRep_TopoCurve.hxx
+  IGESToBRep_TopoCurve.hpp
   IGESToBRep_TopoSurface.cxx
-  IGESToBRep_TopoSurface.hxx
+  IGESToBRep_TopoSurface.hpp
 )

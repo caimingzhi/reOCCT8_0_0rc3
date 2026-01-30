@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_EigenValuesSearcher.hxx>
-#include <math_Vector.hxx>
-#include <NCollection_Array1.hxx>
+#include <math_EigenValuesSearcher.hpp>
+#include <math_Vector.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Failure.hxx>
-#include <Precision.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Failure.hpp>
+#include <Precision.hpp>
 
 #include <cmath>
 #include <algorithm>

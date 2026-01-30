@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_SphericalSurface.hxx>
-#include <GeomGridEval_Sphere.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_SphericalSurface.hpp>
+#include <GeomGridEval_Sphere.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

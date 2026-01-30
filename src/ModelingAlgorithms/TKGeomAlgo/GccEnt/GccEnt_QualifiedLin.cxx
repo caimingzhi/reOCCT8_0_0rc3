@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccEnt_QualifiedLin.hxx>
-#include <gp_Lin2d.hxx>
+#include <GccEnt_QualifiedLin.hpp>
+#include <gp_Lin2d.hpp>
 
 gp_Lin2d GccEnt_QualifiedLin::Qualified() const
 {

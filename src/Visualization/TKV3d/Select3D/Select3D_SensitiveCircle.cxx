@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveCircle.hxx>
+#include <Select3D_SensitiveCircle.hpp>
 
-#include <gp_Ax3.hxx>
+#include <gp_Ax3.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCircle, Select3D_SensitiveEntity)
 

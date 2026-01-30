@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Variable.hxx>
-#include <TDF_Attribute.hxx>
-#include <XmlMDataStd_VariableDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Variable.hpp>
+#include <TDF_Attribute.hpp>
+#include <XmlMDataStd_VariableDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_VariableDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(IsConstString, "isconst")

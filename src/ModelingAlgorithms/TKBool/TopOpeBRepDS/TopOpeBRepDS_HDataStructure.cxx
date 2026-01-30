@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Standard_ProgramError.hxx>
-#include <Standard_Type.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_Check.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <NCollection_List.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
-#include <TopOpeBRepDS_SurfaceCurveInterference.hxx>
-#include <TopOpeBRepDS_SurfaceIterator.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <BRep_Tool.hpp>
+#include <Standard_ProgramError.hpp>
+#include <Standard_Type.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_Check.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <NCollection_List.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
+#include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
+#include <TopOpeBRepDS_SurfaceIterator.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_HDataStructure, Standard_Transient)
 
@@ -450,8 +450,8 @@ bool TopOpeBRepDS_HDataStructure::EdgesSameParameter() const
   return true;
 }
 
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 Standard_EXPORT void FUN_TopOpeBRepDS_SortOnParameter(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& List,

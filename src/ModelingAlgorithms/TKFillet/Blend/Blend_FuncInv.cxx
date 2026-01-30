@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Blend_FuncInv.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Blend_FuncInv.hpp>
 
 int Blend_FuncInv::NbVariables() const
 {

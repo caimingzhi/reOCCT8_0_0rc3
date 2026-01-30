@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_PlaneReducer.pxx>
+#include <StepTidy_PlaneReducer.hpp>
 
-#include <StepShape_AdvancedFace.hxx>
-#include <StepGeom_Pcurve.hxx>
+#include <StepShape_AdvancedFace.hpp>
+#include <StepGeom_Pcurve.hpp>
 
 //==================================================================================================
 

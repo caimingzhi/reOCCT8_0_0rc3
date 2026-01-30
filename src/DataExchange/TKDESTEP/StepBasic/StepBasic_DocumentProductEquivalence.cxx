@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepBasic_DocumentProductEquivalence.hxx>
+#include <StepBasic_DocumentProductEquivalence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DocumentProductEquivalence,
                            StepBasic_DocumentProductAssociation)

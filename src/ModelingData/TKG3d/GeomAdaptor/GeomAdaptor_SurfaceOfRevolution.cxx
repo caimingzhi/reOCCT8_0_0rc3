@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomAdaptor_SurfaceOfRevolution.hxx>
+#include <GeomAdaptor_SurfaceOfRevolution.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <ElCLib.hxx>
-#include <Standard_NoSuchObject.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <ElCLib.hpp>
+#include <Standard_NoSuchObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomAdaptor_SurfaceOfRevolution, GeomAdaptor_Surface)
 

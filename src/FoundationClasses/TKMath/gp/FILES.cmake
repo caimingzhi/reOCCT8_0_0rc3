@@ -3,81 +3,81 @@ set(OCCT_gp_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_gp_FILES
   gp.cxx
-  gp.hxx
+  gp.hpp
   gp_Ax1.cxx
-  gp_Ax1.hxx
+  gp_Ax1.hpp
   gp_Ax2.cxx
-  gp_Ax2.hxx
+  gp_Ax2.hpp
   gp_Ax2d.cxx
-  gp_Ax2d.hxx
+  gp_Ax2d.hpp
   gp_Ax3.cxx
-  gp_Ax3.hxx
+  gp_Ax3.hpp
   gp_Ax22d.cxx
-  gp_Ax22d.hxx
+  gp_Ax22d.hpp
   gp_Circ.cxx
-  gp_Circ.hxx
+  gp_Circ.hpp
   gp_Circ2d.cxx
-  gp_Circ2d.hxx
+  gp_Circ2d.hpp
   gp_Cone.cxx
-  gp_Cone.hxx
+  gp_Cone.hpp
   gp_Cylinder.cxx
-  gp_Cylinder.hxx
+  gp_Cylinder.hpp
   gp_Dir.cxx
-  gp_Dir.hxx
+  gp_Dir.hpp
   gp_Dir2d.cxx
-  gp_Dir2d.hxx
+  gp_Dir2d.hpp
   gp_Elips.cxx
-  gp_Elips.hxx
+  gp_Elips.hpp
   gp_Elips2d.cxx
-  gp_Elips2d.hxx
-  gp_EulerSequence.hxx
+  gp_Elips2d.hpp
+  gp_EulerSequence.hpp
   gp_GTrsf.cxx
-  gp_GTrsf.hxx
+  gp_GTrsf.hpp
   gp_GTrsf2d.cxx
-  gp_GTrsf2d.hxx
+  gp_GTrsf2d.hpp
   gp_Hypr.cxx
-  gp_Hypr.hxx
+  gp_Hypr.hpp
   gp_Hypr2d.cxx
-  gp_Hypr2d.hxx
+  gp_Hypr2d.hpp
   gp_Lin.cxx
-  gp_Lin.hxx
+  gp_Lin.hpp
   gp_Lin2d.cxx
-  gp_Lin2d.hxx
+  gp_Lin2d.hpp
   gp_Mat.cxx
-  gp_Mat.hxx
+  gp_Mat.hpp
   gp_Mat2d.cxx
-  gp_Mat2d.hxx
+  gp_Mat2d.hpp
   gp_Parab.cxx
-  gp_Parab.hxx
+  gp_Parab.hpp
   gp_Parab2d.cxx
-  gp_Parab2d.hxx
+  gp_Parab2d.hpp
   gp_Pln.cxx
-  gp_Pln.hxx
+  gp_Pln.hpp
   gp_Pnt.cxx
-  gp_Pnt.hxx
+  gp_Pnt.hpp
   gp_Pnt2d.cxx
-  gp_Pnt2d.hxx
+  gp_Pnt2d.hpp
   gp_Quaternion.cxx
-  gp_Quaternion.hxx
-  gp_QuaternionNLerp.hxx
-  gp_QuaternionSLerp.hxx
+  gp_Quaternion.hpp
+  gp_QuaternionNLerp.hpp
+  gp_QuaternionSLerp.hpp
   gp_Sphere.cxx
-  gp_Sphere.hxx
+  gp_Sphere.hpp
   gp_Torus.cxx
-  gp_Torus.hxx
+  gp_Torus.hpp
   gp_Trsf.cxx
-  gp_Trsf.hxx
+  gp_Trsf.hpp
   gp_Trsf2d.cxx
-  gp_Trsf2d.hxx
-  gp_TrsfForm.hxx
-  gp_TrsfNLerp.hxx
+  gp_Trsf2d.hpp
+  gp_TrsfForm.hpp
+  gp_TrsfNLerp.hpp
   gp_Vec.cxx
-  gp_Vec.hxx
+  gp_Vec.hpp
   gp_Vec2d.cxx
-  gp_Vec2d.hxx
+  gp_Vec2d.hpp
 
-  gp_VectorWithNullMagnitude.hxx
-  gp_XY.hxx
+  gp_VectorWithNullMagnitude.hpp
+  gp_XY.hpp
   gp_XYZ.cxx
-  gp_XYZ.hxx
+  gp_XYZ.hpp
 )

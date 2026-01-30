@@ -12,36 +12,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_CSWalking.hxx>
+#include <BRepBlend_CSWalking.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <BRepBlend_BlendTool.hxx>
-#include <BRepBlend_Extremity.hxx>
-#include <BRepBlend_HCurve2dTool.hxx>
-#include <BRepBlend_HCurveTool.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepBlend_PointOnRst.hxx>
-#include <Blend_CSFunction.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_Transition.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_Gauss.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <BRepBlend_BlendTool.hpp>
+#include <BRepBlend_Extremity.hpp>
+#include <BRepBlend_HCurve2dTool.hpp>
+#include <BRepBlend_HCurveTool.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepBlend_PointOnRst.hpp>
+#include <Blend_CSFunction.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_Transition.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_Gauss.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <Geom_BSplineCurve.hxx>
-  #include <Standard_Integer.hxx>
+  #include <Geom_BSplineCurve.hpp>
+  #include <Standard_Integer.hpp>
   // POP pour NT
   #include <stdio.h>
 

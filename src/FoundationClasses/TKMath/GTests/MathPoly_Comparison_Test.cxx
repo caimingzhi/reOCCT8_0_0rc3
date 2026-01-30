@@ -14,12 +14,12 @@
 #include <gtest/gtest.h>
 
 // New API
-#include <MathPoly_Quadratic.hxx>
-#include <MathPoly_Cubic.hxx>
-#include <MathPoly_Quartic.hxx>
+#include <MathPoly_Quadratic.hpp>
+#include <MathPoly_Cubic.hpp>
+#include <MathPoly_Quartic.hpp>
 
 // Old API
-#include <math_DirectPolynomialRoots.hxx>
+#include <math_DirectPolynomialRoots.hpp>
 
 #include <algorithm>
 #include <cmath>

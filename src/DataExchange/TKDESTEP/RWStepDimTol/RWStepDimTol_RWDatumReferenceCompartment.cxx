@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepDimTol_RWDatumReferenceCompartment.pxx"
+#include "RWStepDimTol_RWDatumReferenceCompartment.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_Datum.hxx>
-#include <StepDimTol_DatumReferenceCompartment.hxx>
-#include <StepDimTol_GeneralDatumReference.hxx>
-#include <StepDimTol_DatumReferenceElement.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepDimTol_DatumReferenceModifierWithValue.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_Datum.hpp>
+#include <StepDimTol_DatumReferenceCompartment.hpp>
+#include <StepDimTol_GeneralDatumReference.hpp>
+#include <StepDimTol_DatumReferenceElement.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 
 //=================================================================================================
 

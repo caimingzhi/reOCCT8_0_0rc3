@@ -14,45 +14,45 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFeat.hxx>
+#include <BRepFeat.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepTools.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomProjLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec2d.hxx>
-#include <LocOpe.hxx>
-#include <LocOpe_BuildShape.hxx>
-#include <LocOpe_CSIntersector.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <Precision.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepTools.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomProjLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec2d.hpp>
+#include <LocOpe.hpp>
+#include <LocOpe_BuildShape.hpp>
+#include <LocOpe_CSIntersector.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <Precision.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 #define NECHANTBARYC 11
 

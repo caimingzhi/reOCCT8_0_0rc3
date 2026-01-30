@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWFeaShellShearStiffness.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFEA_FeaShellShearStiffness.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWFeaShellShearStiffness.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFEA_FeaShellShearStiffness.hpp>
 
 //=================================================================================================
 

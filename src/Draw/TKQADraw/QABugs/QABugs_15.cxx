@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
 
-#include <QABugs_PresentableObject.hxx>
+#include <QABugs_PresentableObject.hpp>
 
 occ::handle<QABugs_PresentableObject> theObject1 = nullptr;
 occ::handle<QABugs_PresentableObject> theObject2 = nullptr;

@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GraduatedTrihedron.hxx>
+#include <OpenGl_GraduatedTrihedron.hpp>
 
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Text.hxx>
-#include <Graphic3d_TransformPers.hxx>
-#include <Graphic3d_TransformUtils.hxx>
-#include <OpenGl_View.hxx>
-#include <Precision.hxx>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Text.hpp>
+#include <Graphic3d_TransformPers.hpp>
+#include <Graphic3d_TransformUtils.hpp>
+#include <OpenGl_View.hpp>
+#include <Precision.hpp>
 
 #ifndef _WIN32
   #include <cstring>

@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_ShadingAspect.hxx>
+#include <Prs3d_ShadingAspect.hpp>
 
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Dump.hxx>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_ShadingAspect, Prs3d_BasicAspect)
 

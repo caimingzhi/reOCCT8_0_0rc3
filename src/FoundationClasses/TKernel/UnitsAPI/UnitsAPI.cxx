@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Environment.hxx>
-#include <Resource_Manager.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Units.hxx>
-#include <Units_UnitsSystem.hxx>
-#include <UnitsAPI.hxx>
+#include <OSD_Environment.hpp>
+#include <Resource_Manager.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Units.hpp>
+#include <Units_UnitsSystem.hpp>
+#include <UnitsAPI.hpp>
 
 static occ::handle<Resource_Manager> CurrentUnits, SICurrentUnits, MDTVCurrentUnits;
 static Units_UnitsSystem             LocalSystemUnits, SILocalSystemUnits, MDTVLocalSystemUnits;

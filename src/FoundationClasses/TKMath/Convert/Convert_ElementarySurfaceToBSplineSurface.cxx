@@ -14,9 +14,9 @@
 
 // JCV 16/10/91
 
-#include <Convert_ElementarySurfaceToBSplineSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Convert_ElementarySurfaceToBSplineSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_OutOfRange.hpp>
 
 //=================================================================================================
 

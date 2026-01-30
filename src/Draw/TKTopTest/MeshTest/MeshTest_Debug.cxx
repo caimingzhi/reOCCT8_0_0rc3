@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Segment3D.hxx>
-#include <DrawTrSurf_Polygon3D.hxx>
-#include <Draw.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <BRepMesh_DataStructureOfDelaun.hxx>
+#include <Draw_Segment3D.hpp>
+#include <DrawTrSurf_Polygon3D.hpp>
+#include <Draw.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <BRepMesh_DataStructureOfDelaun.hpp>
 
 // This file defines global functions not declared in any public header,
 // intended for use from debugger prompt (Command Window in Visual Studio)

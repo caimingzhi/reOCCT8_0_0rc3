@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_HSurfaceTool.hxx>
+#include <Adaptor3d_HSurfaceTool.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_OffsetCurve.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_OffsetCurve.hpp>
 
 int Adaptor3d_HSurfaceTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S)
 {

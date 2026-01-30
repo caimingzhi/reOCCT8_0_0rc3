@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepLProp_SLProps.hxx>
-#include <BRepLProp_SurfaceTool.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_BuilderON.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepLProp_SLProps.hpp>
+#include <BRepLProp_SurfaceTool.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_BuilderON.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT bool TopOpeBRepBuild_GetcontextEINTERNAL();

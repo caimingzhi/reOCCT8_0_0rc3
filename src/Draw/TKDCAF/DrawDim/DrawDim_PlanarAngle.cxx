@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <Draw.hxx>
-#include <Draw_Display.hxx>
-#include <DrawDim.hxx>
-#include <DrawDim_PlanarAngle.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <Draw.hpp>
+#include <Draw_Display.hpp>
+#include <DrawDim.hpp>
+#include <DrawDim_PlanarAngle.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAPI.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarAngle, DrawDim_PlanarDimension)
 

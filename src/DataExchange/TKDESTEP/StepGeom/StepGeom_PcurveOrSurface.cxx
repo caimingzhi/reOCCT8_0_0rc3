@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepGeom_Pcurve.hxx>
-#include <StepGeom_PcurveOrSurface.hxx>
-#include <StepGeom_Surface.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepGeom_Pcurve.hpp>
+#include <StepGeom_PcurveOrSurface.hpp>
+#include <StepGeom_Surface.hpp>
 
 StepGeom_PcurveOrSurface::StepGeom_PcurveOrSurface() = default;
 

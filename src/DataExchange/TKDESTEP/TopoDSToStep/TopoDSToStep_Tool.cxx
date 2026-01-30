@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <TopoDSToStep_Tool.hxx>
+#include <BRep_Tool.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <TopoDSToStep_Tool.hpp>
 
 //=================================================================================================
 

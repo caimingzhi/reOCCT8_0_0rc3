@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_Activator.hxx>
-#include <IFSelect_SessionPilot.hxx>
-#include <MoniTool_Macros.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_DataMap.hxx>
+#include <IFSelect_Activator.hpp>
+#include <IFSelect_SessionPilot.hpp>
+#include <MoniTool_Macros.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_Activator, Standard_Transient)
 

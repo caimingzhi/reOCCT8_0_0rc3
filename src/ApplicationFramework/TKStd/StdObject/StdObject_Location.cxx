@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdObject_Location.hxx>
-#include <StdPersistent_TopLoc.hxx>
+#include <StdObject_Location.hpp>
+#include <StdPersistent_TopLoc.hpp>
 
 //=======================================================================
 // function : Translate

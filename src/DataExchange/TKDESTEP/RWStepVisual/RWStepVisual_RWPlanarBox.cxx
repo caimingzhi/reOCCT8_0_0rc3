@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWPlanarBox.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_PlanarBox.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWPlanarBox.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_PlanarBox.hpp>
 
 RWStepVisual_RWPlanarBox::RWStepVisual_RWPlanarBox() = default;
 

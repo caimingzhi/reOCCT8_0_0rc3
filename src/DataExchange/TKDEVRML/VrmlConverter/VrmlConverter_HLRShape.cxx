@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBndLib.hxx>
-#include <Precision.hxx>
-#include <StdPrs_HLRToolShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlConverter_DeflectionCurve.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_HLRShape.hxx>
-#include <VrmlConverter_LineAspect.hxx>
-#include <VrmlConverter_Projector.hxx>
+#include <Bnd_Box.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBndLib.hpp>
+#include <Precision.hpp>
+#include <StdPrs_HLRToolShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlConverter_DeflectionCurve.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_HLRShape.hpp>
+#include <VrmlConverter_LineAspect.hpp>
+#include <VrmlConverter_Projector.hpp>
 
 //=================================================================================================
 

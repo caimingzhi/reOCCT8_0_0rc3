@@ -14,56 +14,56 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <BRepAlgo.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepCheck_Result.hxx>
-#include <BRepCheck_Status.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <BRepCheck.hxx>
-#include <BRepCheck_Edge.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw.hxx>
-#include <DBRep.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <DrawTrSurf.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopExp.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRepTest.hpp>
+#include <BRepAlgo.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepCheck_Result.hpp>
+#include <BRepCheck_Status.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <BRepCheck.hpp>
+#include <BRepCheck_Edge.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw.hpp>
+#include <DBRep.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <DrawTrSurf.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopExp.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
-#include <TopOpeBRepTool_PurgeInternalEdges.hxx>
-// #include <TopOpeBRepTool_FuseEdges.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_FuseEdges.hxx>
+#include <TopOpeBRepTool_PurgeInternalEdges.hpp>
+// #include <TopOpeBRepTool_FuseEdges.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_FuseEdges.hpp>
 
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <BRep_Builder.hxx>
-#include <TopoDS_Compound.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <BRep_Builder.hpp>
+#include <TopoDS_Compound.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
 #include <cstdio>
 
-// Number of BRepCheck_Statuses in BRepCheck_Status.hxx file
+// Number of BRepCheck_Statuses in BRepCheck_Status.hpp file
 //(BRepCheck_NoError is not considered, i.e. general status
 // is smaller by one specified in file)
 static const int NumberOfStatus = 36;

@@ -18,7 +18,7 @@
 // PMN : Ajout de la commande smooth
 // JCT : Correction d'un trap dans la commande gcarc
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -26,37 +26,37 @@
 
 #include <fstream>
 
-#include <GeometryTest.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <Geom2dGcc_Circ2d3Tan.hxx>
-#include <Geom2dGcc_Circ2dTanCen.hxx>
-#include <Geom2dGcc_Lin2d2Tan.hxx>
-#include <Geom2dGcc_Lin2dTanObl.hxx>
-#include <Geom2dGcc.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <GeomAPI_Interpolate.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Geom2dAPI_Interpolate.hxx>
-#include <Draw_Marker2D.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <DrawTrSurf_BSplineCurve.hxx>
-#include <DrawTrSurf_BSplineCurve2d.hxx>
-#include <gp_Vec.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
-#include <GC_MakeSegment.hxx>
-#include <GC_MakeArcOfCircle.hxx>
+#include <GeometryTest.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <Geom2dGcc_Circ2d3Tan.hpp>
+#include <Geom2dGcc_Circ2dTanCen.hpp>
+#include <Geom2dGcc_Lin2d2Tan.hpp>
+#include <Geom2dGcc_Lin2dTanObl.hpp>
+#include <Geom2dGcc.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <GeomAPI_Interpolate.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Geom2dAPI_Interpolate.hpp>
+#include <Draw_Marker2D.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <DrawTrSurf_BSplineCurve.hpp>
+#include <DrawTrSurf_BSplineCurve2d.hpp>
+#include <gp_Vec.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
+#include <GC_MakeSegment.hpp>
+#include <GC_MakeArcOfCircle.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

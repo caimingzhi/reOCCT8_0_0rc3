@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_PointLight.hxx>
+#include <Vrml_PointLight.hpp>
 
 Vrml_PointLight::Vrml_PointLight()
     : myOnOff(true),

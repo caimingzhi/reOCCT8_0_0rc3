@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <DDataStd_DrawPresentation.hxx>
-#include <DDF.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DDataStd.hpp>
+#include <DDataStd_DrawPresentation.hpp>
+#include <DDF.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
 
-#include <DBRep.hxx>
-#include <TopoDS.hxx>
+#include <DBRep.hpp>
+#include <TopoDS.hpp>
 
 // LES ATTRIBUTES
 
-#include <TNaming_Builder.hxx>
+#include <TNaming_Builder.hpp>
 
 //=======================================================================
 // function : DDataStd_SetShape

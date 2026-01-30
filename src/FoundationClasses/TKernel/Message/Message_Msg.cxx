@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Msg.hxx>
-#include <Message_MsgFile.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Message_Msg.hpp>
+#include <Message_MsgFile.hpp>
+#include <TCollection_AsciiString.hpp>
 
 typedef enum
 {

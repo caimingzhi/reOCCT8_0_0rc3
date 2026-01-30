@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gce_MakeCylinder.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gce_MakeCylinder.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //  Constructions d un cylindre de gp par son Ax2 A2 et son rayon         +

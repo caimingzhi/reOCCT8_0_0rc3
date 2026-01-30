@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=============================================================================
 // Creation d' un cartesian_point de prostep a partir d' un point3d de gp

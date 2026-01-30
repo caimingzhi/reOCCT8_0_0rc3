@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_AnnotationFillAreaOccurrence.hxx>
+#include <StepVisual_AnnotationFillAreaOccurrence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_AnnotationFillAreaOccurrence, StepVisual_AnnotationOccurrence)
 

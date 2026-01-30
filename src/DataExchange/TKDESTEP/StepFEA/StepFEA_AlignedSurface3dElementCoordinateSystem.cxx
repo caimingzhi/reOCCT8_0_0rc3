@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_AlignedSurface3dElementCoordinateSystem.hxx>
-#include <StepFEA_FeaAxis2Placement3d.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_AlignedSurface3dElementCoordinateSystem.hpp>
+#include <StepFEA_FeaAxis2Placement3d.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_AlignedSurface3dElementCoordinateSystem,
                            StepFEA_FeaRepresentationItem)

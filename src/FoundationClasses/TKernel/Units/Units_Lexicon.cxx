@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units_Lexicon.hxx>
+#include <Units_Lexicon.hpp>
 
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Units_Token.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Units_Token.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Lexicon, Standard_Transient)
 

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRep_ShapeIntersector2d.hxx>
-#include <TopOpeBRepTool_box.hxx>
-#include <TopOpeBRepTool_HBoxTool.hxx>
+#include <TopOpeBRep_ShapeIntersector2d.hpp>
+#include <TopOpeBRepTool_box.hpp>
+#include <TopOpeBRepTool_HBoxTool.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRep_GettraceSI();

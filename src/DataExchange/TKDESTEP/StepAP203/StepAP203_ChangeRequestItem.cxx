@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Transient.hxx>
-#include <StepAP203_ChangeRequestItem.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
+#include <Standard_Transient.hpp>
+#include <StepAP203_ChangeRequestItem.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
 
 //=================================================================================================
 

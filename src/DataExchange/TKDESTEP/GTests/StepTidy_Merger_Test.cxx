@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_DuplicateCleaner.hxx>
+#include <StepTidy_DuplicateCleaner.hpp>
 
-#include <StepGeom_Axis1Placement.hxx>
+#include <StepGeom_Axis1Placement.hpp>
 
 class StepTidy_DuplicateCleanerTest : public StepTidy_BaseTestFixture
 {

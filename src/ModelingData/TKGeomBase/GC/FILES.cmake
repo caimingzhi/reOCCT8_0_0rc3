@@ -3,41 +3,41 @@ set(OCCT_GC_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GC_FILES
   GC_MakeArcOfCircle.cxx
-  GC_MakeArcOfCircle.hxx
+  GC_MakeArcOfCircle.hpp
   GC_MakeArcOfEllipse.cxx
-  GC_MakeArcOfEllipse.hxx
+  GC_MakeArcOfEllipse.hpp
   GC_MakeArcOfHyperbola.cxx
-  GC_MakeArcOfHyperbola.hxx
+  GC_MakeArcOfHyperbola.hpp
   GC_MakeArcOfParabola.cxx
-  GC_MakeArcOfParabola.hxx
+  GC_MakeArcOfParabola.hpp
   GC_MakeCircle.cxx
-  GC_MakeCircle.hxx
+  GC_MakeCircle.hpp
   GC_MakeConicalSurface.cxx
-  GC_MakeConicalSurface.hxx
+  GC_MakeConicalSurface.hpp
   GC_MakeCylindricalSurface.cxx
-  GC_MakeCylindricalSurface.hxx
+  GC_MakeCylindricalSurface.hpp
   GC_MakeEllipse.cxx
-  GC_MakeEllipse.hxx
+  GC_MakeEllipse.hpp
   GC_MakeHyperbola.cxx
-  GC_MakeHyperbola.hxx
+  GC_MakeHyperbola.hpp
   GC_MakeLine.cxx
-  GC_MakeLine.hxx
+  GC_MakeLine.hpp
   GC_MakeMirror.cxx
-  GC_MakeMirror.hxx
+  GC_MakeMirror.hpp
   GC_MakePlane.cxx
-  GC_MakePlane.hxx
+  GC_MakePlane.hpp
   GC_MakeRotation.cxx
-  GC_MakeRotation.hxx
+  GC_MakeRotation.hpp
   GC_MakeScale.cxx
-  GC_MakeScale.hxx
+  GC_MakeScale.hpp
   GC_MakeSegment.cxx
-  GC_MakeSegment.hxx
+  GC_MakeSegment.hpp
   GC_MakeTranslation.cxx
-  GC_MakeTranslation.hxx
+  GC_MakeTranslation.hpp
   GC_MakeTrimmedCone.cxx
-  GC_MakeTrimmedCone.hxx
+  GC_MakeTrimmedCone.hpp
   GC_MakeTrimmedCylinder.cxx
-  GC_MakeTrimmedCylinder.hxx
-  GC_Root.hxx
-  GC_Root.lxx
+  GC_MakeTrimmedCylinder.hpp
+  GC_Root.hpp
+  GC_Root_1.hpp
 )

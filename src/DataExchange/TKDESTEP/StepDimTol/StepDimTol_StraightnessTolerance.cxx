@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepDimTol_StraightnessTolerance.hxx>
+#include <StepDimTol_StraightnessTolerance.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_StraightnessTolerance, StepDimTol_GeometricTolerance)
 

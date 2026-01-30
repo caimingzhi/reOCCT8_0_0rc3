@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools_ShapeReader.hxx>
+#include <BinTools_ShapeReader.hpp>
 
-#include <BinTools_Curve2dSet.hxx>
-#include <BinTools_CurveSet.hxx>
-#include <BinTools_SurfaceSet.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopoDS.hxx>
+#include <BinTools_Curve2dSet.hpp>
+#include <BinTools_CurveSet.hpp>
+#include <BinTools_SurfaceSet.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopoDS.hpp>
 
 //=================================================================================================
 

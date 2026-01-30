@@ -16,32 +16,32 @@
 
 // szv#4 S4163
 
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_ElementarySurface.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <ShapeAnalysis_ShapeContents.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_ElementarySurface.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <ShapeAnalysis_ShapeContents.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 ShapeAnalysis_ShapeContents::ShapeAnalysis_ShapeContents()
 {

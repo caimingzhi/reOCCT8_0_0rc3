@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <BRepLib_MakePolygon.hxx>
-#include <BRepTools.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <BRepLib_MakePolygon.hpp>
+#include <BRepTools.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

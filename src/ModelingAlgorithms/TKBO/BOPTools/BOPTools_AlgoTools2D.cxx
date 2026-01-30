@@ -12,34 +12,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomInt.hxx>
-#include <GeomLib.hxx>
-#include <gp.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_Tools.hxx>
-#include <Precision.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <ProjLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomInt.hpp>
+#include <GeomLib.hpp>
+#include <gp.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_Tools.hpp>
+#include <Precision.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <ProjLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 static double MaxToleranceEdge(const TopoDS_Face&);
 

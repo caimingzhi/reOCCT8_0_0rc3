@@ -12,44 +12,44 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_Walking.hxx>
+#include <BRepBlend_Walking.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <BRepBlend_BlendTool.hxx>
-#include <BRepBlend_Extremity.hxx>
-#include <BRepBlend_HCurve2dTool.hxx>
-#include <BRepBlend_HCurveTool.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepBlend_PointOnRst.hxx>
-#include <Blend_FuncInv.hxx>
-#include <Blend_Function.hxx>
-#include <Blend_Point.hxx>
-#include <CSLib.hxx>
-#include <CSLib_NormalStatus.hxx>
-#include <ChFiDS_ElSpine.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_Transition.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array2.hxx>
-#include <gce_MakePln.hxx>
-#include <gp_Pnt2d.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_Gauss.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <BRepBlend_BlendTool.hpp>
+#include <BRepBlend_Extremity.hpp>
+#include <BRepBlend_HCurve2dTool.hpp>
+#include <BRepBlend_HCurveTool.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepBlend_PointOnRst.hpp>
+#include <Blend_FuncInv.hpp>
+#include <Blend_Function.hpp>
+#include <Blend_Point.hpp>
+#include <CSLib.hpp>
+#include <CSLib_NormalStatus.hpp>
+#include <ChFiDS_ElSpine.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_Transition.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array2.hpp>
+#include <gce_MakePln.hpp>
+#include <gp_Pnt2d.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_Gauss.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <Geom_BSplineCurve.hxx>
-  #include <Standard_Integer.hxx>
+  #include <Geom_BSplineCurve.hpp>
+  #include <Standard_Integer.hpp>
   // POP pour NT
   #include <stdio.h>
 

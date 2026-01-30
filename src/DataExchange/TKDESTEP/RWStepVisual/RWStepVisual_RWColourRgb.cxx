@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWColourRgb.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_ColourRgb.hxx>
+#include "RWStepVisual_RWColourRgb.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_ColourRgb.hpp>
 
 RWStepVisual_RWColourRgb::RWStepVisual_RWColourRgb() = default;
 

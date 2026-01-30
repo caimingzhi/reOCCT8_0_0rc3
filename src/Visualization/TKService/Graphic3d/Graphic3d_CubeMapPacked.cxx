@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_CubeMapPacked.hxx>
+#include <Graphic3d_CubeMapPacked.hpp>
 
-#include <Image_AlienPixMap.hxx>
-#include <Image_DDSParser.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <Image_DDSParser.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CubeMapPacked, Graphic3d_CubeMap)
 

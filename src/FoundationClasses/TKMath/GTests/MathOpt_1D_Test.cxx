@@ -13,7 +13,7 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_Brent.hxx>
+#include <MathOpt_Brent.hpp>
 
 #include <cmath>
 

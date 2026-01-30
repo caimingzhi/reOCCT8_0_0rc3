@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGeom_CompositeCurve.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom_CompositeCurve.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_CompositeCurve, IGESData_IGESEntity)
 

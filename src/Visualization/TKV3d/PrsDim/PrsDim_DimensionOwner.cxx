@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_DimensionOwner.hxx>
+#include <PrsDim_DimensionOwner.hpp>
 
-#include <PrsDim_Dimension.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
+#include <PrsDim_Dimension.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_DimensionOwner, SelectMgr_EntityOwner)
 

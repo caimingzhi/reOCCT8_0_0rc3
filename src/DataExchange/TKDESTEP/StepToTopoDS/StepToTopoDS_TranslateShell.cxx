@@ -16,24 +16,24 @@
 
 //:   gka 09.04.99: S4136: improving tolerance management
 
-#include <BRep_Builder.hxx>
-#include <Message_ProgressScope.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepToTopoDS_NMTool.hxx>
-#include <StepToTopoDS_Tool.hxx>
-#include <StepToTopoDS_TranslateFace.hxx>
-#include <StepToTopoDS_TranslateShell.hxx>
-#include <StepVisual_TessellatedShell.hxx>
-#include <StepVisual_TriangulatedFace.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
+#include <BRep_Builder.hpp>
+#include <Message_ProgressScope.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepToTopoDS_NMTool.hpp>
+#include <StepToTopoDS_Tool.hpp>
+#include <StepToTopoDS_TranslateFace.hpp>
+#include <StepToTopoDS_TranslateShell.hpp>
+#include <StepVisual_TessellatedShell.hpp>
+#include <StepVisual_TriangulatedFace.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
 
 //=================================================================================================
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill_ComputeCLine.hxx>
+#include <BRepFill_ComputeCLine.hpp>
 
-#include <AppParCurves_MultiCurve.hxx>
+#include <AppParCurves_MultiCurve.hpp>
 
 #define MultiLine BRepFill_MultiLine
-#define MultiLine_hxx <BRepFill_MultiLine.hxx>
+#define MultiLine_hxx <BRepFill_MultiLine.hpp>
 #define Approx_ComputeCLine BRepFill_ComputeCLine
-#define Approx_ComputeCLine_hxx <BRepFill_ComputeCLine.hxx>
-#include <Approx_ComputeCLine.gxx>
+#define Approx_ComputeCLine_hxx <BRepFill_ComputeCLine.hpp>
+#include <Approx_ComputeCLine.hpp>

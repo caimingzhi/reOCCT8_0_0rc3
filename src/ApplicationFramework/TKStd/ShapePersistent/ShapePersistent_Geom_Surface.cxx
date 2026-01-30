@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapePersistent_Geom_Surface.hxx>
-#include <StdLPersistent_HArray1.hxx>
-#include <ShapePersistent_HArray2.hxx>
+#include <ShapePersistent_Geom_Surface.hpp>
+#include <StdLPersistent_HArray1.hpp>
+#include <ShapePersistent_HArray2.hpp>
 
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
 
-#include <gp_Ax1.hxx>
+#include <gp_Ax1.hpp>
 
 occ::handle<Geom_Surface> ShapePersistent_Geom_Surface::pLinearExtrusion::Import() const
 {

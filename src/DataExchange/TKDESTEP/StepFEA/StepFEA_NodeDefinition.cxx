@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Standard_Type.hxx>
-#include <StepFEA_NodeDefinition.hxx>
+#include <Standard_Type.hpp>
+#include <StepFEA_NodeDefinition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeDefinition, StepRepr_ShapeAspect)
 

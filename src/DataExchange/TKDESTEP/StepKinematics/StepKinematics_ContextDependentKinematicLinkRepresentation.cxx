@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_ContextDependentKinematicLinkRepresentation.hxx>
+#include <StepKinematics_ContextDependentKinematicLinkRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ContextDependentKinematicLinkRepresentation,
                            Standard_Transient)

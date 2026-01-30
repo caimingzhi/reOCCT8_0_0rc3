@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlAPI.hxx>
+#include <VrmlAPI.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <VrmlAPI_Writer.hxx>
+#include <TopoDS_Shape.hpp>
+#include <VrmlAPI_Writer.hpp>
 
 bool VrmlAPI::Write(const TopoDS_Shape& aShape, const char* aFileName, const int aVersion)
 {

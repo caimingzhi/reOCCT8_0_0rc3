@@ -13,19 +13,19 @@
 
 #include <gtest/gtest.h>
 
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopExp_Explorer.hxx>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopExp_Explorer.hpp>
 
 #include <random>
 #include <chrono>

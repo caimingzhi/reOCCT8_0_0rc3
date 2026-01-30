@@ -21,39 +21,39 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <GeomAdaptor_Curve.hxx>
+#include <GeomAdaptor_Curve.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <BSplCLib.hxx>
-#include <BSplCLib_Cache.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BSplCLib.hpp>
+#include <BSplCLib_Cache.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
-#include "../Geom/Geom_OffsetCurveUtils.pxx"
+#include "../Geom/Geom_OffsetCurveUtils.hpp"
 
-// #include <GeomConvert_BSplineCurveKnotSplitting.hxx>
+// #include <GeomConvert_BSplineCurveKnotSplitting.hpp>
 static const double PosTol = Precision::PConfusion() / 2;
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomAdaptor_Curve, Adaptor3d_Curve)

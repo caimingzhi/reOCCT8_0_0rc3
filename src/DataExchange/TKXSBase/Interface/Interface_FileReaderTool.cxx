@@ -13,35 +13,35 @@
 
 // dce 21/01/99 S3767 : Suppression of general messages
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckFailure.hxx>
-#include <Interface_FileReaderData.hxx>
-#include <Interface_FileReaderTool.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ReaderLib.hxx>
-#include <Interface_ReaderModule.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckFailure.hpp>
+#include <Interface_FileReaderData.hpp>
+#include <Interface_FileReaderTool.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ReaderLib.hpp>
+#include <Interface_ReaderModule.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
 
 #ifdef _WIN32
-  #include <OSD_Exception.hxx>
+  #include <OSD_Exception.hpp>
 #else
-  #include <OSD_Signal.hxx>
+  #include <OSD_Signal.hpp>
 #endif
 #include <cstdio>
 
 // MGE 16/06/98
 // To use Msg class
-#include <Message_Msg.hxx>
+#include <Message_Msg.hpp>
 // To use TCollectionHAsciiString
-#include <TCollection_HAsciiString.hxx>
+#include <TCollection_HAsciiString.hpp>
 
 // Failure to recover error when reading file,
 // TypeMismatch for detailed error message (important special case)

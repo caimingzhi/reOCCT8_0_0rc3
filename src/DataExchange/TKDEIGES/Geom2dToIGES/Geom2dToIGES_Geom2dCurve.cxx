@@ -17,17 +17,17 @@
 // #53 rln 24.12.98 CCI60005
 // #57 rln 25.12.98 avoid code duplication
 
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dToIGES_Geom2dCurve.hxx>
-#include <Geom2dToIGES_Geom2dEntity.hxx>
-#include <GeomAPI.hxx>
-#include <GeomToIGES_GeomCurve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pln.hxx>
-#include <IGESGeom_BSplineCurve.hxx>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dToIGES_Geom2dCurve.hpp>
+#include <Geom2dToIGES_Geom2dEntity.hpp>
+#include <GeomAPI.hpp>
+#include <GeomToIGES_GeomCurve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pln.hpp>
+#include <IGESGeom_BSplineCurve.hpp>
 
-// #include <Geom2dConvert.hxx>
+// #include <Geom2dConvert.hpp>
 //=============================================================================
 //  Geom2dToIGES_Geom2dCurve
 //=============================================================================

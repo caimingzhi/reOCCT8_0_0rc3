@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Standard_ProgramError.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_GeomTool.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_TypeLineCurve.hxx>
-#include <TopOpeBRep_WPointInter.hxx>
-#include <TopOpeBRep_WPointInterIterator.hxx>
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Standard_ProgramError.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_GeomTool.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_TypeLineCurve.hpp>
+#include <TopOpeBRep_WPointInter.hpp>
+#include <TopOpeBRep_WPointInterIterator.hpp>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
 
 //=================================================================================================
 

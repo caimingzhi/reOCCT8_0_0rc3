@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_PWBDrilledHole.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_PWBDrilledHole.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_PWBDrilledHole, IGESData_IGESEntity)
 

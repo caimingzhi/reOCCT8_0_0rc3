@@ -18,18 +18,18 @@
 // Version	Date		Purpose
 //		0.0	Mar 13 1997	Creation
 
-#include <TCollection_AsciiString.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_Handle.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_Map.hxx>
-#include <TDF_Tool.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_Handle.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_Map.hpp>
+#include <TDF_Tool.hpp>
 
 #define TDF_TagSeparator ':'
 

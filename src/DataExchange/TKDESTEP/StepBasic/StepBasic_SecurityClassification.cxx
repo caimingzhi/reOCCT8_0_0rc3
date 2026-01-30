@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_SecurityClassification.hxx>
-#include <StepBasic_SecurityClassificationLevel.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_SecurityClassification.hpp>
+#include <StepBasic_SecurityClassificationLevel.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_SecurityClassification, Standard_Transient)
 

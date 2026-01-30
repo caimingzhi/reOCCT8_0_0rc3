@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_Material.hxx>
-#include <Precision.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_Scene.hxx>
-#include <gp_XYZ.hxx>
+#include <VrmlData_Material.hpp>
+#include <Precision.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_Scene.hpp>
+#include <gp_XYZ.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Material, VrmlData_Node)
 

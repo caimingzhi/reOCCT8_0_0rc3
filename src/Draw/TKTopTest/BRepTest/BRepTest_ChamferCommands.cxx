@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Interpretor.hxx>
-#include <BRepTest.hxx>
-#include <Draw.hxx>
-#include <DBRep.hxx>
-#include <BRepFilletAPI_MakeChamfer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw_Interpretor.hpp>
+#include <BRepTest.hpp>
+#include <Draw.hpp>
+#include <DBRep.hpp>
+#include <BRepFilletAPI_MakeChamfer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
 //===============================================================================
 // function : chamf_throat_with_penetration

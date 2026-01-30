@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_PointOnRst.hxx>
+#include <BRepBlend_PointOnRst.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <IntSurf_Transition.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <IntSurf_Transition.hpp>
 
 BRepBlend_PointOnRst::BRepBlend_PointOnRst()
     : prm(0.0)

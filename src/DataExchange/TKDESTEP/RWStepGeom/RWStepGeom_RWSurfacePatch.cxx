@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWSurfacePatch.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_BoundedSurface.hxx>
-#include <StepGeom_SurfacePatch.hxx>
-#include <StepGeom_TransitionCode.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWSurfacePatch.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_BoundedSurface.hpp>
+#include <StepGeom_SurfacePatch.hpp>
+#include <StepGeom_TransitionCode.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepGeom_RWTransitionCode.pxx"
+#include "RWStepGeom_RWTransitionCode.hpp"
 
 RWStepGeom_RWSurfacePatch::RWStepGeom_RWSurfacePatch() = default;
 

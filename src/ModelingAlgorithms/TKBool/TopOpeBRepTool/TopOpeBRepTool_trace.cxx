@@ -16,7 +16,7 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <Standard_Type.hxx>
+  #include <Standard_Type.hpp>
 
 Standard_EXPORT int TopOpeBRepTool_BOOOPE_CHECK_DEB = 1;
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh.hxx>
+#include <RWMesh.hpp>
 
-#include <TDataStd_Name.hxx>
-#include <TDF_Tool.hxx>
+#include <TDataStd_Name.hpp>
+#include <TDF_Tool.hpp>
 
 //=================================================================================================
 

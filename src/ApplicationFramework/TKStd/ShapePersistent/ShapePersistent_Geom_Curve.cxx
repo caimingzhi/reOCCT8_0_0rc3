@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
+#include <Standard_NullObject.hpp>
 
-#include <ShapePersistent_Geom.hxx>
-#include <ShapePersistent_Geom_Curve.hxx>
+#include <ShapePersistent_Geom.hpp>
+#include <ShapePersistent_Geom_Curve.hpp>
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_OffsetCurve.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_OffsetCurve.hpp>
 
 occ::handle<Geom_Curve> ShapePersistent_Geom_Curve::pBezier::Import() const
 {

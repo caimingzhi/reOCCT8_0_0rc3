@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GlCore11.hxx>
-#include <OpenGl_StencilTest.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Workspace.hxx>
-#include <Standard_Dump.hxx>
+#include <OpenGl_GlCore11.hpp>
+#include <OpenGl_StencilTest.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Workspace.hpp>
+#include <Standard_Dump.hpp>
 
 OpenGl_StencilTest::OpenGl_StencilTest() = default;
 

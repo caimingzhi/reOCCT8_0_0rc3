@@ -16,8 +16,8 @@
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
 
-#include <math_DirectPolynomialRoots.hxx>
-#include <StdFail_InfiniteSolutions.hxx>
+#include <math_DirectPolynomialRoots.hpp>
+#include <StdFail_InfiniteSolutions.hpp>
 
 #include <algorithm>
 #include <array>

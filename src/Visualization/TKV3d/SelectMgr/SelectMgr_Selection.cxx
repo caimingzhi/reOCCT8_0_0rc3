@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_Selection.hxx>
+#include <SelectMgr_Selection.hpp>
 
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_NullObject.hxx>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_NullObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_Selection, Standard_Transient)
 

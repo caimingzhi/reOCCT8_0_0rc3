@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
 
 #include <gtest/gtest.h>
 

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep_Edge.hxx>
-#include <Draw_Color.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
+#include <DBRep_Edge.hpp>
+#include <Draw_Color.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DBRep_Edge, Standard_Transient)
 

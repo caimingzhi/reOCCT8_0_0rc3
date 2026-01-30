@@ -16,45 +16,45 @@
 
 #include <algorithm>
 
-#include <Approx_CurveOnSurface.hxx>
-#include <Extrema_ExtCS.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomLib.hxx>
-#include <gp_Mat2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <Precision.hxx>
-#include <ProjLib_CompProjectedCurve.hxx>
-#include <ProjLib_HCompProjectedCurve.hxx>
-#include <ProjLib_PrjResolve.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_TypeMismatch.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Extrema_ExtCC.hxx>
-#include <NCollection_Vector.hxx>
+#include <Approx_CurveOnSurface.hpp>
+#include <Extrema_ExtCS.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomLib.hpp>
+#include <gp_Mat2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <Precision.hpp>
+#include <ProjLib_CompProjectedCurve.hpp>
+#include <ProjLib_HCompProjectedCurve.hpp>
+#include <ProjLib_PrjResolve.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_TypeMismatch.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Extrema_ExtCC.hpp>
+#include <NCollection_Vector.hpp>
 
 #define FuncTol 1.e-10
 
 IMPLEMENT_STANDARD_RTTIEXT(ProjLib_CompProjectedCurve, Adaptor2d_Curve2d)
 
 #ifdef OCCT_DEBUG_CHRONO
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 
 static OSD_Chronometer chr_init_point, chr_dicho_bound;
 

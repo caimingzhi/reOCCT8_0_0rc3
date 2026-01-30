@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Line.hxx>
-#include <Geom_Line.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <GeomToStep_MakeLine.hxx>
-#include <GeomToStep_MakeVector.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Line.hxx>
-#include <StepGeom_Vector.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_Line.hpp>
+#include <Geom_Line.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <GeomToStep_MakeLine.hpp>
+#include <GeomToStep_MakeVector.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Line.hpp>
+#include <StepGeom_Vector.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' une line de prostep a partir d' une Lin de gp
 //=============================================================================
 GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin& L, const StepData_Factors& theLocalFactors){
 #define Vec_gen gp_Vec
-#include "GeomToStep_MakeLine_gen.pxx"
+#include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
 
@@ -46,7 +46,7 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin& L, const StepData_Factors
 GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin2d&         L,
                                          const StepData_Factors& theLocalFactors){
 #define Vec_gen gp_Vec2d
-#include "GeomToStep_MakeLine_gen.pxx"
+#include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
 
@@ -60,7 +60,7 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom_Line>& Gline,
   gp_Lin L;
   L = Gline->Lin();
 #define Vec_gen gp_Vec
-#include "GeomToStep_MakeLine_gen.pxx"
+#include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
 
@@ -74,7 +74,7 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom2d_Line>& Gline,
   gp_Lin2d L;
   L = Gline->Lin2d();
 #define Vec_gen gp_Vec2d
-#include "GeomToStep_MakeLine_gen.pxx"
+#include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
 

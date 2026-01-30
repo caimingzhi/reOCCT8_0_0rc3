@@ -17,20 +17,20 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Graphic3d_MediaTextureSet.hxx>
+#include <Graphic3d_MediaTextureSet.hpp>
 
-#include <Media_Frame.hxx>
-#include <Media_PlayerContext.hxx>
-#include <Graphic3d_ShaderProgram.hxx>
+#include <Media_Frame.hpp>
+#include <Media_PlayerContext.hpp>
+#include <Graphic3d_ShaderProgram.hpp>
 
 #ifdef HAVE_FFMPEG
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 extern "C"
 {
   #include <libavcodec/avcodec.h>
   #include <libavutil/imgutils.h>
 };
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_MediaTextureSet, Graphic3d_TextureSet)

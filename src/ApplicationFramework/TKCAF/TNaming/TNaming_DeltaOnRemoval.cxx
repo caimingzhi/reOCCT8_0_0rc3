@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TNaming_DeltaOnModification.hxx>
-#include <TNaming_DeltaOnRemoval.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <Standard_Type.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TNaming_DeltaOnModification.hpp>
+#include <TNaming_DeltaOnRemoval.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_DeltaOnRemoval, TDF_DeltaOnRemoval)
 

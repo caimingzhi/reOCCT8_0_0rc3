@@ -30,11 +30,11 @@
 
 // #endif
 
-#include <math_Crout.hxx>
-#include <math_Matrix.hxx>
-#include <math_Uzawa.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Crout.hpp>
+#include <math_Matrix.hpp>
+#include <math_Uzawa.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_Uzawa::math_Uzawa(const math_Matrix& Cont,
                        const math_Vector& Secont,

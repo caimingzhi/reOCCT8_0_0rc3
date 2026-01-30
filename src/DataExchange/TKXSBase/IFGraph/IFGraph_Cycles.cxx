@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_Cycles.hxx>
-#include <IFGraph_StrongComponants.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
+#include <IFGraph_Cycles.hpp>
+#include <IFGraph_StrongComponants.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
 
 //  Cycles uses the services of StrongComponants :
 //  It retains the Strong Componants which are not Single

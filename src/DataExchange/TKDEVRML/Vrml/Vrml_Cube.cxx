@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Cube.hxx>
+#include <Vrml_Cube.hpp>
 
 Vrml_Cube::Vrml_Cube(const double aWidth, const double aHeight, const double aDepth)
 {

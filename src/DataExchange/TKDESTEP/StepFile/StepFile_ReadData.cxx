@@ -13,10 +13,10 @@
  commercial license or contractual agreement.
 */
 
-#include <StepFile_ReadData.hxx>
+#include <StepFile_ReadData.hpp>
 
-#include <Interface_Check.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <TCollection_AsciiString.hpp>
 
 // Constant litterales
 namespace TextValue

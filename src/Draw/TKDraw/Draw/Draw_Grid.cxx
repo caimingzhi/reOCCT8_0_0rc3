@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Appli.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_ColorKind.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Grid.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_ColorKind.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Grid.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Grid, Draw_Drawable3D)
 

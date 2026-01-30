@@ -15,8 +15,8 @@
 
 #include <d3d9.h>
 
-#include <D3DHost_GraphicDriver.hxx>
-#include <D3DHost_View.hxx>
+#include <D3DHost_GraphicDriver.hpp>
+#include <D3DHost_View.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(D3DHost_GraphicDriver, OpenGl_GraphicDriver)
 

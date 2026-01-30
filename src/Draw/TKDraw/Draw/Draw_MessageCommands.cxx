@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Printer.hxx>
+#include <Draw.hpp>
+#include <Draw_Printer.hpp>
 
-#include <Message_PrinterOStream.hxx>
-#include <Message_PrinterSystemLog.hxx>
-#include <Message_PrinterToReport.hxx>
-#include <Message_Report.hxx>
-#include <NCollection_Shared.hxx>
+#include <Message_PrinterOStream.hpp>
+#include <Message_PrinterSystemLog.hpp>
+#include <Message_PrinterToReport.hpp>
+#include <Message_Report.hpp>
+#include <NCollection_Shared.hpp>
 
 //=================================================================================================
 

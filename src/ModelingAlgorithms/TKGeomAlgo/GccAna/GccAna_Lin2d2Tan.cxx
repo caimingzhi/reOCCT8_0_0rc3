@@ -17,18 +17,18 @@
 //   through point.                                                        +
 //=========================================================================
 
-#include <ElCLib.hxx>
-#include <GccAna_Lin2d2Tan.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Lin2d2Tan.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Straight line passing through two points.                                      +

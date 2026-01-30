@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draft.hxx>
+#include <Draft.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <ElSLib.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <ElSLib.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

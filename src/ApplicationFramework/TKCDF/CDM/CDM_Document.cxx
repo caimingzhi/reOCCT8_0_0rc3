@@ -16,22 +16,22 @@
 
 // Modified by rmi, Tue Nov 18 08:17:41 1997
 
-#include <CDM_Application.hxx>
-#include <CDM_Document.hxx>
-#include <NCollection_List.hxx>
-#include <CDM_MetaData.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <CDM_Reference.hxx>
-#include <CDM_ReferenceIterator.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
-#include <UTL.hxx>
+#include <CDM_Application.hpp>
+#include <CDM_Document.hpp>
+#include <NCollection_List.hpp>
+#include <CDM_MetaData.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_DataMap.hpp>
+#include <CDM_Reference.hpp>
+#include <CDM_ReferenceIterator.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
+#include <UTL.hpp>
 class CDM_MetaData;
 
 IMPLEMENT_STANDARD_RTTIEXT(CDM_Document, Standard_Transient)

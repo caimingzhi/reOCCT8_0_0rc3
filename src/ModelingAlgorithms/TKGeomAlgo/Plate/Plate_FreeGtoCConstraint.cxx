@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XY.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Plate_D1.hxx>
-#include <Plate_D2.hxx>
-#include <Plate_D3.hxx>
-#include <Plate_FreeGtoCConstraint.hxx>
-#include <Plate_LinearScalarConstraint.hxx>
-#include <Plate_PinpointConstraint.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XY.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Plate_D1.hpp>
+#include <Plate_D2.hpp>
+#include <Plate_D3.hpp>
+#include <Plate_FreeGtoCConstraint.hpp>
+#include <Plate_LinearScalarConstraint.hpp>
+#include <Plate_PinpointConstraint.hpp>
 
 static const double NORMIN = 1.e-10;
 static const double COSMIN = 1.e-2;

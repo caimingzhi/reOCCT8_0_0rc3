@@ -14,15 +14,15 @@
 #include <gtest/gtest.h>
 
 // New API
-#include <MathOpt_Powell.hxx>
-#include <MathOpt_BFGS.hxx>
+#include <MathOpt_Powell.hpp>
+#include <MathOpt_BFGS.hpp>
 
 // Old API
-#include <math_Powell.hxx>
-#include <math_BFGS.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
-#include <math_Matrix.hxx>
+#include <math_Powell.hpp>
+#include <math_BFGS.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
+#include <math_Matrix.hpp>
 
 #include <cmath>
 

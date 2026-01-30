@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeUpgrade.hxx>
+#include <ShapeUpgrade.hpp>
 
-#include <BSplCLib.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 /*
 // Debug state= True / False.

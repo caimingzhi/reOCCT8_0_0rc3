@@ -3,22 +3,22 @@ set(OCCT_ShapeExtend_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeExtend_FILES
   ShapeExtend.cxx
-  ShapeExtend.hxx
+  ShapeExtend.hpp
   ShapeExtend_BasicMsgRegistrator.cxx
-  ShapeExtend_BasicMsgRegistrator.hxx
+  ShapeExtend_BasicMsgRegistrator.hpp
   ShapeExtend_ComplexCurve.cxx
-  ShapeExtend_ComplexCurve.hxx
-  ShapeExtend_ComplexCurve.lxx
+  ShapeExtend_ComplexCurve.hpp
+  ShapeExtend_ComplexCurve_1.hpp
   ShapeExtend_CompositeSurface.cxx
-  ShapeExtend_CompositeSurface.hxx
+  ShapeExtend_CompositeSurface.hpp
 
   ShapeExtend_Explorer.cxx
-  ShapeExtend_Explorer.hxx
+  ShapeExtend_Explorer.hpp
   ShapeExtend_MsgRegistrator.cxx
-  ShapeExtend_MsgRegistrator.hxx
-  ShapeExtend_MsgRegistrator.lxx
-  ShapeExtend_Parametrisation.hxx
-  ShapeExtend_Status.hxx
+  ShapeExtend_MsgRegistrator.hpp
+  ShapeExtend_MsgRegistrator_1.hpp
+  ShapeExtend_Parametrisation.hpp
+  ShapeExtend_Status.hpp
   ShapeExtend_WireData.cxx
-  ShapeExtend_WireData.hxx
+  ShapeExtend_WireData.hpp
 )

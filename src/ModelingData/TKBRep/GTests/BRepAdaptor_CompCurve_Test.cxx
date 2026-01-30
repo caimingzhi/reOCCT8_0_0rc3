@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <BRepAdaptor_CompCurve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
 
 // Test OCC5696: BRepAdaptor_CompCurve::Edge() method
 // Migrated from QABugs_5.cxx

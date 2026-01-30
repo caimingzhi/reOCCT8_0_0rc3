@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWShellBasedSurfaceModel.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_Shell.hxx>
-#include <StepShape_ShellBasedSurfaceModel.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWShellBasedSurfaceModel.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_Shell.hpp>
+#include <StepShape_ShellBasedSurfaceModel.hpp>
 
 RWStepShape_RWShellBasedSurfaceModel::RWStepShape_RWShellBasedSurfaceModel() = default;
 

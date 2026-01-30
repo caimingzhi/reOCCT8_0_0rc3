@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_Gradient_BFGSOfMyGradientbisOfTheComputeLineOfApprox.hxx>
+#include <BRepApprox_Gradient_BFGSOfMyGradientbisOfTheComputeLineOfApprox.hpp>
 
-#include <BRepApprox_TheMultiLineOfApprox.hxx>
-#include <BRepApprox_TheMultiLineToolOfApprox.hxx>
-#include <BRepApprox_MyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
+#include <BRepApprox_TheMultiLineOfApprox.hpp>
+#include <BRepApprox_TheMultiLineToolOfApprox.hpp>
+#include <BRepApprox_MyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
 
 BRepApprox_Gradient_BFGSOfMyGradientbisOfTheComputeLineOfApprox::
   BRepApprox_Gradient_BFGSOfMyGradientbisOfTheComputeLineOfApprox(

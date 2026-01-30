@@ -13,14 +13,14 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <gp_XYZ.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <gp_XYZ.hpp>
 
 // Test OCC862: GeomAPI_ExtremaCurveCurve - Extrema between BSpline and line
 TEST(GeomAPI_ExtremaCurveCurve_Test, OCC862_ExtremaBSplineAndLine)

@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaLinearElasticity.hxx>
-#include <StepFEA_SymmetricTensor43d.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaLinearElasticity.hpp>
+#include <StepFEA_SymmetricTensor43d.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaLinearElasticity,
                            StepFEA_FeaMaterialPropertyRepresentationItem)

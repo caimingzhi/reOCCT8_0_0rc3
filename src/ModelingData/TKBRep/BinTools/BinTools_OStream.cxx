@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools_OStream.hxx>
+#include <BinTools_OStream.hpp>
 
 #if DO_INVERSE
-  #include <FSD_BinaryFile.hxx>
+  #include <FSD_BinaryFile.hpp>
 #endif
 
 //=================================================================================================

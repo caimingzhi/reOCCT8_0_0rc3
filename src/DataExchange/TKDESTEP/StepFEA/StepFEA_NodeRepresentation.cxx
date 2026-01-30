@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaModel.hxx>
-#include <StepFEA_NodeRepresentation.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaModel.hpp>
+#include <StepFEA_NodeRepresentation.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeRepresentation, StepRepr_Representation)
 

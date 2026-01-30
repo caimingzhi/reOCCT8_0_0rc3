@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeUpgrade_EdgeDivide.hxx>
-#include <ShapeUpgrade_SplitCurve2d.hxx>
-#include <ShapeUpgrade_SplitCurve3d.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeUpgrade_EdgeDivide.hpp>
+#include <ShapeUpgrade_SplitCurve2d.hpp>
+#include <ShapeUpgrade_SplitCurve3d.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_EdgeDivide, ShapeUpgrade_Tool)
 

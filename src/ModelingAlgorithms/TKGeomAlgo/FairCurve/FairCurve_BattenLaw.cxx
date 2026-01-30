@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FairCurve_BattenLaw.hxx>
+#include <FairCurve_BattenLaw.hpp>
 
 FairCurve_BattenLaw::FairCurve_BattenLaw(const double Heigth,
                                          const double Slope,

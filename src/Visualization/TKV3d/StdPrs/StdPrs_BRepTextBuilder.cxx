@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_BRepTextBuilder.hxx>
+#include <StdPrs_BRepTextBuilder.hpp>
 
-#include <Font_TextFormatter.hxx>
+#include <Font_TextFormatter.hpp>
 
 //=================================================================================================
 

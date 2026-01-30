@@ -3,47 +3,47 @@ set(OCCT_Geom2d_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Geom2d_FILES
   Geom2d_AxisPlacement.cxx
-  Geom2d_AxisPlacement.hxx
+  Geom2d_AxisPlacement.hpp
   Geom2d_BezierCurve.cxx
-  Geom2d_BezierCurve.hxx
+  Geom2d_BezierCurve.hpp
   Geom2d_BoundedCurve.cxx
-  Geom2d_BoundedCurve.hxx
+  Geom2d_BoundedCurve.hpp
   Geom2d_BSplineCurve.cxx
-  Geom2d_BSplineCurve.hxx
+  Geom2d_BSplineCurve.hpp
   Geom2d_BSplineCurve_1.cxx
   Geom2d_CartesianPoint.cxx
-  Geom2d_CartesianPoint.hxx
+  Geom2d_CartesianPoint.hpp
   Geom2d_Circle.cxx
-  Geom2d_Circle.hxx
+  Geom2d_Circle.hpp
   Geom2d_Conic.cxx
-  Geom2d_Conic.hxx
+  Geom2d_Conic.hpp
   Geom2d_Curve.cxx
-  Geom2d_Curve.hxx
+  Geom2d_Curve.hpp
   Geom2d_Direction.cxx
-  Geom2d_Direction.hxx
+  Geom2d_Direction.hpp
   Geom2d_Ellipse.cxx
-  Geom2d_Ellipse.hxx
+  Geom2d_Ellipse.hpp
   Geom2d_Geometry.cxx
-  Geom2d_Geometry.hxx
+  Geom2d_Geometry.hpp
   Geom2d_Hyperbola.cxx
-  Geom2d_Hyperbola.hxx
+  Geom2d_Hyperbola.hpp
   Geom2d_Line.cxx
-  Geom2d_Line.hxx
+  Geom2d_Line.hpp
   Geom2d_OffsetCurve.cxx
-  Geom2d_OffsetCurve.hxx
-  Geom2d_OffsetCurveUtils.pxx
+  Geom2d_OffsetCurve.hpp
+  Geom2d_OffsetCurveUtils.hpp
   Geom2d_Parabola.cxx
-  Geom2d_Parabola.hxx
+  Geom2d_Parabola.hpp
   Geom2d_Point.cxx
-  Geom2d_Point.hxx
+  Geom2d_Point.hpp
   Geom2d_Transformation.cxx
-  Geom2d_Transformation.hxx
+  Geom2d_Transformation.hpp
   Geom2d_TrimmedCurve.cxx
-  Geom2d_TrimmedCurve.hxx
-  Geom2d_UndefinedDerivative.hxx
-  Geom2d_UndefinedValue.hxx
+  Geom2d_TrimmedCurve.hpp
+  Geom2d_UndefinedDerivative.hpp
+  Geom2d_UndefinedValue.hpp
   Geom2d_Vector.cxx
-  Geom2d_Vector.hxx
+  Geom2d_Vector.hpp
   Geom2d_VectorWithMagnitude.cxx
-  Geom2d_VectorWithMagnitude.hxx
+  Geom2d_VectorWithMagnitude.hpp
 )

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Camera.hxx>
+#include <Graphic3d_Camera.hpp>
 
-#include <gp_Pln.hxx>
-#include <gp_QuaternionNLerp.hxx>
-#include <gp_QuaternionSLerp.hxx>
-#include <NCollection_Vec4.hxx>
-#include <Standard_TypeDef.hxx>
-#include <Graphic3d_WorldViewProjState.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_ShortReal.hxx>
-#include <Standard_Assert.hxx>
+#include <gp_Pln.hpp>
+#include <gp_QuaternionNLerp.hpp>
+#include <gp_QuaternionSLerp.hpp>
+#include <NCollection_Vec4.hpp>
+#include <Standard_TypeDef.hpp>
+#include <Graphic3d_WorldViewProjState.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_ShortReal.hpp>
+#include <Standard_Assert.hpp>
 
 #include <atomic>
 

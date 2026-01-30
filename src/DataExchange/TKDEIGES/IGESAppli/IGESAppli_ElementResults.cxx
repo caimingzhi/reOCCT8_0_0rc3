@@ -17,14 +17,14 @@
 //--------------------------------------------------------------------
 // UNFINISHED & UNSTARTED
 
-#include <IGESAppli_ElementResults.hxx>
-#include <IGESAppli_FiniteElement.hxx>
-#include <IGESBasic_HArray1OfHArray1OfInteger.hxx>
-#include <IGESBasic_HArray1OfHArray1OfReal.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_ElementResults.hpp>
+#include <IGESAppli_FiniteElement.hpp>
+#include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
+#include <IGESBasic_HArray1OfHArray1OfReal.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_ElementResults, IGESData_IGESEntity)
 

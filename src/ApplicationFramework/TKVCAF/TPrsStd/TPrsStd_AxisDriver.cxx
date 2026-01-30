@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Axis.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <Geom_Line.hxx>
-#include <gp_Lin.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TPrsStd_AxisDriver.hxx>
+#include <AIS_Axis.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <Geom_Line.hpp>
+#include <gp_Lin.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TPrsStd_AxisDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_AxisDriver, TPrsStd_Driver)
 

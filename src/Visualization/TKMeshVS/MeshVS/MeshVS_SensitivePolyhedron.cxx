@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_SensitivePolyhedron.hxx>
+#include <MeshVS_SensitivePolyhedron.hpp>
 
-#include <gp_Lin.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MeshVS_Tool.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <gp_Pnt.hxx>
+#include <gp_Lin.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MeshVS_Tool.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <gp_Pnt.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitivePolyhedron, Select3D_SensitiveEntity)
 

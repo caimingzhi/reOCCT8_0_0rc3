@@ -18,10 +18,10 @@
 // Version	Date		Purpose
 //		0.0	Nov  4 1997	Creation
 
-#include <DDF_Transaction.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Delta.hxx>
+#include <DDF_Transaction.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Delta.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDF_Transaction, Standard_Transient)
 

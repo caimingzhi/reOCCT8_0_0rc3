@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Ellipse.hxx>
-#include <Geom_Ellipse.hxx>
-#include <GeomToStep_MakeAxis2Placement2d.hxx>
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <GeomToStep_MakeEllipse.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Elips2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement2d.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_Ellipse.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom_Ellipse.hpp>
+#include <GeomToStep_MakeAxis2Placement2d.hpp>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <GeomToStep_MakeEllipse.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Elips2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement2d.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_Ellipse.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d'une ellipse de prostep a partir d'une ellipse 3d de gp
@@ -34,7 +34,7 @@
 GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const gp_Elips&         E,
                                                const StepData_Factors& theLocalFactors)
 {
-#include "GeomToStep_MakeEllipse_gen.pxx"
+#include "GeomToStep_MakeEllipse_gen.hpp"
 }
 
 //=============================================================================
@@ -47,7 +47,7 @@ GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const occ::handle<Geom_Ellipse>& 
 {
   gp_Elips E;
   E = Cer->Elips();
-#include "GeomToStep_MakeEllipse_gen.pxx"
+#include "GeomToStep_MakeEllipse_gen.hpp"
 }
 
 //=============================================================================

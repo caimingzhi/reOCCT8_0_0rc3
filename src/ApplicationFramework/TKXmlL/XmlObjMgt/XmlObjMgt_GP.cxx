@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <XmlObjMgt_GP.hxx>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <XmlObjMgt_GP.hpp>
 
 #include <cerrno>
 static const char* Translate(const char* theStr, gp_Mat& M);

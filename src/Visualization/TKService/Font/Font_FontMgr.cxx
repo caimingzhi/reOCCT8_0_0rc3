@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Font_FontMgr.hxx>
+#include <Font_FontMgr.hpp>
 
-#include <Font_NameOfFont.hxx>
-#include <Font_FTLibrary.hxx>
-#include <Font_SystemFont.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <NCollection_Buffer.hxx>
-#include <NCollection_Map.hxx>
-#include <OSD_Environment.hxx>
-#include <Standard_Macro.hxx>
+#include <Font_NameOfFont.hpp>
+#include <Font_FTLibrary.hpp>
+#include <Font_SystemFont.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <NCollection_Buffer.hpp>
+#include <NCollection_Map.hpp>
+#include <OSD_Environment.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #ifdef HAVE_FREETYPE
-  #include "Font_DejavuSans_Latin_woff.pxx"
+  #include "Font_DejavuSans_Latin_woff.hpp"
 
   #include <ft2build.h>
   #include FT_FREETYPE_H
@@ -51,12 +51,12 @@ static const char* Font_FontMgr_Extensions[] = {"ttf", "otf", "ttc", NULL};
 
 #else
 
-  #include <OSD_DirectoryIterator.hxx>
-  #include <OSD_FileIterator.hxx>
-  #include <OSD_Path.hxx>
-  #include <OSD_File.hxx>
-  #include <OSD_OpenMode.hxx>
-  #include <OSD_Protection.hxx>
+  #include <OSD_DirectoryIterator.hpp>
+  #include <OSD_FileIterator.hpp>
+  #include <OSD_Path.hpp>
+  #include <OSD_File.hpp>
+  #include <OSD_OpenMode.hpp>
+  #include <OSD_Protection.hpp>
 
 namespace
 {

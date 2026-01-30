@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRepLib.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=======================================================================
 // function: findNearestValidPoint

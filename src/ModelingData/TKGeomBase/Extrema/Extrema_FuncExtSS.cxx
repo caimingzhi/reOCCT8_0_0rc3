@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_FuncExtSS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_TypeMismatch.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_FuncExtSS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_TypeMismatch.hpp>
 
 /*----------------------------------------------------------------------------
  Si on note Du1s et Dv1s, les derivees en u1 et v1, les 2 fonctions a annuler sont:

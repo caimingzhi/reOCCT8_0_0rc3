@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_BoundSortBox.hxx>
+#include <Bnd_BoundSortBox.hpp>
 
-#include <gp_Pln.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_Vector.hxx>
-#include <Standard_MultiplyDefined.hxx>
-#include <Standard_NullValue.hxx>
+#include <gp_Pln.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_Vector.hpp>
+#include <Standard_MultiplyDefined.hpp>
+#include <Standard_NullValue.hpp>
 
 //==================================================================================================
 //--  lbr le 27 fev 97

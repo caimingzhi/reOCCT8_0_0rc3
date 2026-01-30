@@ -3,25 +3,25 @@ set(OCCT_RWObj_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWObj_FILES
   RWObj.cxx
-  RWObj.hxx
+  RWObj.hpp
   RWObj_CafReader.cxx
-  RWObj_CafReader.hxx
+  RWObj_CafReader.hpp
   RWObj_CafWriter.cxx
-  RWObj_CafWriter.hxx
+  RWObj_CafWriter.hpp
 
-  RWObj_Material.hxx
+  RWObj_Material.hpp
   RWObj_MtlReader.cxx
-  RWObj_MtlReader.hxx
+  RWObj_MtlReader.hpp
   RWObj_ObjMaterialMap.cxx
-  RWObj_ObjMaterialMap.hxx
+  RWObj_ObjMaterialMap.hpp
   RWObj_ObjWriterContext.cxx
-  RWObj_ObjWriterContext.hxx
+  RWObj_ObjWriterContext.hpp
 
   RWObj_Reader.cxx
-  RWObj_Reader.hxx
-  RWObj_SubMesh.hxx
-  RWObj_SubMeshReason.hxx
-  RWObj_Tools.hxx
+  RWObj_Reader.hpp
+  RWObj_SubMesh.hpp
+  RWObj_SubMeshReason.hpp
+  RWObj_Tools.hpp
   RWObj_TriangulationReader.cxx
-  RWObj_TriangulationReader.hxx
+  RWObj_TriangulationReader.hpp
 )

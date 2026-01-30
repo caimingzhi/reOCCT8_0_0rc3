@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_SelectableObjectSet.hxx>
-#include <gp_Trsf.hxx>
-#include <NCollection_Mat4.hxx>
-#include <NCollection_Vec3.hxx>
-#include <NCollection_Vec4.hxx>
+#include <SelectMgr_SelectableObjectSet.hpp>
+#include <gp_Trsf.hpp>
+#include <NCollection_Mat4.hpp>
+#include <NCollection_Vec3.hpp>
+#include <NCollection_Vec4.hpp>
 
-#include <BVH_BinnedBuilder.hxx>
-#include <BVH_LinearBuilder.hxx>
+#include <BVH_BinnedBuilder.hpp>
+#include <BVH_LinearBuilder.hpp>
 
 namespace
 {

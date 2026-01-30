@@ -17,17 +17,17 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Media_Scaler.hxx>
+#include <Media_Scaler.hpp>
 
 #ifdef HAVE_FFMPEG
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 extern "C"
 {
   #include <libavcodec/avcodec.h>
   #include <libavutil/imgutils.h>
   #include <libswscale/swscale.h>
 };
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Scaler, Standard_Transient)

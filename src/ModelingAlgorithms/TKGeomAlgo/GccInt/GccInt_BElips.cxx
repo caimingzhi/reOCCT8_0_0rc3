@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccInt_BElips.hxx>
-#include <gp_Elips2d.hxx>
-#include <Standard_Type.hxx>
+#include <GccInt_BElips.hpp>
+#include <gp_Elips2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GccInt_BElips, GccInt_Bisec)
 

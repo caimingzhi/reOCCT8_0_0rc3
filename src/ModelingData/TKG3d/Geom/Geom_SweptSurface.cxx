@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Curve.hxx>
-#include <Geom_SweptSurface.hxx>
-#include <gp_Dir.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Curve.hpp>
+#include <Geom_SweptSurface.hpp>
+#include <gp_Dir.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_SweptSurface, Geom_Surface)
 

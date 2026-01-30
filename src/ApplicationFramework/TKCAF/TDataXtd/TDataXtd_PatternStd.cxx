@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Ax1.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_PatternStd.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_PatternStd.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_PatternStd, TDataXtd_Pattern)
 

@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <XCAFDoc_Datum.hxx>
-#include <XmlMXCAFDoc_DatumDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <XCAFDoc_Datum.hpp>
+#include <XmlMXCAFDoc_DatumDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_DatumDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(DescrIndexString, "descr")

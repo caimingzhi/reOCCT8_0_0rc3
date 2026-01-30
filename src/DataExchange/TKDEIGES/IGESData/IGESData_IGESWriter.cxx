@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_DefType.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_ReadWriteModule.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <IGESData_WriterLib.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_FloatWriter.hxx>
-#include <Interface_InterfaceMismatch.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ParamList.hxx>
-#include <Interface_ParamSet.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_PCharacter.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_DefType.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_ReadWriteModule.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <IGESData_WriterLib.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_FloatWriter.hpp>
+#include <Interface_InterfaceMismatch.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ParamList.hpp>
+#include <Interface_ParamSet.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_PCharacter.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 #define MaxcarsG 72

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Texture2D.hxx>
+#include <Graphic3d_Texture2D.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Graphic3d_TextureParams.hpp>
+#include <Standard_OutOfRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture2D, Graphic3d_TextureMap)
 

@@ -13,35 +13,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPolygons.hxx>
-#include <Graphic3d_ArrayOfPrimitives.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_TwoNodes.hxx>
-#include <NCollection_Map.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshPrsBuilder.hxx>
-#include <MeshVS_SymmetricPairHasher.hxx>
-#include <MeshVS_Tool.hxx>
-#include <NCollection_Vector.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Quantity_NameOfColor.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TColStd_PackedMapOfInteger.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPolygons.hpp>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_TwoNodes.hpp>
+#include <NCollection_Map.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshPrsBuilder.hpp>
+#include <MeshVS_SymmetricPairHasher.hpp>
+#include <MeshVS_Tool.hpp>
+#include <NCollection_Vector.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Quantity_NameOfColor.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TColStd_PackedMapOfInteger.hpp>
+#include <NCollection_Sequence.hpp>
 
 #ifdef _WIN32
   #include <malloc.h> // for alloca()

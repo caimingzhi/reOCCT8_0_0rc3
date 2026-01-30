@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepBasic_PersonAndOrganizationRole.hxx>
+#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepBasic_PersonAndOrganizationRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignPersonAndOrganizationAssignment,
                            StepBasic_PersonAndOrganizationAssignment)

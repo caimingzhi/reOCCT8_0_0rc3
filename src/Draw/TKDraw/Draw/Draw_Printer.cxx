@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Printer.hxx>
+#include <Draw_Printer.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Printer, Message_Printer)
 

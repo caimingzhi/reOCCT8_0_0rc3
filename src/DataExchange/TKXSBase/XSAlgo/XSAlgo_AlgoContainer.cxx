@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTools_ReShape.hxx>
-#include <Interface_Static.hxx>
-#include <Resource_Manager.hxx>
-#include <ShapeAlgo.hxx>
-#include <ShapeAlgo_AlgoContainer.hxx>
-#include <ShapeAlgo_ToolContainer.hxx>
-#include <ShapeExtend_MsgRegistrator.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_TransientListBinder.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
-#include <XSAlgo_AlgoContainer.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <BRepTools_ReShape.hpp>
+#include <Interface_Static.hpp>
+#include <Resource_Manager.hpp>
+#include <ShapeAlgo.hpp>
+#include <ShapeAlgo_AlgoContainer.hpp>
+#include <ShapeAlgo_ToolContainer.hpp>
+#include <ShapeExtend_MsgRegistrator.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_TransientListBinder.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
+#include <XSAlgo_AlgoContainer.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSAlgo_AlgoContainer, Standard_Transient)
 

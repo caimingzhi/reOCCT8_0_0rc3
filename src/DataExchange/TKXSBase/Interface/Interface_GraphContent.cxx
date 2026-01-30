@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
 
 Interface_GraphContent::Interface_GraphContent() = default;
 

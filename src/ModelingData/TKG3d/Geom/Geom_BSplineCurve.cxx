@@ -29,22 +29,22 @@
 
 #define No_Standard_OutOfRange
 
-#include <BSplCLib.hxx>
-#include <ElCLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Real.hxx>
-#include <Standard_Type.hxx>
+#include <BSplCLib.hpp>
+#include <ElCLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Real.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_BSplineCurve, Geom_BoundedCurve)
 

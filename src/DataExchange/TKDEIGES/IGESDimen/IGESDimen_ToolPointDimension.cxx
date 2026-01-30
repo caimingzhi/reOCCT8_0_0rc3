@@ -16,20 +16,20 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <IGESDimen_PointDimension.hxx>
-#include <IGESDimen_ToolPointDimension.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <IGESDimen_PointDimension.hpp>
+#include <IGESDimen_ToolPointDimension.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
 
 IGESDimen_ToolPointDimension::IGESDimen_ToolPointDimension() = default;
 

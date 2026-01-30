@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_CurveBoundedSurface.hxx>
-#include <StepShape_SweptAreaSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_CurveBoundedSurface.hpp>
+#include <StepShape_SweptAreaSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_SweptAreaSolid, StepShape_SolidModel)
 

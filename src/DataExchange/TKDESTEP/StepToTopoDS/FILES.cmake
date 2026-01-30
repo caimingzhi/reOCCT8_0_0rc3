@@ -3,54 +3,54 @@ set(OCCT_StepToTopoDS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepToTopoDS_FILES
   StepToTopoDS.cxx
-  StepToTopoDS.hxx
+  StepToTopoDS.hpp
   StepToTopoDS_Builder.cxx
-  StepToTopoDS_Builder.hxx
-  StepToTopoDS_BuilderError.hxx
+  StepToTopoDS_Builder.hpp
+  StepToTopoDS_BuilderError.hpp
 
   StepToTopoDS_GeometricTool.cxx
-  StepToTopoDS_GeometricTool.hxx
-  StepToTopoDS_GeometricToolError.hxx
+  StepToTopoDS_GeometricTool.hpp
+  StepToTopoDS_GeometricToolError.hpp
   StepToTopoDS_MakeTransformed.cxx
-  StepToTopoDS_MakeTransformed.hxx
+  StepToTopoDS_MakeTransformed.hpp
   StepToTopoDS_NMTool.cxx
-  StepToTopoDS_NMTool.hxx
+  StepToTopoDS_NMTool.hpp
 
   StepToTopoDS_PointPair.cxx
-  StepToTopoDS_PointPair.hxx
+  StepToTopoDS_PointPair.hpp
 
   StepToTopoDS_Root.cxx
-  StepToTopoDS_Root.hxx
-  StepToTopoDS_Root.lxx
+  StepToTopoDS_Root.hpp
+  StepToTopoDS_Root_1.hpp
   StepToTopoDS_Tool.cxx
-  StepToTopoDS_Tool.hxx
+  StepToTopoDS_Tool.hpp
   StepToTopoDS_TranslateCompositeCurve.cxx
-  StepToTopoDS_TranslateCompositeCurve.hxx
-  StepToTopoDS_TranslateCompositeCurve.lxx
+  StepToTopoDS_TranslateCompositeCurve.hpp
+  StepToTopoDS_TranslateCompositeCurve_1.hpp
   StepToTopoDS_TranslateCurveBoundedSurface.cxx
-  StepToTopoDS_TranslateCurveBoundedSurface.hxx
+  StepToTopoDS_TranslateCurveBoundedSurface.hpp
   StepToTopoDS_TranslateEdge.cxx
-  StepToTopoDS_TranslateEdge.hxx
-  StepToTopoDS_TranslateEdgeError.hxx
+  StepToTopoDS_TranslateEdge.hpp
+  StepToTopoDS_TranslateEdgeError.hpp
   StepToTopoDS_TranslateEdgeLoop.cxx
-  StepToTopoDS_TranslateEdgeLoop.hxx
-  StepToTopoDS_TranslateEdgeLoopError.hxx
+  StepToTopoDS_TranslateEdgeLoop.hpp
+  StepToTopoDS_TranslateEdgeLoopError.hpp
   StepToTopoDS_TranslateFace.cxx
-  StepToTopoDS_TranslateFace.hxx
-  StepToTopoDS_TranslateFaceError.hxx
+  StepToTopoDS_TranslateFace.hpp
+  StepToTopoDS_TranslateFaceError.hpp
   StepToTopoDS_TranslatePolyLoop.cxx
-  StepToTopoDS_TranslatePolyLoop.hxx
-  StepToTopoDS_TranslatePolyLoopError.hxx
+  StepToTopoDS_TranslatePolyLoop.hpp
+  StepToTopoDS_TranslatePolyLoopError.hpp
   StepToTopoDS_TranslateShell.cxx
-  StepToTopoDS_TranslateShell.hxx
-  StepToTopoDS_TranslateShellError.hxx
+  StepToTopoDS_TranslateShell.hpp
+  StepToTopoDS_TranslateShellError.hpp
   StepToTopoDS_TranslateSolid.cxx
-  StepToTopoDS_TranslateSolid.hxx
-  StepToTopoDS_TranslateSolidError.hxx
+  StepToTopoDS_TranslateSolid.hpp
+  StepToTopoDS_TranslateSolidError.hpp
   StepToTopoDS_TranslateVertex.cxx
-  StepToTopoDS_TranslateVertex.hxx
-  StepToTopoDS_TranslateVertexError.hxx
+  StepToTopoDS_TranslateVertex.hpp
+  StepToTopoDS_TranslateVertexError.hpp
   StepToTopoDS_TranslateVertexLoop.cxx
-  StepToTopoDS_TranslateVertexLoop.hxx
-  StepToTopoDS_TranslateVertexLoopError.hxx
+  StepToTopoDS_TranslateVertexLoop.hpp
+  StepToTopoDS_TranslateVertexLoopError.hpp
 )

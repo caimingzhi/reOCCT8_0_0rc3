@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_EditForm.hxx>
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <IGESSelect_EditDirPart.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Interface_TypedValue.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFSelect_EditForm.hpp>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <IGESSelect_EditDirPart.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Interface_TypedValue.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_EditDirPart, IFSelect_Editor)
 

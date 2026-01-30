@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <math_Gauss.hxx>
-#include <math_NotSquare.hxx>
-#include <math_SingularMatrix.hxx>
-#include <Standard_DimensionError.hxx>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <math_Gauss.hpp>
+#include <math_NotSquare.hpp>
+#include <math_SingularMatrix.hpp>
+#include <Standard_DimensionError.hpp>
 
 //==================================================================================================
 

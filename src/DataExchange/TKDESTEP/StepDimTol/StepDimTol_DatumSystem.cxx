@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_DatumSystem.hxx>
+#include <StepDimTol_DatumSystem.hpp>
 
-#include <StepDimTol_DatumReferenceCompartment.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepDimTol_DatumReferenceCompartment.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumSystem, StepRepr_ShapeAspect)
 

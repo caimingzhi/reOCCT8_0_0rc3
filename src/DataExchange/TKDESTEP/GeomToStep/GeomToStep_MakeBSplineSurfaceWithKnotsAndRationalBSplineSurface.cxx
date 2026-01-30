@@ -16,22 +16,22 @@
 
 //              .cxx
 
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAbs_BSplKnotDistribution.hxx>
-#include <GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <StepGeom_KnotType.hxx>
-#include <gp_Pnt.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAbs_BSplKnotDistribution.hpp>
+#include <GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <StepGeom_KnotType.hpp>
+#include <gp_Pnt.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=============================================================================
 // Creation d' une bspline_Surface_with_knots_and_rational_bspline_Surface de

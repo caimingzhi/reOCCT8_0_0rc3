@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DESTEP_ConfigurationNode.hxx>
+#include <DESTEP_ConfigurationNode.hpp>
 
-#include <DESTEP_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <NCollection_Buffer.hxx>
+#include <DESTEP_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <NCollection_Buffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DESTEP_ConfigurationNode, DE_ShapeFixConfigurationNode)
 

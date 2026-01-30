@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomliteTest.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Display.hxx>
+#include <GeomliteTest.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Display.hpp>
 
-#include <GeomLib.hxx>
+#include <GeomLib.hpp>
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_BoundedCurve.hxx>
-#include <Geom_BoundedSurface.hxx>
-#include <Message.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_BoundedCurve.hpp>
+#include <Geom_BoundedSurface.hpp>
+#include <Message.hpp>
 
 #ifdef _MSC_VER
   #include <stdio.h>

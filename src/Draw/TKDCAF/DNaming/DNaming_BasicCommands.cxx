@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DNaming.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Tool.hxx>
-#include <DDF.hxx>
-#include <TNaming.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <NCollection_Map.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TopoDS_Shape.hxx>
-#include <DBRep.hxx>
+#include <DNaming.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Tool.hpp>
+#include <DDF.hpp>
+#include <TNaming.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <NCollection_Map.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TopoDS_Shape.hpp>
+#include <DBRep.hpp>
 
-#include <TNaming_Builder.hxx>
-#include <TDataStd_Name.hxx>
+#include <TNaming_Builder.hpp>
+#include <TDataStd_Name.hpp>
 
 #include <cstdio>
 

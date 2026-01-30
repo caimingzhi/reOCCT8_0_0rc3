@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_AttributeStream.hxx>
-#include <Standard_Dump.hxx>
+#include <Message_AttributeStream.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_AttributeStream, Message_Attribute)
 

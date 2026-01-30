@@ -17,14 +17,14 @@
 //--------------------------------------------------------------------
 // pdn 20.04.99 CTS22655 avoid of exceptions on empty loops
 
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESBasic_HArray1OfHArray1OfInteger.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESSolid_EdgeList.hxx>
-#include <IGESSolid_Loop.hxx>
-#include <IGESSolid_VertexList.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESSolid_EdgeList.hpp>
+#include <IGESSolid_Loop.hpp>
+#include <IGESSolid_VertexList.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_Loop, IGESData_IGESEntity)
 

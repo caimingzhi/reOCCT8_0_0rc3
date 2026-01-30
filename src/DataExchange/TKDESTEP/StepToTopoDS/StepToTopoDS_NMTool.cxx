@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepToTopoDS_NMTool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp_Explorer.hxx>
+#include <StepToTopoDS_NMTool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp_Explorer.hpp>
 
 //=================================================================================================
 

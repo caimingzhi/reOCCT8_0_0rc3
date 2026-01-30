@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Quantity_Color.hxx>
+#include <Quantity_Color.hpp>
 
-#include <Quantity_ColorRGBA.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Dump.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Quantity_ColorRGBA.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Dump.hpp>
+#include <TCollection_AsciiString.hpp>
 
 namespace
 {
@@ -139,7 +139,7 @@ struct Quantity_StandardColor
 
 //! Name list of standard materials (defined within enumeration).
 static constexpr Quantity_StandardColor THE_COLORS[] = {
-#include "Quantity_ColorTable.pxx"
+#include "Quantity_ColorTable.hpp"
 };
 
 //=================================================================================================

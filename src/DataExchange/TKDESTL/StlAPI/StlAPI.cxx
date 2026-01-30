@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StlAPI.hxx>
+#include <StlAPI.hpp>
 
-#include <StlAPI_Reader.hxx>
-#include <StlAPI_Writer.hxx>
-#include <TopoDS_Shape.hxx>
+#include <StlAPI_Reader.hpp>
+#include <StlAPI_Writer.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

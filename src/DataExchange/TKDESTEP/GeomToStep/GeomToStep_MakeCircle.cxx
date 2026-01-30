@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Circle.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomToStep_MakeAxis2Placement2d.hxx>
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <GeomToStep_MakeCircle.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement2d.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_Circle.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_Circle.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomToStep_MakeAxis2Placement2d.hpp>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <GeomToStep_MakeCircle.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement2d.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_Circle.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' un cercle de prostep a partir d' un cercle 3d de gp
@@ -34,7 +34,7 @@
 GeomToStep_MakeCircle::GeomToStep_MakeCircle(const gp_Circ&          C,
                                              const StepData_Factors& theLocalFactors)
 {
-#include "GeomToStep_MakeCircle_gen.pxx"
+#include "GeomToStep_MakeCircle_gen.hpp"
 }
 
 //=============================================================================
@@ -47,7 +47,7 @@ GeomToStep_MakeCircle::GeomToStep_MakeCircle(const occ::handle<Geom_Circle>& Cer
 {
   gp_Circ C;
   C = Cer->Circ();
-#include "GeomToStep_MakeCircle_gen.pxx"
+#include "GeomToStep_MakeCircle_gen.hpp"
 }
 
 //=============================================================================

@@ -18,8 +18,8 @@
 // Version	Date		Purpose
 //		0.0	Mar  7 1997	Creation
 
-#include <Standard_Transient.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_Transient.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_RelocationTable, Standard_Transient)
 

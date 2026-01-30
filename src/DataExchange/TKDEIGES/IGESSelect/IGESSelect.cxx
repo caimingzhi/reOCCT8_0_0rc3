@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESSelect.hxx>
+#include <IGESSelect.hpp>
 
-#include <IFSelect_Functions.hxx>
-#include <IFSelect_SessionPilot.hxx>
-#include <IFSelect_ShareOut.hxx>
-#include <IFSelect_WorkSession.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESSelect_Activator.hxx>
-#include <IGESSelect_WorkLibrary.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
+#include <IFSelect_Functions.hpp>
+#include <IFSelect_SessionPilot.hpp>
+#include <IFSelect_ShareOut.hpp>
+#include <IFSelect_WorkSession.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESSelect_Activator.hpp>
+#include <IGESSelect_WorkLibrary.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
 
 void IGESSelect::Run()
 {

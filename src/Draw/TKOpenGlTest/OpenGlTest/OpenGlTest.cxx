@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGlTest.hxx>
+#include <OpenGlTest.hpp>
 
-#include <Draw_PluginMacro.hxx>
-#include <OpenGl_GraphicDriverFactory.hxx>
+#include <Draw_PluginMacro.hpp>
+#include <OpenGl_GraphicDriverFactory.hpp>
 
 //=================================================================================================
 

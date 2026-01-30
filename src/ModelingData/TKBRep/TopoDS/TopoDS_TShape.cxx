@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_TShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TopoDS_TShape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_TShape, Standard_Transient)
 

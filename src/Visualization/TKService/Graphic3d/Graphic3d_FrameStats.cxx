@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_FrameStats.hxx>
+#include <Graphic3d_FrameStats.hpp>
 
-#include <Graphic3d_CView.hxx>
+#include <Graphic3d_CView.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_FrameStats, Standard_Transient)
 

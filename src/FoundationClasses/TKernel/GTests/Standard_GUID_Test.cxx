@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_GUID.hxx>
+#include <Standard_GUID.hpp>
 
-#include <Standard_Failure.hxx>
+#include <Standard_Failure.hpp>
 
 #include <gtest/gtest.h>
 

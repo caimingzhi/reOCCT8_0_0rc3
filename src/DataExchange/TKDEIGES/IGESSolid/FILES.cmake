@@ -3,113 +3,113 @@ set(OCCT_IGESSolid_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESSolid_FILES
   IGESSolid.cxx
-  IGESSolid.hxx
+  IGESSolid.hpp
 
   IGESSolid_Block.cxx
-  IGESSolid_Block.hxx
+  IGESSolid_Block.hpp
   IGESSolid_BooleanTree.cxx
-  IGESSolid_BooleanTree.hxx
+  IGESSolid_BooleanTree.hpp
   IGESSolid_ConeFrustum.cxx
-  IGESSolid_ConeFrustum.hxx
+  IGESSolid_ConeFrustum.hpp
   IGESSolid_ConicalSurface.cxx
-  IGESSolid_ConicalSurface.hxx
+  IGESSolid_ConicalSurface.hpp
   IGESSolid_Cylinder.cxx
-  IGESSolid_Cylinder.hxx
+  IGESSolid_Cylinder.hpp
   IGESSolid_CylindricalSurface.cxx
-  IGESSolid_CylindricalSurface.hxx
+  IGESSolid_CylindricalSurface.hpp
   IGESSolid_EdgeList.cxx
-  IGESSolid_EdgeList.hxx
+  IGESSolid_EdgeList.hpp
   IGESSolid_Ellipsoid.cxx
-  IGESSolid_Ellipsoid.hxx
+  IGESSolid_Ellipsoid.hpp
   IGESSolid_Face.cxx
-  IGESSolid_Face.hxx
+  IGESSolid_Face.hpp
   IGESSolid_GeneralModule.cxx
-  IGESSolid_GeneralModule.hxx
+  IGESSolid_GeneralModule.hpp
 
   IGESSolid_Loop.cxx
-  IGESSolid_Loop.hxx
+  IGESSolid_Loop.hpp
   IGESSolid_ManifoldSolid.cxx
-  IGESSolid_ManifoldSolid.hxx
+  IGESSolid_ManifoldSolid.hpp
   IGESSolid_PlaneSurface.cxx
-  IGESSolid_PlaneSurface.hxx
+  IGESSolid_PlaneSurface.hpp
   IGESSolid_Protocol.cxx
-  IGESSolid_Protocol.hxx
+  IGESSolid_Protocol.hpp
   IGESSolid_ReadWriteModule.cxx
-  IGESSolid_ReadWriteModule.hxx
+  IGESSolid_ReadWriteModule.hpp
   IGESSolid_RightAngularWedge.cxx
-  IGESSolid_RightAngularWedge.hxx
+  IGESSolid_RightAngularWedge.hpp
   IGESSolid_SelectedComponent.cxx
-  IGESSolid_SelectedComponent.hxx
+  IGESSolid_SelectedComponent.hpp
   IGESSolid_Shell.cxx
-  IGESSolid_Shell.hxx
+  IGESSolid_Shell.hpp
   IGESSolid_SolidAssembly.cxx
-  IGESSolid_SolidAssembly.hxx
+  IGESSolid_SolidAssembly.hpp
   IGESSolid_SolidInstance.cxx
-  IGESSolid_SolidInstance.hxx
+  IGESSolid_SolidInstance.hpp
   IGESSolid_SolidOfLinearExtrusion.cxx
-  IGESSolid_SolidOfLinearExtrusion.hxx
+  IGESSolid_SolidOfLinearExtrusion.hpp
   IGESSolid_SolidOfRevolution.cxx
-  IGESSolid_SolidOfRevolution.hxx
+  IGESSolid_SolidOfRevolution.hpp
   IGESSolid_SpecificModule.cxx
-  IGESSolid_SpecificModule.hxx
+  IGESSolid_SpecificModule.hpp
   IGESSolid_Sphere.cxx
-  IGESSolid_Sphere.hxx
+  IGESSolid_Sphere.hpp
   IGESSolid_SphericalSurface.cxx
-  IGESSolid_SphericalSurface.hxx
+  IGESSolid_SphericalSurface.hpp
   IGESSolid_ToolBlock.cxx
-  IGESSolid_ToolBlock.hxx
+  IGESSolid_ToolBlock.hpp
   IGESSolid_ToolBooleanTree.cxx
-  IGESSolid_ToolBooleanTree.hxx
+  IGESSolid_ToolBooleanTree.hpp
   IGESSolid_ToolConeFrustum.cxx
-  IGESSolid_ToolConeFrustum.hxx
+  IGESSolid_ToolConeFrustum.hpp
   IGESSolid_ToolConicalSurface.cxx
-  IGESSolid_ToolConicalSurface.hxx
+  IGESSolid_ToolConicalSurface.hpp
   IGESSolid_ToolCylinder.cxx
-  IGESSolid_ToolCylinder.hxx
+  IGESSolid_ToolCylinder.hpp
   IGESSolid_ToolCylindricalSurface.cxx
-  IGESSolid_ToolCylindricalSurface.hxx
+  IGESSolid_ToolCylindricalSurface.hpp
   IGESSolid_ToolEdgeList.cxx
-  IGESSolid_ToolEdgeList.hxx
+  IGESSolid_ToolEdgeList.hpp
   IGESSolid_ToolEllipsoid.cxx
-  IGESSolid_ToolEllipsoid.hxx
+  IGESSolid_ToolEllipsoid.hpp
   IGESSolid_ToolFace.cxx
-  IGESSolid_ToolFace.hxx
+  IGESSolid_ToolFace.hpp
   IGESSolid_ToolLoop.cxx
-  IGESSolid_ToolLoop.hxx
+  IGESSolid_ToolLoop.hpp
   IGESSolid_ToolManifoldSolid.cxx
-  IGESSolid_ToolManifoldSolid.hxx
+  IGESSolid_ToolManifoldSolid.hpp
   IGESSolid_ToolPlaneSurface.cxx
-  IGESSolid_ToolPlaneSurface.hxx
+  IGESSolid_ToolPlaneSurface.hpp
   IGESSolid_ToolRightAngularWedge.cxx
-  IGESSolid_ToolRightAngularWedge.hxx
+  IGESSolid_ToolRightAngularWedge.hpp
   IGESSolid_ToolSelectedComponent.cxx
-  IGESSolid_ToolSelectedComponent.hxx
+  IGESSolid_ToolSelectedComponent.hpp
   IGESSolid_ToolShell.cxx
-  IGESSolid_ToolShell.hxx
+  IGESSolid_ToolShell.hpp
   IGESSolid_ToolSolidAssembly.cxx
-  IGESSolid_ToolSolidAssembly.hxx
+  IGESSolid_ToolSolidAssembly.hpp
   IGESSolid_ToolSolidInstance.cxx
-  IGESSolid_ToolSolidInstance.hxx
+  IGESSolid_ToolSolidInstance.hpp
   IGESSolid_ToolSolidOfLinearExtrusion.cxx
-  IGESSolid_ToolSolidOfLinearExtrusion.hxx
+  IGESSolid_ToolSolidOfLinearExtrusion.hpp
   IGESSolid_ToolSolidOfRevolution.cxx
-  IGESSolid_ToolSolidOfRevolution.hxx
+  IGESSolid_ToolSolidOfRevolution.hpp
   IGESSolid_ToolSphere.cxx
-  IGESSolid_ToolSphere.hxx
+  IGESSolid_ToolSphere.hpp
   IGESSolid_ToolSphericalSurface.cxx
-  IGESSolid_ToolSphericalSurface.hxx
+  IGESSolid_ToolSphericalSurface.hpp
   IGESSolid_ToolToroidalSurface.cxx
-  IGESSolid_ToolToroidalSurface.hxx
+  IGESSolid_ToolToroidalSurface.hpp
   IGESSolid_ToolTorus.cxx
-  IGESSolid_ToolTorus.hxx
+  IGESSolid_ToolTorus.hpp
   IGESSolid_ToolVertexList.cxx
-  IGESSolid_ToolVertexList.hxx
+  IGESSolid_ToolVertexList.hpp
   IGESSolid_TopoBuilder.cxx
-  IGESSolid_TopoBuilder.hxx
+  IGESSolid_TopoBuilder.hpp
   IGESSolid_ToroidalSurface.cxx
-  IGESSolid_ToroidalSurface.hxx
+  IGESSolid_ToroidalSurface.hpp
   IGESSolid_Torus.cxx
-  IGESSolid_Torus.hxx
+  IGESSolid_Torus.hpp
   IGESSolid_VertexList.cxx
-  IGESSolid_VertexList.hxx
+  IGESSolid_VertexList.hpp
 )

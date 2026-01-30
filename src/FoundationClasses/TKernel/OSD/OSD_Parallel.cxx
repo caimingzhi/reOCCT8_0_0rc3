@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Parallel.hxx>
+#include <OSD_Parallel.hpp>
 
 #ifdef _WIN32
   #include <windows.h>
@@ -31,7 +31,7 @@
   #endif
 #endif
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 namespace
 {

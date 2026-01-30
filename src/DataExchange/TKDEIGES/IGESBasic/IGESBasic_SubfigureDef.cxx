@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_SubfigureDef, IGESData_IGESEntity)
 

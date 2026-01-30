@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BlendFunc_RuledInv.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BlendFunc_RuledInv.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
 
 BlendFunc_RuledInv::BlendFunc_RuledInv(const occ::handle<Adaptor3d_Surface>& S1,
                                        const occ::handle<Adaptor3d_Surface>& S2,

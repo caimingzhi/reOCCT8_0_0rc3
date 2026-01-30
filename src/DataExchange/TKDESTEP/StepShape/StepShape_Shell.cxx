@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_OpenShell.hxx>
-#include <StepShape_Shell.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_OpenShell.hpp>
+#include <StepShape_Shell.hpp>
 
 StepShape_Shell::StepShape_Shell() = default;
 

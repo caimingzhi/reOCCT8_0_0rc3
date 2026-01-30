@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextModif.hxx>
-#include <IFSelect_Modifier.hxx>
-#include <IFSelect_Selection.hxx>
-#include <IFSelect_TransformStandard.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CopyControl.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Protocol.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <IFSelect_ContextModif.hpp>
+#include <IFSelect_Modifier.hpp>
+#include <IFSelect_Selection.hpp>
+#include <IFSelect_TransformStandard.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CopyControl.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Protocol.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_TransformStandard, IFSelect_Transformer)

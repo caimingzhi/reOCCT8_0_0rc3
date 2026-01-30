@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_NotesTool.hxx>
+#include <XCAFDoc_NotesTool.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDF_Tool.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_NoteBalloon.hxx>
-#include <XCAFDoc_NoteComment.hxx>
-#include <XCAFDoc_NoteBinData.hxx>
-#include <XCAFDoc_AssemblyItemRef.hxx>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDF_Tool.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_NoteBalloon.hpp>
+#include <XCAFDoc_NoteComment.hpp>
+#include <XCAFDoc_NoteBinData.hpp>
+#include <XCAFDoc_AssemblyItemRef.hpp>
 
 namespace
 {

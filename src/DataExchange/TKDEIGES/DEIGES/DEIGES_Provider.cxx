@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEIGES_Provider.hxx>
+#include <DEIGES_Provider.hpp>
 
-#include <DE_ValidationUtils.hxx>
-#include <DEIGES_ConfigurationNode.hxx>
-#include <IGESCAFControl_Reader.hxx>
-#include <IGESCAFControl_Writer.hxx>
-#include <IGESControl_Controller.hxx>
-#include <IGESData.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <Interface_Static.hxx>
-#include <Message.hxx>
-#include <UnitsMethods.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <DE_ValidationUtils.hpp>
+#include <DEIGES_ConfigurationNode.hpp>
+#include <IGESCAFControl_Reader.hpp>
+#include <IGESCAFControl_Writer.hpp>
+#include <IGESControl_Controller.hpp>
+#include <IGESData.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <Interface_Static.hpp>
+#include <Message.hpp>
+#include <UnitsMethods.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XSControl_WorkSession.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEIGES_Provider, DE_Provider)
 

@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_PointOnPlanarCurvePairValue.hxx>
+#include <StepKinematics_PointOnPlanarCurvePairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnPlanarCurvePairValue, StepKinematics_PairValue)
 

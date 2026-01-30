@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <DDataStd_DrawPresentation.hxx>
-#include <DDF.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_Label.hxx>
-#include <TDataStd_Directory.hxx>
+#include <DDataStd.hpp>
+#include <DDataStd_DrawPresentation.hpp>
+#include <DDF.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_Label.hpp>
+#include <TDataStd_Directory.hpp>
 
 // LES ATTRIBUTES
 
-#include <TDataStd_NoteBook.hxx>
-#include <TDataXtd_Shape.hxx>
+#include <TDataStd_NoteBook.hpp>
+#include <TDataXtd_Shape.hpp>
 
-#include <DBRep.hxx>
+#include <DBRep.hpp>
 
 //=======================================================================
 // function : NewDirectory (DF, entry )

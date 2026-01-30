@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <Draw.hxx>
-#include <Message.hxx>
-#include <Precision.hxx>
-#include <Quantity_Color.hxx>
-#include <Quantity_ColorRGBA.hxx>
-#include <OSD_File.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Shape.hxx>
-#include <ViewerTest.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_VisMaterial.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
-#include <XDEDRAW_Colors.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <Draw.hpp>
+#include <Message.hpp>
+#include <Precision.hpp>
+#include <Quantity_Color.hpp>
+#include <Quantity_ColorRGBA.hpp>
+#include <OSD_File.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Shape.hpp>
+#include <ViewerTest.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_VisMaterial.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
+#include <XDEDRAW_Colors.hpp>
 
 //! Parse XCAFDoc_ColorType enumeration argument.
 static bool parseXDocColorType(const TCollection_AsciiString& theArg, XCAFDoc_ColorType& theType)

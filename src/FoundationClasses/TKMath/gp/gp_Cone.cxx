@@ -15,13 +15,13 @@
 // LPA, JCV  07/92 passage sur C1.
 // JCV 07/92 Introduction de la method Dump
 
-#include <gp_Cone.hxx>
+#include <gp_Cone.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
 
 void gp_Cone::Coefficients(double& A1,
                            double& A2,

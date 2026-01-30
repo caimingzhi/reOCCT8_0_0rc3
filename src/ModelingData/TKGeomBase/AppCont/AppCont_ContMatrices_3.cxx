@@ -19,9 +19,9 @@
   #define No_Standard_RangeError
 #endif
 
-#include <AppCont_ContMatrices.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_DimensionError.hxx>
+#include <AppCont_ContMatrices.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_DimensionError.hpp>
 
 static const double IBT[] = {
 

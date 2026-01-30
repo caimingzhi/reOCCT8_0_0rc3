@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_ConcentricRelation.hxx>
+#include <PrsDim_ConcentricRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_ConcentricPresentation.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveCircle.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_ConcentricPresentation.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveCircle.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_ConcentricRelation, PrsDim_Relation)
 

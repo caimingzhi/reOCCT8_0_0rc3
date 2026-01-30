@@ -15,23 +15,23 @@
 // :j4 16.03.99 gka S4134
 // abv 18.11.99 renamed from StepPDR_MakeItem
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <STEPConstruct_Assembly.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_CartesianTransformationOperator3d.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeRepresentationRelationshipWithTransformation.hxx>
-#include <StepRepr_Transformation.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <STEPConstruct_Assembly.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_CartesianTransformationOperator3d.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeRepresentationRelationshipWithTransformation.hpp>
+#include <StepRepr_Transformation.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //  ProductDefinition (pour Relationship)
 //  ContextDependentShapeRepresentation qui contient la Relationship

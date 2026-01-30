@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj.hxx>
+#include <RWObj.hpp>
 
-#include <RWObj_TriangulationReader.hxx>
+#include <RWObj_TriangulationReader.hpp>
 
 //=================================================================================================
 

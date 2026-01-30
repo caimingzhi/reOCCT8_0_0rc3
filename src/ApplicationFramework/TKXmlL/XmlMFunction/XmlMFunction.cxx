@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMFunction.hxx>
+#include <XmlMFunction.hpp>
 
-#include <Message_Messenger.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMFunction_FunctionDriver.hxx>
-#include <XmlMFunction_GraphNodeDriver.hxx>
-#include <XmlMFunction_ScopeDriver.hxx>
+#include <Message_Messenger.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMFunction_FunctionDriver.hpp>
+#include <XmlMFunction_GraphNodeDriver.hpp>
+#include <XmlMFunction_ScopeDriver.hpp>
 
 //=================================================================================================
 

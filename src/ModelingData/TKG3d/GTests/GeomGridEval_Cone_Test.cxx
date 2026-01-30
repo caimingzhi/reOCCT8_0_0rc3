@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_ConicalSurface.hxx>
-#include <GeomGridEval_Cone.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_ConicalSurface.hpp>
+#include <GeomGridEval_Cone.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

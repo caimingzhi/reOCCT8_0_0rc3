@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccAna_Lin2dTanObl.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_Lin2dTanObl.hxx>
-#include <Geom2dGcc_Lin2dTanOblIter.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccAna_Lin2dTanObl.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_Lin2dTanObl.hpp>
+#include <Geom2dGcc_Lin2dTanOblIter.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 Geom2dGcc_Lin2dTanObl::Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qualified1,
                                              const gp_Lin2d&                 TheLine,

@@ -11,35 +11,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <HelixBRep_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelix.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <HelixBRep_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelix.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

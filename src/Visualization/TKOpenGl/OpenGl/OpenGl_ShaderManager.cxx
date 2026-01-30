@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_ShaderManager.hxx>
+#include <OpenGl_ShaderManager.hpp>
 
-#include <Graphic3d_CubeMapPacked.hxx>
-#include <Graphic3d_TextureParams.hxx>
-#include <OpenGl_Aspects.hxx>
-#include <OpenGl_ClippingIterator.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_ShadowMap.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_VertexBufferCompat.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <Graphic3d_CubeMapPacked.hpp>
+#include <Graphic3d_TextureParams.hpp>
+#include <OpenGl_Aspects.hpp>
+#include <OpenGl_ClippingIterator.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_ShadowMap.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_VertexBufferCompat.hpp>
+#include <OpenGl_Workspace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_ShaderManager, Graphic3d_ShaderManager)
 

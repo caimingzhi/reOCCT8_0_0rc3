@@ -14,37 +14,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TNaming.hxx>
+#include <TNaming.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <gp_Trsf.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_RefShape.hxx>
-#include <TNaming_ShapesSet.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_TranslateTool.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <gp_Trsf.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_RefShape.hpp>
+#include <TNaming_ShapesSet.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_TranslateTool.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Map.hpp>
 
 // CopyShape
 //=================================================================================================

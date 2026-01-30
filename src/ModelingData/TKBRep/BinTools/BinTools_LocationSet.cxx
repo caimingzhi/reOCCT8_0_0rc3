@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools.hxx>
-#include <BinTools_LocationSet.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopLoc_Location.hxx>
+#include <BinTools.hpp>
+#include <BinTools_LocationSet.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopLoc_Location.hpp>
 
 //=======================================================================
 // function : operator >> (gp_Trsf& T)

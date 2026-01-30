@@ -13,34 +13,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgo.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <DNaming.hxx>
-#include <DNaming_SphereDriver.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <ModelDefinitions.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDF_Label.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopExp.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRepAlgo.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <DNaming.hpp>
+#include <DNaming_SphereDriver.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <ModelDefinitions.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDF_Label.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopExp.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_SphereDriver, TFunction_Driver)
 

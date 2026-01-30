@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Direction.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_Vector.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Direction.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_Vector.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Direction, Geom_Vector)
 

@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Persistent.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_Data.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_Root.hxx>
-#include <Storage_RootData.hxx>
-#include <Storage_Schema.hxx>
-#include <Storage_TypeData.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Standard_Persistent.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_Data.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_Root.hpp>
+#include <Storage_RootData.hpp>
+#include <Storage_Schema.hpp>
+#include <Storage_TypeData.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Storage_Data, Standard_Transient)
 

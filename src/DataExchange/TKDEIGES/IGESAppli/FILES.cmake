@@ -3,91 +3,91 @@ set(OCCT_IGESAppli_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESAppli_FILES
   IGESAppli.cxx
-  IGESAppli.hxx
+  IGESAppli.hpp
 
   IGESAppli_DrilledHole.cxx
-  IGESAppli_DrilledHole.hxx
+  IGESAppli_DrilledHole.hpp
   IGESAppli_ElementResults.cxx
-  IGESAppli_ElementResults.hxx
+  IGESAppli_ElementResults.hpp
   IGESAppli_FiniteElement.cxx
-  IGESAppli_FiniteElement.hxx
+  IGESAppli_FiniteElement.hpp
   IGESAppli_Flow.cxx
-  IGESAppli_Flow.hxx
+  IGESAppli_Flow.hpp
   IGESAppli_FlowLineSpec.cxx
-  IGESAppli_FlowLineSpec.hxx
+  IGESAppli_FlowLineSpec.hpp
   IGESAppli_GeneralModule.cxx
-  IGESAppli_GeneralModule.hxx
+  IGESAppli_GeneralModule.hpp
 
   IGESAppli_LevelFunction.cxx
-  IGESAppli_LevelFunction.hxx
+  IGESAppli_LevelFunction.hpp
   IGESAppli_LevelToPWBLayerMap.cxx
-  IGESAppli_LevelToPWBLayerMap.hxx
+  IGESAppli_LevelToPWBLayerMap.hpp
   IGESAppli_LineWidening.cxx
-  IGESAppli_LineWidening.hxx
+  IGESAppli_LineWidening.hpp
   IGESAppli_NodalConstraint.cxx
-  IGESAppli_NodalConstraint.hxx
+  IGESAppli_NodalConstraint.hpp
   IGESAppli_NodalDisplAndRot.cxx
-  IGESAppli_NodalDisplAndRot.hxx
+  IGESAppli_NodalDisplAndRot.hpp
   IGESAppli_NodalResults.cxx
-  IGESAppli_NodalResults.hxx
+  IGESAppli_NodalResults.hpp
   IGESAppli_Node.cxx
-  IGESAppli_Node.hxx
+  IGESAppli_Node.hpp
   IGESAppli_PartNumber.cxx
-  IGESAppli_PartNumber.hxx
+  IGESAppli_PartNumber.hpp
   IGESAppli_PinNumber.cxx
-  IGESAppli_PinNumber.hxx
+  IGESAppli_PinNumber.hpp
   IGESAppli_PipingFlow.cxx
-  IGESAppli_PipingFlow.hxx
+  IGESAppli_PipingFlow.hpp
   IGESAppli_Protocol.cxx
-  IGESAppli_Protocol.hxx
+  IGESAppli_Protocol.hpp
   IGESAppli_PWBArtworkStackup.cxx
-  IGESAppli_PWBArtworkStackup.hxx
+  IGESAppli_PWBArtworkStackup.hpp
   IGESAppli_PWBDrilledHole.cxx
-  IGESAppli_PWBDrilledHole.hxx
+  IGESAppli_PWBDrilledHole.hpp
   IGESAppli_ReadWriteModule.cxx
-  IGESAppli_ReadWriteModule.hxx
+  IGESAppli_ReadWriteModule.hpp
   IGESAppli_ReferenceDesignator.cxx
-  IGESAppli_ReferenceDesignator.hxx
+  IGESAppli_ReferenceDesignator.hpp
   IGESAppli_RegionRestriction.cxx
-  IGESAppli_RegionRestriction.hxx
+  IGESAppli_RegionRestriction.hpp
   IGESAppli_SpecificModule.cxx
-  IGESAppli_SpecificModule.hxx
+  IGESAppli_SpecificModule.hpp
   IGESAppli_ToolDrilledHole.cxx
-  IGESAppli_ToolDrilledHole.hxx
+  IGESAppli_ToolDrilledHole.hpp
   IGESAppli_ToolElementResults.cxx
-  IGESAppli_ToolElementResults.hxx
+  IGESAppli_ToolElementResults.hpp
   IGESAppli_ToolFiniteElement.cxx
-  IGESAppli_ToolFiniteElement.hxx
+  IGESAppli_ToolFiniteElement.hpp
   IGESAppli_ToolFlow.cxx
-  IGESAppli_ToolFlow.hxx
+  IGESAppli_ToolFlow.hpp
   IGESAppli_ToolFlowLineSpec.cxx
-  IGESAppli_ToolFlowLineSpec.hxx
+  IGESAppli_ToolFlowLineSpec.hpp
   IGESAppli_ToolLevelFunction.cxx
-  IGESAppli_ToolLevelFunction.hxx
+  IGESAppli_ToolLevelFunction.hpp
   IGESAppli_ToolLevelToPWBLayerMap.cxx
-  IGESAppli_ToolLevelToPWBLayerMap.hxx
+  IGESAppli_ToolLevelToPWBLayerMap.hpp
   IGESAppli_ToolLineWidening.cxx
-  IGESAppli_ToolLineWidening.hxx
+  IGESAppli_ToolLineWidening.hpp
   IGESAppli_ToolNodalConstraint.cxx
-  IGESAppli_ToolNodalConstraint.hxx
+  IGESAppli_ToolNodalConstraint.hpp
   IGESAppli_ToolNodalDisplAndRot.cxx
-  IGESAppli_ToolNodalDisplAndRot.hxx
+  IGESAppli_ToolNodalDisplAndRot.hpp
   IGESAppli_ToolNodalResults.cxx
-  IGESAppli_ToolNodalResults.hxx
+  IGESAppli_ToolNodalResults.hpp
   IGESAppli_ToolNode.cxx
-  IGESAppli_ToolNode.hxx
+  IGESAppli_ToolNode.hpp
   IGESAppli_ToolPartNumber.cxx
-  IGESAppli_ToolPartNumber.hxx
+  IGESAppli_ToolPartNumber.hpp
   IGESAppli_ToolPinNumber.cxx
-  IGESAppli_ToolPinNumber.hxx
+  IGESAppli_ToolPinNumber.hpp
   IGESAppli_ToolPipingFlow.cxx
-  IGESAppli_ToolPipingFlow.hxx
+  IGESAppli_ToolPipingFlow.hpp
   IGESAppli_ToolPWBArtworkStackup.cxx
-  IGESAppli_ToolPWBArtworkStackup.hxx
+  IGESAppli_ToolPWBArtworkStackup.hpp
   IGESAppli_ToolPWBDrilledHole.cxx
-  IGESAppli_ToolPWBDrilledHole.hxx
+  IGESAppli_ToolPWBDrilledHole.hpp
   IGESAppli_ToolReferenceDesignator.cxx
-  IGESAppli_ToolReferenceDesignator.hxx
+  IGESAppli_ToolReferenceDesignator.hpp
   IGESAppli_ToolRegionRestriction.cxx
-  IGESAppli_ToolRegionRestriction.hxx
+  IGESAppli_ToolRegionRestriction.hpp
 )

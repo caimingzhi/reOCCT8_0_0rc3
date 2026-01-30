@@ -18,27 +18,27 @@
 // Version	Date		Purpose
 //		0.0	Feb  7 1997	Creation
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_ImmutableObject.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_DefaultDeltaOnModification.hxx>
-#include <TDF_DefaultDeltaOnRemoval.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnForget.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TDF_DeltaOnResume.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_LabelNode.hxx>
-#include <TDF_Tool.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_ImmutableObject.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_DefaultDeltaOnModification.hpp>
+#include <TDF_DefaultDeltaOnRemoval.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnForget.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TDF_DeltaOnResume.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_LabelNode.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_Attribute, Standard_Transient)
 

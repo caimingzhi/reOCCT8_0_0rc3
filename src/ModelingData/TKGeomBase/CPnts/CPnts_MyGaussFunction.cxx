@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CPnts_MyGaussFunction.hxx>
+#include <CPnts_MyGaussFunction.hpp>
 
 void CPnts_MyGaussFunction::Init(const CPnts_RealFunction& F, void* const D)
 {

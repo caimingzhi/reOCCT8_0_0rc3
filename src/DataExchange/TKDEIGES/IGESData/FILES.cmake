@@ -3,91 +3,91 @@ set(OCCT_IGESData_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESData_FILES
   IGESData.cxx
-  IGESData.hxx
+  IGESData.hpp
 
   IGESData_BasicEditor.cxx
-  IGESData_BasicEditor.hxx
+  IGESData_BasicEditor.hpp
   IGESData_ColorEntity.cxx
-  IGESData_ColorEntity.hxx
+  IGESData_ColorEntity.hpp
   IGESData_DefaultGeneral.cxx
-  IGESData_DefaultGeneral.hxx
+  IGESData_DefaultGeneral.hpp
   IGESData_DefaultSpecific.cxx
-  IGESData_DefaultSpecific.hxx
-  IGESData_DefList.hxx
+  IGESData_DefaultSpecific.hpp
+  IGESData_DefList.hpp
   IGESData_DefSwitch.cxx
-  IGESData_DefSwitch.hxx
-  IGESData_DefType.hxx
+  IGESData_DefSwitch.hpp
+  IGESData_DefType.hpp
   IGESData_DirChecker.cxx
-  IGESData_DirChecker.hxx
+  IGESData_DirChecker.hpp
   IGESData_DirPart.cxx
-  IGESData_DirPart.hxx
-  IGESData_Dump.hxx
+  IGESData_DirPart.hpp
+  IGESData_Dump.hpp
   IGESData_FileProtocol.cxx
-  IGESData_FileProtocol.hxx
-  IGESData_FileRecognizer.hxx
+  IGESData_FileProtocol.hpp
+  IGESData_FileRecognizer.hpp
   IGESData_FileRecognizer_0.cxx
   IGESData_FreeFormatEntity.cxx
-  IGESData_FreeFormatEntity.hxx
+  IGESData_FreeFormatEntity.hpp
   IGESData_GeneralModule.cxx
-  IGESData_GeneralModule.hxx
-  IGESData_GlobalNodeOfSpecificLib.hxx
+  IGESData_GeneralModule.hpp
+  IGESData_GlobalNodeOfSpecificLib.hpp
   IGESData_GlobalNodeOfSpecificLib_0.cxx
-  IGESData_GlobalNodeOfWriterLib.hxx
+  IGESData_GlobalNodeOfWriterLib.hpp
   IGESData_GlobalNodeOfWriterLib_0.cxx
   IGESData_GlobalSection.cxx
-  IGESData_GlobalSection.hxx
+  IGESData_GlobalSection.hpp
 
   IGESData_IGESDumper.cxx
-  IGESData_IGESDumper.hxx
+  IGESData_IGESDumper.hpp
   IGESData_IGESEntity.cxx
-  IGESData_IGESEntity.hxx
+  IGESData_IGESEntity.hpp
   IGESData_IGESModel.cxx
-  IGESData_IGESModel.hxx
+  IGESData_IGESModel.hpp
   IGESData_IGESReaderData.cxx
-  IGESData_IGESReaderData.hxx
+  IGESData_IGESReaderData.hpp
   IGESData_IGESReaderTool.cxx
-  IGESData_IGESReaderTool.hxx
+  IGESData_IGESReaderTool.hpp
   IGESData_IGESType.cxx
-  IGESData_IGESType.hxx
+  IGESData_IGESType.hpp
   IGESData_IGESWriter.cxx
-  IGESData_IGESWriter.hxx
+  IGESData_IGESWriter.hpp
   IGESData_LabelDisplayEntity.cxx
-  IGESData_LabelDisplayEntity.hxx
+  IGESData_LabelDisplayEntity.hpp
   IGESData_LevelListEntity.cxx
-  IGESData_LevelListEntity.hxx
+  IGESData_LevelListEntity.hpp
   IGESData_LineFontEntity.cxx
-  IGESData_LineFontEntity.hxx
+  IGESData_LineFontEntity.hpp
   IGESData_NameEntity.cxx
-  IGESData_NameEntity.hxx
-  IGESData_NodeOfSpecificLib.hxx
+  IGESData_NameEntity.hpp
+  IGESData_NodeOfSpecificLib.hpp
   IGESData_NodeOfSpecificLib_0.cxx
-  IGESData_NodeOfWriterLib.hxx
+  IGESData_NodeOfWriterLib.hpp
   IGESData_NodeOfWriterLib_0.cxx
   IGESData_ParamCursor.cxx
-  IGESData_ParamCursor.hxx
-  IGESData_ParamCursor.lxx
+  IGESData_ParamCursor.hpp
+  IGESData_ParamCursor_1.hpp
   IGESData_ParamReader.cxx
-  IGESData_ParamReader.hxx
+  IGESData_ParamReader.hpp
   IGESData_Protocol.cxx
-  IGESData_Protocol.hxx
-  IGESData_ReadStage.hxx
+  IGESData_Protocol.hpp
+  IGESData_ReadStage.hpp
   IGESData_ReadWriteModule.cxx
-  IGESData_ReadWriteModule.hxx
+  IGESData_ReadWriteModule.hpp
   IGESData_SingleParentEntity.cxx
-  IGESData_SingleParentEntity.hxx
-  IGESData_SpecificLib.hxx
+  IGESData_SingleParentEntity.hpp
+  IGESData_SpecificLib.hpp
   IGESData_SpecificLib_0.cxx
   IGESData_SpecificModule.cxx
-  IGESData_SpecificModule.hxx
-  IGESData_Status.hxx
+  IGESData_SpecificModule.hpp
+  IGESData_Status.hpp
   IGESData_ToolLocation.cxx
-  IGESData_ToolLocation.hxx
+  IGESData_ToolLocation.hpp
   IGESData_TransfEntity.cxx
-  IGESData_TransfEntity.hxx
+  IGESData_TransfEntity.hpp
   IGESData_UndefinedEntity.cxx
-  IGESData_UndefinedEntity.hxx
+  IGESData_UndefinedEntity.hpp
   IGESData_ViewKindEntity.cxx
-  IGESData_ViewKindEntity.hxx
-  IGESData_WriterLib.hxx
+  IGESData_ViewKindEntity.hpp
+  IGESData_WriterLib.hpp
   IGESData_WriterLib_0.cxx
 )

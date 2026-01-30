@@ -3,81 +3,81 @@ set(OCCT_Draw_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Draw_FILES
   Draw.cxx
-  Draw.hxx
-  Draw_Appli.hxx
+  Draw.hpp
+  Draw_Appli.hpp
   Draw_Axis2D.cxx
-  Draw_Axis2D.hxx
+  Draw_Axis2D.hpp
   Draw_Axis3D.cxx
-  Draw_Axis3D.hxx
+  Draw_Axis3D.hpp
   Draw_BasicCommands.cxx
   Draw_Box.cxx
-  Draw_Box.hxx
+  Draw_Box.hpp
   Draw_Chronometer.cxx
-  Draw_Chronometer.hxx
+  Draw_Chronometer.hpp
   Draw_Circle2D.cxx
-  Draw_Circle2D.hxx
+  Draw_Circle2D.hpp
   Draw_Circle3D.cxx
-  Draw_Circle3D.hxx
+  Draw_Circle3D.hpp
   Draw_Color.cxx
-  Draw_Color.hxx
-  Draw_ColorKind.hxx
+  Draw_Color.hpp
+  Draw_ColorKind.hpp
   Draw_Commands.cxx
   Draw_Debug.cxx
   Draw_Display.cxx
-  Draw_Display.hxx
+  Draw_Display.hpp
   Draw_Drawable2D.cxx
-  Draw_Drawable2D.hxx
+  Draw_Drawable2D.hpp
   Draw_Drawable3D.cxx
-  Draw_Drawable3D.hxx
-  Draw_Failure.hxx
+  Draw_Drawable3D.hpp
+  Draw_Failure.hpp
   Draw_GraphicCommands.cxx
   Draw_Grid.cxx
-  Draw_Grid.hxx
-  Draw_Grid.lxx
+  Draw_Grid.hpp
+  Draw_Grid_1.hpp
   Draw_Interpretor.cxx
-  Draw_Interpretor.hxx
+  Draw_Interpretor.hpp
   Draw_Main.cxx
-  Draw_Main.hxx
+  Draw_Main.hpp
 
   Draw_Marker2D.cxx
-  Draw_Marker2D.hxx
+  Draw_Marker2D.hpp
   Draw_Marker3D.cxx
-  Draw_Marker3D.hxx
-  Draw_MarkerShape.hxx
+  Draw_Marker3D.hpp
+  Draw_MarkerShape.hpp
   Draw_MessageCommands.cxx
   Draw_Number.cxx
-  Draw_Number.hxx
-  Draw_PInterp.hxx
+  Draw_Number.hpp
+  Draw_PInterp.hpp
   Draw_PloadCommands.cxx
-  Draw_PluginMacro.hxx
+  Draw_PluginMacro.hpp
   Draw_Printer.cxx
-  Draw_Printer.hxx
+  Draw_Printer.hpp
   Draw_ProgressIndicator.cxx
-  Draw_ProgressIndicator.hxx
+  Draw_ProgressIndicator.hpp
   Draw_Replace.tcl
   Draw_Segment2D.cxx
-  Draw_Segment2D.hxx
+  Draw_Segment2D.hpp
   Draw_Segment3D.cxx
-  Draw_Segment3D.hxx
+  Draw_Segment3D.hpp
 
   Draw_Text2D.cxx
-  Draw_Text2D.hxx
+  Draw_Text2D.hpp
   Draw_Text3D.cxx
-  Draw_Text3D.hxx
+  Draw_Text3D.hpp
   Draw_UnitCommands.cxx
   Draw_VariableCommands.cxx
   Draw_View.cxx
-  Draw_View.hxx
+  Draw_View.hpp
   Draw_Viewer.cxx
-  Draw_Viewer.hxx
+  Draw_Viewer.hpp
   Draw_Window.cxx
-  Draw_Window.hxx
+  Draw_Window.hpp
   Draw_Window_1.mm
   Draw_WNTCommandWindow.cxx
-  Draw_WNTCommandWindow.pxx
+  Draw_WNTCommandWindow.hpp
   Draw_WNTInit.cxx
-  Draw_WNTInit.pxx
+  Draw_WNTInit.hpp
   Draw_WNTMainWindow.cxx
-  Draw_WNTMainWindow.pxx
-  Draw_WNTRessource.pxx
+  Draw_WNTMainWindow.hpp
+  Draw_WNTRessource.hpp
 )

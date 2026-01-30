@@ -13,33 +13,33 @@
 
 #include <gtest/gtest.h>
 
-#include <BRepOffsetAPI_MakeThickSolid.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BRepOffset_MakeOffset.hxx>
-#include <BRepOffset_Error.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_PointsToBSpline.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <NCollection_List.hxx>
+#include <BRepOffsetAPI_MakeThickSolid.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
+#include <BRepOffset_MakeOffset.hpp>
+#include <BRepOffset_Error.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_PointsToBSpline.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <NCollection_List.hpp>
 
 //==================================================================================================
 // Helper function to create a circular wire

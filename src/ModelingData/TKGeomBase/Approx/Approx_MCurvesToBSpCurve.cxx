@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppParCurves_MultiPoint.hxx>
-#include <Approx_MCurvesToBSpCurve.hxx>
-#include <BSplCLib.hxx>
-#include <Convert_CompBezierCurves2dToBSplineCurve2d.hxx>
-#include <Convert_CompBezierCurvesToBSplineCurve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
+#include <AppParCurves_MultiPoint.hpp>
+#include <Approx_MCurvesToBSpCurve.hpp>
+#include <BSplCLib.hpp>
+#include <Convert_CompBezierCurves2dToBSplineCurve2d.hpp>
+#include <Convert_CompBezierCurvesToBSplineCurve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
 
 #ifdef OCCT_DEBUG
 static void DEBUG(const AppParCurves_MultiCurve& MC)

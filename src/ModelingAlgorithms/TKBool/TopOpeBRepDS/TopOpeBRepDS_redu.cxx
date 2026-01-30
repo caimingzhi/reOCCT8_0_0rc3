@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
 
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_makeTransition.hxx>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_makeTransition.hpp>
 
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
 
-#include <TopoDS.hxx>
-#include <BRep_Tool.hxx>
+#include <TopoDS.hpp>
+#include <BRep_Tool.hpp>
 
 #define M_FORWARD(st) (st == TopAbs_FORWARD)
 #define M_UNKNOWN(st) (st == TopAbs_UNKNOWN)

@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWSeamCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_SeamCurve.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWSeamCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_SeamCurve.hpp>
 
-#include "RWStepGeom_RWPreferredSurfaceCurveRepresentation.pxx"
+#include "RWStepGeom_RWPreferredSurfaceCurveRepresentation.hpp"
 
 RWStepGeom_RWSeamCurve::RWStepGeom_RWSeamCurve() = default;
 

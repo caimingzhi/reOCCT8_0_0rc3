@@ -13,28 +13,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Viewer.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDataStd_Name.hxx>
-#include <Draw.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <PCDM_ReaderFilter.hxx>
+#include <DDocStd.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Viewer.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDataStd_Name.hpp>
+#include <Draw.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <PCDM_ReaderFilter.hpp>
 
-#include <OSD_FileSystem.hxx>
-#include <TDocStd_PathParser.hxx>
+#include <OSD_FileSystem.hpp>
+#include <TDocStd_PathParser.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <ViewerTest.hxx>
-#include <V3d_Viewer.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <ViewerTest.hpp>
+#include <V3d_Viewer.hpp>
 
 #ifndef _WIN32
 extern Draw_Viewer dout;

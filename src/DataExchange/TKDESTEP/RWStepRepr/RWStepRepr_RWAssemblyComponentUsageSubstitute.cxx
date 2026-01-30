@@ -13,12 +13,12 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWAssemblyComponentUsageSubstitute.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_AssemblyComponentUsage.hxx>
-#include <StepRepr_AssemblyComponentUsageSubstitute.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWAssemblyComponentUsageSubstitute.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_AssemblyComponentUsage.hpp>
+#include <StepRepr_AssemblyComponentUsageSubstitute.hpp>
 
 RWStepRepr_RWAssemblyComponentUsageSubstitute::RWStepRepr_RWAssemblyComponentUsageSubstitute() =
   default;

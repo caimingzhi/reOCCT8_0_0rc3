@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_CurveOn2Surfaces.hxx>
-#include <BRep_CurveRepresentation.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
+#include <BRep_CurveOn2Surfaces.hpp>
+#include <BRep_CurveRepresentation.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_CurveOn2Surfaces, BRep_CurveRepresentation)
 

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWGltf_GltfMaterialMap.hxx>
+#include <RWGltf_GltfMaterialMap.hpp>
 
-#include <Message.hxx>
-#include <NCollection_Array1.hxx>
-#include <OSD_OpenFile.hxx>
-#include <RWGltf_GltfRootElement.hxx>
+#include <Message.hpp>
+#include <NCollection_Array1.hpp>
+#include <OSD_OpenFile.hpp>
+#include <RWGltf_GltfRootElement.hpp>
 
 #ifdef HAVE_RAPIDJSON
-  #include <RWGltf_GltfOStreamWriter.hxx>
+  #include <RWGltf_GltfOStreamWriter.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_GltfMaterialMap, RWMesh_MaterialMap)

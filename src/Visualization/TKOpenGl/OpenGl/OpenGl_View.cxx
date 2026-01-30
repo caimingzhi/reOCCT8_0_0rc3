@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_View.hxx>
+#include <OpenGl_View.hpp>
 
-#include <Aspect_NeutralWindow.hxx>
-#include <Aspect_RenderingContext.hxx>
-#include <Aspect_XRSession.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Graphic3d_TextureEnv.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_BackgroundArray.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_DepthPeeling.hxx>
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_GlCore11.hxx>
-#include <OpenGl_GraduatedTrihedron.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <OpenGl_RenderFilter.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShadowMap.hxx>
-#include <OpenGl_Texture.hxx>
-#include <OpenGl_Window.hxx>
-#include <OpenGl_Workspace.hxx>
-#include <OSD_Parallel.hxx>
-#include <Standard_CLocaleSentry.hxx>
+#include <Aspect_NeutralWindow.hpp>
+#include <Aspect_RenderingContext.hpp>
+#include <Aspect_XRSession.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Graphic3d_TextureEnv.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_BackgroundArray.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_DepthPeeling.hpp>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_GlCore11.hpp>
+#include <OpenGl_GraduatedTrihedron.hpp>
+#include <OpenGl_GraphicDriver.hpp>
+#include <OpenGl_RenderFilter.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShadowMap.hpp>
+#include <OpenGl_Texture.hpp>
+#include <OpenGl_Window.hpp>
+#include <OpenGl_Workspace.hpp>
+#include <OSD_Parallel.hpp>
+#include <Standard_CLocaleSentry.hpp>
 
-#include "../Textures/Textures_EnvLUT.pxx"
+#include "../Textures/Textures_EnvLUT.hpp"
 
 namespace
 {

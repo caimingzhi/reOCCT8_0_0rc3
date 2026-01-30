@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWViewVolume.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepVisual_PlanarBox.hxx>
-#include <StepVisual_ViewVolume.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWViewVolume.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepVisual_PlanarBox.hpp>
+#include <StepVisual_ViewVolume.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepVisual_RWCentralOrParallel.pxx"
+#include "RWStepVisual_RWCentralOrParallel.hpp"
 
 RWStepVisual_RWViewVolume::RWStepVisual_RWViewVolume() = default;
 

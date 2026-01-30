@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepElement_AnalysisItemWithinRepresentation.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepElement_AnalysisItemWithinRepresentation.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_AnalysisItemWithinRepresentation, Standard_Transient)
 

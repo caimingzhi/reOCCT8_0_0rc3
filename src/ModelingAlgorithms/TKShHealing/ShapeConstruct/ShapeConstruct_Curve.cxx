@@ -11,32 +11,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_Curve2d.hxx>
-#include <Approx_Curve3d.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomConvert.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ShapeConstruct_Curve.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <Approx_Curve2d.hpp>
+#include <Approx_Curve3d.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomConvert.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ShapeConstruct_Curve.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
 // sln 29.12.2001 OCC90 : Method FixKnots was added
 //=================================================================================================

@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESGeom_Point.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESGeom_Point.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_Point, IGESData_IGESEntity)
 

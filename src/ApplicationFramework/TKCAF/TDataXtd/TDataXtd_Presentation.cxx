@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataXtd_Presentation.hxx>
+#include <TDataXtd_Presentation.hpp>
 
-#include <TDF_DefaultDeltaOnRemoval.hxx>
-#include <TDF_Tool.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <TDF_DefaultDeltaOnRemoval.hpp>
+#include <TDF_Tool.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Presentation, TDF_Attribute)
 

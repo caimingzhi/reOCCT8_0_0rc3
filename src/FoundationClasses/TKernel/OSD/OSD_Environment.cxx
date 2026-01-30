@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Environment.hxx>
+#include <OSD_Environment.hpp>
 
-#include <OSD_OSDError.hxx>
-#include <OSD_WhoAmI.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NullObject.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_UtfString.hxx>
+#include <OSD_OSDError.hpp>
+#include <OSD_WhoAmI.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NullObject.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_UtfString.hpp>
 
 #include <cerrno>
 #include <cstdio>
@@ -218,7 +218,7 @@ int OSD_Environment::Error() const
 
   #include <windows.h>
 
-  #include <NCollection_DataMap.hxx>
+  #include <NCollection_DataMap.hpp>
 
   #ifdef OCCT_UWP
 namespace

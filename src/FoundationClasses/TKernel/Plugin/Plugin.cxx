@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_SharedLibrary.hxx>
-#include <Plugin.hxx>
-#include <Plugin_Failure.hxx>
-#include <OSD_Function.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Transient.hxx>
+#include <OSD_SharedLibrary.hpp>
+#include <Plugin.hpp>
+#include <Plugin_Failure.hpp>
+#include <OSD_Function.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Transient.hpp>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 static char                tc[1000];
 static Standard_PCharacter thePluginId = tc;

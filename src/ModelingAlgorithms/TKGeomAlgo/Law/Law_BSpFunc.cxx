@@ -16,15 +16,15 @@
 
 // pmn -> 17/01/1996 added : Continuity, (Nb)Intervals, D2, Trim
 
-#include <BSplCLib.hxx>
-#include <Law_BSpFunc.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_BSplineKnotSplitting.hxx>
-#include <Law_Function.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <BSplCLib.hpp>
+#include <Law_BSpFunc.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_BSplineKnotSplitting.hpp>
+#include <Law_Function.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_BSpFunc, Law_Function)
 

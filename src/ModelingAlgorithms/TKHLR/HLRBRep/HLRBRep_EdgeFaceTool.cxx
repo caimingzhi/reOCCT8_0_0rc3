@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepExtrema_ExtPF.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <HLRBRep_EdgeFaceTool.hxx>
-#include <HLRBRep_Surface.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepExtrema_ExtPF.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <HLRBRep_EdgeFaceTool.hpp>
+#include <HLRBRep_Surface.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

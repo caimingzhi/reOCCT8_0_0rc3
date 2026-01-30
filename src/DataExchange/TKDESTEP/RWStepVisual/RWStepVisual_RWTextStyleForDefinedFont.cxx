@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWTextStyleForDefinedFont.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_Colour.hxx>
-#include <StepVisual_TextStyleForDefinedFont.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWTextStyleForDefinedFont.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_Colour.hpp>
+#include <StepVisual_TextStyleForDefinedFont.hpp>
 
 RWStepVisual_RWTextStyleForDefinedFont::RWStepVisual_RWTextStyleForDefinedFont() = default;
 

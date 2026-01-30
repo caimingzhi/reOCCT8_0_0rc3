@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_RepresentationMap.hxx>
+#include <Standard_Type.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_RepresentationMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_RepresentationMap, Standard_Transient)
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWOuterBoundaryCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_OuterBoundaryCurve.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWOuterBoundaryCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_OuterBoundaryCurve.hpp>
 
 RWStepGeom_RWOuterBoundaryCurve::RWStepGeom_RWOuterBoundaryCurve() = default;
 

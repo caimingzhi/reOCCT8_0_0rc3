@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_DocumentRetrievalDriver.hxx>
-#include <BinLDrivers.hxx>
-#include <BinTObjDrivers.hxx>
+#include <BinTObjDrivers_DocumentRetrievalDriver.hpp>
+#include <BinLDrivers.hpp>
+#include <BinTObjDrivers.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_DocumentRetrievalDriver,
                            BinLDrivers_DocumentRetrievalDriver)

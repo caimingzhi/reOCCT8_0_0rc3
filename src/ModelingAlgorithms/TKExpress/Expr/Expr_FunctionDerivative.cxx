@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_FunctionDerivative.hxx>
-#include <Expr_GeneralFunction.hxx>
-#include <Expr_NamedFunction.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_NumericValue.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_FunctionDerivative.hpp>
+#include <Expr_GeneralFunction.hpp>
+#include <Expr_NamedFunction.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_NumericValue.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_FunctionDerivative, Expr_GeneralFunction)
 

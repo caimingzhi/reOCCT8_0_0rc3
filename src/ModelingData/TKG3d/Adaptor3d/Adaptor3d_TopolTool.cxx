@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_TopolTool.hxx>
+#include <Adaptor3d_TopolTool.hpp>
 
-#include <Adaptor2d_Line2d.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor2d_Line2d.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Adaptor3d_TopolTool, Standard_Transient)
 
@@ -623,14 +623,14 @@ bool Adaptor3d_TopolTool::Identical(const occ::handle<Adaptor3d_HVertex>& V1,
 //-- m e t h o d e s   u t i l i s e e s   p o u r   l e s
 //--  s a m p l e s
 //-- ============================================================
-#include <NCollection_Array2.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <NCollection_Array1.hxx>
-// #include <gce_MakeLin.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
+#include <NCollection_Array2.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <NCollection_Array1.hpp>
+// #include <gce_MakeLin.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
 
 #define myMinPnts                                                                                  \
   4 // Absolute possible minimum of sample points

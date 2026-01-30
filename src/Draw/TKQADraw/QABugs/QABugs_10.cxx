@@ -13,37 +13,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Ax1.hxx>
-#include <BRepPrimAPI_MakeRevol.hxx>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Ax1.hpp>
+#include <BRepPrimAPI_MakeRevol.hpp>
 
-#include <BRepAlgoAPI_Fuse.hxx>
+#include <BRepAlgoAPI_Fuse.hpp>
 
-#include <GProp_GProps.hxx>
-#include <BRepGProp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRep_Tool.hxx>
-#include <Poly_Triangulation.hxx>
-#include <TopExp.hxx>
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Geom_BSplineSurface.hxx>
+#include <GProp_GProps.hpp>
+#include <BRepGProp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <BRep_Tool.hpp>
+#include <Poly_Triangulation.hpp>
+#include <TopExp.hpp>
+#include <BRepFilletAPI_MakeFillet.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Geom_BSplineSurface.hpp>
 
-#include <ShapeUpgrade_UnifySameDomain.hxx>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
 
 static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -168,7 +168,7 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Geom_SurfaceOfRevolution.hxx>
+#include <Geom_SurfaceOfRevolution.hpp>
 
 //=================================================================================================
 
@@ -224,9 +224,9 @@ static int isPeriodic(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Precision.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <Precision.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <GeomAdaptor_Surface.hpp>
 
 //=================================================================================================
 
@@ -309,14 +309,14 @@ static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
   }
 }
 
-#include <GC_MakeArcOfCircle.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <BRepOffsetAPI_DraftAngle.hxx>
+#include <GC_MakeArcOfCircle.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <BRepPrimAPI_MakePrism.hpp>
+#include <BRepOffsetAPI_DraftAngle.hpp>
 
 //=================================================================================================
 
@@ -478,9 +478,9 @@ int performTriangulation(const TopoDS_Shape& aShape, Draw_Interpretor& di)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakeCone.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
 
 //=================================================================================================
 
@@ -548,8 +548,8 @@ static int OCC822_1(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
 
 //=======================================================================
 //  OCC822_2
@@ -719,10 +719,10 @@ static int OCC824(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <NCollection_Array2.hxx>
-#include <GeomConvert.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <BRepPrimAPI_MakeHalfSpace.hxx>
+#include <NCollection_Array2.hpp>
+#include <GeomConvert.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <BRepPrimAPI_MakeHalfSpace.hpp>
 
 //=======================================================================
 //  OCC825
@@ -886,7 +886,7 @@ static int OCC826(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeTorus.hxx>
+#include <BRepPrimAPI_MakeTorus.hpp>
 
 //=======================================================================
 //  OCC827
@@ -1023,7 +1023,7 @@ int performBlend(const TopoDS_Shape& aShape, double rad, TopoDS_Shape& bShape, D
   return 0;
 }
 
-#include <GC_MakeSegment.hxx>
+#include <GC_MakeSegment.hpp>
 
 //=======================================================================
 //  OCC828

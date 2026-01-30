@@ -14,40 +14,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_OffsetDimension.hxx>
+#include <PrsDim_OffsetDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <DsgPrs_OffsetPresentation.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gce_MakeLin.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <DsgPrs_OffsetPresentation.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gce_MakeLin.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_OffsetDimension, PrsDim_Relation)
 

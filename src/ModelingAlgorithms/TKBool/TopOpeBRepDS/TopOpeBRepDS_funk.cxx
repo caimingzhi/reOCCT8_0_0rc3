@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_define.hxx>
+#include <TopOpeBRepDS_define.hpp>
 
-#include <gp_Pnt2d.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_FaceInterferenceTool.hxx>
-#include <TopExp.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_PShapeClassifier.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_tol.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <BRepTools.hxx>
-#include <GeomProjLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <gp_Pnt2d.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_FaceInterferenceTool.hpp>
+#include <TopExp.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_PShapeClassifier.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_tol.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <BRepTools.hpp>
+#include <GeomProjLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
 Standard_EXPORT occ::handle<Geom2d_Curve> MakePCurve(const ProjLib_ProjectedCurve& PC);
 

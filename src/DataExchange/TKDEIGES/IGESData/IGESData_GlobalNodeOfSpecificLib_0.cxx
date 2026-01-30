@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_GlobalNodeOfSpecificLib.hxx>
+#include <IGESData_GlobalNodeOfSpecificLib.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <IGESData_SpecificModule.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_SpecificLib.hxx>
-#include <IGESData_NodeOfSpecificLib.hxx>
+#include <IGESData_SpecificModule.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_SpecificLib.hpp>
+#include <IGESData_NodeOfSpecificLib.hpp>
 
 IGESData_GlobalNodeOfSpecificLib::IGESData_GlobalNodeOfSpecificLib() = default;
 

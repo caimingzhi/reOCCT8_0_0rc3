@@ -22,24 +22,24 @@
 //    by:	Joelle CHAUVET
 //              correction sur le tri des valeurs propres quand valeurs egales
 
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomLib.hxx>
-#include <GeomPlate_BuildAveragePlane.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomLib.hpp>
+#include <GeomPlate_BuildAveragePlane.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

@@ -17,32 +17,32 @@
 // szv#4 S4163
 // eap: Tue Aug 29 11:02:56 2000: Shape Processing moved to upper levels
 
-#include <BRep_Builder.hxx>
-#include <BRepToIGES_BREntity.hxx>
-#include <BRepToIGES_BRShell.hxx>
-#include <BRepToIGES_BRSolid.hxx>
-#include <BRepToIGES_BRWire.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Standard_Transient.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_CompSolid.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientMapper.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepToIGES_BREntity.hpp>
+#include <BRepToIGES_BRShell.hpp>
+#include <BRepToIGES_BRSolid.hpp>
+#include <BRepToIGES_BRWire.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Standard_Transient.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_CompSolid.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientMapper.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
-// #include <ShapeCustom.hxx>
+// #include <ShapeCustom.hpp>
 char Name[100];
 
 //=================================================================================================

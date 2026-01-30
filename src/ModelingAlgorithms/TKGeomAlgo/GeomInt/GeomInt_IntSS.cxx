@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_IntSS.hxx>
+#include <GeomInt_IntSS.hpp>
 
-#include <Adaptor3d_TopolTool.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <Adaptor3d_TopolTool.hpp>
+#include <GeomAdaptor_Surface.hpp>
 
 //=================================================================================================
 

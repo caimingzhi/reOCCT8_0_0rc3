@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_EDescr.hxx>
-#include <StepData_Field.hxx>
-#include <StepData_PDescr.hxx>
+#include <Interface_Check.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_EDescr.hpp>
+#include <StepData_Field.hpp>
+#include <StepData_PDescr.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_PDescr, Standard_Transient)
 

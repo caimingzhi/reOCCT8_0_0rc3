@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ClipPlane.hxx>
+#include <Graphic3d_ClipPlane.hpp>
 
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <gp_Pln.hxx>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <gp_Pln.hpp>
 
 #include <atomic>
 

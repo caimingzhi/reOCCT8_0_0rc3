@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_FileNode.hxx>
+#include <OSD_FileNode.hpp>
 
-#include <OSD_Protection.hxx>
-#include <Quantity_Date.hxx>
-#include <Standard_ProgramError.hxx>
+#include <OSD_Protection.hpp>
+#include <Quantity_Date.hpp>
+#include <Standard_ProgramError.hpp>
 
 #ifndef _WIN32
 
@@ -24,10 +24,10 @@
 //------------------- Linux Sources of OSD_FileNode --------------------------
 //----------------------------------------------------------------------------
 
-  #include <OSD_OSDError.hxx>
-  #include <OSD_Path.hxx>
-  #include <OSD_WhoAmI.hxx>
-  #include <Standard_NullObject.hxx>
+  #include <OSD_OSDError.hpp>
+  #include <OSD_Path.hpp>
+  #include <OSD_WhoAmI.hpp>
+  #include <Standard_NullObject.hpp>
 
   #include <cerrno>
   #include <fcntl.h>
@@ -392,9 +392,9 @@ int OSD_FileNode::Error() const
   #endif
   #include <windows.h>
 
-  #include <TCollection_ExtendedString.hxx>
+  #include <TCollection_ExtendedString.hpp>
 
-  #include <OSD_WNT.hxx>
+  #include <OSD_WNT.hpp>
 
   #ifndef _INC_TCHAR
     #include <tchar.h>

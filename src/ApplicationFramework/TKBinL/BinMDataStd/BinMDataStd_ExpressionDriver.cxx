@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd_ExpressionDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Expression.hxx>
-#include <TDataStd_Variable.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_List.hxx>
+#include <BinMDataStd_ExpressionDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Expression.hpp>
+#include <TDataStd_Variable.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_List.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExpressionDriver, BinMDF_ADriver)
 

@@ -12,28 +12,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_ArgumentAnalyzer.hxx>
-#include <BOPAlgo_CheckerSI.hxx>
-#include <BOPAlgo_CheckResult.hxx>
-#include <BOPDS_DS.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_Pair.hxx>
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepAlgoAPI_Check.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <OSD_Timer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
+#include <BOPAlgo_ArgumentAnalyzer.hpp>
+#include <BOPAlgo_CheckerSI.hpp>
+#include <BOPAlgo_CheckResult.hpp>
+#include <BOPDS_DS.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_Pair.hpp>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepAlgoAPI_Check.hpp>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <OSD_Timer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
 
 #include <algorithm>
 #include <functional>

@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_FWOSDriver.hxx>
-#include <CDM_MetaData.hxx>
-#include <OSD_Directory.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileNode.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <OSD_SingleProtection.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <UTL.hxx>
+#include <CDF_FWOSDriver.hpp>
+#include <CDM_MetaData.hpp>
+#include <OSD_Directory.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileNode.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <OSD_SingleProtection.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <UTL.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_FWOSDriver, CDF_MetaDataDriver)
 

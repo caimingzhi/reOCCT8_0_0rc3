@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Static.hxx>
+#include <Interface_Static.hpp>
 
-#include <OSD_Path.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <OSD_Path.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(Interface_Static, Interface_TypedValue)

@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_WWWAnchor.hxx>
+#include <Vrml_WWWAnchor.hpp>
 
 Vrml_WWWAnchor::Vrml_WWWAnchor(const TCollection_AsciiString& aName,
                                const TCollection_AsciiString& aDescription,

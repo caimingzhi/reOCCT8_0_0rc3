@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDataXtd_TriangulationDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Standard_Type.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <TDataXtd_Triangulation.hxx>
-#include <LDOM_OSStream.hxx>
+#include <XmlMDataXtd_TriangulationDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Standard_Type.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <TDataXtd_Triangulation.hpp>
+#include <LDOM_OSStream.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_TriangulationDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(TriangString, "triangulation")

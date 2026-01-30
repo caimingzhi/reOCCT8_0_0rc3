@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWSecurityClassificationLevel.pxx"
-#include <StepBasic_SecurityClassificationLevel.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWSecurityClassificationLevel.hpp"
+#include <StepBasic_SecurityClassificationLevel.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWSecurityClassificationLevel::RWStepBasic_RWSecurityClassificationLevel() = default;
 

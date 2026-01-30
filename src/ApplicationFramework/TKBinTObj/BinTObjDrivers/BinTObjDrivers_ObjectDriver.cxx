@@ -15,14 +15,14 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <Message_Messenger.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <TDF_Tool.hxx>
+#include <Message_Messenger.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <TDF_Tool.hpp>
 
-#include <BinTObjDrivers_ObjectDriver.hxx>
-#include <TObj_Assistant.hxx>
-#include <TObj_TObject.hxx>
-#include <TObj_Persistence.hxx>
+#include <BinTObjDrivers_ObjectDriver.hpp>
+#include <TObj_Assistant.hpp>
+#include <TObj_TObject.hpp>
+#include <TObj_Persistence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_ObjectDriver, BinMDF_ADriver)
 

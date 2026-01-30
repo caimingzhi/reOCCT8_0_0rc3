@@ -15,34 +15,34 @@
 // commercial license or contractual agreement.
 
 // Include self.
-#include <BRepOffset_MakeSimpleOffset.hxx>
+#include <BRepOffset_MakeSimpleOffset.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepTools_Quilt.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepOffset_SimpleOffset.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <GeomFill_Generator.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <NCollection_List.hxx>
-#include <ShapeAnalysis_FreeBounds.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepTools_Quilt.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepOffset_SimpleOffset.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <GeomFill_Generator.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <NCollection_List.hpp>
+#include <ShapeAnalysis_FreeBounds.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 //=================================================================================================
 

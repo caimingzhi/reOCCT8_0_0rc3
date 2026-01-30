@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Curve.hxx>
-#include <StepShape_EdgeCurve.hxx>
-#include <StepShape_Vertex.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Curve.hpp>
+#include <StepShape_EdgeCurve.hpp>
+#include <StepShape_Vertex.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_EdgeCurve, StepShape_Edge)
 

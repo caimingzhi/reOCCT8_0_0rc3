@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_BezierSurface.hxx>
+#include <GeomGridEval_BezierSurface.hpp>
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <GeomGridEval_Curve.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <GeomGridEval_Curve.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
 
 namespace
 {

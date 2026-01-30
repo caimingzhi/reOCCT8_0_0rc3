@@ -22,14 +22,14 @@
 //                authentication we cut last '\r' in the line (which will
 //                be present if file is in DOS coding)
 
-#include <Message_ProgressScope.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeSet.hxx>
-#include <Standard_Assert.hxx>
+#include <Message_ProgressScope.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeSet.hpp>
+#include <Standard_Assert.hpp>
 
-#include <BRep_TFace.hxx>
+#include <BRep_TFace.hpp>
 
 #include <cstring>
 

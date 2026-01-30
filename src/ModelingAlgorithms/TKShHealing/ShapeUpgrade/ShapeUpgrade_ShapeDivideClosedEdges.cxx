@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeUpgrade_ClosedEdgeDivide.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_ShapeDivideClosedEdges.hxx>
-#include <ShapeUpgrade_SplitSurface.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <TopoDS_Shape.hxx>
+#include <ShapeUpgrade_ClosedEdgeDivide.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_ShapeDivideClosedEdges.hpp>
+#include <ShapeUpgrade_SplitSurface.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
+#include <BOPTest.hpp>
 
-#include <BOPAlgo_MakePeriodic.hxx>
+#include <BOPAlgo_MakePeriodic.hpp>
 
-#include <BOPTest_DrawableShape.hxx>
-#include <BOPTest_Objects.hxx>
+#include <BOPTest_DrawableShape.hpp>
+#include <BOPTest_Objects.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_Objects.hpp>
 
-#include <DBRep.hxx>
-#include <Draw.hxx>
+#include <DBRep.hpp>
+#include <Draw.hpp>
 
-#include <TopoDS.hxx>
+#include <TopoDS.hpp>
 
 static int MakePeriodic(Draw_Interpretor&, int, const char**);
 static int GetTwins(Draw_Interpretor&, int, const char**);

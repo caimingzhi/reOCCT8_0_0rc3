@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_PlanarBox.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_PlanarBox.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_PlanarBox, StepVisual_PlanarExtent)
 

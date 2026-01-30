@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP242_ItemIdentifiedRepresentationUsage.hxx>
+#include <StepAP242_ItemIdentifiedRepresentationUsage.hpp>
 
-#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP242_ItemIdentifiedRepresentationUsage, Standard_Transient)
 

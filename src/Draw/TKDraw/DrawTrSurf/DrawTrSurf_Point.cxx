@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_Point.hxx>
+#include <DrawTrSurf_Point.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Point, Draw_Drawable3D)
 

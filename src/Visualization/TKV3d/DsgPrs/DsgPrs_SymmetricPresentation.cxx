@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_SymmetricPresentation.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeLin.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
+#include <DsgPrs_SymmetricPresentation.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeLin.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
 
 //===================================================================
 // Function:Add

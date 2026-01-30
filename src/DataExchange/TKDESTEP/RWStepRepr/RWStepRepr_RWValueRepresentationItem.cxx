@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include "RWStepRepr_RWValueRepresentationItem.pxx"
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_ValueRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include "RWStepRepr_RWValueRepresentationItem.hpp"
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_ValueRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepRepr_RWValueRepresentationItem::RWStepRepr_RWValueRepresentationItem() = default;
 

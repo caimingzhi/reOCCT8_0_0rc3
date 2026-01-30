@@ -19,27 +19,27 @@
 //                            tri des solutions pour eviter de rendre plusieurs
 //                            fois la meme solution
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Range.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_CurveTool.hxx>
-#include <Extrema_ExtCC.hxx>
-#include <Extrema_ExtElC.hxx>
-#include <Extrema_ExtPElC.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_List.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Range.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_CurveTool.hpp>
+#include <Extrema_ExtCC.hpp>
+#include <Extrema_ExtElC.hpp>
+#include <Extrema_ExtPElC.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

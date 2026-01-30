@@ -15,20 +15,20 @@
 
 // The original implementation copyright (c) RINA S.p.A.
 
-#include <Message.hxx>
-#include <Message_Algorithm.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Message_MsgFile.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TCollection_HExtendedString.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Message.hpp>
+#include <Message_Algorithm.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Message_MsgFile.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TCollection_HExtendedString.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_Algorithm, Standard_Transient)
 

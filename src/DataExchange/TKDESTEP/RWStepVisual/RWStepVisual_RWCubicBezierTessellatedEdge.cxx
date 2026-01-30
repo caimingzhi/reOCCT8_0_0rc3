@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWCubicBezierTessellatedEdge.pxx"
-#include <StepVisual_CubicBezierTessellatedEdge.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepVisual_CoordinatesList.hxx>
-#include <StepVisual_EdgeOrCurve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include "RWStepVisual_RWCubicBezierTessellatedEdge.hpp"
+#include <StepVisual_CubicBezierTessellatedEdge.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepVisual_CoordinatesList.hpp>
+#include <StepVisual_EdgeOrCurve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

@@ -17,12 +17,12 @@
 //                                                                        +
 //=========================================================================
 
-#include <GccEnt.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <GccEnt.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <TCollection_AsciiString.hpp>
 
 namespace
 {

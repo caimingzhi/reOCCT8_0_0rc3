@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DiscretFactory.hxx>
+#include <BRepMesh_DiscretFactory.hpp>
 
-#include <OSD_SharedLibrary.hxx>
-#include <OSD_Function.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepMesh_DiscretRoot.hxx>
+#include <OSD_SharedLibrary.hpp>
+#include <OSD_Function.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <BRepMesh_DiscretRoot.hpp>
 
 namespace
 {

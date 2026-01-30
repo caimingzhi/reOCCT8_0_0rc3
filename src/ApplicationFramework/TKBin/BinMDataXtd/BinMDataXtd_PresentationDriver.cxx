@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataXtd_PresentationDriver.hxx>
+#include <BinMDataXtd_PresentationDriver.hpp>
 
-#include <TDataXtd_Presentation.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Quantity_Color.hxx>
+#include <TDataXtd_Presentation.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Quantity_Color.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PresentationDriver, BinMDF_ADriver)
 

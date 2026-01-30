@@ -13,24 +13,24 @@
 
 //: i1 pdn 03.04.99  BUC60301
 
-#include <Geom2d_Point.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_HGraph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Transfer_ResultFromModel.hxx>
-#include <Transfer_ResultFromTransient.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_Vars.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <Geom2d_Point.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_HGraph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Transfer_ResultFromModel.hpp>
+#include <Transfer_ResultFromTransient.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_Vars.hpp>
+#include <XSControl_WorkSession.hpp>
 
 #include <mutex>
 

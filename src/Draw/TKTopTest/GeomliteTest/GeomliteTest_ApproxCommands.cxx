@@ -17,7 +17,7 @@
 // PMN : Ajout de la commande smooth
 // PMN : 11/07/97 Passage a GeomliteTest de bsmooth.
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -25,32 +25,32 @@
 
 #include <fstream>
 
-#include <GeomliteTest.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_Marker2D.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <gp_Pnt2d.hxx>
+#include <GeomliteTest.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_Marker2D.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <gp_Pnt2d.hpp>
 
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <DrawTrSurf_BSplineCurve.hxx>
-#include <DrawTrSurf_BezierCurve.hxx>
-#include <DrawTrSurf_BSplineCurve2d.hxx>
-#include <DrawTrSurf_BezierCurve2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <DrawTrSurf_BSplineCurve.hpp>
+#include <DrawTrSurf_BezierCurve.hpp>
+#include <DrawTrSurf_BSplineCurve2d.hpp>
+#include <DrawTrSurf_BezierCurve2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <AppDef_Variational.hxx>
-#include <AppDef_Compute.hxx>
-#include <AppParCurves_ConstraintCouple.hxx>
-#include <AppDef_MultiPointConstraint.hxx>
+#include <AppDef_Variational.hpp>
+#include <AppDef_Compute.hpp>
+#include <AppParCurves_ConstraintCouple.hpp>
+#include <AppDef_MultiPointConstraint.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

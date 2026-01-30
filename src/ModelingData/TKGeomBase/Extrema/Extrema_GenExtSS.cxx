@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_GenExtSS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <math_BFGS.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
-#include <math_Vector.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_GenExtSS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <math_BFGS.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
+#include <math_Vector.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
 
 //! This class represents distance objective function for surface / surface.
 class Extrema_FuncDistSS : public math_MultipleVarFunctionWithGradient

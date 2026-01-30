@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepAdaptor_Curve.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <Geom_OffsetCurve.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <Geom_OffsetCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Curve, Adaptor3d_Curve)
 

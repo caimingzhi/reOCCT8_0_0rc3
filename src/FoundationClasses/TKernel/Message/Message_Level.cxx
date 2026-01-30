@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Level.hxx>
+#include <Message_Level.hpp>
 
-#include <Message.hxx>
-#include <Message_AlertExtended.hxx>
-#include <Message_CompositeAlerts.hxx>
-#include <Message_AttributeMeter.hxx>
-#include <Message_Report.hxx>
+#include <Message.hpp>
+#include <Message_AlertExtended.hpp>
+#include <Message_CompositeAlerts.hpp>
+#include <Message_AttributeMeter.hpp>
+#include <Message_Report.hpp>
 
-#include <OSD_Chronometer.hxx>
+#include <OSD_Chronometer.hpp>
 
 //=================================================================================================
 

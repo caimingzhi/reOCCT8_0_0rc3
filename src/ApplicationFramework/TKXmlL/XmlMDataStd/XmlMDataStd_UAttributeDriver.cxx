@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDF_Attribute.hxx>
-#include <XmlMDataStd_UAttributeDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDF_Attribute.hpp>
+#include <XmlMDataStd_UAttributeDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_UAttributeDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(GuidString, "guid")

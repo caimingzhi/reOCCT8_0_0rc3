@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFNoteObjects_NoteObject.hxx>
+#include <XCAFNoteObjects_NoteObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFNoteObjects_NoteObject, Standard_Transient)
 

@@ -13,32 +13,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_EdgeFace.hxx>
+#include <IntTools_EdgeFace.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Torus.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntTools.hxx>
-#include <IntTools_BeanFaceIntersector.hxx>
-#include <IntTools_CommonPrt.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <IntTools_Range.hxx>
-#include <IntTools_Tools.hxx>
-#include <Precision.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Torus.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntTools.hpp>
+#include <IntTools_BeanFaceIntersector.hpp>
+#include <IntTools_CommonPrt.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <IntTools_Range.hpp>
+#include <IntTools_Tools.hpp>
+#include <Precision.hpp>
 
 #include <algorithm>
 static bool IsCoplanar(const BRepAdaptor_Curve&, const BRepAdaptor_Surface&);

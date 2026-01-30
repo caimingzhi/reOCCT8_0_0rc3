@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWToleranceValue.pxx"
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_ToleranceValue.hxx>
-#include <StepRepr_MeasureRepresentationItem.hxx>
-#include <StepRepr_ReprItemAndMeasureWithUnit.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWToleranceValue.hpp"
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_ToleranceValue.hpp>
+#include <StepRepr_MeasureRepresentationItem.hpp>
+#include <StepRepr_ReprItemAndMeasureWithUnit.hpp>
 
 RWStepShape_RWToleranceValue::RWStepShape_RWToleranceValue() = default;
 

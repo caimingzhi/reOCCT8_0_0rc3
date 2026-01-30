@@ -3,93 +3,93 @@ set(OCCT_TDataStd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TDataStd_FILES
   TDataStd.cxx
-  TDataStd.hxx
+  TDataStd.hpp
   TDataStd_AsciiString.cxx
-  TDataStd_AsciiString.hxx
+  TDataStd_AsciiString.hpp
   TDataStd_BooleanArray.cxx
-  TDataStd_BooleanArray.hxx
+  TDataStd_BooleanArray.hpp
   TDataStd_BooleanList.cxx
-  TDataStd_BooleanList.hxx
+  TDataStd_BooleanList.hpp
   TDataStd_ByteArray.cxx
-  TDataStd_ByteArray.hxx
+  TDataStd_ByteArray.hpp
   TDataStd_ChildNodeIterator.cxx
-  TDataStd_ChildNodeIterator.hxx
+  TDataStd_ChildNodeIterator.hpp
   TDataStd_Comment.cxx
-  TDataStd_Comment.hxx
+  TDataStd_Comment.hpp
   TDataStd_Current.cxx
-  TDataStd_Current.hxx
+  TDataStd_Current.hpp
   TDataStd_GenericEmpty.cxx
-  TDataStd_GenericEmpty.hxx
+  TDataStd_GenericEmpty.hpp
   TDataStd_GenericExtString.cxx
-  TDataStd_GenericExtString.hxx
+  TDataStd_GenericExtString.hpp
 
   TDataStd_DeltaOnModificationOfByteArray.cxx
-  TDataStd_DeltaOnModificationOfByteArray.hxx
+  TDataStd_DeltaOnModificationOfByteArray.hpp
   TDataStd_DeltaOnModificationOfExtStringArray.cxx
-  TDataStd_DeltaOnModificationOfExtStringArray.hxx
+  TDataStd_DeltaOnModificationOfExtStringArray.hpp
   TDataStd_DeltaOnModificationOfIntArray.cxx
-  TDataStd_DeltaOnModificationOfIntArray.hxx
+  TDataStd_DeltaOnModificationOfIntArray.hpp
   TDataStd_DeltaOnModificationOfIntPackedMap.cxx
-  TDataStd_DeltaOnModificationOfIntPackedMap.hxx
+  TDataStd_DeltaOnModificationOfIntPackedMap.hpp
   TDataStd_DeltaOnModificationOfRealArray.cxx
-  TDataStd_DeltaOnModificationOfRealArray.hxx
+  TDataStd_DeltaOnModificationOfRealArray.hpp
   TDataStd_Directory.cxx
-  TDataStd_Directory.hxx
+  TDataStd_Directory.hpp
   TDataStd_Expression.cxx
-  TDataStd_Expression.hxx
+  TDataStd_Expression.hpp
   TDataStd_ExtStringArray.cxx
-  TDataStd_ExtStringArray.hxx
+  TDataStd_ExtStringArray.hpp
   TDataStd_ExtStringList.cxx
-  TDataStd_ExtStringList.hxx
+  TDataStd_ExtStringList.hpp
   TDataStd_HDataMapOfStringByte.cxx
-  TDataStd_HDataMapOfStringByte.hxx
+  TDataStd_HDataMapOfStringByte.hpp
   TDataStd_HDataMapOfStringHArray1OfInteger.cxx
-  TDataStd_HDataMapOfStringHArray1OfInteger.hxx
+  TDataStd_HDataMapOfStringHArray1OfInteger.hpp
   TDataStd_HDataMapOfStringHArray1OfReal.cxx
-  TDataStd_HDataMapOfStringHArray1OfReal.hxx
+  TDataStd_HDataMapOfStringHArray1OfReal.hpp
   TDataStd_HDataMapOfStringInteger.cxx
-  TDataStd_HDataMapOfStringInteger.hxx
+  TDataStd_HDataMapOfStringInteger.hpp
   TDataStd_HDataMapOfStringReal.cxx
-  TDataStd_HDataMapOfStringReal.hxx
+  TDataStd_HDataMapOfStringReal.hpp
   TDataStd_HDataMapOfStringString.cxx
-  TDataStd_HDataMapOfStringString.hxx
+  TDataStd_HDataMapOfStringString.hpp
 
   TDataStd_Integer.cxx
-  TDataStd_Integer.hxx
+  TDataStd_Integer.hpp
   TDataStd_IntegerArray.cxx
-  TDataStd_IntegerArray.hxx
+  TDataStd_IntegerArray.hpp
   TDataStd_IntegerList.cxx
-  TDataStd_IntegerList.hxx
+  TDataStd_IntegerList.hpp
   TDataStd_IntPackedMap.cxx
-  TDataStd_IntPackedMap.hxx
+  TDataStd_IntPackedMap.hpp
 
   TDataStd_Name.cxx
-  TDataStd_Name.hxx
+  TDataStd_Name.hpp
   TDataStd_NamedData.cxx
-  TDataStd_NamedData.hxx
+  TDataStd_NamedData.hpp
   TDataStd_NoteBook.cxx
-  TDataStd_NoteBook.hxx
-  TDataStd_PtrTreeNode.hxx
+  TDataStd_NoteBook.hpp
+  TDataStd_PtrTreeNode.hpp
   TDataStd_Real.cxx
-  TDataStd_Real.hxx
+  TDataStd_Real.hpp
   TDataStd_RealArray.cxx
-  TDataStd_RealArray.hxx
-  TDataStd_RealEnum.hxx
+  TDataStd_RealArray.hpp
+  TDataStd_RealEnum.hpp
   TDataStd_RealList.cxx
-  TDataStd_RealList.hxx
+  TDataStd_RealList.hpp
   TDataStd_ReferenceArray.cxx
-  TDataStd_ReferenceArray.hxx
+  TDataStd_ReferenceArray.hpp
   TDataStd_ReferenceList.cxx
-  TDataStd_ReferenceList.hxx
+  TDataStd_ReferenceList.hpp
   TDataStd_Relation.cxx
-  TDataStd_Relation.hxx
+  TDataStd_Relation.hpp
   TDataStd_Tick.cxx
-  TDataStd_Tick.hxx
+  TDataStd_Tick.hpp
   TDataStd_TreeNode.cxx
-  TDataStd_TreeNode.hxx
-  TDataStd_TreeNode.lxx
+  TDataStd_TreeNode.hpp
+  TDataStd_TreeNode_1.hpp
   TDataStd_UAttribute.cxx
-  TDataStd_UAttribute.hxx
+  TDataStd_UAttribute.hpp
   TDataStd_Variable.cxx
-  TDataStd_Variable.hxx
+  TDataStd_Variable.hpp
 )

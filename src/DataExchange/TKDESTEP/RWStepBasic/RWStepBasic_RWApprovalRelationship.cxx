@@ -13,12 +13,12 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWApprovalRelationship.pxx"
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_ApprovalRelationship.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWApprovalRelationship.hpp"
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_ApprovalRelationship.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWApprovalRelationship::RWStepBasic_RWApprovalRelationship() = default;
 

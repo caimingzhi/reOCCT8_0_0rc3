@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_Gauss.hxx>
+#include <math_Gauss.hpp>
 
-#include <math_Matrix.hxx>
-#include <math_NotSquare.hxx>
-#include <math_Recipes.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Matrix.hpp>
+#include <math_NotSquare.hpp>
+#include <math_Recipes.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_Gauss::math_Gauss(const math_Matrix&           A,
                        const double                 MinPivot,

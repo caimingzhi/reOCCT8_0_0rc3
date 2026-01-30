@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepVisual_ExternallyDefinedCurveFont.hxx>
+#include <StepVisual_ExternallyDefinedCurveFont.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_ExternallyDefinedCurveFont, StepBasic_ExternallyDefinedItem)
 

@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_LineWidening.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_LineWidening.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_LineWidening, IGESData_IGESEntity)
 

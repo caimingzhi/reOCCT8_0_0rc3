@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_SectionLaw, Standard_Transient)
 

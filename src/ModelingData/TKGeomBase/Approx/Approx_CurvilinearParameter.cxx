@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_CurvilinearParameter.hxx>
+#include <Approx_CurvilinearParameter.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Approx_CurvlinFunc.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <math_Vector.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Approx_CurvlinFunc.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <math_Vector.hpp>
 
 #ifdef OCCT_DEBUG_CHRONO
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 static OSD_Chronometer chr_total, chr_init, chr_approx;
 
 double t_total, t_init, t_approx;

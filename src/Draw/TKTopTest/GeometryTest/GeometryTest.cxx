@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeometryTest.hxx>
-#include <GeomliteTest.hxx>
-#include <Standard_Boolean.hxx>
-#include <Draw_Interpretor.hxx>
+#include <GeometryTest.hpp>
+#include <GeomliteTest.hpp>
+#include <Standard_Boolean.hpp>
+#include <Draw_Interpretor.hpp>
 
 void GeometryTest::AllCommands(Draw_Interpretor& theCommands)
 {

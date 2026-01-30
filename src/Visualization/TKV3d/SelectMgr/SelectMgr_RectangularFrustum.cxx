@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_RectangularFrustum.hxx>
+#include <SelectMgr_RectangularFrustum.hpp>
 
-#include <BVH_Tools.hxx>
-#include <gp_Pln.hxx>
-#include <NCollection_Vector.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <SelectMgr_FrustumBuilder.hxx>
-#include <SelectMgr_ViewClipRange.hxx>
+#include <BVH_Tools.hpp>
+#include <gp_Pln.hpp>
+#include <NCollection_Vector.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <SelectMgr_FrustumBuilder.hpp>
+#include <SelectMgr_ViewClipRange.hpp>
 
 //=================================================================================================
 

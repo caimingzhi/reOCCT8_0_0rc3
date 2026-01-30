@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest_ContinuousRedrawer.hxx>
+#include <ViewerTest_ContinuousRedrawer.hpp>
 
-#include <Aspect_DisplayConnection.hxx>
-#include <OSD.hxx>
-#include <OSD_Timer.hxx>
-#include <V3d_View.hxx>
+#include <Aspect_DisplayConnection.hpp>
+#include <OSD.hpp>
+#include <OSD_Timer.hpp>
+#include <V3d_View.hpp>
 
 //=================================================================================================
 

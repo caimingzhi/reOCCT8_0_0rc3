@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TColStd_PackedMapOfInteger.hxx>
-#include <TDataStd_IntPackedMap.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <XmlMDataStd.hxx>
-#include <XmlMDataStd_IntPackedMapDriver.hxx>
-#include <XmlMDF_ADriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
-#include <XmlObjMgt_SRelocationTable.hxx>
+#include <Message_Messenger.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TColStd_PackedMapOfInteger.hpp>
+#include <TDataStd_IntPackedMap.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <XmlMDataStd.hpp>
+#include <XmlMDataStd_IntPackedMapDriver.hpp>
+#include <XmlMDF_ADriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
+#include <XmlObjMgt_SRelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_IntPackedMapDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(IntPackedMapSize, "mapsize")

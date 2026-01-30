@@ -16,25 +16,25 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_Flow.hxx>
-#include <IGESAppli_ToolFlow.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDraw_ConnectPoint.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
+#include <IGESAppli_Flow.hpp>
+#include <IGESAppli_ToolFlow.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDraw_ConnectPoint.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
 
 IGESAppli_ToolFlow::IGESAppli_ToolFlow() = default;
 

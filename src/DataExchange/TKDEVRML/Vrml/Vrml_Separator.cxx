@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Separator.hxx>
+#include <Vrml_Separator.hpp>
 
 Vrml_Separator::Vrml_Separator(const Vrml_SeparatorRenderCulling aRenderCulling)
 {

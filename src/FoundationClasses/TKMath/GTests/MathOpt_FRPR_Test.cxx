@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_FRPR.hxx>
-#include <MathOpt_BFGS.hxx>
-#include <math_FRPR.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
-#include <math_Vector.hxx>
+#include <MathOpt_FRPR.hpp>
+#include <MathOpt_BFGS.hpp>
+#include <math_FRPR.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
+#include <math_Vector.hpp>
 
 #include <cmath>
 

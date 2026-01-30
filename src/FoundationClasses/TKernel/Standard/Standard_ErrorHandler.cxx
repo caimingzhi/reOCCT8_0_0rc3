@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ErrorHandler.hxx>
+#include <Standard_ErrorHandler.hpp>
 
 // During [sig]setjmp()/[sig]longjmp() K_SETJMP is non zero (try)
 // So if there is an abort request and if K_SETJMP is non zero, the abort

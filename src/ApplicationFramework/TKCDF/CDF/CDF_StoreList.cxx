@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_Application.hxx>
-#include <CDF_MetaDataDriver.hxx>
-#include <CDF_StoreList.hxx>
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <CDM_ReferenceIterator.hxx>
-#include <PCDM_StorageDriver.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <CDF_Application.hpp>
+#include <CDF_MetaDataDriver.hpp>
+#include <CDF_StoreList.hpp>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <CDM_ReferenceIterator.hpp>
+#include <PCDM_StorageDriver.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_StoreList, Standard_Transient)
 

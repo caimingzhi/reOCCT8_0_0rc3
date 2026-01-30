@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <GProp.hxx>
-#include <GProp_VelGProps.hxx>
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <GProp.hpp>
+#include <GProp_VelGProps.hpp>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 GProp_VelGProps::GProp_VelGProps() = default;
 

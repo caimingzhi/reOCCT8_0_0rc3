@@ -12,26 +12,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_Dumper.hxx>
-#include <TopOpeBRepDS_Edge3dInterferenceTool.hxx>
-#include <TopOpeBRepDS_EdgeInterferenceTool.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_EIR.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_repvg.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_Dumper.hpp>
+#include <TopOpeBRepDS_Edge3dInterferenceTool.hpp>
+#include <TopOpeBRepDS_EdgeInterferenceTool.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_EIR.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_repvg.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define M_FORWARD(O) (O == TopAbs_FORWARD)
 #define M_REVERSED(O) (O == TopAbs_REVERSED)

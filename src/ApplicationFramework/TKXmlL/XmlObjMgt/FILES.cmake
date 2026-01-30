@@ -3,20 +3,20 @@ set(OCCT_XmlObjMgt_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XmlObjMgt_FILES
   XmlObjMgt.cxx
-  XmlObjMgt.hxx
+  XmlObjMgt.hpp
   XmlObjMgt_Array1.cxx
-  XmlObjMgt_Array1.hxx
-  XmlObjMgt_Array1.lxx
-  XmlObjMgt_Document.hxx
-  XmlObjMgt_DOMString.hxx
-  XmlObjMgt_Element.hxx
+  XmlObjMgt_Array1.hpp
+  XmlObjMgt_Array1_1.hpp
+  XmlObjMgt_Document.hpp
+  XmlObjMgt_DOMString.hpp
+  XmlObjMgt_Element.hpp
   XmlObjMgt_GP.cxx
-  XmlObjMgt_GP.hxx
+  XmlObjMgt_GP.hpp
   XmlObjMgt_Persistent.cxx
-  XmlObjMgt_Persistent.hxx
-  XmlObjMgt_Persistent.lxx
+  XmlObjMgt_Persistent.hpp
+  XmlObjMgt_Persistent_1.hpp
   XmlObjMgt_RRelocationTable.cxx
-  XmlObjMgt_RRelocationTable.hxx
+  XmlObjMgt_RRelocationTable.hpp
   XmlObjMgt_SRelocationTable.cxx
-  XmlObjMgt_SRelocationTable.hxx
+  XmlObjMgt_SRelocationTable.hpp
 )

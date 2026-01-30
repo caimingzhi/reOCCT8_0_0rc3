@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepFeat_MakeCylindricalHole.hxx>
-#include <BRepPrim_Cylinder.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Ax1.hxx>
-#include <LocOpe_CurveShapeIntersector.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Solid.hxx>
-#include <NCollection_List.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <CSLib.hxx>
+#include <Bnd_Box.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepFeat_MakeCylindricalHole.hpp>
+#include <BRepPrim_Cylinder.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Ax1.hpp>
+#include <LocOpe_CurveShapeIntersector.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Solid.hpp>
+#include <NCollection_List.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <CSLib.hpp>
 
 static void Baryc(const TopoDS_Shape&, gp_Pnt&);
 

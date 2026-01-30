@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_BVHThreadPool.hxx>
+#include <SelectMgr_BVHThreadPool.hpp>
 
-#include <Message.hxx>
-#include <OSD.hxx>
-#include <OSD_Parallel.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <Message.hpp>
+#include <OSD.hpp>
+#include <OSD_Parallel.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_BVHThreadPool, Standard_Transient)
 

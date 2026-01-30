@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepTool_2d.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepTool_2d.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool              TopOpeBRep_GettraceSHA(const int i);

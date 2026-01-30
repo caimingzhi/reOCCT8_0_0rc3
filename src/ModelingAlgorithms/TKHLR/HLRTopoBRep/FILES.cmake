@@ -3,21 +3,21 @@ set(OCCT_HLRTopoBRep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_HLRTopoBRep_FILES
   HLRTopoBRep_Data.cxx
-  HLRTopoBRep_Data.hxx
-  HLRTopoBRep_Data.lxx
+  HLRTopoBRep_Data.hpp
+  HLRTopoBRep_Data_1.hpp
 
   HLRTopoBRep_DSFiller.cxx
-  HLRTopoBRep_DSFiller.hxx
+  HLRTopoBRep_DSFiller.hpp
   HLRTopoBRep_FaceData.cxx
-  HLRTopoBRep_FaceData.hxx
-  HLRTopoBRep_FaceData.lxx
+  HLRTopoBRep_FaceData.hpp
+  HLRTopoBRep_FaceData_1.hpp
   HLRTopoBRep_FaceIsoLiner.cxx
-  HLRTopoBRep_FaceIsoLiner.hxx
+  HLRTopoBRep_FaceIsoLiner.hpp
 
   HLRTopoBRep_OutLiner.cxx
-  HLRTopoBRep_OutLiner.hxx
-  HLRTopoBRep_OutLiner.lxx
+  HLRTopoBRep_OutLiner.hpp
+  HLRTopoBRep_OutLiner_1.hpp
   HLRTopoBRep_VData.cxx
-  HLRTopoBRep_VData.hxx
-  HLRTopoBRep_VData.lxx
+  HLRTopoBRep_VData.hpp
+  HLRTopoBRep_VData_1.hpp
 )

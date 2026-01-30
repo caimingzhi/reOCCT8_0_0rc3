@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTopAdaptor_HVertex.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRepTopAdaptor_HVertex.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 #ifdef OCCT_DEBUG
 static TCollection_AsciiString PRODINP("dinp ");

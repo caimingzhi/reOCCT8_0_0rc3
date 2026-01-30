@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_CurveRepresentation.hxx>
-#include <BRep_PolygonOnSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Poly_Polygon2D.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
+#include <BRep_CurveRepresentation.hpp>
+#include <BRep_PolygonOnSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Poly_Polygon2D.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PolygonOnSurface, BRep_CurveRepresentation)
 

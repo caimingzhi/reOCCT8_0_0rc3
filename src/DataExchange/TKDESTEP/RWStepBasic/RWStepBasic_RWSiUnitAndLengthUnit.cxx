@@ -13,16 +13,16 @@
 
 // pdn 24.12.98 t3d_opt.stp: treatment of unsorted uncertanties
 
-#include "RWStepBasic_RWSiUnitAndLengthUnit.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiPrefix.hxx>
-#include <StepBasic_SiUnitAndLengthUnit.hxx>
-#include <StepBasic_SiUnitName.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWSiUnitAndLengthUnit.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiPrefix.hpp>
+#include <StepBasic_SiUnitAndLengthUnit.hpp>
+#include <StepBasic_SiUnitName.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
-#include "RWStepBasic_RWSiUnitName.pxx"
-#include "RWStepBasic_RWSiPrefix.pxx"
+#include "RWStepBasic_RWSiUnitName.hpp"
+#include "RWStepBasic_RWSiPrefix.hpp"
 
 RWStepBasic_RWSiUnitAndLengthUnit::RWStepBasic_RWSiUnitAndLengthUnit() = default;
 

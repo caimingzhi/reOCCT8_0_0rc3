@@ -18,74 +18,74 @@
 // Modified by PMN 14/04/97 : Passage a Geomlite
 // Modified by JPI 01/08/97 : ajout de la commande approxcurve
 
-#include <GeomliteTest.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_BezierCurve.hxx>
-#include <DrawTrSurf_BSplineCurve.hxx>
-#include <DrawTrSurf_BezierCurve2d.hxx>
-#include <DrawTrSurf_BSplineCurve2d.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_Marker2D.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
+#include <GeomliteTest.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_BezierCurve.hpp>
+#include <DrawTrSurf_BSplineCurve.hpp>
+#include <DrawTrSurf_BezierCurve2d.hpp>
+#include <DrawTrSurf_BSplineCurve2d.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_Marker2D.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
 
-#include <gp.hxx>
+#include <gp.hpp>
 
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <GeomAdaptor_Surface.hpp>
 
-#include <GeomLib.hxx>
-#include <Geom2dConvert.hxx>
+#include <GeomLib.hpp>
+#include <Geom2dConvert.hpp>
 
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
 
-#include <GeomLProp.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <Geom2dLProp_CurAndInf2d.hxx>
+#include <GeomLProp.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <Geom2dLProp_CurAndInf2d.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Integer.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Integer.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
 #include <cstdio>
 
-#include <NCollection_HArray1.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
+#include <NCollection_HArray1.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
 
-#include <GeomAbs_Shape.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_ApproxCurve.hxx>
-#include <Geom2dConvert_ApproxCurve.hxx>
-#include <Geom2d_Curve.hxx>
+#include <GeomAbs_Shape.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_ApproxCurve.hpp>
+#include <Geom2dConvert_ApproxCurve.hpp>
+#include <Geom2d_Curve.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Approx_CurvilinearParameter.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Approx_CurvilinearParameter.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Approx_FitAndDivide.hxx>
-#include <Convert_CompBezierCurvesToBSplineCurve.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Approx_FitAndDivide.hpp>
+#include <Convert_CompBezierCurvesToBSplineCurve.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

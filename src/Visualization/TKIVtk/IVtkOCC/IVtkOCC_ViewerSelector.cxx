@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtkOCC_ViewerSelector.hxx>
+#include <IVtkOCC_ViewerSelector.hpp>
 
-#include <Select3D_SensitiveBox.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <Graphic3d_Camera.hxx>
+#include <Select3D_SensitiveBox.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <Graphic3d_Camera.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_ViewerSelector, SelectMgr_ViewerSelector)
 

@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <Standard_Type.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <StdSelect_FaceFilter.hxx>
-#include <TopAbs.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <Standard_Type.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <StdSelect_FaceFilter.hpp>
+#include <TopAbs.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_FaceFilter, SelectMgr_Filter)
 

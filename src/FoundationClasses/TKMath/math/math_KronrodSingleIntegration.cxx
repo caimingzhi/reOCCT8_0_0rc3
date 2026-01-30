@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math.hxx>
-#include <math_Function.hxx>
-#include <math_KronrodSingleIntegration.hxx>
-#include <math_Vector.hxx>
-#include <NCollection_Sequence.hxx>
+#include <math.hpp>
+#include <math_Function.hpp>
+#include <math_KronrodSingleIntegration.hpp>
+#include <math_Vector.hpp>
+#include <NCollection_Sequence.hpp>
 
 //==========================================================================
 // function : An empty constructor.

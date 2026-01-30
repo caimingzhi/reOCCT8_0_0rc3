@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly_MakeLoops.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_DataMap.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
+#include <Poly_MakeLoops.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_DataMap.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
 
 #ifdef OCCT_DEBUG
 static int doDebug = 0;

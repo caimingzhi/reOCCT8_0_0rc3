@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepIntCurveSurface_Inter.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_TransitionOnCurve.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_FaceEdgeIntersector.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepIntCurveSurface_Inter.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_TransitionOnCurve.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_FaceEdgeIntersector.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <TopAbs.hxx>
+  #include <TopAbs.hpp>
 extern bool TopOpeBRep_GettraceFITOL();
 extern bool TopOpeBRep_GettraceSAVFF();
-  #include <TCollection_AsciiString.hxx>
-  #include <Standard_CString.hxx>
-  #include <BRepTools.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <Standard_CString.hpp>
+  #include <BRepTools.hpp>
 
 static void SAVFE(const TopoDS_Face& F1, const TopoDS_Edge& E)
 {
@@ -48,7 +48,7 @@ static void SAVFE(const TopoDS_Face& F1, const TopoDS_Edge& E)
 }
 
 extern bool TopOpeBRepTool_GettraceKRO();
-  #include <TopOpeBRepTool_KRO.hxx>
+  #include <TopOpeBRepTool_KRO.hpp>
 Standard_EXPORT TOPKRO KRO_DSFILLER_INTFE("intersection face/edge");
 #endif
 

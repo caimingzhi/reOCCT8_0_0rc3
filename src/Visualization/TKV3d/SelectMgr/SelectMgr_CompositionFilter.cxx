@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_CompositionFilter.hxx>
-#include <SelectMgr_Filter.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_Type.hxx>
+#include <SelectMgr_CompositionFilter.hpp>
+#include <SelectMgr_Filter.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_CompositionFilter, SelectMgr_Filter)
 

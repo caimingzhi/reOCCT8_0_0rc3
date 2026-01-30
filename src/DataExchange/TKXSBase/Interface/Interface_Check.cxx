@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_Check, Standard_Transient)
 

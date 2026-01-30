@@ -3,91 +3,91 @@ set(OCCT_IntPatch_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IntPatch_FILES
   IntPatch_ALine.cxx
-  IntPatch_ALine.hxx
-  IntPatch_ALine.lxx
+  IntPatch_ALine.hpp
+  IntPatch_ALine_1.hpp
   IntPatch_ALineToWLine.cxx
-  IntPatch_ALineToWLine.hxx
+  IntPatch_ALineToWLine.hpp
   IntPatch_ArcFunction.cxx
-  IntPatch_ArcFunction.hxx
-  IntPatch_ArcFunction.lxx
+  IntPatch_ArcFunction.hpp
+  IntPatch_ArcFunction_1.hpp
   IntPatch_CSFunction.cxx
-  IntPatch_CSFunction.hxx
-  IntPatch_CurvIntSurf.hxx
+  IntPatch_CSFunction.hpp
+  IntPatch_CurvIntSurf.hpp
   IntPatch_CurvIntSurf_0.cxx
   IntPatch_GLine.cxx
-  IntPatch_GLine.hxx
-  IntPatch_GLine.lxx
+  IntPatch_GLine.hpp
+  IntPatch_GLine_1.hpp
   IntPatch_HCurve2dTool.cxx
-  IntPatch_HCurve2dTool.hxx
-  IntPatch_HCurve2dTool.lxx
+  IntPatch_HCurve2dTool.hpp
+  IntPatch_HCurve2dTool_1.hpp
   IntPatch_HInterTool.cxx
-  IntPatch_HInterTool.hxx
-  IntPatch_HInterTool.lxx
-  IntPatch_IType.hxx
+  IntPatch_HInterTool.hpp
+  IntPatch_HInterTool_1.hpp
+  IntPatch_IType.hpp
   IntPatch_ImpImpIntersection.cxx
-  IntPatch_ImpImpIntersection.hxx
-  IntPatch_ImpImpIntersection.lxx
+  IntPatch_ImpImpIntersection.hpp
+  IntPatch_ImpImpIntersection_1.hpp
   IntPatch_ImpPrmIntersection.cxx
-  IntPatch_ImpPrmIntersection.hxx
-  IntPatch_ImpPrmIntersection.lxx
+  IntPatch_ImpPrmIntersection.hpp
+  IntPatch_ImpPrmIntersection_1.hpp
   IntPatch_InterferencePolyhedron.cxx
-  IntPatch_InterferencePolyhedron.hxx
+  IntPatch_InterferencePolyhedron.hpp
   IntPatch_Intersection.cxx
-  IntPatch_Intersection.hxx
-  IntPatch_Intersection.lxx
+  IntPatch_Intersection.hpp
+  IntPatch_Intersection_1.hpp
   IntPatch_Line.cxx
-  IntPatch_Line.hxx
-  IntPatch_Line.lxx
+  IntPatch_Line.hpp
+  IntPatch_Line_1.hpp
   IntPatch_LineConstructor.cxx
-  IntPatch_LineConstructor.hxx
+  IntPatch_LineConstructor.hpp
   IntPatch_Point.cxx
-  IntPatch_Point.hxx
-  IntPatch_Point.lxx
+  IntPatch_Point.hpp
+  IntPatch_Point_1.hpp
   IntPatch_PointLine.cxx
-  IntPatch_PointLine.hxx
+  IntPatch_PointLine.hpp
   IntPatch_PolyArc.cxx
-  IntPatch_PolyArc.hxx
+  IntPatch_PolyArc.hpp
   IntPatch_PolyLine.cxx
-  IntPatch_PolyLine.hxx
+  IntPatch_PolyLine.hpp
   IntPatch_Polygo.cxx
-  IntPatch_Polygo.hxx
-  IntPatch_Polygo.lxx
+  IntPatch_Polygo.hpp
+  IntPatch_Polygo_1.hpp
   IntPatch_Polyhedron.cxx
-  IntPatch_Polyhedron.hxx
-  IntPatch_PolyhedronTool.hxx
-  IntPatch_PolyhedronTool.lxx
+  IntPatch_Polyhedron.hpp
+  IntPatch_PolyhedronTool.hpp
+  IntPatch_PolyhedronTool_1.hpp
   IntPatch_PrmPrmIntersection.cxx
-  IntPatch_PrmPrmIntersection.hxx
-  IntPatch_PrmPrmIntersection.lxx
+  IntPatch_PrmPrmIntersection.hpp
+  IntPatch_PrmPrmIntersection_1.hpp
   IntPatch_PrmPrmIntersection_T3Bits.cxx
-  IntPatch_PrmPrmIntersection_T3Bits.hxx
+  IntPatch_PrmPrmIntersection_T3Bits.hpp
   IntPatch_RLine.cxx
-  IntPatch_RLine.hxx
-  IntPatch_RLine.lxx
+  IntPatch_RLine.hpp
+  IntPatch_RLine_1.hpp
   IntPatch_RstInt.cxx
-  IntPatch_RstInt.hxx
-  IntPatch_SearchPnt.hxx
+  IntPatch_RstInt.hpp
+  IntPatch_SearchPnt.hpp
 
-  IntPatch_SpecPntType.hxx
+  IntPatch_SpecPntType.hpp
   IntPatch_SpecialPoints.cxx
-  IntPatch_SpecialPoints.hxx
-  IntPatch_TheIWLineOfTheIWalking.hxx
+  IntPatch_SpecialPoints.hpp
+  IntPatch_TheIWLineOfTheIWalking.hpp
   IntPatch_TheIWLineOfTheIWalking_0.cxx
-  IntPatch_TheIWalking.hxx
+  IntPatch_TheIWalking.hpp
   IntPatch_TheIWalking_0.cxx
-  IntPatch_ThePathPointOfTheSOnBounds.hxx
+  IntPatch_ThePathPointOfTheSOnBounds.hpp
   IntPatch_ThePathPointOfTheSOnBounds_0.cxx
-  IntPatch_TheSOnBounds.hxx
+  IntPatch_TheSOnBounds.hpp
   IntPatch_TheSOnBounds_0.cxx
-  IntPatch_TheSearchInside.hxx
+  IntPatch_TheSearchInside.hpp
   IntPatch_TheSearchInside_0.cxx
-  IntPatch_TheSegmentOfTheSOnBounds.hxx
+  IntPatch_TheSegmentOfTheSOnBounds.hpp
   IntPatch_TheSegmentOfTheSOnBounds_0.cxx
-  IntPatch_TheSurfFunction.hxx
+  IntPatch_TheSurfFunction.hpp
   IntPatch_TheSurfFunction_0.cxx
   IntPatch_WLine.cxx
-  IntPatch_WLine.hxx
-  IntPatch_WLine.lxx
+  IntPatch_WLine.hpp
+  IntPatch_WLine_1.hpp
   IntPatch_WLineTool.cxx
-  IntPatch_WLineTool.hxx
+  IntPatch_WLineTool.hpp
 )

@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_Failure.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_EdgesIntersector.hxx>
-#include <TopOpeBRep_Point2d.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_tol.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <Bnd_Box.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_Failure.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_EdgesIntersector.hpp>
+#include <TopOpeBRep_Point2d.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_tol.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepTool_GettraceNYI();
@@ -52,7 +52,7 @@ extern bool TopOpeBRep_GetcontextNOFEI();
 extern bool TopOpeBRep_GettraceFITOL();
 extern bool TopOpeBRep_GettraceEEFF();
 extern void debeeff();
-  #include <TopOpeBRepTool_KRO.hxx>
+  #include <TopOpeBRepTool_KRO.hpp>
 Standard_EXPORT TOPKRO KRO_DSFILLER_INTEE("intersection edge/edge");
 #endif
 
@@ -181,7 +181,7 @@ void TopOpeBRep_EdgesIntersector::ForceTolerances(const double Tol1, const doubl
   myTolForced = true;
 }
 
-#include <IntRes2d_Transition.hxx>
+#include <IntRes2d_Transition.hpp>
 
 static bool TransitionEqualAndExtremity(const IntRes2d_Transition& T1,
                                         const IntRes2d_Transition& T2)
@@ -300,7 +300,7 @@ bool EdgesIntersector_checkT1D(const TopoDS_Edge&       E1,
 } // EdgesIntersector_checkT1D
 
 // modified by NIZNHY-PKV Fri Nov  5 12:27:07 1999 from
-#include <BRepAdaptor_Surface.hxx>
+#include <BRepAdaptor_Surface.hpp>
 
 // modified by NIZNHY-PKV Fri Nov  5 12:27:10 1999 to
 //=================================================================================================

@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_CoordinateSystemConverter.hxx>
+#include <RWMesh_CoordinateSystemConverter.hpp>
 
-#include <gp_Quaternion.hxx>
+#include <gp_Quaternion.hpp>
 
 //=================================================================================================
 

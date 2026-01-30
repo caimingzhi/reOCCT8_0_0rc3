@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_DatumReferenceModifierWithValue.hxx>
+#include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumReferenceModifierWithValue, Standard_Transient)
 

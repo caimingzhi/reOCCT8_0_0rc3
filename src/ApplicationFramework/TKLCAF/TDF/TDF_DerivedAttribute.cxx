@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_DerivedAttribute.hxx>
+#include <TDF_DerivedAttribute.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <Standard_CStringHasher.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Standard_CStringHasher.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <mutex>
 

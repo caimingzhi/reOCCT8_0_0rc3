@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ItemDefinedTransformation, Standard_Transient)
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Hyperbola.hxx>
+#include <GeomGridEval_Hyperbola.hpp>
 
-#include <gp_Hypr.hxx>
+#include <gp_Hypr.hpp>
 
 #include <cmath>
 

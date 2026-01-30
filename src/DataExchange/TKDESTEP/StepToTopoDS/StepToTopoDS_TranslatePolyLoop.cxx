@@ -16,29 +16,29 @@
 
 // gka,abv 14.09.99: S4136: eliminate BRepAPI::Precision()
 
-#include <BRep_Builder.hxx>
-#include <ElSLib.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepShape_PolyLoop.hxx>
-#include <StepToGeom.hxx>
-#include <StepToTopoDS_Tool.hxx>
-#include <StepToTopoDS_TranslatePolyLoop.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <BRep_Builder.hpp>
+#include <ElSLib.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepShape_PolyLoop.hpp>
+#include <StepToGeom.hpp>
+#include <StepToTopoDS_Tool.hpp>
+#include <StepToTopoDS_TranslatePolyLoop.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 // #include <BRepAPI.hxx>
 //=================================================================================================

@@ -16,7 +16,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ShapeDefinitionRepresentation,
                            StepRepr_PropertyDefinitionRepresentation)

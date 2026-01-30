@@ -14,33 +14,33 @@
 //: r5 abv 06.04.99: ec_turbine-A.stp, #4313: protect against null curve
 //    abv 09.04.99  S4136: add parameter preci (to eliminate BRepAPI::Precision)
 
-#include <ShapeFix_EdgeProjAux.hxx>
+#include <ShapeFix_EdgeProjAux.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <BSplCLib.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <BSplCLib.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_EdgeProjAux, Standard_Transient)
 

@@ -19,11 +19,11 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <FairCurve_Energy.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_IntegerVector.hxx>
-#include <math_Matrix.hxx>
+#include <FairCurve_Energy.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_IntegerVector.hpp>
+#include <math_Matrix.hpp>
 
 //=======================================================================
 FairCurve_Energy::FairCurve_Energy(const occ::handle<NCollection_HArray1<gp_Pnt2d>>& Poles,

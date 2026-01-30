@@ -16,8 +16,8 @@
 
 //		<design>
 
-#include <Standard_Type.hxx>
-#include <Transfer_VoidBinder.hxx>
+#include <Standard_Type.hpp>
+#include <Transfer_VoidBinder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_VoidBinder, Transfer_Binder)
 

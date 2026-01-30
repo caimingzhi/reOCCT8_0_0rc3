@@ -18,8 +18,8 @@
 // Version	Date		Purpose
 //		0.0	Nov  3 1997	Creation
 
-#include <TDF_DeltaOnForget.hxx>
-#include <TDF_Label.hxx>
+#include <TDF_DeltaOnForget.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnForget, TDF_AttributeDelta)
 

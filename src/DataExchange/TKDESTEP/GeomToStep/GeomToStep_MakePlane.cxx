@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Plane.hxx>
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <GeomToStep_MakePlane.hxx>
-#include <gp_Pln.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_Plane.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom_Plane.hpp>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <GeomToStep_MakePlane.hpp>
+#include <gp_Pln.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_Plane.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' un plane de prostep a partir d' un Pln de gp

@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units_UnitsDictionary.hxx>
+#include <Units_UnitsDictionary.hpp>
 
-#include <OSD.hxx>
-#include <OSD_OpenFile.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Macro.hxx>
+#include <OSD.hpp>
+#include <OSD_OpenFile.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Units.hxx>
-#include <Units_Dimensions.hxx>
-#include <Units_MathSentence.hxx>
-#include <Units_Operators.hxx>
-#include <Units_Quantity.hxx>
-#include <Units_ShiftedUnit.hxx>
-#include <Units_Token.hxx>
-#include <Units_Unit.hxx>
-#include <Units_UnitSentence.hxx>
-#include <Units_UnitsLexicon.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Units.hpp>
+#include <Units_Dimensions.hpp>
+#include <Units_MathSentence.hpp>
+#include <Units_Operators.hpp>
+#include <Units_Quantity.hpp>
+#include <Units_ShiftedUnit.hpp>
+#include <Units_Token.hpp>
+#include <Units_Unit.hpp>
+#include <Units_UnitSentence.hpp>
+#include <Units_UnitsLexicon.hpp>
 
-#include "../UnitsAPI/UnitsAPI_Units_dat.pxx"
+#include "../UnitsAPI/UnitsAPI_Units_dat.hpp"
 
 #include <cstdio>
 

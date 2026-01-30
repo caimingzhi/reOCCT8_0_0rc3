@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaParametricPoint.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaParametricPoint.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaParametricPoint, StepGeom_Point)
 

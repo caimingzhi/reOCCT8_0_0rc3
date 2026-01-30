@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AppliedPersonAndOrganizationAssignment.hxx>
-#include <StepAP214_PersonAndOrganizationItem.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepBasic_PersonAndOrganizationRole.hxx>
+#include <StepAP214_AppliedPersonAndOrganizationAssignment.hpp>
+#include <StepAP214_PersonAndOrganizationItem.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepBasic_PersonAndOrganizationRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedPersonAndOrganizationAssignment,
                            StepBasic_PersonAndOrganizationAssignment)

@@ -14,32 +14,32 @@
 
 //  Modified by skv - Thu Jul  7 14:37:05 2005 OCC9134
 
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtElC.hxx>
-#include <Extrema_ExtElCS.hxx>
-#include <Extrema_ExtPElC.hxx>
-#include <Extrema_ExtPElS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <IntAna_Quadric.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtElC.hpp>
+#include <Extrema_ExtElCS.hpp>
+#include <Extrema_ExtPElC.hpp>
+#include <Extrema_ExtPElS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <IntAna_Quadric.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
 
 Extrema_ExtElCS::Extrema_ExtElCS()
 {

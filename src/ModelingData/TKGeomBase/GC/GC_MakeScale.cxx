@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GC_MakeScale.hxx>
-#include <Geom_Transformation.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GC_MakeScale.hpp>
+#include <Geom_Transformation.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Creation d un homothetie de gp de centre Point et de rapport Scale.  +

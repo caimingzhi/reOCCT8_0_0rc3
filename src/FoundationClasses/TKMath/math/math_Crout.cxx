@@ -21,12 +21,12 @@
 
 // #endif
 
-#include <math_Crout.hxx>
-#include <math_Matrix.hxx>
-#include <math_NotSquare.hxx>
-#include <math_Vector.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Crout.hpp>
+#include <math_Matrix.hpp>
+#include <math_NotSquare.hpp>
+#include <math_Vector.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_Crout::math_Crout(const math_Matrix& A, const double MinPivot)
     : InvA(1, A.RowNumber(), 1, A.ColNumber())

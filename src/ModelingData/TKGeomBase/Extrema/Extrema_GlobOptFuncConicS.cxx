@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement
 
-#include <Extrema_GlobOptFuncConicS.hxx>
+#include <Extrema_GlobOptFuncConicS.hpp>
 
-#include <gp_Pnt.hxx>
-#include <ElCLib.hxx>
+#include <gp_Pnt.hpp>
+#include <ElCLib.hpp>
 
 // F(u, v) = Conic.SquareDistance(myS(u, v))
 

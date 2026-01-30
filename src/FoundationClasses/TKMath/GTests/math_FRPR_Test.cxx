@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_FRPR.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
-#include <math_Vector.hxx>
+#include <math_FRPR.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
+#include <math_Vector.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Precision.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Precision.hpp>
 
 #include <cmath>
 

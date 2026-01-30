@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESBasic_Group.hxx>
-#include <IGESBasic_SingleParent.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESGeom_Plane.hxx>
-#include <IGESSelect_SelectFaces.hxx>
-#include <IGESSolid_ManifoldSolid.hxx>
-#include <IGESSolid_Shell.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IGESBasic_Group.hpp>
+#include <IGESBasic_SingleParent.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESGeom_Plane.hpp>
+#include <IGESSelect_SelectFaces.hpp>
+#include <IGESSolid_ManifoldSolid.hpp>
+#include <IGESSolid_Shell.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_SelectFaces, IFSelect_SelectExplore)
 

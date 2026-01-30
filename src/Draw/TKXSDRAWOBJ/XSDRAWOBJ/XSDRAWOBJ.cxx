@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWOBJ.hxx>
+#include <XSDRAWOBJ.hpp>
 
-#include <BRep_Builder.hxx>
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DEOBJ_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <RWObj_CafReader.hxx>
-#include <RWObj_CafWriter.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <UnitsAPI.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
+#include <BRep_Builder.hpp>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DEOBJ_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <RWObj_CafReader.hpp>
+#include <RWObj_CafWriter.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <UnitsAPI.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
 
 //=============================================================================
 // function : parseCoordinateSystem

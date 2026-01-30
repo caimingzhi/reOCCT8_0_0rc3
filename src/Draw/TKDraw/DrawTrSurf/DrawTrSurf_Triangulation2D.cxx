@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <DrawTrSurf_Triangulation2D.hxx>
-#include <Poly.hxx>
-#include <Poly_Connect.hxx>
-#include <Poly_Triangle.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <DrawTrSurf_Triangulation2D.hpp>
+#include <Poly.hpp>
+#include <Poly_Connect.hpp>
+#include <Poly_Triangle.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Triangulation2D, Draw_Drawable2D)
 

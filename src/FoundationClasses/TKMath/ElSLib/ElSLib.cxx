@@ -20,15 +20,15 @@
   #define No_Exception
 #endif
 
-#include <ElSLib.hxx>
-#include <gp.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
+#include <ElSLib.hpp>
+#include <gp.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
 
 namespace
 {

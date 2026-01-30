@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepLib_MakeShell.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Geom2d_Curve.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepLib_MakeShell.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Geom2d_Curve.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

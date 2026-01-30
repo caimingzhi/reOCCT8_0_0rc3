@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_VersionInfo.hxx>
+#include <Standard_VersionInfo.hpp>
 
 #include <Standard_Version.hxx>
 

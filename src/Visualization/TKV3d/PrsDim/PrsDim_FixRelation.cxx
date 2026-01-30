@@ -14,41 +14,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_FixRelation.hxx>
+#include <PrsDim_FixRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_FixPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_List.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_FixPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_List.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_FixRelation, PrsDim_Relation)
 

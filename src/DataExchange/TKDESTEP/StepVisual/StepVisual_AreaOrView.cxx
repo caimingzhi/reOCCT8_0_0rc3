@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_AreaOrView.hxx>
-#include <StepVisual_PresentationArea.hxx>
-#include <StepVisual_PresentationView.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_AreaOrView.hpp>
+#include <StepVisual_PresentationArea.hpp>
+#include <StepVisual_PresentationView.hpp>
 
 StepVisual_AreaOrView::StepVisual_AreaOrView() = default;
 

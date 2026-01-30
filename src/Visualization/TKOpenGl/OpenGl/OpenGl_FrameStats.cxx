@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_FrameStats.hxx>
+#include <OpenGl_FrameStats.hpp>
 
-#include <OpenGl_View.hxx>
-#include <OpenGl_DepthPeeling.hxx>
-#include <OpenGl_ShadowMap.hxx>
-#include <OpenGl_TextureBuffer.hxx>
-#include <OpenGl_Window.hxx>
+#include <OpenGl_View.hpp>
+#include <OpenGl_DepthPeeling.hpp>
+#include <OpenGl_ShadowMap.hpp>
+#include <OpenGl_TextureBuffer.hpp>
+#include <OpenGl_Window.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameStats, Graphic3d_FrameStats)
 

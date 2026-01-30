@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_SpecialPoints.hxx>
+#include <IntPatch_SpecialPoints.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
-#include <IntPatch_Point.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Standard_TypeMismatch.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <IntPatch_Point.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Standard_TypeMismatch.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Matrix.hpp>
 
 // The function for searching intersection point, which
 // lies in the seam-edge of the quadric definitely.

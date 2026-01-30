@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepAP242_RWDraughtingModelItemAssociation.pxx"
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepAP242_DraughtingModelItemAssociation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepRepr_Representation.hxx>
+#include "RWStepAP242_RWDraughtingModelItemAssociation.hpp"
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepAP242_DraughtingModelItemAssociation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepRepr_Representation.hpp>
 
 //=================================================================================================
 

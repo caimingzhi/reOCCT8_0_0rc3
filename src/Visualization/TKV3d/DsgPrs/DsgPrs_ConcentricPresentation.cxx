@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_ConcentricPresentation.hxx>
-#include <ElCLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
+#include <DsgPrs_ConcentricPresentation.hpp>
+#include <ElCLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
 
 void DsgPrs_ConcentricPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                         const occ::handle<Prs3d_Drawer>&       aDrawer,

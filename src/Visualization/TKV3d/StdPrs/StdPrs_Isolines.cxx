@@ -13,32 +13,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_Isolines.hxx>
+#include <StdPrs_Isolines.hpp>
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Bnd_Range.hxx>
-#include <BRepTools.hxx>
-#include <BRep_Tool.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Lin2d.hxx>
-#include <Hatch_Hatcher.hxx>
-#include <NCollection_Shared.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <Poly_Triangulation.hxx>
-#include <StdPrs_DeflectionCurve.hxx>
-#include <StdPrs_ToolRFace.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Bnd_Range.hpp>
+#include <BRepTools.hpp>
+#include <BRep_Tool.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Lin2d.hpp>
+#include <Hatch_Hatcher.hpp>
+#include <NCollection_Shared.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <Poly_Triangulation.hpp>
+#include <StdPrs_DeflectionCurve.hpp>
+#include <StdPrs_ToolRFace.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
 #include <algorithm>
 
 namespace

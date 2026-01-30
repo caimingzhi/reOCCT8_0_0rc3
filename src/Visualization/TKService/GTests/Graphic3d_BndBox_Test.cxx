@@ -13,14 +13,14 @@
 
 #include <gtest/gtest.h>
 
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Ax1.hxx>
-#include <Graphic3d_BndBox3d.hxx>
-#include <NCollection_Vec3.hxx>
-#include <Standard_TypeDef.hxx>
-#include <NCollection_Mat4.hxx>
-#include <Precision.hxx>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Ax1.hpp>
+#include <Graphic3d_BndBox3d.hpp>
+#include <NCollection_Vec3.hpp>
+#include <Standard_TypeDef.hpp>
+#include <NCollection_Mat4.hpp>
+#include <Precision.hpp>
 
 //==================================================================================================
 // Constructor Tests

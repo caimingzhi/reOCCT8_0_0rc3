@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_EdgeBuilder.hxx>
-#include <TopOpeBRepBuild_FaceBuilder.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
-#include <TopOpeBRepBuild_SolidBuilder.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_EdgeBuilder.hpp>
+#include <TopOpeBRepBuild_FaceBuilder.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
+#include <TopOpeBRepBuild_SolidBuilder.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <TopOpeBRepBuild_GIter.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_Dumper.hxx>
-#include <gp_Pnt.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_Surface.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <TopOpeBRepBuild_GIter.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_Dumper.hpp>
+#include <gp_Pnt.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_Surface.hpp>
 
 #ifdef OCCT_DEBUG
 static TCollection_AsciiString PRODINS("dins ");

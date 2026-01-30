@@ -16,17 +16,17 @@
 
 //    gka 30.04.99 S4137: re-worked
 
-#include <Geom_BSplineCurve.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade.hxx>
-#include <ShapeUpgrade_SplitCurve.hxx>
-#include <Standard_Type.hxx>
-#include <Geom_Curve.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade.hpp>
+#include <ShapeUpgrade_SplitCurve.hpp>
+#include <Standard_Type.hpp>
+#include <Geom_Curve.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitCurve, Standard_Transient)
 

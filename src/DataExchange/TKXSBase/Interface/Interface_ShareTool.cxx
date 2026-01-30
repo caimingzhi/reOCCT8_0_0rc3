@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GTool.hxx>
-#include <Interface_HGraph.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GTool.hpp>
+#include <Interface_HGraph.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 Interface_ShareTool::Interface_ShareTool(const occ::handle<Interface_InterfaceModel>& amodel,
                                          const Interface_GeneralLib&                  lib)

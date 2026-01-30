@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XmlDrivers.hxx>
-#include <XmlDrivers_DocumentRetrievalDriver.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMNaming_NamedShapeDriver.hxx>
-#include <XmlObjMgt_Element.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XmlDrivers.hpp>
+#include <XmlDrivers_DocumentRetrievalDriver.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMNaming_NamedShapeDriver.hpp>
+#include <XmlObjMgt_Element.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlDrivers_DocumentRetrievalDriver, XmlLDrivers_DocumentRetrievalDriver)
 

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepSweep_Revol.hxx>
-#include <BRepSweep_Rotation.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Trsf.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Sweep_NumShape.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepSweep_Revol.hpp>
+#include <BRepSweep_Rotation.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Trsf.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Sweep_NumShape.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

@@ -18,10 +18,10 @@
 // Updated :
 // -------------------------------------------------------------
 
-#include <Quantity_Period.hxx>
-#include <Quantity_PeriodDefinitionError.hxx>
+#include <Quantity_Period.hpp>
+#include <Quantity_PeriodDefinitionError.hpp>
 
-#include "Quantity_TimeConstants.pxx"
+#include "Quantity_TimeConstants.hpp"
 
 // -----------------------------------------------------------
 // IsValid : Checks the validity of a date

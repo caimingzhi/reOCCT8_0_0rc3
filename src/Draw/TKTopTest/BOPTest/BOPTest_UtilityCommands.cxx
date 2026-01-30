@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
+#include <BOPTest.hpp>
 
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <DBRep.hxx>
-#include <IntTools_Context.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Draw.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BRepLib.hxx>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <DBRep.hpp>
+#include <IntTools_Context.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Draw.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BRepLib.hpp>
 
 static int attachpcurve(Draw_Interpretor&, int, const char**);
 static int edgestowire(Draw_Interpretor&, int, const char**);

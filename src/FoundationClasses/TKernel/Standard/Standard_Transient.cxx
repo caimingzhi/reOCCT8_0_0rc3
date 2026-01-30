@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
+#include <Standard_Transient.hpp>
 
-#include <Standard_Type.hxx>
-#include <Standard_CString.hxx>
-#include <Standard_ProgramError.hxx>
+#include <Standard_Type.hpp>
+#include <Standard_CString.hpp>
+#include <Standard_ProgramError.hpp>
 
 const Handle(Standard_Type)& Standard_Transient::get_type_descriptor()
 {

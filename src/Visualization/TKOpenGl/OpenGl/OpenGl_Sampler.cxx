@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Sampler.hxx>
+#include <OpenGl_Sampler.hpp>
 
-#include <OpenGl_ArbSamplerObject.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Texture.hxx>
-#include <Standard_Assert.hxx>
+#include <OpenGl_ArbSamplerObject.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Texture.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Sampler, OpenGl_Resource)
 

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_CString.hxx>
-#include <Standard_CStringHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <MoniTool_Timer.hxx>
-#include <MoniTool_TimerSentry.hxx>
-#include <OSD_Timer.hxx>
-#include <Standard_Type.hxx>
+#include <Standard_CString.hpp>
+#include <Standard_CStringHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <MoniTool_Timer.hpp>
+#include <MoniTool_TimerSentry.hpp>
+#include <OSD_Timer.hpp>
+#include <Standard_Type.hpp>
 
 #include <cstdio>
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hxx>
+#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hpp>
 
-#include <IntSurf_Quadric.hxx>
-#include <gp_Lin.hxx>
-#include <HLRBRep_LineTool.hxx>
-#include <gp_Vec.hxx>
+#include <IntSurf_Quadric.hpp>
+#include <gp_Lin.hpp>
+#include <HLRBRep_LineTool.hpp>
+#include <gp_Vec.hpp>
 
 HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf::
   HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf(const IntSurf_Quadric& Q, const gp_Lin& C)

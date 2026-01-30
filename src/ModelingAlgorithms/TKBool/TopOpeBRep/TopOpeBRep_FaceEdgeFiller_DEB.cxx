@@ -16,17 +16,17 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <TCollection_AsciiString.hxx>
-  #include <TopOpeBRep_FaceEdgeIntersector.hxx>
-  #include <TopOpeBRepDS_DataStructure.hxx>
-  #include <TopOpeBRepDS.hxx>
-  #include <TopOpeBRepDS_Transition.hxx>
-  #include <TopoDS_Shape.hxx>
-  #include <TopAbs.hxx>
-  #include <TopAbs_State.hxx>
-  #include <TopAbs_Orientation.hxx>
-  #include <gp_Pnt.hxx>
-  #include <gp_Pnt2d.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <TopOpeBRep_FaceEdgeIntersector.hpp>
+  #include <TopOpeBRepDS_DataStructure.hpp>
+  #include <TopOpeBRepDS.hpp>
+  #include <TopOpeBRepDS_Transition.hpp>
+  #include <TopoDS_Shape.hpp>
+  #include <TopAbs.hpp>
+  #include <TopAbs_State.hpp>
+  #include <TopAbs_Orientation.hpp>
+  #include <gp_Pnt.hpp>
+  #include <gp_Pnt2d.hpp>
 
 //------------------------------------------------------------------
 void FEINT_DUMPPOINTS(TopOpeBRep_FaceEdgeIntersector& FEINT, const TopOpeBRepDS_DataStructure& BDS)

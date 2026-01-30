@@ -16,30 +16,30 @@
 
 #include <algorithm>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <ElCLib.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomInt.hxx>
-#include <GeomInt_LineConstructor.hxx>
-#include <GeomInt_LineTool.hxx>
-#include <GeomInt_ParameterAndOrientation.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_Line.hxx>
-#include <IntPatch_Point.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <IntSurf_Transition.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopAbs_Orientation.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <ElCLib.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomInt.hpp>
+#include <GeomInt_LineConstructor.hpp>
+#include <GeomInt_LineTool.hpp>
+#include <GeomInt_ParameterAndOrientation.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_Line.hpp>
+#include <IntPatch_Point.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <IntSurf_Transition.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopAbs_Orientation.hpp>
 
 static const double TwoPI = M_PI + M_PI;
 

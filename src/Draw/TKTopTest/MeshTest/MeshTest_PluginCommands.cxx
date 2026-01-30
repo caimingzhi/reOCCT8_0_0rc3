@@ -13,37 +13,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepGProp.hxx>
-#include <BRepMesh_DiscretFactory.hxx>
-#include <BRepMesh_DiscretRoot.hxx>
-#include <BRepMesh_FactoryError.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DrawTrSurf.hxx>
-#include <gp_Vec.hxx>
-#include <GProp_GProps.hxx>
-#include <MeshTest.hxx>
-#include <MeshTest_CheckTopology.hxx>
-#include <NCollection_Map.hxx>
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepGProp.hpp>
+#include <BRepMesh_DiscretFactory.hpp>
+#include <BRepMesh_DiscretRoot.hpp>
+#include <BRepMesh_FactoryError.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DrawTrSurf.hpp>
+#include <gp_Vec.hpp>
+#include <GProp_GProps.hpp>
+#include <MeshTest.hpp>
+#include <MeshTest_CheckTopology.hpp>
+#include <NCollection_Map.hpp>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
 
 static int mpnames(Draw_Interpretor&, int, const char**);
 static int mpsetdefaultname(Draw_Interpretor&, int, const char**);

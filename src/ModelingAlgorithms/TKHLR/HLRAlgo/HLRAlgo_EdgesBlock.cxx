@@ -18,8 +18,8 @@
   #define No_Exception
 #endif
 
-#include <HLRAlgo_EdgesBlock.hxx>
-#include <Standard_Type.hxx>
+#include <HLRAlgo_EdgesBlock.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_EdgesBlock, Standard_Transient)
 

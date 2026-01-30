@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextModif.hxx>
-#include <IFSelect_IntParam.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESSelect_ChangeLevelNumber.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_ContextModif.hpp>
+#include <IFSelect_IntParam.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESSelect_ChangeLevelNumber.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_ChangeLevelNumber, IGESSelect_ModelModifier)

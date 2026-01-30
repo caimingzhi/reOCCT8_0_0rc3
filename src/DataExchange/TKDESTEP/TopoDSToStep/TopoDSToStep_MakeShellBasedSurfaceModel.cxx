@@ -14,40 +14,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_Shape.hxx>
-#include <Standard_Transient.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Message_ProgressScope.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_Face.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepShape_Shell.hxx>
-#include <StepShape_OpenShell.hxx>
-#include <StepShape_ShellBasedSurfaceModel.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <StepVisual_TessellatedGeometricSet.hxx>
-#include <StepVisual_TessellatedShell.hxx>
-#include <StepVisual_TessellatedSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDSToStep.hxx>
-#include <TopoDSToStep_Builder.hxx>
-#include <TopoDSToStep_MakeShellBasedSurfaceModel.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <TopoDS_Shape.hpp>
+#include <Standard_Transient.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Message_ProgressScope.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_Face.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepShape_Shell.hpp>
+#include <StepShape_OpenShell.hpp>
+#include <StepShape_ShellBasedSurfaceModel.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <StepVisual_TessellatedGeometricSet.hpp>
+#include <StepVisual_TessellatedShell.hpp>
+#include <StepVisual_TessellatedSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDSToStep.hpp>
+#include <TopoDSToStep_Builder.hpp>
+#include <TopoDSToStep_MakeShellBasedSurfaceModel.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 //=============================================================================
 // Create a ShellBasedSurfaceModel of StepShape from a Face of TopoDS

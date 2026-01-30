@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Transient.hxx>
-#include <StepShape_DimensionalCharacteristic.hxx>
-#include <StepShape_DimensionalLocation.hxx>
-#include <StepShape_DimensionalSize.hxx>
+#include <Standard_Transient.hpp>
+#include <StepShape_DimensionalCharacteristic.hpp>
+#include <StepShape_DimensionalLocation.hpp>
+#include <StepShape_DimensionalSize.hpp>
 
 //=================================================================================================
 

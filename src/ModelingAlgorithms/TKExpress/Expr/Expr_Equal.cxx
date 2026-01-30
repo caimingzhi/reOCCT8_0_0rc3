@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr.hxx>
-#include <Expr_Equal.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_GeneralRelation.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr.hpp>
+#include <Expr_Equal.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_GeneralRelation.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_Equal, Expr_SingleRelation)
 

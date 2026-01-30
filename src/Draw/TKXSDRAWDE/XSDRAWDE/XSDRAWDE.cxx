@@ -11,27 +11,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWDE.hxx>
+#include <XSDRAWDE.hpp>
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <DE_Provider.hxx>
-#include <DE_Wrapper.hxx>
-#include <DEBREP_ConfigurationNode.hxx>
-#include <DEXCAF_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Message.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <DE_Provider.hpp>
+#include <DE_Wrapper.hpp>
+#include <DEBREP_ConfigurationNode.hpp>
+#include <DEXCAF_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Message.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
 
 namespace
 {

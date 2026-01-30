@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_SpecificLib.hxx>
-#include <IGESData_SpecificModule.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_MSG.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_SpecificLib.hpp>
+#include <IGESData_SpecificModule.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_MSG.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IGESData_IGESDumper::IGESData_IGESDumper(const occ::handle<IGESData_IGESModel>& model,
                                          const occ::handle<IGESData_Protocol>&  protocol)

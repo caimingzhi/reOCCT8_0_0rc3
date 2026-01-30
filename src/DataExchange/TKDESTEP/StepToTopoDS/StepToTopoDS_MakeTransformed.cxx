@@ -15,23 +15,23 @@
 // sln 23.10.2001. CTS23496: Verifying on error creation of directions is added
 // (StepToTopoDS_MakeTransformed::Compute(...) function)
 
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_TrsfForm.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_CartesianTransformationOperator3d.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationMap.hxx>
-#include <StepToGeom.hxx>
-#include <StepToTopoDS_MakeTransformed.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_TrsfForm.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_CartesianTransformationOperator3d.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationMap.hpp>
+#include <StepToGeom.hpp>
+#include <StepToTopoDS_MakeTransformed.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
 
 //  + pour CartesianOperator3d
 //=================================================================================================

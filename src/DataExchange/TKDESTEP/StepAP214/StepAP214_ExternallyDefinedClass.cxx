@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepAP214_ExternallyDefinedClass.hxx>
-#include <StepBasic_ExternallyDefinedItem.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_SourceItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepAP214_ExternallyDefinedClass.hpp>
+#include <StepBasic_ExternallyDefinedItem.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_SourceItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_ExternallyDefinedClass, StepAP214_Class)
 

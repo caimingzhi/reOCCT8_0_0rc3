@@ -4,23 +4,23 @@ set(OCCT_TFunction_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_TFunction_FILES
 
   TFunction_Driver.cxx
-  TFunction_Driver.hxx
-  TFunction_Driver.lxx
+  TFunction_Driver.hpp
+  TFunction_Driver_1.hpp
   TFunction_DriverTable.cxx
-  TFunction_DriverTable.hxx
-  TFunction_ExecutionStatus.hxx
+  TFunction_DriverTable.hpp
+  TFunction_ExecutionStatus.hpp
   TFunction_Function.cxx
-  TFunction_Function.hxx
+  TFunction_Function.hpp
   TFunction_GraphNode.cxx
-  TFunction_GraphNode.hxx
+  TFunction_GraphNode.hpp
 
   TFunction_IFunction.cxx
-  TFunction_IFunction.hxx
+  TFunction_IFunction.hpp
   TFunction_Iterator.cxx
-  TFunction_Iterator.hxx
+  TFunction_Iterator.hpp
   TFunction_Logbook.cxx
-  TFunction_Logbook.hxx
-  TFunction_Logbook.lxx
+  TFunction_Logbook.hpp
+  TFunction_Logbook_1.hpp
   TFunction_Scope.cxx
-  TFunction_Scope.hxx
+  TFunction_Scope.hpp
 )

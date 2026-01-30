@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDF_ADriver.hxx>
-#include <BinMNaming.hxx>
-#include <BinMNaming_NamingDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinObjMgt_RRelocationTable.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Naming.hxx>
-#include <TopAbs_ShapeEnum.hxx>
+#include <BinMDF_ADriver.hpp>
+#include <BinMNaming.hpp>
+#include <BinMNaming_NamingDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinObjMgt_RRelocationTable.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Naming.hpp>
+#include <TopAbs_ShapeEnum.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMNaming_NamingDriver, BinMDF_ADriver)
 

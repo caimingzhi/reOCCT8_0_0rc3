@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAbs_BSplKnotDistribution.hxx>
-#include <GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepGeom_KnotType.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAbs_BSplKnotDistribution.hpp>
+#include <GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepGeom_KnotType.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
 
 //=============================================================================
 // Creation d' une bspline_curve_with_knots_and_rational_bspline_curve de
@@ -40,7 +40,7 @@ GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
     const occ::handle<Geom_BSplineCurve>& BS,
     const StepData_Factors&               theLocalFactors){
 #define Array1OfPnt_gen NCollection_Array1<gp_Pnt>
-#include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.pxx"
+#include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.hpp"
 #undef Array1OfPnt_gen
   }
 
@@ -56,7 +56,7 @@ GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
 
 {
 #define Array1OfPnt_gen NCollection_Array1<gp_Pnt2d>
-#include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.pxx"
+#include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.hpp"
 #undef Array1OfPnt_gen
 }
 

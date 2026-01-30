@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTools_PurgeLocations.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <NCollection_Vector.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <TopLoc_Datum3D.hxx>
+#include <BRepTools_PurgeLocations.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <NCollection_Vector.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <TopLoc_Datum3D.hpp>
 
 //=================================================================================================
 

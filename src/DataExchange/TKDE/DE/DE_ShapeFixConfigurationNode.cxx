@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_ShapeFixConfigurationNode.hxx>
+#include <DE_ShapeFixConfigurationNode.hpp>
 
-#include <DE_ConfigurationContext.hxx>
-#include <DE_Wrapper.hxx>
+#include <DE_ConfigurationContext.hpp>
+#include <DE_Wrapper.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_ShapeFixConfigurationNode, DE_ConfigurationNode)
 

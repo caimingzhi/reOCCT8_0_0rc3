@@ -3,22 +3,22 @@ set(OCCT_MathUtils_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_MathUtils_FILES
   # Types and configuration
-  MathUtils_Types.hxx
-  MathUtils_Config.hxx
-  MathUtils_Domain.hxx
+  MathUtils_Types.hpp
+  MathUtils_Config.hpp
+  MathUtils_Domain.hpp
   # Core utilities
-  MathUtils_Core.hxx
-  MathUtils_Convergence.hxx
-  MathUtils_Poly.hxx
-  MathUtils_Bracket.hxx
-  MathUtils_Gauss.hxx
-  MathUtils_Deriv.hxx
-  MathUtils_LineSearch.hxx
-  MathUtils_GaussKronrodWeights.hxx
+  MathUtils_Core.hpp
+  MathUtils_Convergence.hpp
+  MathUtils_Poly.hpp
+  MathUtils_Bracket.hpp
+  MathUtils_Gauss.hpp
+  MathUtils_Deriv.hpp
+  MathUtils_LineSearch.hpp
+  MathUtils_GaussKronrodWeights.hpp
   MathUtils_GaussKronrodWeights.cxx
   # Functors
-  MathUtils_FunctorScalar.hxx
-  MathUtils_FunctorVector.hxx
+  MathUtils_FunctorScalar.hpp
+  MathUtils_FunctorVector.hpp
   # Documentation
   README.md
 )

@@ -3,101 +3,101 @@ set(OCCT_RWStepDimTol_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWStepDimTol_FILES
   RWStepDimTol_RWAngularityTolerance.cxx
-  RWStepDimTol_RWAngularityTolerance.pxx
+  RWStepDimTol_RWAngularityTolerance.hpp
   RWStepDimTol_RWCircularRunoutTolerance.cxx
-  RWStepDimTol_RWCircularRunoutTolerance.pxx
+  RWStepDimTol_RWCircularRunoutTolerance.hpp
   RWStepDimTol_RWCoaxialityTolerance.cxx
-  RWStepDimTol_RWCoaxialityTolerance.pxx
+  RWStepDimTol_RWCoaxialityTolerance.hpp
   RWStepDimTol_RWCommonDatum.cxx
-  RWStepDimTol_RWCommonDatum.pxx
+  RWStepDimTol_RWCommonDatum.hpp
   RWStepDimTol_RWConcentricityTolerance.cxx
-  RWStepDimTol_RWConcentricityTolerance.pxx
+  RWStepDimTol_RWConcentricityTolerance.hpp
   RWStepDimTol_RWCylindricityTolerance.cxx
-  RWStepDimTol_RWCylindricityTolerance.pxx
+  RWStepDimTol_RWCylindricityTolerance.hpp
   RWStepDimTol_RWDatum.cxx
-  RWStepDimTol_RWDatum.pxx
+  RWStepDimTol_RWDatum.hpp
   RWStepDimTol_RWDatumFeature.cxx
-  RWStepDimTol_RWDatumFeature.pxx
+  RWStepDimTol_RWDatumFeature.hpp
   RWStepDimTol_RWDatumReference.cxx
-  RWStepDimTol_RWDatumReference.pxx
+  RWStepDimTol_RWDatumReference.hpp
   RWStepDimTol_RWDatumReferenceCompartment.cxx
-  RWStepDimTol_RWDatumReferenceCompartment.pxx
+  RWStepDimTol_RWDatumReferenceCompartment.hpp
   RWStepDimTol_RWDatumReferenceElement.cxx
-  RWStepDimTol_RWDatumReferenceElement.pxx
+  RWStepDimTol_RWDatumReferenceElement.hpp
   RWStepDimTol_RWDatumReferenceModifierWithValue.cxx
-  RWStepDimTol_RWDatumReferenceModifierWithValue.pxx
+  RWStepDimTol_RWDatumReferenceModifierWithValue.hpp
   RWStepDimTol_RWDatumSystem.cxx
-  RWStepDimTol_RWDatumSystem.pxx
+  RWStepDimTol_RWDatumSystem.hpp
   RWStepDimTol_RWDatumTarget.cxx
-  RWStepDimTol_RWDatumTarget.pxx
+  RWStepDimTol_RWDatumTarget.hpp
   RWStepDimTol_RWFlatnessTolerance.cxx
-  RWStepDimTol_RWFlatnessTolerance.pxx
+  RWStepDimTol_RWFlatnessTolerance.hpp
   RWStepDimTol_RWGeneralDatumReference.cxx
-  RWStepDimTol_RWGeneralDatumReference.pxx
+  RWStepDimTol_RWGeneralDatumReference.hpp
   RWStepDimTol_RWGeometricTolerance.cxx
-  RWStepDimTol_RWGeometricTolerance.pxx
+  RWStepDimTol_RWGeometricTolerance.hpp
   RWStepDimTol_RWGeometricToleranceRelationship.cxx
-  RWStepDimTol_RWGeometricToleranceRelationship.pxx
+  RWStepDimTol_RWGeometricToleranceRelationship.hpp
   RWStepDimTol_RWGeometricToleranceWithDatumReference.cxx
-  RWStepDimTol_RWGeometricToleranceWithDatumReference.pxx
+  RWStepDimTol_RWGeometricToleranceWithDatumReference.hpp
   RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit.cxx
-  RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit.pxx
+  RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit.hpp
   RWStepDimTol_RWGeometricToleranceWithDefinedUnit.cxx
-  RWStepDimTol_RWGeometricToleranceWithDefinedUnit.pxx
+  RWStepDimTol_RWGeometricToleranceWithDefinedUnit.hpp
   RWStepDimTol_RWGeometricToleranceWithMaximumTolerance.cxx
-  RWStepDimTol_RWGeometricToleranceWithMaximumTolerance.pxx
+  RWStepDimTol_RWGeometricToleranceWithMaximumTolerance.hpp
   RWStepDimTol_RWGeometricToleranceWithModifiers.cxx
-  RWStepDimTol_RWGeometricToleranceWithModifiers.pxx
+  RWStepDimTol_RWGeometricToleranceWithModifiers.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRef.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthDatRef.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthDatRef.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol.hpp
   RWStepDimTol_RWGeoTolAndGeoTolWthMod.cxx
-  RWStepDimTol_RWGeoTolAndGeoTolWthMod.pxx
+  RWStepDimTol_RWGeoTolAndGeoTolWthMod.hpp
   RWStepDimTol_RWLineProfileTolerance.cxx
-  RWStepDimTol_RWLineProfileTolerance.pxx
+  RWStepDimTol_RWLineProfileTolerance.hpp
   RWStepDimTol_RWModifiedGeometricTolerance.cxx
-  RWStepDimTol_RWModifiedGeometricTolerance.pxx
+  RWStepDimTol_RWModifiedGeometricTolerance.hpp
   RWStepDimTol_RWNonUniformZoneDefinition.cxx
-  RWStepDimTol_RWNonUniformZoneDefinition.pxx
+  RWStepDimTol_RWNonUniformZoneDefinition.hpp
   RWStepDimTol_RWParallelismTolerance.cxx
-  RWStepDimTol_RWParallelismTolerance.pxx
+  RWStepDimTol_RWParallelismTolerance.hpp
   RWStepDimTol_RWPerpendicularityTolerance.cxx
-  RWStepDimTol_RWPerpendicularityTolerance.pxx
+  RWStepDimTol_RWPerpendicularityTolerance.hpp
   RWStepDimTol_RWPlacedDatumTargetFeature.cxx
-  RWStepDimTol_RWPlacedDatumTargetFeature.pxx
+  RWStepDimTol_RWPlacedDatumTargetFeature.hpp
   RWStepDimTol_RWPositionTolerance.cxx
-  RWStepDimTol_RWPositionTolerance.pxx
+  RWStepDimTol_RWPositionTolerance.hpp
   RWStepDimTol_RWProjectedZoneDefinition.cxx
-  RWStepDimTol_RWProjectedZoneDefinition.pxx
+  RWStepDimTol_RWProjectedZoneDefinition.hpp
   RWStepDimTol_RWRoundnessTolerance.cxx
-  RWStepDimTol_RWRoundnessTolerance.pxx
+  RWStepDimTol_RWRoundnessTolerance.hpp
   RWStepDimTol_RWRunoutZoneDefinition.cxx
-  RWStepDimTol_RWRunoutZoneDefinition.pxx
+  RWStepDimTol_RWRunoutZoneDefinition.hpp
   RWStepDimTol_RWRunoutZoneOrientation.cxx
-  RWStepDimTol_RWRunoutZoneOrientation.pxx
+  RWStepDimTol_RWRunoutZoneOrientation.hpp
   RWStepDimTol_RWStraightnessTolerance.cxx
-  RWStepDimTol_RWStraightnessTolerance.pxx
+  RWStepDimTol_RWStraightnessTolerance.hpp
   RWStepDimTol_RWSurfaceProfileTolerance.cxx
-  RWStepDimTol_RWSurfaceProfileTolerance.pxx
+  RWStepDimTol_RWSurfaceProfileTolerance.hpp
   RWStepDimTol_RWSymmetryTolerance.cxx
-  RWStepDimTol_RWSymmetryTolerance.pxx
+  RWStepDimTol_RWSymmetryTolerance.hpp
   RWStepDimTol_RWToleranceZone.cxx
-  RWStepDimTol_RWToleranceZone.pxx
+  RWStepDimTol_RWToleranceZone.hpp
   RWStepDimTol_RWToleranceZoneDefinition.cxx
-  RWStepDimTol_RWToleranceZoneDefinition.pxx
+  RWStepDimTol_RWToleranceZoneDefinition.hpp
   RWStepDimTol_RWToleranceZoneForm.cxx
-  RWStepDimTol_RWToleranceZoneForm.pxx
+  RWStepDimTol_RWToleranceZoneForm.hpp
   RWStepDimTol_RWTotalRunoutTolerance.cxx
-  RWStepDimTol_RWTotalRunoutTolerance.pxx
+  RWStepDimTol_RWTotalRunoutTolerance.hpp
   RWStepDimTol_RWUnequallyDisposedGeometricTolerance.cxx
-  RWStepDimTol_RWUnequallyDisposedGeometricTolerance.pxx
+  RWStepDimTol_RWUnequallyDisposedGeometricTolerance.hpp
 )

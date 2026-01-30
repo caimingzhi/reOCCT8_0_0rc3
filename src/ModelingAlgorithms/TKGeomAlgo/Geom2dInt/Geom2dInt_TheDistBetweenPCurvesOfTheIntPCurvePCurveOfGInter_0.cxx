@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hxx>
+#include <Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <math_Matrix.hpp>
 
 #define TheCurve Adaptor2d_Curve2d
-#define TheCurve_hxx <Adaptor2d_Curve2d.hxx>
+#define TheCurve_hxx <Adaptor2d_Curve2d.hpp>
 #define TheCurveTool Geom2dInt_Geom2dCurveTool
-#define TheCurveTool_hxx <Geom2dInt_Geom2dCurveTool.hxx>
+#define TheCurveTool_hxx <Geom2dInt_Geom2dCurveTool.hpp>
 #define IntCurve_DistBetweenPCurvesGen Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter
 #define IntCurve_DistBetweenPCurvesGen_hxx                                                         \
-  <Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hxx>
-#include <IntCurve_DistBetweenPCurvesGen.gxx>
+  <Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hpp>
+#include <IntCurve_DistBetweenPCurvesGen.hpp>

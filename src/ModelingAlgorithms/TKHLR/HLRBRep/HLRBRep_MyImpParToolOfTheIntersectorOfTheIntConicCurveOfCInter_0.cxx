@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hxx>
+#include <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hpp>
 
-#include <IntCurve_IConicTool.hxx>
-#include <HLRBRep_CurveTool.hxx>
+#include <IntCurve_IConicTool.hpp>
+#include <HLRBRep_CurveTool.hpp>
 
-#include <gp_Vec2d.hxx>
+#include <gp_Vec2d.hpp>
 
 HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter::
   HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter(const IntCurve_IConicTool& ITool,

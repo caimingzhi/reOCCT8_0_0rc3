@@ -3,43 +3,43 @@ set(OCCT_BRepFeat_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepFeat_FILES
   BRepFeat.cxx
-  BRepFeat.hxx
+  BRepFeat.hpp
   BRepFeat_Builder.cxx
-  BRepFeat_Builder.hxx
+  BRepFeat_Builder.hpp
   BRepFeat_Form.cxx
-  BRepFeat_Form.hxx
-  BRepFeat_Form.lxx
+  BRepFeat_Form.hpp
+  BRepFeat_Form_1.hpp
   BRepFeat_Gluer.cxx
-  BRepFeat_Gluer.hxx
-  BRepFeat_Gluer.lxx
+  BRepFeat_Gluer.hpp
+  BRepFeat_Gluer_1.hpp
   BRepFeat_MakeCylindricalHole.cxx
-  BRepFeat_MakeCylindricalHole.hxx
-  BRepFeat_MakeCylindricalHole.lxx
+  BRepFeat_MakeCylindricalHole.hpp
+  BRepFeat_MakeCylindricalHole_1.hpp
   BRepFeat_MakeDPrism.cxx
-  BRepFeat_MakeDPrism.hxx
+  BRepFeat_MakeDPrism.hpp
   BRepFeat_MakeLinearForm.cxx
-  BRepFeat_MakeLinearForm.hxx
-  BRepFeat_MakeLinearForm.lxx
+  BRepFeat_MakeLinearForm.hpp
+  BRepFeat_MakeLinearForm_1.hpp
   BRepFeat_MakePipe.cxx
-  BRepFeat_MakePipe.hxx
-  BRepFeat_MakePipe.lxx
+  BRepFeat_MakePipe.hpp
+  BRepFeat_MakePipe_1.hpp
   BRepFeat_MakePrism.cxx
-  BRepFeat_MakePrism.hxx
-  BRepFeat_MakePrism.lxx
+  BRepFeat_MakePrism.hpp
+  BRepFeat_MakePrism_1.hpp
   BRepFeat_MakeRevol.cxx
-  BRepFeat_MakeRevol.hxx
-  BRepFeat_MakeRevol.lxx
+  BRepFeat_MakeRevol.hpp
+  BRepFeat_MakeRevol_1.hpp
   BRepFeat_MakeRevolutionForm.cxx
-  BRepFeat_MakeRevolutionForm.hxx
-  BRepFeat_MakeRevolutionForm.lxx
-  BRepFeat_PerfSelection.hxx
+  BRepFeat_MakeRevolutionForm.hpp
+  BRepFeat_MakeRevolutionForm_1.hpp
+  BRepFeat_PerfSelection.hpp
   BRepFeat_RibSlot.cxx
-  BRepFeat_RibSlot.hxx
-  BRepFeat_RibSlot.lxx
+  BRepFeat_RibSlot.hpp
+  BRepFeat_RibSlot_1.hpp
   BRepFeat_SplitShape.cxx
-  BRepFeat_SplitShape.hxx
-  BRepFeat_SplitShape.lxx
-  BRepFeat_Status.hxx
-  BRepFeat_StatusError.hxx
+  BRepFeat_SplitShape.hpp
+  BRepFeat_SplitShape_1.hpp
+  BRepFeat_Status.hpp
+  BRepFeat_StatusError.hpp
   BRepFeat_trace.cxx
 )

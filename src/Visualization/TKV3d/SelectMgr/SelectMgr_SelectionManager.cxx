@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_SelectionManager.hxx>
+#include <SelectMgr_SelectionManager.hpp>
 
-#include <Select3D_SensitiveGroup.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <StdSelect_BRepSelectionTool.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Select3D_SensitiveGroup.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <StdSelect_BRepSelectionTool.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_SelectionManager, Standard_Transient)
 

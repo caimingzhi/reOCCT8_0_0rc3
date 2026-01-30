@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPControl_Writer.hxx>
+#include <STEPControl_Writer.hpp>
 
-#include <APIHeaderSection_MakeHeader.hxx>
-#include <DE_ShapeFixParameters.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <STEPControl_ActorWrite.hxx>
-#include <STEPControl_Controller.hxx>
-#include <DESTEP_Parameters.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepTidy_DuplicateCleaner.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <UnitsMethods.hxx>
+#include <APIHeaderSection_MakeHeader.hpp>
+#include <DE_ShapeFixParameters.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <STEPControl_ActorWrite.hpp>
+#include <STEPControl_Controller.hpp>
+#include <DESTEP_Parameters.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepTidy_DuplicateCleaner.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <UnitsMethods.hpp>
 
 //=================================================================================================
 

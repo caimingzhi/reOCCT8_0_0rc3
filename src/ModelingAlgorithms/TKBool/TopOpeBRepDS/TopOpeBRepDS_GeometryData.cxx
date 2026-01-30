@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_GeometryData.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <NCollection_List.hxx>
+#include <TopOpeBRepDS_GeometryData.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

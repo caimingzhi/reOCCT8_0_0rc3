@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaAxis2Placement3d.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Direction.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaAxis2Placement3d.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Direction.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaAxis2Placement3d, StepGeom_Axis2Placement3d)
 

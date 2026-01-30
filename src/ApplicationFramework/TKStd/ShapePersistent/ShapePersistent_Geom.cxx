@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapePersistent_Geom.hxx>
-#include <ShapePersistent_Geom_Curve.hxx>
-#include <ShapePersistent_Geom_Surface.hxx>
-#include <StdObject_gp_Vectors.hxx>
+#include <ShapePersistent_Geom.hpp>
+#include <ShapePersistent_Geom_Curve.hpp>
+#include <ShapePersistent_Geom_Surface.hpp>
+#include <StdObject_gp_Vectors.hpp>
 
 //=======================================================================
 // function : Read

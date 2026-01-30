@@ -16,22 +16,22 @@
 
 // Modified by rmi, Wed Jan 14 08:17:35 1998
 
-#include <CDF_Application.hxx>
-#include <CDF_Directory.hxx>
-#include <CDF_FWOSDriver.hxx>
-#include <CDM_CanCloseStatus.hxx>
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <PCDM_RetrievalDriver.hxx>
-#include <PCDM_StorageDriver.hxx>
-#include <PCDM_ReaderFilter.hxx>
-#include <Plugin.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_ProgramError.hxx>
-#include <UTL.hxx>
+#include <CDF_Application.hpp>
+#include <CDF_Directory.hpp>
+#include <CDF_FWOSDriver.hpp>
+#include <CDM_CanCloseStatus.hpp>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <PCDM_RetrievalDriver.hpp>
+#include <PCDM_StorageDriver.hpp>
+#include <PCDM_ReaderFilter.hpp>
+#include <Plugin.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_ProgramError.hpp>
+#include <UTL.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_Application, CDM_Application)
 

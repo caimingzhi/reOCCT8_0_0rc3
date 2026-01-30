@@ -18,12 +18,12 @@
 // UNFINISHED
 // The last field (theDependentValues) not resolved. Queried to mdtv
 
-#include <IGESBasic_HArray1OfHArray1OfReal.hxx>
-#include <IGESDefs_TabularData.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <IGESBasic_HArray1OfHArray1OfReal.hpp>
+#include <IGESDefs_TabularData.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_TabularData, IGESData_IGESEntity)
 

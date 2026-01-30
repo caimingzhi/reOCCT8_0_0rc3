@@ -3,126 +3,126 @@ set(OCCT_math_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_math_FILES
   math.cxx
-  math.hxx
+  math.hpp
 
   math_BFGS.cxx
-  math_BFGS.hxx
-  math_BFGS.lxx
+  math_BFGS.hpp
+  math_BFGS_1.hpp
   math_BissecNewton.cxx
-  math_BissecNewton.hxx
-  math_BissecNewton.lxx
+  math_BissecNewton.hpp
+  math_BissecNewton_1.hpp
   math_BracketedRoot.cxx
-  math_BracketedRoot.hxx
-  math_BracketedRoot.lxx
+  math_BracketedRoot.hpp
+  math_BracketedRoot_1.hpp
   math_BracketMinimum.cxx
-  math_BracketMinimum.hxx
-  math_BracketMinimum.lxx
+  math_BracketMinimum.hpp
+  math_BracketMinimum_1.hpp
   math_BrentMinimum.cxx
-  math_BrentMinimum.hxx
-  math_BrentMinimum.lxx
-  math_BullardGenerator.hxx
+  math_BrentMinimum.hpp
+  math_BrentMinimum_1.hpp
+  math_BullardGenerator.hpp
   math_ComputeGaussPointsAndWeights.cxx
-  math_ComputeGaussPointsAndWeights.hxx
+  math_ComputeGaussPointsAndWeights.hpp
   math_ComputeKronrodPointsAndWeights.cxx
-  math_ComputeKronrodPointsAndWeights.hxx
+  math_ComputeKronrodPointsAndWeights.hpp
   math_Crout.cxx
-  math_Crout.hxx
-  math_Crout.lxx
+  math_Crout.hpp
+  math_Crout_1.hpp
   math_DirectPolynomialRoots.cxx
-  math_DirectPolynomialRoots.hxx
-  math_DoubleTab.hxx
+  math_DirectPolynomialRoots.hpp
+  math_DoubleTab.hpp
   math_EigenValuesSearcher.cxx
-  math_EigenValuesSearcher.hxx
+  math_EigenValuesSearcher.hpp
   math_FRPR.cxx
-  math_FRPR.hxx
-  math_FRPR.lxx
+  math_FRPR.hpp
+  math_FRPR_1.hpp
   math_Function.cxx
-  math_Function.hxx
+  math_Function.hpp
   math_FunctionAllRoots.cxx
-  math_FunctionAllRoots.hxx
-  math_FunctionAllRoots.lxx
+  math_FunctionAllRoots.hpp
+  math_FunctionAllRoots_1.hpp
   math_FunctionRoot.cxx
-  math_FunctionRoot.hxx
-  math_FunctionRoot.lxx
+  math_FunctionRoot.hpp
+  math_FunctionRoot_1.hpp
   math_FunctionRoots.cxx
-  math_FunctionRoots.hxx
-  math_FunctionRoots.lxx
+  math_FunctionRoots.hpp
+  math_FunctionRoots_1.hpp
   math_FunctionSample.cxx
-  math_FunctionSample.hxx
+  math_FunctionSample.hpp
   math_FunctionSet.cxx
-  math_FunctionSet.hxx
+  math_FunctionSet.hpp
   math_FunctionSetRoot.cxx
-  math_FunctionSetRoot.hxx
-  math_FunctionSetWithDerivatives.hxx
+  math_FunctionSetRoot.hpp
+  math_FunctionSetWithDerivatives.hpp
   math_FunctionWithDerivative.cxx
-  math_FunctionWithDerivative.hxx
+  math_FunctionWithDerivative.hpp
   math_Gauss.cxx
-  math_Gauss.hxx
+  math_Gauss.hpp
   math_GaussLeastSquare.cxx
-  math_GaussLeastSquare.hxx
-  math_GaussLeastSquare.lxx
+  math_GaussLeastSquare.hpp
+  math_GaussLeastSquare_1.hpp
   math_GaussMultipleIntegration.cxx
-  math_GaussMultipleIntegration.hxx
-  math_GaussMultipleIntegration.lxx
+  math_GaussMultipleIntegration.hpp
+  math_GaussMultipleIntegration_1.hpp
   math_GaussSetIntegration.cxx
-  math_GaussSetIntegration.hxx
-  math_GaussSetIntegration.lxx
+  math_GaussSetIntegration.hpp
+  math_GaussSetIntegration_1.hpp
   math_GaussSingleIntegration.cxx
-  math_GaussSingleIntegration.hxx
-  math_GaussSingleIntegration.lxx
+  math_GaussSingleIntegration.hpp
+  math_GaussSingleIntegration_1.hpp
   math_GlobOptMin.cxx
-  math_GlobOptMin.hxx
+  math_GlobOptMin.hpp
   math_Householder.cxx
-  math_Householder.hxx
-  math_Householder.lxx
-  math_IntegerVector.hxx
+  math_Householder.hpp
+  math_Householder_1.hpp
+  math_IntegerVector.hpp
   math_Jacobi.cxx
-  math_Jacobi.hxx
-  math_Jacobi.lxx
+  math_Jacobi.hpp
+  math_Jacobi_1.hpp
   math_Kronrod.cxx
   math_KronrodSingleIntegration.cxx
-  math_KronrodSingleIntegration.hxx
-  math_KronrodSingleIntegration.lxx
+  math_KronrodSingleIntegration.hpp
+  math_KronrodSingleIntegration_1.hpp
   math_Matrix.cxx
-  math_Matrix.hxx
-  math_Matrix.lxx
+  math_Matrix.hpp
+  math_Matrix_1.hpp
   math_MultipleVarFunction.cxx
-  math_MultipleVarFunction.hxx
-  math_MultipleVarFunctionWithGradient.hxx
-  math_MultipleVarFunctionWithHessian.hxx
+  math_MultipleVarFunction.hpp
+  math_MultipleVarFunctionWithGradient.hpp
+  math_MultipleVarFunctionWithHessian.hpp
   math_NewtonFunctionRoot.cxx
-  math_NewtonFunctionRoot.hxx
-  math_NewtonFunctionRoot.lxx
+  math_NewtonFunctionRoot.hpp
+  math_NewtonFunctionRoot_1.hpp
   math_NewtonFunctionSetRoot.cxx
-  math_NewtonFunctionSetRoot.hxx
-  math_NewtonFunctionSetRoot.lxx
+  math_NewtonFunctionSetRoot.hpp
+  math_NewtonFunctionSetRoot_1.hpp
   math_NewtonMinimum.cxx
-  math_NewtonMinimum.hxx
-  math_NewtonMinimum.lxx
-  math_NotSquare.hxx
+  math_NewtonMinimum.hpp
+  math_NewtonMinimum_1.hpp
+  math_NotSquare.hpp
   math_Powell.cxx
-  math_Powell.hxx
-  math_Powell.lxx
+  math_Powell.hpp
+  math_Powell_1.hpp
   math_PSO.cxx
-  math_PSO.hxx
+  math_PSO.hpp
   math_PSOParticlesPool.cxx
-  math_PSOParticlesPool.hxx
+  math_PSOParticlesPool.hpp
   math_Recipes.cxx
-  math_Recipes.hxx
-  math_SingularMatrix.hxx
-  math_Status.hxx
+  math_Recipes.hpp
+  math_SingularMatrix.hpp
+  math_Status.hpp
   math_SVD.cxx
-  math_SVD.hxx
-  math_SVD.lxx
+  math_SVD.hpp
+  math_SVD_1.hpp
   math_TrigonometricFunctionRoots.cxx
-  math_TrigonometricFunctionRoots.hxx
-  math_TrigonometricFunctionRoots.lxx
-  math_TrigonometricEquationFunction.hxx
+  math_TrigonometricFunctionRoots.hpp
+  math_TrigonometricFunctionRoots_1.hpp
+  math_TrigonometricEquationFunction.hpp
   math_Uzawa.cxx
-  math_Uzawa.hxx
-  math_Uzawa.lxx
-  math_ValueAndWeight.hxx
-  math_VectorBase.hxx
-  math_VectorBase.lxx
-  math_Vector.hxx
+  math_Uzawa.hpp
+  math_Uzawa_1.hpp
+  math_ValueAndWeight.hpp
+  math_VectorBase.hpp
+  math_VectorBase_1.hpp
+  math_Vector.hpp
 )

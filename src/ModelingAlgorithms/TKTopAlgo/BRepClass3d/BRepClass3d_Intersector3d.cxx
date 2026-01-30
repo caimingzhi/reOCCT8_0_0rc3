@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepClass3d_Intersector3d.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepClass3d_Intersector3d.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <TopoDS_Face.hpp>
 
 //============================================================================
 BRepClass3d_Intersector3d::BRepClass3d_Intersector3d()

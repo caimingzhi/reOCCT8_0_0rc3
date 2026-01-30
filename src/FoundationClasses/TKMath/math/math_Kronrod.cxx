@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math.hxx>
-#include <math_ComputeKronrodPointsAndWeights.hxx>
+#include <math.hpp>
+#include <math_ComputeKronrodPointsAndWeights.hpp>
 
 int math::KronrodPointsMax()
 {

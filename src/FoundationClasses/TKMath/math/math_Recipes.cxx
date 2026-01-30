@@ -20,11 +20,11 @@
 
 #include <cmath>
 
-#include <math_Recipes.hxx>
+#include <math_Recipes.hpp>
 
-#include <math_IntegerVector.hxx>
-#include <math_Matrix.hxx>
-#include <Message_ProgressScope.hxx>
+#include <math_IntegerVector.hpp>
+#include <math_Matrix.hpp>
+#include <Message_ProgressScope.hpp>
 
 namespace
 {

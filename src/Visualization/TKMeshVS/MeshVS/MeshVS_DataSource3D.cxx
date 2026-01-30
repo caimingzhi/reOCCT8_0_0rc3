@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_DataSource3D.hxx>
-#include <Standard_Type.hxx>
+#include <MeshVS_DataSource3D.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_DataSource3D, MeshVS_DataSource)
 

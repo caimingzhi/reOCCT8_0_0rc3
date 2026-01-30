@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Vrml_TextureCoordinate2.hxx>
+#include <Standard_Type.hpp>
+#include <Vrml_TextureCoordinate2.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Vrml_TextureCoordinate2, Standard_Transient)
 

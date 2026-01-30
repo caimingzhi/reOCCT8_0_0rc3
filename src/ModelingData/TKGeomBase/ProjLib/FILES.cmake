@@ -3,37 +3,37 @@ set(OCCT_ProjLib_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ProjLib_FILES
   ProjLib.cxx
-  ProjLib.hxx
+  ProjLib.hpp
   ProjLib_CompProjectedCurve.cxx
-  ProjLib_CompProjectedCurve.hxx
+  ProjLib_CompProjectedCurve.hpp
   ProjLib_ComputeApprox.cxx
-  ProjLib_ComputeApprox.hxx
+  ProjLib_ComputeApprox.hpp
   ProjLib_ComputeApproxOnPolarSurface.cxx
-  ProjLib_ComputeApproxOnPolarSurface.hxx
+  ProjLib_ComputeApproxOnPolarSurface.hpp
   ProjLib_Cone.cxx
-  ProjLib_Cone.hxx
+  ProjLib_Cone.hpp
   ProjLib_Cylinder.cxx
-  ProjLib_Cylinder.hxx
-  ProjLib_HCompProjectedCurve.hxx
-  ProjLib_HProjectedCurve.hxx
+  ProjLib_Cylinder.hpp
+  ProjLib_HCompProjectedCurve.hpp
+  ProjLib_HProjectedCurve.hpp
 
   ProjLib_Plane.cxx
-  ProjLib_Plane.hxx
+  ProjLib_Plane.hpp
   ProjLib_PrjFunc.cxx
-  ProjLib_PrjFunc.hxx
+  ProjLib_PrjFunc.hpp
   ProjLib_PrjResolve.cxx
-  ProjLib_PrjResolve.hxx
+  ProjLib_PrjResolve.hpp
   ProjLib_ProjectedCurve.cxx
-  ProjLib_ProjectedCurve.hxx
+  ProjLib_ProjectedCurve.hpp
   ProjLib_ProjectOnPlane.cxx
-  ProjLib_ProjectOnPlane.hxx
+  ProjLib_ProjectOnPlane.hpp
   ProjLib_ProjectOnSurface.cxx
-  ProjLib_ProjectOnSurface.hxx
+  ProjLib_ProjectOnSurface.hpp
   ProjLib_Projector.cxx
-  ProjLib_Projector.hxx
+  ProjLib_Projector.hpp
 
   ProjLib_Sphere.cxx
-  ProjLib_Sphere.hxx
+  ProjLib_Sphere.hpp
   ProjLib_Torus.cxx
-  ProjLib_Torus.hxx
+  ProjLib_Torus.hpp
 )

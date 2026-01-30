@@ -14,11 +14,11 @@
 //    rln 22.03.99: syntax correction in CombineVertex
 // szv#4 S4163
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <ShapeBuild_Vertex.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <ShapeBuild_Vertex.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

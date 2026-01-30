@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_LayerTool.hxx>
+#include <XCAFDoc_LayerTool.hpp>
 
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_LayerTool, TDataStd_GenericEmpty, "xcaf", "LayerTool")
 

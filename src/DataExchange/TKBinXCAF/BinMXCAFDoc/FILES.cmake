@@ -3,33 +3,33 @@ set(OCCT_BinMXCAFDoc_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMXCAFDoc_FILES
   BinMXCAFDoc.cxx
-  BinMXCAFDoc.hxx
+  BinMXCAFDoc.hpp
   BinMXCAFDoc_AssemblyItemRefDriver.cxx
-  BinMXCAFDoc_AssemblyItemRefDriver.hxx
+  BinMXCAFDoc_AssemblyItemRefDriver.hpp
   BinMXCAFDoc_CentroidDriver.cxx
-  BinMXCAFDoc_CentroidDriver.hxx
+  BinMXCAFDoc_CentroidDriver.hpp
   BinMXCAFDoc_ColorDriver.cxx
-  BinMXCAFDoc_ColorDriver.hxx
+  BinMXCAFDoc_ColorDriver.hpp
   BinMXCAFDoc_DatumDriver.cxx
-  BinMXCAFDoc_DatumDriver.hxx
+  BinMXCAFDoc_DatumDriver.hpp
   BinMXCAFDoc_DimTolDriver.cxx
-  BinMXCAFDoc_DimTolDriver.hxx
+  BinMXCAFDoc_DimTolDriver.hpp
   BinMXCAFDoc_GraphNodeDriver.cxx
-  BinMXCAFDoc_GraphNodeDriver.hxx
+  BinMXCAFDoc_GraphNodeDriver.hpp
   BinMXCAFDoc_LengthUnitDriver.cxx
-  BinMXCAFDoc_LengthUnitDriver.hxx
+  BinMXCAFDoc_LengthUnitDriver.hpp
   BinMXCAFDoc_LocationDriver.cxx
-  BinMXCAFDoc_LocationDriver.hxx
+  BinMXCAFDoc_LocationDriver.hpp
   BinMXCAFDoc_MaterialDriver.cxx
-  BinMXCAFDoc_MaterialDriver.hxx
+  BinMXCAFDoc_MaterialDriver.hpp
   BinMXCAFDoc_NoteDriver.cxx
-  BinMXCAFDoc_NoteDriver.hxx
+  BinMXCAFDoc_NoteDriver.hpp
   BinMXCAFDoc_NoteCommentDriver.cxx
-  BinMXCAFDoc_NoteCommentDriver.hxx
+  BinMXCAFDoc_NoteCommentDriver.hpp
   BinMXCAFDoc_NoteBinDataDriver.cxx
-  BinMXCAFDoc_NoteBinDataDriver.hxx
+  BinMXCAFDoc_NoteBinDataDriver.hpp
   BinMXCAFDoc_VisMaterialDriver.cxx
-  BinMXCAFDoc_VisMaterialDriver.hxx
+  BinMXCAFDoc_VisMaterialDriver.hpp
   BinMXCAFDoc_VisMaterialToolDriver.cxx
-  BinMXCAFDoc_VisMaterialToolDriver.hxx
+  BinMXCAFDoc_VisMaterialToolDriver.hpp
 )

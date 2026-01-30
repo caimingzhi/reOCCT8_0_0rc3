@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveBox.hxx>
+#include <Select3D_SensitiveBox.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveBox, Select3D_SensitiveEntity)
 

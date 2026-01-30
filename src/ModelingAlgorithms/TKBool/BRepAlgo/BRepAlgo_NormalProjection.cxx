@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAlgo_NormalProjection.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepLib_MakeWire.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAdaptor.hxx>
-#include <Precision.hxx>
-#include <ProjLib_HCompProjectedCurve.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepAlgo_NormalProjection.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepLib_MakeWire.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAdaptor.hpp>
+#include <Precision.hpp>
+#include <ProjLib_HCompProjectedCurve.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 #ifdef OCCT_DEBUG_CHRONO
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 
 OSD_Chronometer chr_total, chr_init, chr_approx, chr_booltool;
 

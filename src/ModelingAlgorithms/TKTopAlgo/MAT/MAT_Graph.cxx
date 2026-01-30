@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT_Arc.hxx>
-#include <MAT_Bisector.hxx>
-#include <Standard_Integer.hxx>
-#include <MAT_BasicElt.hxx>
-#include <NCollection_DataMap.hxx>
-#include <MAT_Edge.hxx>
-#include <MAT_Graph.hxx>
-#include <MAT_ListOfBisector.hxx>
-#include <MAT_Node.hxx>
-#include <MAT_Zone.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
+#include <MAT_Arc.hpp>
+#include <MAT_Bisector.hpp>
+#include <Standard_Integer.hpp>
+#include <MAT_BasicElt.hpp>
+#include <NCollection_DataMap.hpp>
+#include <MAT_Edge.hpp>
+#include <MAT_Graph.hpp>
+#include <MAT_ListOfBisector.hpp>
+#include <MAT_Node.hpp>
+#include <MAT_Zone.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Graph, Standard_Transient)
 

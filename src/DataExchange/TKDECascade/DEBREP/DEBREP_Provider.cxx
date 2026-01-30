@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEBREP_Provider.hxx>
+#include <DEBREP_Provider.hpp>
 
-#include <BRepTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BinTools.hxx>
-#include <DEBREP_ConfigurationNode.hxx>
-#include <Message.hxx>
-#include <OSD_FileSystem.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRepTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BinTools.hpp>
+#include <DEBREP_ConfigurationNode.hpp>
+#include <Message.hpp>
+#include <OSD_FileSystem.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEBREP_Provider, DE_Provider)
 

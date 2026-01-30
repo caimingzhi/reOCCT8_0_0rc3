@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWPresentationStyleAssignment.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_NullStyleMember.hxx>
-#include <StepVisual_PresentationStyleAssignment.hxx>
-#include <StepVisual_PresentationStyleSelect.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWPresentationStyleAssignment.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_NullStyleMember.hpp>
+#include <StepVisual_PresentationStyleAssignment.hpp>
+#include <StepVisual_PresentationStyleSelect.hpp>
 
 RWStepVisual_RWPresentationStyleAssignment::RWStepVisual_RWPresentationStyleAssignment() = default;
 

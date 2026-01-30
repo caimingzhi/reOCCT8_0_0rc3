@@ -16,13 +16,13 @@
 // JCV 07/92 Introduction de la method Dump
 // LBO 08/93 passage aux Ax3
 
-#include <gp_Cylinder.hxx>
+#include <gp_Cylinder.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
 
 void gp_Cylinder::Coefficients(double& A1,
                                double& A2,

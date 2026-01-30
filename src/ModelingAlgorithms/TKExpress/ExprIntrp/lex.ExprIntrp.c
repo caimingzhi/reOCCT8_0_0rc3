@@ -752,7 +752,7 @@ char *yytext;
 */ 
 #include <ExprIntrp.tab.h>
 
-#include <ExprIntrp_yaccintrf.hxx>
+#include <ExprIntrp_yaccintrf.hpp>
 
 #define YY_SKIP_YYWRAP
 

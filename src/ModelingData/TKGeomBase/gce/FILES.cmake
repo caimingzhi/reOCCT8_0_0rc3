@@ -2,53 +2,53 @@
 set(OCCT_gce_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_gce_FILES
-  gce_ErrorType.hxx
+  gce_ErrorType.hpp
   gce_MakeCirc.cxx
-  gce_MakeCirc.hxx
+  gce_MakeCirc.hpp
   gce_MakeCirc2d.cxx
-  gce_MakeCirc2d.hxx
+  gce_MakeCirc2d.hpp
   gce_MakeCone.cxx
-  gce_MakeCone.hxx
+  gce_MakeCone.hpp
   gce_MakeCylinder.cxx
-  gce_MakeCylinder.hxx
+  gce_MakeCylinder.hpp
   gce_MakeDir.cxx
-  gce_MakeDir.hxx
+  gce_MakeDir.hpp
   gce_MakeDir2d.cxx
-  gce_MakeDir2d.hxx
+  gce_MakeDir2d.hpp
   gce_MakeElips.cxx
-  gce_MakeElips.hxx
+  gce_MakeElips.hpp
   gce_MakeElips2d.cxx
-  gce_MakeElips2d.hxx
+  gce_MakeElips2d.hpp
   gce_MakeHypr.cxx
-  gce_MakeHypr.hxx
+  gce_MakeHypr.hpp
   gce_MakeHypr2d.cxx
-  gce_MakeHypr2d.hxx
+  gce_MakeHypr2d.hpp
   gce_MakeLin.cxx
-  gce_MakeLin.hxx
+  gce_MakeLin.hpp
   gce_MakeLin2d.cxx
-  gce_MakeLin2d.hxx
+  gce_MakeLin2d.hpp
   gce_MakeMirror.cxx
-  gce_MakeMirror.hxx
+  gce_MakeMirror.hpp
   gce_MakeMirror2d.cxx
-  gce_MakeMirror2d.hxx
+  gce_MakeMirror2d.hpp
   gce_MakeParab.cxx
-  gce_MakeParab.hxx
+  gce_MakeParab.hpp
   gce_MakeParab2d.cxx
-  gce_MakeParab2d.hxx
+  gce_MakeParab2d.hpp
   gce_MakePln.cxx
-  gce_MakePln.hxx
+  gce_MakePln.hpp
   gce_MakeRotation.cxx
-  gce_MakeRotation.hxx
+  gce_MakeRotation.hpp
   gce_MakeRotation2d.cxx
-  gce_MakeRotation2d.hxx
+  gce_MakeRotation2d.hpp
   gce_MakeScale.cxx
-  gce_MakeScale.hxx
+  gce_MakeScale.hpp
   gce_MakeScale2d.cxx
-  gce_MakeScale2d.hxx
+  gce_MakeScale2d.hpp
   gce_MakeTranslation.cxx
-  gce_MakeTranslation.hxx
+  gce_MakeTranslation.hpp
   gce_MakeTranslation2d.cxx
-  gce_MakeTranslation2d.hxx
-  gce_Root.hxx
-  gce_Root.lxx
+  gce_MakeTranslation2d.hpp
+  gce_Root.hpp
+  gce_Root_1.hpp
 )

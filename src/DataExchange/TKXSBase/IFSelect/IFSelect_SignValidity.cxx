@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SignValidity.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_SignValidity.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SignValidity, IFSelect_Signature)
 

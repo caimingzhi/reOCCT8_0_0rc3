@@ -3,35 +3,35 @@ set(OCCT_BRepTools_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepTools_FILES
   BRepTools.cxx
-  BRepTools.hxx
+  BRepTools.hpp
   BRepTools_CopyModification.cxx
-  BRepTools_CopyModification.hxx
+  BRepTools_CopyModification.hpp
 
   BRepTools_Debug.cxx
   BRepTools_GTrsfModification.cxx
-  BRepTools_GTrsfModification.hxx
-  BRepTools_History.hxx
+  BRepTools_GTrsfModification.hpp
+  BRepTools_History.hpp
   BRepTools_History.cxx
 
   BRepTools_Modification.cxx
-  BRepTools_Modification.hxx
+  BRepTools_Modification.hpp
   BRepTools_Modifier.cxx
-  BRepTools_Modifier.hxx
-  BRepTools_Modifier.lxx
+  BRepTools_Modifier.hpp
+  BRepTools_Modifier_1.hpp
   BRepTools_NurbsConvertModification.cxx
-  BRepTools_NurbsConvertModification.hxx
+  BRepTools_NurbsConvertModification.hpp
   BRepTools_Quilt.cxx
-  BRepTools_Quilt.hxx
+  BRepTools_Quilt.hpp
   BRepTools_ReShape.cxx
-  BRepTools_ReShape.hxx
+  BRepTools_ReShape.hpp
   BRepTools_ShapeSet.cxx
-  BRepTools_ShapeSet.hxx
+  BRepTools_ShapeSet.hpp
   BRepTools_Substitution.cxx
-  BRepTools_Substitution.hxx
+  BRepTools_Substitution.hpp
   BRepTools_TrsfModification.cxx
-  BRepTools_TrsfModification.hxx
+  BRepTools_TrsfModification.hpp
   BRepTools_WireExplorer.cxx
-  BRepTools_WireExplorer.hxx
+  BRepTools_WireExplorer.hpp
   BRepTools_PurgeLocations.cxx
-  BRepTools_PurgeLocations.hxx
+  BRepTools_PurgeLocations.hpp
 )

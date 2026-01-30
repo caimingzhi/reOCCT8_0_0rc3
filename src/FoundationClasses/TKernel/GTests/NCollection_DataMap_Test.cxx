@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 #include <algorithm>

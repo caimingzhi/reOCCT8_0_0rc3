@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AutoDesignOrganizationAssignment.hxx>
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_OrganizationRole.hxx>
+#include <StepAP214_AutoDesignOrganizationAssignment.hpp>
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_OrganizationRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignOrganizationAssignment,
                            StepBasic_OrganizationAssignment)

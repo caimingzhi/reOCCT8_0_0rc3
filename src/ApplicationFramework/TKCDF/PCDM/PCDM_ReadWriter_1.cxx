@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <CDM_ReferenceIterator.hxx>
-#include <OSD_Path.hxx>
-#include <PCDM.hxx>
-#include <PCDM_ReadWriter_1.hxx>
-#include <PCDM_Reference.hxx>
-#include <PCDM_TypeOfFileDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_Data.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_Schema.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <UTL.hxx>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <CDM_ReferenceIterator.hpp>
+#include <OSD_Path.hpp>
+#include <PCDM.hpp>
+#include <PCDM_ReadWriter_1.hpp>
+#include <PCDM_Reference.hpp>
+#include <PCDM_TypeOfFileDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_Data.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_Schema.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <UTL.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PCDM_ReadWriter_1, PCDM_ReadWriter)
 

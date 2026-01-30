@@ -3,125 +3,125 @@ set(OCCT_TopOpeBRepDS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopOpeBRepDS_FILES
   TopOpeBRepDS.cxx
-  TopOpeBRepDS.hxx
+  TopOpeBRepDS.hpp
 
   TopOpeBRepDS_Association.cxx
-  TopOpeBRepDS_Association.hxx
+  TopOpeBRepDS_Association.hpp
   TopOpeBRepDS_BuildTool.cxx
-  TopOpeBRepDS_BuildTool.hxx
+  TopOpeBRepDS_BuildTool.hpp
   TopOpeBRepDS_Check.cxx
-  TopOpeBRepDS_Check.hxx
-  TopOpeBRepDS_CheckStatus.hxx
-  TopOpeBRepDS_Config.hxx
+  TopOpeBRepDS_Check.hpp
+  TopOpeBRepDS_CheckStatus.hpp
+  TopOpeBRepDS_Config.hpp
   TopOpeBRepDS_connex.cxx
-  TopOpeBRepDS_connex.hxx
+  TopOpeBRepDS_connex.hpp
   TopOpeBRepDS_Curve.cxx
-  TopOpeBRepDS_Curve.hxx
+  TopOpeBRepDS_Curve.hpp
   TopOpeBRepDS_CurveData.cxx
-  TopOpeBRepDS_CurveData.hxx
+  TopOpeBRepDS_CurveData.hpp
   TopOpeBRepDS_CurveExplorer.cxx
-  TopOpeBRepDS_CurveExplorer.hxx
+  TopOpeBRepDS_CurveExplorer.hpp
   TopOpeBRepDS_CurveIterator.cxx
-  TopOpeBRepDS_CurveIterator.hxx
+  TopOpeBRepDS_CurveIterator.hpp
   TopOpeBRepDS_CurvePointInterference.cxx
-  TopOpeBRepDS_CurvePointInterference.hxx
+  TopOpeBRepDS_CurvePointInterference.hpp
 
   TopOpeBRepDS_DataStructure.cxx
-  TopOpeBRepDS_DataStructure.hxx
-  TopOpeBRepDS_define.hxx
+  TopOpeBRepDS_DataStructure.hpp
+  TopOpeBRepDS_define.hpp
 
   TopOpeBRepDS_Dumper.cxx
-  TopOpeBRepDS_Dumper.hxx
+  TopOpeBRepDS_Dumper.hpp
   TopOpeBRepDS_Edge3dInterferenceTool.cxx
-  TopOpeBRepDS_Edge3dInterferenceTool.hxx
+  TopOpeBRepDS_Edge3dInterferenceTool.hpp
   TopOpeBRepDS_EdgeInterferenceTool.cxx
-  TopOpeBRepDS_EdgeInterferenceTool.hxx
+  TopOpeBRepDS_EdgeInterferenceTool.hpp
   TopOpeBRepDS_EdgeVertexInterference.cxx
-  TopOpeBRepDS_EdgeVertexInterference.hxx
+  TopOpeBRepDS_EdgeVertexInterference.hpp
   TopOpeBRepDS_EIR.cxx
-  TopOpeBRepDS_EIR.hxx
+  TopOpeBRepDS_EIR.hpp
   TopOpeBRepDS_Explorer.cxx
-  TopOpeBRepDS_Explorer.hxx
+  TopOpeBRepDS_Explorer.hpp
   TopOpeBRepDS_EXPORT.cxx
-  TopOpeBRepDS_EXPORT.hxx
+  TopOpeBRepDS_EXPORT.hpp
   TopOpeBRepDS_FaceEdgeInterference.cxx
-  TopOpeBRepDS_FaceEdgeInterference.hxx
+  TopOpeBRepDS_FaceEdgeInterference.hpp
   TopOpeBRepDS_FaceInterferenceTool.cxx
-  TopOpeBRepDS_FaceInterferenceTool.hxx
+  TopOpeBRepDS_FaceInterferenceTool.hpp
   TopOpeBRepDS_Filter.cxx
-  TopOpeBRepDS_Filter.hxx
+  TopOpeBRepDS_Filter.hpp
   TopOpeBRepDS_FilterCurveInterferences.cxx
   TopOpeBRepDS_FilterEdgeInterferences.cxx
   TopOpeBRepDS_FilterFaceInterferences.cxx
   TopOpeBRepDS_FIR.cxx
-  TopOpeBRepDS_FIR.hxx
+  TopOpeBRepDS_FIR.hpp
   TopOpeBRepDS_funk.cxx
   TopOpeBRepDS_GapFiller.cxx
-  TopOpeBRepDS_GapFiller.hxx
+  TopOpeBRepDS_GapFiller.hpp
   TopOpeBRepDS_GapTool.cxx
-  TopOpeBRepDS_GapTool.hxx
+  TopOpeBRepDS_GapTool.hpp
   TopOpeBRepDS_GeometryData.cxx
-  TopOpeBRepDS_GeometryData.hxx
+  TopOpeBRepDS_GeometryData.hpp
 
   TopOpeBRepDS_HDataStructure.cxx
-  TopOpeBRepDS_HDataStructure.hxx
+  TopOpeBRepDS_HDataStructure.hpp
 
   TopOpeBRepDS_Interference.cxx
-  TopOpeBRepDS_Interference.hxx
+  TopOpeBRepDS_Interference.hpp
   TopOpeBRepDS_InterferenceIterator.cxx
-  TopOpeBRepDS_InterferenceIterator.hxx
+  TopOpeBRepDS_InterferenceIterator.hpp
   TopOpeBRepDS_InterferenceTool.cxx
-  TopOpeBRepDS_InterferenceTool.hxx
-  TopOpeBRepDS_Kind.hxx
+  TopOpeBRepDS_InterferenceTool.hpp
+  TopOpeBRepDS_Kind.hpp
 
   TopOpeBRepDS_ListOfShapeOn1State.cxx
-  TopOpeBRepDS_ListOfShapeOn1State.hxx
+  TopOpeBRepDS_ListOfShapeOn1State.hpp
 
   TopOpeBRepDS_Marker.cxx
-  TopOpeBRepDS_Marker.hxx
-  TopOpeBRepDS_PDataStructure.hxx
+  TopOpeBRepDS_Marker.hpp
+  TopOpeBRepDS_PDataStructure.hpp
   TopOpeBRepDS_Point.cxx
-  TopOpeBRepDS_Point.hxx
+  TopOpeBRepDS_Point.hpp
   TopOpeBRepDS_PointData.cxx
-  TopOpeBRepDS_PointData.hxx
+  TopOpeBRepDS_PointData.hpp
   TopOpeBRepDS_PointExplorer.cxx
-  TopOpeBRepDS_PointExplorer.hxx
+  TopOpeBRepDS_PointExplorer.hpp
   TopOpeBRepDS_PointIterator.cxx
-  TopOpeBRepDS_PointIterator.hxx
+  TopOpeBRepDS_PointIterator.hpp
   TopOpeBRepDS_ProcessEdgeInterferences.cxx
   TopOpeBRepDS_ProcessFaceInterferences.cxx
   TopOpeBRepDS_ProcessInterferencesTool.cxx
-  TopOpeBRepDS_ProcessInterferencesTool.hxx
+  TopOpeBRepDS_ProcessInterferencesTool.hpp
   TopOpeBRepDS_redu.cxx
   TopOpeBRepDS_Reducer.cxx
-  TopOpeBRepDS_Reducer.hxx
+  TopOpeBRepDS_Reducer.hpp
   TopOpeBRepDS_repvg.cxx
-  TopOpeBRepDS_repvg.hxx
+  TopOpeBRepDS_repvg.hpp
   TopOpeBRepDS_samdom.cxx
-  TopOpeBRepDS_samdom.hxx
+  TopOpeBRepDS_samdom.hpp
   TopOpeBRepDS_ShapeData.cxx
-  TopOpeBRepDS_ShapeData.hxx
+  TopOpeBRepDS_ShapeData.hpp
   TopOpeBRepDS_ShapeShapeInterference.cxx
-  TopOpeBRepDS_ShapeShapeInterference.hxx
+  TopOpeBRepDS_ShapeShapeInterference.hpp
 
   TopOpeBRepDS_ShapeWithState.cxx
-  TopOpeBRepDS_ShapeWithState.hxx
+  TopOpeBRepDS_ShapeWithState.hpp
   TopOpeBRepDS_SolidSurfaceInterference.cxx
-  TopOpeBRepDS_SolidSurfaceInterference.hxx
+  TopOpeBRepDS_SolidSurfaceInterference.hpp
   TopOpeBRepDS_Surface.cxx
-  TopOpeBRepDS_Surface.hxx
+  TopOpeBRepDS_Surface.hpp
   TopOpeBRepDS_SurfaceCurveInterference.cxx
-  TopOpeBRepDS_SurfaceCurveInterference.hxx
+  TopOpeBRepDS_SurfaceCurveInterference.hpp
   TopOpeBRepDS_SurfaceData.cxx
-  TopOpeBRepDS_SurfaceData.hxx
+  TopOpeBRepDS_SurfaceData.hpp
   TopOpeBRepDS_SurfaceExplorer.cxx
-  TopOpeBRepDS_SurfaceExplorer.hxx
+  TopOpeBRepDS_SurfaceExplorer.hpp
   TopOpeBRepDS_SurfaceIterator.cxx
-  TopOpeBRepDS_SurfaceIterator.hxx
+  TopOpeBRepDS_SurfaceIterator.hpp
   TopOpeBRepDS_TKI.cxx
-  TopOpeBRepDS_TKI.hxx
+  TopOpeBRepDS_TKI.hpp
   TopOpeBRepDS_TOOL.cxx
-  TopOpeBRepDS_TOOL.hxx
+  TopOpeBRepDS_TOOL.hpp
   TopOpeBRepDS_Transition.cxx
-  TopOpeBRepDS_Transition.hxx
+  TopOpeBRepDS_Transition.hpp
 )

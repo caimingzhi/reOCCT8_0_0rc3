@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
 
 #define MYDS (*((TopOpeBRepDS_DataStructure*)myDS))
 static TopOpeBRepDS_Curve* CEX_PEMPTY = nullptr;

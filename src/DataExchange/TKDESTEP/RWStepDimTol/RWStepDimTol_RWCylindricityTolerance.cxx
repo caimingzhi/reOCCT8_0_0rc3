@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepDimTol_RWCylindricityTolerance.pxx"
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_CylindricityTolerance.hxx>
-#include <StepDimTol_GeometricToleranceTarget.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepDimTol_RWCylindricityTolerance.hpp"
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_CylindricityTolerance.hpp>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
 
 //=================================================================================================
 

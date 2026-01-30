@@ -17,15 +17,15 @@
 // Modified:	Fri Jul 10 11:23:35 1998
 //              JCT : Add WithRatio,MinM
 
-#include <Geom_BoundedCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom_BoundedCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_CompCurveToBSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

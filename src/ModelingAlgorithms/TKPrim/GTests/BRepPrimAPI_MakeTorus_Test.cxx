@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepPrimAPI_MakeTorus.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepPrimAPI_MakeTorus.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <gtest/gtest.h>
 

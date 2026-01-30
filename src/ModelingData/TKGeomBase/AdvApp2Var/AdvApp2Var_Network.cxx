@@ -18,9 +18,9 @@
 //   by:	Joelle CHAUVET
 //		G1135 : empty constructor
 
-#include <AdvApp2Var_Network.hxx>
-#include <AdvApp2Var_Patch.hxx>
-#include <NCollection_Sequence.hxx>
+#include <AdvApp2Var_Network.hpp>
+#include <AdvApp2Var_Patch.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

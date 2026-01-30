@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "Geom_OsculatingSurface.pxx"
+#include "Geom_OsculatingSurface.hpp"
 
-#include <BSplSLib.hxx>
-#include <Convert_GridPolynomialToPoles.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <PLib.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_HArray2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplSLib.hpp>
+#include <Convert_GridPolynomialToPoles.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <PLib.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_HArray2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

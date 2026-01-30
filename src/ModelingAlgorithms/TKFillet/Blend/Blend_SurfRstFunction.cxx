@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_Point.hxx>
-#include <Blend_SurfRstFunction.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Blend_Point.hpp>
+#include <Blend_SurfRstFunction.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_NotImplemented.hpp>
 
 const gp_Pnt& Blend_SurfRstFunction::Pnt1() const
 {

@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_ModelBuilder.hxx>
-#include <BRepMeshData_Model.hxx>
-#include <BRepMesh_ShapeVisitor.hxx>
-#include <BRepMesh_ShapeTool.hxx>
-#include <IMeshTools_ShapeExplorer.hxx>
+#include <BRepMesh_ModelBuilder.hpp>
+#include <BRepMeshData_Model.hpp>
+#include <BRepMesh_ShapeVisitor.hpp>
+#include <BRepMesh_ShapeTool.hpp>
+#include <IMeshTools_ShapeExplorer.hpp>
 
-#include <Bnd_Box.hxx>
-#include <BRepBndLib.hxx>
+#include <Bnd_Box.hpp>
+#include <BRepBndLib.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelBuilder, IMeshTools_ModelBuilder)
 

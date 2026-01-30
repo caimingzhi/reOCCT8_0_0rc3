@@ -3,49 +3,49 @@ set(OCCT_Storage_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Storage_FILES
   Storage.cxx
-  Storage.hxx
+  Storage.hpp
 
-  Storage_ArrayOfSchema.hxx
+  Storage_ArrayOfSchema.hpp
   Storage_BaseDriver.cxx
-  Storage_BaseDriver.hxx
-  Storage_BucketOfPersistent.hxx
+  Storage_BaseDriver.hpp
+  Storage_BucketOfPersistent.hpp
   Storage_CallBack.cxx
-  Storage_CallBack.hxx
+  Storage_CallBack.hpp
   Storage_Data.cxx
-  Storage_Data.hxx
+  Storage_Data.hpp
 
   Storage_DefaultCallBack.cxx
-  Storage_DefaultCallBack.hxx
-  Storage_Error.hxx
+  Storage_DefaultCallBack.hpp
+  Storage_Error.hpp
 
   Storage_HeaderData.cxx
-  Storage_HeaderData.hxx
+  Storage_HeaderData.hpp
 
   Storage_InternalData.cxx
-  Storage_InternalData.hxx
-  Storage_Macros.hxx
+  Storage_InternalData.hpp
+  Storage_Macros.hpp
 
-  Storage_OpenMode.hxx
+  Storage_OpenMode.hpp
 
-  Storage_Position.hxx
+  Storage_Position.hpp
 
   Storage_Root.cxx
-  Storage_Root.hxx
+  Storage_Root.hpp
   Storage_RootData.cxx
-  Storage_RootData.hxx
+  Storage_RootData.hpp
   Storage_Schema.cxx
-  Storage_Schema.hxx
+  Storage_Schema.hpp
 
-  Storage_SolveMode.hxx
-  Storage_StreamExtCharParityError.hxx
-  Storage_StreamFormatError.hxx
-  Storage_StreamModeError.hxx
-  Storage_StreamReadError.hxx
-  Storage_StreamTypeMismatchError.hxx
-  Storage_StreamUnknownTypeError.hxx
-  Storage_StreamWriteError.hxx
+  Storage_SolveMode.hpp
+  Storage_StreamExtCharParityError.hpp
+  Storage_StreamFormatError.hpp
+  Storage_StreamModeError.hpp
+  Storage_StreamReadError.hpp
+  Storage_StreamTypeMismatchError.hpp
+  Storage_StreamUnknownTypeError.hpp
+  Storage_StreamWriteError.hpp
   Storage_TypeData.cxx
-  Storage_TypeData.hxx
+  Storage_TypeData.hpp
   Storage_TypedCallBack.cxx
-  Storage_TypedCallBack.hxx
+  Storage_TypedCallBack.hpp
 )

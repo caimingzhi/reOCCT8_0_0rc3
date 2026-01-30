@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
+#include <BOPTest.hpp>
 
-#include <BOPTest_Objects.hxx>
+#include <BOPTest_Objects.hpp>
 
-#include <DBRep.hxx>
+#include <DBRep.hpp>
 
-#include <Draw_Interpretor.hxx>
+#include <Draw_Interpretor.hpp>
 
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <NCollection_List.hxx>
+#include <NCollection_List.hpp>
 
 static int baddobjects(Draw_Interpretor&, int, const char**);
 static int bclearobjects(Draw_Interpretor&, int, const char**);

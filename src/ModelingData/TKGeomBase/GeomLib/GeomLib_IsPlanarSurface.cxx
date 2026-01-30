@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomLib.hxx>
-#include <GeomLib_IsPlanarSurface.hxx>
-#include <gp_Pln.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomLib.hpp>
+#include <GeomLib_IsPlanarSurface.hpp>
+#include <gp_Pln.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 static bool Controle(const NCollection_Array1<gp_Pnt>& Poles,
                      const double                      Tol,

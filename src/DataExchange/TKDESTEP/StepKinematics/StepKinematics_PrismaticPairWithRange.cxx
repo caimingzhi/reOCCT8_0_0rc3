@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_PrismaticPairWithRange.hxx>
+#include <StepKinematics_PrismaticPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PrismaticPairWithRange, StepKinematics_PrismaticPair)
 

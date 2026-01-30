@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_BvhCStructureSet.hxx>
+#include <Graphic3d_BvhCStructureSet.hpp>
 
-#include <BVH_BinnedBuilder.hxx>
-#include <Graphic3d_CStructure.hxx>
+#include <BVH_BinnedBuilder.hpp>
+#include <Graphic3d_CStructure.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_BvhCStructureSet, BVH_PrimitiveSet3d)
 

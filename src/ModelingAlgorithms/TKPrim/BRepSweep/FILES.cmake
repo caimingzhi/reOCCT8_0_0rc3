@@ -3,23 +3,23 @@ set(OCCT_BRepSweep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepSweep_FILES
   BRepSweep_Builder.cxx
-  BRepSweep_Builder.hxx
-  BRepSweep_Builder.lxx
+  BRepSweep_Builder.hpp
+  BRepSweep_Builder_1.hpp
   BRepSweep_Iterator.cxx
-  BRepSweep_Iterator.hxx
-  BRepSweep_Iterator.lxx
+  BRepSweep_Iterator.hpp
+  BRepSweep_Iterator_1.hpp
   BRepSweep_NumLinearRegularSweep.cxx
-  BRepSweep_NumLinearRegularSweep.hxx
+  BRepSweep_NumLinearRegularSweep.hpp
   BRepSweep_Prism.cxx
-  BRepSweep_Prism.hxx
+  BRepSweep_Prism.hpp
   BRepSweep_Revol.cxx
-  BRepSweep_Revol.hxx
+  BRepSweep_Revol.hpp
   BRepSweep_Rotation.cxx
-  BRepSweep_Rotation.hxx
+  BRepSweep_Rotation.hpp
   BRepSweep_Tool.cxx
-  BRepSweep_Tool.hxx
+  BRepSweep_Tool.hpp
   BRepSweep_Translation.cxx
-  BRepSweep_Translation.hxx
+  BRepSweep_Translation.hpp
   BRepSweep_Trsf.cxx
-  BRepSweep_Trsf.hxx
+  BRepSweep_Trsf.hpp
 )

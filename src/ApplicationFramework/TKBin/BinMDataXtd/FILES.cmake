@@ -3,17 +3,17 @@ set(OCCT_BinMDataXtd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMDataXtd_FILES
   BinMDataXtd.cxx
-  BinMDataXtd.hxx
+  BinMDataXtd.hpp
   BinMDataXtd_ConstraintDriver.cxx
-  BinMDataXtd_ConstraintDriver.hxx
+  BinMDataXtd_ConstraintDriver.hpp
   BinMDataXtd_GeometryDriver.cxx
-  BinMDataXtd_GeometryDriver.hxx
+  BinMDataXtd_GeometryDriver.hpp
   BinMDataXtd_PatternStdDriver.cxx
-  BinMDataXtd_PatternStdDriver.hxx
-  BinMDataXtd_PresentationDriver.hxx
+  BinMDataXtd_PatternStdDriver.hpp
+  BinMDataXtd_PresentationDriver.hpp
   BinMDataXtd_PresentationDriver.cxx
-  BinMDataXtd_PositionDriver.hxx
+  BinMDataXtd_PositionDriver.hpp
   BinMDataXtd_PositionDriver.cxx
   BinMDataXtd_TriangulationDriver.cxx
-  BinMDataXtd_TriangulationDriver.hxx
+  BinMDataXtd_TriangulationDriver.hpp
 )

@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Draw_Display.hxx>
-#include <DrawDim.hxx>
-#include <DrawDim_PlanarRadius.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <Draw_Display.hpp>
+#include <DrawDim.hpp>
+#include <DrawDim_PlanarRadius.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarRadius, DrawDim_PlanarDimension)
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard.hxx>
+#include <Standard.hpp>
 
-#include <Standard_OutOfMemory.hxx>
+#include <Standard_OutOfMemory.hpp>
 
 #include <cstdlib>
 
@@ -74,8 +74,8 @@ static Standard::AllocatorType& allocatorTypeInstance()
 // - OCCT_MMGT_OPT_NATIVE, using native calloc, free
 // - OCCT_MMGT_OPT_JEMALLOC, using external jecalloc, jefree
 #ifdef OCCT_MMGT_OPT_FLEXIBLE
-  #include <Standard_MMgrOpt.hxx>
-  #include <Standard_Assert.hxx>
+  #include <Standard_MMgrOpt.hpp>
+  #include <Standard_Assert.hpp>
 
   // There is no support for environment variables in UWP
   // OSD_Environment could not be used here because of cyclic dependency

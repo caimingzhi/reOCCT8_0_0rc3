@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_ThePolyhedronToolOfHInter.hxx>
+#include <IntCurveSurface_ThePolyhedronToolOfHInter.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <IntCurveSurface_ThePolyhedronOfHInter.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <IntCurveSurface_ThePolyhedronOfHInter.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
 
 void IntCurveSurface_ThePolyhedronToolOfHInter::Dump(
   const IntCurveSurface_ThePolyhedronOfHInter& polyh)

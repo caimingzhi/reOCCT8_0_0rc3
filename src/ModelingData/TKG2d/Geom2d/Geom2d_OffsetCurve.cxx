@@ -16,25 +16,25 @@
 
 //  modified by Edward AGAPOV (eap) Jan 28 2002 --- DN(), occ143(BUC60654)
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_OffsetCurveUtils.pxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_UndefinedDerivative.hxx>
-#include <Standard_NullValue.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_OffsetCurveUtils.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_UndefinedDerivative.hpp>
+#include <Standard_NullValue.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_OffsetCurve, Geom2d_Curve)
 

@@ -21,13 +21,13 @@
   /*            ones ) and other convrnient functions.                          */
   /******************************************************************************/
   /***/
-  #include <OSD_WNT.hxx>
+  #include <OSD_WNT.hpp>
 
   #include <strsafe.h>
   #include <wchar.h>
   #include <stdlib.h>
 
-  #include <Standard_Macro.hxx>
+  #include <Standard_Macro.hpp>
 
   /***/
   #ifndef OCCT_UWP

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Layer.hxx>
+#include <Graphic3d_Layer.hpp>
 
-#include <Graphic3d_CStructure.hxx>
-#include <Graphic3d_CullingTool.hxx>
+#include <Graphic3d_CStructure.hpp>
+#include <Graphic3d_CullingTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Layer, Standard_Transient)
 

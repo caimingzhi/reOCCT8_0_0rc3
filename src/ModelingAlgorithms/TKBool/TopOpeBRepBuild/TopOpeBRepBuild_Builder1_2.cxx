@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_List.hxx>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_List.hpp>
 
 //=======================================================================
 // function : TopOpeBRepBuild_Builder1::CorrectResult2d

@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bisector_Bisec.hxx>
-#include <Bisector_BisecAna.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepFill_TrimEdgeTool.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopExp.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <Bisector_Bisec.hpp>
+#include <Bisector_BisecAna.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepFill_TrimEdgeTool.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopExp.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
 #ifdef OCCT_DEBUG
 #endif

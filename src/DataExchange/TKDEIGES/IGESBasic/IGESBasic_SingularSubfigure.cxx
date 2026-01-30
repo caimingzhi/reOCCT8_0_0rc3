@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESBasic_SingularSubfigure.hxx>
-#include <IGESBasic_SubfigureDef.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESBasic_SingularSubfigure.hpp>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_SingularSubfigure, IGESData_IGESEntity)
 

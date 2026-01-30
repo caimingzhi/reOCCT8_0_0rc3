@@ -15,40 +15,40 @@
 // commercial license or contractual agreement.
 
 #include <algorithm>
-#include <GeomInt_IntSS.hxx>
+#include <GeomInt_IntSS.hpp>
 
-#include <Adaptor3d_TopolTool.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Geom2dAdaptor.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <GeomAdaptor.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomInt.hxx>
-#include <GeomInt_LineTool.hxx>
-#include <GeomInt_WLApprox.hxx>
-#include <GeomLib_Check2dBSplineCurve.hxx>
-#include <GeomLib_CheckBSplineCurve.hxx>
-#include <GeomProjLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <Precision.hxx>
-#include <ApproxInt_KnotTools.hxx>
+#include <Adaptor3d_TopolTool.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Geom2dAdaptor.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <GeomAdaptor.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomInt.hpp>
+#include <GeomInt_LineTool.hpp>
+#include <GeomInt_WLApprox.hpp>
+#include <GeomLib_Check2dBSplineCurve.hpp>
+#include <GeomLib_CheckBSplineCurve.hpp>
+#include <GeomProjLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <Precision.hpp>
+#include <ApproxInt_KnotTools.hpp>
 
 //=================================================================================================
 

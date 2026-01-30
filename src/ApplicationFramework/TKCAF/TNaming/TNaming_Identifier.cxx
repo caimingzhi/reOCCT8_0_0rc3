@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Identifier.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Localizer.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <NCollection_Map.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Identifier.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Localizer.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <NCollection_Map.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
 
 // #define MDTV_DEB_IDF
 #ifdef OCCT_DEBUG_IDF
-  #include <TCollection_AsciiString.hxx>
-  #include <TDF_Tool.hxx>
-  #include <BRepTools.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <TDF_Tool.hpp>
+  #include <BRepTools.hpp>
 
 // unreferenced function, commented
 /*static void ModDbgTools_Write(const TopoDS_Shape& shape,

@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools_ShapeWriter.hxx>
-#include <BinTools_LocationSet.hxx>
+#include <BinTools_ShapeWriter.hpp>
+#include <BinTools_LocationSet.hpp>
 
-#include <TopoDS.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_Polygon3D.hxx>
-#include <BRep_PolygonOnTriangulation.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <BRep_TFace.hxx>
-#include <BinTools_CurveSet.hxx>
-#include <BinTools_Curve2dSet.hxx>
-#include <BinTools_SurfaceSet.hxx>
-#include <BinTools_OStream.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <TopoDS.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_Polygon3D.hpp>
+#include <BRep_PolygonOnTriangulation.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <BRep_TFace.hpp>
+#include <BinTools_CurveSet.hpp>
+#include <BinTools_Curve2dSet.hpp>
+#include <BinTools_SurfaceSet.hpp>
+#include <BinTools_OStream.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 //=================================================================================================
 

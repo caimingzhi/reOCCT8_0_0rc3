@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
 
-#include <IntPatch_WLine.hxx>
-#include <ApproxInt_SvSurfaces.hxx>
+#include <IntPatch_WLine.hpp>
+#include <ApproxInt_SvSurfaces.hpp>
 
 #define Handle_TheLine occ::handle<IntPatch_WLine>
 #define TheLine IntPatch_WLine
-#define TheLine_hxx <IntPatch_WLine.hxx>
+#define TheLine_hxx <IntPatch_WLine.hpp>
 #define TheSvSurfaces ApproxInt_SvSurfaces
-#define TheSvSurfaces_hxx <ApproxInt_SvSurfaces.hxx>
+#define TheSvSurfaces_hxx <ApproxInt_SvSurfaces.hpp>
 #define ApproxInt_MultiLine GeomInt_TheMultiLineOfWLApprox
-#define ApproxInt_MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <ApproxInt_MultiLine.gxx>
+#define ApproxInt_MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <ApproxInt_MultiLine.hpp>

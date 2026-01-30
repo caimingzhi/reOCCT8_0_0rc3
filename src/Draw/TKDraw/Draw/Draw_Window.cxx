@@ -19,19 +19,19 @@
   #include <windows.h>
 #endif
 
-#include <Draw_Window.hxx>
+#include <Draw_Window.hpp>
 
-#include <Aspect_DisplayConnection.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <Message.hxx>
-#include <NCollection_List.hxx>
-#include <OSD.hxx>
-#include <OSD_Timer.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Aspect_DisplayConnection.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <Message.hpp>
+#include <NCollection_List.hpp>
+#include <OSD.hpp>
+#include <OSD_Timer.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #include <tcl.h>
 
@@ -73,8 +73,8 @@ extern "C" void        Tk_GeometryRequest(Tk_Window tkwin, int reqWidth, int req
 
 #if defined(_WIN32)
 
-  #include "Draw_WNTRessource.pxx"
-  #include "Draw_WNTInit.pxx"
+  #include "Draw_WNTRessource.hpp"
+  #include "Draw_WNTInit.hpp"
 
   #define PENWIDTH 1
   #define CLIENTWND 0

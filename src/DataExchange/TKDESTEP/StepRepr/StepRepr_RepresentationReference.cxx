@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_RepresentationReference.hxx>
+#include <StepRepr_RepresentationReference.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_RepresentationReference, Standard_Transient)
 

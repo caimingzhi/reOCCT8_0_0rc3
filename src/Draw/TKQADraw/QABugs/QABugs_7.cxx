@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
+#include <Draw_Interpretor.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
 
 //=================================================================================================
 

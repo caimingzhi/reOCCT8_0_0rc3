@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWGeneralPropertyRelationship.pxx"
-#include <StepBasic_GeneralProperty.hxx>
-#include <StepBasic_GeneralPropertyRelationship.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWGeneralPropertyRelationship.hpp"
+#include <StepBasic_GeneralProperty.hpp>
+#include <StepBasic_GeneralPropertyRelationship.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
 
 //=================================================================================================
 

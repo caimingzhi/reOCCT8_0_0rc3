@@ -16,29 +16,29 @@
 
 #define No_Standard_OutOfRange
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <CSLib_Class2d.hxx>
-#include <ElCLib.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <CSLib_Class2d.hpp>
+#include <ElCLib.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 #ifdef _MSC_VER
   #include <stdio.h>
@@ -748,7 +748,7 @@ void BRepTopAdaptor_FClass2d::Destroy()
   TabClass.Clear();
 }
 
-#include <Standard_ConstructionError.hxx>
+#include <Standard_ConstructionError.hpp>
 
 // const BRepTopAdaptor_FClass2d &  BRepTopAdaptor_FClass2d::Copy(const BRepTopAdaptor_FClass2d&
 // Other) const {

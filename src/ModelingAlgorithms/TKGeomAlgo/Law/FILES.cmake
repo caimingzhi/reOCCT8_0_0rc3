@@ -3,27 +3,27 @@ set(OCCT_Law_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Law_FILES
   Law.cxx
-  Law.hxx
+  Law.hpp
   Law_BSpFunc.cxx
-  Law_BSpFunc.hxx
+  Law_BSpFunc.hpp
   Law_BSpline.cxx
-  Law_BSpline.hxx
+  Law_BSpline.hpp
   Law_BSplineKnotSplitting.cxx
-  Law_BSplineKnotSplitting.hxx
+  Law_BSplineKnotSplitting.hpp
   Law_Composite.cxx
-  Law_Composite.hxx
+  Law_Composite.hpp
   Law_Constant.cxx
-  Law_Constant.hxx
+  Law_Constant.hpp
   Law_Function.cxx
-  Law_Function.hxx
+  Law_Function.hpp
   Law_Interpol.cxx
-  Law_Interpol.hxx
+  Law_Interpol.hpp
   Law_Interpolate.cxx
-  Law_Interpolate.hxx
+  Law_Interpolate.hpp
 
   Law_Linear.cxx
-  Law_Linear.hxx
+  Law_Linear.hpp
 
   Law_S.cxx
-  Law_S.hxx
+  Law_S.hpp
 )

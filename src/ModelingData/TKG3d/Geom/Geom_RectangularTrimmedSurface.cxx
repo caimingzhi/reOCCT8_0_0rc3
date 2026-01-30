@@ -17,24 +17,24 @@
 // *******************************************************************
 // *******************************************************************
 
-#include <ElCLib.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <ElCLib.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_RectangularTrimmedSurface, Geom_BoundedSurface)
 

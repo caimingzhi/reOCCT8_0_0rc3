@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDataXtd_PresentationDriver.hxx>
+#include <XmlMDataXtd_PresentationDriver.hpp>
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <TDataXtd_Presentation.hxx>
-#include <Quantity_Color.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <TDataXtd_Presentation.hpp>
+#include <Quantity_Color.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_PresentationDriver, XmlMDF_ADriver)
 

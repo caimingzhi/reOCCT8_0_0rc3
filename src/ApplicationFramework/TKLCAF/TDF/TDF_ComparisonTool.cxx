@@ -18,15 +18,15 @@
 // Version	Date		Purpose
 //		0.0	Sep  4 1997	Creation
 
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_ComparisonTool.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_ComparisonTool.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_RelocationTable.hpp>
 
 //=======================================================================
 // function : Compare

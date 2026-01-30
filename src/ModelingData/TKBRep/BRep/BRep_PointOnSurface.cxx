@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_PointOnSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
+#include <BRep_PointOnSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PointOnSurface, BRep_PointsOnSurface)
 

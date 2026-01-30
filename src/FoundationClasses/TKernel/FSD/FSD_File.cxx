@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FSD_File.hxx>
+#include <FSD_File.hpp>
 
-#include <OSD.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_StreamExtCharParityError.hxx>
-#include <Storage_StreamFormatError.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <Storage_StreamWriteError.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <OSD.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_StreamExtCharParityError.hpp>
+#include <Storage_StreamFormatError.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <Storage_StreamWriteError.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 static const char* MAGICNUMBER                 = "FSDFILE";
 static const char* ENDOFNORMALEXTENDEDSECTION  = "BEGIN_REF_SECTION";

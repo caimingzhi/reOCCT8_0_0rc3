@@ -15,24 +15,24 @@
 // File: BOPAlgo_ShellSplitter.cxx
 // Created: Thu Jan 16 08:33:50 2014
 
-#include <BOPAlgo_ShellSplitter.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_CoupleOfShape.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <BRep_Builder.hxx>
-#include <IntTools_Context.hxx>
-#include <NCollection_Vector.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_ShellSplitter.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_CoupleOfShape.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <BRep_Builder.hpp>
+#include <IntTools_Context.hpp>
+#include <NCollection_Vector.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 //
 static void MakeShell(const NCollection_List<TopoDS_Shape>&, TopoDS_Shell&);

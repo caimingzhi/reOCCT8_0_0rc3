@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDSToStep.hxx>
+#include <TopoDSToStep.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <Standard_Transient.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <Standard_Transient.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeBuilderError(
   const TopoDSToStep_BuilderError E)

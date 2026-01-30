@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <BRepTopAdaptor_HVertex.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array2.hxx>
-#include <TopoDS.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <BRepTopAdaptor_HVertex.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array2.hpp>
+#include <TopoDS.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTopAdaptor_TopolTool, Adaptor3d_TopolTool)
 

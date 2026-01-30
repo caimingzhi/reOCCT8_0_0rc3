@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_CachedFileSystem.hxx>
-#include <OSD_OpenFile.hxx>
+#include <OSD_CachedFileSystem.hpp>
+#include <OSD_OpenFile.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_CachedFileSystem, OSD_FileSystem)
 

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ProgramError.hxx>
-#include <TopAbs.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepDS.hxx>
+#include <Standard_ProgramError.hpp>
+#include <TopAbs.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepDS.hpp>
 
 //=================================================================================================
 

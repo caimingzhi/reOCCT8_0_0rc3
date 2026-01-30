@@ -17,14 +17,14 @@
 //  Complement : CKY, alimentation du TransientProcess
 //    (Bind general;  BindVertex ?)
 
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <StepToTopoDS_Tool.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <StepToTopoDS_Tool.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
 
 //=================================================================================================
 

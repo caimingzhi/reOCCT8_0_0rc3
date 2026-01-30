@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Transient.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransferIterator.hxx>
+#include <Interface_Check.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Transient.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransferIterator.hpp>
 
 static occ::handle<Standard_Transient> nultrans; // for const&(Null) return
 

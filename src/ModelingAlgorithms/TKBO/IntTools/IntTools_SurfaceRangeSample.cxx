@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_Range.hxx>
-#include <IntTools_SurfaceRangeSample.hxx>
+#include <IntTools_Range.hpp>
+#include <IntTools_SurfaceRangeSample.hpp>
 
 IntTools_SurfaceRangeSample::IntTools_SurfaceRangeSample() = default;
 

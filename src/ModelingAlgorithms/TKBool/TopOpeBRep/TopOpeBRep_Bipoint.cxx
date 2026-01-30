@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ProgramError.hxx>
-#include <TopOpeBRep_Bipoint.hxx>
+#include <Standard_ProgramError.hpp>
+#include <TopOpeBRep_Bipoint.hpp>
 
 TopOpeBRep_Bipoint::TopOpeBRep_Bipoint()
     : myI1(0),

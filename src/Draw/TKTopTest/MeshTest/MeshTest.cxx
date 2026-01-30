@@ -14,43 +14,43 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshTest.hxx>
+#include <MeshTest.hpp>
 
 #include <cstdio>
 
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepLib.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepTest.hxx>
-#include <BRepTools.hxx>
-#include <CSLib.hxx>
-#include <DBRep.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Draw_Segment2D.hxx>
-#include <DrawTrSurf.hxx>
-#include <GeometryTest.hxx>
-#include <IMeshData_Status.hxx>
-#include <Message.hxx>
-#include <Message_ProgressRange.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Poly_MergeNodesTool.hxx>
-#include <Poly_TriangulationParameters.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRep_TEdge.hxx>
-#include <TopExp.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepLib.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <BRepTest.hpp>
+#include <BRepTools.hpp>
+#include <CSLib.hpp>
+#include <DBRep.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Draw_Segment2D.hpp>
+#include <DrawTrSurf.hpp>
+#include <GeometryTest.hpp>
+#include <IMeshData_Status.hpp>
+#include <Message.hpp>
+#include <Message_ProgressRange.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Poly_MergeNodesTool.hpp>
+#include <Poly_TriangulationParameters.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRep_TEdge.hpp>
+#include <TopExp.hpp>
 
-#include <BRepMesh_Context.hxx>
-#include <BRepMesh_FaceDiscret.hxx>
-#include <BRepMesh_MeshAlgoFactory.hxx>
-#include <BRepMesh_DelabellaMeshAlgoFactory.hxx>
+#include <BRepMesh_Context.hpp>
+#include <BRepMesh_FaceDiscret.hpp>
+#include <BRepMesh_MeshAlgoFactory.hpp>
+#include <BRepMesh_DelabellaMeshAlgoFactory.hpp>
 
 #include <algorithm>
 
@@ -67,7 +67,7 @@ Standard_IMPORT Draw_Viewer dout;
 #define TWOTHIRD 0.666666666666666666666666666666666666666666666666666666666666
 
 #ifdef OCCT_DEBUG_MESH_CHRONO
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 int             D0Control, D0Internal, D0Unif, D0Edges, NbControls;
 OSD_Chronometer chTotal, chInternal, chControl, chUnif, chAddPoint;
 OSD_Chronometer chEdges, chMaillEdges, chEtuInter, chLastControl, chStock;

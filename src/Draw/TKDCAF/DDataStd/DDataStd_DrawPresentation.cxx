@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd_DrawDriver.hxx>
-#include <DDataStd_DrawPresentation.hxx>
-#include <Draw.hxx>
-#include <Draw_Viewer.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_DefaultDeltaOnModification.hxx>
-#include <TDF_DefaultDeltaOnRemoval.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
+#include <DDataStd_DrawDriver.hpp>
+#include <DDataStd_DrawPresentation.hpp>
+#include <Draw.hpp>
+#include <Draw_Viewer.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_DefaultDeltaOnModification.hpp>
+#include <TDF_DefaultDeltaOnRemoval.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDataStd_DrawPresentation, TDF_Attribute)
 

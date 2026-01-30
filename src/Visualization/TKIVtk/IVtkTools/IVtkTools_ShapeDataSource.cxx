@@ -14,9 +14,9 @@
 // commercial license or contractual agreement.
 
 // VIS includes
-#include <IVtkTools_ShapeDataSource.hxx>
-#include <IVtkOCC_ShapeMesher.hxx>
-#include <IVtkTools_ShapeObject.hxx>
+#include <IVtkTools_ShapeDataSource.hpp>
+#include <IVtkOCC_ShapeMesher.hpp>
+#include <IVtkTools_ShapeObject.hpp>
 
 // prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER

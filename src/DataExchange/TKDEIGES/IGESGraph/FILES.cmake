@@ -3,71 +3,71 @@ set(OCCT_IGESGraph_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESGraph_FILES
   IGESGraph.cxx
-  IGESGraph.hxx
+  IGESGraph.hpp
 
   IGESGraph_Color.cxx
-  IGESGraph_Color.hxx
+  IGESGraph_Color.hpp
   IGESGraph_DefinitionLevel.cxx
-  IGESGraph_DefinitionLevel.hxx
+  IGESGraph_DefinitionLevel.hpp
   IGESGraph_DrawingSize.cxx
-  IGESGraph_DrawingSize.hxx
+  IGESGraph_DrawingSize.hpp
   IGESGraph_DrawingUnits.cxx
-  IGESGraph_DrawingUnits.hxx
+  IGESGraph_DrawingUnits.hpp
   IGESGraph_GeneralModule.cxx
-  IGESGraph_GeneralModule.hxx
+  IGESGraph_GeneralModule.hpp
 
   IGESGraph_HighLight.cxx
-  IGESGraph_HighLight.hxx
+  IGESGraph_HighLight.hpp
   IGESGraph_IntercharacterSpacing.cxx
-  IGESGraph_IntercharacterSpacing.hxx
+  IGESGraph_IntercharacterSpacing.hpp
   IGESGraph_LineFontDefPattern.cxx
-  IGESGraph_LineFontDefPattern.hxx
+  IGESGraph_LineFontDefPattern.hpp
   IGESGraph_LineFontDefTemplate.cxx
-  IGESGraph_LineFontDefTemplate.hxx
+  IGESGraph_LineFontDefTemplate.hpp
   IGESGraph_LineFontPredefined.cxx
-  IGESGraph_LineFontPredefined.hxx
+  IGESGraph_LineFontPredefined.hpp
   IGESGraph_NominalSize.cxx
-  IGESGraph_NominalSize.hxx
+  IGESGraph_NominalSize.hpp
   IGESGraph_Pick.cxx
-  IGESGraph_Pick.hxx
+  IGESGraph_Pick.hpp
   IGESGraph_Protocol.cxx
-  IGESGraph_Protocol.hxx
+  IGESGraph_Protocol.hpp
   IGESGraph_ReadWriteModule.cxx
-  IGESGraph_ReadWriteModule.hxx
+  IGESGraph_ReadWriteModule.hpp
   IGESGraph_SpecificModule.cxx
-  IGESGraph_SpecificModule.hxx
+  IGESGraph_SpecificModule.hpp
   IGESGraph_TextDisplayTemplate.cxx
-  IGESGraph_TextDisplayTemplate.hxx
+  IGESGraph_TextDisplayTemplate.hpp
   IGESGraph_TextFontDef.cxx
-  IGESGraph_TextFontDef.hxx
+  IGESGraph_TextFontDef.hpp
   IGESGraph_ToolColor.cxx
-  IGESGraph_ToolColor.hxx
+  IGESGraph_ToolColor.hpp
   IGESGraph_ToolDefinitionLevel.cxx
-  IGESGraph_ToolDefinitionLevel.hxx
+  IGESGraph_ToolDefinitionLevel.hpp
   IGESGraph_ToolDrawingSize.cxx
-  IGESGraph_ToolDrawingSize.hxx
+  IGESGraph_ToolDrawingSize.hpp
   IGESGraph_ToolDrawingUnits.cxx
-  IGESGraph_ToolDrawingUnits.hxx
+  IGESGraph_ToolDrawingUnits.hpp
   IGESGraph_ToolHighLight.cxx
-  IGESGraph_ToolHighLight.hxx
+  IGESGraph_ToolHighLight.hpp
   IGESGraph_ToolIntercharacterSpacing.cxx
-  IGESGraph_ToolIntercharacterSpacing.hxx
+  IGESGraph_ToolIntercharacterSpacing.hpp
   IGESGraph_ToolLineFontDefPattern.cxx
-  IGESGraph_ToolLineFontDefPattern.hxx
+  IGESGraph_ToolLineFontDefPattern.hpp
   IGESGraph_ToolLineFontDefTemplate.cxx
-  IGESGraph_ToolLineFontDefTemplate.hxx
+  IGESGraph_ToolLineFontDefTemplate.hpp
   IGESGraph_ToolLineFontPredefined.cxx
-  IGESGraph_ToolLineFontPredefined.hxx
+  IGESGraph_ToolLineFontPredefined.hpp
   IGESGraph_ToolNominalSize.cxx
-  IGESGraph_ToolNominalSize.hxx
+  IGESGraph_ToolNominalSize.hpp
   IGESGraph_ToolPick.cxx
-  IGESGraph_ToolPick.hxx
+  IGESGraph_ToolPick.hpp
   IGESGraph_ToolTextDisplayTemplate.cxx
-  IGESGraph_ToolTextDisplayTemplate.hxx
+  IGESGraph_ToolTextDisplayTemplate.hpp
   IGESGraph_ToolTextFontDef.cxx
-  IGESGraph_ToolTextFontDef.hxx
+  IGESGraph_ToolTextFontDef.hpp
   IGESGraph_ToolUniformRectGrid.cxx
-  IGESGraph_ToolUniformRectGrid.hxx
+  IGESGraph_ToolUniformRectGrid.hpp
   IGESGraph_UniformRectGrid.cxx
-  IGESGraph_UniformRectGrid.hxx
+  IGESGraph_UniformRectGrid.hpp
 )

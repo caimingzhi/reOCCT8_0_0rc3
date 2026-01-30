@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_Attr.hxx>
-#include <LDOM_BasicAttribute.hxx>
+#include <LDOM_Attr.hpp>
+#include <LDOM_BasicAttribute.hpp>
 
 //=================================================================================================
 

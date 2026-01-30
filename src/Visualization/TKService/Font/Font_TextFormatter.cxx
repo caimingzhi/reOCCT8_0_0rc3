@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Font_TextFormatter.hxx>
+#include <Font_TextFormatter.hpp>
 
-#include <Font_FTFont.hxx>
+#include <Font_FTFont.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Font_TextFormatter, Standard_Transient)
 

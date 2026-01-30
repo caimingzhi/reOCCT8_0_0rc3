@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD.hxx>
-#include <Standard_CString.hxx>
-#include <OSD_Exception_CTRL_BREAK.hxx>
-#include <Standard_DivideByZero.hxx>
-#include <Standard_Overflow.hxx>
-#include <Standard_Assert.hxx>
+#include <OSD.hpp>
+#include <Standard_CString.hpp>
+#include <OSD_Exception_CTRL_BREAK.hpp>
+#include <Standard_DivideByZero.hpp>
+#include <Standard_Overflow.hpp>
+#include <Standard_Assert.hpp>
 
 #include <mutex>
 #include <csignal>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 static OSD_SignalMode OSD_WasSetSignal           = OSD_SignalMode_AsIs;
 static int            OSD_SignalStackTraceLength = 0;
@@ -66,20 +66,20 @@ void OSD::SetSignalStackTraceLength(int theLength)
     #define STATUS_FLOAT_MULTIPLE_TRAPS (0xC00002B5L)
   #endif
 
-  #include <OSD_Exception_ACCESS_VIOLATION.hxx>
-  #include <OSD_Exception_ARRAY_BOUNDS_EXCEEDED.hxx>
-  #include <OSD_Exception_ILLEGAL_INSTRUCTION.hxx>
-  #include <OSD_Exception_IN_PAGE_ERROR.hxx>
-  #include <OSD_Exception_INT_OVERFLOW.hxx>
-  #include <OSD_Exception_INVALID_DISPOSITION.hxx>
-  #include <OSD_Exception_NONCONTINUABLE_EXCEPTION.hxx>
-  #include <OSD_Exception_PRIV_INSTRUCTION.hxx>
-  #include <OSD_Exception_STACK_OVERFLOW.hxx>
-  #include <OSD_Exception_STATUS_NO_MEMORY.hxx>
+  #include <OSD_Exception_ACCESS_VIOLATION.hpp>
+  #include <OSD_Exception_ARRAY_BOUNDS_EXCEEDED.hpp>
+  #include <OSD_Exception_ILLEGAL_INSTRUCTION.hpp>
+  #include <OSD_Exception_IN_PAGE_ERROR.hpp>
+  #include <OSD_Exception_INT_OVERFLOW.hpp>
+  #include <OSD_Exception_INVALID_DISPOSITION.hpp>
+  #include <OSD_Exception_NONCONTINUABLE_EXCEPTION.hpp>
+  #include <OSD_Exception_PRIV_INSTRUCTION.hpp>
+  #include <OSD_Exception_STACK_OVERFLOW.hpp>
+  #include <OSD_Exception_STATUS_NO_MEMORY.hpp>
 
-  #include <OSD_Environment.hxx>
-  #include <Standard_Underflow.hxx>
-  #include <Standard_ProgramError.hxx>
+  #include <OSD_Environment.hpp>
+  #include <Standard_Underflow.hpp>
+  #include <Standard_ProgramError.hpp>
 
   #ifdef _MSC_VER
     #include <eh.h>
@@ -727,18 +727,18 @@ LONG _osd_debug(void)
 
   #include <cstdio>
 
-  #include <OSD_WhoAmI.hxx>
-  #include <OSD_SIGHUP.hxx>
-  #include <OSD_SIGINT.hxx>
-  #include <OSD_SIGQUIT.hxx>
-  #include <OSD_SIGILL.hxx>
-  #include <OSD_SIGKILL.hxx>
-  #include <OSD_SIGBUS.hxx>
-  #include <OSD_SIGSEGV.hxx>
-  #include <OSD_SIGSYS.hxx>
-  #include <Standard_NumericError.hxx>
+  #include <OSD_WhoAmI.hpp>
+  #include <OSD_SIGHUP.hpp>
+  #include <OSD_SIGINT.hpp>
+  #include <OSD_SIGQUIT.hpp>
+  #include <OSD_SIGILL.hpp>
+  #include <OSD_SIGKILL.hpp>
+  #include <OSD_SIGBUS.hpp>
+  #include <OSD_SIGSEGV.hpp>
+  #include <OSD_SIGSYS.hpp>
+  #include <Standard_NumericError.hpp>
 
-  #include <Standard_ErrorHandler.hxx>
+  #include <Standard_ErrorHandler.hpp>
 
   // POSIX threads
   #include <pthread.h>

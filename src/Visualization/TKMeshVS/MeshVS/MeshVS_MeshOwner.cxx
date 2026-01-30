@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshOwner.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshOwner.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_MeshOwner, SelectMgr_EntityOwner)
 

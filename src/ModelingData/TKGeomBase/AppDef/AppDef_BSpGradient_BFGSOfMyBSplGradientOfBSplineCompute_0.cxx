@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute.hxx>
+#include <AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute.hpp>
 
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_MyLineTool.hxx>
-#include <AppDef_MyBSplGradientOfBSplineCompute.hxx>
-#include <AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hxx>
-#include <AppDef_BSpParFunctionOfMyBSplGradientOfBSplineCompute.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_MyLineTool.hpp>
+#include <AppDef_MyBSplGradientOfBSplineCompute.hpp>
+#include <AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hpp>
+#include <AppDef_BSpParFunctionOfMyBSplGradientOfBSplineCompute.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
 
 AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute::
   AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute(math_MultipleVarFunctionWithGradient& F,

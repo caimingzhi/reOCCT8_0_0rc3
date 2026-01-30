@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ErrorHandler.hxx>
-#include <StdDrivers.hxx>
-#include <StdStorage_TypeData.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <StdDrivers.hpp>
+#include <StdStorage_TypeData.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdStorage_TypeData, Standard_Transient)
 

@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_GeneralLib.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_ActorDispatch.hxx>
-#include <Transfer_ActorOfTransientProcess.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_TransferDispatch.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_ActorDispatch.hpp>
+#include <Transfer_ActorOfTransientProcess.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_TransferDispatch.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_ActorDispatch, Transfer_ActorOfTransientProcess)
 

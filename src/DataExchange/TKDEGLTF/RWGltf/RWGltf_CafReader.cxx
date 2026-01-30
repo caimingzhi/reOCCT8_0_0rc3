@@ -12,26 +12,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWGltf_CafReader.hxx>
+#include <RWGltf_CafReader.hpp>
 
-#include "RWGltf_GltfJsonParser.hxx"
-#include <RWGltf_TriangulationReader.hxx>
+#include "RWGltf_GltfJsonParser.hpp"
+#include <RWGltf_TriangulationReader.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <OSD_CachedFileSystem.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_ThreadPool.hxx>
-#include <RWGltf_GltfLatePrimitiveArray.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeMapTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <OSD_CachedFileSystem.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_ThreadPool.hpp>
+#include <RWGltf_GltfLatePrimitiveArray.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeMapTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_CafReader, RWMesh_CafReader)
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_ObjWriterContext.hxx>
+#include <RWObj_ObjWriterContext.hpp>
 
-#include <Message.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <OSD_OpenFile.hxx>
+#include <Message.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <OSD_OpenFile.hpp>
 
 //=================================================================================================
 

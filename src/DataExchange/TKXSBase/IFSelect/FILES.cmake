@@ -3,166 +3,166 @@ set(OCCT_IFSelect_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IFSelect_FILES
   IFSelect.cxx
-  IFSelect.hxx
+  IFSelect.hpp
   IFSelect_Act.cxx
-  IFSelect_Act.hxx
-  IFSelect_ActFunc.hxx
+  IFSelect_Act.hpp
+  IFSelect_ActFunc.hpp
   IFSelect_Activator.cxx
-  IFSelect_Activator.hxx
+  IFSelect_Activator.hpp
   IFSelect_AppliedModifiers.cxx
-  IFSelect_AppliedModifiers.hxx
+  IFSelect_AppliedModifiers.hpp
   IFSelect_BasicDumper.cxx
-  IFSelect_BasicDumper.hxx
+  IFSelect_BasicDumper.hpp
   IFSelect_CheckCounter.cxx
-  IFSelect_CheckCounter.hxx
+  IFSelect_CheckCounter.hpp
   IFSelect_ContextModif.cxx
-  IFSelect_ContextModif.hxx
+  IFSelect_ContextModif.hpp
   IFSelect_ContextWrite.cxx
-  IFSelect_ContextWrite.hxx
+  IFSelect_ContextWrite.hpp
   IFSelect_Dispatch.cxx
-  IFSelect_Dispatch.hxx
+  IFSelect_Dispatch.hpp
   IFSelect_DispGlobal.cxx
-  IFSelect_DispGlobal.hxx
+  IFSelect_DispGlobal.hpp
   IFSelect_DispPerCount.cxx
-  IFSelect_DispPerCount.hxx
+  IFSelect_DispPerCount.hpp
   IFSelect_DispPerFiles.cxx
-  IFSelect_DispPerFiles.hxx
+  IFSelect_DispPerFiles.hpp
   IFSelect_DispPerOne.cxx
-  IFSelect_DispPerOne.hxx
+  IFSelect_DispPerOne.hpp
   IFSelect_DispPerSignature.cxx
-  IFSelect_DispPerSignature.hxx
+  IFSelect_DispPerSignature.hpp
   IFSelect_EditForm.cxx
-  IFSelect_EditForm.hxx
+  IFSelect_EditForm.hpp
   IFSelect_Editor.cxx
-  IFSelect_Editor.hxx
-  IFSelect_EditValue.hxx
+  IFSelect_Editor.hpp
+  IFSelect_EditValue.hpp
   IFSelect_Functions.cxx
-  IFSelect_Functions.hxx
+  IFSelect_Functions.hpp
   IFSelect_GeneralModifier.cxx
-  IFSelect_GeneralModifier.hxx
+  IFSelect_GeneralModifier.hpp
   IFSelect_GraphCounter.cxx
-  IFSelect_GraphCounter.hxx
+  IFSelect_GraphCounter.hpp
 
   IFSelect_IntParam.cxx
-  IFSelect_IntParam.hxx
+  IFSelect_IntParam.hpp
   IFSelect_ListEditor.cxx
-  IFSelect_ListEditor.hxx
+  IFSelect_ListEditor.hpp
   IFSelect_ModelCopier.cxx
-  IFSelect_ModelCopier.hxx
+  IFSelect_ModelCopier.hpp
   IFSelect_ModifEditForm.cxx
-  IFSelect_ModifEditForm.hxx
+  IFSelect_ModifEditForm.hpp
   IFSelect_Modifier.cxx
-  IFSelect_Modifier.hxx
+  IFSelect_Modifier.hpp
   IFSelect_ModifReorder.cxx
-  IFSelect_ModifReorder.hxx
+  IFSelect_ModifReorder.hpp
   IFSelect_PacketList.cxx
-  IFSelect_PacketList.hxx
+  IFSelect_PacketList.hpp
   IFSelect_ParamEditor.cxx
-  IFSelect_ParamEditor.hxx
-  IFSelect_PrintCount.hxx
-  IFSelect_PrintFail.hxx
-  IFSelect_RemainMode.hxx
-  IFSelect_ReturnStatus.hxx
+  IFSelect_ParamEditor.hpp
+  IFSelect_PrintCount.hpp
+  IFSelect_PrintFail.hpp
+  IFSelect_RemainMode.hpp
+  IFSelect_ReturnStatus.hpp
   IFSelect_SelectAnyList.cxx
-  IFSelect_SelectAnyList.hxx
+  IFSelect_SelectAnyList.hpp
   IFSelect_SelectAnyType.cxx
-  IFSelect_SelectAnyType.hxx
+  IFSelect_SelectAnyType.hpp
   IFSelect_SelectBase.cxx
-  IFSelect_SelectBase.hxx
+  IFSelect_SelectBase.hpp
   IFSelect_SelectCombine.cxx
-  IFSelect_SelectCombine.hxx
+  IFSelect_SelectCombine.hpp
   IFSelect_SelectControl.cxx
-  IFSelect_SelectControl.hxx
+  IFSelect_SelectControl.hpp
   IFSelect_SelectDeduct.cxx
-  IFSelect_SelectDeduct.hxx
+  IFSelect_SelectDeduct.hpp
   IFSelect_SelectDiff.cxx
-  IFSelect_SelectDiff.hxx
+  IFSelect_SelectDiff.hpp
   IFSelect_SelectEntityNumber.cxx
-  IFSelect_SelectEntityNumber.hxx
+  IFSelect_SelectEntityNumber.hpp
   IFSelect_SelectErrorEntities.cxx
-  IFSelect_SelectErrorEntities.hxx
+  IFSelect_SelectErrorEntities.hpp
   IFSelect_SelectExplore.cxx
-  IFSelect_SelectExplore.hxx
+  IFSelect_SelectExplore.hpp
   IFSelect_SelectExtract.cxx
-  IFSelect_SelectExtract.hxx
+  IFSelect_SelectExtract.hpp
   IFSelect_SelectFlag.cxx
-  IFSelect_SelectFlag.hxx
+  IFSelect_SelectFlag.hpp
   IFSelect_SelectIncorrectEntities.cxx
-  IFSelect_SelectIncorrectEntities.hxx
+  IFSelect_SelectIncorrectEntities.hpp
   IFSelect_SelectInList.cxx
-  IFSelect_SelectInList.hxx
+  IFSelect_SelectInList.hpp
   IFSelect_SelectIntersection.cxx
-  IFSelect_SelectIntersection.hxx
+  IFSelect_SelectIntersection.hpp
   IFSelect_Selection.cxx
-  IFSelect_Selection.hxx
+  IFSelect_Selection.hpp
   IFSelect_SelectionIterator.cxx
-  IFSelect_SelectionIterator.hxx
+  IFSelect_SelectionIterator.hpp
   IFSelect_SelectModelEntities.cxx
-  IFSelect_SelectModelEntities.hxx
+  IFSelect_SelectModelEntities.hpp
   IFSelect_SelectModelRoots.cxx
-  IFSelect_SelectModelRoots.hxx
+  IFSelect_SelectModelRoots.hpp
   IFSelect_SelectPointed.cxx
-  IFSelect_SelectPointed.hxx
+  IFSelect_SelectPointed.hpp
   IFSelect_SelectRange.cxx
-  IFSelect_SelectRange.hxx
+  IFSelect_SelectRange.hpp
   IFSelect_SelectRootComps.cxx
-  IFSelect_SelectRootComps.hxx
+  IFSelect_SelectRootComps.hpp
   IFSelect_SelectRoots.cxx
-  IFSelect_SelectRoots.hxx
+  IFSelect_SelectRoots.hpp
   IFSelect_SelectSent.cxx
-  IFSelect_SelectSent.hxx
+  IFSelect_SelectSent.hpp
   IFSelect_SelectShared.cxx
-  IFSelect_SelectShared.hxx
+  IFSelect_SelectShared.hpp
   IFSelect_SelectSharing.cxx
-  IFSelect_SelectSharing.hxx
+  IFSelect_SelectSharing.hpp
   IFSelect_SelectSignature.cxx
-  IFSelect_SelectSignature.hxx
+  IFSelect_SelectSignature.hpp
   IFSelect_SelectSignedShared.cxx
-  IFSelect_SelectSignedShared.hxx
+  IFSelect_SelectSignedShared.hpp
   IFSelect_SelectSignedSharing.cxx
-  IFSelect_SelectSignedSharing.hxx
+  IFSelect_SelectSignedSharing.hpp
   IFSelect_SelectSuite.cxx
-  IFSelect_SelectSuite.hxx
+  IFSelect_SelectSuite.hpp
   IFSelect_SelectType.cxx
-  IFSelect_SelectType.hxx
+  IFSelect_SelectType.hpp
   IFSelect_SelectUnion.cxx
-  IFSelect_SelectUnion.hxx
+  IFSelect_SelectUnion.hpp
   IFSelect_SelectUnknownEntities.cxx
-  IFSelect_SelectUnknownEntities.hxx
+  IFSelect_SelectUnknownEntities.hpp
 
   IFSelect_SessionDumper.cxx
-  IFSelect_SessionDumper.hxx
+  IFSelect_SessionDumper.hpp
   IFSelect_SessionFile.cxx
-  IFSelect_SessionFile.hxx
+  IFSelect_SessionFile.hpp
   IFSelect_SessionPilot.cxx
-  IFSelect_SessionPilot.hxx
+  IFSelect_SessionPilot.hpp
   IFSelect_ShareOut.cxx
-  IFSelect_ShareOut.hxx
+  IFSelect_ShareOut.hpp
   IFSelect_ShareOutResult.cxx
-  IFSelect_ShareOutResult.hxx
+  IFSelect_ShareOutResult.hpp
   IFSelect_SignAncestor.cxx
-  IFSelect_SignAncestor.hxx
+  IFSelect_SignAncestor.hpp
   IFSelect_Signature.cxx
-  IFSelect_Signature.hxx
+  IFSelect_Signature.hpp
   IFSelect_SignatureList.cxx
-  IFSelect_SignatureList.hxx
+  IFSelect_SignatureList.hpp
   IFSelect_SignCategory.cxx
-  IFSelect_SignCategory.hxx
+  IFSelect_SignCategory.hpp
   IFSelect_SignCounter.cxx
-  IFSelect_SignCounter.hxx
+  IFSelect_SignCounter.hpp
   IFSelect_SignMultiple.cxx
-  IFSelect_SignMultiple.hxx
+  IFSelect_SignMultiple.hpp
   IFSelect_SignType.cxx
-  IFSelect_SignType.hxx
+  IFSelect_SignType.hpp
   IFSelect_SignValidity.cxx
-  IFSelect_SignValidity.hxx
+  IFSelect_SignValidity.hpp
   IFSelect_Transformer.cxx
-  IFSelect_Transformer.hxx
+  IFSelect_Transformer.hpp
   IFSelect_TransformStandard.cxx
-  IFSelect_TransformStandard.hxx
+  IFSelect_TransformStandard.hpp
 
   IFSelect_WorkLibrary.cxx
-  IFSelect_WorkLibrary.hxx
+  IFSelect_WorkLibrary.hpp
   IFSelect_WorkSession.cxx
-  IFSelect_WorkSession.hxx
+  IFSelect_WorkSession.hpp
 )

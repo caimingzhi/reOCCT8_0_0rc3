@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaMassDensity.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_FeaMassDensity.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaMassDensity, StepFEA_FeaMaterialPropertyRepresentationItem)
 

@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <STEPSelections_AssemblyExplorer.hxx>
-#include <STEPSelections_AssemblyLink.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <STEPSelections_AssemblyExplorer.hpp>
+#include <STEPSelections_AssemblyLink.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 STEPSelections_AssemblyExplorer::STEPSelections_AssemblyExplorer(const Interface_Graph& G)
     : myGraph(G)

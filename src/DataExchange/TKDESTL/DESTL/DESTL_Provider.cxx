@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DESTL_Provider.hxx>
+#include <DESTL_Provider.hpp>
 
-#include <BRep_Builder.hxx>
-#include <DE_ValidationUtils.hxx>
-#include <DESTL_ConfigurationNode.hxx>
-#include <Message.hxx>
-#include <NCollection_Vector.hxx>
-#include <Poly_Triangle.hxx>
-#include <RWStl.hxx>
-#include <RWStl_Reader.hxx>
-#include <StlAPI.hxx>
-#include <StlAPI_Reader.hxx>
-#include <StlAPI_Writer.hxx>
-#include <Standard_ReadLineBuffer.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRep_Builder.hpp>
+#include <DE_ValidationUtils.hpp>
+#include <DESTL_ConfigurationNode.hpp>
+#include <Message.hpp>
+#include <NCollection_Vector.hpp>
+#include <Poly_Triangle.hpp>
+#include <RWStl.hpp>
+#include <RWStl_Reader.hpp>
+#include <StlAPI.hpp>
+#include <StlAPI_Reader.hpp>
+#include <StlAPI_Writer.hpp>
+#include <Standard_ReadLineBuffer.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 #include <cstring>
 
 IMPLEMENT_STANDARD_RTTIEXT(DESTL_Provider, DE_Provider)

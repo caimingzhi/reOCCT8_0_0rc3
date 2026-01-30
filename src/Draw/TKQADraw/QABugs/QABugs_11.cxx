@@ -15,89 +15,89 @@
 
 #include <cstdio>
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Geom_Surface.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <gp.hxx>
-#include <gp_Trsf.hxx>
-#include <AIS_Trihedron.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <TopoDS_Solid.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <IGESToBRep_Reader.hxx>
-#include <TopoDS.hxx>
-#include <GCPnts_UniformDeflection.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Overflow.hxx>
-#include <Standard_Underflow.hxx>
-#include <Standard_DivideByZero.hxx>
-#include <OSD_SIGSEGV.hxx>
-#include <OSD_Exception_ACCESS_VIOLATION.hxx>
-#include <OSD_Exception_STACK_OVERFLOW.hxx>
-#include <OSD_Timer.hxx>
-#include <OSD_Parallel.hxx>
-#include <STEPCAFControl_Writer.hxx>
-#include <STEPControl_StepModelType.hxx>
-#include <Interface_Static.hxx>
-#include <Standard_Failure.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Geom2dAPI_Interpolate.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dConvert_BSplineCurveToBezierCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <GeomProjLib.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDF_CopyLabel.hxx>
-#include <NCollection_Vector.hxx>
-#include <Standard_Integer.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <AIS_ColorScale.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <gp_GTrsf.hxx>
-#include <Poly_Triangulation.hxx>
-#include <IGESControl_Reader.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <V3d_View.hxx>
-#include <BRepFeat_SplitShape.hxx>
-#include <BRepAlgoAPI_Common.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <Message.hxx>
-#include <Draw_Printer.hxx>
-#include <TopExp_Explorer.hxx>
-#include <ShapeFix_Shell.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <TDocStd_Document.hxx>
-#include <PCDM_StoreStatus.hxx>
-#include <TDocStd_Application.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <ExprIntrp_GenExp.hxx>
-#include <StepData_StepModel.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <Geom_Surface.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <gp.hpp>
+#include <gp_Trsf.hpp>
+#include <AIS_Trihedron.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <TopoDS_Solid.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <BRepPrimAPI_MakeCone.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <IGESToBRep_Reader.hpp>
+#include <TopoDS.hpp>
+#include <GCPnts_UniformDeflection.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Overflow.hpp>
+#include <Standard_Underflow.hpp>
+#include <Standard_DivideByZero.hpp>
+#include <OSD_SIGSEGV.hpp>
+#include <OSD_Exception_ACCESS_VIOLATION.hpp>
+#include <OSD_Exception_STACK_OVERFLOW.hpp>
+#include <OSD_Timer.hpp>
+#include <OSD_Parallel.hpp>
+#include <STEPCAFControl_Writer.hpp>
+#include <STEPControl_StepModelType.hpp>
+#include <Interface_Static.hpp>
+#include <Standard_Failure.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Geom2dAPI_Interpolate.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dConvert_BSplineCurveToBezierCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <GeomProjLib.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDF_CopyLabel.hpp>
+#include <NCollection_Vector.hpp>
+#include <Standard_Integer.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <AIS_ColorScale.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <gp_GTrsf.hpp>
+#include <Poly_Triangulation.hpp>
+#include <IGESControl_Reader.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <V3d_View.hpp>
+#include <BRepFeat_SplitShape.hpp>
+#include <BRepAlgoAPI_Common.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <Message.hpp>
+#include <Draw_Printer.hpp>
+#include <TopExp_Explorer.hpp>
+#include <ShapeFix_Shell.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <TDocStd_Document.hpp>
+#include <PCDM_StoreStatus.hpp>
+#include <TDocStd_Application.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <ExprIntrp_GenExp.hpp>
+#include <StepData_StepModel.hpp>
+#include <XSControl_WorkSession.hpp>
 
 #include <atomic>
 
@@ -253,9 +253,9 @@ static int BUC60610(Draw_Interpretor& di, int argc, const char** argv)
 //====================================================
 
 // OCC105
-#include <BRepTools_WireExplorer.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <TopExp.hxx>
+#include <BRepTools_WireExplorer.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <TopExp.hpp>
 
 //
 // usage : OCC105 shape
@@ -338,9 +338,9 @@ static int OCC105(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <GeomFill_Pipe.hxx>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <GeomFill_Pipe.hpp>
 
 static int pipe_OCC9(Draw_Interpretor& di, int n, const char** a)
 {
@@ -442,7 +442,7 @@ int OCC125(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-#include <BRepLib_FindSurface.hxx>
+#include <BRepLib_FindSurface.hpp>
 
 int OCC157(Draw_Interpretor& di, int n, const char** a)
 // static int findplanarsurface(Draw_Interpretor&, int n, const char ** a)
@@ -480,11 +480,11 @@ int OCC157(Draw_Interpretor& di, int n, const char** a)
 }
 
 // #include <MyCommandsCMD.h>
-#include <ShapeFix_Shape.hxx>
-#include <BRepOffsetAPI_MakeOffset.hxx>
-#include <GeomAbs_JoinType.hxx>
+#include <ShapeFix_Shape.hpp>
+#include <BRepOffsetAPI_MakeOffset.hpp>
+#include <GeomAbs_JoinType.hpp>
 
-#include <BRepTools.hxx>
+#include <BRepTools.hpp>
 
 int OCC165(Draw_Interpretor& di, int n, const char** a)
 
@@ -563,14 +563,14 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
   // 	return TCL_OK;
 }
 
-#include <BRepAlgoAPI_Cut.hxx>
+#include <BRepAlgoAPI_Cut.hpp>
 
-#include <BRepPrimAPI_MakeHalfSpace.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <AIS_Point.hxx>
+#include <BRepPrimAPI_MakeHalfSpace.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <AIS_Point.hpp>
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
 
 static int OCC297(Draw_Interpretor& di, int /*argc*/, const char** argv)
 
@@ -622,8 +622,8 @@ static int OCC297(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <GProp_GProps.hxx>
-#include <BRepGProp.hxx>
+#include <GProp_GProps.hpp>
+#include <BRepGProp.hpp>
 
 static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
 
@@ -682,7 +682,7 @@ static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <DDocStd.hxx>
+#include <DDocStd.hpp>
 
 static int OCC381_Save(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -795,7 +795,7 @@ static int OCC381_SaveAs(Draw_Interpretor& di, int nb, const char** a)
   return 0;
 }
 
-#include <BRepClass3d_SolidClassifier.hxx>
+#include <BRepClass3d_SolidClassifier.hpp>
 
 int OCC299bug(Draw_Interpretor& theDi, int theArgNb, const char** theArgVec)
 {
@@ -846,13 +846,13 @@ int OCC299bug(Draw_Interpretor& theDi, int theArgNb, const char** theArgVec)
   }
 }
 
-#include <OSD_Process.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <TDataStd_Name.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <TDF_Label.hxx>
-#include <XCAFPrs_Driver.hxx>
+#include <OSD_Process.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <TDataStd_Name.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <TDF_Label.hpp>
+#include <XCAFPrs_Driver.hpp>
 
 //=================================================================================================
 
@@ -948,7 +948,7 @@ static int OCC363(Draw_Interpretor& di, int argc, const char** argv)
 //   return 0;
 // }
 
-#include <BRepTopAdaptor_FClass2d.hxx>
+#include <BRepTopAdaptor_FClass2d.hpp>
 
 //=================================================================================================
 
@@ -1064,8 +1064,8 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <ShapeUpgrade_ShapeDivideAngle.hxx>
-#include <ShapeBuild_ReShape.hxx>
+#include <ShapeUpgrade_ShapeDivideAngle.hpp>
+#include <ShapeBuild_ReShape.hpp>
 
 //=================================================================================================
 
@@ -1139,12 +1139,12 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <ShapeProcess_OperLibrary.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <ShapeProcess.hxx>
+#include <ShapeProcess_OperLibrary.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <ShapeProcess.hpp>
 
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <IMeshTools_Parameters.hxx>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <IMeshTools_Parameters.hpp>
 
 //=================================================================================================
 
@@ -1249,8 +1249,8 @@ static int OCC369(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 static int OCC524(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1309,14 +1309,14 @@ static int OCC524(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <GeomPlate_BuildPlateSurface.hxx>
+#include <GeomPlate_BuildPlateSurface.hpp>
 
 //=================================================================================================
 
-#include <gce_MakeRotation.hxx>
-#include <gce_MakeTranslation.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepPrimAPI_MakeWedge.hxx>
+#include <gce_MakeRotation.hpp>
+#include <gce_MakeTranslation.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepPrimAPI_MakeWedge.hpp>
 
 //=================================================================================================
 
@@ -1398,10 +1398,10 @@ static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Standard_GUID.hxx>
+#include <Standard_GUID.hpp>
 
 #if defined(DDataStd_def01)
-  #include <DDataStd_DrawPresentation.hxx>
+  #include <DDataStd_DrawPresentation.hpp>
 
 //=================================================================================================
 
@@ -1463,7 +1463,7 @@ static int OCC708(Draw_Interpretor& di, int argc, const char** argv)
 
 //=================================================================================================
 
-#include <GeomAPI_ProjectPointOnSurf.hxx>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
 
 //=================================================================================================
 
@@ -1547,13 +1547,13 @@ static int OCC921(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_GeneralExpression.hxx>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_GeneralExpression.hpp>
 
 //=================================================================================================
 
-#include <DDF.hxx>
-#include <TPrsStd_AISViewer.hxx>
+#include <DDF.hpp>
+#include <TPrsStd_AISViewer.hpp>
 
 //=======================================================================
 // function : OCC1029_AISTransparency
@@ -1806,8 +1806,8 @@ static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <NCollection_List.hxx>
-#include <BRepFilletAPI_MakeFillet.hxx>
+#include <NCollection_List.hpp>
+#include <BRepFilletAPI_MakeFillet.hpp>
 
 //=================================================================================================
 
@@ -3130,21 +3130,21 @@ static int OCC15755(Draw_Interpretor& di, int argc, const char** argv)
 }
 
 // For OCC16782 testing
-#include <AppStd_Application.hxx>
-#include <TDF_Tool.hxx>
+#include <AppStd_Application.hpp>
+#include <TDF_Tool.hpp>
 // Iterators
 // Attributes
-#include <TDataStd_Tick.hxx>
-#include <TDataStd_IntegerList.hxx>
-#include <TDataStd_RealList.hxx>
-#include <TDataStd_ExtStringList.hxx>
-#include <TDataStd_BooleanList.hxx>
-#include <TDataStd_ReferenceList.hxx>
-#include <TDataStd_BooleanArray.hxx>
-#include <TDataStd_ReferenceArray.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <TDataStd_NamedData.hxx>
-#include <TDF_Reference.hxx>
+#include <TDataStd_Tick.hpp>
+#include <TDataStd_IntegerList.hpp>
+#include <TDataStd_RealList.hpp>
+#include <TDataStd_ExtStringList.hpp>
+#include <TDataStd_BooleanList.hpp>
+#include <TDataStd_ReferenceList.hpp>
+#include <TDataStd_BooleanArray.hpp>
+#include <TDataStd_ReferenceArray.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <TDataStd_NamedData.hpp>
+#include <TDF_Reference.hpp>
 //
 occ::handle<AppStd_Application> app;
 
@@ -4431,11 +4431,11 @@ static int OCC12584(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <MoniTool_Macros.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Message_ProgressScope.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Message_ProgressScope.hpp>
 
-#include <Geom_Plane.hxx>
+#include <Geom_Plane.hpp>
 
 static int OCC20766(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -4484,8 +4484,8 @@ static int OCC20627(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <IntCurvesFace_ShapeIntersector.hxx>
-#include <gp_Lin.hxx>
+#include <IntCurvesFace_ShapeIntersector.hpp>
+#include <gp_Lin.hpp>
 
 int OCC17424(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -4569,7 +4569,7 @@ int OCC22301(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <NCollection_DataMap.hxx>
+#include <NCollection_DataMap.hpp>
 class AIS_InteractiveObject;
 
 int OCC22744(Draw_Interpretor& di, int argc, const char** argv)

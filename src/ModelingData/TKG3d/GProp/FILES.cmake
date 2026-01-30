@@ -3,22 +3,22 @@ set(OCCT_GProp_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GProp_FILES
   GProp.cxx
-  GProp.hxx
+  GProp.hpp
   GProp_CelGProps.cxx
-  GProp_CelGProps.hxx
-  GProp_EquaType.hxx
+  GProp_CelGProps.hpp
+  GProp_EquaType.hpp
   GProp_GProps.cxx
-  GProp_GProps.hxx
+  GProp_GProps.hpp
   GProp_PEquation.cxx
-  GProp_PEquation.hxx
+  GProp_PEquation.hpp
   GProp_PGProps.cxx
-  GProp_PGProps.hxx
+  GProp_PGProps.hpp
   GProp_PrincipalProps.cxx
-  GProp_PrincipalProps.hxx
+  GProp_PrincipalProps.hpp
   GProp_SelGProps.cxx
-  GProp_SelGProps.hxx
-  GProp_UndefinedAxis.hxx
-  GProp_ValueType.hxx
+  GProp_SelGProps.hpp
+  GProp_UndefinedAxis.hpp
+  GProp_ValueType.hpp
   GProp_VelGProps.cxx
-  GProp_VelGProps.hxx
+  GProp_VelGProps.hpp
 )

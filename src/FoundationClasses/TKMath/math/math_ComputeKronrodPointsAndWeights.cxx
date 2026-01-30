@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_ValueAndWeight.hxx>
-#include <NCollection_Array1.hxx>
-#include <math_ComputeKronrodPointsAndWeights.hxx>
-#include <math_EigenValuesSearcher.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <math_ValueAndWeight.hpp>
+#include <NCollection_Array1.hpp>
+#include <math_ComputeKronrodPointsAndWeights.hpp>
+#include <math_EigenValuesSearcher.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #include <algorithm>
 

@@ -18,13 +18,13 @@
 //   by:	Joelle CHAUVET
 //		G1135 : empty constructor
 
-#include <AdvApp2Var_Framework.hxx>
-#include <AdvApp2Var_Iso.hxx>
-#include <NCollection_Sequence.hxx>
-#include <AdvApp2Var_Node.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_XY.hxx>
+#include <AdvApp2Var_Framework.hpp>
+#include <AdvApp2Var_Iso.hpp>
+#include <NCollection_Sequence.hpp>
+#include <AdvApp2Var_Node.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_XY.hpp>
 
 //=================================================================================================
 

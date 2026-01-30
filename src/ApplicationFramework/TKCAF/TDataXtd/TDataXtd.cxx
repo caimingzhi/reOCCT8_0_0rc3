@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataXtd.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_PatternStd.hxx>
-#include <TDataXtd_Placement.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDataXtd_Position.hxx>
-#include <TDataXtd_Shape.hxx>
-#include <Standard_GUID.hxx>
-#include <NCollection_List.hxx>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_PatternStd.hpp>
+#include <TDataXtd_Placement.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDataXtd_Position.hpp>
+#include <TDataXtd_Shape.hpp>
+#include <Standard_GUID.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

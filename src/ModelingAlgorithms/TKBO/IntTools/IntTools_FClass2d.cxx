@@ -14,42 +14,42 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <CSLib_Class2d.hxx>
-#include <ElCLib.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomInt.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Poly.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <CSLib_Class2d.hpp>
+#include <ElCLib.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomInt.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Poly.hpp>
 
 #include <cstdio>
 
 // #define DEBUG_PCLASS_POLYGON
 #ifdef DEBUG_PCLASS_POLYGON
-  #include <DrawTrSurf.hxx>
-  #include <Geom2d_BSplineCurve.hxx>
+  #include <DrawTrSurf.hpp>
+  #include <Geom2d_BSplineCurve.hpp>
 #endif
 
 //=================================================================================================

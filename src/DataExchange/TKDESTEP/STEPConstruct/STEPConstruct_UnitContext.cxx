@@ -17,29 +17,29 @@
 // abv 17.11.99: renamed from StepPDR_MakeUnitAndToleranceContext and merged with STEPControl_Unit
 // abv 30.02.00: ability to write file in units other than MM
 
-#include <StepBasic_ConversionBasedUnitAndAreaUnit.hxx>
-#include <StepBasic_ConversionBasedUnitAndLengthUnit.hxx>
-#include <StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hxx>
-#include <StepBasic_ConversionBasedUnitAndSolidAngleUnit.hxx>
-#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_NamedUnit.hxx>
-#include <StepBasic_SiUnitAndAreaUnit.hxx>
-#include <StepBasic_SiUnitAndLengthUnit.hxx>
-#include <StepBasic_SiUnitAndPlaneAngleUnit.hxx>
-#include <StepBasic_SiUnitAndSolidAngleUnit.hxx>
-#include <StepBasic_SiUnitAndVolumeUnit.hxx>
-#include <STEPConstruct_UnitContext.hxx>
-#include <StepData_Factors.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hxx>
-#include <StepRepr_GlobalUncertaintyAssignedContext.hxx>
-#include <StepRepr_GlobalUnitAssignedContext.hxx>
-#include <StepRepr_ReprItemAndMeasureWithUnit.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ConversionBasedUnitAndAreaUnit.hpp>
+#include <StepBasic_ConversionBasedUnitAndLengthUnit.hpp>
+#include <StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hpp>
+#include <StepBasic_ConversionBasedUnitAndSolidAngleUnit.hpp>
+#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_NamedUnit.hpp>
+#include <StepBasic_SiUnitAndAreaUnit.hpp>
+#include <StepBasic_SiUnitAndLengthUnit.hpp>
+#include <StepBasic_SiUnitAndPlaneAngleUnit.hpp>
+#include <StepBasic_SiUnitAndSolidAngleUnit.hpp>
+#include <StepBasic_SiUnitAndVolumeUnit.hpp>
+#include <STEPConstruct_UnitContext.hpp>
+#include <StepData_Factors.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp>
+#include <StepRepr_GlobalUncertaintyAssignedContext.hpp>
+#include <StepRepr_GlobalUnitAssignedContext.hpp>
+#include <StepRepr_ReprItemAndMeasureWithUnit.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=================================================================================================
 

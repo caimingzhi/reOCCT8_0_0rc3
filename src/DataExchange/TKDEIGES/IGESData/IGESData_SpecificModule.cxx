@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_SpecificModule.hxx>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_SpecificModule.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_SpecificModule, Standard_Transient)
 

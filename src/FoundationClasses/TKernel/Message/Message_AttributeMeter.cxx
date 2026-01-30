@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_AttributeMeter.hxx>
+#include <Message_AttributeMeter.hpp>
 
-#include <Message_Report.hxx>
-#include <OSD_Timer.hxx>
+#include <Message_Report.hpp>
+#include <OSD_Timer.hpp>
 
-#include <Precision.hxx>
-#include <Standard_Dump.hxx>
+#include <Precision.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_AttributeMeter, Message_Attribute)
 

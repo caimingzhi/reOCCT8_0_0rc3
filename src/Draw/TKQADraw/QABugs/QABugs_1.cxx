@@ -13,30 +13,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
 
-#include <TDocStd_Application.hxx>
-#include <DDocStd.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDF_Label.hxx>
-#include <DDF.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <TPrsStd_AISPresentation.hxx>
+#include <TDocStd_Application.hpp>
+#include <DDocStd.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDF_Label.hpp>
+#include <DDF.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <TPrsStd_AISPresentation.hpp>
 
-#include <Draw_Viewer.hxx>
-#include <Draw.hxx>
+#include <Draw_Viewer.hpp>
+#include <Draw.hpp>
 
 #ifndef _WIN32
 extern Draw_Viewer dout;
@@ -44,10 +44,10 @@ extern Draw_Viewer dout;
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <TopoDS.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <TopoDS.hpp>
 
 #if !defined(_WIN32)
 extern NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>&
@@ -57,10 +57,10 @@ Standard_EXPORT NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TColle
                 GetMapOfAIS();
 #endif
 
-#include <AIS_PlaneTrihedron.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <GC_MakePlane.hxx>
+#include <AIS_PlaneTrihedron.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <GC_MakePlane.hpp>
 
 static int OCC159bug(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -374,15 +374,15 @@ static int OCC74bug_get(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <AIS_InteractiveObject.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <AIS_InteractiveObject.hpp>
 
-#include <Graphic3d_Texture2D.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <OSD_FileSystem.hxx>
-#include <Prs3d_ShadingAspect.hxx>
+#include <Graphic3d_Texture2D.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <OSD_FileSystem.hpp>
+#include <Prs3d_ShadingAspect.hpp>
 class AIS_InteractiveObject;
 
 //=======================================================================

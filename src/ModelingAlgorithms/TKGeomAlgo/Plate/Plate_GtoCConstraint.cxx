@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Plate_D2.hxx>
-#include <Plate_D3.hxx>
-#include <Plate_GtoCConstraint.hxx>
-#include <Plate_PinpointConstraint.hxx>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Plate_D2.hpp>
+#include <Plate_D3.hpp>
+#include <Plate_GtoCConstraint.hpp>
+#include <Plate_PinpointConstraint.hpp>
 
 // alr le 12/11/96
 static const double NORMIN = 1.e-10;

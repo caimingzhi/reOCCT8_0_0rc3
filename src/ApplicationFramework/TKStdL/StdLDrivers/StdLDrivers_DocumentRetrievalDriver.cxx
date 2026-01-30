@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLDrivers_DocumentRetrievalDriver.hxx>
-#include <StdLDrivers.hxx>
+#include <StdLDrivers_DocumentRetrievalDriver.hpp>
+#include <StdLDrivers.hpp>
 
-#include <StdObjMgt_MapOfInstantiators.hxx>
-#include <StdObjMgt_ReadData.hxx>
+#include <StdObjMgt_MapOfInstantiators.hpp>
+#include <StdObjMgt_ReadData.hpp>
 
-#include <Storage_HeaderData.hxx>
-#include <Storage_TypeData.hxx>
-#include <Storage_RootData.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <Storage_StreamFormatError.hxx>
-#include <Storage_StreamReadError.hxx>
+#include <Storage_HeaderData.hpp>
+#include <Storage_TypeData.hpp>
+#include <Storage_RootData.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <Storage_StreamFormatError.hpp>
+#include <Storage_StreamReadError.hpp>
 
-#include <PCDM.hxx>
-#include <PCDM_ReadWriter.hxx>
+#include <PCDM.hpp>
+#include <PCDM_ReadWriter.hpp>
 
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Array1.hxx>
-#include <TDocStd_Document.hxx>
-#include <Storage_Schema.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Array1.hpp>
+#include <TDocStd_Document.hpp>
+#include <Storage_Schema.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 

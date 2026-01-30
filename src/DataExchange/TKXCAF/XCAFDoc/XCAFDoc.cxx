@@ -11,32 +11,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_ColorType.hxx>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_ColorType.hpp>
 
-#include <TCollection_HAsciiString.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_Tool.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Comment.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_Name.hxx>
-#include <XCAFDoc_LengthUnit.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDocStd_Document.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XCAFDoc_Area.hxx>
-#include <XCAFDoc_Centroid.hxx>
-#include <XCAFDoc_Color.hxx>
-#include <XCAFDoc_DimTol.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_Material.hxx>
-#include <XCAFDoc_ShapeMapTool.hxx>
-#include <XCAFDoc_Volume.hxx>
+#include <TCollection_HAsciiString.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_Tool.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Comment.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_Name.hpp>
+#include <XCAFDoc_LengthUnit.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDocStd_Document.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XCAFDoc_Area.hpp>
+#include <XCAFDoc_Centroid.hpp>
+#include <XCAFDoc_Color.hpp>
+#include <XCAFDoc_DimTol.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_Material.hpp>
+#include <XCAFDoc_ShapeMapTool.hpp>
+#include <XCAFDoc_Volume.hpp>
 
 //=================================================================================================
 

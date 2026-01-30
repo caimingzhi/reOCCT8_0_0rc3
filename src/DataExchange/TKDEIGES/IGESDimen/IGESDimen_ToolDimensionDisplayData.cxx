@@ -16,23 +16,23 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDimen_DimensionDisplayData.hxx>
-#include <IGESDimen_ToolDimensionDisplayData.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Message_Messenger.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDimen_DimensionDisplayData.hpp>
+#include <IGESDimen_ToolDimensionDisplayData.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Message_Messenger.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IGESDimen_ToolDimensionDisplayData::IGESDimen_ToolDimensionDisplayData() = default;
 

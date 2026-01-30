@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_RunoutZoneDefinition.hxx>
+#include <StepDimTol_RunoutZoneDefinition.hpp>
 
-#include <StepRepr_ShapeAspect.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepDimTol_RunoutZoneOrientation.hxx>
+#include <StepRepr_ShapeAspect.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepDimTol_RunoutZoneOrientation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_RunoutZoneDefinition, StepDimTol_ToleranceZoneDefinition)
 

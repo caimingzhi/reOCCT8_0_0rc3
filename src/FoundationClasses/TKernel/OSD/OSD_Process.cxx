@@ -14,25 +14,25 @@
 
 #ifdef _WIN32
   // it is important to undefine NOUSER and enforce including <windows.h> before
-  // Standard_Macro.hxx defines it and includes <windows.h> causing compilation errors
+  // Standard_Macro.hpp defines it and includes <windows.h> causing compilation errors
   #ifdef NOUSER
     #undef NOUSER // we need SW_HIDE from windows.h
   #endif
   #include <windows.h>
 #endif
 
-#include <OSD_Process.hxx>
+#include <OSD_Process.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_OSDError.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_WhoAmI.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Quantity_Date.hxx>
+#include <NCollection_Array1.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_OSDError.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_WhoAmI.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Quantity_Date.hpp>
 
 #ifdef _WIN32
-  #include <OSD_WNT.hxx>
+  #include <OSD_WNT.hpp>
   #include <lmcons.h> // for UNLEN - maximum user name length GetUserName()
 #else
 const OSD_WhoAmI Iam = OSD_WProcess;

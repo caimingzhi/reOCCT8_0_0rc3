@@ -18,8 +18,8 @@
   #define No_Exception
 #endif
 
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
 
 //=================================================================================================
 

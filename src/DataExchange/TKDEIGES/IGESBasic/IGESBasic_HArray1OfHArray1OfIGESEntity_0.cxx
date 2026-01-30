@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IGESBasic_HArray1OfHArray1OfIGESEntity::IGESBasic_HArray1OfHArray1OfIGESEntity(const int low,
                                                                                const int up)

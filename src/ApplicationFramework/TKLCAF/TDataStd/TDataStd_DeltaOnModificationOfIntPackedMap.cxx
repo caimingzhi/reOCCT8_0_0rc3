@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_DeltaOnModificationOfIntPackedMap.hxx>
+#include <TDataStd_DeltaOnModificationOfIntPackedMap.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDataStd_IntPackedMap.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_Type.hpp>
+#include <TDataStd_IntPackedMap.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfIntPackedMap, TDF_DeltaOnModification)
 

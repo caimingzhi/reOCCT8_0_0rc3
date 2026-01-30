@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <IGESGeom_CircularArc.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <IGESGeom_CircularArc.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_CircularArc, IGESData_IGESEntity)
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_SurfaceOfRevolution.hxx>
+#include <GeomGridEval_SurfaceOfRevolution.hpp>
 
-#include <Geom_RevolutionUtils.pxx>
+#include <Geom_RevolutionUtils.hpp>
 
 //==================================================================================================
 

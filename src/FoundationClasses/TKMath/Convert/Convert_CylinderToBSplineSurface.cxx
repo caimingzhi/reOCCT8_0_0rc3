@@ -14,11 +14,11 @@
 
 // JCV 16/10/91
 
-#include <Convert_CylinderToBSplineSurface.hxx>
-#include <gp.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_DomainError.hxx>
+#include <Convert_CylinderToBSplineSurface.hpp>
+#include <gp.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_DomainError.hpp>
 
 namespace
 {

@@ -2,30 +2,30 @@
 set(OCCT_Geom2dInt_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Geom2dInt_FILES
-  Geom2dInt_ExactIntersectionPointOfTheIntPCurvePCurveOfGInter.hxx
+  Geom2dInt_ExactIntersectionPointOfTheIntPCurvePCurveOfGInter.hpp
   Geom2dInt_ExactIntersectionPointOfTheIntPCurvePCurveOfGInter_0.cxx
   Geom2dInt_Geom2dCurveTool.cxx
-  Geom2dInt_Geom2dCurveTool.hxx
-  Geom2dInt_Geom2dCurveTool.lxx
-  Geom2dInt_GInter.hxx
+  Geom2dInt_Geom2dCurveTool.hpp
+  Geom2dInt_Geom2dCurveTool_1.hpp
+  Geom2dInt_GInter.hpp
   Geom2dInt_GInter_0.cxx
-  Geom2dInt_IntConicCurveOfGInter.hxx
+  Geom2dInt_IntConicCurveOfGInter.hpp
   Geom2dInt_IntConicCurveOfGInter_0.cxx
-  Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hxx
+  Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hpp
   Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter_0.cxx
-  Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter.hxx
-  Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hxx
-  Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hxx
+  Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter.hpp
+  Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hpp
+  Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter.hpp
   Geom2dInt_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfGInter_0.cxx
-  Geom2dInt_TheIntConicCurveOfGInter.hxx
+  Geom2dInt_TheIntConicCurveOfGInter.hpp
   Geom2dInt_TheIntConicCurveOfGInter_0.cxx
-  Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hxx
+  Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hpp
   Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter_0.cxx
-  Geom2dInt_TheIntPCurvePCurveOfGInter.hxx
+  Geom2dInt_TheIntPCurvePCurveOfGInter.hpp
   Geom2dInt_TheIntPCurvePCurveOfGInter_0.cxx
-  Geom2dInt_TheLocateExtPCOfTheProjPCurOfGInter.hxx
-  Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hxx
+  Geom2dInt_TheLocateExtPCOfTheProjPCurOfGInter.hpp
+  Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hpp
   Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter_0.cxx
-  Geom2dInt_TheProjPCurOfGInter.hxx
+  Geom2dInt_TheProjPCurOfGInter.hpp
   Geom2dInt_TheProjPCurOfGInter_0.cxx
 )

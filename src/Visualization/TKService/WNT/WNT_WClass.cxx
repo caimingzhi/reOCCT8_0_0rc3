@@ -16,11 +16,11 @@
   #include <windows.h>
 #endif
 
-#include <WNT_WClass.hxx>
+#include <WNT_WClass.hpp>
 
-#include <TCollection_ExtendedString.hxx>
-#include <WNT_ClassDefinitionError.hxx>
-#include <WNT_Window.hxx>
+#include <TCollection_ExtendedString.hpp>
+#include <WNT_ClassDefinitionError.hpp>
+#include <WNT_Window.hpp>
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
 

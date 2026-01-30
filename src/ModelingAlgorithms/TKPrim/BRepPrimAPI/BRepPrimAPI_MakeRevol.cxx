@@ -17,24 +17,24 @@
 // Modified by skv - Fri Mar  4 15:50:09 2005
 // Add methods for supporting history.
 
-#include <BRep_TEdge.hxx>
-#include <BRepLib.hxx>
-#include <BRepPrimAPI_MakeRevol.hxx>
-#include <BRepSweep_Revol.hxx>
-#include <gp_Ax1.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <BRepTools_ReShape.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_SurfaceOfRevolution.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Extrema_ExtCC.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Geom_Line.hxx>
-#include <Adaptor3d_Curve.hxx>
+#include <BRep_TEdge.hpp>
+#include <BRepLib.hpp>
+#include <BRepPrimAPI_MakeRevol.hpp>
+#include <BRepSweep_Revol.hpp>
+#include <gp_Ax1.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <BRepTools_ReShape.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_SurfaceOfRevolution.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Extrema_ExtCC.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Geom_Line.hpp>
+#include <Adaptor3d_Curve.hpp>
 
 // perform checks on the argument
 static const TopoDS_Shape& check(const TopoDS_Shape& S)

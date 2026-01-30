@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_GeometricSet.hxx>
-#include <StepShape_GeometricSetSelect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_GeometricSet.hpp>
+#include <StepShape_GeometricSetSelect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_GeometricSet, StepGeom_GeometricRepresentationItem)
 

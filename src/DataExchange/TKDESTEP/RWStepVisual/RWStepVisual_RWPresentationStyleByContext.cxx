@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWPresentationStyleByContext.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_NullStyleMember.hxx>
-#include <StepVisual_PresentationStyleByContext.hxx>
-#include <StepVisual_PresentationStyleSelect.hxx>
-#include <StepVisual_StyleContextSelect.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWPresentationStyleByContext.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_NullStyleMember.hpp>
+#include <StepVisual_PresentationStyleByContext.hpp>
+#include <StepVisual_PresentationStyleSelect.hpp>
+#include <StepVisual_StyleContextSelect.hpp>
 
 RWStepVisual_RWPresentationStyleByContext::RWStepVisual_RWPresentationStyleByContext() = default;
 

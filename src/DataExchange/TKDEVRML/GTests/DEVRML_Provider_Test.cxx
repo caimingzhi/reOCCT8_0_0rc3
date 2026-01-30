@@ -11,30 +11,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEVRML_Provider.hxx>
-#include <DEVRML_ConfigurationNode.hxx>
-#include <DE_Wrapper.hxx>
+#include <DEVRML_Provider.hpp>
+#include <DEVRML_ConfigurationNode.hpp>
+#include <DE_Wrapper.hpp>
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRep_Builder.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Dir.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <BRep_Tool.hxx>
-#include <TopLoc_Location.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Application.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRep_Builder.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Dir.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <BRep_Tool.hpp>
+#include <TopLoc_Location.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Application.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 #include <sstream>
 #include <gtest/gtest.h>

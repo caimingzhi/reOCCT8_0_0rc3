@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_Data.hxx>
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_WriteData.hxx>
+#include <StdLPersistent_Data.hpp>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_WriteData.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Attribute.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Attribute.hpp>
 
 //! Create a transient label tree from persistent data
 class StdLPersistent_Data::Parser

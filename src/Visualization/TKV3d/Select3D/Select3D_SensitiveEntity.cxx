@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveEntity.hxx>
+#include <Select3D_SensitiveEntity.hpp>
 
-#include <SelectMgr_EntityOwner.hxx>
+#include <SelectMgr_EntityOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveEntity, Standard_Transient)
 

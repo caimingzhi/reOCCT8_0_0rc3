@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_connex.hxx>
+#include <TopOpeBRepDS_connex.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
 
 static NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>*
   GLOBAL_elf1 = nullptr; // NYI to CDLize as a tool of DS

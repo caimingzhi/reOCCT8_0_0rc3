@@ -18,7 +18,7 @@
 // Version	Date		Purpose
 //		0.0	Oct 10 1997	Creation
 
-#include <TDF_DeltaOnModification.hxx>
+#include <TDF_DeltaOnModification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnModification, TDF_AttributeDelta)
 

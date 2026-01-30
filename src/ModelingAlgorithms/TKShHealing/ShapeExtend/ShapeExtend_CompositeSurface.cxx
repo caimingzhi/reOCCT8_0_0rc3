@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend_CompositeSurface.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend_CompositeSurface.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeExtend_CompositeSurface, Geom_Surface)
 

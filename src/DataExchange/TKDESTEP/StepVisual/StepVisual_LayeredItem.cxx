@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_LayeredItem.hxx>
-#include <StepVisual_PresentationRepresentation.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_LayeredItem.hpp>
+#include <StepVisual_PresentationRepresentation.hpp>
 
 StepVisual_LayeredItem::StepVisual_LayeredItem() = default;
 

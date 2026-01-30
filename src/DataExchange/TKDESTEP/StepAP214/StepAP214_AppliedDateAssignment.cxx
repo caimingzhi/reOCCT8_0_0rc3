@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AppliedDateAssignment.hxx>
-#include <StepAP214_DateItem.hxx>
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DateRole.hxx>
+#include <StepAP214_AppliedDateAssignment.hpp>
+#include <StepAP214_DateItem.hpp>
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DateRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedDateAssignment, StepBasic_DateAssignment)
 

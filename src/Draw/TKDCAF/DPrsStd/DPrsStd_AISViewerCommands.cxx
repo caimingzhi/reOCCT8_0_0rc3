@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DPrsStd.hxx>
+#include <DPrsStd.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Data.hxx>
-#include <DDF.hxx>
-#include <DDocStd.hxx>
-#include <ViewerTest.hxx>
-#include <V3d_View.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <AIS_InteractiveContext.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Data.hpp>
+#include <DDF.hpp>
+#include <DDocStd.hpp>
+#include <ViewerTest.hpp>
+#include <V3d_View.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <AIS_InteractiveContext.hpp>
 
 //=======================================================================
 // function : DPrsStd_AISInitViewer

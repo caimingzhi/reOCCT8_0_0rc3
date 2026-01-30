@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepVisual_PresentedItem.hxx>
+#include <Standard_Type.hpp>
+#include <StepVisual_PresentedItem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_PresentedItem, Standard_Transient)

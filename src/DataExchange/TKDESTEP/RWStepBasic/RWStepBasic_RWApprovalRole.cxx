@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWApprovalRole.pxx"
-#include <StepBasic_ApprovalRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWApprovalRole.hpp"
+#include <StepBasic_ApprovalRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWApprovalRole::RWStepBasic_RWApprovalRole() = default;
 

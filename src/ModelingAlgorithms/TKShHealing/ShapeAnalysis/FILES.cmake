@@ -3,49 +3,49 @@ set(OCCT_ShapeAnalysis_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeAnalysis_FILES
   ShapeAnalysis.cxx
-  ShapeAnalysis.hxx
+  ShapeAnalysis.hpp
   ShapeAnalysis_BoxBndTree.cxx
-  ShapeAnalysis_BoxBndTree.hxx
+  ShapeAnalysis_BoxBndTree.hpp
   ShapeAnalysis_CheckSmallFace.cxx
-  ShapeAnalysis_CheckSmallFace.hxx
-  ShapeAnalysis_CheckSmallFace.lxx
+  ShapeAnalysis_CheckSmallFace.hpp
+  ShapeAnalysis_CheckSmallFace_1.hpp
   ShapeAnalysis_Curve.cxx
-  ShapeAnalysis_Curve.hxx
+  ShapeAnalysis_Curve.hpp
 
   ShapeAnalysis_Edge.cxx
-  ShapeAnalysis_Edge.hxx
+  ShapeAnalysis_Edge.hpp
   ShapeAnalysis_FreeBoundData.cxx
-  ShapeAnalysis_FreeBoundData.hxx
-  ShapeAnalysis_FreeBoundData.lxx
+  ShapeAnalysis_FreeBoundData.hpp
+  ShapeAnalysis_FreeBoundData_1.hpp
   ShapeAnalysis_FreeBounds.cxx
-  ShapeAnalysis_FreeBounds.hxx
-  ShapeAnalysis_FreeBounds.lxx
+  ShapeAnalysis_FreeBounds.hpp
+  ShapeAnalysis_FreeBounds_1.hpp
   ShapeAnalysis_FreeBoundsProperties.cxx
-  ShapeAnalysis_FreeBoundsProperties.hxx
-  ShapeAnalysis_FreeBoundsProperties.lxx
+  ShapeAnalysis_FreeBoundsProperties.hpp
+  ShapeAnalysis_FreeBoundsProperties_1.hpp
   ShapeAnalysis_Geom.cxx
-  ShapeAnalysis_Geom.hxx
+  ShapeAnalysis_Geom.hpp
 
   ShapeAnalysis_ShapeContents.cxx
-  ShapeAnalysis_ShapeContents.hxx
+  ShapeAnalysis_ShapeContents.hpp
   ShapeAnalysis_ShapeTolerance.cxx
-  ShapeAnalysis_ShapeTolerance.hxx
+  ShapeAnalysis_ShapeTolerance.hpp
   ShapeAnalysis_Shell.cxx
-  ShapeAnalysis_Shell.hxx
+  ShapeAnalysis_Shell.hpp
   ShapeAnalysis_Surface.cxx
-  ShapeAnalysis_Surface.hxx
-  ShapeAnalysis_Surface.lxx
+  ShapeAnalysis_Surface.hpp
+  ShapeAnalysis_Surface_1.hpp
   ShapeAnalysis_TransferParameters.cxx
-  ShapeAnalysis_TransferParameters.hxx
+  ShapeAnalysis_TransferParameters.hpp
   ShapeAnalysis_TransferParametersProj.cxx
-  ShapeAnalysis_TransferParametersProj.hxx
+  ShapeAnalysis_TransferParametersProj.hpp
   ShapeAnalysis_Wire.cxx
-  ShapeAnalysis_Wire.hxx
-  ShapeAnalysis_Wire.lxx
+  ShapeAnalysis_Wire.hpp
+  ShapeAnalysis_Wire_1.hpp
   ShapeAnalysis_WireOrder.cxx
-  ShapeAnalysis_WireOrder.hxx
+  ShapeAnalysis_WireOrder.hpp
   ShapeAnalysis_WireVertex.cxx
-  ShapeAnalysis_WireVertex.hxx
+  ShapeAnalysis_WireVertex.hpp
   ShapeAnalysis_CanonicalRecognition.cxx
-  ShapeAnalysis_CanonicalRecognition.hxx
+  ShapeAnalysis_CanonicalRecognition.hpp
 )

@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_VisMaterialTool.hxx>
+#include <XCAFDoc_VisMaterialTool.hpp>
 
-#include <TDataStd_Name.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_VisMaterial.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_VisMaterial.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_VisMaterialTool, TDF_Attribute)
 

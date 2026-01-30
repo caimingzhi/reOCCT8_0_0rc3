@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_Wrapper.hxx>
+#include <DE_Wrapper.hpp>
 
-#include <DE_ConfigurationContext.hxx>
-#include <DE_ConfigurationNode.hxx>
-#include <DE_Provider.hxx>
-#include <DE_ValidationUtils.hxx>
-#include <Message_ProgressRange.hxx>
-#include <NCollection_Buffer.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopoDS_Shape.hxx>
+#include <DE_ConfigurationContext.hpp>
+#include <DE_ConfigurationNode.hpp>
+#include <DE_Provider.hpp>
+#include <DE_ValidationUtils.hpp>
+#include <Message_ProgressRange.hpp>
+#include <NCollection_Buffer.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_Wrapper, Standard_Transient)
 

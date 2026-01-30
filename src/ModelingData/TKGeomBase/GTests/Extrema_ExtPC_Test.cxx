@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtPC.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_Circle.hxx>
-#include <ElSLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Cylinder.hxx>
+#include <Extrema_ExtPC.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_Circle.hpp>
+#include <ElSLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Cylinder.hpp>
 
 #include <gtest/gtest.h>
 

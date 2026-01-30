@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_SymmetricRelation.hxx>
+#include <PrsDim_SymmetricRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_SymmetricPresentation.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeLin.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_SymmetricPresentation.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeLin.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_SymmetricRelation, PrsDim_Relation)
 

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Application.hxx>
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <CDM_Application.hpp>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDM_Application, Standard_Transient)
 

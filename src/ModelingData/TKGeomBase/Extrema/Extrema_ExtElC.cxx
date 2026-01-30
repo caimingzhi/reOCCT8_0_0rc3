@@ -12,28 +12,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Extrema_ExtElC.hxx>
-#include <Extrema_ExtElC2d.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <math_TrigonometricFunctionRoots.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <Extrema_ExtElC.hpp>
+#include <Extrema_ExtElC2d.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <math_TrigonometricFunctionRoots.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 static void RefineDir(gp_Dir& aDir);
 

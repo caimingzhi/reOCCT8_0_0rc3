@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GetcontextSPEON();

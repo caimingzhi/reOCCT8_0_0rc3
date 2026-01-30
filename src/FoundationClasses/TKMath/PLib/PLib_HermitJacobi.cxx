@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_LocalArray.hxx>
-#include <PLib.hxx>
-#include <PLib_HermitJacobi.hxx>
-#include <PLib_JacobiPolynomial.hxx>
-#include <Standard_Type.hxx>
-#include <math_Matrix.hxx>
+#include <NCollection_LocalArray.hpp>
+#include <PLib.hpp>
+#include <PLib_HermitJacobi.hpp>
+#include <PLib_JacobiPolynomial.hpp>
+#include <Standard_Type.hpp>
+#include <math_Matrix.hpp>
 
 namespace
 {

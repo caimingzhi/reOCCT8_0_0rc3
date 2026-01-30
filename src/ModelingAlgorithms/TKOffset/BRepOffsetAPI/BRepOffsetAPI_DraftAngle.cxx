@@ -14,38 +14,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepOffsetAPI_DraftAngle.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_Substitution.hxx>
-#include <Draft_Modification.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <Precision.hxx>
-#include <Standard_NullObject.hxx>
-#include <gp_Pnt.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepOffsetAPI_DraftAngle.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_Substitution.hpp>
+#include <Draft_Modification.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <Precision.hpp>
+#include <Standard_NullObject.hpp>
+#include <gp_Pnt.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
 
-#include <Geom2dInt_GInter.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
+#include <Geom2dInt_GInter.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
 
 //=================================================================================================
 

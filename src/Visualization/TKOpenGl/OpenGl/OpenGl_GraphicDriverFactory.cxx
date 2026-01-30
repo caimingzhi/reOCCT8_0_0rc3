@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GraphicDriverFactory.hxx>
+#include <OpenGl_GraphicDriverFactory.hpp>
 
-#include <OpenGl_GraphicDriver.hxx>
+#include <OpenGl_GraphicDriver.hpp>
 
 #ifdef HAVE_GLES2
   #define OpenGl_DRIVER_NAME "TKOpenGles"

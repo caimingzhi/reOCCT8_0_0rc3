@@ -13,32 +13,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDataStd.hxx>
+#include <XmlMDataStd.hpp>
 
-#include <Message_Messenger.hxx>
-#include <XmlMDataStd_AsciiStringDriver.hxx>
-#include <XmlMDataStd_BooleanArrayDriver.hxx>
-#include <XmlMDataStd_BooleanListDriver.hxx>
-#include <XmlMDataStd_ByteArrayDriver.hxx>
-#include <XmlMDataStd_ExpressionDriver.hxx>
-#include <XmlMDataStd_ExtStringArrayDriver.hxx>
-#include <XmlMDataStd_ExtStringListDriver.hxx>
-#include <XmlMDataStd_IntegerArrayDriver.hxx>
-#include <XmlMDataStd_IntegerDriver.hxx>
-#include <XmlMDataStd_IntegerListDriver.hxx>
-#include <XmlMDataStd_IntPackedMapDriver.hxx>
-#include <XmlMDataStd_NamedDataDriver.hxx>
-#include <XmlMDataStd_GenericExtStringDriver.hxx>
-#include <XmlMDataStd_RealArrayDriver.hxx>
-#include <XmlMDataStd_RealDriver.hxx>
-#include <XmlMDataStd_RealListDriver.hxx>
-#include <XmlMDataStd_ReferenceArrayDriver.hxx>
-#include <XmlMDataStd_ReferenceListDriver.hxx>
-#include <XmlMDataStd_GenericEmptyDriver.hxx>
-#include <XmlMDataStd_TreeNodeDriver.hxx>
-#include <XmlMDataStd_UAttributeDriver.hxx>
-#include <XmlMDataStd_VariableDriver.hxx>
-#include <XmlMDF_ADriverTable.hxx>
+#include <Message_Messenger.hpp>
+#include <XmlMDataStd_AsciiStringDriver.hpp>
+#include <XmlMDataStd_BooleanArrayDriver.hpp>
+#include <XmlMDataStd_BooleanListDriver.hpp>
+#include <XmlMDataStd_ByteArrayDriver.hpp>
+#include <XmlMDataStd_ExpressionDriver.hpp>
+#include <XmlMDataStd_ExtStringArrayDriver.hpp>
+#include <XmlMDataStd_ExtStringListDriver.hpp>
+#include <XmlMDataStd_IntegerArrayDriver.hpp>
+#include <XmlMDataStd_IntegerDriver.hpp>
+#include <XmlMDataStd_IntegerListDriver.hpp>
+#include <XmlMDataStd_IntPackedMapDriver.hpp>
+#include <XmlMDataStd_NamedDataDriver.hpp>
+#include <XmlMDataStd_GenericExtStringDriver.hpp>
+#include <XmlMDataStd_RealArrayDriver.hpp>
+#include <XmlMDataStd_RealDriver.hpp>
+#include <XmlMDataStd_RealListDriver.hpp>
+#include <XmlMDataStd_ReferenceArrayDriver.hpp>
+#include <XmlMDataStd_ReferenceListDriver.hpp>
+#include <XmlMDataStd_GenericEmptyDriver.hpp>
+#include <XmlMDataStd_TreeNodeDriver.hpp>
+#include <XmlMDataStd_UAttributeDriver.hpp>
+#include <XmlMDataStd_VariableDriver.hpp>
+#include <XmlMDF_ADriverTable.hpp>
 
 //=================================================================================================
 

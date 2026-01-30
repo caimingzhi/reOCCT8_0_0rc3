@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_ProductRelatedProductCategory.hxx>
-#include <STEPConstruct_Assembly.hxx>
-#include <StepGeom_CompositeCurve.hxx>
-#include <StepGeom_CompositeCurveSegment.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_RepresentationMap.hxx>
-#include <StepRepr_ShapeRepresentationRelationship.hxx>
-#include <STEPSelections_Counter.hxx>
-#include <StepShape_BrepWithVoids.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_FacetedBrep.hxx>
-#include <StepShape_FacetedBrepAndBrepWithVoids.hxx>
-#include <StepShape_GeometricSet.hxx>
-#include <StepShape_GeometricSetSelect.hxx>
-#include <StepShape_ManifoldSolidBrep.hxx>
-#include <StepShape_OpenShell.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <StepShape_ShellBasedSurfaceModel.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_ProductRelatedProductCategory.hpp>
+#include <STEPConstruct_Assembly.hpp>
+#include <StepGeom_CompositeCurve.hpp>
+#include <StepGeom_CompositeCurveSegment.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_RepresentationMap.hpp>
+#include <StepRepr_ShapeRepresentationRelationship.hpp>
+#include <STEPSelections_Counter.hpp>
+#include <StepShape_BrepWithVoids.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_FacetedBrep.hpp>
+#include <StepShape_FacetedBrepAndBrepWithVoids.hpp>
+#include <StepShape_GeometricSet.hpp>
+#include <StepShape_GeometricSetSelect.hpp>
+#include <StepShape_ManifoldSolidBrep.hpp>
+#include <StepShape_OpenShell.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <StepShape_ShellBasedSurfaceModel.hpp>
 
 STEPSelections_Counter::STEPSelections_Counter()
 {

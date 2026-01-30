@@ -14,9 +14,9 @@
 
 #ifndef _WIN32
 
-  #include <OSD_Function.hxx>
-  #include <OSD_LoadMode.hxx>
-  #include <OSD_SharedLibrary.hxx>
+  #include <OSD_Function.hpp>
+  #include <OSD_LoadMode.hpp>
+  #include <OSD_SharedLibrary.hpp>
 
   #include <cstdio>
   #include <cstring>
@@ -211,18 +211,18 @@ void OSD_SharedLibrary::Destroy()
   //------------------------------------------------------------------------
 
   // it is important to define STRICT and enforce including <windows.h> before
-  // Standard_Macro.hxx undefines it and includes <windows.h> causing compilation errors
+  // Standard_Macro.hpp undefines it and includes <windows.h> causing compilation errors
   #ifndef STRICT
     #define STRICT
   #endif
   #include <windows.h>
 
-  #include <OSD_Path.hxx>
-  #include <OSD_SharedLibrary.hxx>
-  #include <TCollection_AsciiString.hxx>
-  #include <TCollection_ExtendedString.hxx>
+  #include <OSD_Path.hpp>
+  #include <OSD_SharedLibrary.hpp>
+  #include <TCollection_AsciiString.hpp>
+  #include <TCollection_ExtendedString.hpp>
 
-  #include <Standard_WarningDisableFunctionCast.hxx>
+  #include <Standard_WarningDisableFunctionCast.hpp>
 
 static DWORD lastDLLError;
 

@@ -3,7 +3,7 @@ set(OCCT_DEGLTF_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_DEGLTF_FILES
   DEGLTF_ConfigurationNode.cxx
-  DEGLTF_ConfigurationNode.hxx
+  DEGLTF_ConfigurationNode.hpp
   DEGLTF_Provider.cxx
-  DEGLTF_Provider.hxx
+  DEGLTF_Provider.hpp
 )

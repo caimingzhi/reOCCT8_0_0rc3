@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_BSplineSurface.hxx>
+#include <GeomGridEval_BSplineSurface.hpp>
 
 #include <algorithm>
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 namespace
 {

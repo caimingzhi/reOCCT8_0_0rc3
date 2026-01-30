@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Storage_Schema.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Map.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <XmlMDF.hxx>
-#include <XmlMDF_ADriver.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMDF_ReferenceDriver.hxx>
-#include <XmlMDF_TagSourceDriver.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDocStd_Document.hxx>
-#include <Standard_GUID.hxx>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Storage_Schema.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Map.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <XmlMDF.hpp>
+#include <XmlMDF_ADriver.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMDF_ReferenceDriver.hpp>
+#include <XmlMDF_TagSourceDriver.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDocStd_Document.hpp>
+#include <Standard_GUID.hpp>
 
 IMPLEMENT_DOMSTRING(TagString, "tag")
 IMPLEMENT_DOMSTRING(LabelString, "label")

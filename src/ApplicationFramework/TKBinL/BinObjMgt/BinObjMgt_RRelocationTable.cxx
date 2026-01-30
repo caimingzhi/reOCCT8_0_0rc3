@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinObjMgt_RRelocationTable.hxx>
+#include <BinObjMgt_RRelocationTable.hpp>
 
 //=======================================================================
 // function : GetHeaderData

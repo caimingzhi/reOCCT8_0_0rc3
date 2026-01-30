@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom2d_Curve.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Map.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_Association.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_GapFiller.hxx>
-#include <TopOpeBRepDS_GapTool.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom2d_Curve.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Map.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_Association.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_GapFiller.hpp>
+#include <TopOpeBRepDS_GapTool.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
 
 //=================================================================================================
 

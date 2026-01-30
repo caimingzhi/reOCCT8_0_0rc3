@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_CopyControl.hxx>
-#include <Interface_CopyMap.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_CopyControl.hpp>
+#include <Interface_CopyMap.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 // Remember that a richer version of CopyTool exists: it is
 // TransferDispatch (package Transfer). This class offers much more

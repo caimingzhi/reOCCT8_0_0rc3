@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <Standard_HashUtils.hxx>
-#include <Standard_Assert.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Standard_HashUtils.hpp>
+#include <Standard_Assert.hpp>
 
 #include <mutex>
 

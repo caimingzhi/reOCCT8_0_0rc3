@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib_PointCloudShape.hxx>
+#include <BRepLib_PointCloudShape.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepGProp.hxx>
-#include <BRepLib_ToolTriangulatedShape.hxx>
-#include <BRepTools.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom_Surface.hxx>
-#include <GProp_GProps.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepGProp.hpp>
+#include <BRepLib_ToolTriangulatedShape.hpp>
+#include <BRepTools.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom_Surface.hpp>
+#include <GProp_GProps.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <random>
 

@@ -2,24 +2,24 @@
 set(OCCT_Font_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Font_FILES
-  Font_BRepFont.hxx
-  Font_BRepTextBuilder.hxx
-  Font_FontAspect.hxx
+  Font_BRepFont.hpp
+  Font_BRepTextBuilder.hpp
+  Font_FontAspect.hpp
   Font_FontMgr.cxx
-  Font_FontMgr.hxx
+  Font_FontMgr.hpp
   Font_FTFont.cxx
-  Font_FTFont.hxx
+  Font_FTFont.hpp
   Font_FTLibrary.cxx
-  Font_FTLibrary.hxx
-  Font_Hinting.hxx
-  Font_NameOfFont.hxx
+  Font_FTLibrary.hpp
+  Font_Hinting.hpp
+  Font_NameOfFont.hpp
 
-  Font_Rect.hxx
-  Font_StrictLevel.hxx
+  Font_Rect.hpp
+  Font_StrictLevel.hpp
   Font_SystemFont.cxx
-  Font_SystemFont.hxx
-  Font_TextFormatter.hxx
+  Font_SystemFont.hpp
+  Font_TextFormatter.hpp
   Font_TextFormatter.cxx
-  Font_UnicodeSubset.hxx
-  Font_DejavuSans_Latin_woff.pxx
+  Font_UnicodeSubset.hpp
+  Font_DejavuSans_Latin_woff.hpp
 )

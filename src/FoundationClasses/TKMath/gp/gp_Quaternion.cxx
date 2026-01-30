@@ -17,10 +17,10 @@
 // http://www.gamedev.ru/code/articles/?id=4215&page=3
 // and maths found in Wikipedia and elsewhere
 
-#include <gp_Quaternion.hxx>
+#include <gp_Quaternion.hpp>
 
-#include <gp_Vec.hxx>
-#include <gp_Mat.hxx>
+#include <gp_Vec.hpp>
+#include <gp_Mat.hpp>
 
 //=================================================================================================
 

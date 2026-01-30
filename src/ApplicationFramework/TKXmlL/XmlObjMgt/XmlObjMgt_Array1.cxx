@@ -15,10 +15,10 @@
 
 // AGV 130202: Changed prototype LDOM_Node::getOwnerDocument()
 
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Array1.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_DOMString.hxx>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Array1.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_DOMString.hpp>
 
 IMPLEMENT_DOMSTRING(LowerString, "lower")
 IMPLEMENT_DOMSTRING(UpperString, "upper")

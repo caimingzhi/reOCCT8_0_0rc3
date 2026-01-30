@@ -15,21 +15,21 @@
 
 #include <cstdio>
 
-#include <QADNaming.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_SameShapeIterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <DBRep.hxx>
-#include <TNaming.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <QADNaming.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_SameShapeIterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <DBRep.hpp>
+#include <TNaming.hpp>
+#include <TNaming_NamedShape.hpp>
 
-#include <DDF.hxx>
+#include <DDF.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Tool.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Tool.hpp>
 
 static const char* EvolutionString(TNaming_Evolution theEvolution)
 {

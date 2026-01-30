@@ -13,32 +13,32 @@
 
 #include <gtest/gtest.h>
 
-#include <ShapeConstruct_ProjectCurveOnSurface.hxx>
-#include <ShapeAnalysis_Surface.hxx>
+#include <ShapeConstruct_ProjectCurveOnSurface.hpp>
+#include <ShapeAnalysis_Surface.hpp>
 
-#include <GC_MakeSegment.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_PointsToBSpline.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
+#include <GC_MakeSegment.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_PointsToBSpline.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
 
 //==================================================================================================
 // Test fixture for ShapeConstruct_ProjectCurveOnSurface

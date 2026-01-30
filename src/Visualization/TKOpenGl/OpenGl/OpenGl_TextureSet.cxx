@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_TextureSet.hxx>
+#include <OpenGl_TextureSet.hpp>
 
-#include <OpenGl_Texture.hxx>
+#include <OpenGl_Texture.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_TextureSet, Standard_Transient)
 

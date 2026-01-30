@@ -17,12 +17,12 @@
 // Updated :
 // -------------------------------------------------------------
 
-#include <Quantity_Date.hxx>
-#include <Quantity_DateDefinitionError.hxx>
-#include <Quantity_Period.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Quantity_Date.hpp>
+#include <Quantity_DateDefinitionError.hpp>
+#include <Quantity_Period.hpp>
+#include <Standard_OutOfRange.hpp>
 
-#include "Quantity_TimeConstants.pxx"
+#include "Quantity_TimeConstants.hpp"
 
 namespace
 {

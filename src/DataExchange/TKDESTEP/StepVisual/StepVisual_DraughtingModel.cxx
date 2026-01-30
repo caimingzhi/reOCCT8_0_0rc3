@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Standard_Type.hxx>
-#include <StepVisual_DraughtingModel.hxx>
+#include <Standard_Type.hpp>
+#include <StepVisual_DraughtingModel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_DraughtingModel, StepRepr_Representation)
 

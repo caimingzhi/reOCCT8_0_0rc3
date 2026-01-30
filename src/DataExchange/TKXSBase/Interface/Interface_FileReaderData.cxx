@@ -17,14 +17,14 @@
 // Interface_FileReaderData::BoundEntity
 //====================================================================
 
-#include <Interface_FileParameter.hxx>
-#include <Interface_FileReaderData.hxx>
-#include <Interface_ParamList.hxx>
-#include <Interface_ParamSet.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_FileParameter.hpp>
+#include <Interface_FileReaderData.hpp>
+#include <Interface_ParamList.hpp>
+#include <Interface_ParamSet.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_FileReaderData, Standard_Transient)
 

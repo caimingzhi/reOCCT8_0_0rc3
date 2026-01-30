@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_GeometricToleranceWithModifiers.hxx>
+#include <StepDimTol_GeometricToleranceWithModifiers.hpp>
 
-#include <StepDimTol_GeometricToleranceTarget.hxx>
-#include <StepDimTol_GeometricToleranceModifier.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
+#include <StepDimTol_GeometricToleranceModifier.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithModifiers,
                            StepDimTol_GeometricTolerance)

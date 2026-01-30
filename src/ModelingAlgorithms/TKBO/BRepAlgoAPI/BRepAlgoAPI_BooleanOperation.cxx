@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgoAPI_BooleanOperation.hxx>
+#include <BRepAlgoAPI_BooleanOperation.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Section.hxx>
-#include <BRepAlgoAPI_Check.hxx>
-#include <BRepTools.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Section.hpp>
+#include <BRepAlgoAPI_Check.hpp>
+#include <BRepTools.hpp>
 
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 

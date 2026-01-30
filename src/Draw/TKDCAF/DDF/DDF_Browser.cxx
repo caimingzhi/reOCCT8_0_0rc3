@@ -18,19 +18,19 @@
 // Version	Date		Purpose
 //		0.0	Oct  3 1997	Creation
 
-#include <DDF_AttributeBrowser.hxx>
-#include <DDF_Browser.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <DDF_AttributeBrowser.hpp>
+#include <DDF_Browser.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDF_Browser, Draw_Drawable3D)
 

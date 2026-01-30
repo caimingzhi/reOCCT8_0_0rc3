@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GC_MakeArcOfParabola.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GC_MakeArcOfParabola.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 GC_MakeArcOfParabola::GC_MakeArcOfParabola(const gp_Parab& Parab,
                                            const gp_Pnt&   P1,

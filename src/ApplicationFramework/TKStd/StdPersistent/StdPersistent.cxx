@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPersistent.hxx>
-#include <StdObjMgt_MapOfInstantiators.hxx>
+#include <StdPersistent.hpp>
+#include <StdObjMgt_MapOfInstantiators.hpp>
 
-#include <StdPersistent_TopLoc.hxx>
-#include <StdPersistent_Naming.hxx>
-#include <StdPersistent_HArray1.hxx>
-#include <StdLPersistent_HArray1.hxx>
-#include <StdPersistent_DataXtd.hxx>
-#include <StdPersistent_DataXtd_Constraint.hxx>
-#include <StdPersistent_DataXtd_PatternStd.hxx>
-#include <StdPersistent_PPrsStd.hxx>
+#include <StdPersistent_TopLoc.hpp>
+#include <StdPersistent_Naming.hpp>
+#include <StdPersistent_HArray1.hpp>
+#include <StdLPersistent_HArray1.hpp>
+#include <StdPersistent_DataXtd.hpp>
+#include <StdPersistent_DataXtd_Constraint.hpp>
+#include <StdPersistent_DataXtd_PatternStd.hpp>
+#include <StdPersistent_PPrsStd.hpp>
 
 //=================================================================================================
 

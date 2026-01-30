@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS.hxx>
+#include <TopOpeBRepDS.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <TopOpeBRepDS_define.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TopOpeBRepDS_define.hpp>
 
 //=======================================================================
 // function : Print the name of a State

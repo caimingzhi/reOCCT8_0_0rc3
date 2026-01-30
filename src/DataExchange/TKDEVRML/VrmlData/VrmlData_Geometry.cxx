@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_Coordinate.hxx>
-#include <VrmlData_Color.hxx>
-#include <VrmlData_Normal.hxx>
-#include <VrmlData_TextureCoordinate.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_Box.hxx>
-#include <VrmlData_Cone.hxx>
-#include <VrmlData_Cylinder.hxx>
-#include <VrmlData_Sphere.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrim_Cone.hxx>
-#include <BRepPrim_Cylinder.hxx>
-#include <BRepPrim_Sphere.hxx>
-#include <BRepPrim_Builder.hxx>
-#include <NCollection_Vector.hxx>
-#include <VrmlData_ArrayVec3d.hxx>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_Coordinate.hpp>
+#include <VrmlData_Color.hpp>
+#include <VrmlData_Normal.hpp>
+#include <VrmlData_TextureCoordinate.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_Box.hpp>
+#include <VrmlData_Cone.hpp>
+#include <VrmlData_Cylinder.hpp>
+#include <VrmlData_Sphere.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrim_Cone.hpp>
+#include <BRepPrim_Cylinder.hpp>
+#include <BRepPrim_Sphere.hpp>
+#include <BRepPrim_Builder.hpp>
+#include <NCollection_Vector.hpp>
+#include <VrmlData_ArrayVec3d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Geometry, VrmlData_Node)
 

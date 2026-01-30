@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepRepr_RWGeometricAlignment.pxx"
+#include "RWStepRepr_RWGeometricAlignment.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_GeometricAlignment.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeAspect.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_GeometricAlignment.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeAspect.hpp>
 
 //=================================================================================================
 

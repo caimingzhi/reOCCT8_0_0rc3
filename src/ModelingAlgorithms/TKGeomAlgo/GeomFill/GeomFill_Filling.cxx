@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Filling.hxx>
-#include <gp_Pnt.hxx>
+#include <GeomFill_Filling.hpp>
+#include <gp_Pnt.hpp>
 
 //=================================================================================================
 

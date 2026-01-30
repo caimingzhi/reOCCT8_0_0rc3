@@ -13,29 +13,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <ShapeAnalysis_TransferParametersProj.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <ShapeFix_SplitTool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <ShapeAnalysis_TransferParametersProj.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeFix_SplitTool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

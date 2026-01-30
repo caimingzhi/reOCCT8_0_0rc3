@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT void debfctwesmess(const int i, const TCollection_AsciiString& s = "");

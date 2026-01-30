@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_GTrsf2d.hxx>
+#include <gp_GTrsf2d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Mat2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_XY.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Mat2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_XY.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
 
 void gp_GTrsf2d::SetAffinity(const gp_Ax2d& A, const double Ratio)
 {

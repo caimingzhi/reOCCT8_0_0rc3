@@ -16,8 +16,8 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <Standard_Type.hxx>
-  #include <TopOpeBRepTool_STATE.hxx>
+  #include <Standard_Type.hpp>
+  #include <TopOpeBRepTool_STATE.hpp>
 
 static TopOpeBRepTool_STATE TopOpeBRepTool_CL3DDR("draw 3d classification states");
 static TopOpeBRepTool_STATE TopOpeBRepTool_CL3DPR("print 3d classification states");

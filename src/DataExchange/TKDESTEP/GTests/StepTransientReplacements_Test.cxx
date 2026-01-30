@@ -13,31 +13,31 @@
 
 #include <gtest/gtest.h>
 
-#include <Standard_Transient.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepRepr_ReprItemAndMeasureWithUnit.hxx>
+#include <Standard_Transient.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepRepr_ReprItemAndMeasureWithUnit.hpp>
 
-#include <StepBasic_ConversionBasedUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiUnit.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_SiPrefix.hxx>
-#include <StepBasic_SiUnitName.hxx>
+#include <StepBasic_ConversionBasedUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiUnit.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_SiPrefix.hpp>
+#include <StepBasic_SiUnitName.hpp>
 
-#include <StepDimTol_GeometricTolerance.hxx>
-#include <StepRepr_MakeFromUsageOption.hxx>
-#include <StepRepr_ParallelOffset.hxx>
-#include <StepRepr_QuantifiedAssemblyComponentUsage.hxx>
-#include <StepShape_MeasureQualification.hxx>
-#include <StepData_Logical.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepDimTol_GeometricToleranceTarget.hxx>
-#include <StepShape_ValueQualifier.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepDimTol_GeometricTolerance.hpp>
+#include <StepRepr_MakeFromUsageOption.hpp>
+#include <StepRepr_ParallelOffset.hpp>
+#include <StepRepr_QuantifiedAssemblyComponentUsage.hpp>
+#include <StepShape_MeasureQualification.hpp>
+#include <StepData_Logical.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
+#include <StepShape_ValueQualifier.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <TCollection_HAsciiString.hxx>
+#include <TCollection_HAsciiString.hpp>
 
 // Helper functions to create test objects
 namespace

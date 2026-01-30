@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWVertexLoop.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_Vertex.hxx>
-#include <StepShape_VertexLoop.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWVertexLoop.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_Vertex.hpp>
+#include <StepShape_VertexLoop.hpp>
 
 RWStepShape_RWVertexLoop::RWStepShape_RWVertexLoop() = default;
 

@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_ConnectedInteractive.hxx>
+#include <AIS_ConnectedInteractive.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
-#include <BRepTools.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_ProgramError.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_HLRPolyShape.hxx>
-#include <StdSelect.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <TopoDS_Shape.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
+#include <BRepTools.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_ProgramError.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_HLRPolyShape.hpp>
+#include <StdSelect.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ConnectedInteractive, AIS_InteractiveObject)
 

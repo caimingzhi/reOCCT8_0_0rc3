@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <Standard_GUID.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <Standard_GUID.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 #include <gtest/gtest.h>
 

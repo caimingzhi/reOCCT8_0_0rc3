@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_TangentRelation.hxx>
+#include <PrsDim_TangentRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <DsgPrs_TangentPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <DsgPrs_TangentPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_TangentRelation, PrsDim_Relation)
 

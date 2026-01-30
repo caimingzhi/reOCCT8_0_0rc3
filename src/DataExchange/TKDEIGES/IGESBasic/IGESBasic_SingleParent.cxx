@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_SingleParent.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_SingleParent.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_SingleParent, IGESData_SingleParentEntity)
 

@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfTriangleStrips.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <StdPrs_ShadedSurface.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfTriangleStrips.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <StdPrs_ShadedSurface.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

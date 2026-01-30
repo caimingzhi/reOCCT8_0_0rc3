@@ -16,22 +16,22 @@
 // svv#2 21.02.00 : porting on SIL
 // smh#14 17.03.2000 : FRA62479 Clearing of gtool.
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_GTool.hxx>
-#include <Interface_InterfaceMismatch.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Interface_SignType.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_GTool.hpp>
+#include <Interface_InterfaceMismatch.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Interface_SignType.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_InterfaceModel, Standard_Transient)
 

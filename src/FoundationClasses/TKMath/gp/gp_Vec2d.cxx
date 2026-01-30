@@ -16,14 +16,14 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_Vec2d.hxx>
+#include <gp_Vec2d.hpp>
 
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_VectorWithNullMagnitude.hxx>
-#include <gp_XY.hxx>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_VectorWithNullMagnitude.hpp>
+#include <gp_XY.hpp>
 
 bool gp_Vec2d::IsEqual(const gp_Vec2d& theOther,
                        const double    theLinearTolerance,

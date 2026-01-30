@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_Name.hxx>
-#include <TDF_Label.hxx>
+#include <TDataStd_Name.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_Name, TDataStd_GenericExtString)
 

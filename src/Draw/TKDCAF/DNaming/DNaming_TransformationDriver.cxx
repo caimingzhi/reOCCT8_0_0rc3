@@ -13,35 +13,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <DNaming.hxx>
-#include <DNaming_TransformationDriver.hxx>
-#include <GeomLib_IsPlanarSurface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <ModelDefinitions.hxx>
-#include <NCollection_Handle.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Label.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Standard_Integer.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <DNaming.hpp>
+#include <DNaming_TransformationDriver.hpp>
+#include <GeomLib_IsPlanarSurface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <ModelDefinitions.hpp>
+#include <NCollection_Handle.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Label.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Standard_Integer.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_TransformationDriver, TFunction_Driver)
 
@@ -57,9 +57,9 @@ IMPLEMENT_STANDARD_RTTIEXT(DNaming_TransformationDriver, TFunction_Driver)
 
 // #define MDTV_DEB_TRSF
 #ifdef OCCT_DEBUG_TRSF
-  #include <TCollection_AsciiString.hxx>
-  #include <BRepTools.hxx>
-  #include <TDF_Tool.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <BRepTools.hpp>
+  #include <TDF_Tool.hpp>
 
 void PrintE(const TDF_Label& label)
 {

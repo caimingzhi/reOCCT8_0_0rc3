@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOMBasicString.hxx>
-#include <LDOM_MemManager.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <LDOMBasicString.hpp>
+#include <LDOM_MemManager.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 #include <cerrno>
 
 //=======================================================================
@@ -330,7 +330,7 @@ bool LDOMBasicString::GetInteger(int& aResult) const
     //=======================================================================
     // Debug Function for DBX: use "print -p <Variable> or pp <Variable>"
     //=======================================================================
-    #include <LDOM_OSStream.hxx>
+    #include <LDOM_OSStream.hpp>
     #define FLITERAL 0x10
 
 char* db_pretty_print(const LDOMBasicString* aString, int fl, char*)

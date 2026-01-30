@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeometryTest_DrawableQualifiedCurve2d.hxx>
+#include <GeometryTest_DrawableQualifiedCurve2d.hpp>
 
-#include <GccEnt.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
+#include <GccEnt.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeometryTest_DrawableQualifiedCurve2d, DrawTrSurf_Curve2d)
 

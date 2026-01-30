@@ -18,10 +18,10 @@
   #include <windows.h>
 #endif
 
-#include <Draw_Main.hxx>
+#include <Draw_Main.hpp>
 #include <cstdlib>
-#include <Draw_Appli.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Draw_Appli.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <tcl.h>
 

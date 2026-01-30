@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <TopLoc_Datum3D.hxx>
-#include <TopTools_LocationSet.hxx>
-#include <XCAFDoc_Location.hxx>
-#include <XmlMXCAFDoc_LocationDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_DOMString.hxx>
-#include <XmlObjMgt_GP.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <TopLoc_Datum3D.hpp>
+#include <TopTools_LocationSet.hpp>
+#include <XCAFDoc_Location.hpp>
+#include <XmlMXCAFDoc_LocationDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_DOMString.hpp>
+#include <XmlObjMgt_GP.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_LocationDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(DatumString, "datum")

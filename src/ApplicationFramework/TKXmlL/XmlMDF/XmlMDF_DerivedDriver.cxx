@@ -11,6 +11,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDF_DerivedDriver.hxx>
+#include <XmlMDF_DerivedDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_DerivedDriver, XmlMDF_ADriver)

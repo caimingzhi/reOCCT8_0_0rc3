@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomAdaptor_TransformedSurface.hxx>
+#include <GeomAdaptor_TransformedSurface.hpp>
 
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomAdaptor_TransformedSurface, Adaptor3d_Surface)
 

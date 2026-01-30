@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWStl.hxx>
+#include <RWStl.hpp>
 
-#include <Message_ProgressScope.hxx>
-#include <NCollection_Vector.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_OpenFile.hxx>
-#include <RWStl_Reader.hxx>
-#include <Standard_ReadLineBuffer.hxx>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_Vector.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_OpenFile.hpp>
+#include <RWStl_Reader.hpp>
+#include <Standard_ReadLineBuffer.hpp>
 #include <iomanip>
 #include <iostream>
 #include <cstring>

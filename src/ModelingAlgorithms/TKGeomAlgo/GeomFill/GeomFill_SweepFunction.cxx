@@ -20,14 +20,14 @@
   #define No_Standard_DimensionError
 #endif
 
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <GeomFill_SweepFunction.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <GeomFill_SweepFunction.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_SweepFunction, Approx_SweepFunction)
 

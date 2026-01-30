@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESSelect_FileModifier.hxx>
+#include <IGESSelect_FileModifier.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <IGESData_IGESWriter.hxx>
-#include <IFSelect_ContextWrite.hxx>
+#include <IGESData_IGESWriter.hpp>
+#include <IFSelect_ContextWrite.hpp>
 
 IGESSelect_FileModifier::IGESSelect_FileModifier()
     : IFSelect_GeneralModifier(false)

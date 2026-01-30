@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_AxisIntersector.hxx>
+#include <SelectMgr_AxisIntersector.hpp>
 
-#include <BVH_Tools.hxx>
-#include <Precision.hxx>
-#include <SelectBasics_PickResult.hxx>
-#include <SelectMgr_ViewClipRange.hxx>
+#include <BVH_Tools.hpp>
+#include <Precision.hpp>
+#include <SelectBasics_PickResult.hpp>
+#include <SelectMgr_ViewClipRange.hpp>
 
 //=================================================================================================
 

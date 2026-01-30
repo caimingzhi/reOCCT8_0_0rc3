@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
+#include <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
 
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_TheMultiLineToolOfWLApprox.hxx>
-#include <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_TheMultiLineToolOfWLApprox.hpp>
+#include <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
 
 #define MultiLine GeomInt_TheMultiLineOfWLApprox
-#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hxx>
+#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hpp>
 #define ToolLine GeomInt_TheMultiLineToolOfWLApprox
-#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hxx>
+#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hpp>
 #define Squares GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox
-#define Squares_hxx <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
+#define Squares_hxx <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
 #define ResolCons GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox
-#define ResolCons_hxx <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
+#define ResolCons_hxx <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
 #define AppParCurves_Function GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox
 #define AppParCurves_Function_hxx                                                                  \
-  <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <AppParCurves_Function.gxx>
+  <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <AppParCurves_Function.hpp>

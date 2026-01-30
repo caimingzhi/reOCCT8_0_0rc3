@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <XCAFDoc_AssemblyItemRef.hxx>
-#include <XmlMXCAFDoc_AssemblyItemRefDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <XCAFDoc_AssemblyItemRef.hpp>
+#include <XmlMXCAFDoc_AssemblyItemRefDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_AssemblyItemRefDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(Path, "path")

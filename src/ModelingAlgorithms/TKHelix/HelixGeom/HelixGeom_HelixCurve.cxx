@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HelixGeom_HelixCurve.hxx>
+#include <HelixGeom_HelixCurve.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <NCollection_Array1.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

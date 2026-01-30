@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_FreeFormatEntity.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_UndefinedContent.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData_FreeFormatEntity.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_UndefinedContent.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_FreeFormatEntity, IGESData_UndefinedEntity)
 

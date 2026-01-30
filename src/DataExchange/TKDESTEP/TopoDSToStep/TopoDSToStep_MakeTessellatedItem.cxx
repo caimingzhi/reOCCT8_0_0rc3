@@ -11,27 +11,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Standard_Transient.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Poly.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepVisual_FaceOrSurface.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <StepVisual_TessellatedShell.hxx>
-#include <StepVisual_TriangulatedFace.hxx>
-#include <StepVisual_TriangulatedSurfaceSet.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDSToStep.hxx>
-#include <TopoDSToStep_MakeTessellatedItem.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRep_Tool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Standard_Transient.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Poly.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepVisual_FaceOrSurface.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <StepVisual_TessellatedShell.hpp>
+#include <StepVisual_TriangulatedFace.hpp>
+#include <StepVisual_TriangulatedSurfaceSet.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDSToStep.hpp>
+#include <TopoDSToStep_MakeTessellatedItem.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 //=============================================================================
 // Method  : InitTriangulation

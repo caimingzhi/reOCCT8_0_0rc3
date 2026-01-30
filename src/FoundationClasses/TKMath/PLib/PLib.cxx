@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PLib.hxx>
+#include <PLib.hpp>
 
-#include <GeomAbs_Shape.hxx>
-#include <math.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <BSplCLib.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <GeomAbs_Shape.hpp>
+#include <math.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <BSplCLib.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Standard_ConstructionError.hpp>
 
 #include <array>
 

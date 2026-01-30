@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GC_MakeHyperbola.hxx>
-#include <gce_MakeHypr.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GC_MakeHyperbola.hpp>
+#include <gce_MakeHypr.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 GC_MakeHyperbola::GC_MakeHyperbola(const gp_Hypr& H)
 {

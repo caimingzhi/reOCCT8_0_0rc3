@@ -16,10 +16,10 @@
 // Workaround for PCH
 #include <limits>
 
-#include <IVtkDraw_HighlightAndSelectionPipeline.hxx>
+#include <IVtkDraw_HighlightAndSelectionPipeline.hpp>
 
 // prevent disabling some MSVC warning messages by VTK headers
-#include <Standard_WarningsDisable.hxx>
+#include <Standard_WarningsDisable.hpp>
 #include <vtkRenderer.h>
 #include <vtkActor.h>
 #include <vtkPolyDataMapper.h>
@@ -27,12 +27,12 @@
 #include <vtkAppendPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
-#include <Standard_WarningsRestore.hxx>
+#include <Standard_WarningsRestore.hpp>
 
-#include <IVtkOCC_Shape.hxx>
-#include <IVtkTools_DisplayModeFilter.hxx>
-#include <IVtkTools_ShapeDataSource.hxx>
-#include <IVtkTools_ShapeObject.hxx>
+#include <IVtkOCC_Shape.hpp>
+#include <IVtkTools_DisplayModeFilter.hpp>
+#include <IVtkTools_ShapeDataSource.hpp>
+#include <IVtkTools_ShapeObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkDraw_HighlightAndSelectionPipeline, Standard_Transient)
 

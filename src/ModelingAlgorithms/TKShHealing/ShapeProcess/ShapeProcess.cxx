@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeProcess.hxx>
+#include <ShapeProcess.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Message_ProgressScope.hxx>
-#include <ShapeProcess_Context.hxx>
-#include <ShapeProcess_Operator.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Message_ProgressScope.hpp>
+#include <ShapeProcess_Context.hpp>
+#include <ShapeProcess_Operator.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
 
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<ShapeProcess_Operator>>
   aMapOfOperators;

@@ -3,28 +3,28 @@ set(OCCT_BinTools_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinTools_FILES
   BinTools.cxx
-  BinTools.hxx
+  BinTools.hpp
   BinTools_Curve2dSet.cxx
-  BinTools_Curve2dSet.hxx
+  BinTools_Curve2dSet.hpp
   BinTools_CurveSet.cxx
-  BinTools_CurveSet.hxx
-  BinTools_FormatVersion.hxx
+  BinTools_CurveSet.hpp
+  BinTools_FormatVersion.hpp
   BinTools_IStream.cxx
-  BinTools_IStream.hxx
+  BinTools_IStream.hpp
   BinTools_LocationSet.cxx
-  BinTools_LocationSet.hxx
-  BinTools_LocationSetPtr.hxx
+  BinTools_LocationSet.hpp
+  BinTools_LocationSetPtr.hpp
   BinTools_ShapeSet.cxx
-  BinTools_ShapeSet.hxx
+  BinTools_ShapeSet.hpp
   BinTools_ShapeSetBase.cxx
-  BinTools_ShapeSetBase.hxx
+  BinTools_ShapeSetBase.hpp
   BinTools_SurfaceSet.cxx
-  BinTools_SurfaceSet.hxx
-  BinTools_ObjectType.hxx
+  BinTools_SurfaceSet.hpp
+  BinTools_ObjectType.hpp
   BinTools_OStream.cxx
-  BinTools_OStream.hxx
-  BinTools_ShapeReader.hxx
+  BinTools_OStream.hpp
+  BinTools_ShapeReader.hpp
   BinTools_ShapeReader.cxx
-  BinTools_ShapeWriter.hxx
+  BinTools_ShapeWriter.hpp
   BinTools_ShapeWriter.cxx
 )

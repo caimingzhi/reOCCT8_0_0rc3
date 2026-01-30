@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_Triangulator.hxx>
-#include <Precision.hxx>
-#include <ProjLib.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <BRepMesh_Delaun.hxx>
+#include <BRepMesh_Triangulator.hpp>
+#include <Precision.hpp>
+#include <ProjLib.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <BRepMesh_Delaun.hpp>
 
 #ifdef CHECK_PERF
-  #include <MoniTool_Timer.hxx>
-  #include <MoniTool_TimerSentry.hxx>
+  #include <MoniTool_Timer.hpp>
+  #include <MoniTool_TimerSentry.hpp>
 #endif
 
 namespace

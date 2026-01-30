@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_MechanismStateRepresentation.hxx>
-#include <StepKinematics_MechanismRepresentation.hxx>
+#include <StepKinematics_MechanismStateRepresentation.hpp>
+#include <StepKinematics_MechanismRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_MechanismStateRepresentation, StepRepr_Representation)
 

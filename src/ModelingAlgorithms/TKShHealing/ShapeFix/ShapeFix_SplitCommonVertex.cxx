@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <Message_Msg.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_SplitCommonVertex.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_Sequence.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <Message_Msg.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_SplitCommonVertex.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_SplitCommonVertex, ShapeFix_Root)
 

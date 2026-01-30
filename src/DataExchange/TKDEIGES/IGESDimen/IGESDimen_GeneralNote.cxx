@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESGraph_TextFontDef.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESGraph_TextFontDef.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_GeneralNote, IGESData_IGESEntity)
 

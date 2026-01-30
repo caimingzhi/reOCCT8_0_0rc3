@@ -3,61 +3,61 @@ set(OCCT_LocOpe_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_LocOpe_FILES
   LocOpe.cxx
-  LocOpe.hxx
+  LocOpe.hpp
   LocOpe_BuildShape.cxx
-  LocOpe_BuildShape.hxx
-  LocOpe_BuildShape.lxx
+  LocOpe_BuildShape.hpp
+  LocOpe_BuildShape_1.hpp
   LocOpe_BuildWires.cxx
-  LocOpe_BuildWires.hxx
+  LocOpe_BuildWires.hpp
   LocOpe_CSIntersector.cxx
-  LocOpe_CSIntersector.hxx
-  LocOpe_CSIntersector.lxx
+  LocOpe_CSIntersector.hpp
+  LocOpe_CSIntersector_1.hpp
   LocOpe_CurveShapeIntersector.cxx
-  LocOpe_CurveShapeIntersector.hxx
-  LocOpe_CurveShapeIntersector.lxx
+  LocOpe_CurveShapeIntersector.hpp
+  LocOpe_CurveShapeIntersector_1.hpp
 
   LocOpe_DPrism.cxx
-  LocOpe_DPrism.hxx
+  LocOpe_DPrism.hpp
   LocOpe_FindEdges.cxx
-  LocOpe_FindEdges.hxx
-  LocOpe_FindEdges.lxx
+  LocOpe_FindEdges.hpp
+  LocOpe_FindEdges_1.hpp
   LocOpe_FindEdgesInFace.cxx
-  LocOpe_FindEdgesInFace.hxx
-  LocOpe_FindEdgesInFace.lxx
+  LocOpe_FindEdgesInFace.hpp
+  LocOpe_FindEdgesInFace_1.hpp
   LocOpe_GeneratedShape.cxx
-  LocOpe_GeneratedShape.hxx
+  LocOpe_GeneratedShape.hpp
   LocOpe_Generator.cxx
-  LocOpe_Generator.hxx
-  LocOpe_Generator.lxx
+  LocOpe_Generator.hpp
+  LocOpe_Generator_1.hpp
   LocOpe_GluedShape.cxx
-  LocOpe_GluedShape.hxx
+  LocOpe_GluedShape.hpp
   LocOpe_Gluer.cxx
-  LocOpe_Gluer.hxx
-  LocOpe_Gluer.lxx
+  LocOpe_Gluer.hpp
+  LocOpe_Gluer_1.hpp
   LocOpe_LinearForm.cxx
-  LocOpe_LinearForm.hxx
-  LocOpe_LinearForm.lxx
-  LocOpe_Operation.hxx
+  LocOpe_LinearForm.hpp
+  LocOpe_LinearForm_1.hpp
+  LocOpe_Operation.hpp
   LocOpe_Pipe.cxx
-  LocOpe_Pipe.hxx
-  LocOpe_Pipe.lxx
-  LocOpe_PntFace.hxx
+  LocOpe_Pipe.hpp
+  LocOpe_Pipe_1.hpp
+  LocOpe_PntFace.hpp
   LocOpe_Prism.cxx
-  LocOpe_Prism.hxx
+  LocOpe_Prism.hpp
   LocOpe_Revol.cxx
-  LocOpe_Revol.hxx
+  LocOpe_Revol.hpp
   LocOpe_RevolutionForm.cxx
-  LocOpe_RevolutionForm.hxx
+  LocOpe_RevolutionForm.hpp
 
   LocOpe_SplitDrafts.cxx
-  LocOpe_SplitDrafts.hxx
+  LocOpe_SplitDrafts.hpp
   LocOpe_Spliter.cxx
-  LocOpe_Spliter.hxx
-  LocOpe_Spliter.lxx
+  LocOpe_Spliter.hpp
+  LocOpe_Spliter_1.hpp
   LocOpe_SplitShape.cxx
-  LocOpe_SplitShape.hxx
-  LocOpe_SplitShape.lxx
+  LocOpe_SplitShape.hpp
+  LocOpe_SplitShape_1.hpp
   LocOpe_WiresOnShape.cxx
-  LocOpe_WiresOnShape.hxx
-  LocOpe_WiresOnShape.lxx
+  LocOpe_WiresOnShape.hpp
+  LocOpe_WiresOnShape_1.hpp
 )

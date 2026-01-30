@@ -17,19 +17,19 @@
 // 25.12.98 pdn: renaming methods GetWires and GetEdges to GetClosedWires
 //               and GetOpenWires respectively
 
-#include <BRep_Builder.hxx>
-#include <ShapeAnalysis_FreeBounds.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <ShapeFix_FreeBounds.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <ShapeAnalysis_FreeBounds.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <ShapeFix_FreeBounds.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 //=================================================================================================
 

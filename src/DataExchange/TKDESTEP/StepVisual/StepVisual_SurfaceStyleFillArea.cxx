@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_FillAreaStyle.hxx>
-#include <StepVisual_SurfaceStyleFillArea.hxx>
+#include <StepVisual_FillAreaStyle.hpp>
+#include <StepVisual_SurfaceStyleFillArea.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_SurfaceStyleFillArea, Standard_Transient)
 

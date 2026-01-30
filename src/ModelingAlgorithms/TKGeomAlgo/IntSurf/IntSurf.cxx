@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntSurf.hxx>
+#include <IntSurf.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <IntSurf_Transition.hxx>
-#include <Precision.hxx>
-#include <gp_Vec.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <IntSurf_Transition.hpp>
+#include <Precision.hpp>
+#include <gp_Vec.hpp>
 
 //--------------------------------------------------------------
 //-- IntSurf::MakeTransition(Vtgint,Vtgrst,Normale,Transline,Transarc);

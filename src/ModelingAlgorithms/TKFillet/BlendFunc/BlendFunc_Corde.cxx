@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BlendFunc.hxx>
-#include <BlendFunc_Corde.hxx>
-#include <ElCLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <BlendFunc.hpp>
+#include <BlendFunc_Corde.hpp>
+#include <ElCLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

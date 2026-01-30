@@ -3,15 +3,15 @@ set(OCCT_BRepMeshData_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepMeshData_FILES
   BRepMeshData_Curve.cxx
-  BRepMeshData_Curve.hxx
+  BRepMeshData_Curve.hpp
   BRepMeshData_Edge.cxx
-  BRepMeshData_Edge.hxx
+  BRepMeshData_Edge.hpp
   BRepMeshData_Face.cxx
-  BRepMeshData_Face.hxx
+  BRepMeshData_Face.hpp
   BRepMeshData_Model.cxx
-  BRepMeshData_Model.hxx
+  BRepMeshData_Model.hpp
   BRepMeshData_PCurve.cxx
-  BRepMeshData_PCurve.hxx
+  BRepMeshData_PCurve.hpp
   BRepMeshData_Wire.cxx
-  BRepMeshData_Wire.hxx
+  BRepMeshData_Wire.hpp
 )

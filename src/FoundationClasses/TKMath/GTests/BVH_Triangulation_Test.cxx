@@ -13,7 +13,7 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_Triangulation.hxx>
+#include <BVH_Triangulation.hpp>
 
 // =============================================================================
 // BVH_Triangulation Basic Tests

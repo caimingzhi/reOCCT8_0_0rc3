@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDF_ADriver.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_DataMap.hxx>
-#include <BinMDF_DerivedDriver.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TDF_DerivedAttribute.hxx>
+#include <BinMDF_ADriver.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_DataMap.hpp>
+#include <BinMDF_DerivedDriver.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TDF_DerivedAttribute.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDF_ADriverTable, Standard_Transient)
 

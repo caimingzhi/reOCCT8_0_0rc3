@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 //=================================================================================================
 

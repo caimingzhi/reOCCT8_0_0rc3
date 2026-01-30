@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_HInter.hxx>
+#include <IntCurveSurface_HInter.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <IntCurveSurface_TheCSFunctionOfHInter.hxx>
-#include <IntCurveSurface_TheExactHInter.hxx>
-#include <IntCurveSurface_TheHCurveTool.hxx>
-#include <IntCurveSurface_TheInterferenceOfHInter.hxx>
-#include <IntCurveSurface_ThePolygonOfHInter.hxx>
-#include <IntCurveSurface_ThePolygonToolOfHInter.hxx>
-#include <IntCurveSurface_ThePolyhedronOfHInter.hxx>
-#include <IntCurveSurface_ThePolyhedronToolOfHInter.hxx>
-#include <IntCurveSurface_TheQuadCurvExactHInter.hxx>
-#include <IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <IntCurveSurface_TheCSFunctionOfHInter.hpp>
+#include <IntCurveSurface_TheExactHInter.hpp>
+#include <IntCurveSurface_TheHCurveTool.hpp>
+#include <IntCurveSurface_TheInterferenceOfHInter.hpp>
+#include <IntCurveSurface_ThePolygonOfHInter.hpp>
+#include <IntCurveSurface_ThePolygonToolOfHInter.hpp>
+#include <IntCurveSurface_ThePolyhedronOfHInter.hpp>
+#include <IntCurveSurface_ThePolyhedronToolOfHInter.hpp>
+#include <IntCurveSurface_TheQuadCurvExactHInter.hpp>
+#include <IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter.hpp>
 
-#include "IntCurveSurface_Inter.pxx"
+#include "IntCurveSurface_Inter.hpp"
 
 // Type aliases for readability
 using TheCurve              = occ::handle<Adaptor3d_Curve>;

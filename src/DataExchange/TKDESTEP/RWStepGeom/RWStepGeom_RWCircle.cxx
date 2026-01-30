@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWCircle.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Circle.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWCircle.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Circle.hpp>
 
 RWStepGeom_RWCircle::RWStepGeom_RWCircle() = default;
 

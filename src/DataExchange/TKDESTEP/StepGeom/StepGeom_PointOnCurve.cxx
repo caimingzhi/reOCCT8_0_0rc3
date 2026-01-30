@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_PointOnCurve.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_PointOnCurve.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_PointOnCurve, StepGeom_Point)
 

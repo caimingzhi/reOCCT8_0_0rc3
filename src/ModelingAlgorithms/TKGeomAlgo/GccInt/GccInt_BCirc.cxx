@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccInt_BCirc.hxx>
-#include <gp_Circ2d.hxx>
-#include <Standard_Type.hxx>
+#include <GccInt_BCirc.hpp>
+#include <gp_Circ2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GccInt_BCirc, GccInt_Bisec)
 

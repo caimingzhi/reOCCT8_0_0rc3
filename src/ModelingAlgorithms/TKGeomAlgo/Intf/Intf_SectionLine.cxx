@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Intf_SectionLine.hxx>
-#include <Intf_SectionPoint.hxx>
+#include <Intf_SectionLine.hpp>
+#include <Intf_SectionPoint.hpp>
 
 //=================================================================================================
 

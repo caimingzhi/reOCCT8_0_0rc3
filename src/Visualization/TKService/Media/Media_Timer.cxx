@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Media_Timer.hxx>
+#include <Media_Timer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Timer, Standard_Transient)
 

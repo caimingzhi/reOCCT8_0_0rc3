@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepGProp_MeshProps.hxx>
+#include <BRepGProp_MeshProps.hpp>
 
-#include <BRepGProp.hxx>
-#include <ElSLib.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <GProp.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_Triangle.hxx>
-#include <TopLoc_Location.hxx>
+#include <BRepGProp.hpp>
+#include <ElSLib.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <GProp.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_Triangle.hpp>
+#include <TopLoc_Location.hpp>
 
 //=======================================================================
 // function : CalculateElSProps

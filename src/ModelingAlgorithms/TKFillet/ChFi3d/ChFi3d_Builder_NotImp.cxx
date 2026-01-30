@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_CurvPointFuncInv.hxx>
-#include <Blend_FuncInv.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <ChFi3d_Builder.hxx>
-#include <ChFiDS_ElSpine.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
+#include <Blend_CurvPointFuncInv.hpp>
+#include <Blend_FuncInv.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <ChFi3d_Builder.hpp>
+#include <ChFiDS_ElSpine.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
 
 //=================================================================================================
 

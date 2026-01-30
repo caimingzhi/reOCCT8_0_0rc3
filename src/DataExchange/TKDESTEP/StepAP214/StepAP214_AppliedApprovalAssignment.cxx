@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AppliedApprovalAssignment.hxx>
-#include <StepAP214_ApprovalItem.hxx>
-#include <StepBasic_Approval.hxx>
+#include <StepAP214_AppliedApprovalAssignment.hpp>
+#include <StepAP214_ApprovalItem.hpp>
+#include <StepBasic_Approval.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedApprovalAssignment, StepBasic_ApprovalAssignment)
 

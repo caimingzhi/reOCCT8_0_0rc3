@@ -15,25 +15,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <gp_Pnt.hxx>
-#include <Bnd_Box.hxx>
+#include <gp_Pnt.hpp>
+#include <Bnd_Box.hpp>
 
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Edge.hxx>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepBndLib.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBndLib.hpp>
 
-#include <NCollection_Map.hxx>
-#include <BOPDS_CommonBlock.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_Handle.hxx>
-#include <BOPDS_DS.hxx>
+#include <NCollection_Map.hpp>
+#include <BOPDS_CommonBlock.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_Handle.hpp>
+#include <BOPDS_DS.hpp>
 class BOPDS_PaveBlock;
 
 //=================================================================================================

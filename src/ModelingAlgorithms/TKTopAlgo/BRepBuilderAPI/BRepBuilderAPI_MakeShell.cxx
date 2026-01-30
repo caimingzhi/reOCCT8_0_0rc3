@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_MakeShell.hxx>
-#include <Geom_Surface.hxx>
-#include <TopoDS_Shell.hxx>
+#include <BRepBuilderAPI_MakeShell.hpp>
+#include <Geom_Surface.hpp>
+#include <TopoDS_Shell.hpp>
 
 //=================================================================================================
 

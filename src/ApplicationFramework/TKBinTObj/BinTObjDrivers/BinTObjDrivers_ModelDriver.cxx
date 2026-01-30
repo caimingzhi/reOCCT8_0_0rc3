@@ -15,15 +15,15 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_ModelDriver.hxx>
+#include <BinTObjDrivers_ModelDriver.hpp>
 
-#include <BinObjMgt_Persistent.hxx>
-#include <Standard_GUID.hxx>
-#include <TDF_Attribute.hxx>
+#include <BinObjMgt_Persistent.hpp>
+#include <Standard_GUID.hpp>
+#include <TDF_Attribute.hpp>
 
-#include <TObj_TModel.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_Assistant.hxx>
+#include <TObj_TModel.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_Assistant.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_ModelDriver, BinMDF_ADriver)
 

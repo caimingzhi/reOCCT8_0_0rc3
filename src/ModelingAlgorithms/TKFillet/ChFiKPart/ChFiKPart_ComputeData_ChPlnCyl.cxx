@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <ChFiKPart_ComputeData_Fcts.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <Precision.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <ChFiKPart_ComputeData_Fcts.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <Precision.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
 
 // pour tester
 //=======================================================================

@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_CharacterizedRepresentation.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_CharacterizedRepresentation.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_CharacterizedRepresentation, StepRepr_Representation)
 

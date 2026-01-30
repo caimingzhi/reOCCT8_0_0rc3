@@ -12,25 +12,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_OffsetCurve.hxx>
-#include <ElCLib.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <Geom2dGcc_Circ2d2TanRadGeo.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Standard_NegativeValue.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor2d_OffsetCurve.hpp>
+#include <ElCLib.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <Geom2dGcc_Circ2d2TanRadGeo.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Standard_NegativeValue.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
 
 static const int aNbSolMAX = 16;
 

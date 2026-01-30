@@ -14,51 +14,51 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepApprox_Approx.hxx>
-#include <BRepApprox_ApproxLine.hxx>
-#include <BRepTools.hxx>
-#include <ElSLib.hxx>
-#include <gce_MakeCirc.hxx>
-#include <gce_MakeLin.hxx>
-#include <gce_MakeLin2d.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomLib_Check2dBSplineCurve.hxx>
-#include <GeomLib_CheckBSplineCurve.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopOpeBRepTool_GeomTool.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepApprox_Approx.hpp>
+#include <BRepApprox_ApproxLine.hpp>
+#include <BRepTools.hpp>
+#include <ElSLib.hpp>
+#include <gce_MakeCirc.hpp>
+#include <gce_MakeLin.hpp>
+#include <gce_MakeLin2d.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomLib_Check2dBSplineCurve.hpp>
+#include <GeomLib_CheckBSplineCurve.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopOpeBRepTool_GeomTool.hpp>
 
 // #include <Approx.hxx>
 #ifdef OCCT_DEBUG
-  #include <TopOpeBRepTool_KRO.hxx>
+  #include <TopOpeBRepTool_KRO.hpp>
 TOPKRO      KRO_CURVETOOL_APPRO("approximation");
 extern bool TopOpeBRepTool_GettraceKRO();
 extern bool TopOpeBRepTool_GettracePCURV();

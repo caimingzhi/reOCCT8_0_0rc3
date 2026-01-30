@@ -13,7 +13,7 @@
 // commercial license or contractual agreement.
 
 #include <cfloat>
-#include <Standard_Real.hxx>
+#include <Standard_Real.hpp>
 
 //==================================================================================================
 

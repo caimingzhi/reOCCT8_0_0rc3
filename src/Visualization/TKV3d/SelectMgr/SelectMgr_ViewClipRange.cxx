@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_ViewClipRange.hxx>
+#include <SelectMgr_ViewClipRange.hpp>
 
-#include <Graphic3d_SequenceOfHClipPlane.hxx>
+#include <Graphic3d_SequenceOfHClipPlane.hpp>
 
 //=================================================================================================
 

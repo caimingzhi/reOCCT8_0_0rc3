@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <BinMXCAFDoc_AssemblyItemRefDriver.hxx>
-#include <XCAFDoc_AssemblyItemRef.hxx>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <BinMXCAFDoc_AssemblyItemRefDriver.hpp>
+#include <XCAFDoc_AssemblyItemRef.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_AssemblyItemRefDriver, BinMDF_ADriver)
 

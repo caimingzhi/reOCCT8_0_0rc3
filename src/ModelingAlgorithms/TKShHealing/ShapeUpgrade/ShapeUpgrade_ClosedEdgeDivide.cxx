@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeUpgrade_ClosedEdgeDivide.hxx>
-#include <ShapeUpgrade_SplitCurve2d.hxx>
-#include <ShapeUpgrade_SplitCurve3d.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeUpgrade_ClosedEdgeDivide.hpp>
+#include <ShapeUpgrade_SplitCurve2d.hpp>
+#include <ShapeUpgrade_SplitCurve3d.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ClosedEdgeDivide, ShapeUpgrade_EdgeDivide)
 

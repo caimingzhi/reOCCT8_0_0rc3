@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepIntCurveSurface_Inter.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <LocOpe_CurveShapeIntersector.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepIntCurveSurface_Inter.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <LocOpe_CurveShapeIntersector.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS_Shape.hpp>
 
 static void Perform(BRepIntCurveSurface_Inter&, NCollection_Sequence<LocOpe_PntFace>&);
 

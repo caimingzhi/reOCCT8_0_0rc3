@@ -16,24 +16,24 @@
 
 #include <cstdio>
 
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
-#include <BRep_Builder.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Face.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom2d_Line.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
+#include <BRep_Builder.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Face.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom2d_Line.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 OSD_Chronometer simul, elspine, chemine;
 #endif
 

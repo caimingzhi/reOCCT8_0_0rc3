@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_XY.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Plate_FreeGtoCConstraint.hxx>
-#include <Plate_GlobalTranslationConstraint.hxx>
-#include <Plate_GtoCConstraint.hxx>
-#include <Plate_LinearScalarConstraint.hxx>
-#include <Plate_LinearXYZConstraint.hxx>
-#include <Plate_LineConstraint.hxx>
-#include <Plate_PinpointConstraint.hxx>
-#include <Plate_PlaneConstraint.hxx>
-#include <Plate_Plate.hxx>
-#include <Plate_SampledCurveConstraint.hxx>
+#include <gp_XY.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Plate_FreeGtoCConstraint.hpp>
+#include <Plate_GlobalTranslationConstraint.hpp>
+#include <Plate_GtoCConstraint.hpp>
+#include <Plate_LinearScalarConstraint.hpp>
+#include <Plate_LinearXYZConstraint.hpp>
+#include <Plate_LineConstraint.hpp>
+#include <Plate_PinpointConstraint.hpp>
+#include <Plate_PlaneConstraint.hpp>
+#include <Plate_Plate.hpp>
+#include <Plate_SampledCurveConstraint.hpp>
 
 //=================================================================================================
 

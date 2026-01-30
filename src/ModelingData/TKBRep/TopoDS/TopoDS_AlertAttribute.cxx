@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_AlertAttribute.hxx>
+#include <TopoDS_AlertAttribute.hpp>
 
-#include <Message_PrinterToReport.hxx>
+#include <Message_PrinterToReport.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_AlertAttribute, Message_Attribute)
 

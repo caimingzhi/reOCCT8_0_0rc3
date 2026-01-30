@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFPrs_Texture.hxx>
+#include <XCAFPrs_Texture.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
+#include <Graphic3d_TextureParams.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFPrs_Texture, Graphic3d_Texture2D)
 

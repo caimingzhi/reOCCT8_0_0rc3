@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_CartesianPointReducer.pxx>
+#include <StepTidy_CartesianPointReducer.hpp>
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_BSplineCurveWithKnots.hxx>
-#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
-#include <StepGeom_BSplineSurfaceWithKnots.hxx>
-#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx>
-#include <StepGeom_Line.hxx>
-#include <StepGeom_RationalBSplineSurface.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepShape_GeometricCurveSet.hxx>
-#include <StepShape_VertexPoint.hxx>
-#include <StepVisual_PresentationLayerAssignment.hxx>
-#include <StepVisual_StyledItem.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_BSplineCurveWithKnots.hpp>
+#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
+#include <StepGeom_BSplineSurfaceWithKnots.hpp>
+#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
+#include <StepGeom_Line.hpp>
+#include <StepGeom_RationalBSplineSurface.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepShape_GeometricCurveSet.hpp>
+#include <StepShape_VertexPoint.hpp>
+#include <StepVisual_PresentationLayerAssignment.hpp>
+#include <StepVisual_StyledItem.hpp>
 
 class StepTidy_CartesianPointReducerTest : public StepTidy_BaseTestFixture
 {

@@ -17,11 +17,11 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Media_FormatContext.hxx>
-#include "../Media/Media_FFmpegCompatibility.pxx"
+#include <Media_FormatContext.hpp>
+#include "../Media/Media_FFmpegCompatibility.hpp"
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_FormatContext, Standard_Transient)
 

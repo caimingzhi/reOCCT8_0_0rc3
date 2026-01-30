@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveObject.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Label.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_AISObject.hxx>
-#include <XCAFPrs_Driver.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Label.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_AISObject.hpp>
+#include <XCAFPrs_Driver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFPrs_Driver, TPrsStd_Driver)
 

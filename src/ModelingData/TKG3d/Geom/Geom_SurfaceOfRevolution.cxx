@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include "Geom_RevolutionUtils.pxx"
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Dir.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include "Geom_RevolutionUtils.hpp"
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Dir.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_SurfaceOfRevolution, Geom_SweptSurface)
 

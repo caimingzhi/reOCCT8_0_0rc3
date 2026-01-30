@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Standard_Type.hxx>
-#include <StepBasic_ThermodynamicTemperatureUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_ThermodynamicTemperatureUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ThermodynamicTemperatureUnit, StepBasic_NamedUnit)
 

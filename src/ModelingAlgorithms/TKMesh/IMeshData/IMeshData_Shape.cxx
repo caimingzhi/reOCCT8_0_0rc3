@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshData_Shape.hxx>
+#include <IMeshData_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshData_Shape, Standard_Transient)

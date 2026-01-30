@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWGLTF.hxx>
+#include <XSDRAWGLTF.hpp>
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DEGLTF_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <RWGltf_CafReader.hxx>
-#include <RWGltf_CafWriter.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DEGLTF_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <RWGltf_CafReader.hpp>
+#include <RWGltf_CafWriter.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
 
 namespace
 {

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd_DrawDocument.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
+#include <DDocStd_DrawDocument.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDocStd_DrawDocument, DDF_Data)
 

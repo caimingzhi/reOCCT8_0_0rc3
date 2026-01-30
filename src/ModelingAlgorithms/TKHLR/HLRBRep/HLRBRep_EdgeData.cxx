@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <HLRBRep_EdgeData.hxx>
-#include <TopoDS_Edge.hxx>
+#include <BRep_Tool.hpp>
+#include <HLRBRep_EdgeData.hpp>
+#include <TopoDS_Edge.hpp>
 
 //=================================================================================================
 

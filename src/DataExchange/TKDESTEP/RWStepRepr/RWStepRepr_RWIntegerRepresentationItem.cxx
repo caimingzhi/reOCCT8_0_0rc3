@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepRepr_RWIntegerRepresentationItem.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_IntegerRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include "RWStepRepr_RWIntegerRepresentationItem.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_IntegerRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepRepr_RWIntegerRepresentationItem::RWStepRepr_RWIntegerRepresentationItem() = default;
 

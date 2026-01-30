@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_IGESEntity.hxx>
-#include <IGESSelect_SplineToBSpline.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CopyControl.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESSelect_SplineToBSpline.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CopyControl.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_SplineToBSpline, IFSelect_Transformer)
 

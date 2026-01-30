@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepVisual_PresentationSet.hxx>
-#include <StepVisual_StyleContextSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepVisual_PresentationSet.hpp>
+#include <StepVisual_StyleContextSelect.hpp>
 
 StepVisual_StyleContextSelect::StepVisual_StyleContextSelect() = default;
 

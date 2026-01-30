@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepShape_FaceBasedSurfaceModel.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_FaceBasedSurfaceModel.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_FaceBasedSurfaceModel, StepGeom_GeometricRepresentationItem)
 

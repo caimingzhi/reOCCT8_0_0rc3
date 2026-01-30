@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshTest_CheckTopology.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Connect.hxx>
-#include <Precision.hxx>
+#include <MeshTest_CheckTopology.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Connect.hpp>
+#include <Precision.hpp>
 
 //=======================================================================
 // function : ComputeArea

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_RepresentationMap.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_RepresentationMap.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_MappedItem, StepRepr_RepresentationItem)
 

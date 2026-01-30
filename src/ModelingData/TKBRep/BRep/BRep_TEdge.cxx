@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_CurveOn2Surfaces.hxx>
-#include <BRep_CurveRepresentation.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_CurveOn2Surfaces.hpp>
+#include <BRep_CurveRepresentation.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_TEdge, TopoDS_TEdge)
 

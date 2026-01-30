@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWSiUnitAndAreaUnit.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiUnitAndAreaUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWSiUnitAndAreaUnit.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiUnitAndAreaUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
-#include "RWStepBasic_RWSiUnitName.pxx"
-#include "RWStepBasic_RWSiPrefix.pxx"
+#include "RWStepBasic_RWSiUnitName.hpp"
+#include "RWStepBasic_RWSiPrefix.hpp"
 
 RWStepBasic_RWSiUnitAndAreaUnit::RWStepBasic_RWSiUnitAndAreaUnit() = default;
 

@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_Trihedron.hxx>
+#include <V3d_Trihedron.hpp>
 
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_TransformPers.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Prs3d_ToolSphere.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_TransformPers.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Prs3d_ToolSphere.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_Trihedron, Standard_Transient)
 

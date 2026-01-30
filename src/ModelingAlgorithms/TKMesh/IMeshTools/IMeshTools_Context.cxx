@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshTools_Context.hxx>
+#include <IMeshTools_Context.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_Context, IMeshData_Shape)

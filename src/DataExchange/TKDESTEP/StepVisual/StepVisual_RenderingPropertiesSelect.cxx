@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_RenderingPropertiesSelect.hxx>
-#include <StepVisual_SurfaceStyleReflectanceAmbient.hxx>
-#include <StepVisual_SurfaceStyleTransparent.hxx>
+#include <StepVisual_RenderingPropertiesSelect.hpp>
+#include <StepVisual_SurfaceStyleReflectanceAmbient.hpp>
+#include <StepVisual_SurfaceStyleTransparent.hpp>
 
 //=================================================================================================
 

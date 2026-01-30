@@ -18,62 +18,62 @@
 // abv,pdn 05.05.99 S4174: new commands for testing ShapeDivide added, some removed
 // pdn,gka 10.06.99 S4189: command DT_ShapeConvertRev added
 
-#include <BRep_Tool.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepTest_Objects.hxx>
-#include <BRepTools.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Message.hxx>
-#include <Precision.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeCustom.hxx>
-#include <ShapeExtend_CompositeSurface.hxx>
-#include <ShapeFix.hxx>
-#include <ShapeFix_ComposeShell.hxx>
-#include <ShapeUpgrade_RemoveInternalWires.hxx>
-#include <ShapeUpgrade_RemoveLocations.hxx>
-#include <ShapeUpgrade_ShapeConvertToBezier.hxx>
-#include <ShapeUpgrade_ShapeDivideAngle.hxx>
-#include <ShapeUpgrade_ShapeDivideArea.hxx>
-#include <ShapeUpgrade_ShapeDivideClosed.hxx>
-#include <ShapeUpgrade_ShapeDivideContinuity.hxx>
-#include <ShapeUpgrade_SplitCurve2dContinuity.hxx>
-#include <ShapeUpgrade_SplitCurve3dContinuity.hxx>
-#include <ShapeUpgrade_SplitSurfaceContinuity.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
-#include <SWDRAW.hxx>
-#include <SWDRAW_ShapeUpgrade.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepTest_Objects.hpp>
+#include <BRepTools.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Message.hpp>
+#include <Precision.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeCustom.hpp>
+#include <ShapeExtend_CompositeSurface.hpp>
+#include <ShapeFix.hpp>
+#include <ShapeFix_ComposeShell.hpp>
+#include <ShapeUpgrade_RemoveInternalWires.hpp>
+#include <ShapeUpgrade_RemoveLocations.hpp>
+#include <ShapeUpgrade_ShapeConvertToBezier.hpp>
+#include <ShapeUpgrade_ShapeDivideAngle.hpp>
+#include <ShapeUpgrade_ShapeDivideArea.hpp>
+#include <ShapeUpgrade_ShapeDivideClosed.hpp>
+#include <ShapeUpgrade_ShapeDivideContinuity.hpp>
+#include <ShapeUpgrade_SplitCurve2dContinuity.hpp>
+#include <ShapeUpgrade_SplitCurve3dContinuity.hpp>
+#include <ShapeUpgrade_SplitSurfaceContinuity.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
+#include <SWDRAW.hpp>
+#include <SWDRAW_ShapeUpgrade.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <cstdio>
 
-// #include <SWDRAW_ShapeUpgrade.hxx>
+// #include <SWDRAW_ShapeUpgrade.hpp>
 // #include <ShapeUpgrade_SupportModification.hxx>
-// #include <ShapeExtend_WireData.hxx>
-// #include <ShapeAnalysis_Shell.hxx>
-// #include <ShapeAnalysis_WireOrder.hxx>
-// #include <ShapeAnalysis_Wire.hxx>
-// #include <ShapeUpgrade_ShellSewing.hxx>
+// #include <ShapeExtend_WireData.hpp>
+// #include <ShapeAnalysis_Shell.hpp>
+// #include <ShapeAnalysis_WireOrder.hpp>
+// #include <ShapeAnalysis_Wire.hpp>
+// #include <ShapeUpgrade_ShellSewing.hpp>
 //  the plane (equation z=0) shared by PlaneDividedFaceContinuity and PlaneGridShell
 // static occ::handle<Geom_Plane> ThePlane= new Geom_Plane(0,0,1,0);
 //=================================================================================================

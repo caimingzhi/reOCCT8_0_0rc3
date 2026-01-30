@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
 
 class Geom2d_OffsetCurve_Test : public ::testing::Test
 {

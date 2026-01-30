@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_CStructure.hxx>
+#include <Graphic3d_CStructure.hpp>
 
-#include <Graphic3d_StructureManager.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Standard_Dump.hxx>
+#include <Graphic3d_StructureManager.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CStructure, Standard_Transient)
 

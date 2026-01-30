@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
+#include <BRepAdaptor_Surface.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Geom_Surface.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Geom_Surface.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Surface, GeomAdaptor_TransformedSurface)
 

@@ -15,18 +15,18 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <XmlLDrivers.hxx>
-#include <XmlTObjDrivers.hxx>
-#include <XmlTObjDrivers_DocumentStorageDriver.hxx>
-#include <XmlTObjDrivers_DocumentRetrievalDriver.hxx>
-#include <XmlTObjDrivers_ModelDriver.hxx>
-#include <XmlTObjDrivers_ObjectDriver.hxx>
-#include <XmlTObjDrivers_ReferenceDriver.hxx>
-#include <XmlTObjDrivers_XYZDriver.hxx>
-#include <XmlTObjDrivers_IntSparseArrayDriver.hxx>
+#include <XmlLDrivers.hpp>
+#include <XmlTObjDrivers.hpp>
+#include <XmlTObjDrivers_DocumentStorageDriver.hpp>
+#include <XmlTObjDrivers_DocumentRetrievalDriver.hpp>
+#include <XmlTObjDrivers_ModelDriver.hpp>
+#include <XmlTObjDrivers_ObjectDriver.hpp>
+#include <XmlTObjDrivers_ReferenceDriver.hpp>
+#include <XmlTObjDrivers_XYZDriver.hpp>
+#include <XmlTObjDrivers_IntSparseArrayDriver.hpp>
 
-#include <Plugin_Macro.hxx>
-#include <TDocStd_Application.hxx>
+#include <Plugin_Macro.hpp>
+#include <TDocStd_Application.hpp>
 
 static Standard_GUID XmlStorageDriver("f78ff4a0-a779-11d5-aab4-0050044b1af1");
 static Standard_GUID XmlRetrievalDriver("f78ff4a1-a779-11d5-aab4-0050044b1af1");

@@ -15,13 +15,13 @@
 
 #include <d3d9.h>
 
-#include <D3DHost_FrameBuffer.hxx>
+#include <D3DHost_FrameBuffer.hpp>
 
-#include <OpenGl_GlCore20.hxx>
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Texture.hxx>
-#include <Standard_ProgramError.hxx>
+#include <OpenGl_GlCore20.hpp>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Texture.hpp>
+#include <Standard_ProgramError.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(D3DHost_FrameBuffer, OpenGl_FrameBuffer)
 

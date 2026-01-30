@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr.hxx>
-#include <Expr_Division.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_LogOf10.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_Operators.hxx>
-#include <Expr_Product.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr.hpp>
+#include <Expr_Division.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_LogOf10.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_Operators.hpp>
+#include <Expr_Product.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_LogOf10, Expr_UnaryExpression)
 

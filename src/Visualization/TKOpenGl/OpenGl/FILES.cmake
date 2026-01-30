@@ -4,157 +4,157 @@ set(OCCT_OpenGl_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_OpenGl_FILES
   OpenGl_glext.h
   OpenGl_khrplatform.h
-  OpenGl_ArbDbg.hxx
-  OpenGl_ArbFBO.hxx
-  OpenGl_ArbIns.hxx
-  OpenGl_ArbSamplerObject.hxx
-  OpenGl_ArbTBO.hxx
-  OpenGl_ArbTexBindless.hxx
+  OpenGl_ArbDbg.hpp
+  OpenGl_ArbFBO.hpp
+  OpenGl_ArbIns.hpp
+  OpenGl_ArbSamplerObject.hpp
+  OpenGl_ArbTBO.hpp
+  OpenGl_ArbTexBindless.hpp
   OpenGl_Aspects.cxx
-  OpenGl_Aspects.hxx
+  OpenGl_Aspects.hpp
   OpenGl_AspectsProgram.cxx
-  OpenGl_AspectsProgram.hxx
+  OpenGl_AspectsProgram.hpp
   OpenGl_AspectsSprite.cxx
-  OpenGl_AspectsSprite.hxx
+  OpenGl_AspectsSprite.hpp
   OpenGl_AspectsTextureSet.cxx
-  OpenGl_AspectsTextureSet.hxx
+  OpenGl_AspectsTextureSet.hpp
   OpenGl_Buffer.cxx
-  OpenGl_Buffer.hxx
-  OpenGl_BufferCompatT.hxx
+  OpenGl_Buffer.hpp
+  OpenGl_BufferCompatT.hpp
   OpenGl_FrameStats.cxx
-  OpenGl_FrameStats.hxx
+  OpenGl_FrameStats.hpp
   OpenGl_FrameStatsPrs.cxx
-  OpenGl_FrameStatsPrs.hxx
-  OpenGl_Group.hxx
+  OpenGl_FrameStatsPrs.hpp
+  OpenGl_Group.hpp
   OpenGl_Group.cxx
-  OpenGl_Structure.hxx
+  OpenGl_Structure.hpp
   OpenGl_Structure.cxx
-  OpenGl_StructureShadow.hxx
+  OpenGl_StructureShadow.hpp
   OpenGl_StructureShadow.cxx
-  OpenGl_Element.hxx
+  OpenGl_Element.hpp
   OpenGl_Element.cxx
-  OpenGl_Text.hxx
+  OpenGl_Text.hpp
   OpenGl_Text.cxx
-  OpenGl_PointSprite.hxx
+  OpenGl_PointSprite.hpp
   OpenGl_PointSprite.cxx
-  OpenGl_PrimitiveArray.hxx
+  OpenGl_PrimitiveArray.hpp
   OpenGl_PrimitiveArray.cxx
-  OpenGl_Workspace.hxx
+  OpenGl_Workspace.hpp
   OpenGl_Workspace.cxx
-  OpenGl_View.hxx
+  OpenGl_View.hpp
   OpenGl_View.cxx
   OpenGl_View_Raytrace.cxx
-  OpenGl_GraduatedTrihedron.hxx
+  OpenGl_GraduatedTrihedron.hpp
   OpenGl_GraduatedTrihedron.cxx
-  OpenGl_Material.hxx
-  OpenGl_MaterialState.hxx
-  OpenGl_MatrixState.hxx
-  OpenGl_LineAttributes.hxx
+  OpenGl_Material.hpp
+  OpenGl_MaterialState.hpp
+  OpenGl_MatrixState.hpp
+  OpenGl_LineAttributes.hpp
   OpenGl_LineAttributes.cxx
-  OpenGl_Window.hxx
+  OpenGl_Window.hpp
   OpenGl_Window.cxx
   OpenGl_Window_1.mm
-  OpenGl_FrameBuffer.hxx
+  OpenGl_FrameBuffer.hpp
   OpenGl_FrameBuffer.cxx
   OpenGl_Texture.cxx
-  OpenGl_Texture.hxx
+  OpenGl_Texture.hpp
   OpenGl_TextureFormat.cxx
-  OpenGl_TextureFormat.hxx
+  OpenGl_TextureFormat.hpp
   OpenGl_TextureSet.cxx
-  OpenGl_TextureSet.hxx
-  OpenGl_TextureSetPairIterator.hxx
-  OpenGl_Resource.hxx
+  OpenGl_TextureSet.hpp
+  OpenGl_TextureSetPairIterator.hpp
+  OpenGl_Resource.hpp
   OpenGl_Resource.cxx
-  OpenGl_NamedResource.hxx
-  OpenGl_Font.hxx
+  OpenGl_NamedResource.hpp
+  OpenGl_Font.hpp
   OpenGl_Font.cxx
   OpenGl_BackgroundArray.cxx
-  OpenGl_BackgroundArray.hxx
+  OpenGl_BackgroundArray.hpp
   OpenGl_CappingAlgo.cxx
-  OpenGl_CappingAlgo.hxx
+  OpenGl_CappingAlgo.hpp
   OpenGl_CappingPlaneResource.cxx
-  OpenGl_CappingPlaneResource.hxx
+  OpenGl_CappingPlaneResource.hpp
   OpenGl_Caps.cxx
-  OpenGl_Caps.hxx
+  OpenGl_Caps.hpp
   OpenGl_Clipping.cxx
-  OpenGl_Clipping.hxx
-  OpenGl_ClippingIterator.hxx
+  OpenGl_Clipping.hpp
+  OpenGl_ClippingIterator.hpp
   OpenGl_Context.cxx
-  OpenGl_Context.hxx
+  OpenGl_Context.hpp
   OpenGl_Context_1.mm
   OpenGl_DepthPeeling.cxx
-  OpenGl_DepthPeeling.hxx
-  OpenGl_ExtGS.hxx
-  OpenGl_GLESExtensions.hxx
+  OpenGl_DepthPeeling.hpp
+  OpenGl_ExtGS.hpp
+  OpenGl_GLESExtensions.hpp
   OpenGl_GlFunctions.cxx
-  OpenGl_GlFunctions.hxx
-  OpenGl_GlNative.hxx
-  OpenGl_GlTypes.hxx
+  OpenGl_GlFunctions.hpp
+  OpenGl_GlNative.hpp
+  OpenGl_GlTypes.hpp
   OpenGl_Flipper.cxx
-  OpenGl_Flipper.hxx
-  OpenGl_GlCore11.hxx
-  OpenGl_GlCore11Fwd.hxx
-  OpenGl_GlCore12.hxx
-  OpenGl_GlCore13.hxx
-  OpenGl_GlCore14.hxx
-  OpenGl_GlCore15.hxx
-  OpenGl_GlCore20.hxx
-  OpenGl_GlCore21.hxx
-  OpenGl_GlCore30.hxx
-  OpenGl_GlCore31.hxx
-  OpenGl_GlCore32.hxx
-  OpenGl_GlCore33.hxx
-  OpenGl_GlCore40.hxx
-  OpenGl_GlCore41.hxx
-  OpenGl_GlCore42.hxx
-  OpenGl_GlCore43.hxx
-  OpenGl_GlCore44.hxx
-  OpenGl_GlCore45.hxx
-  OpenGl_GlCore46.hxx
+  OpenGl_Flipper.hpp
+  OpenGl_GlCore11.hpp
+  OpenGl_GlCore11Fwd.hpp
+  OpenGl_GlCore12.hpp
+  OpenGl_GlCore13.hpp
+  OpenGl_GlCore14.hpp
+  OpenGl_GlCore15.hpp
+  OpenGl_GlCore20.hpp
+  OpenGl_GlCore21.hpp
+  OpenGl_GlCore30.hpp
+  OpenGl_GlCore31.hpp
+  OpenGl_GlCore32.hpp
+  OpenGl_GlCore33.hpp
+  OpenGl_GlCore40.hpp
+  OpenGl_GlCore41.hpp
+  OpenGl_GlCore42.hpp
+  OpenGl_GlCore43.hpp
+  OpenGl_GlCore44.hpp
+  OpenGl_GlCore45.hpp
+  OpenGl_GlCore46.hpp
   OpenGl_LayerList.cxx
-  OpenGl_LayerList.hxx
-  OpenGl_LayerFilter.hxx
+  OpenGl_LayerList.hpp
+  OpenGl_LayerFilter.hpp
   OpenGl_GraphicDriver.cxx
-  OpenGl_GraphicDriver.hxx
+  OpenGl_GraphicDriver.hpp
   OpenGl_GraphicDriverFactory.cxx
-  OpenGl_GraphicDriverFactory.hxx
+  OpenGl_GraphicDriverFactory.hpp
   OpenGl_IndexBuffer.cxx
-  OpenGl_IndexBuffer.hxx
-  OpenGl_Layer.hxx
+  OpenGl_IndexBuffer.hpp
+  OpenGl_Layer.hpp
   OpenGl_PBREnvironment.cxx
-  OpenGl_PBREnvironment.hxx
-  OpenGl_RenderFilter.hxx
+  OpenGl_PBREnvironment.hpp
+  OpenGl_RenderFilter.hpp
   OpenGl_Sampler.cxx
-  OpenGl_Sampler.hxx
+  OpenGl_Sampler.hpp
   OpenGl_SceneGeometry.cxx
-  OpenGl_SceneGeometry.hxx
-  OpenGl_SetOfShaderPrograms.hxx
+  OpenGl_SceneGeometry.hpp
+  OpenGl_SetOfShaderPrograms.hpp
   OpenGl_ShaderManager.cxx
-  OpenGl_ShaderManager.hxx
+  OpenGl_ShaderManager.hpp
   OpenGl_ShaderObject.cxx
-  OpenGl_ShaderObject.hxx
+  OpenGl_ShaderObject.hpp
   OpenGl_ShaderProgram.cxx
-  OpenGl_ShaderProgram.hxx
+  OpenGl_ShaderProgram.hpp
   OpenGl_ShaderStates.cxx
-  OpenGl_ShaderStates.hxx
+  OpenGl_ShaderStates.hpp
   OpenGl_ShadowMap.cxx
-  OpenGl_ShadowMap.hxx
+  OpenGl_ShadowMap.hpp
   OpenGl_StencilTest.cxx
-  OpenGl_StencilTest.hxx
-  OpenGl_TileSampler.hxx
+  OpenGl_StencilTest.hpp
+  OpenGl_TileSampler.hpp
   OpenGl_TileSampler.cxx
   OpenGl_TextureBuffer.cxx
-  OpenGl_TextureBuffer.hxx
+  OpenGl_TextureBuffer.hpp
 
   OpenGl_UniformBuffer.cxx
-  OpenGl_UniformBuffer.hxx
-  OpenGl_Vec.hxx
+  OpenGl_UniformBuffer.hpp
+  OpenGl_Vec.hpp
   OpenGl_VertexBuffer.cxx
-  OpenGl_VertexBuffer.hxx
-  OpenGl_VertexBufferCompat.hxx
-  OpenGl_VertexBufferEditor.hxx
-  OpenGl_TextBuilder.hxx
+  OpenGl_VertexBuffer.hpp
+  OpenGl_VertexBufferCompat.hpp
+  OpenGl_VertexBufferEditor.hpp
+  OpenGl_TextBuilder.hpp
   OpenGl_TextBuilder.cxx
-  OpenGl_HaltonSampler.hxx
-  OpenGl_ShaderProgramDumpLevel.hxx
+  OpenGl_HaltonSampler.hpp
+  OpenGl_ShaderProgramDumpLevel.hpp
 )

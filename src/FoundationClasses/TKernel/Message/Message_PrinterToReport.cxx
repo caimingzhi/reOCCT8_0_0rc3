@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_PrinterToReport.hxx>
+#include <Message_PrinterToReport.hpp>
 
-#include <Message.hxx>
-#include <Message_AttributeMeter.hxx>
-#include <Message_AttributeObject.hxx>
-#include <Message_AttributeStream.hxx>
-#include <Message_Report.hxx>
+#include <Message.hpp>
+#include <Message_AttributeMeter.hpp>
+#include <Message_AttributeObject.hpp>
+#include <Message_AttributeStream.hpp>
+#include <Message_Report.hpp>
 
-#include <Standard_Dump.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Standard_Dump.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterToReport, Message_Printer)
 

@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Texture.hxx>
+#include <OpenGl_Texture.hpp>
 
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_GlCore45.hxx>
-#include <OpenGl_Sampler.hxx>
-#include <Graphic3d_TextureParams.hxx>
-#include <Standard_Assert.hxx>
-#include <Image_CompressedPixMap.hxx>
-#include <Image_PixMap.hxx>
-#include <Image_SupportedFormats.hxx>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_GlCore45.hpp>
+#include <OpenGl_Sampler.hpp>
+#include <Graphic3d_TextureParams.hpp>
+#include <Standard_Assert.hpp>
+#include <Image_CompressedPixMap.hpp>
+#include <Image_PixMap.hpp>
+#include <Image_SupportedFormats.hpp>
 
 #include <algorithm>
 

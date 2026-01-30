@@ -18,12 +18,12 @@
 // Version	Date		Purpose
 //		0.0	Sep 15 1997	Creation
 
-#include <TDocStd_XLinkIterator.hxx>
+#include <TDocStd_XLinkIterator.hpp>
 
-#include <Standard_NoMoreObject.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_XLink.hxx>
-#include <TDocStd_XLinkRoot.hxx>
+#include <Standard_NoMoreObject.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_XLink.hpp>
+#include <TDocStd_XLinkRoot.hpp>
 
 //=================================================================================================
 

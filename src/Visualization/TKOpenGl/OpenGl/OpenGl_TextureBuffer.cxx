@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_TextureBuffer.hxx>
+#include <OpenGl_TextureBuffer.hpp>
 
-#include <OpenGl_ArbTBO.hxx>
-#include <OpenGl_GlCore20.hxx>
-#include <OpenGl_Context.hxx>
-#include <Standard_Assert.hxx>
+#include <OpenGl_ArbTBO.hpp>
+#include <OpenGl_GlCore20.hpp>
+#include <OpenGl_Context.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_TextureBuffer, OpenGl_Buffer)
 

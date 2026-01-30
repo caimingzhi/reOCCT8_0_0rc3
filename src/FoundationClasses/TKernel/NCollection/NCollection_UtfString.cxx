@@ -17,7 +17,7 @@
   #include <windows.h>
 #endif
 
-#include <NCollection_UtfString.hxx>
+#include <NCollection_UtfString.hpp>
 
 #if !defined(__ANDROID__)
 //=================================================================================================

@@ -11,46 +11,46 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWSTEP.hxx>
+#include <XSDRAWSTEP.hpp>
 
-#include <DBRep.hxx>
-#include <DDF.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DESTEP_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Parallel.hxx>
-#include <OSD_Path.hxx>
-#include <STEPCAFControl_Controller.hxx>
-#include <STEPCAFControl_Reader.hxx>
-#include <STEPCAFControl_Writer.hxx>
-#include <STEPControl_ActorWrite.hxx>
-#include <STEPControl_Controller.hxx>
-#include <STEPControl_Reader.hxx>
-#include <STEPControl_StepModelType.hxx>
-#include <STEPControl_Writer.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepSelect_Activator.hxx>
-#include <STEPSelections_AssemblyExplorer.hxx>
-#include <STEPSelections_Counter.hxx>
-#include <StepToTopoDS_MakeTransformed.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <UnitsMethods.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
+#include <DBRep.hpp>
+#include <DDF.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DESTEP_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Parallel.hpp>
+#include <OSD_Path.hpp>
+#include <STEPCAFControl_Controller.hpp>
+#include <STEPCAFControl_Reader.hpp>
+#include <STEPCAFControl_Writer.hpp>
+#include <STEPControl_ActorWrite.hpp>
+#include <STEPControl_Controller.hpp>
+#include <STEPControl_Reader.hpp>
+#include <STEPControl_StepModelType.hpp>
+#include <STEPControl_Writer.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepSelect_Activator.hpp>
+#include <STEPSelections_AssemblyExplorer.hpp>
+#include <STEPSelections_Counter.hpp>
+#include <StepToTopoDS_MakeTransformed.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <UnitsMethods.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
 
 namespace
 {

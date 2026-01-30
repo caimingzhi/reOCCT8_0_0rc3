@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
-#include <Vrml_LOD.hxx>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
+#include <Vrml_LOD.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Vrml_LOD, Standard_Transient)
 

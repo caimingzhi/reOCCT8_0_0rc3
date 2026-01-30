@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_TransientListBinder.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_TransientListBinder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_TransientListBinder, Transfer_Binder)
 

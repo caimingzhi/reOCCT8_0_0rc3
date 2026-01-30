@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <DsgPrs_ShapeDirPresentation.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <GeomLProp_SLProps.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <Bnd_Box.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <DsgPrs_ShapeDirPresentation.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <GeomLProp_SLProps.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

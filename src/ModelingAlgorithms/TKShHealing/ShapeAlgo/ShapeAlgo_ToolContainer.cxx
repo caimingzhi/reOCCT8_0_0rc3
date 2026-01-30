@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeAlgo_ToolContainer.hxx>
-#include <ShapeFix_EdgeProjAux.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <Standard_Type.hxx>
+#include <ShapeAlgo_ToolContainer.hpp>
+#include <ShapeFix_EdgeProjAux.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeAlgo_ToolContainer, Standard_Transient)
 

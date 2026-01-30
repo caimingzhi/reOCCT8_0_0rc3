@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_PSO.hxx>
+#include <math_PSO.hpp>
 
-#include <math_BullardGenerator.hxx>
-#include <math_PSOParticlesPool.hxx>
+#include <math_BullardGenerator.hpp>
+#include <math_PSOParticlesPool.hpp>
 
 const double aBorderDivisor = 1.0e+4;
 

@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
-#include <TDocStd_MultiTransactionManager.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <Draw.hxx>
-#include <DDF_Browser.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Comment.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TDF_Reference.hxx>
+#include <DDocStd.hpp>
+#include <TDocStd_MultiTransactionManager.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <Draw.hpp>
+#include <DDF_Browser.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Comment.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TDF_Reference.hpp>
 
 //=======================================================================
 // function : mtmCreate

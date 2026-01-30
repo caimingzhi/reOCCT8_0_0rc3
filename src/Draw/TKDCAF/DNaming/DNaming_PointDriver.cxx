@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <DNaming.hxx>
-#include <DNaming_PointDriver.hxx>
-#include <gp_Pnt.hxx>
-#include <ModelDefinitions.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Label.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <DNaming.hpp>
+#include <DNaming_PointDriver.hpp>
+#include <gp_Pnt.hpp>
+#include <ModelDefinitions.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Label.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_PointDriver, TFunction_Driver)
 

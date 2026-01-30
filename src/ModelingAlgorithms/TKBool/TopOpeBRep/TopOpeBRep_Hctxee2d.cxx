@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRep_Hctxee2d.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRep_Hctxee2d.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRep_Hctxee2d, Standard_Transient)
 
 #ifdef OCCT_DEBUG
-  #include <GeomTools_SurfaceSet.hxx>
-  #include <GeomTools_CurveSet.hxx>
-  #include <GeomTools_Curve2dSet.hxx>
-  #include <Geom_Curve.hxx>
+  #include <GeomTools_SurfaceSet.hpp>
+  #include <GeomTools_CurveSet.hpp>
+  #include <GeomTools_Curve2dSet.hpp>
+  #include <Geom_Curve.hpp>
 Standard_EXPORT bool TopOpeBRep_GettracePROEDG();
 #endif
 

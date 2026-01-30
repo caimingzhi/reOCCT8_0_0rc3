@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntAna_IntQuadQuad.hxx>
-#include <IntAna_Quadric.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Ax3.hxx>
+#include <IntAna_IntQuadQuad.hpp>
+#include <IntAna_Quadric.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Ax3.hpp>
 
 #include <gtest/gtest.h>
 

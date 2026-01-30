@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AppliedExternalIdentificationAssignment.hxx>
-#include <StepAP214_DocumentReferenceItem.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_CharacterizedObject.hxx>
-#include <StepBasic_ExternallyDefinedItem.hxx>
-#include <StepBasic_Group.hxx>
-#include <StepBasic_GroupRelationship.hxx>
-#include <StepBasic_ProductCategory.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepRepr_AssemblyComponentUsage.hxx>
-#include <StepRepr_DescriptiveRepresentationItem.hxx>
-#include <StepRepr_MaterialDesignation.hxx>
-#include <StepRepr_MeasureRepresentationItem.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <StepShape_DimensionalSize.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AppliedExternalIdentificationAssignment.hpp>
+#include <StepAP214_DocumentReferenceItem.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_CharacterizedObject.hpp>
+#include <StepBasic_ExternallyDefinedItem.hpp>
+#include <StepBasic_Group.hpp>
+#include <StepBasic_GroupRelationship.hpp>
+#include <StepBasic_ProductCategory.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepRepr_AssemblyComponentUsage.hpp>
+#include <StepRepr_DescriptiveRepresentationItem.hpp>
+#include <StepRepr_MaterialDesignation.hpp>
+#include <StepRepr_MeasureRepresentationItem.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <StepShape_DimensionalSize.hpp>
 
 StepAP214_DocumentReferenceItem::StepAP214_DocumentReferenceItem() = default;
 

@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hxx>
+#include <Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hpp>
 
-#include <Standard_ConstructionError.hxx>
-#include <IntCurve_IConicTool.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <Geom2dInt_TheProjPCurOfGInter.hxx>
-#include <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Standard_ConstructionError.hpp>
+#include <IntCurve_IConicTool.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <Geom2dInt_TheProjPCurOfGInter.hpp>
+#include <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <gp_Pnt2d.hpp>
 
 #define ImpTool IntCurve_IConicTool
-#define ImpTool_hxx <IntCurve_IConicTool.hxx>
+#define ImpTool_hxx <IntCurve_IConicTool.hpp>
 #define ParCurve Adaptor2d_Curve2d
-#define ParCurve_hxx <Adaptor2d_Curve2d.hxx>
+#define ParCurve_hxx <Adaptor2d_Curve2d.hpp>
 #define ParTool Geom2dInt_Geom2dCurveTool
-#define ParTool_hxx <Geom2dInt_Geom2dCurveTool.hxx>
+#define ParTool_hxx <Geom2dInt_Geom2dCurveTool.hpp>
 #define ProjectOnPCurveTool Geom2dInt_TheProjPCurOfGInter
-#define ProjectOnPCurveTool_hxx <Geom2dInt_TheProjPCurOfGInter.hxx>
+#define ProjectOnPCurveTool_hxx <Geom2dInt_TheProjPCurOfGInter.hpp>
 #define IntImpParGen_MyImpParTool Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter
 #define IntImpParGen_MyImpParTool_hxx                                                              \
-  <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hxx>
+  <Geom2dInt_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfGInter.hpp>
 #define IntImpParGen_Intersector Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter
-#define IntImpParGen_Intersector_hxx <Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hxx>
-#include <IntImpParGen_Intersector.gxx>
+#define IntImpParGen_Intersector_hxx <Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter.hpp>
+#include <IntImpParGen_Intersector.hpp>

@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Storage_InternalData.hxx>
-#include <Storage_Schema.hxx>
+#include <Storage_InternalData.hpp>
+#include <Storage_Schema.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Storage_InternalData, Standard_Transient)
 

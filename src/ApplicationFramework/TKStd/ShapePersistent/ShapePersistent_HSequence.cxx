@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdObjMgt_ReadData.hxx>
-#include <ShapePersistent_HSequence.hxx>
+#include <StdObjMgt_ReadData.hpp>
+#include <ShapePersistent_HSequence.hpp>
 
 template <class SequenceClass>
 void ShapePersistent_HSequence::node<SequenceClass>::Read(StdObjMgt_ReadData& theReadData)

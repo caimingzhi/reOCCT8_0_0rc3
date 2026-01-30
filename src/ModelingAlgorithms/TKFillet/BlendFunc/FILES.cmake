@@ -3,47 +3,47 @@ set(OCCT_BlendFunc_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BlendFunc_FILES
   BlendFunc.cxx
-  BlendFunc.hxx
+  BlendFunc.hpp
   BlendFunc_GenChamfer.cxx
-  BlendFunc_GenChamfer.hxx
+  BlendFunc_GenChamfer.hpp
   BlendFunc_GenChamfInv.cxx
-  BlendFunc_GenChamfInv.hxx
+  BlendFunc_GenChamfInv.hpp
   BlendFunc_Chamfer.cxx
-  BlendFunc_Chamfer.hxx
+  BlendFunc_Chamfer.hpp
   BlendFunc_ChamfInv.cxx
-  BlendFunc_ChamfInv.hxx
+  BlendFunc_ChamfInv.hpp
   BlendFunc_ChAsym.cxx
-  BlendFunc_ChAsym.hxx
+  BlendFunc_ChAsym.hpp
   BlendFunc_ChAsymInv.cxx
-  BlendFunc_ChAsymInv.hxx
+  BlendFunc_ChAsymInv.hpp
   BlendFunc_ConstRad.cxx
-  BlendFunc_ConstRad.hxx
+  BlendFunc_ConstRad.hpp
   BlendFunc_ConstRadInv.cxx
-  BlendFunc_ConstRadInv.hxx
+  BlendFunc_ConstRadInv.hpp
   BlendFunc_Corde.cxx
-  BlendFunc_Corde.hxx
+  BlendFunc_Corde.hpp
   BlendFunc_CSCircular.cxx
-  BlendFunc_CSCircular.hxx
+  BlendFunc_CSCircular.hpp
   BlendFunc_CSConstRad.cxx
-  BlendFunc_CSConstRad.hxx
+  BlendFunc_CSConstRad.hpp
   BlendFunc_EvolRad.cxx
-  BlendFunc_EvolRad.hxx
+  BlendFunc_EvolRad.hpp
   BlendFunc_EvolRadInv.cxx
-  BlendFunc_EvolRadInv.hxx
+  BlendFunc_EvolRadInv.hpp
   BlendFunc_Ruled.cxx
-  BlendFunc_Ruled.hxx
+  BlendFunc_Ruled.hpp
   BlendFunc_RuledInv.cxx
-  BlendFunc_RuledInv.hxx
-  BlendFunc_SectionShape.hxx
+  BlendFunc_RuledInv.hpp
+  BlendFunc_SectionShape.hpp
   BlendFunc_Tensor.cxx
-  BlendFunc_Tensor.hxx
-  BlendFunc_Tensor.lxx
+  BlendFunc_Tensor.hpp
+  BlendFunc_Tensor_1.hpp
   BlendFunc_ConstThroat.cxx
-  BlendFunc_ConstThroat.hxx
+  BlendFunc_ConstThroat.hpp
   BlendFunc_ConstThroatInv.cxx
-  BlendFunc_ConstThroatInv.hxx
+  BlendFunc_ConstThroatInv.hpp
   BlendFunc_ConstThroatWithPenetration.cxx
-  BlendFunc_ConstThroatWithPenetration.hxx
+  BlendFunc_ConstThroatWithPenetration.hpp
   BlendFunc_ConstThroatWithPenetrationInv.cxx
-  BlendFunc_ConstThroatWithPenetrationInv.hxx
+  BlendFunc_ConstThroatWithPenetrationInv.hpp
 )

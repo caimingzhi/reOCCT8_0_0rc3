@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_TextBuilder.hxx>
-#include <OpenGl_VertexBufferCompat.hxx>
+#include <OpenGl_TextBuilder.hpp>
+#include <OpenGl_VertexBufferCompat.hpp>
 
-#include <Font_FTFont.hxx>
-#include <Font_TextFormatter.hxx>
+#include <Font_FTFont.hpp>
+#include <Font_TextFormatter.hpp>
 
 namespace
 {

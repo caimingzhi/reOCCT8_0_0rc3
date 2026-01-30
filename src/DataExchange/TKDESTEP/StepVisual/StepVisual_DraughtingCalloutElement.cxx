@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_DraughtingCalloutElement.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepVisual_AnnotationCurveOccurrence.hxx>
-#include <StepVisual_AnnotationFillAreaOccurrence.hxx>
-#include <StepVisual_AnnotationTextOccurrence.hxx>
-#include <StepVisual_TessellatedAnnotationOccurrence.hxx>
+#include <StepVisual_DraughtingCalloutElement.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepVisual_AnnotationCurveOccurrence.hpp>
+#include <StepVisual_AnnotationFillAreaOccurrence.hpp>
+#include <StepVisual_AnnotationTextOccurrence.hpp>
+#include <StepVisual_TessellatedAnnotationOccurrence.hpp>
 
 //=================================================================================================
 

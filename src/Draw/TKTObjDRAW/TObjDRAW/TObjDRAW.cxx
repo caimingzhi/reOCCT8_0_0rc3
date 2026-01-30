@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <Draw.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Tool.hxx>
-#include <TObj_Application.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_Object.hxx>
-#include <TObj_OcafObjectIterator.hxx>
-#include <TObj_TModel.hxx>
-#include <TObj_TNameContainer.hxx>
-#include <TObjDRAW.hxx>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <Draw.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDF_Tool.hpp>
+#include <TObj_Application.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_Object.hpp>
+#include <TObj_OcafObjectIterator.hpp>
+#include <TObj_TModel.hpp>
+#include <TObj_TNameContainer.hpp>
+#include <TObjDRAW.hpp>
 
-#include <BinTObjDrivers.hxx>
-#include <XmlTObjDrivers.hxx>
-#include <OSD_FileSystem.hxx>
+#include <BinTObjDrivers.hpp>
+#include <XmlTObjDrivers.hpp>
+#include <OSD_FileSystem.hpp>
 
 #include <cstdio>
 
@@ -131,7 +131,7 @@ public:
   DEFINE_STANDARD_RTTI_INLINE(TObjDRAW_Object, TObj_Object)
 };
 
-// Definition of HANDLE object using Standard_DefineHandle.hxx
+// Definition of HANDLE object using Standard_DefineHandle.hpp
 IMPLEMENT_TOBJOCAF_PERSISTENCE(TObjDRAW_Object)
 
 //=================================================================================================

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_Directory.hxx>
-#include <CDF_DirectoryIterator.hxx>
-#include <CDM_Document.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Type.hxx>
+#include <CDF_Directory.hpp>
+#include <CDF_DirectoryIterator.hpp>
+#include <CDM_Document.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_Directory, Standard_Transient)
 

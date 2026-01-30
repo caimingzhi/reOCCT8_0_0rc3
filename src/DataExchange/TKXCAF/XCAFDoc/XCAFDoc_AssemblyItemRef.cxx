@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_AssemblyItemRef.hxx>
+#include <XCAFDoc_AssemblyItemRef.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDocStd_Document.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDocStd_Document.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_AssemblyItemRef, TDF_Attribute)
 

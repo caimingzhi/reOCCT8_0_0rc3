@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_FunctionallyDefinedTransformation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_FunctionallyDefinedTransformation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_FunctionallyDefinedTransformation, Standard_Transient)
 

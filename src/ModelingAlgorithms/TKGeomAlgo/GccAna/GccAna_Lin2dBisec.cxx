@@ -16,18 +16,18 @@
 //   CREATION of the BISSECTICE between two STRAIGHT LINES.                        +
 //=========================================================================
 
-#include <ElCLib.hxx>
-#include <GccAna_Lin2dBisec.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Lin2dBisec.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   The first calculated bissectrice is the interior bisectrice, the     +

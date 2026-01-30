@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPConstruct_RenderingProperties.hxx>
+#include <STEPConstruct_RenderingProperties.hpp>
 
-#include <STEPConstruct_Styles.hxx>
-#include <StepVisual_SurfaceStyleRenderingWithProperties.hxx>
-#include <StepVisual_RenderingPropertiesSelect.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepVisual_SurfaceStyleTransparent.hxx>
-#include <StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hxx>
-#include <StepVisual_ColourRgb.hxx>
-#include <Quantity_Color.hxx>
-#include <Quantity_ColorRGBA.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <STEPConstruct_Styles.hpp>
+#include <StepVisual_SurfaceStyleRenderingWithProperties.hpp>
+#include <StepVisual_RenderingPropertiesSelect.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepVisual_SurfaceStyleTransparent.hpp>
+#include <StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hpp>
+#include <StepVisual_ColourRgb.hpp>
+#include <Quantity_Color.hpp>
+#include <Quantity_ColorRGBA.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <gtest/gtest.h>
 

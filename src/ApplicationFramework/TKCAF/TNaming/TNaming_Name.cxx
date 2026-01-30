@@ -14,44 +14,44 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeSolid.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepTools.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_Name.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamingTool.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_ShapesSet.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_CompSolid.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_List.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeSolid.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepTools.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_Name.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamingTool.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_ShapesSet.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_CompSolid.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_List.hpp>
 
 // mpv modifications 08.04.2002
 // end of mpv modifications 08.04.2002
@@ -68,11 +68,11 @@
   #define MDTV_DEB_SHELL
 #endif
 #ifdef OCCT_DEBUG
-  #include <TCollection_AsciiString.hxx>
+  #include <TCollection_AsciiString.hpp>
 #endif
 #ifdef OCCT_DEBUG
-  #include <TCollection_AsciiString.hxx>
-  #include <TDF_ChildIterator.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <TDF_ChildIterator.hpp>
 
 //=======================================================================
 void PrintEntry(const TDF_Label& label)

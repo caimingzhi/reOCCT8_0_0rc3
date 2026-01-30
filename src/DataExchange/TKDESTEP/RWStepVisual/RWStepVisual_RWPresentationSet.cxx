@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWPresentationSet.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_PresentationSet.hxx>
+#include "RWStepVisual_RWPresentationSet.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_PresentationSet.hpp>
 
 RWStepVisual_RWPresentationSet::RWStepVisual_RWPresentationSet() = default;
 

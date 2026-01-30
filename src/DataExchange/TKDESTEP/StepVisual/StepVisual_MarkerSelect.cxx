@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepVisual_MarkerMember.hxx>
-#include <StepVisual_MarkerSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepVisual_MarkerMember.hpp>
+#include <StepVisual_MarkerSelect.hpp>
 
 StepVisual_MarkerSelect::StepVisual_MarkerSelect() = default;
 

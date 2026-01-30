@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib_ValidateEdge.hxx>
+#include <BRepLib_ValidateEdge.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRepCheck.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <GeomLib_CheckCurveOnSurface.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRepCheck.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <GeomLib_CheckCurveOnSurface.hpp>
 #include <utility>
 
 //=================================================================================================

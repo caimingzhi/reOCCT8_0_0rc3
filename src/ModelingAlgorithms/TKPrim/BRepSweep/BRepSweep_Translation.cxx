@@ -14,40 +14,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepSweep_Translation.hxx>
+#include <BRepSweep_Translation.hpp>
 
-#include <GeomAdaptor_SurfaceOfLinearExtrusion.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Sweep_NumShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <GeomAdaptor_SurfaceOfLinearExtrusion.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Sweep_NumShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 static void SetThePCurve(const BRep_Builder&              B,
                          TopoDS_Edge&                     E,

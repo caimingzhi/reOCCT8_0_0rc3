@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_CorrectedFrenet.hxx>
+#include <GeomFill_CorrectedFrenet.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomFill_Frenet.hxx>
-#include <GeomFill_SnglrFunc.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <GeomLib.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Law_BSpFunc.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_Composite.hxx>
-#include <Law_Constant.hxx>
-#include <Law_Function.hxx>
-#include <Law_Interpolate.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomFill_Frenet.hpp>
+#include <GeomFill_SnglrFunc.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <GeomLib.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Law_BSpFunc.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_Composite.hpp>
+#include <Law_Constant.hpp>
+#include <Law_Function.hpp>
+#include <Law_Interpolate.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CorrectedFrenet, GeomFill_TrihedronLaw)

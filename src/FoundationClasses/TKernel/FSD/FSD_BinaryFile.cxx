@@ -12,24 +12,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FSD_BinaryFile.hxx>
-#include <OSD.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_CallBack.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_InternalData.hxx>
-#include <Storage_RootData.hxx>
-#include <Storage_StreamExtCharParityError.hxx>
-#include <Storage_StreamFormatError.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <Storage_StreamWriteError.hxx>
-#include <Storage_TypeData.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Standard_Assert.hxx>
+#include <FSD_BinaryFile.hpp>
+#include <OSD.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_CallBack.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_InternalData.hpp>
+#include <Storage_RootData.hpp>
+#include <Storage_StreamExtCharParityError.hpp>
+#include <Storage_StreamFormatError.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <Storage_StreamWriteError.hpp>
+#include <Storage_TypeData.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Standard_Assert.hpp>
 
 static const char* MAGICNUMBER = "BINFILE";
 

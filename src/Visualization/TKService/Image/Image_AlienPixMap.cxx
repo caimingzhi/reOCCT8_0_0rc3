@@ -26,9 +26,9 @@
 #elif defined(HAVE_WINCODEC)
   #include <wincodec.h>
   // prevent warnings on MSVC10
-  #include <Standard_WarningsDisable.hxx>
-  #include <Standard_TypeDef.hxx>
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsDisable.hpp>
+  #include <Standard_TypeDef.hpp>
+  #include <Standard_WarningsRestore.hpp>
   #undef min
   #undef max
 
@@ -39,14 +39,14 @@
   #include <emscripten/emscripten.h>
 #endif
 
-#include <Image_AlienPixMap.hxx>
-#include <gp.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <OSD_OpenFile.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <gp.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <OSD_OpenFile.hpp>
 
 #include <fstream>
 #include <algorithm>

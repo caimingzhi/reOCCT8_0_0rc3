@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <gp.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_TransferParameters.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <gp.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_TransferParameters.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_TransferParameters, Standard_Transient)
 

@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepSweep_Iterator.hxx>
-#include <BRepSweep_NumLinearRegularSweep.hxx>
-#include <BRepSweep_Tool.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Sweep_NumShape.hxx>
-#include <Sweep_NumShapeIterator.hxx>
-#include <Sweep_NumShapeTool.hxx>
-#include <TopAbs.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
+#include <BRepSweep_Iterator.hpp>
+#include <BRepSweep_NumLinearRegularSweep.hpp>
+#include <BRepSweep_Tool.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Sweep_NumShape.hpp>
+#include <Sweep_NumShapeIterator.hpp>
+#include <Sweep_NumShapeTool.hpp>
+#include <TopAbs.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=======================================================================
 // function : BRepSweep_NumLinearRegularSweep

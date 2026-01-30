@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_DirectionReducer.pxx>
+#include <StepTidy_DirectionReducer.hpp>
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
 
 class StepTidy_DirectionReducerTest : public StepTidy_BaseTestFixture
 {

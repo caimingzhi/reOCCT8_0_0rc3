@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_ManifoldSolidBrep.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_ManifoldSolidBrep.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ManifoldSolidBrep, StepShape_SolidModel)
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GC_MakeMirror.hxx>
-#include <Geom_Transformation.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GC_MakeMirror.hpp>
+#include <Geom_Transformation.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Creation d une symetrie de Geom par rapport a un point.              +

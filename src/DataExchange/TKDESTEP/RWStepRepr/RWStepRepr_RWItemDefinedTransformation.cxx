@@ -13,13 +13,13 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWItemDefinedTransformation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWItemDefinedTransformation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepRepr_RWItemDefinedTransformation::RWStepRepr_RWItemDefinedTransformation() = default;
 

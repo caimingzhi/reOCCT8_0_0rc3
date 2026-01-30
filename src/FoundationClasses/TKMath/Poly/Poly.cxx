@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly.hxx>
+#include <Poly.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Precision.hxx>
-#include <Standard_Macro.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Precision.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_EllipseRadiusDimension.hxx>
+#include <PrsDim_EllipseRadiusDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <PrsDim.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EllipseRadiusDimension, PrsDim_Relation)
 

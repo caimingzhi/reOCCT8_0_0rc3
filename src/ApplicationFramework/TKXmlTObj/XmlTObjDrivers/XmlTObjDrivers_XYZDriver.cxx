@@ -15,15 +15,15 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <XmlTObjDrivers_XYZDriver.hxx>
+#include <XmlTObjDrivers_XYZDriver.hpp>
 
-#include <Message_Messenger.hxx>
+#include <Message_Messenger.hpp>
 
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
 
-#include <TObj_TXYZ.hxx>
+#include <TObj_TXYZ.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_XYZDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(CoordX, "X")

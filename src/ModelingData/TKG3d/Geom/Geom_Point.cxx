@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Point.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Point.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Point, Geom_Geometry)
 

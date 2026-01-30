@@ -14,13 +14,13 @@
 
 // Modif JCV 10/01/91
 
-#include <gp_Elips2d.hxx>
+#include <gp_Elips2d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
 
 void gp_Elips2d::Coefficients(double& A, double& B, double& C, double& D, double& E, double& F)
   const

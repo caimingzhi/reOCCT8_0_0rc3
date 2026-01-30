@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
 
-#include <V3d_View.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
+#include <V3d_View.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
 
 static int OCC281bug(Draw_Interpretor& di, int argc, const char** argv)
 {

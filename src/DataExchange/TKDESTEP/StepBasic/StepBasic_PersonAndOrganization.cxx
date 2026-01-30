@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_Person.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_Person.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_PersonAndOrganization, Standard_Transient)
 

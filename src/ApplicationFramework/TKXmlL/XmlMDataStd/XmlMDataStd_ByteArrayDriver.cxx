@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <XmlMDataStd.hxx>
-#include <XmlMDataStd_ByteArrayDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <XmlMDataStd.hpp>
+#include <XmlMDataStd_ByteArrayDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_DOMSTRING(AttributeIDString, "bytearrattguid")
 

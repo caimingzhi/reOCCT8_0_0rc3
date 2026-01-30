@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool_connexity.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_State.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <TopOpeBRepTool_connexity.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_State.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define M_FORWARD(sta) (sta == TopAbs_FORWARD)
 #define M_REVERSED(sta) (sta == TopAbs_REVERSED)

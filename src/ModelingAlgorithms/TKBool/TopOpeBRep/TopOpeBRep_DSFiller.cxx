@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_DSFiller.hxx>
-#include <TopOpeBRep_EdgesFiller.hxx>
-#include <TopOpeBRep_FaceEdgeFiller.hxx>
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_ShapeIntersector.hxx>
-#include <TopOpeBRep_ShapeIntersector2d.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_Filter.hxx>
-#include <TopOpeBRepDS_GapFiller.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Reducer.hxx>
-#include <TopOpeBRepDS_samdom.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_box.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_DSFiller.hpp>
+#include <TopOpeBRep_EdgesFiller.hpp>
+#include <TopOpeBRep_FaceEdgeFiller.hpp>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_ShapeIntersector.hpp>
+#include <TopOpeBRep_ShapeIntersector2d.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_Filter.hpp>
+#include <TopOpeBRepDS_GapFiller.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Reducer.hpp>
+#include <TopOpeBRepDS_samdom.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_box.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 extern void BREP_sortonparameter(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 extern void BREP_mergePDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
@@ -105,7 +105,7 @@ void debfillerss(const int i1, const int i2)
   std::cout << "+ + + + debfillerss " << i1 << " " << i2 << std::endl;
 }
 
-  #include <TopOpeBRepTool_KRO.hxx>
+  #include <TopOpeBRepTool_KRO.hpp>
 Standard_EXPORT TOPKRO KRO_DSFILLER_TOTAL("dsfiller");
 extern TOPKRO          KRO_DSFILLER_INTFF;
 extern TOPKRO          KRO_DSFILLER_INTEE;
@@ -119,10 +119,10 @@ static void FUN_RESET_KRO_DSFILLER()
   KRO_DSFILLER_INTFE.Reset();
 }
 
-  #include <TopOpeBRep_traceSIFF.hxx>
-  #include <BRepTools.hxx>
-  #include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-  #include <TopOpeBRepDS_CurvePointInterference.hxx>
+  #include <TopOpeBRep_traceSIFF.hpp>
+  #include <BRepTools.hpp>
+  #include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+  #include <TopOpeBRepDS_CurvePointInterference.hpp>
 
 extern TopOpeBRep_traceSIFF SIFF;
 

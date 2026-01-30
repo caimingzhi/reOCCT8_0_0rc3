@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+#include <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 
-#include <BRepApprox_TheMultiLineOfApprox.hxx>
-#include <BRepApprox_TheMultiLineToolOfApprox.hxx>
-#include <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
+#include <BRepApprox_TheMultiLineOfApprox.hpp>
+#include <BRepApprox_TheMultiLineToolOfApprox.hpp>
+#include <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
 
 #define MultiLine BRepApprox_TheMultiLineOfApprox
-#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hxx>
+#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hpp>
 #define ToolLine BRepApprox_TheMultiLineToolOfApprox
-#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hxx>
+#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hpp>
 #define Squares BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox
-#define Squares_hxx <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+#define Squares_hxx <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define ResolCons BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox
-#define ResolCons_hxx <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+#define ResolCons_hxx <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define AppParCurves_Function BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox
 #define AppParCurves_Function_hxx                                                                  \
-  <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <AppParCurves_Function.gxx>
+  <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <AppParCurves_Function.hpp>

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsMgr_PresentableObject.hxx>
+#include <PrsMgr_PresentableObject.hpp>
 
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <PrsMgr_Presentation.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <PrsMgr_Presentation.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsMgr_PresentableObject, Standard_Transient)
 

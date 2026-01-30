@@ -74,7 +74,7 @@
 
 /* First part of user prologue.  */
 
-#include <ExprIntrp_yaccintrf.hxx>
+#include <ExprIntrp_yaccintrf.hpp>
 
 extern void ExprIntrp_EndOfFuncDef();
 extern void ExprIntrp_EndOfRelation();

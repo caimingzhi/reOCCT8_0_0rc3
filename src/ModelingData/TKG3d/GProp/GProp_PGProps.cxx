@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GProp_PGProps.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_DomainError.hxx>
+#include <GProp_PGProps.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_DomainError.hpp>
 
-// #include <gp.hxx>
+// #include <gp.hpp>
 typedef gp_Pnt                     Pnt;
 typedef gp_Mat                     Mat;
 typedef gp_XYZ                     XYZ;

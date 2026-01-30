@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
+#include <DDataStd.hpp>
 
-#include <DDF.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DDF.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Tool.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Tool.hpp>
 
-#include <TNaming_NamedShape.hxx>
+#include <TNaming_NamedShape.hpp>
 
-#include <TDataStd_Real.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_PatternStd.hxx>
-#include <TDataXtd_Position.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_PatternStd.hpp>
+#include <TDataXtd_Position.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 //=======================================================================
 // function : DDataStd_SetConstraint

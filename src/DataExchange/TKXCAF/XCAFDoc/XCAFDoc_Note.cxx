@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_Note.hxx>
+#include <XCAFDoc_Note.hpp>
 
-#include <gp_Pln.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_GraphNode.hxx>
+#include <gp_Pln.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_GraphNode.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_Note, TDF_Attribute)
 

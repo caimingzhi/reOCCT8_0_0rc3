@@ -11,27 +11,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi2d_FilletAlgo.hxx>
+#include <ChFi2d_FilletAlgo.hpp>
 
-#include <GeomProjLib.hxx>
-#include <BRep_Tool.hxx>
-#include <Precision.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
+#include <GeomProjLib.hpp>
+#include <BRep_Tool.hpp>
+#include <Precision.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
 
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <NCollection_List.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <NCollection_List.hpp>
 
-#include <Geom_Circle.hxx>
-#include <Geom2d_Line.hxx>
+#include <Geom_Circle.hpp>
+#include <Geom2d_Line.hpp>
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
 ChFi2d_FilletAlgo::ChFi2d_FilletAlgo()
     : myStart1(0.0),

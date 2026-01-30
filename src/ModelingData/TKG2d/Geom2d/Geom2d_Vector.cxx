@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Vector.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Type.hxx>
+#include <Geom2d_Vector.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_Vector, Geom2d_Geometry)
 

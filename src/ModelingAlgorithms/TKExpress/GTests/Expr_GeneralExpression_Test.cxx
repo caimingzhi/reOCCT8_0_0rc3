@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <ExprIntrp_GenExp.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <ExprIntrp_GenExp.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 

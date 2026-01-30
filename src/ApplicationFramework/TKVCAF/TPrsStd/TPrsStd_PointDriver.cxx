@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Point.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDF_Label.hxx>
-#include <TPrsStd_PointDriver.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Point.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDF_Label.hpp>
+#include <TPrsStd_PointDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_PointDriver, TPrsStd_Driver)
 

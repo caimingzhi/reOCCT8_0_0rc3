@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Surface.hxx>
+#include <GeomGridEval_Surface.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAdaptor_SurfaceOfLinearExtrusion.hxx>
-#include <GeomAdaptor_SurfaceOfRevolution.hxx>
-#include <GeomAdaptor_TransformedSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAdaptor_SurfaceOfLinearExtrusion.hpp>
+#include <GeomAdaptor_SurfaceOfRevolution.hpp>
+#include <GeomAdaptor_TransformedSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
 
 namespace
 {

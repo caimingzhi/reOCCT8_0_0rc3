@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <StepBasic_SizeMember.hxx>
-#include <StepBasic_SizeSelect.hxx>
-#include <StepData_SelectMember.hxx>
+#include <Standard_Transient.hpp>
+#include <StepBasic_SizeMember.hpp>
+#include <StepBasic_SizeSelect.hpp>
+#include <StepData_SelectMember.hpp>
 
 //=================================================================================================
 

@@ -13,37 +13,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinLDrivers.hxx>
-#include <BinLDrivers_DocumentRetrievalDriver.hxx>
-#include <BinLDrivers_DocumentSection.hxx>
-#include <BinLDrivers_Marker.hxx>
-#include <BinMDataStd.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <CDM_Application.hxx>
-#include <Message_Messenger.hxx>
-#include <FSD_BinaryFile.hxx>
-#include <FSD_FileHeader.hxx>
-#include <OSD_FileSystem.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <Standard_Macro.hxx>
+#include <BinLDrivers.hpp>
+#include <BinLDrivers_DocumentRetrievalDriver.hpp>
+#include <BinLDrivers_DocumentSection.hpp>
+#include <BinLDrivers_Marker.hpp>
+#include <BinMDataStd.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <CDM_Application.hpp>
+#include <Message_Messenger.hpp>
+#include <FSD_BinaryFile.hpp>
+#include <FSD_FileHeader.hpp>
+#include <OSD_FileSystem.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_Schema.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <TDocStd_Owner.hxx>
-#include <Message_ProgressScope.hxx>
-#include <PCDM_ReaderFilter.hxx>
+#include <Standard_Type.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_Schema.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <TDocStd_Owner.hpp>
+#include <Message_ProgressScope.hpp>
+#include <PCDM_ReaderFilter.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 

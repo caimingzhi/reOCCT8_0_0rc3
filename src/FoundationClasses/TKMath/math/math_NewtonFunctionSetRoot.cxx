@@ -19,10 +19,10 @@
 
 // #endif
 
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_Recipes.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_Recipes.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

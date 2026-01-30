@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepCheck.hxx>
+#include <BRepCheck.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepCheck_Status.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <BRepCheck_Wire.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <gp_Elips.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepCheck_Status.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <BRepCheck_Wire.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <gp_Elips.hpp>
 
 //=================================================================================================
 

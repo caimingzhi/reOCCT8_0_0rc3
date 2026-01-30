@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWPointOnCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_PointOnCurve.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWPointOnCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_PointOnCurve.hpp>
 
 RWStepGeom_RWPointOnCurve::RWStepGeom_RWPointOnCurve() = default;
 

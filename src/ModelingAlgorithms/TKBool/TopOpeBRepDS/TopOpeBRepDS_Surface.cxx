@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_Surface.hxx>
+#include <TopOpeBRepDS_Surface.hpp>
 
-#include <Geom_Surface.hxx>
+#include <Geom_Surface.hpp>
 
 //=================================================================================================
 

@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepRepr_RWParallelOffset.pxx"
+#include "RWStepRepr_RWParallelOffset.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_ParallelOffset.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_ParallelOffset.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 //=================================================================================================
 

@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_LineTool.hxx>
+#include <GeomInt_LineTool.hpp>
 
-#include <Extrema_ExtPS.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Geom_Surface.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_GLine.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_WLine.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <NCollection_OccAllocator.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Extrema_ExtPS.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Geom_Surface.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_GLine.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_WLine.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <NCollection_OccAllocator.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <vector>
 

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Chronometer.hxx>
+#include <Draw_Chronometer.hpp>
 
-#include <Draw_Display.hxx>
+#include <Draw_Display.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Chronometer, Draw_Drawable3D)
 

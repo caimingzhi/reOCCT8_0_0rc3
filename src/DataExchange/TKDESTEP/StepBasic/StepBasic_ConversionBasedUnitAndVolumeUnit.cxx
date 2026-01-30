@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hxx>
-#include <StepBasic_VolumeUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hpp>
+#include <StepBasic_VolumeUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ConversionBasedUnitAndVolumeUnit,
                            StepBasic_ConversionBasedUnit)

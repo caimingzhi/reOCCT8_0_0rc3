@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_ThePolygonToolOfInterCSurf.hxx>
+#include <HLRBRep_ThePolygonToolOfInterCSurf.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <gp_Pnt.hxx>
-#include <HLRBRep_ThePolygonOfInterCSurf.hxx>
-#include <Bnd_Box.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <gp_Pnt.hpp>
+#include <HLRBRep_ThePolygonOfInterCSurf.hpp>
+#include <Bnd_Box.hpp>
 
 #include <iostream>
 

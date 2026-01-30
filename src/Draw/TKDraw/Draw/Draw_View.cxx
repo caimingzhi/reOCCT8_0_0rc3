@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_View.hxx>
-#include <Draw_Viewer.hxx>
+#include <Draw_View.hpp>
+#include <Draw_Viewer.hpp>
 
-#include <gp_Trsf.hxx>
+#include <gp_Trsf.hpp>
 
 //=================================================================================================
 

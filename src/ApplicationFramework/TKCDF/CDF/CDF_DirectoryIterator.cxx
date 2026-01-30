@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_Directory.hxx>
-#include <CDF_DirectoryIterator.hxx>
-#include <CDM_Document.hxx>
+#include <CDF_Directory.hpp>
+#include <CDF_DirectoryIterator.hpp>
+#include <CDM_Document.hpp>
 
 CDF_DirectoryIterator::CDF_DirectoryIterator(const occ::handle<CDF_Directory>& aDirectory)
     : myIterator(aDirectory->List())

@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
+#include <BOPTest.hpp>
 
-#include <BOPTest_DrawableShape.hxx>
-#include <BOPTest_Objects.hxx>
+#include <BOPTest_DrawableShape.hpp>
+#include <BOPTest_Objects.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <BRepAlgoAPI_Defeaturing.hxx>
+#include <BRepAlgoAPI_Defeaturing.hpp>
 
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_Objects.hpp>
 
-#include <DBRep.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <DBRep.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
 static int RemoveFeatures(Draw_Interpretor&, int, const char**);
 

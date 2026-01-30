@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_ApproxAFunc2Var.hxx>
-#include <AdvApp2Var_EvaluatorFunc2Var.hxx>
-#include <AdvApp2Var_Criterion.hxx>
-#include <AdvApp2Var_Context.hxx>
-#include <AdvApp2Var_Patch.hxx>
-#include <AdvApp2Var_Network.hxx>
-#include <AdvApp2Var_Node.hxx>
-#include <AdvApp2Var_Iso.hxx>
-#include <NCollection_Sequence.hxx>
-#include <AdvApp2Var_Framework.hxx>
-#include <AdvApprox_Cutting.hxx>
+#include <AdvApp2Var_ApproxAFunc2Var.hpp>
+#include <AdvApp2Var_EvaluatorFunc2Var.hpp>
+#include <AdvApp2Var_Criterion.hpp>
+#include <AdvApp2Var_Context.hpp>
+#include <AdvApp2Var_Patch.hpp>
+#include <AdvApp2Var_Network.hpp>
+#include <AdvApp2Var_Node.hpp>
+#include <AdvApp2Var_Iso.hpp>
+#include <NCollection_Sequence.hpp>
+#include <AdvApp2Var_Framework.hpp>
+#include <AdvApprox_Cutting.hpp>
 
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
-#include <gp_XY.hxx>
-#include <gp_Pnt.hxx>
+#include <gp_XY.hpp>
+#include <gp_Pnt.hpp>
 
-#include <Convert_GridPolynomialToPoles.hxx>
+#include <Convert_GridPolynomialToPoles.hpp>
 
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
 
 //=================================================================================================
 

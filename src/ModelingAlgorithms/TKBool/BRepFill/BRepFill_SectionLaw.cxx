@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepFill_SectionLaw.hxx>
-#include <BRepLProp.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepFill_SectionLaw.hpp>
+#include <BRepLProp.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_SectionLaw, Standard_Transient)
 

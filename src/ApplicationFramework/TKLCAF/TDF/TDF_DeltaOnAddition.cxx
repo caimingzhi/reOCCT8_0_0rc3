@@ -18,10 +18,10 @@
 // Version	Date		Purpose
 //		0.0	Oct 10 1997	Creation
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnAddition, TDF_AttributeDelta)
 

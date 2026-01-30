@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <gce_MakeCirc2d.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <gce_MakeCirc2d.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Creation d un cercle 2d de gp passant par trois points.              +

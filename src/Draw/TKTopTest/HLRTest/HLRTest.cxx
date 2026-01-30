@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRTest.hxx>
+#include <HLRTest.hpp>
 
-#include <DBRep.hxx>
-#include <Draw_Appli.hxx>
-#include <HLRAppli_ReflectLines.hxx>
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_HLRToShape.hxx>
-#include <HLRTest_OutLiner.hxx>
-#include <HLRTest_Projector.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <TopoDS_Shape.hxx>
-#include <BRep_Builder.hxx>
+#include <DBRep.hpp>
+#include <Draw_Appli.hpp>
+#include <HLRAppli_ReflectLines.hpp>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_HLRToShape.hpp>
+#include <HLRTest_OutLiner.hpp>
+#include <HLRTest_Projector.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <TopoDS_Shape.hpp>
+#include <BRep_Builder.hpp>
 
 static occ::handle<HLRBRep_Algo> hider;
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-#include <BRepTopAdaptor_Tool.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRepTopAdaptor_Tool.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 //=================================================================================================
 

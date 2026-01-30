@@ -12,28 +12,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <gp.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <math_Function.hxx>
-#include <math_BrentMinimum.hxx>
-#include <math_PSO.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <gp.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <math_Function.hpp>
+#include <math_BrentMinimum.hpp>
+#include <math_PSO.hpp>
 
 //=================================================================================================
 

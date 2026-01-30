@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Transfer_ResultFromModel.hxx>
-#include <Transfer_ResultFromTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Transfer_ResultFromModel.hpp>
+#include <Transfer_ResultFromTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_ResultFromModel, Standard_Transient)
 

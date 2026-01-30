@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly_MergeNodesTool.hxx>
+#include <Poly_MergeNodesTool.hpp>
 
-#include <NCollection_IncAllocator.hxx>
-#include <Standard_CStringHasher.hxx>
+#include <NCollection_IncAllocator.hpp>
+#include <Standard_CStringHasher.hpp>
 
 #include <algorithm>
 

@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <Standard_Macro.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <TCollection_AsciiString.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_Dumper.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_Dumper.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 //=================================================================================================
 

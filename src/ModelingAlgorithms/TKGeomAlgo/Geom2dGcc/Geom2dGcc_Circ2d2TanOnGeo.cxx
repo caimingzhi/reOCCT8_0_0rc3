@@ -24,26 +24,26 @@
 //                                                  Courbes.              +
 //=========================================================================
 
-#include <Adaptor2d_OffsetCurve.hxx>
-#include <ElCLib.hxx>
-#include <GccAna_Circ2dBisec.hxx>
-#include <GccAna_CircLin2dBisec.hxx>
-#include <GccAna_CircPnt2dBisec.hxx>
-#include <GccAna_Lin2dBisec.hxx>
-#include <GccAna_LinPnt2dBisec.hxx>
-#include <GccAna_Pnt2dBisec.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <GccInt_BHyper.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dGcc_Circ2d2TanOnGeo.hxx>
-#include <Geom2dInt_TheIntConicCurveOfGInter.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor2d_OffsetCurve.hpp>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2dBisec.hpp>
+#include <GccAna_CircLin2dBisec.hpp>
+#include <GccAna_CircPnt2dBisec.hpp>
+#include <GccAna_Lin2dBisec.hpp>
+#include <GccAna_LinPnt2dBisec.hpp>
+#include <GccAna_Pnt2dBisec.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <GccInt_BHyper.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dGcc_Circ2d2TanOnGeo.hpp>
+#include <Geom2dInt_TheIntConicCurveOfGInter.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 static const int aNbSolMAX = 8;
 

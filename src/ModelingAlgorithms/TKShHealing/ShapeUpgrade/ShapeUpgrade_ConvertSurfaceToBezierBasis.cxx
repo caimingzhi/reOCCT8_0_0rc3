@@ -16,31 +16,31 @@
 
 //   svv  10.01.00 porting on DEC
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert_BSplineSurfaceToBezierSurface.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeExtend_CompositeSurface.hxx>
-#include <ShapeUpgrade_ConvertCurve3dToBezier.hxx>
-#include <ShapeUpgrade_ConvertSurfaceToBezierBasis.hxx>
-#include <Standard_Type.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Geom_Surface.hxx>
-#include <NCollection_HArray2.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert_BSplineSurfaceToBezierSurface.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeExtend_CompositeSurface.hpp>
+#include <ShapeUpgrade_ConvertCurve3dToBezier.hpp>
+#include <ShapeUpgrade_ConvertSurfaceToBezierBasis.hpp>
+#include <Standard_Type.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Geom_Surface.hpp>
+#include <NCollection_HArray2.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ConvertSurfaceToBezierBasis, ShapeUpgrade_SplitSurface)
 

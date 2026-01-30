@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEIGES_ConfigurationNode.hxx>
+#include <DEIGES_ConfigurationNode.hpp>
 
-#include <DEIGES_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <NCollection_Buffer.hxx>
+#include <DEIGES_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <NCollection_Buffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEIGES_ConfigurationNode, DE_ShapeFixConfigurationNode)
 

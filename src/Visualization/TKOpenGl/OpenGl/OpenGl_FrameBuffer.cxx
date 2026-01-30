@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_FrameBuffer.hxx>
+#include <OpenGl_FrameBuffer.hpp>
 
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Texture.hxx>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Texture.hpp>
 
-#include <Standard_Assert.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Standard_Assert.hpp>
+#include <Standard_NotImplemented.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameBuffer, OpenGl_NamedResource)
 

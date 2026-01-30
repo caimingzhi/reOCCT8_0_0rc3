@@ -14,48 +14,48 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
+#include <BRepTest.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
 #include <cstring>
 #include <cstdio>
 
-#include <Precision.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
+#include <Precision.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
 
-#include <ElCLib.hxx>
+#include <ElCLib.hpp>
 
-#include <NCollection_Sequence.hxx>
+#include <NCollection_Sequence.hpp>
 
-#include <IntCurvesFace_Intersector.hxx>
+#include <IntCurvesFace_Intersector.hpp>
 
-#include <TopAbs_Orientation.hxx>
+#include <TopAbs_Orientation.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Face.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Face.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
 
-#include <LocOpe_CSIntersector.hxx>
-#include <gp_Lin.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <BRepFeat_MakeDPrism.hxx>
+#include <LocOpe_CSIntersector.hpp>
+#include <gp_Lin.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <BRepFeat_MakeDPrism.hpp>
 
-#include <BRepTools.hxx>
-#include <BRepIntCurveSurface_Inter.hxx>
-#include <BRepOffset_MakeOffset.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Message.hxx>
+#include <BRepTools.hpp>
+#include <BRepIntCurveSurface_Inter.hpp>
+#include <BRepOffset_MakeOffset.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Message.hpp>
 
 static void        SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_Pnt>& theSeq);
 static TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,

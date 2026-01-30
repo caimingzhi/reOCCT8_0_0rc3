@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Timer.hxx>
+#include <OSD_Timer.hpp>
 
 #ifdef _WIN32
   #include <windows.h>

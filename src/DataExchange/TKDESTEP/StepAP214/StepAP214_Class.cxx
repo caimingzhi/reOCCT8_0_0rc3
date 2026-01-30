@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Standard_Type.hxx>
-#include <StepAP214_Class.hxx>
+#include <Standard_Type.hpp>
+#include <StepAP214_Class.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_Class, StepBasic_Group)
 

@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Map.hxx>
-#include <TNaming_Name.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Map.hpp>
+#include <TNaming_Name.hpp>
+#include <TNaming_NamedShape.hpp>
 
 // Test BUC60925: TNaming_Name solve with empty NamedShape
 TEST(TNaming_Name_Test, BUC60925_SolveWithEmptyNamedShape)

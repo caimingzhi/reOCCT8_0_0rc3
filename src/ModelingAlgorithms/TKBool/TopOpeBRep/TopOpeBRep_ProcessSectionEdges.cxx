@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_PointClassifier.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterClassifier.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_PointClassifier.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterClassifier.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 Standard_EXPORT bool FUN_EqualponR(const TopOpeBRep_LineInter&   Lrest,
                                    const TopOpeBRep_VPointInter& VP1,

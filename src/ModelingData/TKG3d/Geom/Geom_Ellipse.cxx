@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Geometry.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <ElCLib.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Geometry.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Ellipse, Geom_Conic)
 

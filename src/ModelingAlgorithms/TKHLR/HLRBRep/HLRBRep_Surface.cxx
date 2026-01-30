@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Vec.hxx>
-#include <GProp_PEquation.hxx>
-#include <HLRAlgo_Projector.hxx>
-#include <HLRBRep_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <TopoDS_Face.hxx>
+#include <gp_Vec.hpp>
+#include <GProp_PEquation.hpp>
+#include <HLRAlgo_Projector.hpp>
+#include <HLRBRep_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_CircleReducer.pxx>
+#include <StepTidy_CircleReducer.hpp>
 
-#include <Interface_Graph.hxx>
-#include <StepShape_EdgeCurve.hxx>
-#include <StepGeom_SurfaceCurve.hxx>
-#include <StepGeom_SeamCurve.hxx>
+#include <Interface_Graph.hpp>
+#include <StepShape_EdgeCurve.hpp>
+#include <StepGeom_SurfaceCurve.hpp>
+#include <StepGeom_SeamCurve.hpp>
 
 //==================================================================================================
 

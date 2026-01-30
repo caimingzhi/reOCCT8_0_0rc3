@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <GeomFill_SimpleBound.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Law.hxx>
-#include <Law_BSpFunc.hxx>
-#include <Law_Function.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomFill_SimpleBound.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Law.hpp>
+#include <Law_BSpFunc.hpp>
+#include <Law_Function.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_SimpleBound, GeomFill_Boundary)
 

@@ -16,32 +16,32 @@
 
 // 09-Aug-95 : xab : changed the ProjLib_ProjectOnPlane in the case
 //                   of the line and the parameteriation is kept
-#include <ProjLib_ProjectOnPlane.hxx>
-#include <Approx_FitAndDivide.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Precision.hxx>
-#include <BSplCLib.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <ElCLib.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <GeomConvert.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Ellipse.hxx>
-#include <GeomLib_Tool.hxx>
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <gce_MakeParab.hxx>
-#include <gce_MakeDir.hxx>
-#include <LProp3d_CLProps.hxx>
-#include <math_Function.hxx>
-#include <math_BrentMinimum.hxx>
+#include <ProjLib_ProjectOnPlane.hpp>
+#include <Approx_FitAndDivide.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Precision.hpp>
+#include <BSplCLib.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <ElCLib.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <GeomConvert.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Ellipse.hpp>
+#include <GeomLib_Tool.hpp>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <gce_MakeParab.hpp>
+#include <gce_MakeDir.hpp>
+#include <LProp3d_CLProps.hpp>
+#include <math_Function.hpp>
+#include <math_BrentMinimum.hpp>
 
 const double aParabolaLimit  = 20000.;
 const double aHyperbolaLimit = 10.;

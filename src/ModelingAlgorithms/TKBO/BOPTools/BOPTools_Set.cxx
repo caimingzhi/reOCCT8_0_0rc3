@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTools_Set.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPTools_Set.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 static size_t NormalizedIds(const size_t aId, const int aDiv);
 

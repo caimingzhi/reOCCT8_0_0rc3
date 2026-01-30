@@ -18,7 +18,7 @@
   #define No_Exception
 #endif
 
-#include <Intrv_Intervals.hxx>
+#include <Intrv_Intervals.hpp>
 
 //                   **---------****             Other
 //     ***-----*                                 IsBefore

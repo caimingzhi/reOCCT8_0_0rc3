@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_Options.hxx>
-#include <Message_MsgFile.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <BOPAlgo_Alerts.hxx>
+#include <BOPAlgo_Options.hpp>
+#include <Message_MsgFile.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <BOPAlgo_Alerts.hpp>
 
 namespace
 {
 bool myGlobalRunParallel = false;
 
 // Initialize textual messages for errors and warnings defined in BOPAlgo
-#include "BOPAlgo_BOPAlgo_msg.pxx"
+#include "BOPAlgo_BOPAlgo_msg.hpp"
 bool BOPAlgo_InitMessages = false;
 
 void BOPAlgo_LoadMessages()

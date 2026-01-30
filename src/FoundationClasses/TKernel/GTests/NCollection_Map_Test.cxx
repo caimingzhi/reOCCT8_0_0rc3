@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_Map.hxx>
-#include <NCollection_MapAlgo.hxx>
-#include <Standard_Integer.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <NCollection_Map.hpp>
+#include <NCollection_MapAlgo.hpp>
+#include <Standard_Integer.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 

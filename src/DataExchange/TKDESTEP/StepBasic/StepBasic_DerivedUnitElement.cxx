@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_DerivedUnitElement.hxx>
-#include <StepBasic_NamedUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_DerivedUnitElement.hpp>
+#include <StepBasic_NamedUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DerivedUnitElement, Standard_Transient)
 

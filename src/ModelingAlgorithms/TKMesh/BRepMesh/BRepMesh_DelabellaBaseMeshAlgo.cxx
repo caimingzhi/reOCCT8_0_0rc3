@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DelabellaBaseMeshAlgo.hxx>
+#include <BRepMesh_DelabellaBaseMeshAlgo.hpp>
 
-#include <BRepMesh_MeshTool.hxx>
-#include <BRepMesh_Delaun.hxx>
-#include <Message.hxx>
+#include <BRepMesh_MeshTool.hpp>
+#include <BRepMesh_Delaun.hpp>
+#include <Message.hpp>
 
 #include <cstring>
 #include <cstdarg>
 
-#include "delabella.pxx"
+#include "delabella.hpp"
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DelabellaBaseMeshAlgo, BRepMesh_CustomBaseMeshAlgo)
 

@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_CafWriter.hxx>
+#include <RWObj_CafWriter.hpp>
 
-#include <Message.hxx>
-#include <Message_LazyProgressScope.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <RWMesh_FaceIterator.hxx>
-#include <RWObj_ObjMaterialMap.hxx>
-#include <RWObj_ObjWriterContext.hxx>
-#include <Standard_CLocaleSentry.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDataStd_Name.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_DocumentExplorer.hxx>
+#include <Message.hpp>
+#include <Message_LazyProgressScope.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <RWMesh_FaceIterator.hpp>
+#include <RWObj_ObjMaterialMap.hpp>
+#include <RWObj_ObjWriterContext.hpp>
+#include <Standard_CLocaleSentry.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDataStd_Name.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_DocumentExplorer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWObj_CafWriter, Standard_Transient)
 

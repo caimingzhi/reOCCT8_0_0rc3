@@ -16,14 +16,14 @@
 
 #define No_Standard_OutOfRange
 
-#include <HLRAlgo_Coincidence.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_EdgeBuilder.hxx>
-#include <HLRBRep_EdgeIList.hxx>
-#include <HLRBRep_Hider.hxx>
-#include <HLRBRep_VertexList.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <HLRAlgo_Coincidence.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_EdgeBuilder.hpp>
+#include <HLRBRep_EdgeIList.hpp>
+#include <HLRBRep_Hider.hpp>
+#include <HLRBRep_VertexList.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 //=================================================================================================
 

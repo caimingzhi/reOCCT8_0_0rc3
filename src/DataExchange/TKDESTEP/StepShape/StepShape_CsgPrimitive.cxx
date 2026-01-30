@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepShape_Block.hxx>
-#include <StepShape_CsgPrimitive.hxx>
-#include <StepShape_RightAngularWedge.hxx>
-#include <StepShape_RightCircularCone.hxx>
-#include <StepShape_RightCircularCylinder.hxx>
-#include <StepShape_Sphere.hxx>
-#include <StepShape_Torus.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepShape_Block.hpp>
+#include <StepShape_CsgPrimitive.hpp>
+#include <StepShape_RightAngularWedge.hpp>
+#include <StepShape_RightCircularCone.hpp>
+#include <StepShape_RightCircularCylinder.hpp>
+#include <StepShape_Sphere.hpp>
+#include <StepShape_Torus.hpp>
 
 StepShape_CsgPrimitive::StepShape_CsgPrimitive() = default;
 

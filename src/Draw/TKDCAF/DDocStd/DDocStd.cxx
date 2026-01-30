@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
+#include <DDocStd.hpp>
 
-#include <DDocStd_DrawDocument.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Standard_GUID.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
+#include <DDocStd_DrawDocument.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Standard_GUID.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
 
-#include <StdLDrivers.hxx>
-#include <BinLDrivers.hxx>
-#include <XmlLDrivers.hxx>
-#include <StdDrivers.hxx>
-#include <BinDrivers.hxx>
-#include <XmlDrivers.hxx>
+#include <StdLDrivers.hpp>
+#include <BinLDrivers.hpp>
+#include <XmlLDrivers.hpp>
+#include <StdDrivers.hpp>
+#include <BinDrivers.hpp>
+#include <XmlDrivers.hpp>
 
 //=================================================================================================
 

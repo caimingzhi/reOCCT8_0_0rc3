@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_RepositionedTessellatedItem.hxx>
+#include <StepVisual_RepositionedTessellatedItem.hpp>
 
-#include <StepGeom_Axis2Placement3d.hxx>
+#include <StepGeom_Axis2Placement3d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_RepositionedTessellatedItem, StepVisual_TessellatedItem)
 

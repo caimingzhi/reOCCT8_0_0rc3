@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_Application.hxx>
-#include <CDF_MetaDataDriver.hxx>
-#include <CDM_MetaData.hxx>
-#include <PCDM_ReferenceIterator.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <OSD_Thread.hxx>
+#include <CDF_Application.hpp>
+#include <CDF_MetaDataDriver.hpp>
+#include <CDM_MetaData.hpp>
+#include <PCDM_ReferenceIterator.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <OSD_Thread.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_MetaDataDriver, Standard_Transient)
 

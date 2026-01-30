@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Contap_TheSegmentOfTheSearch.hxx>
+#include <Contap_TheSegmentOfTheSearch.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Standard_DomainError.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <Contap_ThePathPointOfTheSearch.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Standard_DomainError.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <Contap_ThePathPointOfTheSearch.hpp>
 
 Contap_TheSegmentOfTheSearch::Contap_TheSegmentOfTheSearch()
     : hasfp(false),

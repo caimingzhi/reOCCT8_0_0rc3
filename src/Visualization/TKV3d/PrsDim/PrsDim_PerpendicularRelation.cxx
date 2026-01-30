@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_PerpendicularRelation.hxx>
+#include <PrsDim_PerpendicularRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <DsgPrs_PerpenPresentation.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeDir.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <DsgPrs_PerpenPresentation.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeDir.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAPI.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_PerpendicularRelation, PrsDim_Relation)
 

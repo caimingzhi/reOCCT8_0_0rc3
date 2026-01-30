@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TNaming_Identifier.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <NCollection_List.hxx>
-#include <TNaming_Localizer.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <TNaming_Identifier.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <NCollection_List.hpp>
+#include <TNaming_Localizer.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 #ifdef OCCT_DEBUG
   // #define MDTV_DEB_SC
   #ifdef OCCT_DEBUG_SC
-    #include <TDF_Tool.hxx>
-    #include <TDF_Label.hxx>
-    #include <NCollection_Map.hxx>
+    #include <TDF_Tool.hpp>
+    #include <TDF_Label.hpp>
+    #include <NCollection_Map.hpp>
 
-    #include <TCollection_AsciiString.hxx>
-    #include <BRepTools.hxx>
+    #include <TCollection_AsciiString.hpp>
+    #include <BRepTools.hpp>
 
 void LPrintEntry(const TDF_Label& label)
 {

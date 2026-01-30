@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dHatch_Classifier.hxx>
-#include <Geom2dHatch_Element.hxx>
-#include <Geom2dHatch_Hatcher.hxx>
-#include <Geom2dHatch_Hatching.hxx>
-#include <Geom2dHatch_Intersector.hxx>
-#include <HatchGen_Domain.hxx>
-#include <HatchGen_PointOnElement.hxx>
-#include <HatchGen_PointOnHatching.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <IntRes2d_Transition.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopAbs.hxx>
-#include <TopTrans_CurveTransition.hxx>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dHatch_Classifier.hpp>
+#include <Geom2dHatch_Element.hpp>
+#include <Geom2dHatch_Hatcher.hpp>
+#include <Geom2dHatch_Hatching.hpp>
+#include <Geom2dHatch_Intersector.hpp>
+#include <HatchGen_Domain.hpp>
+#include <HatchGen_PointOnElement.hpp>
+#include <HatchGen_PointOnHatching.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <IntRes2d_Transition.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopAbs.hpp>
+#include <TopTrans_CurveTransition.hpp>
 
 #define RAISE_IF_NOSUCHOBJECT 0
 #define TRACE_HATCHER 0

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWLoopAndPath.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_LoopAndPath.hxx>
-#include <StepShape_OrientedEdge.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWLoopAndPath.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_LoopAndPath.hpp>
+#include <StepShape_OrientedEdge.hpp>
 
 RWStepShape_RWLoopAndPath::RWStepShape_RWLoopAndPath() = default;
 

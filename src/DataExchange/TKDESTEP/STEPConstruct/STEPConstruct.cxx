@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPConstruct.hxx>
+#include <STEPConstruct.hpp>
 
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 //=================================================================================================
 

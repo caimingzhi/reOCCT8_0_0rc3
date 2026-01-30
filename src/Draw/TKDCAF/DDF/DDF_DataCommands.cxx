@@ -19,29 +19,29 @@
 // Version	Date		Purpose
 //		0.0	Sep 30 1997	Creation
 
-#include <TDF_ClosureMode.hxx>
-#include <TDF_ClosureTool.hxx>
-#include <TDF_CopyTool.hxx>
+#include <TDF_ClosureMode.hpp>
+#include <TDF_ClosureTool.hpp>
+#include <TDF_CopyTool.hpp>
 
-#include <DDF.hxx>
-#include <DDF_Data.hxx>
+#include <DDF.hpp>
+#include <DDF_Data.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Draw_Interpretor.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Draw_Interpretor.hpp>
 
-#include <Standard_NotImplemented.hxx>
+#include <Standard_NotImplemented.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_CopyLabel.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <Standard_Handle.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_Map.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_CopyLabel.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <Standard_Handle.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_Map.hpp>
 
 //=======================================================================
 // function : MakeDF

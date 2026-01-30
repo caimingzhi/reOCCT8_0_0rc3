@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_WireEdgeClassifier.hxx>
+#include <TopOpeBRepBuild_WireEdgeClassifier.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <Standard_ProgramError.hxx>
-#include <gp_Vec2d.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopExp.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <Standard_ProgramError.hpp>
+#include <gp_Vec2d.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopExp.hpp>
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
 
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
-#include <TopOpeBRepBuild_define.hxx>
+#include <TopOpeBRepBuild_define.hpp>
 
 #ifdef OCCT_DEBUG
 static TCollection_AsciiString PRODINS("dins ");

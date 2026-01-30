@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <GeomToStep_MakePolyline.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Polyline.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <GeomToStep_MakePolyline.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Polyline.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' une polyline Step a partir d' une Array1OfPnt
@@ -31,7 +31,7 @@ GeomToStep_MakePolyline::GeomToStep_MakePolyline(const NCollection_Array1<gp_Pnt
                                                  const StepData_Factors&           theLocalFactors)
 {
   gp_Pnt P1;
-#include "GeomToStep_MakePolyline_gen.pxx"
+#include "GeomToStep_MakePolyline_gen.hpp"
 }
 
 //=============================================================================
@@ -42,7 +42,7 @@ GeomToStep_MakePolyline::GeomToStep_MakePolyline(const NCollection_Array1<gp_Pnt
                                                  const StepData_Factors& theLocalFactors)
 {
   gp_Pnt2d P1;
-#include "GeomToStep_MakePolyline_gen.pxx"
+#include "GeomToStep_MakePolyline_gen.hpp"
 }
 
 //=============================================================================

@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <DrawTrSurf.hxx>
-#include <DBRep.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <TopoDS_Edge.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <Draw_Interpretor.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <DrawTrSurf.hpp>
+#include <DBRep.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <TopoDS_Edge.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #include <cstdio>
 #include <cstdlib>

@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepAlgo.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepFeat.hxx>
-#include <BRepFeat_Builder.hxx>
-#include <BRepFeat_Form.hxx>
-#include <BRepLib.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <ElCLib.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <LocOpe_CSIntersector.hxx>
-#include <LocOpe_FindEdges.hxx>
-#include <LocOpe_Gluer.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <Precision.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepAlgo.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepFeat.hpp>
+#include <BRepFeat_Builder.hpp>
+#include <BRepFeat_Form.hpp>
+#include <BRepLib.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <ElCLib.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <LocOpe_CSIntersector.hpp>
+#include <LocOpe_FindEdges.hpp>
+#include <LocOpe_Gluer.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <Precision.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool BRepFeat_GettraceFEAT();

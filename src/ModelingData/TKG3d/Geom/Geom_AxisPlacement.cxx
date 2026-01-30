@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_AxisPlacement.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_AxisPlacement.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_AxisPlacement, Geom_Geometry)
 

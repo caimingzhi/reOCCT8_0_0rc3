@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepGProp.hxx>
-#include <GProp_GProps.hxx>
-#include <Precision.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade_FaceDivideArea.hxx>
-#include <ShapeUpgrade_SplitSurfaceArea.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepGProp.hpp>
+#include <GProp_GProps.hpp>
+#include <Precision.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade_FaceDivideArea.hpp>
+#include <ShapeUpgrade_SplitSurfaceArea.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_FaceDivideArea, ShapeUpgrade_FaceDivide)
 

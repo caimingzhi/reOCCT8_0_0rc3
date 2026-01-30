@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Triangulation.hxx>
+#include <AIS_Triangulation.hpp>
 
-#include <AIS_DisplayMode.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <Standard_Type.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
+#include <AIS_DisplayMode.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <Standard_Type.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Triangulation, AIS_InteractiveObject)
 

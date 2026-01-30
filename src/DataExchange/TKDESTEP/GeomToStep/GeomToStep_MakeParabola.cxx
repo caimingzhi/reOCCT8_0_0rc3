@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Parabola.hxx>
-#include <Geom_Parabola.hxx>
-#include <GeomToStep_MakeAxis2Placement2d.hxx>
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <GeomToStep_MakeParabola.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Parab2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement2d.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_Parabola.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom2d_Parabola.hpp>
+#include <Geom_Parabola.hpp>
+#include <GeomToStep_MakeAxis2Placement2d.hpp>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <GeomToStep_MakeParabola.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Parab2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement2d.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_Parabola.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d'une Parabola de prostep a partir d'une Parabola de

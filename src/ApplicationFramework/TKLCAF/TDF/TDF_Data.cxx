@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_IncAllocator.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_GUID.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Delta.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnForget.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TDF_DeltaOnResume.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_LabelNode.hxx>
-#include <TDF_Tool.hxx>
+#include <NCollection_IncAllocator.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_GUID.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Delta.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnForget.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TDF_DeltaOnResume.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_LabelNode.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_Data, Standard_Transient)
 

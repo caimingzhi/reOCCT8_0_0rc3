@@ -19,25 +19,25 @@
 // Version   Date            Purpose
 //          0.0 Feb 10 1997  Creation
 
-#include <DDF.hxx>
+#include <DDF.hpp>
 
-#include <TDF_ComparisonTool.hxx>
+#include <TDF_ComparisonTool.hpp>
 
-#include <DDF_Data.hxx>
+#include <DDF_Data.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Standard_NotImplemented.hpp>
 
-#include <TCollection_AsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
 
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_DerivedAttribute.hxx>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_DerivedAttribute.hpp>
 
 //=======================================================================
 // function : Children

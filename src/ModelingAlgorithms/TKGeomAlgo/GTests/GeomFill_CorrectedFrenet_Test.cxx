@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_CorrectedFrenet.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <GC_MakeSegment.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <TopoDS_Edge.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Real.hxx>
+#include <GeomFill_CorrectedFrenet.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <GC_MakeSegment.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <TopoDS_Edge.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Real.hpp>
 
 #include <gtest/gtest.h>
 

@@ -12,24 +12,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_Curve.hxx>
-#include <IntTools_Range.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_Curve.hpp>
+#include <IntTools_Range.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

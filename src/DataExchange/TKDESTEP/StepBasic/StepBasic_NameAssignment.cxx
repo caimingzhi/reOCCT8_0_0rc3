@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_NameAssignment.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_NameAssignment.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_NameAssignment, Standard_Transient)
 

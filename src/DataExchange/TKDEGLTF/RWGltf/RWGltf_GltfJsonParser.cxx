@@ -12,27 +12,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWGltf_GltfJsonParser.hxx"
+#include "RWGltf_GltfJsonParser.hpp"
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <FSD_Base64.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_ThreadPool.hxx>
-#include <Precision.hxx>
-#include <RWGltf_TriangulationReader.hxx>
-#include <TDataStd_NamedData.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <gp_Quaternion.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <FSD_Base64.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_ThreadPool.hpp>
+#include <Precision.hpp>
+#include <RWGltf_TriangulationReader.hpp>
+#include <TDataStd_NamedData.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <gp_Quaternion.hpp>
 
 #include <fstream>
 

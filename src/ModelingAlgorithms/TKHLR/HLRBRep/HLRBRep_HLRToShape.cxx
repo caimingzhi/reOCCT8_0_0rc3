@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRBRep.hxx>
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_EdgeData.hxx>
-#include <HLRBRep_HLRToShape.hxx>
-#include <HLRBRep_ShapeBounds.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRep_Builder.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRBRep.hpp>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_EdgeData.hpp>
+#include <HLRBRep_HLRToShape.hpp>
+#include <HLRBRep_ShapeBounds.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 //=================================================================================================
 

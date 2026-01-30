@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepFill_CurveConstraint.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomPlate_CurveConstraint.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <ProjLib_ProjectOnPlane.hxx>
-#include <Standard_Type.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepFill_CurveConstraint.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomPlate_CurveConstraint.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <ProjLib_ProjectOnPlane.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_CurveConstraint, GeomPlate_CurveConstraint)
 

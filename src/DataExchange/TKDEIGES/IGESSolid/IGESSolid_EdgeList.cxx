@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESSolid_EdgeList.hxx>
-#include <IGESSolid_VertexList.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESSolid_EdgeList.hpp>
+#include <IGESSolid_VertexList.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_EdgeList, IGESData_IGESEntity)
 

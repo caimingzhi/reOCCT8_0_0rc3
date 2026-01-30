@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_PointCloud.hxx>
+#include <AIS_PointCloud.hpp>
 
-#include <AIS_GraphicTool.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Prs3d_BndBox.hxx>
+#include <AIS_GraphicTool.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Prs3d_BndBox.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_PointCloudOwner, SelectMgr_EntityOwner)
 IMPLEMENT_STANDARD_RTTIEXT(AIS_PointCloud, AIS_InteractiveObject)

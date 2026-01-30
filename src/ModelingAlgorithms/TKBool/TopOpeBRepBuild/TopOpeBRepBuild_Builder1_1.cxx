@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepTools.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_GTool.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_Tools.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopAbs_State.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_ShapeWithState.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepTools.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_GTool.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_Tools.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopAbs_State.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_ShapeWithState.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 // define parameter division number as 10*e^(-PI) = 0.43213918
 const double PAR_T = 0.43213918;

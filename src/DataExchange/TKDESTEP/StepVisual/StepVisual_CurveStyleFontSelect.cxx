@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_CurveStyleFont.hxx>
-#include <StepVisual_CurveStyleFontSelect.hxx>
-#include <StepVisual_ExternallyDefinedCurveFont.hxx>
-#include <StepVisual_PreDefinedCurveFont.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_CurveStyleFont.hpp>
+#include <StepVisual_CurveStyleFontSelect.hpp>
+#include <StepVisual_ExternallyDefinedCurveFont.hpp>
+#include <StepVisual_PreDefinedCurveFont.hpp>
 
 StepVisual_CurveStyleFontSelect::StepVisual_CurveStyleFontSelect() = default;
 

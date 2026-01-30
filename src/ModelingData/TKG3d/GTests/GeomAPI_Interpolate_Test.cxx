@@ -13,13 +13,13 @@
 
 #include <gtest/gtest.h>
 
-#include <GeomAPI_Interpolate.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
+#include <GeomAPI_Interpolate.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
 
 #include <cmath>
 

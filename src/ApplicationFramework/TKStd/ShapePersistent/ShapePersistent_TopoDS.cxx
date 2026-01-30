@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapePersistent_TopoDS.hxx>
-#include <ShapePersistent_BRep.hxx>
+#include <ShapePersistent_TopoDS.hpp>
+#include <ShapePersistent_BRep.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
 
-#include <Standard_Assert.hxx>
+#include <Standard_Assert.hpp>
 
 enum
 {

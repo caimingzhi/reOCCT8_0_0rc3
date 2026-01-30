@@ -12,12 +12,12 @@
 // commercial license or contractual agreement.
 
 #include <gtest/gtest.h>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_DimensionError.hxx>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DimensionError.hpp>
 
 #ifndef M_SQRT1_2
   #define M_SQRT1_2 0.707106781186547524400844362104849039

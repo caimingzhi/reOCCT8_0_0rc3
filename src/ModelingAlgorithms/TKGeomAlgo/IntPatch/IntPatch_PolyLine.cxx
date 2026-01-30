@@ -17,10 +17,10 @@
 //-- lbr le 12 juin : Ajout des fleches sur les Lines
 //-- msv 13.03.2002 : compute deflection for WLine; Error() returns deflection
 
-#include <IntPatch_PolyLine.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_WLine.hxx>
-#include <Precision.hxx>
+#include <IntPatch_PolyLine.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_WLine.hpp>
+#include <Precision.hpp>
 
 #define INITDEFLE Precision::PConfusion() * 100.
 

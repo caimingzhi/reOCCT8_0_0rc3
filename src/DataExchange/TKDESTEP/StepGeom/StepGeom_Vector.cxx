@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Direction.hxx>
-#include <StepGeom_Vector.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Direction.hpp>
+#include <StepGeom_Vector.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_Vector, StepGeom_GeometricRepresentationItem)
 

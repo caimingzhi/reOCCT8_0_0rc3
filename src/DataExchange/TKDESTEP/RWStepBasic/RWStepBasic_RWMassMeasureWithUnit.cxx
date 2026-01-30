@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWMassMeasureWithUnit.pxx"
-#include <StepBasic_MassMeasureWithUnit.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWMassMeasureWithUnit.hpp"
+#include <StepBasic_MassMeasureWithUnit.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

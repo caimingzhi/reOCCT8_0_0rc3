@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Precision.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Precision.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
 
 #include <gtest/gtest.h>
 

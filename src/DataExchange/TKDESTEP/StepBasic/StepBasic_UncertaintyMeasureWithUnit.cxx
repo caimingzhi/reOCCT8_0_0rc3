@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_UncertaintyMeasureWithUnit.hxx>
-#include <StepBasic_Unit.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_UncertaintyMeasureWithUnit.hpp>
+#include <StepBasic_Unit.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_UncertaintyMeasureWithUnit, StepBasic_MeasureWithUnit)
 

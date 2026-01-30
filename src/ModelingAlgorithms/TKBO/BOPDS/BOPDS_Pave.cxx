@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_Pave.hxx>
+#include <BOPDS_Pave.hpp>
 
 #include <cstdio>
 

@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinDrivers.hxx>
-#include <BinDrivers_DocumentRetrievalDriver.hxx>
-#include <BinLDrivers_DocumentSection.hxx>
-#include <BinMDataStd.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <BinMNaming_NamedShapeDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_IStream.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <BinDrivers.hpp>
+#include <BinDrivers_DocumentRetrievalDriver.hpp>
+#include <BinLDrivers_DocumentSection.hpp>
+#include <BinMDataStd.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinMNaming_NamedShapeDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_IStream.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentRetrievalDriver, BinLDrivers_DocumentRetrievalDriver)
 

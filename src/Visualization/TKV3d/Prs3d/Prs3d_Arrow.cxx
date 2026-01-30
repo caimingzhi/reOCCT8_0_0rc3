@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_Arrow.hxx>
+#include <Prs3d_Arrow.hpp>
 
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ToolCylinder.hxx>
-#include <Prs3d_ToolDisk.hxx>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ToolCylinder.hpp>
+#include <Prs3d_ToolDisk.hpp>
 
 //=================================================================================================
 

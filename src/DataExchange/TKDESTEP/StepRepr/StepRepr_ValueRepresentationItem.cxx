@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepRepr_ValueRepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepRepr_ValueRepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ValueRepresentationItem, StepRepr_RepresentationItem)
 

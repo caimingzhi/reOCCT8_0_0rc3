@@ -14,15 +14,15 @@
 
 // JCV 16/10/91
 
-#include <Convert_ParabolaToBSplineCurve.hxx>
-#include <gp.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Standard_Integer.hxx>
+#include <Convert_ParabolaToBSplineCurve.hpp>
+#include <gp.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Standard_Integer.hpp>
 
 static int TheDegree  = 2;
 static int MaxNbKnots = 2;

@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_EdgesFiller.hxx>
-#include <TopOpeBRep_EdgesIntersector.hxx>
-#include <TopOpeBRep_Point2d.hxx>
-#include <TopOpeBRep_PointGeomTool.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_Config.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_EdgesFiller.hpp>
+#include <TopOpeBRep_EdgesIntersector.hpp>
+#include <TopOpeBRep_Point2d.hpp>
+#include <TopOpeBRep_PointGeomTool.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_Config.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <TopOpeBRepDS_CurvePointInterference.hxx>
+  #include <TopOpeBRepDS_CurvePointInterference.hpp>
 extern bool TopOpeBRep_GettraceEEFF();
 
 Standard_EXPORT void debposesd(void)

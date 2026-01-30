@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWReparametrisedCompositeCurveSegment.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_ReparametrisedCompositeCurveSegment.hxx>
-#include <StepGeom_TransitionCode.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWReparametrisedCompositeCurveSegment.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_ReparametrisedCompositeCurveSegment.hpp>
+#include <StepGeom_TransitionCode.hpp>
 
-#include "RWStepGeom_RWTransitionCode.pxx"
+#include "RWStepGeom_RWTransitionCode.hpp"
 
 RWStepGeom_RWReparametrisedCompositeCurveSegment::
   RWStepGeom_RWReparametrisedCompositeCurveSegment() = default;

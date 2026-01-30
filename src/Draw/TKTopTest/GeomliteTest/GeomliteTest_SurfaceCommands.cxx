@@ -14,59 +14,59 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomliteTest.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Display.hxx>
+#include <GeomliteTest.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Display.hpp>
 
-#include <GeomAbs_Shape.hxx>
+#include <GeomAbs_Shape.hpp>
 
-#include <Geom_Plane.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Surface.hxx>
+#include <Geom_Plane.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Surface.hpp>
 
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_OffsetCurve.hxx>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_OffsetCurve.hpp>
 
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
-#include <Precision.hxx>
-#include <Convert_CompBezierCurvesToBSplineCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_BSplineCurveToBezierCurve.hxx>
-#include <GeomConvert_BSplineSurfaceToBezierSurface.hxx>
-#include <GeomConvert_CompBezierSurfacesToBSplineSurface.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom2dConvert_BSplineCurveToBezierCurve.hxx>
-#include <GeomLProp_SLProps.hxx>
-#include <GeomConvert_SurfToAnaSurf.hxx>
-#include <GeomConvert_CurveToAnaCurve.hxx>
-#include <GeomConvert_ConvType.hxx>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
+#include <Precision.hpp>
+#include <Convert_CompBezierCurvesToBSplineCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_BSplineCurveToBezierCurve.hpp>
+#include <GeomConvert_BSplineSurfaceToBezierSurface.hpp>
+#include <GeomConvert_CompBezierSurfacesToBSplineSurface.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom2dConvert_BSplineCurveToBezierCurve.hpp>
+#include <GeomLProp_SLProps.hpp>
+#include <GeomConvert_SurfToAnaSurf.hpp>
+#include <GeomConvert_CurveToAnaCurve.hpp>
+#include <GeomConvert_ConvType.hpp>
 
-#include <DrawTrSurf_BezierSurface.hxx>
-#include <DrawTrSurf_BSplineSurface.hxx>
-#include <GeomConvert_ApproxSurface.hxx>
-#include <GeomLib_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <Message.hxx>
+#include <DrawTrSurf_BezierSurface.hpp>
+#include <DrawTrSurf_BSplineSurface.hpp>
+#include <GeomConvert_ApproxSurface.hpp>
+#include <GeomLib_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <Message.hpp>
 
 #include <cstdio>
 #ifdef _WIN32

@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools.hxx>
+#include <IntTools.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepGProp.hxx>
-#include <gce_MakeCirc.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <GProp_GProps.hxx>
-#include <IntTools_Root.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_List.hxx>
-#include <TopoDS_Edge.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepGProp.hpp>
+#include <gce_MakeCirc.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <GProp_GProps.hpp>
+#include <IntTools_Root.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_List.hpp>
+#include <TopoDS_Edge.hpp>
 
 #include <algorithm>
 
@@ -304,13 +304,13 @@ void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfR
   }
 }
 
-#include <GeomAdaptor_Curve.hxx>
-#include <ElCLib.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Parab.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <ElCLib.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Parab.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
 
 //=================================================================================================
 

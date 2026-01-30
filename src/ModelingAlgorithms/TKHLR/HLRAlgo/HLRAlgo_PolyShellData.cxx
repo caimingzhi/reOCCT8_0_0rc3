@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_PolyShellData.hxx>
+#include <HLRAlgo_PolyShellData.hpp>
 
-#include <HLRAlgo_BiPoint.hxx>
-#include <NCollection_List.hxx>
+#include <HLRAlgo_BiPoint.hpp>
+#include <NCollection_List.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyShellData, Standard_Transient)
 

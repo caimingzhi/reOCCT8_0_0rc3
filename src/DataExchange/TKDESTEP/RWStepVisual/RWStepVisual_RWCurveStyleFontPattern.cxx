@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWCurveStyleFontPattern.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_CurveStyleFontPattern.hxx>
+#include "RWStepVisual_RWCurveStyleFontPattern.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_CurveStyleFontPattern.hpp>
 
 RWStepVisual_RWCurveStyleFontPattern::RWStepVisual_RWCurveStyleFontPattern() = default;
 

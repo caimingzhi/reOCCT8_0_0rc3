@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Interpretor.hxx>
+#include <Draw_Interpretor.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Message.hxx>
-#include <Message_PrinterOStream.hxx>
-#include <OSD.hxx>
-#include <OSD_Path.hxx>
-#include <Standard_SStream.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Macro.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Draw_Appli.hpp>
+#include <Message.hpp>
+#include <Message_PrinterOStream.hpp>
+#include <OSD.hpp>
+#include <OSD_Path.hpp>
+#include <Standard_SStream.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Macro.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #include <cstring>
 #include <tcl.h>

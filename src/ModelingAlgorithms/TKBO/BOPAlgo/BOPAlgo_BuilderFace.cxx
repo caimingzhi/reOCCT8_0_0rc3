@@ -16,36 +16,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BuilderFace.hxx>
-#include <BOPAlgo_WireEdgeSet.hxx>
-#include <BOPAlgo_WireSplitter.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_BoxTree.hxx>
-#include <Bnd_Tools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepTools.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <BOPAlgo_WireEdgeSet.hpp>
+#include <BOPAlgo_WireSplitter.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_BoxTree.hpp>
+#include <Bnd_Tools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepTools.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 //
 static bool IsGrowthWire(const TopoDS_Shape&,
                          const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&);

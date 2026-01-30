@@ -13,17 +13,17 @@
 
 #include <gtest/gtest.h>
 
-#include <MathLin_SVD.hxx>
-#include <MathLin_Householder.hxx>
-#include <MathLin_Jacobi.hxx>
-#include <MathLin_LeastSquares.hxx>
-#include <MathLin_Gauss.hxx>
-#include <math_SVD.hxx>
-#include <math_Householder.hxx>
-#include <math_Jacobi.hxx>
-#include <math_GaussLeastSquare.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
+#include <MathLin_SVD.hpp>
+#include <MathLin_Householder.hpp>
+#include <MathLin_Jacobi.hpp>
+#include <MathLin_LeastSquares.hpp>
+#include <MathLin_Gauss.hpp>
+#include <math_SVD.hpp>
+#include <math_Householder.hpp>
+#include <math_Jacobi.hpp>
+#include <math_GaussLeastSquare.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
 
 #include <cmath>
 

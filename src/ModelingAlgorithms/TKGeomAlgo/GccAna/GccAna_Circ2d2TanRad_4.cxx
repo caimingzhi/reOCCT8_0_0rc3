@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d2TanRad.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <Precision.hxx>
-#include <Standard_NegativeValue.hxx>
-#include <NCollection_Array1.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d2TanRad.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <Precision.hpp>
+#include <Standard_NegativeValue.hpp>
+#include <NCollection_Array1.hpp>
 
 // circular tangent to two lines of given radius
 //===============================================

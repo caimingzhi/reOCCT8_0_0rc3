@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_ApproxCurve.hxx>
-#include <GeomFill_Profiler.hxx>
-#include <Standard_DomainError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <BSplCLib.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_ApproxCurve.hpp>
+#include <GeomFill_Profiler.hpp>
+#include <Standard_DomainError.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

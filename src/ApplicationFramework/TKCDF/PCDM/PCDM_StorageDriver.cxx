@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Document.hxx>
-#include <FSD_CmpFile.hxx>
-#include <PCDM_DriverError.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <PCDM_StorageDriver.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_Data.hxx>
-#include <Storage_OpenMode.hxx>
-#include <Storage_Schema.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <CDM_Document.hpp>
+#include <FSD_CmpFile.hpp>
+#include <PCDM_DriverError.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <PCDM_StorageDriver.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_Data.hpp>
+#include <Storage_OpenMode.hpp>
+#include <Storage_Schema.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PCDM_StorageDriver, PCDM_Writer)
 

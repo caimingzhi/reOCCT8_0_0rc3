@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_DivideByZero.hxx>
-#include <Standard_NullValue.hxx>
-#include <Precision.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_DivideByZero.hpp>
+#include <Standard_NullValue.hpp>
+#include <Precision.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
 
 namespace
 {

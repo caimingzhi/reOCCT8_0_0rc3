@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_TextureEnv.hxx>
-#include <Graphic3d_TextureParams.hxx>
-#include <Graphic3d_TypeOfTexture.hxx>
-#include <Graphic3d_TypeOfTextureMode.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Graphic3d_TextureEnv.hpp>
+#include <Graphic3d_TextureParams.hpp>
+#include <Graphic3d_TypeOfTexture.hpp>
+#include <Graphic3d_TypeOfTextureMode.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_TextureEnv, Graphic3d_TextureRoot)
 

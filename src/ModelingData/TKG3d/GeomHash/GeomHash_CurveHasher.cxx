@@ -11,29 +11,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomHash_CurveHasher.hxx>
+#include <GeomHash_CurveHasher.hpp>
 
-#include <Standard_CStringHasher.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_OffsetCurve.hxx>
+#include <Standard_CStringHasher.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_OffsetCurve.hpp>
 
-#include <GeomHash_LineHasher.pxx>
-#include <GeomHash_CircleHasher.pxx>
-#include <GeomHash_EllipseHasher.pxx>
-#include <GeomHash_HyperbolaHasher.pxx>
-#include <GeomHash_ParabolaHasher.pxx>
-#include <GeomHash_BezierCurveHasher.pxx>
-#include <GeomHash_BSplineCurveHasher.pxx>
-#include <GeomHash_TrimmedCurveHasher.pxx>
-#include <GeomHash_OffsetCurveHasher.pxx>
+#include <GeomHash_LineHasher.hpp>
+#include <GeomHash_CircleHasher.hpp>
+#include <GeomHash_EllipseHasher.hpp>
+#include <GeomHash_HyperbolaHasher.hpp>
+#include <GeomHash_ParabolaHasher.hpp>
+#include <GeomHash_BezierCurveHasher.hpp>
+#include <GeomHash_BSplineCurveHasher.hpp>
+#include <GeomHash_TrimmedCurveHasher.hpp>
+#include <GeomHash_OffsetCurveHasher.hpp>
 
 //=================================================================================================
 

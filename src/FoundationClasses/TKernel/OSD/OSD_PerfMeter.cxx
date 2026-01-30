@@ -15,10 +15,10 @@
  commercial license or contractual agreement.
 */
 
-#include <OSD_PerfMeter.hxx>
+#include <OSD_PerfMeter.hpp>
 
-#include <OSD_Chronometer.hxx>
-#include <NCollection_DataMap.hxx>
+#include <OSD_Chronometer.hpp>
+#include <NCollection_DataMap.hpp>
 
 // Simple stopwatch class to measure elapsed time
 // and provides methods to start, stop, and get the elapsed time in seconds.

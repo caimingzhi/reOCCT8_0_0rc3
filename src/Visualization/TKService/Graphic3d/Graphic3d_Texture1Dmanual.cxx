@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Texture1Dmanual.hxx>
+#include <Graphic3d_Texture1Dmanual.hpp>
 
-#include <TCollection_AsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture1Dmanual, Graphic3d_Texture1D)
 

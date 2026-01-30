@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
+#include <Message_Messenger.hpp>
 
-#include <Message_Printer.hxx>
-#include <Message_PrinterOStream.hxx>
-#include <Standard_Dump.hxx>
+#include <Message_Printer.hpp>
+#include <Message_PrinterOStream.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_Messenger, Standard_Transient)
 

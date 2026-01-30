@@ -16,12 +16,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWContractAssignment.pxx"
-#include <StepBasic_Contract.hxx>
-#include <StepBasic_ContractAssignment.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWContractAssignment.hpp"
+#include <StepBasic_Contract.hpp>
+#include <StepBasic_ContractAssignment.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

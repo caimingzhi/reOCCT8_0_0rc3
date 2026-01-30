@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SessionPilot.hxx>
-#include <IFSelect_WorkSession.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_Plex.hxx>
-#include <StepData_Simple.hxx>
-#include <StepData_UndefinedEntity.hxx>
-#include <StepSelect_Activator.hxx>
-#include <StepSelect_FloatFormat.hxx>
+#include <IFSelect_SessionPilot.hpp>
+#include <IFSelect_WorkSession.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_Plex.hpp>
+#include <StepData_Simple.hpp>
+#include <StepData_UndefinedEntity.hpp>
+#include <StepSelect_Activator.hpp>
+#include <StepSelect_FloatFormat.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepSelect_Activator, IFSelect_Activator)
 

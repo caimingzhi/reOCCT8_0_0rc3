@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Torus.hxx>
+#include <GeomGridEval_Torus.hpp>
 
-#include <gp_Torus.hxx>
+#include <gp_Torus.hpp>
 
 #include <cmath>
 

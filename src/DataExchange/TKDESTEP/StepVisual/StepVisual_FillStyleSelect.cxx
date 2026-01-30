@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_FillAreaStyleColour.hxx>
-#include <StepVisual_FillStyleSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_FillAreaStyleColour.hpp>
+#include <StepVisual_FillStyleSelect.hpp>
 
 StepVisual_FillStyleSelect::StepVisual_FillStyleSelect() = default;
 

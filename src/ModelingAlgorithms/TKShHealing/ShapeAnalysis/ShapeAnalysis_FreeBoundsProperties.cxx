@@ -17,26 +17,26 @@
 // 25.12.98 pdn renaming of ShapeAnalysis_FreeBounds and ShapeAnalysis_Wire methods
 // szv#4 S4163
 
-#include <BRep_Builder.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_FreeBounds.hxx>
-#include <ShapeAnalysis_FreeBoundsProperties.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_FreeBounds.hpp>
+#include <ShapeAnalysis_FreeBoundsProperties.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 #define NbControl 23
 

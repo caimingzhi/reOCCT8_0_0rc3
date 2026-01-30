@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESBasic_SingularSubfigure.hxx>
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESDraw_CircArraySubfigure.hxx>
-#include <IGESDraw_NetworkSubfigure.hxx>
-#include <IGESDraw_NetworkSubfigureDef.hxx>
-#include <IGESDraw_RectArraySubfigure.hxx>
-#include <IGESSelect_SelectBypassSubfigure.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IGESBasic_SingularSubfigure.hpp>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESDraw_CircArraySubfigure.hpp>
+#include <IGESDraw_NetworkSubfigure.hpp>
+#include <IGESDraw_NetworkSubfigureDef.hpp>
+#include <IGESDraw_RectArraySubfigure.hpp>
+#include <IGESSelect_SelectBypassSubfigure.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_SelectBypassSubfigure, IFSelect_SelectExplore)
 

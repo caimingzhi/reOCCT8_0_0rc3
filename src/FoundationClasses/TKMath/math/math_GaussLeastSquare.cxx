@@ -19,11 +19,11 @@
 
 // #endif
 
-#include <math_GaussLeastSquare.hxx>
-#include <math_Matrix.hxx>
-#include <math_Recipes.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_GaussLeastSquare.hpp>
+#include <math_Matrix.hpp>
+#include <math_Recipes.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_GaussLeastSquare::math_GaussLeastSquare(const math_Matrix& A, const double MinPivot)
     : LU(1, A.ColNumber(), 1, A.ColNumber()),

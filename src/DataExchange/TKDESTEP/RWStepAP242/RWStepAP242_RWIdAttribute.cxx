@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepAP242_RWIdAttribute.pxx"
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepAP242_IdAttribute.hxx>
-#include <StepAP242_IdAttributeSelect.hxx>
+#include "RWStepAP242_RWIdAttribute.hpp"
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepAP242_IdAttribute.hpp>
+#include <StepAP242_IdAttributeSelect.hpp>
 
 RWStepAP242_RWIdAttribute::RWStepAP242_RWIdAttribute() = default;
 

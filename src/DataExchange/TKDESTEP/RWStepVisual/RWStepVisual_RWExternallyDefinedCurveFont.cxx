@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWExternallyDefinedCurveFont.pxx"
-#include <StepBasic_ExternalSource.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_ExternallyDefinedCurveFont.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWExternallyDefinedCurveFont.hpp"
+#include <StepBasic_ExternalSource.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_ExternallyDefinedCurveFont.hpp>
 
 //=================================================================================================
 

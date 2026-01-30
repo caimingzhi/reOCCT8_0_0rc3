@@ -16,20 +16,20 @@
 
 //  Modified by skv - Tue Aug  1 16:29:59 2006 OCC13116
 
-#include <ElCLib.hxx>
-#include <gp.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <ProjLib_Sphere.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <gp.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <ProjLib_Sphere.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

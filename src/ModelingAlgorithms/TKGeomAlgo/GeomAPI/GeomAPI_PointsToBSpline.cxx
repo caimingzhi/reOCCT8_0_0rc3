@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_BSplineCompute.hxx>
-#include <AppDef_MultiPointConstraint.hxx>
-#include <AppDef_Variational.hxx>
-#include <AppParCurves_Constraint.hxx>
-#include <AppParCurves_ConstraintCouple.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
-#include <BSplCLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAPI_PointsToBSpline.hxx>
-#include <math_Vector.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <AppDef_BSplineCompute.hpp>
+#include <AppDef_MultiPointConstraint.hpp>
+#include <AppDef_Variational.hpp>
+#include <AppParCurves_Constraint.hpp>
+#include <AppParCurves_ConstraintCouple.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
+#include <BSplCLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAPI_PointsToBSpline.hpp>
+#include <math_Vector.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

@@ -12,34 +12,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs.hxx>
+#include <DsgPrs.hpp>
 
-#include <Aspect_TypeOfMarker.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeLin.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
+#include <Aspect_TypeOfMarker.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeLin.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
 
 void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentation,
                            const occ::handle<Prs3d_DimensionAspect>& LA,

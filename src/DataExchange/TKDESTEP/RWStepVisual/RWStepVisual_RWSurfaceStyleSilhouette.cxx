@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWSurfaceStyleSilhouette.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_CurveStyle.hxx>
-#include <StepVisual_SurfaceStyleSilhouette.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWSurfaceStyleSilhouette.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_CurveStyle.hpp>
+#include <StepVisual_SurfaceStyleSilhouette.hpp>
 
 RWStepVisual_RWSurfaceStyleSilhouette::RWStepVisual_RWSurfaceStyleSilhouette() = default;
 

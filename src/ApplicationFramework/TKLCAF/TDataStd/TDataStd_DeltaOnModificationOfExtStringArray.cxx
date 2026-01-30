@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_DeltaOnModificationOfExtStringArray.hxx>
+#include <TDataStd_DeltaOnModificationOfExtStringArray.hpp>
 
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfExtStringArray, TDF_DeltaOnModification)
 

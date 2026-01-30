@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XBRepMesh.hxx>
-#include <BRepMesh_PluginMacro.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
+#include <XBRepMesh.hpp>
+#include <BRepMesh_PluginMacro.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
 
 //=================================================================================================
 

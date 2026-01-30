@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_WLineTool.hxx>
+#include <IntTools_WLineTool.hpp>
 
-#include <BRep_Tool.hxx>
-#include <Extrema_ExtCC.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomInt.hxx>
-#include <GeomInt_LineConstructor.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Circ.hxx>
-#include <IntTools_Context.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_Pnt2d.hxx>
+#include <BRep_Tool.hpp>
+#include <Extrema_ExtCC.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomInt.hpp>
+#include <GeomInt_LineConstructor.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Circ.hpp>
+#include <IntTools_Context.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_Pnt2d.hpp>
 
 /////////////////////// NotUseSurfacesForApprox /////////////////////////
 

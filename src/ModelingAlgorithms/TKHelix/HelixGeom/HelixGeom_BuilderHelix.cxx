@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Curve.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Trsf.hxx>
-#include <HelixGeom_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Geom_Curve.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Trsf.hpp>
+#include <HelixGeom_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

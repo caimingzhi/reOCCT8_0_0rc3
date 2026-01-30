@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation.pxx"
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hxx>
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation.hpp"
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hpp>
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

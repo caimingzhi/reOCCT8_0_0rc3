@@ -13,42 +13,42 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill_AdvancedEvolved.hxx>
+#include <BRepFill_AdvancedEvolved.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepFill_PipeShell.hxx>
-#include <BRepFill_TransitionStyle.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BRepLib_FindSurface.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BOPAlgo_MakerVolume.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <math_NewtonMinimum.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <math_Vector.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <BRepTools.hxx>
-#include <BOPAlgo_BuilderFace.hxx>
-#include <Geom2d_Line.hxx>
-#include <math_GlobOptMin.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <BOPDS_DS.hxx>
-#include <BRepLib.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepGProp_Face.hxx>
-#include <BRep_TEdge.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
-#include <Bnd_Box.hxx>
-#include <BRepBndLib.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepFill_PipeShell.hpp>
+#include <BRepFill_TransitionStyle.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BRepLib_FindSurface.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BOPAlgo_MakerVolume.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <math_NewtonMinimum.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <math_Vector.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <BRepTools.hpp>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <Geom2d_Line.hpp>
+#include <math_GlobOptMin.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <BOPDS_DS.hpp>
+#include <BRepLib.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepGProp_Face.hpp>
+#include <BRep_TEdge.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
+#include <Bnd_Box.hpp>
+#include <BRepBndLib.hpp>
 
 #ifdef BRepFill_AdvancedEvolved_DEBUG
-  #include <BinTools.hxx>
+  #include <BinTools.hpp>
 #endif
 
 static const double aPipeLinearTolerance  = 1.0e-4;

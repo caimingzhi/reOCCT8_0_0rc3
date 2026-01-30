@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepShape_RWTopologicalRepresentationItem.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
+#include "RWStepShape_RWTopologicalRepresentationItem.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
 
 RWStepShape_RWTopologicalRepresentationItem::RWStepShape_RWTopologicalRepresentationItem() =
   default;

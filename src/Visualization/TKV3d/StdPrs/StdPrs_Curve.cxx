@@ -17,21 +17,21 @@
 // Great zoom leads to non-coincidence of
 // a point and non-infinite lines passing through this point:
 
-#include <Adaptor3d_Curve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <StdPrs_Curve.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <StdPrs_Curve.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

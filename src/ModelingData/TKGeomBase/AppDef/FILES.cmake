@@ -3,65 +3,65 @@ set(OCCT_AppDef_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_AppDef_FILES
 
-  AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute.hxx
+  AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute.hpp
   AppDef_BSpGradient_BFGSOfMyBSplGradientOfBSplineCompute_0.cxx
-  AppDef_BSplineCompute.hxx
+  AppDef_BSplineCompute.hpp
   AppDef_BSplineCompute_0.cxx
-  AppDef_BSpParFunctionOfMyBSplGradientOfBSplineCompute.hxx
+  AppDef_BSpParFunctionOfMyBSplGradientOfBSplineCompute.hpp
   AppDef_BSpParFunctionOfMyBSplGradientOfBSplineCompute_0.cxx
-  AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hxx
+  AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hpp
   AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute_0.cxx
-  AppDef_Compute.hxx
+  AppDef_Compute.hpp
   AppDef_Compute_0.cxx
-  AppDef_Gradient_BFGSOfMyGradientbisOfBSplineCompute.hxx
+  AppDef_Gradient_BFGSOfMyGradientbisOfBSplineCompute.hpp
   AppDef_Gradient_BFGSOfMyGradientbisOfBSplineCompute_0.cxx
-  AppDef_Gradient_BFGSOfMyGradientOfCompute.hxx
+  AppDef_Gradient_BFGSOfMyGradientOfCompute.hpp
   AppDef_Gradient_BFGSOfMyGradientOfCompute_0.cxx
-  AppDef_Gradient_BFGSOfTheGradient.hxx
+  AppDef_Gradient_BFGSOfTheGradient.hpp
   AppDef_Gradient_BFGSOfTheGradient_0.cxx
 
   AppDef_LinearCriteria.cxx
-  AppDef_LinearCriteria.hxx
+  AppDef_LinearCriteria.hpp
   AppDef_MultiLine.cxx
-  AppDef_MultiLine.hxx
+  AppDef_MultiLine.hpp
   AppDef_MultiPointConstraint.cxx
-  AppDef_MultiPointConstraint.hxx
-  AppDef_MyBSplGradientOfBSplineCompute.hxx
+  AppDef_MultiPointConstraint.hpp
+  AppDef_MyBSplGradientOfBSplineCompute.hpp
   AppDef_MyBSplGradientOfBSplineCompute_0.cxx
-  AppDef_MyGradientbisOfBSplineCompute.hxx
+  AppDef_MyGradientbisOfBSplineCompute.hpp
   AppDef_MyGradientbisOfBSplineCompute_0.cxx
-  AppDef_MyGradientOfCompute.hxx
+  AppDef_MyGradientOfCompute.hpp
   AppDef_MyGradientOfCompute_0.cxx
   AppDef_MyLineTool.cxx
-  AppDef_MyLineTool.hxx
-  AppDef_ParFunctionOfMyGradientbisOfBSplineCompute.hxx
+  AppDef_MyLineTool.hpp
+  AppDef_ParFunctionOfMyGradientbisOfBSplineCompute.hpp
   AppDef_ParFunctionOfMyGradientbisOfBSplineCompute_0.cxx
-  AppDef_ParFunctionOfMyGradientOfCompute.hxx
+  AppDef_ParFunctionOfMyGradientOfCompute.hpp
   AppDef_ParFunctionOfMyGradientOfCompute_0.cxx
-  AppDef_ParFunctionOfTheGradient.hxx
+  AppDef_ParFunctionOfTheGradient.hpp
   AppDef_ParFunctionOfTheGradient_0.cxx
-  AppDef_ParLeastSquareOfMyGradientbisOfBSplineCompute.hxx
+  AppDef_ParLeastSquareOfMyGradientbisOfBSplineCompute.hpp
   AppDef_ParLeastSquareOfMyGradientbisOfBSplineCompute_0.cxx
-  AppDef_ParLeastSquareOfMyGradientOfCompute.hxx
+  AppDef_ParLeastSquareOfMyGradientOfCompute.hpp
   AppDef_ParLeastSquareOfMyGradientOfCompute_0.cxx
-  AppDef_ParLeastSquareOfTheGradient.hxx
+  AppDef_ParLeastSquareOfTheGradient.hpp
   AppDef_ParLeastSquareOfTheGradient_0.cxx
-  AppDef_ResConstraintOfMyGradientbisOfBSplineCompute.hxx
+  AppDef_ResConstraintOfMyGradientbisOfBSplineCompute.hpp
   AppDef_ResConstraintOfMyGradientbisOfBSplineCompute_0.cxx
-  AppDef_ResConstraintOfMyGradientOfCompute.hxx
+  AppDef_ResConstraintOfMyGradientOfCompute.hpp
   AppDef_ResConstraintOfMyGradientOfCompute_0.cxx
-  AppDef_ResConstraintOfTheGradient.hxx
+  AppDef_ResConstraintOfTheGradient.hpp
   AppDef_ResConstraintOfTheGradient_0.cxx
   AppDef_SmoothCriterion.cxx
-  AppDef_SmoothCriterion.hxx
-  AppDef_TheFunction.hxx
+  AppDef_SmoothCriterion.hpp
+  AppDef_TheFunction.hpp
   AppDef_TheFunction_0.cxx
-  AppDef_TheGradient.hxx
+  AppDef_TheGradient.hpp
   AppDef_TheGradient_0.cxx
-  AppDef_TheLeastSquares.hxx
+  AppDef_TheLeastSquares.hpp
   AppDef_TheLeastSquares_0.cxx
-  AppDef_TheResol.hxx
+  AppDef_TheResol.hpp
   AppDef_TheResol_0.cxx
   AppDef_Variational.cxx
-  AppDef_Variational.hxx
+  AppDef_Variational.hpp
 )

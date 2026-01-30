@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gce_MakeDir.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gce_MakeDir.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Creation d une direction 3d (Dir) de gp a partir de 2 Pnt de gp.     +

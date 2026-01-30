@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <ShapeFix_EdgeConnect.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <ShapeFix_EdgeConnect.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 // #define POSITION_USES_MEAN_POINT
 //=======================================================================

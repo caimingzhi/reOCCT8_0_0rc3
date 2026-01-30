@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_NextAssemblyUsageOccurrence, StepRepr_AssemblyComponentUsage)
 

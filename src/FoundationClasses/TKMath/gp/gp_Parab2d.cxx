@@ -14,13 +14,13 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_Parab2d.hxx>
+#include <gp_Parab2d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
 
 gp_Parab2d::gp_Parab2d(const gp_Ax2d& theDirectrix, const gp_Pnt2d& theFocus, const bool theSense)
 {

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Cylinder.hxx>
+#include <GeomGridEval_Cylinder.hpp>
 
-#include <gp_Cylinder.hxx>
+#include <gp_Cylinder.hpp>
 
 #include <cmath>
 

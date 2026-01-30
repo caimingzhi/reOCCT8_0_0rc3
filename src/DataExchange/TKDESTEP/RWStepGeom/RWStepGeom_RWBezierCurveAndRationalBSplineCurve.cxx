@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWBezierCurveAndRationalBSplineCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_BezierCurveAndRationalBSplineCurve.hxx>
-#include <StepGeom_BSplineCurveForm.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWBezierCurveAndRationalBSplineCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_BezierCurveAndRationalBSplineCurve.hpp>
+#include <StepGeom_BSplineCurveForm.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include "RWStepGeom_RWBSplineCurveForm.pxx"
+#include "RWStepGeom_RWBSplineCurveForm.hpp"
 
 RWStepGeom_RWBezierCurveAndRationalBSplineCurve::RWStepGeom_RWBezierCurveAndRationalBSplineCurve() =
   default;

@@ -14,36 +14,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_Builder1.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepBuild_ShellFaceSet.hxx>
-#include <TopOpeBRepBuild_Tools.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <NCollection_List.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepDS_ShapeWithState.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_Builder1.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepBuild_ShellFaceSet.hpp>
+#include <TopOpeBRepBuild_Tools.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <NCollection_List.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepDS_ShapeWithState.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
 // define parameter division number as 10*e^(-PI) = 0.43213918
 const double PAR_T = 0.43213918;

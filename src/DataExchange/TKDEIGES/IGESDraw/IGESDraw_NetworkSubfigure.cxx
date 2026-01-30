@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDraw_NetworkSubfigure.hxx>
-#include <IGESDraw_NetworkSubfigureDef.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDraw_NetworkSubfigure.hpp>
+#include <IGESDraw_NetworkSubfigureDef.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_NetworkSubfigure, IGESData_IGESEntity)
 

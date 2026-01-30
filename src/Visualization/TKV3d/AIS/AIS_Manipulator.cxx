@@ -13,28 +13,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Manipulator.hxx>
+#include <AIS_Manipulator.hpp>
 
-#include <AIS_DisplayMode.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_ManipulatorOwner.hxx>
-#include <Extrema_ExtElC.hxx>
-#include <gce_MakeDir.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_ToolDisk.hxx>
-#include <Prs3d_ToolSector.hxx>
-#include <Prs3d_ToolSphere.hxx>
-#include <Select3D_SensitiveCircle.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <Select3D_SensitiveTriangulation.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <V3d_View.hxx>
+#include <AIS_DisplayMode.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_ManipulatorOwner.hpp>
+#include <Extrema_ExtElC.hpp>
+#include <gce_MakeDir.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_ToolDisk.hpp>
+#include <Prs3d_ToolSector.hpp>
+#include <Prs3d_ToolSphere.hpp>
+#include <Select3D_SensitiveCircle.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <Select3D_SensitiveTriangulation.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <V3d_View.hpp>
 class SelectMgr_EntityOwner;
 
 #ifndef M_SQRT2

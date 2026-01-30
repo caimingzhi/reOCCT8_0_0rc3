@@ -16,21 +16,21 @@
 
 //  Modified by skv - Thu Sep  4 11:22:05 2003 OCC578
 
-#include <BRep_Tool.hxx>
-#include <BRepClass3d_Intersector3d.hxx>
-#include <BRepClass3d_SClassifier.hxx>
-#include <BRepClass3d_SolidExplorer.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntCurvesFace_Intersector.hxx>
-#include <math_BullardGenerator.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Extrema_ExtPS.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepClass3d_Intersector3d.hpp>
+#include <BRepClass3d_SClassifier.hpp>
+#include <BRepClass3d_SolidExplorer.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntCurvesFace_Intersector.hpp>
+#include <math_BullardGenerator.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Extrema_ExtPS.hpp>
 
 #include <vector>
 

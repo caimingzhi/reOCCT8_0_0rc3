@@ -22,22 +22,22 @@
 //   by:	Joelle CHAUVET / Jean-Marc LACHAUME
 //		Initialisation de myCritValue pour OSF
 
-#include <AdvApp2Var_ApproxF2var.hxx>
-#include <AdvApp2Var_Context.hxx>
-#include <AdvApp2Var_Criterion.hxx>
-#include <AdvApp2Var_Framework.hxx>
-#include <AdvApp2Var_Iso.hxx>
-#include <AdvApp2Var_MathBase.hxx>
-#include <AdvApp2Var_Node.hxx>
-#include <AdvApp2Var_Patch.hxx>
-#include <Convert_GridPolynomialToPoles.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <AdvApp2Var_ApproxF2var.hpp>
+#include <AdvApp2Var_Context.hpp>
+#include <AdvApp2Var_Criterion.hpp>
+#include <AdvApp2Var_Framework.hpp>
+#include <AdvApp2Var_Iso.hpp>
+#include <AdvApp2Var_MathBase.hpp>
+#include <AdvApp2Var_Node.hpp>
+#include <AdvApp2Var_Patch.hpp>
+#include <Convert_GridPolynomialToPoles.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AdvApp2Var_Patch, Standard_Transient)
 

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPolyh_StartPoint.hxx>
-#include <IntPolyh_Triangle.hxx>
+#include <IntPolyh_StartPoint.hpp>
+#include <IntPolyh_Triangle.hpp>
 
 #include <cstdio>
-// #include <Precision.hxx>
+// #include <Precision.hpp>
 #define MyConfusionPrecision 10.0e-12
 
 IntPolyh_StartPoint::IntPolyh_StartPoint()

@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_LocationDraft.hxx>
+#include <GeomFill_LocationDraft.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomFill_DraftTrihedron.hxx>
-#include <GeomFill_FunctionDraft.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_Tensor.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_Intersection.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_Vector.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomFill_DraftTrihedron.hpp>
+#include <GeomFill_FunctionDraft.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_Tensor.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_Intersection.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_Vector.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_LocationDraft, GeomFill_LocationLaw)
 

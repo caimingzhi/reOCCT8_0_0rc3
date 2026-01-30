@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepDimTol_ConcentricityTolerance.hxx>
+#include <StepDimTol_ConcentricityTolerance.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ConcentricityTolerance,
                            StepDimTol_GeometricToleranceWithDatumReference)

@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Failure.hxx>
+#include <Standard_Failure.hpp>
 
-#include <Standard_ErrorHandler.hxx>
+#include <Standard_ErrorHandler.hpp>
 
 #include <algorithm>
 #include <cstring>

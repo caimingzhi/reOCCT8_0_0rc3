@@ -2,12 +2,12 @@
 set(OCCT_BRepFilletAPI_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepFilletAPI_FILES
-  BRepFilletAPI_LocalOperation.hxx
+  BRepFilletAPI_LocalOperation.hpp
   BRepFilletAPI_MakeChamfer.cxx
-  BRepFilletAPI_MakeChamfer.hxx
+  BRepFilletAPI_MakeChamfer.hpp
   BRepFilletAPI_MakeFillet.cxx
-  BRepFilletAPI_MakeFillet.hxx
+  BRepFilletAPI_MakeFillet.hpp
   BRepFilletAPI_MakeFillet2d.cxx
-  BRepFilletAPI_MakeFillet2d.hxx
-  BRepFilletAPI_MakeFillet2d.lxx
+  BRepFilletAPI_MakeFillet2d.hpp
+  BRepFilletAPI_MakeFillet2d_1.hpp
 )

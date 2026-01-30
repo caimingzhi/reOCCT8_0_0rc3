@@ -13,42 +13,42 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_ShapeConvert.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_Group.hxx>
-#include <VrmlData_IndexedFaceSet.hxx>
-#include <VrmlData_IndexedLineSet.hxx>
-#include <VrmlData_ShapeNode.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Surface.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_Connect.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Label.hxx>
+#include <VrmlData_ShapeConvert.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_Group.hpp>
+#include <VrmlData_IndexedFaceSet.hpp>
+#include <VrmlData_IndexedLineSet.hpp>
+#include <VrmlData_ShapeNode.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Surface.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_Connect.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDF_Label.hpp>
 // #include <NCollection_Sequence<TDF_Label>.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <GCPnts_TangentialDeflection.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomLib.hxx>
-#include <Standard_ShortReal.hxx>
-#include <VrmlData_Appearance.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_Style.hxx>
-#include <XCAFDoc_VisMaterial.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
+#include <TDocStd_Document.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <GCPnts_TangentialDeflection.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomLib.hpp>
+#include <Standard_ShortReal.hpp>
+#include <VrmlData_Appearance.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_Style.hpp>
+#include <XCAFDoc_VisMaterial.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
 
 //=================================================================================================
 

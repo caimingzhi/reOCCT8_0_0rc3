@@ -18,36 +18,36 @@
 //: s4 abv 26.04.99: sim6049.igs 21677: copy of curve is necessary to get True SP
 //    abv 06.05.99: S4137: adding methods GetTangent2d()
 
-#include <Adaptor3d_Curve.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRepLib_ValidateEdge.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeExtend.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopExp.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRepLib_ValidateEdge.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeExtend.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopExp.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

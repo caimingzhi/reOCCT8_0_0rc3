@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_KinematicTopologyDirectedStructure.hxx>
+#include <StepKinematics_KinematicTopologyDirectedStructure.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_KinematicTopologyDirectedStructure,
                            StepRepr_Representation)

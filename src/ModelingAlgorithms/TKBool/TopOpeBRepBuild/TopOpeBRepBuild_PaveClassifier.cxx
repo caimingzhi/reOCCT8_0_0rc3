@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Curve.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_Pave.hxx>
-#include <TopOpeBRepBuild_PaveClassifier.hxx>
+#include <BRep_Tool.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Curve.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_Pave.hpp>
+#include <TopOpeBRepBuild_PaveClassifier.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepTool_GettraceVC();

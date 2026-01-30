@@ -12,24 +12,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntImp_ComputeTangence.hxx>
-#include <IntSurf_LineOn2S.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <IntWalk_PWalking.hxx>
-#include <IntWalk_StatusDeflection.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <Precision.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntImp_ComputeTangence.hpp>
+#include <IntSurf_LineOn2S.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <IntWalk_PWalking.hpp>
+#include <IntWalk_StatusDeflection.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <Precision.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
 
 //==================================================================================
 // function : ComputePasInit

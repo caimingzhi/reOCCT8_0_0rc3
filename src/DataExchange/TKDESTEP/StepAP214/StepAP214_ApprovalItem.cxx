@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_ApprovalItem.hxx>
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_Effectivity.hxx>
-#include <StepBasic_Group.hxx>
-#include <StepBasic_GroupRelationship.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductDefinitionFormationRelationship.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepBasic_SecurityClassification.hxx>
-#include <StepRepr_AssemblyComponentUsageSubstitute.hxx>
-#include <StepRepr_ConfigurationItem.hxx>
-#include <StepRepr_MaterialDesignation.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hxx>
-#include <StepVisual_PresentationArea.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_ApprovalItem.hpp>
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_Effectivity.hpp>
+#include <StepBasic_Group.hpp>
+#include <StepBasic_GroupRelationship.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductDefinitionFormationRelationship.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepBasic_SecurityClassification.hpp>
+#include <StepRepr_AssemblyComponentUsageSubstitute.hpp>
+#include <StepRepr_ConfigurationItem.hpp>
+#include <StepRepr_MaterialDesignation.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp>
+#include <StepVisual_PresentationArea.hpp>
 
 StepAP214_ApprovalItem::StepAP214_ApprovalItem() = default;
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPersistent_DataXtd_PatternStd.hxx>
+#include <StdPersistent_DataXtd_PatternStd.hpp>
 
-#include <TNaming_NamedShape.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_Integer.hxx>
+#include <TNaming_NamedShape.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_Integer.hpp>
 
 //=======================================================================
 // function : Import

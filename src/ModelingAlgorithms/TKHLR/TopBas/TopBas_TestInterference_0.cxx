@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopBas_TestInterference.hxx>
+#include <TopBas_TestInterference.hpp>
 
 //=================================================================================================
 

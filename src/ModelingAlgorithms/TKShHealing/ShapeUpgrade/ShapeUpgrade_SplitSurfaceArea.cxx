@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomAdaptor_Surface.hxx>
-#include <ShapeUpgrade_SplitSurfaceArea.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <GeomAdaptor_Surface.hpp>
+#include <ShapeUpgrade_SplitSurfaceArea.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitSurfaceArea, ShapeUpgrade_SplitSurface)
 

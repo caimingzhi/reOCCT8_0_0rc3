@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Static.hxx>
+#include <Interface_Static.hpp>
 
-#include <DEIGES_Parameters.hxx>
+#include <DEIGES_Parameters.hpp>
 
 //=================================================================================================
 

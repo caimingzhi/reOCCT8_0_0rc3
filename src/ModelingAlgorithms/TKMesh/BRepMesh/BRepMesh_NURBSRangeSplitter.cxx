@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_NURBSRangeSplitter.hxx>
+#include <BRepMesh_NURBSRangeSplitter.hpp>
 
 #include <algorithm>
-#include <BRepMesh_GeomTool.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomLib.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_Wire.hxx>
-#include <NCollection_Handle.hxx>
+#include <BRepMesh_GeomTool.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomLib.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_Wire.hpp>
+#include <NCollection_Handle.hpp>
 
 namespace
 {

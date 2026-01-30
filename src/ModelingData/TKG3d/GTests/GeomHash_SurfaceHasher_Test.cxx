@@ -13,28 +13,28 @@
 
 #include <gtest/gtest.h>
 
-#include <GeomHash_SurfaceHasher.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <GeomHash_SurfaceHasher.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 class GeomHash_SurfaceHasherTest : public ::testing::Test
 {

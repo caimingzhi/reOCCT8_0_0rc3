@@ -15,13 +15,13 @@
 
 // AGV 150202: Changed prototype XmlObjMgt::SetStringValue()
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_Tool.hxx>
-#include <XmlMDF_ReferenceDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_Tool.hpp>
+#include <XmlMDF_ReferenceDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ReferenceDriver, XmlMDF_ADriver)
 

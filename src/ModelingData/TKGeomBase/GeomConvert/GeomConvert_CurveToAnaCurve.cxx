@@ -14,30 +14,30 @@
 // performance of this software, and specifically disclaims any responsibility
 // for any damages, special or consequential, connected with its use.
 
-#include <ElCLib.hxx>
-#include <gce_MakeCirc.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <GeomConvert_CurveToAnaCurve.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
-#include <math_Gauss.hxx>
+#include <ElCLib.hpp>
+#include <gce_MakeCirc.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <GeomConvert_CurveToAnaCurve.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
+#include <math_Gauss.hpp>
 
 #include <array>
 

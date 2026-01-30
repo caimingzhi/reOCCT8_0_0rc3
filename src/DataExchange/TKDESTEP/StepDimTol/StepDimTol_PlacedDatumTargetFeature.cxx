@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Standard_Type.hxx>
-#include <StepDimTol_PlacedDatumTargetFeature.hxx>
+#include <Standard_Type.hpp>
+#include <StepDimTol_PlacedDatumTargetFeature.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_PlacedDatumTargetFeature, StepDimTol_DatumTarget)
 

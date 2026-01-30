@@ -12,18 +12,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_BSplineCurve2d.hxx>
+#include <DrawTrSurf_BSplineCurve2d.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_MarkerShape.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_MarkerShape.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_BSplineCurve2d, DrawTrSurf_Curve2d)
 

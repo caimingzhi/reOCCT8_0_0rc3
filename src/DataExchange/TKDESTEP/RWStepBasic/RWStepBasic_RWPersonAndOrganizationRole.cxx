@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWPersonAndOrganizationRole.pxx"
-#include <StepBasic_PersonAndOrganizationRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWPersonAndOrganizationRole.hpp"
+#include <StepBasic_PersonAndOrganizationRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWPersonAndOrganizationRole::RWStepBasic_RWPersonAndOrganizationRole() = default;
 

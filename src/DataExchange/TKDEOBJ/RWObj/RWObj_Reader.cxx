@@ -12,22 +12,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_Reader.hxx>
+#include <RWObj_Reader.hpp>
 
-#include <RWObj_MtlReader.hxx>
+#include <RWObj_MtlReader.hpp>
 
-#include <BRepMesh_DataStructureOfDelaun.hxx>
-#include <BRepMesh_Delaun.hxx>
-#include <gp_XY.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Timer.hxx>
-#include <Standard_CLocaleSentry.hxx>
-#include <Standard_ReadLineBuffer.hxx>
+#include <BRepMesh_DataStructureOfDelaun.hpp>
+#include <BRepMesh_Delaun.hpp>
+#include <gp_XY.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Timer.hpp>
+#include <Standard_CLocaleSentry.hpp>
+#include <Standard_ReadLineBuffer.hpp>
 
 #include <algorithm>
 #include <limits>

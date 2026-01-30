@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepPrim_Builder.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepPrim_Builder.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepVisual_CameraModelD3.hxx>
-#include <StepVisual_ViewVolume.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepVisual_CameraModelD3.hpp>
+#include <StepVisual_ViewVolume.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CameraModelD3, StepVisual_CameraModel)
 

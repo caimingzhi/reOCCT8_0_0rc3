@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc_DatumDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TDF_Attribute.hxx>
-#include <XCAFDoc_Datum.hxx>
+#include <BinMXCAFDoc_DatumDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TDF_Attribute.hpp>
+#include <XCAFDoc_Datum.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_DatumDriver, BinMDF_ADriver)
 

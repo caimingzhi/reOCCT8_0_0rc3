@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib_Cache.hxx>
-#include <BSplCLib.hxx>
+#include <BSplCLib_Cache.hpp>
+#include <BSplCLib.hpp>
 
-#include <NCollection_LocalArray.hxx>
+#include <NCollection_LocalArray.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt2d.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt2d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BSplCLib_Cache, Standard_Transient)
 

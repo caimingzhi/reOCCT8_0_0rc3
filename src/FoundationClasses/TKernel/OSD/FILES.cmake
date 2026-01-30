@@ -3,97 +3,97 @@ set(OCCT_OSD_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_OSD_FILES
   OSD.cxx
-  OSD.hxx
+  OSD.hpp
   OSD_CachedFileSystem.cxx
-  OSD_CachedFileSystem.hxx
+  OSD_CachedFileSystem.hpp
   OSD_Chronometer.cxx
-  OSD_Chronometer.hxx
+  OSD_Chronometer.hpp
   OSD_Directory.cxx
-  OSD_Directory.hxx
+  OSD_Directory.hpp
   OSD_DirectoryIterator.cxx
-  OSD_DirectoryIterator.hxx
+  OSD_DirectoryIterator.hpp
   OSD_Disk.cxx
-  OSD_Disk.hxx
+  OSD_Disk.hpp
   OSD_Environment.cxx
-  OSD_Environment.hxx
+  OSD_Environment.hpp
   OSD_Error.cxx
-  OSD_Error.hxx
-  OSD_ErrorList.hxx
-  OSD_Exception.hxx
-  OSD_Exception_ACCESS_VIOLATION.hxx
-  OSD_Exception_ARRAY_BOUNDS_EXCEEDED.hxx
-  OSD_Exception_CTRL_BREAK.hxx
-  OSD_Exception_ILLEGAL_INSTRUCTION.hxx
-  OSD_Exception_IN_PAGE_ERROR.hxx
-  OSD_Exception_INT_OVERFLOW.hxx
-  OSD_Exception_INVALID_DISPOSITION.hxx
-  OSD_Exception_NONCONTINUABLE_EXCEPTION.hxx
-  OSD_Exception_PRIV_INSTRUCTION.hxx
-  OSD_Exception_STACK_OVERFLOW.hxx
-  OSD_Exception_STATUS_NO_MEMORY.hxx
+  OSD_Error.hpp
+  OSD_ErrorList.hpp
+  OSD_Exception.hpp
+  OSD_Exception_ACCESS_VIOLATION.hpp
+  OSD_Exception_ARRAY_BOUNDS_EXCEEDED.hpp
+  OSD_Exception_CTRL_BREAK.hpp
+  OSD_Exception_ILLEGAL_INSTRUCTION.hpp
+  OSD_Exception_IN_PAGE_ERROR.hpp
+  OSD_Exception_INT_OVERFLOW.hpp
+  OSD_Exception_INVALID_DISPOSITION.hpp
+  OSD_Exception_NONCONTINUABLE_EXCEPTION.hpp
+  OSD_Exception_PRIV_INSTRUCTION.hpp
+  OSD_Exception_STACK_OVERFLOW.hpp
+  OSD_Exception_STATUS_NO_MEMORY.hpp
   OSD_File.cxx
-  OSD_File.hxx
+  OSD_File.hpp
   OSD_FileIterator.cxx
-  OSD_FileIterator.hxx
+  OSD_FileIterator.hpp
   OSD_FileNode.cxx
-  OSD_FileNode.hxx
+  OSD_FileNode.hpp
   OSD_FileSystem.cxx
-  OSD_FileSystem.hxx
+  OSD_FileSystem.hpp
   OSD_FileSystemSelector.cxx
-  OSD_FileSystemSelector.hxx
-  OSD_FromWhere.hxx
-  OSD_Function.hxx
+  OSD_FileSystemSelector.hpp
+  OSD_FromWhere.hpp
+  OSD_Function.hpp
   OSD_Host.cxx
-  OSD_Host.hxx
-  OSD_KindFile.hxx
-  OSD_LoadMode.hxx
+  OSD_Host.hpp
+  OSD_KindFile.hpp
+  OSD_LoadMode.hpp
   OSD_LocalFileSystem.cxx
-  OSD_LocalFileSystem.hxx
-  OSD_LockType.hxx
+  OSD_LocalFileSystem.hpp
+  OSD_LockType.hpp
   OSD_MemInfo.cxx
-  OSD_MemInfo.hxx
-  OSD_OEMType.hxx
+  OSD_MemInfo.hpp
+  OSD_OEMType.hpp
   OSD_OpenFile.cxx
-  OSD_OpenFile.hxx
-  OSD_OpenMode.hxx
-  OSD_OSDError.hxx
+  OSD_OpenFile.hpp
+  OSD_OpenMode.hpp
+  OSD_OSDError.hpp
   OSD_Parallel.cxx
-  OSD_Parallel.hxx
+  OSD_Parallel.hpp
   OSD_Parallel_TBB.cxx
   OSD_Parallel_Threads.cxx
   OSD_Path.cxx
-  OSD_Path.hxx
+  OSD_Path.hpp
   OSD_PerfMeter.cxx
-  OSD_PerfMeter.hxx
+  OSD_PerfMeter.hpp
   OSD_Process.cxx
-  OSD_Process.hxx
+  OSD_Process.hpp
   OSD_Protection.cxx
-  OSD_Protection.hxx
-  OSD_PThread.hxx
+  OSD_Protection.hpp
+  OSD_PThread.hpp
   OSD_SharedLibrary.cxx
-  OSD_SharedLibrary.hxx
-  OSD_SIGBUS.hxx
-  OSD_SIGHUP.hxx
-  OSD_SIGILL.hxx
-  OSD_SIGINT.hxx
-  OSD_SIGKILL.hxx
+  OSD_SharedLibrary.hpp
+  OSD_SIGBUS.hpp
+  OSD_SIGHUP.hpp
+  OSD_SIGILL.hpp
+  OSD_SIGINT.hpp
+  OSD_SIGKILL.hpp
   OSD_signal.cxx
-  OSD_Signal.hxx
-  OSD_SIGQUIT.hxx
-  OSD_SIGSEGV.hxx
-  OSD_SIGSYS.hxx
-  OSD_SingleProtection.hxx
-  OSD_StreamBuffer.hxx
-  OSD_SysType.hxx
+  OSD_Signal.hpp
+  OSD_SIGQUIT.hpp
+  OSD_SIGSEGV.hpp
+  OSD_SIGSYS.hpp
+  OSD_SingleProtection.hpp
+  OSD_StreamBuffer.hpp
+  OSD_SysType.hpp
   OSD_Thread.cxx
-  OSD_Thread.hxx
+  OSD_Thread.hpp
   OSD_ThreadPool.cxx
-  OSD_ThreadPool.hxx
-  OSD_ThreadFunction.hxx
+  OSD_ThreadPool.hpp
+  OSD_ThreadFunction.hpp
   OSD_Timer.cxx
-  OSD_Timer.hxx
-  OSD_WhoAmI.hxx
+  OSD_Timer.hpp
+  OSD_WhoAmI.hpp
   OSD_WNT.cxx
-  OSD_WNT.hxx
-  OSD_SignalMode.hxx
+  OSD_WNT.hpp
+  OSD_SignalMode.hpp
 )

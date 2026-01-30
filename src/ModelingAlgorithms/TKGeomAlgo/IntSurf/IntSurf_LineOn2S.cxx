@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntSurf_LineOn2S.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Standard_Type.hxx>
+#include <IntSurf_LineOn2S.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntSurf_LineOn2S, Standard_Transient)
 

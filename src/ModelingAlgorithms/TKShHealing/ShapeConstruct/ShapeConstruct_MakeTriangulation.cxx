@@ -11,31 +11,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <ShapeConstruct_MakeTriangulation.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_HSequence.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <ShapeConstruct_MakeTriangulation.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_HSequence.hpp>
 
 //=================================================================================================
 

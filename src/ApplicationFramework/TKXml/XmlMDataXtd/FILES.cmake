@@ -3,17 +3,17 @@ set(OCCT_XmlMDataXtd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XmlMDataXtd_FILES
   XmlMDataXtd.cxx
-  XmlMDataXtd.hxx
+  XmlMDataXtd.hpp
   XmlMDataXtd_ConstraintDriver.cxx
-  XmlMDataXtd_ConstraintDriver.hxx
+  XmlMDataXtd_ConstraintDriver.hpp
   XmlMDataXtd_GeometryDriver.cxx
-  XmlMDataXtd_GeometryDriver.hxx
+  XmlMDataXtd_GeometryDriver.hpp
   XmlMDataXtd_PatternStdDriver.cxx
-  XmlMDataXtd_PatternStdDriver.hxx
-  XmlMDataXtd_PositionDriver.hxx
+  XmlMDataXtd_PatternStdDriver.hpp
+  XmlMDataXtd_PositionDriver.hpp
   XmlMDataXtd_PositionDriver.cxx
-  XmlMDataXtd_PresentationDriver.hxx
+  XmlMDataXtd_PresentationDriver.hpp
   XmlMDataXtd_PresentationDriver.cxx
   XmlMDataXtd_TriangulationDriver.cxx
-  XmlMDataXtd_TriangulationDriver.hxx
+  XmlMDataXtd_TriangulationDriver.hpp
 )

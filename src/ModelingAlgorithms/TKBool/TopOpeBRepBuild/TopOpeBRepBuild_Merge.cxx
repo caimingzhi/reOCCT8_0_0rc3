@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepCheck.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepCheck_Status.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <BRepCheck_Result.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_EdgeBuilder.hxx>
-#include <TopOpeBRepBuild_FaceBuilder.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
-#include <TopOpeBRepBuild_ShellFaceSet.hxx>
-#include <TopOpeBRepBuild_SolidBuilder.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRepCheck.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepCheck_Status.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <BRepCheck_Result.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_EdgeBuilder.hpp>
+#include <TopOpeBRepBuild_FaceBuilder.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
+#include <TopOpeBRepBuild_ShellFaceSet.hpp>
+#include <TopOpeBRepBuild_SolidBuilder.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
-// #include <DBRep.hxx>
+// #include <DBRep.hpp>
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceSPS();
 #endif

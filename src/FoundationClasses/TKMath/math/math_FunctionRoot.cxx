@@ -19,10 +19,10 @@
 
 // #endif
 
-#include <math_FunctionRoot.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_FunctionWithDerivative.hxx>
+#include <math_FunctionRoot.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_FunctionWithDerivative.hpp>
 
 class math_MyFunctionSetWithDerivatives : public math_FunctionSetWithDerivatives
 {

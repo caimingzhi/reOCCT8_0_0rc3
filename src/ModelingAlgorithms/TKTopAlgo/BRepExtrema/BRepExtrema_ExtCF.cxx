@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_ExtCF.hxx>
+#include <BRepExtrema_ExtCF.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
 //=================================================================================================
 

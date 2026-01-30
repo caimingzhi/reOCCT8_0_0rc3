@@ -2,32 +2,32 @@
 set(OCCT_IntPolyh_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IntPolyh_FILES
-  IntPolyh_Array.hxx
-  IntPolyh_ArrayOfEdges.hxx
-  IntPolyh_ArrayOfPoints.hxx
-  IntPolyh_ArrayOfPointNormal.hxx
-  IntPolyh_ArrayOfSectionLines.hxx
-  IntPolyh_ArrayOfTangentZones.hxx
-  IntPolyh_ArrayOfTriangles.hxx
+  IntPolyh_Array.hpp
+  IntPolyh_ArrayOfEdges.hpp
+  IntPolyh_ArrayOfPoints.hpp
+  IntPolyh_ArrayOfPointNormal.hpp
+  IntPolyh_ArrayOfSectionLines.hpp
+  IntPolyh_ArrayOfTangentZones.hpp
+  IntPolyh_ArrayOfTriangles.hpp
   IntPolyh_Couple.cxx
-  IntPolyh_Couple.hxx
+  IntPolyh_Couple.hpp
   IntPolyh_Edge.cxx
-  IntPolyh_Edge.hxx
+  IntPolyh_Edge.hpp
   IntPolyh_Intersection.cxx
-  IntPolyh_Intersection.hxx
+  IntPolyh_Intersection.hpp
 
   IntPolyh_MaillageAffinage.cxx
-  IntPolyh_MaillageAffinage.hxx
-  IntPolyh_PMaillageAffinage.hxx
+  IntPolyh_MaillageAffinage.hpp
+  IntPolyh_PMaillageAffinage.hpp
   IntPolyh_Point.cxx
-  IntPolyh_Point.hxx
+  IntPolyh_Point.hpp
   IntPolyh_SectionLine.cxx
-  IntPolyh_SectionLine.hxx
+  IntPolyh_SectionLine.hpp
 
   IntPolyh_StartPoint.cxx
-  IntPolyh_StartPoint.hxx
+  IntPolyh_StartPoint.hpp
   IntPolyh_Tools.cxx
-  IntPolyh_Tools.hxx
+  IntPolyh_Tools.hpp
   IntPolyh_Triangle.cxx
-  IntPolyh_Triangle.hxx
+  IntPolyh_Triangle.hpp
 )

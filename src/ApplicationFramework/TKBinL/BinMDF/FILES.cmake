@@ -3,20 +3,20 @@ set(OCCT_BinMDF_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMDF_FILES
   BinMDF.cxx
-  BinMDF.hxx
+  BinMDF.hpp
   BinMDF_ADriver.cxx
-  BinMDF_ADriver.hxx
-  BinMDF_ADriver.lxx
+  BinMDF_ADriver.hpp
+  BinMDF_ADriver_1.hpp
   BinMDF_ADriverTable.cxx
-  BinMDF_ADriverTable.hxx
-  BinMDF_ADriverTable.lxx
+  BinMDF_ADriverTable.hpp
+  BinMDF_ADriverTable_1.hpp
 
   BinMDF_ReferenceDriver.cxx
-  BinMDF_ReferenceDriver.hxx
+  BinMDF_ReferenceDriver.hpp
 
   BinMDF_TagSourceDriver.cxx
-  BinMDF_TagSourceDriver.hxx
+  BinMDF_TagSourceDriver.hpp
 
   BinMDF_DerivedDriver.cxx
-  BinMDF_DerivedDriver.hxx
+  BinMDF_DerivedDriver.hpp
 )

@@ -17,19 +17,19 @@
 // #58 rln 28.12.98 STEP header fields (NOTE: more parameterization is necessary)
 // pdn 11.01.99 including <stdio.h> for compilation on NT
 
-#include <APIHeaderSection_MakeHeader.hxx>
-#include <HeaderSection_FileDescription.hxx>
-#include <HeaderSection_FileName.hxx>
-#include <HeaderSection_FileSchema.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_MSG.hxx>
-#include <Interface_Version.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepModel.hxx>
+#include <APIHeaderSection_MakeHeader.hpp>
+#include <HeaderSection_FileDescription.hpp>
+#include <HeaderSection_FileName.hpp>
+#include <HeaderSection_FileSchema.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_MSG.hpp>
+#include <Interface_Version.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepModel.hpp>
 
 #include <cstdio>
 // This is a generic header for any STEP scheme

@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_CurveStyle.hxx>
-#include <StepVisual_FillAreaStyle.hxx>
-#include <StepVisual_NullStyleMember.hxx>
-#include <StepVisual_PointStyle.hxx>
-#include <StepVisual_PresentationStyleSelect.hxx>
-#include <StepVisual_SurfaceStyleUsage.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_CurveStyle.hpp>
+#include <StepVisual_FillAreaStyle.hpp>
+#include <StepVisual_NullStyleMember.hpp>
+#include <StepVisual_PointStyle.hpp>
+#include <StepVisual_PresentationStyleSelect.hpp>
+#include <StepVisual_SurfaceStyleUsage.hpp>
 
 StepVisual_PresentationStyleSelect::StepVisual_PresentationStyleSelect() = default;
 

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_EdgeBuilder.hxx>
-#include <TopOpeBRepBuild_PaveClassifier.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
+#include <TopOpeBRepBuild_EdgeBuilder.hpp>
+#include <TopOpeBRepBuild_PaveClassifier.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
 
 //=================================================================================================
 

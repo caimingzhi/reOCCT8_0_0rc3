@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_PntOn2Faces.hxx>
-#include <IntTools_PntOnFace.hxx>
+#include <IntTools_PntOn2Faces.hpp>
+#include <IntTools_PntOnFace.hpp>
 
 //=================================================================================================
 

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_CurveAndTrihedron.hxx>
+#include <GeomFill_CurveAndTrihedron.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <GeomLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <GeomLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CurveAndTrihedron, GeomFill_LocationLaw)
 

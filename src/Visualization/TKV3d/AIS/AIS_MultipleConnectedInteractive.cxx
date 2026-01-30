@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_MultipleConnectedInteractive.hxx>
+#include <AIS_MultipleConnectedInteractive.hpp>
 
-#include <AIS_ConnectedInteractive.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <SelectMgr_EntityOwner.hxx>
+#include <AIS_ConnectedInteractive.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <SelectMgr_EntityOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_MultipleConnectedInteractive, AIS_InteractiveObject)
 

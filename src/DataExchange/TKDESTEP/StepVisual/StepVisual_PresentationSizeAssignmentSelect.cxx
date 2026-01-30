@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_AreaInSet.hxx>
-#include <StepVisual_PresentationArea.hxx>
-#include <StepVisual_PresentationSizeAssignmentSelect.hxx>
-#include <StepVisual_PresentationView.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_AreaInSet.hpp>
+#include <StepVisual_PresentationArea.hpp>
+#include <StepVisual_PresentationSizeAssignmentSelect.hpp>
+#include <StepVisual_PresentationView.hpp>
 
 StepVisual_PresentationSizeAssignmentSelect::StepVisual_PresentationSizeAssignmentSelect() =
   default;

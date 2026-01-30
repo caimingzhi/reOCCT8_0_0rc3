@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <Geom_Plane.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Vec2d.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <Geom_Plane.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Vec2d.hpp>
 
 #include <gtest/gtest.h>
 

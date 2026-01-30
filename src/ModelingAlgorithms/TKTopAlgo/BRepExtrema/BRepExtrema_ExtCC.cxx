@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_ExtCC.hxx>
+#include <BRepExtrema_ExtCC.hpp>
 
-#include <BRep_Tool.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <BRep_Tool.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <BRepAdaptor_Curve.hpp>
 
 //=================================================================================================
 

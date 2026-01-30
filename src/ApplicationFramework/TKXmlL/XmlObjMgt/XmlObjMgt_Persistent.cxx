@@ -15,9 +15,9 @@
 
 // AGV 130202: Changed prototype LDOM_Node::getOwnerDocument()
 
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 //=================================================================================================
 

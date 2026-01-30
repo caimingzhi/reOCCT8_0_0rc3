@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopAbs.hxx>
-#include <TopTrans_CurveTransition.hxx>
+#include <TopAbs.hpp>
+#include <TopTrans_CurveTransition.hpp>
 
 #define GREATER 1
 #define SAME 0

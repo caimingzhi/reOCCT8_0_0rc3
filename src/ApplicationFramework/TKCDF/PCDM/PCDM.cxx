@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Application.hxx>
-#include <CDM_Document.hxx>
-#include <FSD_BinaryFile.hxx>
-#include <FSD_CmpFile.hxx>
-#include <FSD_File.hxx>
-#include <PCDM.hxx>
-#include <PCDM_StorageDriver.hxx>
-#include <Plugin.hxx>
-#include <Resource_Manager.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <CDM_Application.hpp>
+#include <CDM_Document.hpp>
+#include <FSD_BinaryFile.hpp>
+#include <FSD_CmpFile.hpp>
+#include <FSD_File.hpp>
+#include <PCDM.hpp>
+#include <PCDM_StorageDriver.hpp>
+#include <Plugin.hpp>
+#include <Resource_Manager.hpp>
+#include <TCollection_AsciiString.hpp>
 
 //=================================================================================================
 

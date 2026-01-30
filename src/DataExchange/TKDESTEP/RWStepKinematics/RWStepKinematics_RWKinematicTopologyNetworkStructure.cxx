@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWKinematicTopologyNetworkStructure.pxx"
+#include "RWStepKinematics_RWKinematicTopologyNetworkStructure.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_KinematicTopologyNetworkStructure.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepKinematics_KinematicTopologyStructure.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_KinematicTopologyNetworkStructure.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepKinematics_KinematicTopologyStructure.hpp>
 
 //=================================================================================================
 

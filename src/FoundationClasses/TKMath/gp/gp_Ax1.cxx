@@ -19,13 +19,13 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_Ax1.hxx>
+#include <gp_Ax1.hpp>
 
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Dump.hxx>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Dump.hpp>
 
 bool gp_Ax1::IsCoaxial(const gp_Ax1& Other,
                        const double  AngularTolerance,

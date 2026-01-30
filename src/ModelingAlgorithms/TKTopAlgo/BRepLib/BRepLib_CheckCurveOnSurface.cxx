@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepLib_CheckCurveOnSurface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepLib_CheckCurveOnSurface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

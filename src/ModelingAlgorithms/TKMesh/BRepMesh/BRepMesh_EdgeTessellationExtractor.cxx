@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_EdgeTessellationExtractor.hxx>
+#include <BRepMesh_EdgeTessellationExtractor.hpp>
 
-#include <BRepMesh_ShapeTool.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_Face.hxx>
-#include <Poly_Triangulation.hxx>
+#include <BRepMesh_ShapeTool.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_Face.hpp>
+#include <Poly_Triangulation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_EdgeTessellationExtractor, IMeshTools_CurveTessellator)
 

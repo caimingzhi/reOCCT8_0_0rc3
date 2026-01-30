@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineCurve.hxx>
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <HelixGeom_HelixCurve.hxx>
-#include <HelixGeom_Tools.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <HelixGeom_HelixCurve.hpp>
+#include <HelixGeom_Tools.hpp>
 
 //=================================================================================================
 

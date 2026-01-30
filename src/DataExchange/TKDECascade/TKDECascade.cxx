@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEBREP_ConfigurationNode.hxx>
-#include <DEXCAF_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
+#include <DEBREP_ConfigurationNode.hpp>
+#include <DEXCAF_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
 
 //! Plugin factory function to register TKDECascade configuration nodes.
 //! Call PLUGINFACTORY() to register both DEBREP_ConfigurationNode and DEXCAF_ConfigurationNode

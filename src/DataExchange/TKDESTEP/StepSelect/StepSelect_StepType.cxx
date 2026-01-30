@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_InterfaceError.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_ReadWriteModule.hxx>
-#include <StepData_UndefinedEntity.hxx>
-#include <StepSelect_StepType.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Interface_InterfaceError.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_ReadWriteModule.hpp>
+#include <StepData_UndefinedEntity.hpp>
+#include <StepSelect_StepType.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepSelect_StepType, IFSelect_Signature)
 

@@ -15,8 +15,8 @@
 //============================================================================
 //======================================================= IntAna2d_Outils.cxx
 //============================================================================
-#include <IntAna2d_Outils.hxx>
-#include <math_DirectPolynomialRoots.hxx>
+#include <IntAna2d_Outils.hpp>
+#include <math_DirectPolynomialRoots.hpp>
 
 MyDirectPolynomialRoots::MyDirectPolynomialRoots(const double A4,
                                                  const double A3,

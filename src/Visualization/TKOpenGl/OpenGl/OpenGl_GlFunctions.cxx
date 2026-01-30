@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GlNative.hxx>
+#include <OpenGl_GlNative.hpp>
 
-#include <OpenGl_Context.hxx>
+#include <OpenGl_Context.hpp>
 
-#include <OpenGl_ArbTBO.hxx>
-#include <OpenGl_ArbIns.hxx>
-#include <OpenGl_ArbDbg.hxx>
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_ExtGS.hxx>
-#include <OpenGl_ArbSamplerObject.hxx>
-#include <OpenGl_ArbTexBindless.hxx>
-#include <OpenGl_GlCore46.hxx>
+#include <OpenGl_ArbTBO.hpp>
+#include <OpenGl_ArbIns.hpp>
+#include <OpenGl_ArbDbg.hpp>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_ExtGS.hpp>
+#include <OpenGl_ArbSamplerObject.hpp>
+#include <OpenGl_ArbTexBindless.hpp>
+#include <OpenGl_GlCore46.hpp>
 
 #if !defined(HAVE_EGL) && defined(HAVE_XLIB)
   #include <GL/glx.h>

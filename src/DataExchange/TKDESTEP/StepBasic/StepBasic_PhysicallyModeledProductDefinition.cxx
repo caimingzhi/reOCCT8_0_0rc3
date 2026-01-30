@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_PhysicallyModeledProductDefinition.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_PhysicallyModeledProductDefinition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_PhysicallyModeledProductDefinition,
                            StepBasic_ProductDefinition)

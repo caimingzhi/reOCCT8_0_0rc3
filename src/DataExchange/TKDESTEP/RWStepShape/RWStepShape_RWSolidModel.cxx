@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepShape_RWSolidModel.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_SolidModel.hxx>
+#include "RWStepShape_RWSolidModel.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_SolidModel.hpp>
 
 RWStepShape_RWSolidModel::RWStepShape_RWSolidModel() = default;
 

@@ -13,25 +13,25 @@
 
 // #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
 
-#include <IGESData_BasicEditor.hxx>
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_GeneralModule.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_SpecificModule.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <IGESData_BasicEditor.hpp>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_GeneralModule.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_SpecificModule.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IGESData_BasicEditor::IGESData_BasicEditor(const occ::handle<IGESData_Protocol>& protocol)
 {

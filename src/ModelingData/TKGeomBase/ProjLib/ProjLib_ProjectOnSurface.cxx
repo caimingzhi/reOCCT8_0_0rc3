@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ProjLib_ProjectOnSurface.hxx>
+#include <ProjLib_ProjectOnSurface.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Approx_FitAndDivide.hxx>
-#include <BSplCLib.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Precision.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Approx_FitAndDivide.hpp>
+#include <BSplCLib.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Precision.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 //=======================================================================
 // function : OnSurface_Value

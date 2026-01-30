@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend_MsgRegistrator.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend_MsgRegistrator.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeProcess_ShapeContext, ShapeProcess_Context)
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math.hxx>
-#include <Standard_Assert.hxx>
-#include <BRepGProp_Face.hxx>
-#include <BRepGProp_Domain.hxx>
-#include <BRepGProp_Gauss.hxx>
+#include <math.hpp>
+#include <Standard_Assert.hpp>
+#include <BRepGProp_Face.hpp>
+#include <BRepGProp_Domain.hpp>
+#include <BRepGProp_Gauss.hpp>
 
 // If the following is defined the error of algorithm is calculated by static moments
 #define IS_MIN_DIM

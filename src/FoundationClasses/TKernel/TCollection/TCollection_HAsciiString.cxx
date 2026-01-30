@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NegativeValue.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TCollection_HExtendedString.hxx>
+#include <Standard_NegativeValue.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TCollection_HExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TCollection_HAsciiString, Standard_Transient)
 

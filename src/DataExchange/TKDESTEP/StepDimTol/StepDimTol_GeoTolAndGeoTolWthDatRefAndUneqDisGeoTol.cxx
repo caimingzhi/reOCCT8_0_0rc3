@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_GeometricToleranceWithDatumReference.hxx>
-#include <StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol.hxx>
-#include <StepDimTol_UnequallyDisposedGeometricTolerance.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepDimTol_GeometricToleranceWithDatumReference.hpp>
+#include <StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol.hpp>
+#include <StepDimTol_UnequallyDisposedGeometricTolerance.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol,
                            StepDimTol_GeoTolAndGeoTolWthDatRef)

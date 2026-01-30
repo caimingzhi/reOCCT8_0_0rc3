@@ -16,7 +16,7 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <Standard_Type.hxx>
+  #include <Standard_Type.hpp>
 
 static bool TopOpeBRepBuild_traceCU = false; // dump curves
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AutoDesignOrganizationItem.hxx>
-#include <StepBasic_Document.hxx>
-#include <StepBasic_PhysicallyModeledProductDefinition.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AutoDesignOrganizationItem.hpp>
+#include <StepBasic_Document.hpp>
+#include <StepBasic_PhysicallyModeledProductDefinition.hpp>
 
 StepAP214_AutoDesignOrganizationItem::StepAP214_AutoDesignOrganizationItem() = default;
 

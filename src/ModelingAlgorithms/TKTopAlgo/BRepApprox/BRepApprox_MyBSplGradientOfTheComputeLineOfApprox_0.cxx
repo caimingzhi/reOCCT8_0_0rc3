@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_MyBSplGradientOfTheComputeLineOfApprox.hxx>
+#include <BRepApprox_MyBSplGradientOfTheComputeLineOfApprox.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <BRepApprox_TheMultiLineOfApprox.hxx>
-#include <BRepApprox_TheMultiLineToolOfApprox.hxx>
-#include <BRepApprox_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <BRepApprox_TheMultiLineOfApprox.hpp>
+#include <BRepApprox_TheMultiLineToolOfApprox.hpp>
+#include <BRepApprox_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
 
 #define MultiLine BRepApprox_TheMultiLineOfApprox
-#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hxx>
+#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hpp>
 #define ToolLine BRepApprox_TheMultiLineToolOfApprox
-#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hxx>
+#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hpp>
 #define AppParCurves_BSpParLeastSquare                                                             \
   BRepApprox_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfApprox
 #define AppParCurves_BSpParLeastSquare_hxx                                                         \
-  <BRepApprox_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
+  <BRepApprox_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
 #define AppParCurves_BSpParFunction                                                                \
   BRepApprox_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfApprox
 #define AppParCurves_BSpParFunction_hxx                                                            \
-  <BRepApprox_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
+  <BRepApprox_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
 #define AppParCurves_BSpGradient_BFGS                                                              \
   BRepApprox_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfApprox
 #define AppParCurves_BSpGradient_BFGS_hxx                                                          \
-  <BRepApprox_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfApprox.hxx>
+  <BRepApprox_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfApprox.hpp>
 #define AppParCurves_BSpGradient BRepApprox_MyBSplGradientOfTheComputeLineOfApprox
-#define AppParCurves_BSpGradient_hxx <BRepApprox_MyBSplGradientOfTheComputeLineOfApprox.hxx>
-#include <AppParCurves_BSpGradient.gxx>
+#define AppParCurves_BSpGradient_hxx <BRepApprox_MyBSplGradientOfTheComputeLineOfApprox.hpp>
+#include <AppParCurves_BSpGradient.hpp>

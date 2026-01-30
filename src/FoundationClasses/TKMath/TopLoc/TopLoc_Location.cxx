@@ -16,11 +16,11 @@
 
 #define No_Standard_NoSuchObject
 
-#include <gp_Trsf.hxx>
-#include <Standard_Dump.hxx>
-#include <TopLoc_Datum3D.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopLoc_SListOfItemLocation.hxx>
+#include <gp_Trsf.hpp>
+#include <Standard_Dump.hpp>
+#include <TopLoc_Datum3D.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopLoc_SListOfItemLocation.hpp>
 
 //=================================================================================================
 

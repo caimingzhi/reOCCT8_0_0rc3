@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWTextLiteral.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_TextLiteral.hxx>
-#include <StepVisual_TextPath.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWTextLiteral.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_TextLiteral.hpp>
+#include <StepVisual_TextPath.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepVisual_RWTextPath.pxx"
+#include "RWStepVisual_RWTextPath.hpp"
 
 RWStepVisual_RWTextLiteral::RWStepVisual_RWTextLiteral() = default;
 

@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Standard_Type.hxx>
-#include <StepDimTol_Datum.hxx>
-#include <StepDimTol_DatumReference.hxx>
+#include <Standard_Type.hpp>
+#include <StepDimTol_Datum.hpp>
+#include <StepDimTol_DatumReference.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumReference, Standard_Transient)
 

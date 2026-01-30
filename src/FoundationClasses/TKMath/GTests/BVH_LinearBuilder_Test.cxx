@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_LinearBuilder.hxx>
-#include <BVH_BoxSet.hxx>
-#include <Precision.hxx>
+#include <BVH_LinearBuilder.hpp>
+#include <BVH_BoxSet.hpp>
+#include <Precision.hpp>
 
 TEST(BVH_LinearBuilderTest, DefaultConstructor)
 {

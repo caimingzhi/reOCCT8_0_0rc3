@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d_BndBoxTree.hxx>
+#include <BRepClass3d_BndBoxTree.hpp>
 
-#include <TopoDS.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <Extrema_ExtCC.hxx>
+#include <TopoDS.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <Extrema_ExtCC.hpp>
 
 //=================================================================================================
 

@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_PositionalLight.hxx>
+#include <V3d_PositionalLight.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_PositionalLight, V3d_PositionLight)
 

@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Ax1.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <GProp.hxx>
-#include <GProp_GProps.hxx>
-#include <GProp_PrincipalProps.hxx>
-#include <math_Jacobi.hxx>
-#include <Standard_DomainError.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <GProp.hpp>
+#include <GProp_GProps.hpp>
+#include <GProp_PrincipalProps.hpp>
+#include <math_Jacobi.hpp>
+#include <Standard_DomainError.hpp>
 
 GProp_GProps::GProp_GProps()
     : g(gp::Origin()),

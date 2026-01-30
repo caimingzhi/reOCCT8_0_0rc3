@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_ShapeProximity.hxx>
+#include <BRepExtrema_ShapeProximity.hpp>
 
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
 
 // Assign a map of sub-shapes (edges/faces) of a given shape
 static bool initSubShapes(const TopoDS_Shape&                   theShape,

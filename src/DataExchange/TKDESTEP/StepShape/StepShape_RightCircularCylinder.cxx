@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepShape_RightCircularCylinder.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepShape_RightCircularCylinder.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_RightCircularCylinder, StepGeom_GeometricRepresentationItem)
 

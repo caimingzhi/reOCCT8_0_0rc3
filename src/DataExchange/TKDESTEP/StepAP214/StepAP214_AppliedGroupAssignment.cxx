@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepAP214_AppliedGroupAssignment.hxx>
-#include <StepBasic_Group.hxx>
+#include <StepAP214_AppliedGroupAssignment.hpp>
+#include <StepBasic_Group.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedGroupAssignment, StepBasic_GroupAssignment)
 

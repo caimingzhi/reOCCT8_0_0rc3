@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_OBB.hxx>
+#include <Bnd_OBB.hpp>
 
-#include <Bnd_Tools.hxx>
-#include <Bnd_Range.hxx>
+#include <Bnd_Tools.hpp>
+#include <Bnd_Range.hpp>
 
-#include <BVH_BoxSet.hxx>
-#include <BVH_LinearBuilder.hxx>
+#include <BVH_BoxSet.hpp>
+#include <BVH_LinearBuilder.hpp>
 
-#include <BVH_Traverse.hxx>
+#include <BVH_Traverse.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <Precision.hxx>
-#include <Standard_Dump.hxx>
+#include <NCollection_Array1.hpp>
+#include <Precision.hpp>
+#include <Standard_Dump.hpp>
 
 namespace
 {

@@ -13,23 +13,23 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom2dHash_CurveHasher.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom2dHash_CurveHasher.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 class Geom2dHash_CurveHasherTest : public ::testing::Test
 {

@@ -14,14 +14,14 @@
 // sln 09.10.2001. BUC61003. Correction of looking for items of complex entity in case of them  do
 // not saticfy to alphabetical order
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit.pxx"
-#include <StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_PlaneAngleUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit.hpp"
+#include <StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_PlaneAngleUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit::
   RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit() = default;

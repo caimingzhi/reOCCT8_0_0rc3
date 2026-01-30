@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_ALineToWLine.hxx>
+#include <IntPatch_ALineToWLine.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <ElSLib.hxx>
-#include <IntPatch_ALine.hxx>
-#include <IntPatch_Point.hxx>
-#include <IntPatch_SpecialPoints.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_LineOn2S.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ElSLib.hpp>
+#include <IntPatch_ALine.hpp>
+#include <IntPatch_Point.hpp>
+#include <IntPatch_SpecialPoints.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_LineOn2S.hpp>
 
 //=================================================================================================
 

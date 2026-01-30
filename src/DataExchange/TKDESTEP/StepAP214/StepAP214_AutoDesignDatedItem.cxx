@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AutoDesignDateAndPersonAssignment.hxx>
-#include <StepAP214_AutoDesignDatedItem.hxx>
-#include <StepBasic_ApprovalPersonOrganization.hxx>
-#include <StepBasic_ProductDefinitionEffectivity.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AutoDesignDateAndPersonAssignment.hpp>
+#include <StepAP214_AutoDesignDatedItem.hpp>
+#include <StepBasic_ApprovalPersonOrganization.hpp>
+#include <StepBasic_ProductDefinitionEffectivity.hpp>
 
 StepAP214_AutoDesignDatedItem::StepAP214_AutoDesignDatedItem() = default;
 

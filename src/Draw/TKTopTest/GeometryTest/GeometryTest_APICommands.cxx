@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_Appli.hxx>
-#include <GeometryTest.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <GeomAPI_ExtremaCurveSurface.hxx>
-#include <GeomAPI_ExtremaSurfaceSurface.hxx>
-#include <GeomAPI_PointsToBSpline.hxx>
-#include <GeomAPI_PointsToBSplineSurface.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_MarkerShape.hxx>
-#include <Message.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <Precision.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_Appli.hpp>
+#include <GeometryTest.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <GeomAPI_ExtremaCurveSurface.hpp>
+#include <GeomAPI_ExtremaSurfaceSurface.hpp>
+#include <GeomAPI_PointsToBSpline.hpp>
+#include <GeomAPI_PointsToBSplineSurface.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_MarkerShape.hpp>
+#include <Message.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <Precision.hpp>
 #include <cstdio>
 
 #ifdef _WIN32

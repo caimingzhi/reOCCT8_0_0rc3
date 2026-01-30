@@ -14,11 +14,11 @@
 
 // Modif jcv 14/12/90 suite a la premiere revue de projet
 
-#include <gp_Hypr.hxx>
+#include <gp_Hypr.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
 
 void gp_Hypr::Mirror(const gp_Pnt& P) noexcept
 {

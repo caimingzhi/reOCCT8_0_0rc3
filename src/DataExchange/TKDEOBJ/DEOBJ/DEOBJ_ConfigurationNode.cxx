@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEOBJ_ConfigurationNode.hxx>
+#include <DEOBJ_ConfigurationNode.hpp>
 
-#include <DEOBJ_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
+#include <DEOBJ_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEOBJ_ConfigurationNode, DE_ConfigurationNode)
 

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
+#include <GeomInt_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
 
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_TheMultiLineToolOfWLApprox.hxx>
-#include <GeomInt_MyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_TheMultiLineToolOfWLApprox.hpp>
+#include <GeomInt_MyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <GeomInt_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <GeomInt_ResConstraintOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <GeomInt_ParFunctionOfMyGradientOfTheComputeLineBezierOfWLApprox.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
 
 GeomInt_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfWLApprox::
   GeomInt_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfWLApprox(

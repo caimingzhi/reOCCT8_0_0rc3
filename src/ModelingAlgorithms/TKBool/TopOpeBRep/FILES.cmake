@@ -4,89 +4,89 @@ set(OCCT_TopOpeBRep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_TopOpeBRep_FILES
   FILES
   TopOpeBRep.cxx
-  TopOpeBRep.hxx
+  TopOpeBRep.hpp
 
   TopOpeBRep_Bipoint.cxx
-  TopOpeBRep_Bipoint.hxx
+  TopOpeBRep_Bipoint.hpp
 
-  TopOpeBRep_define.hxx
+  TopOpeBRep_define.hpp
   TopOpeBRep_DSFiller.cxx
-  TopOpeBRep_DSFiller.hxx
+  TopOpeBRep_DSFiller.hpp
   TopOpeBRep_EdgesFiller.cxx
-  TopOpeBRep_EdgesFiller.hxx
+  TopOpeBRep_EdgesFiller.hpp
   TopOpeBRep_EdgesIntersector.cxx
-  TopOpeBRep_EdgesIntersector.hxx
+  TopOpeBRep_EdgesIntersector.hpp
   TopOpeBRep_EdgesIntersector_1.cxx
   TopOpeBRep_FaceEdgeFiller.cxx
-  TopOpeBRep_FaceEdgeFiller.hxx
+  TopOpeBRep_FaceEdgeFiller.hpp
   TopOpeBRep_FaceEdgeFiller_DEB.cxx
   TopOpeBRep_FaceEdgeIntersector.cxx
-  TopOpeBRep_FaceEdgeIntersector.hxx
+  TopOpeBRep_FaceEdgeIntersector.hpp
   TopOpeBRep_FacesFiller.cxx
-  TopOpeBRep_FacesFiller.hxx
+  TopOpeBRep_FacesFiller.hpp
   TopOpeBRep_FacesFiller_1.cxx
   TopOpeBRep_FacesIntersector.cxx
-  TopOpeBRep_FacesIntersector.hxx
+  TopOpeBRep_FacesIntersector.hpp
   TopOpeBRep_FFDumper.cxx
-  TopOpeBRep_FFDumper.hxx
+  TopOpeBRep_FFDumper.hpp
   TopOpeBRep_FFTransitionTool.cxx
-  TopOpeBRep_FFTransitionTool.hxx
+  TopOpeBRep_FFTransitionTool.hpp
   TopOpeBRep_GeomTool.cxx
-  TopOpeBRep_GeomTool.hxx
+  TopOpeBRep_GeomTool.hpp
 
   TopOpeBRep_Hctxee2d.cxx
-  TopOpeBRep_Hctxee2d.hxx
+  TopOpeBRep_Hctxee2d.hpp
   TopOpeBRep_Hctxff2d.cxx
-  TopOpeBRep_Hctxff2d.hxx
+  TopOpeBRep_Hctxff2d.hpp
   TopOpeBRep_kpart.cxx
   TopOpeBRep_LineInter.cxx
-  TopOpeBRep_LineInter.hxx
-  TopOpeBRep_LineInter.lxx
+  TopOpeBRep_LineInter.hpp
+  TopOpeBRep_LineInter_1.hpp
 
   TopOpeBRep_mergePDS.cxx
-  TopOpeBRep_P2Dstatus.hxx
-  TopOpeBRep_PEdgesIntersector.hxx
-  TopOpeBRep_PFacesFiller.hxx
-  TopOpeBRep_PFacesIntersector.hxx
-  TopOpeBRep_PIntRes2d_IntersectionPoint.hxx
-  TopOpeBRep_PLineInter.hxx
+  TopOpeBRep_P2Dstatus.hpp
+  TopOpeBRep_PEdgesIntersector.hpp
+  TopOpeBRep_PFacesFiller.hpp
+  TopOpeBRep_PFacesIntersector.hpp
+  TopOpeBRep_PIntRes2d_IntersectionPoint.hpp
+  TopOpeBRep_PLineInter.hpp
   TopOpeBRep_Point2d.cxx
-  TopOpeBRep_Point2d.hxx
-  TopOpeBRep_Point2d.lxx
+  TopOpeBRep_Point2d.hpp
+  TopOpeBRep_Point2d_1.hpp
   TopOpeBRep_PointClassifier.cxx
-  TopOpeBRep_PointClassifier.hxx
+  TopOpeBRep_PointClassifier.hpp
   TopOpeBRep_PointGeomTool.cxx
-  TopOpeBRep_PointGeomTool.hxx
-  TopOpeBRep_PPntOn2S.hxx
+  TopOpeBRep_PointGeomTool.hpp
+  TopOpeBRep_PPntOn2S.hpp
   TopOpeBRep_ProcessGR.cxx
   TopOpeBRep_ProcessSectionEdges.cxx
-  TopOpeBRep_PThePointOfIntersection.hxx
+  TopOpeBRep_PThePointOfIntersection.hpp
 
   TopOpeBRep_ShapeIntersector.cxx
-  TopOpeBRep_ShapeIntersector.hxx
+  TopOpeBRep_ShapeIntersector.hpp
   TopOpeBRep_ShapeIntersector2d.cxx
-  TopOpeBRep_ShapeIntersector2d.hxx
+  TopOpeBRep_ShapeIntersector2d.hpp
   TopOpeBRep_ShapeScanner.cxx
-  TopOpeBRep_ShapeScanner.hxx
+  TopOpeBRep_ShapeScanner.hpp
   TopOpeBRep_sort.cxx
   TopOpeBRep_trace.cxx
   TopOpeBRep_traceALWL.cxx
   TopOpeBRep_traceBOOPNINT.cxx
   TopOpeBRep_traceSIFF.cxx
-  TopOpeBRep_traceSIFF.hxx
-  TopOpeBRep_TypeLineCurve.hxx
+  TopOpeBRep_traceSIFF.hpp
+  TopOpeBRep_TypeLineCurve.hpp
   TopOpeBRep_VPointInter.cxx
-  TopOpeBRep_VPointInter.hxx
-  TopOpeBRep_VPointInter.lxx
+  TopOpeBRep_VPointInter.hpp
+  TopOpeBRep_VPointInter_1.hpp
   TopOpeBRep_VPointInterClassifier.cxx
-  TopOpeBRep_VPointInterClassifier.hxx
+  TopOpeBRep_VPointInterClassifier.hpp
   TopOpeBRep_VPointInterIterator.cxx
-  TopOpeBRep_VPointInterIterator.hxx
+  TopOpeBRep_VPointInterIterator.hpp
   TopOpeBRep_vpr.cxx
   TopOpeBRep_vprclo.cxx
   TopOpeBRep_vprdeg.cxx
   TopOpeBRep_WPointInter.cxx
-  TopOpeBRep_WPointInter.hxx
+  TopOpeBRep_WPointInter.hpp
   TopOpeBRep_WPointInterIterator.cxx
-  TopOpeBRep_WPointInterIterator.hxx
+  TopOpeBRep_WPointInterIterator.hpp
 )

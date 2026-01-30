@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrim_Torus.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRepPrim_Torus.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

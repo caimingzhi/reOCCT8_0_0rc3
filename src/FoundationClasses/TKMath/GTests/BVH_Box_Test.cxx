@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_Box.hxx>
-#include <Precision.hxx>
+#include <BVH_Box.hpp>
+#include <Precision.hpp>
 
 TEST(BVH_BoxTest, DefaultConstructor)
 {

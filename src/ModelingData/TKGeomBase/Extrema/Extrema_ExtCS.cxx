@@ -16,23 +16,23 @@
 
 //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134
 
-#include <Adaptor3d_Surface.hxx>
-#include <Bnd_Box.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Extrema_ExtCS.hxx>
-#include <Extrema_GenExtCS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <Extrema_ExtPS.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Bnd_Box.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Extrema_ExtCS.hpp>
+#include <Extrema_GenExtCS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <Extrema_ExtPS.hpp>
 
 Extrema_ExtCS::Extrema_ExtCS()
     : myS(nullptr),

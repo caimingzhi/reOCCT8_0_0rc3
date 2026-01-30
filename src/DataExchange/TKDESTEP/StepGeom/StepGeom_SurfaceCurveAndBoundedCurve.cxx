@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_BoundedCurve.hxx>
-#include <StepGeom_SurfaceCurveAndBoundedCurve.hxx>
+#include <StepGeom_BoundedCurve.hpp>
+#include <StepGeom_SurfaceCurveAndBoundedCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_SurfaceCurveAndBoundedCurve, StepGeom_SurfaceCurve)
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepGeom_GeometricRepresentationItem.hxx>
-#include <StepRepr_FunctionallyDefinedTransformation.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_Transformation.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepGeom_GeometricRepresentationItem.hpp>
+#include <StepRepr_FunctionallyDefinedTransformation.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_Transformation.hpp>
 
 StepRepr_Transformation::StepRepr_Transformation() = default;
 

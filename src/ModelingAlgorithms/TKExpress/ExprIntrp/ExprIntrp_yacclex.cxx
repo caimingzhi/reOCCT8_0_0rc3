@@ -15,7 +15,7 @@
 // commercial license or contractual agreement.
 
 #include <cstring>
-#include <ExprIntrp_yaccintrf.hxx>
+#include <ExprIntrp_yaccintrf.hpp>
 
 static TCollection_AsciiString ExprIntrp_curres;
 static int                     ExprIntrp_degree;

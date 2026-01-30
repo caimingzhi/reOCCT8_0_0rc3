@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepShape_BoxDomain.hxx>
+#include <Standard_Type.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepShape_BoxDomain.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_BoxDomain, Standard_Transient)
 

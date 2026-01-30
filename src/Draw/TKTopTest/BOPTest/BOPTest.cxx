@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <GeometryTest.hxx>
-#include <GeomliteTest.hxx>
-#include <HLRTest.hxx>
-#include <NCollection_Map.hxx>
-#include <MeshTest.hxx>
-#include <Message_Msg.hxx>
-#include <SWDRAW.hxx>
+#include <BOPTest.hpp>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <GeometryTest.hpp>
+#include <GeomliteTest.hpp>
+#include <HLRTest.hpp>
+#include <NCollection_Map.hpp>
+#include <MeshTest.hpp>
+#include <Message_Msg.hpp>
+#include <SWDRAW.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPTest_Objects.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPTest_Objects.hpp>
 
 //=================================================================================================
 

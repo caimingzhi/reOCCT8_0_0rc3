@@ -18,15 +18,15 @@
 // Version	Date		Purpose
 //		0.0	Sep  8 1997	Creation
 
-#include <TDF_AttributeDelta.hxx>
+#include <TDF_AttributeDelta.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_AttributeDelta, Standard_Transient)
 

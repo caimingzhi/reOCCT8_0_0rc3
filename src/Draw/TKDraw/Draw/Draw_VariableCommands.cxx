@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Axis2D.hxx>
-#include <Draw_Axis3D.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Draw_Grid.hxx>
-#include <Draw_Number.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Message.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Map.hxx>
-#include <Standard_SStream.hxx>
-#include <Standard_Macro.hxx>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Axis2D.hpp>
+#include <Draw_Axis3D.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Draw_Grid.hpp>
+#include <Draw_Number.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Message.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Map.hpp>
+#include <Standard_SStream.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_NotImplemented.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Standard_NotImplemented.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <ios>
 #ifdef _WIN32
@@ -43,9 +43,9 @@ extern Draw_Viewer dout;
 #include <tcl.h>
 #include <cerrno>
 
-#include <OSD_Environment.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_OpenFile.hxx>
+#include <OSD_Environment.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_OpenFile.hpp>
 
 bool Draw_ParseFailed = true;
 

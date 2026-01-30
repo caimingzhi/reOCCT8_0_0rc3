@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_ProductDefinitionRelationshipKinematics.hxx>
+#include <StepKinematics_ProductDefinitionRelationshipKinematics.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ProductDefinitionRelationshipKinematics,
                            StepRepr_PropertyDefinition)

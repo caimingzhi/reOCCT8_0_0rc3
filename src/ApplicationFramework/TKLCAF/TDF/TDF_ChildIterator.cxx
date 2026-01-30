@@ -18,9 +18,9 @@
 // Version	Date		Purpose
 //		0.0	Feb  7 1997	Creation
 
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_LabelNode.hxx>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_LabelNode.hpp>
 
 #define ChildIterator_UpToBrother                                                                  \
   {                                                                                                \

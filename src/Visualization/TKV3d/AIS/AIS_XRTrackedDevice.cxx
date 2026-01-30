@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_XRTrackedDevice.hxx>
+#include <AIS_XRTrackedDevice.hpp>
 
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Image_Texture.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <SelectMgr_EntityOwner.hxx>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Image_Texture.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <SelectMgr_EntityOwner.hpp>
 
 //! Texture holder.
 class AIS_XRTrackedDevice::XRTexture : public Graphic3d_Texture2D

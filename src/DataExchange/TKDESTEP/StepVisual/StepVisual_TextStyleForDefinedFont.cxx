@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepVisual_Colour.hxx>
-#include <StepVisual_TextStyleForDefinedFont.hxx>
+#include <Standard_Type.hpp>
+#include <StepVisual_Colour.hpp>
+#include <StepVisual_TextStyleForDefinedFont.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TextStyleForDefinedFont, Standard_Transient)
 

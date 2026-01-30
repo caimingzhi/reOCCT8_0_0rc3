@@ -15,14 +15,14 @@
 
 // modified     13.04.2009 Sergey Zaritchny
 
-#include <BinMDataXtd_ConstraintDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDF_Attribute.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <BinMDataXtd_ConstraintDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDF_Attribute.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_ConstraintDriver, BinMDF_ADriver)
 

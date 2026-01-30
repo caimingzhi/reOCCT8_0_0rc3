@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_DatumReferenceCompartment.hxx>
+#include <StepDimTol_DatumReferenceCompartment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumReferenceCompartment, StepDimTol_GeneralDatumReference)
 

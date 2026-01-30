@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <SWDRAW.hxx>
-#include <SWDRAW_ShapeExtend.hxx>
-#include <TopoDS_Shape.hxx>
+#include <DBRep.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <SWDRAW.hpp>
+#include <SWDRAW_ShapeExtend.hpp>
+#include <TopoDS_Shape.hpp>
 
 static int sortcompound(Draw_Interpretor& di, int argc, const char** argv)
 {

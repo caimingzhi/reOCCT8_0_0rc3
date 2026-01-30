@@ -15,25 +15,25 @@
 // commercial license or contractual agreement.
 
 // Include self.
-#include <BRepOffset_SimpleOffset.hxx>
+#include <BRepOffset_SimpleOffset.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_ValidateEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepOffset.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <NCollection_Vector.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_ValidateEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepOffset.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <NCollection_Vector.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

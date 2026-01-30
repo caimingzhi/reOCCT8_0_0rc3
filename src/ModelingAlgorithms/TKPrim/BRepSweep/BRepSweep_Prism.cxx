@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepSweep_Prism.hxx>
-#include <BRepSweep_Translation.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Sweep_NumShape.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepSweep_Prism.hpp>
+#include <BRepSweep_Translation.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Sweep_NumShape.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

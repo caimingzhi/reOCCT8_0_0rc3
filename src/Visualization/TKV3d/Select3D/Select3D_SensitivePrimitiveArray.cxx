@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitivePrimitiveArray.hxx>
+#include <Select3D_SensitivePrimitiveArray.hpp>
 
-#include <OSD_Parallel.hxx>
+#include <OSD_Parallel.hpp>
 
 #include <atomic>
 

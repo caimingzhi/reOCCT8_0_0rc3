@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HeaderSection_FileDescription.hxx>
-#include <HeaderSection_FileName.hxx>
-#include <HeaderSection_FileSchema.hxx>
-#include <HeaderSection_Protocol.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_UndefinedEntity.hxx>
+#include <HeaderSection_FileDescription.hpp>
+#include <HeaderSection_FileName.hpp>
+#include <HeaderSection_FileSchema.hpp>
+#include <HeaderSection_Protocol.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_UndefinedEntity.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HeaderSection_Protocol, StepData_Protocol)
 

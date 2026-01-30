@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_Map.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Shape.hxx>
+#include <ChFiDS_Map.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

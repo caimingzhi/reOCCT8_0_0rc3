@@ -3,129 +3,129 @@ set(OCCT_HLRBRep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_HLRBRep_FILES
   HLRBRep.cxx
-  HLRBRep.hxx
+  HLRBRep.hpp
   HLRBRep_Algo.cxx
-  HLRBRep_Algo.hxx
+  HLRBRep_Algo.hpp
   HLRBRep_AreaLimit.cxx
-  HLRBRep_AreaLimit.hxx
+  HLRBRep_AreaLimit.hpp
 
   HLRBRep_BCurveTool.cxx
-  HLRBRep_BCurveTool.hxx
-  HLRBRep_BCurveTool.lxx
-  HLRBRep_BiPnt2D.hxx
-  HLRBRep_BiPoint.hxx
+  HLRBRep_BCurveTool.hpp
+  HLRBRep_BCurveTool_1.hpp
+  HLRBRep_BiPnt2D.hpp
+  HLRBRep_BiPoint.hpp
   HLRBRep_BSurfaceTool.cxx
-  HLRBRep_BSurfaceTool.hxx
-  HLRBRep_BSurfaceTool.lxx
-  HLRBRep_CInter.hxx
+  HLRBRep_BSurfaceTool.hpp
+  HLRBRep_BSurfaceTool_1.hpp
+  HLRBRep_CInter.hpp
   HLRBRep_CInter_0.cxx
-  HLRBRep_CLProps.hxx
+  HLRBRep_CLProps.hpp
   HLRBRep_CLProps_0.cxx
-  HLRBRep_CLPropsATool.hxx
-  HLRBRep_CLPropsATool.lxx
+  HLRBRep_CLPropsATool.hpp
+  HLRBRep_CLPropsATool_1.hpp
   HLRBRep_Curve.cxx
-  HLRBRep_Curve.hxx
-  HLRBRep_Curve.lxx
+  HLRBRep_Curve.hpp
+  HLRBRep_Curve_1.hpp
   HLRBRep_CurveTool.cxx
-  HLRBRep_CurveTool.hxx
-  HLRBRep_CurveTool.lxx
+  HLRBRep_CurveTool.hpp
+  HLRBRep_CurveTool_1.hpp
   HLRBRep_Data.cxx
-  HLRBRep_Data.hxx
-  HLRBRep_Data.lxx
+  HLRBRep_Data.hpp
+  HLRBRep_Data_1.hpp
   HLRBRep_EdgeBuilder.cxx
-  HLRBRep_EdgeBuilder.hxx
+  HLRBRep_EdgeBuilder.hpp
   HLRBRep_EdgeData.cxx
-  HLRBRep_EdgeData.hxx
-  HLRBRep_EdgeData.lxx
+  HLRBRep_EdgeData.hpp
+  HLRBRep_EdgeData_1.hpp
   HLRBRep_EdgeFaceTool.cxx
-  HLRBRep_EdgeFaceTool.hxx
+  HLRBRep_EdgeFaceTool.hpp
   HLRBRep_EdgeIList.cxx
-  HLRBRep_EdgeIList.hxx
+  HLRBRep_EdgeIList.hpp
   HLRBRep_EdgeInterferenceTool.cxx
-  HLRBRep_EdgeInterferenceTool.hxx
-  HLRBRep_EdgeInterferenceTool.lxx
-  HLRBRep_ExactIntersectionPointOfTheIntPCurvePCurveOfCInter.hxx
+  HLRBRep_EdgeInterferenceTool.hpp
+  HLRBRep_EdgeInterferenceTool_1.hpp
+  HLRBRep_ExactIntersectionPointOfTheIntPCurvePCurveOfCInter.hpp
   HLRBRep_ExactIntersectionPointOfTheIntPCurvePCurveOfCInter_0.cxx
   HLRBRep_FaceData.cxx
-  HLRBRep_FaceData.hxx
-  HLRBRep_FaceData.lxx
+  HLRBRep_FaceData.hpp
+  HLRBRep_FaceData_1.hpp
   HLRBRep_FaceIterator.cxx
-  HLRBRep_FaceIterator.hxx
-  HLRBRep_FaceIterator.lxx
+  HLRBRep_FaceIterator.hpp
+  HLRBRep_FaceIterator_1.hpp
   HLRBRep_Hider.cxx
-  HLRBRep_Hider.hxx
+  HLRBRep_Hider.hpp
   HLRBRep_HLRToShape.cxx
-  HLRBRep_HLRToShape.hxx
-  HLRBRep_HLRToShape.lxx
-  HLRBRep_IntConicCurveOfCInter.hxx
+  HLRBRep_HLRToShape.hpp
+  HLRBRep_HLRToShape_1.hpp
+  HLRBRep_IntConicCurveOfCInter.hpp
   HLRBRep_IntConicCurveOfCInter_0.cxx
-  HLRBRep_InterCSurf.hxx
+  HLRBRep_InterCSurf.hpp
   HLRBRep_InterCSurf.cxx
   HLRBRep_InternalAlgo.cxx
-  HLRBRep_InternalAlgo.hxx
+  HLRBRep_InternalAlgo.hpp
   HLRBRep_Intersector.cxx
-  HLRBRep_Intersector.hxx
-  HLRBRep_LineTool.hxx
-  HLRBRep_LineTool.lxx
+  HLRBRep_Intersector.hpp
+  HLRBRep_LineTool.hpp
+  HLRBRep_LineTool_1.hpp
 
-  HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hxx
+  HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hpp
   HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter_0.cxx
-  HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter.hxx
+  HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter.hpp
   HLRBRep_PolyAlgo.cxx
-  HLRBRep_PolyAlgo.hxx
+  HLRBRep_PolyAlgo.hpp
   HLRBRep_PolyHLRToShape.cxx
-  HLRBRep_PolyHLRToShape.hxx
-  HLRBRep_PolyHLRToShape.lxx
+  HLRBRep_PolyHLRToShape.hpp
+  HLRBRep_PolyHLRToShape_1.hpp
 
   HLRBRep_ShapeBounds.cxx
-  HLRBRep_ShapeBounds.hxx
-  HLRBRep_ShapeBounds.lxx
+  HLRBRep_ShapeBounds.hpp
+  HLRBRep_ShapeBounds_1.hpp
   HLRBRep_ShapeToHLR.cxx
-  HLRBRep_ShapeToHLR.hxx
-  HLRBRep_SLProps.hxx
+  HLRBRep_ShapeToHLR.hpp
+  HLRBRep_SLProps.hpp
   HLRBRep_SLProps_0.cxx
-  HLRBRep_SLPropsATool.hxx
-  HLRBRep_SLPropsATool.lxx
+  HLRBRep_SLPropsATool.hpp
+  HLRBRep_SLPropsATool_1.hpp
   HLRBRep_Surface.cxx
-  HLRBRep_Surface.hxx
-  HLRBRep_Surface.lxx
+  HLRBRep_Surface.hpp
+  HLRBRep_Surface_1.hpp
   HLRBRep_SurfaceTool.cxx
-  HLRBRep_SurfaceTool.hxx
-  HLRBRep_SurfaceTool.lxx
-  HLRBRep_TheCSFunctionOfInterCSurf.hxx
+  HLRBRep_SurfaceTool.hpp
+  HLRBRep_SurfaceTool_1.hpp
+  HLRBRep_TheCSFunctionOfInterCSurf.hpp
   HLRBRep_TheCSFunctionOfInterCSurf_0.cxx
-  HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hxx
-  HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hxx
+  HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hpp
+  HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hpp
   HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter_0.cxx
-  HLRBRep_TheExactInterCSurf.hxx
+  HLRBRep_TheExactInterCSurf.hpp
   HLRBRep_TheExactInterCSurf_0.cxx
-  HLRBRep_TheIntConicCurveOfCInter.hxx
+  HLRBRep_TheIntConicCurveOfCInter.hpp
   HLRBRep_TheIntConicCurveOfCInter_0.cxx
-  HLRBRep_TheInterferenceOfInterCSurf.hxx
+  HLRBRep_TheInterferenceOfInterCSurf.hpp
   HLRBRep_TheInterferenceOfInterCSurf_0.cxx
-  HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hxx
+  HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hpp
   HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter_0.cxx
-  HLRBRep_TheIntPCurvePCurveOfCInter.hxx
+  HLRBRep_TheIntPCurvePCurveOfCInter.hpp
   HLRBRep_TheIntPCurvePCurveOfCInter_0.cxx
-  HLRBRep_TheLocateExtPCOfTheProjPCurOfCInter.hxx
-  HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hxx
+  HLRBRep_TheLocateExtPCOfTheProjPCurOfCInter.hpp
+  HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hpp
   HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter_0.cxx
-  HLRBRep_ThePolygonOfInterCSurf.hxx
+  HLRBRep_ThePolygonOfInterCSurf.hpp
   HLRBRep_ThePolygonOfInterCSurf.cxx
-  HLRBRep_ThePolygonToolOfInterCSurf.hxx
+  HLRBRep_ThePolygonToolOfInterCSurf.hpp
   HLRBRep_ThePolygonToolOfInterCSurf_0.cxx
-  HLRBRep_ThePolyhedronOfInterCSurf.hxx
+  HLRBRep_ThePolyhedronOfInterCSurf.hpp
   HLRBRep_ThePolyhedronOfInterCSurf.cxx
-  HLRBRep_ThePolyhedronToolOfInterCSurf.hxx
+  HLRBRep_ThePolyhedronToolOfInterCSurf.hpp
   HLRBRep_ThePolyhedronToolOfInterCSurf_0.cxx
-  HLRBRep_TheProjPCurOfCInter.hxx
+  HLRBRep_TheProjPCurOfCInter.hpp
   HLRBRep_TheProjPCurOfCInter_0.cxx
-  HLRBRep_TypeDef.hxx
-  HLRBRep_TheQuadCurvExactInterCSurf.hxx
+  HLRBRep_TypeDef.hpp
+  HLRBRep_TheQuadCurvExactInterCSurf.hpp
   HLRBRep_TheQuadCurvExactInterCSurf.cxx
-  HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hxx
+  HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hpp
   HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf_0.cxx
   HLRBRep_VertexList.cxx
-  HLRBRep_VertexList.hxx
-  HLRBRep_TypeOfResultingEdge.hxx
+  HLRBRep_VertexList.hpp
+  HLRBRep_TypeOfResultingEdge.hpp
 )

@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi3d_ChBuilder.hxx>
+#include <ChFi3d_ChBuilder.hpp>
 
 //=================================================================================================
 

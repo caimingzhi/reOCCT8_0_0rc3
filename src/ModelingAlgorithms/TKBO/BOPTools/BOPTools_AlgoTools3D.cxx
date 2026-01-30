@@ -12,41 +12,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dHatch_Hatcher.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <HatchGen_Domain.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_Tools.hxx>
-#include <Poly_Triangulation.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <Bnd_Box.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dHatch_Hatcher.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <HatchGen_Domain.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_Tools.hpp>
+#include <Poly_Triangulation.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 static void Add(const TopoDS_Shape&                                            aS,
                 NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& myShapes,

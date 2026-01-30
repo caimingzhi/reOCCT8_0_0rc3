@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWMechanicalDesignGeometricPresentationArea.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepVisual_MechanicalDesignGeometricPresentationArea.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWMechanicalDesignGeometricPresentationArea.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepVisual_MechanicalDesignGeometricPresentationArea.hpp>
 
 RWStepVisual_RWMechanicalDesignGeometricPresentationArea::
   RWStepVisual_RWMechanicalDesignGeometricPresentationArea() = default;

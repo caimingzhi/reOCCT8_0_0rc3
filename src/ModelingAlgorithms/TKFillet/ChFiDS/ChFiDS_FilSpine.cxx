@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_FilSpine.hxx>
-#include <ChFiDS_ElSpine.hxx>
-#include <NCollection_List.hxx>
-#include <ElCLib.hxx>
-#include <gp_XY.hxx>
-#include <Law_Composite.hxx>
-#include <Law_Constant.hxx>
-#include <Law_Function.hxx>
-#include <Law_Interpol.hxx>
-#include <Law_S.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <ChFiDS_FilSpine.hpp>
+#include <ChFiDS_ElSpine.hpp>
+#include <NCollection_List.hpp>
+#include <ElCLib.hpp>
+#include <gp_XY.hpp>
+#include <Law_Composite.hpp>
+#include <Law_Constant.hpp>
+#include <Law_Function.hpp>
+#include <Law_Interpol.hpp>
+#include <Law_S.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_FilSpine, ChFiDS_Spine)
 

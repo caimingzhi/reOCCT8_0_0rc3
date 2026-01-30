@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntRes2d_Transition.hxx>
-#include <Standard_DomainError.hxx>
+#include <IntRes2d_Transition.hpp>
+#include <Standard_DomainError.hpp>
 
 IntRes2d_Transition::IntRes2d_Transition()
     : tangent(true),

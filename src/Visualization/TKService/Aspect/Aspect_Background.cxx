@@ -21,9 +21,9 @@
 //-Declarations
 // for the class
 
-#include <Aspect_Background.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Dump.hxx>
+#include <Aspect_Background.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Dump.hpp>
 
 //-Aliases
 //-Global data definitions

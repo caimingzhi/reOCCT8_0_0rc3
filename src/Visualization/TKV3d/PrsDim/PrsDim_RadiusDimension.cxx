@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_RadiusDimension.hxx>
+#include <PrsDim_RadiusDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeDir.hxx>
+#include <PrsDim.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeDir.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_RadiusDimension, PrsDim_Dimension)
 

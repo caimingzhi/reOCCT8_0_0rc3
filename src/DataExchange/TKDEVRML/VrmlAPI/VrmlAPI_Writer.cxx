@@ -11,37 +11,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_Path.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard_Macro.hxx>
+#include <BRep_Tool.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Path.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Vrml.hxx>
-#include <Vrml_Group.hxx>
-#include <Vrml_Instancing.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlAPI_Writer.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
-#include <VrmlConverter_LineAspect.hxx>
-#include <VrmlConverter_PointAspect.hxx>
-#include <VrmlConverter_Projector.hxx>
-#include <VrmlConverter_ShadedShape.hxx>
-#include <VrmlConverter_ShadingAspect.hxx>
-#include <VrmlConverter_WFDeflectionShape.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_ShapeConvert.hxx>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Vrml.hpp>
+#include <Vrml_Group.hpp>
+#include <Vrml_Instancing.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlAPI_Writer.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
+#include <VrmlConverter_LineAspect.hpp>
+#include <VrmlConverter_PointAspect.hpp>
+#include <VrmlConverter_Projector.hpp>
+#include <VrmlConverter_ShadedShape.hpp>
+#include <VrmlConverter_ShadingAspect.hpp>
+#include <VrmlConverter_WFDeflectionShape.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_ShapeConvert.hpp>
 
 VrmlAPI_Writer::VrmlAPI_Writer()
 {

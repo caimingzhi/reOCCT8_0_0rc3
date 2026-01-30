@@ -17,9 +17,9 @@
 // Version of parallel executor used when TBB is available
 #ifdef HAVE_TBB
 
-  #include <OSD_Parallel.hxx>
-  #include <OSD_ThreadPool.hxx>
-  #include <Standard_ProgramError.hxx>
+  #include <OSD_Parallel.hpp>
+  #include <OSD_ThreadPool.hpp>
+  #include <Standard_ProgramError.hpp>
 
 Standard_DISABLE_DEPRECATION_WARNINGS
   #include <tbb/parallel_for.h>

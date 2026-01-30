@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_ActorOfTransientProcess.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_ProcessForTransient.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <Transfer_ActorOfTransientProcess.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_ProcessForTransient.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_ActorOfTransientProcess, Transfer_ActorOfProcessForTransient)
 

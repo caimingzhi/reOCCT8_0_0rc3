@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SelectIncorrectEntities.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_SelectIncorrectEntities.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectIncorrectEntities, IFSelect_SelectFlag)
 

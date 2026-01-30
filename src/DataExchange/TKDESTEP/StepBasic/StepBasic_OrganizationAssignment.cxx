@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_OrganizationAssignment.hxx>
-#include <StepBasic_OrganizationRole.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_OrganizationAssignment.hpp>
+#include <StepBasic_OrganizationRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_OrganizationAssignment, Standard_Transient)
 

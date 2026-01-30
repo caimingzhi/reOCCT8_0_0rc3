@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Storage_CallBack.hxx>
-#include <Storage_Schema.hxx>
+#include <Storage_CallBack.hpp>
+#include <Storage_Schema.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Storage_CallBack, Standard_Transient)

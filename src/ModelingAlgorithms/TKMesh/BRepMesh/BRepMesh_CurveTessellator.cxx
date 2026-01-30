@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_CurveTessellator.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS_Edge.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <IMeshTools_Parameters.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Geom_Plane.hxx>
-#include <TopExp.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Standard_Failure.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
+#include <BRepMesh_CurveTessellator.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS_Edge.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <IMeshTools_Parameters.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Geom_Plane.hpp>
+#include <TopExp.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Standard_Failure.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_CurveTessellator, IMeshTools_CurveTessellator)
 

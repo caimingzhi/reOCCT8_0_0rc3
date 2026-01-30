@@ -16,35 +16,35 @@
 
 //  Modified by skv - Mon May 31 12:34:09 2004 OCC5865
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools_Substitution.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Vec.hxx>
-#include <LocOpe_BuildWires.hxx>
-#include <LocOpe_Spliter.hxx>
-#include <LocOpe_SplitShape.hxx>
-#include <LocOpe_WiresOnShape.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools_Substitution.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Vec.hpp>
+#include <LocOpe_BuildWires.hpp>
+#include <LocOpe_Spliter.hpp>
+#include <LocOpe_SplitShape.hpp>
+#include <LocOpe_WiresOnShape.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 // #include <LocOpe_ProjectedWires.hxx>
 //   Modified by skv - Mon May 31 13:00:30 2004 OCC5865 Begin

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draft_VertexInfo.hxx>
-#include <Standard_DomainError.hxx>
-#include <NCollection_List.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
+#include <Draft_VertexInfo.hpp>
+#include <Standard_DomainError.hpp>
+#include <NCollection_List.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
 
 //=================================================================================================
 

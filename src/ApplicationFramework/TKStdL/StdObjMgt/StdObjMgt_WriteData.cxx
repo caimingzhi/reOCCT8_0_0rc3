@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdObjMgt_WriteData.hxx>
-#include <StdObjMgt_Persistent.hxx>
+#include <StdObjMgt_WriteData.hpp>
+#include <StdObjMgt_Persistent.hpp>
 
-#include <Standard_GUID.hxx>
+#include <Standard_GUID.hpp>
 
 StdObjMgt_WriteData::StdObjMgt_WriteData(const occ::handle<Storage_BaseDriver>& theDriver)
     : myDriver(theDriver)

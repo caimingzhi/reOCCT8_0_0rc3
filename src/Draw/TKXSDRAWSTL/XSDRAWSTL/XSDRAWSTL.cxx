@@ -11,44 +11,44 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWSTL.hxx>
+#include <XSDRAWSTL.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <BRep_Builder.hxx>
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DESTL_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <MeshVS_DeformedDataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_ElementalColorPrsBuilder.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshEntityOwner.hxx>
-#include <MeshVS_MeshPrsBuilder.hxx>
-#include <MeshVS_NodalColorPrsBuilder.hxx>
-#include <MeshVS_TextPrsBuilder.hxx>
-#include <MeshVS_VectorPrsBuilder.hxx>
-#include <RWStl.hxx>
-#include <StlAPI.hxx>
-#include <StlAPI_Writer.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <V3d_View.hxx>
-#include <ViewerTest.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
-#include <XSDRAWSTL_DataSource.hxx>
-#include <XSDRAWSTL_DataSource3D.hxx>
-#include <XSDRAWSTL_DrawableMesh.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <BRep_Builder.hpp>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DESTL_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <MeshVS_DeformedDataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_ElementalColorPrsBuilder.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshEntityOwner.hpp>
+#include <MeshVS_MeshPrsBuilder.hpp>
+#include <MeshVS_NodalColorPrsBuilder.hpp>
+#include <MeshVS_TextPrsBuilder.hpp>
+#include <MeshVS_VectorPrsBuilder.hpp>
+#include <RWStl.hpp>
+#include <StlAPI.hpp>
+#include <StlAPI_Writer.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <V3d_View.hpp>
+#include <ViewerTest.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
+#include <XSDRAWSTL_DataSource.hpp>
+#include <XSDRAWSTL_DataSource3D.hpp>
+#include <XSDRAWSTL_DrawableMesh.hpp>
 
 extern bool VDisplayAISObject(const TCollection_AsciiString&            theName,
                               const occ::handle<AIS_InteractiveObject>& theAISObj,

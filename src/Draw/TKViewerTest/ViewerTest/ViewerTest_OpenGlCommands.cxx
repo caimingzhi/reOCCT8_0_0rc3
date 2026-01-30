@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest.hxx>
+#include <ViewerTest.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <Message.hxx>
-#include <OSD_File.hxx>
-#include <OSD_FileSystem.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <Message.hpp>
+#include <OSD_File.hpp>
+#include <OSD_FileSystem.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
 
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DoubleMap.hxx>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DoubleMap.hpp>
 class AIS_InteractiveObject;
 
 extern NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>&
@@ -1012,7 +1012,7 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   int                     aTableSize = -1;
   int                     aNbSamples = -1;
   TCollection_AsciiString aFilePath =
-    Graphic3d_TextureRoot::TexturesFolder() + "/Textures_EnvLUT.pxx";
+    Graphic3d_TextureRoot::TexturesFolder() + "/Textures_EnvLUT.hpp";
 
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {

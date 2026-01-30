@@ -11,28 +11,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <StepAP214_SecurityClassificationItem.hxx>
-#include <StepBasic_Action.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_VersionedActionRequest.hxx>
-#include <StepBasic_GeneralProperty.hxx>
-#include <StepRepr_ProductConcept.hxx>
-#include <StepRepr_AssemblyComponentUsage.hxx>
-#include <StepRepr_AssemblyComponentUsageSubstitute.hxx>
-#include <StepRepr_ConfigurationDesign.hxx>
-#include <StepRepr_ConfigurationEffectivity.hxx>
-#include <StepRepr_MakeFromUsageOption.hxx>
-#include <StepRepr_MaterialDesignation.hxx>
-#include <StepRepr_ProductDefinitionUsage.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <StepVisual_DraughtingModel.hxx>
-#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hxx>
-#include <StepVisual_PresentationArea.hxx>
+#include <MoniTool_Macros.hpp>
+#include <StepAP214_SecurityClassificationItem.hpp>
+#include <StepBasic_Action.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_VersionedActionRequest.hpp>
+#include <StepBasic_GeneralProperty.hpp>
+#include <StepRepr_ProductConcept.hpp>
+#include <StepRepr_AssemblyComponentUsage.hpp>
+#include <StepRepr_AssemblyComponentUsageSubstitute.hpp>
+#include <StepRepr_ConfigurationDesign.hpp>
+#include <StepRepr_ConfigurationEffectivity.hpp>
+#include <StepRepr_MakeFromUsageOption.hpp>
+#include <StepRepr_MaterialDesignation.hpp>
+#include <StepRepr_ProductDefinitionUsage.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <StepVisual_DraughtingModel.hpp>
+#include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp>
+#include <StepVisual_PresentationArea.hpp>
 
 StepAP214_SecurityClassificationItem::StepAP214_SecurityClassificationItem() = default;
 

@@ -18,15 +18,15 @@
 // Version	Date		Purpose
 //		0.0	Sep 15 1997	Creation
 
-#include <TDocStd_XLinkRoot.hxx>
+#include <TDocStd_XLinkRoot.hpp>
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDocStd_XLink.hxx>
-#include <TDocStd_XLinkIterator.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDocStd_XLink.hpp>
+#include <TDocStd_XLinkIterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_XLinkRoot, TDF_Attribute)
 

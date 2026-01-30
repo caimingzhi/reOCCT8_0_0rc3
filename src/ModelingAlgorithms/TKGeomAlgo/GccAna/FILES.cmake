@@ -3,7 +3,7 @@ set(OCCT_GccAna_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GccAna_FILES
   GccAna_Circ2d2TanOn.cxx
-  GccAna_Circ2d2TanOn.hxx
+  GccAna_Circ2d2TanOn.hpp
   GccAna_Circ2d2TanOn_1.cxx
   GccAna_Circ2d2TanOn_2.cxx
   GccAna_Circ2d2TanOn_3.cxx
@@ -16,14 +16,14 @@ set(OCCT_GccAna_FILES
   GccAna_Circ2d2TanOn_10.cxx
   GccAna_Circ2d2TanOn_11.cxx
   GccAna_Circ2d2TanRad.cxx
-  GccAna_Circ2d2TanRad.hxx
+  GccAna_Circ2d2TanRad.hpp
   GccAna_Circ2d2TanRad_1.cxx
   GccAna_Circ2d2TanRad_2.cxx
   GccAna_Circ2d2TanRad_3.cxx
   GccAna_Circ2d2TanRad_4.cxx
   GccAna_Circ2d2TanRad_5.cxx
   GccAna_Circ2d3Tan.cxx
-  GccAna_Circ2d3Tan.hxx
+  GccAna_Circ2d3Tan.hpp
   GccAna_Circ2d3Tan_1.cxx
   GccAna_Circ2d3Tan_2.cxx
   GccAna_Circ2d3Tan_3.cxx
@@ -34,33 +34,33 @@ set(OCCT_GccAna_FILES
   GccAna_Circ2d3Tan_8.cxx
   GccAna_Circ2d3Tan_9.cxx
   GccAna_Circ2dBisec.cxx
-  GccAna_Circ2dBisec.hxx
+  GccAna_Circ2dBisec.hpp
   GccAna_Circ2dTanCen.cxx
-  GccAna_Circ2dTanCen.hxx
+  GccAna_Circ2dTanCen.hpp
   GccAna_Circ2dTanOnRad.cxx
-  GccAna_Circ2dTanOnRad.hxx
+  GccAna_Circ2dTanOnRad.hpp
   GccAna_Circ2dTanOnRad_1.cxx
   GccAna_Circ2dTanOnRad_2.cxx
   GccAna_Circ2dTanOnRad_3.cxx
   GccAna_Circ2dTanOnRad_4.cxx
   GccAna_Circ2dTanOnRad_5.cxx
   GccAna_CircLin2dBisec.cxx
-  GccAna_CircLin2dBisec.hxx
+  GccAna_CircLin2dBisec.hpp
   GccAna_CircPnt2dBisec.cxx
-  GccAna_CircPnt2dBisec.hxx
+  GccAna_CircPnt2dBisec.hpp
   GccAna_Lin2d2Tan.cxx
-  GccAna_Lin2d2Tan.hxx
+  GccAna_Lin2d2Tan.hpp
   GccAna_Lin2dBisec.cxx
-  GccAna_Lin2dBisec.hxx
+  GccAna_Lin2dBisec.hpp
   GccAna_Lin2dTanObl.cxx
-  GccAna_Lin2dTanObl.hxx
+  GccAna_Lin2dTanObl.hpp
   GccAna_Lin2dTanPar.cxx
-  GccAna_Lin2dTanPar.hxx
+  GccAna_Lin2dTanPar.hpp
   GccAna_Lin2dTanPer.cxx
-  GccAna_Lin2dTanPer.hxx
+  GccAna_Lin2dTanPer.hpp
   GccAna_LinPnt2dBisec.cxx
-  GccAna_LinPnt2dBisec.hxx
-  GccAna_NoSolution.hxx
+  GccAna_LinPnt2dBisec.hpp
+  GccAna_NoSolution.hpp
   GccAna_Pnt2dBisec.cxx
-  GccAna_Pnt2dBisec.hxx
+  GccAna_Pnt2dBisec.hpp
 )

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_EdgeDiscret.hxx>
-#include <BRepMesh_Deflection.hxx>
-#include <IMeshData_Model.hxx>
-#include <IMeshData_Face.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <TopExp.hxx>
-#include <BRepMesh_ShapeTool.hxx>
-#include <BRepMesh_EdgeTessellationExtractor.hxx>
-#include <IMeshData_ParametersListArrayAdaptor.hxx>
-#include <BRepMesh_CurveTessellator.hxx>
-#include <OSD_Parallel.hxx>
+#include <BRepMesh_EdgeDiscret.hpp>
+#include <BRepMesh_Deflection.hpp>
+#include <IMeshData_Model.hpp>
+#include <IMeshData_Face.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <TopExp.hpp>
+#include <BRepMesh_ShapeTool.hpp>
+#include <BRepMesh_EdgeTessellationExtractor.hpp>
+#include <IMeshData_ParametersListArrayAdaptor.hpp>
+#include <BRepMesh_CurveTessellator.hpp>
+#include <OSD_Parallel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_EdgeDiscret, IMeshTools_ModelAlgo)
 

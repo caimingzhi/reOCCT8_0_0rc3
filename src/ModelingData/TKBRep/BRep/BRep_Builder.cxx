@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Curve3D.hxx>
-#include <BRep_CurveOn2Surfaces.hxx>
-#include <BRep_CurveOnClosedSurface.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <NCollection_List.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <BRep_Polygon3D.hxx>
-#include <BRep_PolygonOnClosedSurface.hxx>
-#include <BRep_PolygonOnClosedTriangulation.hxx>
-#include <BRep_PolygonOnSurface.hxx>
-#include <BRep_PolygonOnTriangulation.hxx>
-#include <BRep_TEdge.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_LockedShape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Curve3D.hpp>
+#include <BRep_CurveOn2Surfaces.hpp>
+#include <BRep_CurveOnClosedSurface.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <NCollection_List.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <BRep_Polygon3D.hpp>
+#include <BRep_PolygonOnClosedSurface.hpp>
+#include <BRep_PolygonOnClosedTriangulation.hpp>
+#include <BRep_PolygonOnSurface.hpp>
+#include <BRep_PolygonOnTriangulation.hpp>
+#include <BRep_TEdge.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_LockedShape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

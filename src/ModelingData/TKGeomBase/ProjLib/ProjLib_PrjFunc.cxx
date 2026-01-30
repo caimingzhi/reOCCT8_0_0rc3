@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <ProjLib_PrjFunc.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <ProjLib_PrjFunc.hpp>
+#include <Standard_ConstructionError.hpp>
 
 ProjLib_PrjFunc::ProjLib_PrjFunc(const Adaptor3d_Curve*   C,
                                  const double             FixVal,

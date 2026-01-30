@@ -13,18 +13,18 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixGeom_HelixCurve.hxx>
-#include <HelixGeom_BuilderApproxCurve.hxx>
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <HelixGeom_Tools.hxx>
+#include <HelixGeom_HelixCurve.hpp>
+#include <HelixGeom_BuilderApproxCurve.hpp>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <HelixGeom_Tools.hpp>
 
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Geom_Curve.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Geom_Curve.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_ConstructionError.hpp>
 
 class HelixGeomTest : public ::testing::Test
 {

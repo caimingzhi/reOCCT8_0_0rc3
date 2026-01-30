@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <D3DHost_GraphicDriverFactory.hxx>
+#include <D3DHost_GraphicDriverFactory.hpp>
 
-#include <D3DHost_GraphicDriver.hxx>
+#include <D3DHost_GraphicDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(D3DHost_GraphicDriverFactory, OpenGl_GraphicDriverFactory)
 

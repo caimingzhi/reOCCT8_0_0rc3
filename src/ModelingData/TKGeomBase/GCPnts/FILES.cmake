@@ -3,22 +3,22 @@ set(OCCT_GCPnts_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GCPnts_FILES
   GCPnts_AbscissaPoint.cxx
-  GCPnts_AbscissaPoint.hxx
-  GCPnts_AbscissaType.hxx
-  GCPnts_DeflectionType.hxx
+  GCPnts_AbscissaPoint.hpp
+  GCPnts_AbscissaType.hpp
+  GCPnts_DeflectionType.hpp
   GCPnts_QuasiUniformAbscissa.cxx
-  GCPnts_QuasiUniformAbscissa.hxx
+  GCPnts_QuasiUniformAbscissa.hpp
   GCPnts_QuasiUniformDeflection.cxx
-  GCPnts_QuasiUniformDeflection.hxx
+  GCPnts_QuasiUniformDeflection.hpp
   GCPnts_TangentialDeflection.cxx
-  GCPnts_TangentialDeflection.hxx
-  GCPnts_TCurveTypes.hxx
+  GCPnts_TangentialDeflection.hpp
+  GCPnts_TCurveTypes.hpp
   GCPnts_UniformAbscissa.cxx
-  GCPnts_UniformAbscissa.hxx
+  GCPnts_UniformAbscissa.hpp
   GCPnts_UniformDeflection.cxx
-  GCPnts_UniformDeflection.hxx
-  GCPnts_DistFunction.hxx
+  GCPnts_UniformDeflection.hpp
+  GCPnts_DistFunction.hpp
   GCPnts_DistFunction.cxx
-  GCPnts_DistFunction2d.hxx
+  GCPnts_DistFunction2d.hpp
   GCPnts_DistFunction2d.cxx
 )

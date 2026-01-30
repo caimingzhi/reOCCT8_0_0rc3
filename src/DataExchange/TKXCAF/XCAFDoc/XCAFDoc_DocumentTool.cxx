@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_DocumentTool.hxx>
+#include <XCAFDoc_DocumentTool.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_ClippingPlaneTool.hxx>
-#include <XCAFDoc_DimTolTool.hxx>
-#include <XCAFDoc_LayerTool.hxx>
-#include <XCAFDoc_LengthUnit.hxx>
-#include <XCAFDoc_MaterialTool.hxx>
-#include <XCAFDoc_NotesTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_ViewTool.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
-#include <UnitsMethods.hxx>
+#include <Standard_Type.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_ClippingPlaneTool.hpp>
+#include <XCAFDoc_DimTolTool.hpp>
+#include <XCAFDoc_LayerTool.hpp>
+#include <XCAFDoc_LengthUnit.hpp>
+#include <XCAFDoc_MaterialTool.hpp>
+#include <XCAFDoc_NotesTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_ViewTool.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
+#include <UnitsMethods.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_DocumentTool,
                                       TDataStd_GenericEmpty,

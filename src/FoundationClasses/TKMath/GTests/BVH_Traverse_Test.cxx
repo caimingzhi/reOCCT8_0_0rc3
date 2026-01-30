@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_BinnedBuilder.hxx>
-#include <BVH_Traverse.hxx>
-#include <BVH_Triangulation.hxx>
+#include <BVH_BinnedBuilder.hpp>
+#include <BVH_Traverse.hpp>
+#include <BVH_Triangulation.hpp>
 
 #include <vector>
 

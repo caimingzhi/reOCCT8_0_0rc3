@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NotImplemented.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPElC.hxx>
-#include <Extrema_ExtPExtS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Precision.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_Vector.hxx>
-#include <GeomAdaptor_SurfaceOfLinearExtrusion.hxx>
+#include <Standard_NotImplemented.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPElC.hpp>
+#include <Extrema_ExtPExtS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Precision.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_Vector.hpp>
+#include <GeomAdaptor_SurfaceOfLinearExtrusion.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Extrema_ExtPExtS, Standard_Transient)
 

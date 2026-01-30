@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPConstruct_Tool.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_TransferWriter.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <STEPConstruct_Tool.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_TransferWriter.hpp>
+#include <XSControl_WorkSession.hpp>
 
 //=================================================================================================
 

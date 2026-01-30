@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_GlobalNodeOfReaderLib.hxx>
+#include <Interface_GlobalNodeOfReaderLib.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <Interface_ReaderModule.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <Interface_ReaderLib.hxx>
-#include <Interface_NodeOfReaderLib.hxx>
+#include <Interface_ReaderModule.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <Interface_ReaderLib.hpp>
+#include <Interface_NodeOfReaderLib.hpp>
 
 Interface_GlobalNodeOfReaderLib::Interface_GlobalNodeOfReaderLib() = default;
 

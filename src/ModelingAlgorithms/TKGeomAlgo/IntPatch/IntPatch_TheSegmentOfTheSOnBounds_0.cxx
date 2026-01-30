@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_TheSegmentOfTheSOnBounds.hxx>
+#include <IntPatch_TheSegmentOfTheSOnBounds.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Standard_DomainError.hxx>
-#include <Adaptor3d_HVertex.hxx>
-#include <IntPatch_ThePathPointOfTheSOnBounds.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Standard_DomainError.hpp>
+#include <Adaptor3d_HVertex.hpp>
+#include <IntPatch_ThePathPointOfTheSOnBounds.hpp>
 
 IntPatch_TheSegmentOfTheSOnBounds::IntPatch_TheSegmentOfTheSOnBounds()
     : hasfp(false),

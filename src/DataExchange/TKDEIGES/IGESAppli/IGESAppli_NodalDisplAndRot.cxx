@@ -16,15 +16,15 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_NodalDisplAndRot.hxx>
-#include <IGESAppli_Node.hxx>
-#include <IGESBasic_HArray1OfHArray1OfXYZ.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <IGESAppli_NodalDisplAndRot.hpp>
+#include <IGESAppli_Node.hpp>
+#include <IGESBasic_HArray1OfHArray1OfXYZ.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_NodalDisplAndRot, IGESData_IGESEntity)
 

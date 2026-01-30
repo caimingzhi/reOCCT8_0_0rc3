@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_HGraph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_MSG.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_HGraph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_MSG.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_TransientProcess, Transfer_ProcessForTransient)
 

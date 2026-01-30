@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Selection.hxx>
+#include <AIS_Selection.hpp>
 
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_SelectionScheme.hxx>
-#include <SelectMgr_Filter.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_SelectionScheme.hpp>
+#include <SelectMgr_Filter.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Selection, Standard_Transient)
 

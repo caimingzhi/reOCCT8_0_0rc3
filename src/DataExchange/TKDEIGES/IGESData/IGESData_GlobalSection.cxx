@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_GlobalSection.hxx>
+#include <IGESData_GlobalSection.hpp>
 
-#include <gp_XYZ.hxx>
-#include <IGESData_BasicEditor.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_FileParameter.hxx>
-#include <Interface_FloatWriter.hxx>
-#include <Interface_ParamSet.hxx>
-#include <Interface_ParamType.hxx>
-#include <Message_Msg.hxx>
-#include <OSD_Process.hxx>
-#include <Quantity_Date.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <UnitsMethods.hxx>
+#include <gp_XYZ.hpp>
+#include <IGESData_BasicEditor.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_FileParameter.hpp>
+#include <Interface_FloatWriter.hpp>
+#include <Interface_ParamSet.hpp>
+#include <Interface_ParamType.hpp>
+#include <Message_Msg.hpp>
+#include <OSD_Process.hpp>
+#include <Quantity_Date.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <UnitsMethods.hpp>
 
 #include <cstdio>
 

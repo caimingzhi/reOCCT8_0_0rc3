@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_QuickSorter.hxx>
-#include <BVH_Triangulation.hxx>
+#include <BVH_QuickSorter.hpp>
+#include <BVH_Triangulation.hpp>
 
 // =============================================================================
 // BVH_QuickSorter Basic Tests

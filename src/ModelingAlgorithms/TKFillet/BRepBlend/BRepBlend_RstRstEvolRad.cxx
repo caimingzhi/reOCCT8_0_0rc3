@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_RstRstEvolRad.hxx>
+#include <BRepBlend_RstRstEvolRad.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Blend_Point.hxx>
-#include <BlendFunc.hxx>
-#include <ElCLib.hxx>
-#include <GeomFill.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Law_Function.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_SVD.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Blend_Point.hpp>
+#include <BlendFunc.hpp>
+#include <ElCLib.hpp>
+#include <GeomFill.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Law_Function.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_SVD.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Sequence.hpp>
 
 #define Eps 1.e-15
 

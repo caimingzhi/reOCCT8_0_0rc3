@@ -14,61 +14,61 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
+#include <DDataStd.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <DDF.hxx>
-#include <Message.hxx>
+#include <DDF.hpp>
+#include <Message.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_Sequence.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_Sequence.hpp>
 
-#include <BRep_Tool.hxx>
-#include <DBRep.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <DBRep.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 // LES ATTRIBUTES
-#include <TDataXtd_Triangulation.hxx>
-#include <TDataStd_Comment.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Reference.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_BooleanArray.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_BooleanList.hxx>
-#include <TDataStd_IntegerList.hxx>
-#include <TDataStd_RealList.hxx>
-#include <TDataStd_Variable.hxx>
-#include <TDataStd_ExtStringArray.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Tool.hxx>
+#include <TDataXtd_Triangulation.hpp>
+#include <TDataStd_Comment.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Reference.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_BooleanArray.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_BooleanList.hpp>
+#include <TDataStd_IntegerList.hpp>
+#include <TDataStd_RealList.hpp>
+#include <TDataStd_Variable.hpp>
+#include <TDataStd_ExtStringArray.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Tool.hpp>
 
-#include <TDataStd_NamedData.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_IntPackedMap.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_PackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TDataStd_ByteArray.hxx>
-#include <NCollection_List.hxx>
-#include <TDataStd_ReferenceArray.hxx>
-#include <TDataStd_ExtStringList.hxx>
-#include <TDataStd_ReferenceList.hxx>
+#include <TDataStd_NamedData.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_IntPackedMap.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_PackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TDataStd_ByteArray.hpp>
+#include <NCollection_List.hpp>
+#include <TDataStd_ReferenceArray.hpp>
+#include <TDataStd_ExtStringList.hpp>
+#include <TDataStd_ReferenceList.hpp>
 
 #include <algorithm>
 #include <vector>
@@ -1048,7 +1048,7 @@ static int DDataStd_GetVariable(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-#include <TDataStd_Relation.hxx>
+#include <TDataStd_Relation.hpp>
 
 //=======================================================================
 // function : SetRelation (DF, entry, expression, var1[, var2, ...])
@@ -1135,7 +1135,7 @@ static int DDataStd_DumpRelation(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-#include <TFunction_Function.hxx>
+#include <TFunction_Function.hpp>
 
 //=======================================================================
 // function : SetFunction (DF, entry, guid, failure)

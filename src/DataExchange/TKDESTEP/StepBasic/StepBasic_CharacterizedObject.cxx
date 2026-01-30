@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_CharacterizedObject.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_CharacterizedObject.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_CharacterizedObject, Standard_Transient)
 

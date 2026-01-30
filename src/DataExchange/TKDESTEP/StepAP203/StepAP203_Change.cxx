@@ -16,8 +16,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_Change.hxx>
-#include <StepBasic_Action.hxx>
+#include <StepAP203_Change.hpp>
+#include <StepBasic_Action.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_Change, StepBasic_ActionAssignment)
 

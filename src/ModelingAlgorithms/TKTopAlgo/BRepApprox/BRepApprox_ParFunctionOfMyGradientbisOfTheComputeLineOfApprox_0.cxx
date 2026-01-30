@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hxx>
+#include <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hpp>
 
-#include <BRepApprox_TheMultiLineOfApprox.hxx>
-#include <BRepApprox_TheMultiLineToolOfApprox.hxx>
-#include <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
+#include <BRepApprox_TheMultiLineOfApprox.hpp>
+#include <BRepApprox_TheMultiLineToolOfApprox.hpp>
+#include <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
 
 #define MultiLine BRepApprox_TheMultiLineOfApprox
-#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hxx>
+#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hpp>
 #define ToolLine BRepApprox_TheMultiLineToolOfApprox
-#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hxx>
+#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hpp>
 #define Squares BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox
-#define Squares_hxx <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hxx>
+#define Squares_hxx <BRepApprox_ParLeastSquareOfMyGradientbisOfTheComputeLineOfApprox.hpp>
 #define ResolCons BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox
-#define ResolCons_hxx <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hxx>
+#define ResolCons_hxx <BRepApprox_ResConstraintOfMyGradientbisOfTheComputeLineOfApprox.hpp>
 #define AppParCurves_Function BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox
 #define AppParCurves_Function_hxx                                                                  \
-  <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hxx>
-#include <AppParCurves_Function.gxx>
+  <BRepApprox_ParFunctionOfMyGradientbisOfTheComputeLineOfApprox.hpp>
+#include <AppParCurves_Function.hpp>

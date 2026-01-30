@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Interpretor.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Draw.hxx>
-#include <Message.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_SharedLibrary.hxx>
-#include <Resource_Manager.hxx>
+#include <Draw_Interpretor.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Draw.hpp>
+#include <Message.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_SharedLibrary.hpp>
+#include <Resource_Manager.hpp>
 
 //! Searches for the existence of the plugin file according to its name thePluginName:
 //! - if thePluginName is empty then it defaults to DrawPlugin

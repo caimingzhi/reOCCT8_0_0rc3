@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_HLRShape.hxx>
+#include <StdPrs_HLRShape.hpp>
 
-#include <BRepAdaptor_Curve.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <StdPrs_HLRToolShape.hxx>
-#include <StdPrs_DeflectionCurve.hxx>
-#include <TopoDS_Shape.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <HLRAlgo_Projector.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <StdPrs_HLRToolShape.hpp>
+#include <StdPrs_DeflectionCurve.hpp>
+#include <TopoDS_Shape.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <HLRAlgo_Projector.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdPrs_HLRShape, StdPrs_HLRShapeI)
 

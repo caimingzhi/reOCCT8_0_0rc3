@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_Context.hxx>
-#include <BRepMesh_ModelBuilder.hxx>
-#include <BRepMesh_EdgeDiscret.hxx>
-#include <BRepMesh_ModelHealer.hxx>
-#include <BRepMesh_FaceDiscret.hxx>
-#include <BRepMesh_ModelPreProcessor.hxx>
-#include <BRepMesh_ModelPostProcessor.hxx>
+#include <BRepMesh_Context.hpp>
+#include <BRepMesh_ModelBuilder.hpp>
+#include <BRepMesh_EdgeDiscret.hpp>
+#include <BRepMesh_ModelHealer.hpp>
+#include <BRepMesh_FaceDiscret.hpp>
+#include <BRepMesh_ModelPreProcessor.hpp>
+#include <BRepMesh_ModelPostProcessor.hpp>
 
-#include <BRepMesh_MeshAlgoFactory.hxx>
-#include <BRepMesh_DelabellaMeshAlgoFactory.hxx>
-#include <Message.hxx>
-#include <OSD_Environment.hxx>
+#include <BRepMesh_MeshAlgoFactory.hpp>
+#include <BRepMesh_DelabellaMeshAlgoFactory.hpp>
+#include <Message.hpp>
+#include <OSD_Environment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Context, IMeshTools_Context)
 

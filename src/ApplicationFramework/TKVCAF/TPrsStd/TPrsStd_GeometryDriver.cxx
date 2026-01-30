@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Circle.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Line.hxx>
-#include <AIS_Point.hxx>
-#include <AIS_Shape.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Tool.hxx>
-#include <TPrsStd_GeometryDriver.hxx>
+#include <AIS_Circle.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Line.hpp>
+#include <AIS_Point.hpp>
+#include <AIS_Shape.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Tool.hpp>
+#include <TPrsStd_GeometryDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_GeometryDriver, TPrsStd_Driver)
 

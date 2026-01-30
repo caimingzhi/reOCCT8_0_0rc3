@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <XmlTObjDrivers_DocumentStorageDriver.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlTObjDrivers.hxx>
+#include <XmlTObjDrivers_DocumentStorageDriver.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlTObjDrivers.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_DocumentStorageDriver, XmlLDrivers_DocumentStorageDriver)
 

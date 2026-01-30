@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_PatternStd.hxx>
-#include <TDF_Attribute.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <XmlMDataXtd_PatternStdDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_PatternStd.hpp>
+#include <TDF_Attribute.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <XmlMDataXtd_PatternStdDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_PatternStdDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(SignatureString, "signature")

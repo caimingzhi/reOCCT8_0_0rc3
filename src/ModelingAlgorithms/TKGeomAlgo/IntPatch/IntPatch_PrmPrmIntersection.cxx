@@ -17,26 +17,26 @@
 // modified by Edward AGAPOV (eap) Tue Jan 22 12:29:55 2002
 // modified by Oleg FEDYAED  (ofv) Fri Nov 29 16:08:02 2002
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <IntPatch_InterferencePolyhedron.hxx>
-#include <IntPatch_Polyhedron.hxx>
-#include <IntPatch_PrmPrmIntersection.hxx>
-#include <IntPatch_PrmPrmIntersection_T3Bits.hxx>
-#include <IntPatch_RstInt.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntPolyh_Intersection.hxx>
-#include <IntSurf_LineOn2S.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <NCollection_List.hxx>
-#include <IntWalk_PWalking.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <IntPatch_InterferencePolyhedron.hpp>
+#include <IntPatch_Polyhedron.hpp>
+#include <IntPatch_PrmPrmIntersection.hpp>
+#include <IntPatch_PrmPrmIntersection_T3Bits.hpp>
+#include <IntPatch_RstInt.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntPolyh_Intersection.hpp>
+#include <IntSurf_LineOn2S.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <NCollection_List.hpp>
+#include <IntWalk_PWalking.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
 
 static void SectionPointToParameters(const Intf_SectionPoint&   Sp,
                                      const IntPatch_Polyhedron& Surf1,

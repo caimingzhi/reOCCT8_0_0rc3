@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DESTEP_Provider.hxx>
+#include <DESTEP_Provider.hpp>
 
-#include <DE_ValidationUtils.hxx>
-#include <DESTEP_ConfigurationNode.hxx>
-#include <DESTEP_Parameters.hxx>
-#include <Interface_Static.hxx>
-#include <Message.hxx>
-#include <STEPCAFControl_Controller.hxx>
-#include <STEPCAFControl_Reader.hxx>
-#include <STEPCAFControl_Writer.hxx>
-#include <STEPControl_Reader.hxx>
-#include <STEPControl_Writer.hxx>
-#include <StepData_StepModel.hxx>
-#include <UnitsMethods.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <OSD_OpenFile.hxx>
+#include <DE_ValidationUtils.hpp>
+#include <DESTEP_ConfigurationNode.hpp>
+#include <DESTEP_Parameters.hpp>
+#include <Interface_Static.hpp>
+#include <Message.hpp>
+#include <STEPCAFControl_Controller.hpp>
+#include <STEPCAFControl_Reader.hpp>
+#include <STEPCAFControl_Writer.hpp>
+#include <STEPControl_Reader.hpp>
+#include <STEPControl_Writer.hpp>
+#include <StepData_StepModel.hpp>
+#include <UnitsMethods.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <OSD_OpenFile.hpp>
 #include <fstream>
 
 IMPLEMENT_STANDARD_RTTIEXT(DESTEP_Provider, DE_Provider)

@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_XYZ.hxx>
+#include <gp_XYZ.hpp>
 
-#include <gp_Mat.hxx>
-#include <Standard_Dump.hxx>
+#include <gp_Mat.hpp>
+#include <Standard_Dump.hpp>
 
 //=================================================================================================
 

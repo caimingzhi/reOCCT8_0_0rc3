@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_LocFunction.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Vec2d.hxx>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_LocFunction.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Vec2d.hpp>
 
 GeomFill_LocFunction::GeomFill_LocFunction(const occ::handle<GeomFill_LocationLaw>& Law)
     : V(1, 4),

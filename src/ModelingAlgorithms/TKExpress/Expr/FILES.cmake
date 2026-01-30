@@ -3,124 +3,124 @@ set(OCCT_Expr_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Expr_FILES
   Expr.cxx
-  Expr.hxx
+  Expr.hpp
   Expr_Absolute.cxx
-  Expr_Absolute.hxx
+  Expr_Absolute.hpp
   Expr_ArcCosine.cxx
-  Expr_ArcCosine.hxx
+  Expr_ArcCosine.hpp
   Expr_ArcSine.cxx
-  Expr_ArcSine.hxx
+  Expr_ArcSine.hpp
   Expr_ArcTangent.cxx
-  Expr_ArcTangent.hxx
+  Expr_ArcTangent.hpp
   Expr_ArgCosh.cxx
-  Expr_ArgCosh.hxx
+  Expr_ArgCosh.hpp
   Expr_ArgSinh.cxx
-  Expr_ArgSinh.hxx
+  Expr_ArgSinh.hpp
   Expr_ArgTanh.cxx
-  Expr_ArgTanh.hxx
+  Expr_ArgTanh.hpp
 
 
   Expr_BinaryExpression.cxx
-  Expr_BinaryExpression.hxx
-  Expr_BinaryExpression.lxx
+  Expr_BinaryExpression.hpp
+  Expr_BinaryExpression_1.hpp
   Expr_BinaryFunction.cxx
-  Expr_BinaryFunction.hxx
+  Expr_BinaryFunction.hpp
   Expr_Cosh.cxx
-  Expr_Cosh.hxx
+  Expr_Cosh.hpp
   Expr_Cosine.cxx
-  Expr_Cosine.hxx
+  Expr_Cosine.hpp
   Expr_Difference.cxx
-  Expr_Difference.hxx
+  Expr_Difference.hpp
   Expr_Different.cxx
-  Expr_Different.hxx
+  Expr_Different.hpp
   Expr_Division.cxx
-  Expr_Division.hxx
+  Expr_Division.hpp
   Expr_Equal.cxx
-  Expr_Equal.hxx
+  Expr_Equal.hpp
   Expr_Exponential.cxx
-  Expr_Exponential.hxx
+  Expr_Exponential.hpp
   Expr_Exponentiate.cxx
-  Expr_Exponentiate.hxx
-  Expr_ExprFailure.hxx
+  Expr_Exponentiate.hpp
+  Expr_ExprFailure.hpp
   Expr_FunctionDerivative.cxx
-  Expr_FunctionDerivative.hxx
+  Expr_FunctionDerivative.hpp
   Expr_GeneralExpression.cxx
-  Expr_GeneralExpression.hxx
+  Expr_GeneralExpression.hpp
   Expr_GeneralFunction.cxx
-  Expr_GeneralFunction.hxx
+  Expr_GeneralFunction.hpp
   Expr_GeneralRelation.cxx
-  Expr_GeneralRelation.hxx
+  Expr_GeneralRelation.hpp
   Expr_GreaterThan.cxx
-  Expr_GreaterThan.hxx
+  Expr_GreaterThan.hpp
   Expr_GreaterThanOrEqual.cxx
-  Expr_GreaterThanOrEqual.hxx
-  Expr_InvalidAssignment.hxx
-  Expr_InvalidFunction.hxx
-  Expr_InvalidOperand.hxx
+  Expr_GreaterThanOrEqual.hpp
+  Expr_InvalidAssignment.hpp
+  Expr_InvalidFunction.hpp
+  Expr_InvalidOperand.hpp
   Expr_LessThan.cxx
-  Expr_LessThan.hxx
+  Expr_LessThan.hpp
   Expr_LessThanOrEqual.cxx
-  Expr_LessThanOrEqual.hxx
+  Expr_LessThanOrEqual.hpp
   Expr_LogOf10.cxx
-  Expr_LogOf10.hxx
+  Expr_LogOf10.hpp
   Expr_LogOfe.cxx
-  Expr_LogOfe.hxx
+  Expr_LogOfe.hpp
 
   Expr_NamedConstant.cxx
-  Expr_NamedConstant.hxx
-  Expr_NamedConstant.lxx
+  Expr_NamedConstant.hpp
+  Expr_NamedConstant_1.hpp
   Expr_NamedExpression.cxx
-  Expr_NamedExpression.hxx
+  Expr_NamedExpression.hpp
   Expr_NamedFunction.cxx
-  Expr_NamedFunction.hxx
+  Expr_NamedFunction.hpp
   Expr_NamedUnknown.cxx
-  Expr_NamedUnknown.hxx
-  Expr_NamedUnknown.lxx
-  Expr_NotAssigned.hxx
-  Expr_NotEvaluable.hxx
+  Expr_NamedUnknown.hpp
+  Expr_NamedUnknown_1.hpp
+  Expr_NotAssigned.hpp
+  Expr_NotEvaluable.hpp
   Expr_NumericValue.cxx
-  Expr_NumericValue.hxx
+  Expr_NumericValue.hpp
   Expr_Operators.cxx
-  Expr_Operators.hxx
+  Expr_Operators.hpp
   Expr_PolyExpression.cxx
-  Expr_PolyExpression.hxx
-  Expr_PolyExpression.lxx
+  Expr_PolyExpression.hpp
+  Expr_PolyExpression_1.hpp
   Expr_PolyFunction.cxx
-  Expr_PolyFunction.hxx
+  Expr_PolyFunction.hpp
   Expr_Product.cxx
-  Expr_Product.hxx
+  Expr_Product.hpp
   Expr_RelationIterator.cxx
-  Expr_RelationIterator.hxx
+  Expr_RelationIterator.hpp
   Expr_RUIterator.cxx
-  Expr_RUIterator.hxx
+  Expr_RUIterator.hpp
 
   Expr_Sign.cxx
-  Expr_Sign.hxx
+  Expr_Sign.hpp
   Expr_Sine.cxx
-  Expr_Sine.hxx
+  Expr_Sine.hpp
   Expr_SingleRelation.cxx
-  Expr_SingleRelation.hxx
+  Expr_SingleRelation.hpp
   Expr_Sinh.cxx
-  Expr_Sinh.hxx
+  Expr_Sinh.hpp
   Expr_Square.cxx
-  Expr_Square.hxx
+  Expr_Square.hpp
   Expr_SquareRoot.cxx
-  Expr_SquareRoot.hxx
+  Expr_SquareRoot.hpp
   Expr_Sum.cxx
-  Expr_Sum.hxx
+  Expr_Sum.hpp
   Expr_SystemRelation.cxx
-  Expr_SystemRelation.hxx
+  Expr_SystemRelation.hpp
   Expr_Tangent.cxx
-  Expr_Tangent.hxx
+  Expr_Tangent.hpp
   Expr_Tanh.cxx
-  Expr_Tanh.hxx
+  Expr_Tanh.hpp
   Expr_UnaryExpression.cxx
-  Expr_UnaryExpression.hxx
-  Expr_UnaryExpression.lxx
+  Expr_UnaryExpression.hpp
+  Expr_UnaryExpression_1.hpp
   Expr_UnaryFunction.cxx
-  Expr_UnaryFunction.hxx
+  Expr_UnaryFunction.hpp
   Expr_UnaryMinus.cxx
-  Expr_UnaryMinus.hxx
+  Expr_UnaryMinus.hpp
   Expr_UnknownIterator.cxx
-  Expr_UnknownIterator.hxx
+  Expr_UnknownIterator.hpp
 )

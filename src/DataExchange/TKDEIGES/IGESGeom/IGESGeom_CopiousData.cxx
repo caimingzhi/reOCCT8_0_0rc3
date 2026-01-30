@@ -16,13 +16,13 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IGESGeom_CopiousData.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IGESGeom_CopiousData.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_CopiousData, IGESData_IGESEntity)
 

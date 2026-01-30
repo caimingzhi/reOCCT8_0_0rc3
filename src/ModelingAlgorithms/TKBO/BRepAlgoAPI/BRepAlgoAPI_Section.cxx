@@ -17,21 +17,21 @@
 // modified by Michael KLOKOV  Wed Mar  6 15:01:25 2002
 // modified by  Eugeny MALTCHIKOV Wed Jul 04 11:13:01 2012
 
-#include <BRepAlgoAPI_Section.hxx>
+#include <BRepAlgoAPI_Section.hpp>
 
-#include <BOPAlgo_PaveFiller.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
 
-#include <BOPDS_DS.hxx>
+#include <BOPDS_DS.hpp>
 
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeShell.hxx>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeShell.hpp>
 
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
 
-#include <gp_Pln.hxx>
+#include <gp_Pln.hpp>
 
-#include <TopoDS_Shape.hxx>
+#include <TopoDS_Shape.hpp>
 
 //
 static TopoDS_Shape MakeShape(const occ::handle<Geom_Surface>&);

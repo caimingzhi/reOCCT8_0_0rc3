@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_BiPoint.hxx>
-#include <HLRAlgo_PolyInternalData.hxx>
-#include <Standard_Macro.hxx>
+#include <HLRAlgo_BiPoint.hpp>
+#include <HLRAlgo_PolyInternalData.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyInternalData, Standard_Transient)
 

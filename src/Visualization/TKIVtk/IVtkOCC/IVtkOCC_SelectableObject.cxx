@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtkOCC_SelectableObject.hxx>
+#include <IVtkOCC_SelectableObject.hpp>
 
-#include <AIS_Shape.hxx>
-#include <BRepBndLib.hxx>
-#include <Message.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <StdSelect_BRepSelectionTool.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <AIS_Shape.hpp>
+#include <BRepBndLib.hpp>
+#include <Message.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <StdSelect_BRepSelectionTool.hpp>
+#include <TopoDS_Iterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_SelectableObject, SelectMgr_SelectableObject)
 

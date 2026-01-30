@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextWrite.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_FileSystem.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepDumper.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepFile_Read.hxx>
-#include <StepSelect_FileModifier.hxx>
-#include <StepSelect_WorkLibrary.hxx>
+#include <IFSelect_ContextWrite.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_FileSystem.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepDumper.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepFile_Read.hpp>
+#include <StepSelect_FileModifier.hpp>
+#include <StepSelect_WorkLibrary.hpp>
 
 #include <cerrno>
 IMPLEMENT_STANDARD_RTTIEXT(StepSelect_WorkLibrary, IFSelect_WorkLibrary)

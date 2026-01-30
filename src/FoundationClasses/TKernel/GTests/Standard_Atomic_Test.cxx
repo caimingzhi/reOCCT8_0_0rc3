@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Parallel.hxx>
-#include <Standard_Boolean.hxx>
+#include <OSD_Parallel.hpp>
+#include <Standard_Boolean.hpp>
 
 #include <atomic>
 #include <gtest/gtest.h>

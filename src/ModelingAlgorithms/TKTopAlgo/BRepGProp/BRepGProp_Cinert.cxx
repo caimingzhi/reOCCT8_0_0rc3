@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepGProp_Cinert.hxx>
-#include <BRepGProp_EdgeTool.hxx>
-#include <gp_Pnt.hxx>
-#include <math.hxx>
-#include <NCollection_Array1.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepGProp_Cinert.hpp>
+#include <BRepGProp_EdgeTool.hpp>
+#include <gp_Pnt.hpp>
+#include <math.hpp>
+#include <NCollection_Array1.hpp>
 
 BRepGProp_Cinert::BRepGProp_Cinert() = default;
 

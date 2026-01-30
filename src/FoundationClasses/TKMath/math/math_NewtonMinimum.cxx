@@ -21,12 +21,12 @@
 
 // #endif
 
-#include <math_Gauss.hxx>
-#include <math_Jacobi.hxx>
-#include <math_MultipleVarFunctionWithHessian.hxx>
-#include <math_NewtonMinimum.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Gauss.hpp>
+#include <math_Jacobi.hpp>
+#include <math_MultipleVarFunctionWithHessian.hpp>
+#include <math_NewtonMinimum.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

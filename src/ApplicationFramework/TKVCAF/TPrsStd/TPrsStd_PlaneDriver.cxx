@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Plane.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Tool.hxx>
-#include <TPrsStd_PlaneDriver.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Plane.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Tool.hpp>
+#include <TPrsStd_PlaneDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_PlaneDriver, TPrsStd_Driver)
 

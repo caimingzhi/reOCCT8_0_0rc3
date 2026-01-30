@@ -16,13 +16,13 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_PipingFlow.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESDraw_ConnectPoint.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESAppli_PipingFlow.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESDraw_ConnectPoint.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_PipingFlow, IGESData_IGESEntity)
 

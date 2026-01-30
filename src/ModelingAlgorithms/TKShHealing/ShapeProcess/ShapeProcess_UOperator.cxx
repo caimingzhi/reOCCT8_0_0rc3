@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeProcess_UOperator.hxx>
-#include <Standard_Type.hxx>
+#include <ShapeProcess_UOperator.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeProcess_UOperator, ShapeProcess_Operator)
 

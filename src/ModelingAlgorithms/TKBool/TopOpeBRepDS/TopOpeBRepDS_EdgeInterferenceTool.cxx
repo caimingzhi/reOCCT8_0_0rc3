@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepLProp_CLProps.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <TopOpeBRepDS_EdgeInterferenceTool.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepLProp_CLProps.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <TopOpeBRepDS_EdgeInterferenceTool.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 //=================================================================================================
 

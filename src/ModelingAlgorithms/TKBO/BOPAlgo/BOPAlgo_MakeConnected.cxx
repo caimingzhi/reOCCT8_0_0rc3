@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_MakeConnected.hxx>
+#include <BOPAlgo_MakeConnected.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_Tools.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_Tools.hpp>
 
-#include <BOPTools_AlgoTools.hxx>
+#include <BOPTools_AlgoTools.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <TopExp_Explorer.hxx>
+#include <TopExp_Explorer.hpp>
 
 //=======================================================================
 // function : Perform

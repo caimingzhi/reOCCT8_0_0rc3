@@ -3,143 +3,143 @@ set(OCCT_RWStepRepr_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWStepRepr_FILES
   RWStepRepr_RWAllAroundShapeAspect.cxx
-  RWStepRepr_RWAllAroundShapeAspect.pxx
+  RWStepRepr_RWAllAroundShapeAspect.hpp
   RWStepRepr_RWApex.cxx
-  RWStepRepr_RWApex.pxx
+  RWStepRepr_RWApex.hpp
   RWStepRepr_RWAssemblyComponentUsage.cxx
-  RWStepRepr_RWAssemblyComponentUsage.pxx
+  RWStepRepr_RWAssemblyComponentUsage.hpp
   RWStepRepr_RWAssemblyComponentUsageSubstitute.cxx
-  RWStepRepr_RWAssemblyComponentUsageSubstitute.pxx
+  RWStepRepr_RWAssemblyComponentUsageSubstitute.hpp
   RWStepRepr_RWBetweenShapeAspect.cxx
-  RWStepRepr_RWBetweenShapeAspect.pxx
+  RWStepRepr_RWBetweenShapeAspect.hpp
   RWStepRepr_RWBooleanRepresentationItem.cxx
-  RWStepRepr_RWBooleanRepresentationItem.pxx
+  RWStepRepr_RWBooleanRepresentationItem.hpp
   RWStepRepr_RWCentreOfSymmetry.cxx
-  RWStepRepr_RWCentreOfSymmetry.pxx
+  RWStepRepr_RWCentreOfSymmetry.hpp
   RWStepRepr_RWCharacterizedRepresentation.cxx
-  RWStepRepr_RWCharacterizedRepresentation.pxx
+  RWStepRepr_RWCharacterizedRepresentation.hpp
   RWStepRepr_RWCompGroupShAspAndCompShAspAndDatumFeatAndShAsp.cxx
-  RWStepRepr_RWCompGroupShAspAndCompShAspAndDatumFeatAndShAsp.pxx
+  RWStepRepr_RWCompGroupShAspAndCompShAspAndDatumFeatAndShAsp.hpp
   RWStepRepr_RWCompositeGroupShapeAspect.cxx
-  RWStepRepr_RWCompositeGroupShapeAspect.pxx
+  RWStepRepr_RWCompositeGroupShapeAspect.hpp
   RWStepRepr_RWCompositeShapeAspect.cxx
-  RWStepRepr_RWCompositeShapeAspect.pxx
+  RWStepRepr_RWCompositeShapeAspect.hpp
   RWStepRepr_RWCompoundRepresentationItem.cxx
-  RWStepRepr_RWCompoundRepresentationItem.pxx
+  RWStepRepr_RWCompoundRepresentationItem.hpp
   RWStepRepr_RWCompShAspAndDatumFeatAndShAsp.cxx
-  RWStepRepr_RWCompShAspAndDatumFeatAndShAsp.pxx
+  RWStepRepr_RWCompShAspAndDatumFeatAndShAsp.hpp
   RWStepRepr_RWConfigurationDesign.cxx
-  RWStepRepr_RWConfigurationDesign.pxx
+  RWStepRepr_RWConfigurationDesign.hpp
   RWStepRepr_RWConfigurationEffectivity.cxx
-  RWStepRepr_RWConfigurationEffectivity.pxx
+  RWStepRepr_RWConfigurationEffectivity.hpp
   RWStepRepr_RWConfigurationItem.cxx
-  RWStepRepr_RWConfigurationItem.pxx
+  RWStepRepr_RWConfigurationItem.hpp
   RWStepRepr_RWConstructiveGeometryRepresentation.cxx
-  RWStepRepr_RWConstructiveGeometryRepresentation.pxx
+  RWStepRepr_RWConstructiveGeometryRepresentation.hpp
   RWStepRepr_RWConstructiveGeometryRepresentationRelationship.cxx
-  RWStepRepr_RWConstructiveGeometryRepresentationRelationship.pxx
+  RWStepRepr_RWConstructiveGeometryRepresentationRelationship.hpp
   RWStepRepr_RWContinuosShapeAspect.cxx
-  RWStepRepr_RWContinuosShapeAspect.pxx
+  RWStepRepr_RWContinuosShapeAspect.hpp
   RWStepRepr_RWDataEnvironment.cxx
-  RWStepRepr_RWDataEnvironment.pxx
+  RWStepRepr_RWDataEnvironment.hpp
   RWStepRepr_RWDefinitionalRepresentation.cxx
-  RWStepRepr_RWDefinitionalRepresentation.pxx
+  RWStepRepr_RWDefinitionalRepresentation.hpp
   RWStepRepr_RWDerivedShapeAspect.cxx
-  RWStepRepr_RWDerivedShapeAspect.pxx
+  RWStepRepr_RWDerivedShapeAspect.hpp
   RWStepRepr_RWDescriptiveRepresentationItem.cxx
-  RWStepRepr_RWDescriptiveRepresentationItem.pxx
+  RWStepRepr_RWDescriptiveRepresentationItem.hpp
   RWStepRepr_RWExtension.cxx
-  RWStepRepr_RWExtension.pxx
+  RWStepRepr_RWExtension.hpp
   RWStepRepr_RWFeatureForDatumTargetRelationship.cxx
-  RWStepRepr_RWFeatureForDatumTargetRelationship.pxx
+  RWStepRepr_RWFeatureForDatumTargetRelationship.hpp
   RWStepRepr_RWFunctionallyDefinedTransformation.cxx
-  RWStepRepr_RWFunctionallyDefinedTransformation.pxx
+  RWStepRepr_RWFunctionallyDefinedTransformation.hpp
   RWStepRepr_RWGeometricAlignment.cxx
-  RWStepRepr_RWGeometricAlignment.pxx
+  RWStepRepr_RWGeometricAlignment.hpp
   RWStepRepr_RWGlobalUncertaintyAssignedContext.cxx
-  RWStepRepr_RWGlobalUncertaintyAssignedContext.pxx
+  RWStepRepr_RWGlobalUncertaintyAssignedContext.hpp
   RWStepRepr_RWGlobalUnitAssignedContext.cxx
-  RWStepRepr_RWGlobalUnitAssignedContext.pxx
+  RWStepRepr_RWGlobalUnitAssignedContext.hpp
   RWStepRepr_RWIntegerRepresentationItem.cxx
-  RWStepRepr_RWIntegerRepresentationItem.pxx
+  RWStepRepr_RWIntegerRepresentationItem.hpp
   RWStepRepr_RWItemDefinedTransformation.cxx
-  RWStepRepr_RWItemDefinedTransformation.pxx
+  RWStepRepr_RWItemDefinedTransformation.hpp
   RWStepRepr_RWMakeFromUsageOption.cxx
-  RWStepRepr_RWMakeFromUsageOption.pxx
+  RWStepRepr_RWMakeFromUsageOption.hpp
   RWStepRepr_RWMappedItem.cxx
-  RWStepRepr_RWMappedItem.pxx
+  RWStepRepr_RWMappedItem.hpp
   RWStepRepr_RWMaterialDesignation.cxx
-  RWStepRepr_RWMaterialDesignation.pxx
+  RWStepRepr_RWMaterialDesignation.hpp
   RWStepRepr_RWMaterialProperty.cxx
-  RWStepRepr_RWMaterialProperty.pxx
+  RWStepRepr_RWMaterialProperty.hpp
   RWStepRepr_RWMaterialPropertyRepresentation.cxx
-  RWStepRepr_RWMaterialPropertyRepresentation.pxx
+  RWStepRepr_RWMaterialPropertyRepresentation.hpp
   RWStepRepr_RWMeasureRepresentationItem.cxx
-  RWStepRepr_RWMeasureRepresentationItem.pxx
+  RWStepRepr_RWMeasureRepresentationItem.hpp
   RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.cxx
-  RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.pxx
+  RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.hpp
   RWStepRepr_RWParallelOffset.cxx
-  RWStepRepr_RWParallelOffset.pxx
+  RWStepRepr_RWParallelOffset.hpp
   RWStepRepr_RWParametricRepresentationContext.cxx
-  RWStepRepr_RWParametricRepresentationContext.pxx
+  RWStepRepr_RWParametricRepresentationContext.hpp
   RWStepRepr_RWPerpendicularTo.cxx
-  RWStepRepr_RWPerpendicularTo.pxx
+  RWStepRepr_RWPerpendicularTo.hpp
   RWStepRepr_RWProductConcept.cxx
-  RWStepRepr_RWProductConcept.pxx
+  RWStepRepr_RWProductConcept.hpp
   RWStepRepr_RWProductDefinitionShape.cxx
-  RWStepRepr_RWProductDefinitionShape.pxx
+  RWStepRepr_RWProductDefinitionShape.hpp
   RWStepRepr_RWPropertyDefinition.cxx
-  RWStepRepr_RWPropertyDefinition.pxx
+  RWStepRepr_RWPropertyDefinition.hpp
   RWStepRepr_RWPropertyDefinitionRelationship.cxx
-  RWStepRepr_RWPropertyDefinitionRelationship.pxx
+  RWStepRepr_RWPropertyDefinitionRelationship.hpp
   RWStepRepr_RWPropertyDefinitionRepresentation.cxx
-  RWStepRepr_RWPropertyDefinitionRepresentation.pxx
+  RWStepRepr_RWPropertyDefinitionRepresentation.hpp
   RWStepRepr_RWQuantifiedAssemblyComponentUsage.cxx
-  RWStepRepr_RWQuantifiedAssemblyComponentUsage.pxx
+  RWStepRepr_RWQuantifiedAssemblyComponentUsage.hpp
   RWStepRepr_RWRealRepresentationItem.cxx
-  RWStepRepr_RWRealRepresentationItem.pxx
+  RWStepRepr_RWRealRepresentationItem.hpp
   RWStepRepr_RWRepresentation.cxx
-  RWStepRepr_RWRepresentation.pxx
+  RWStepRepr_RWRepresentation.hpp
   RWStepRepr_RWRepresentationContext.cxx
-  RWStepRepr_RWRepresentationContext.pxx
+  RWStepRepr_RWRepresentationContext.hpp
   RWStepRepr_RWRepresentationContextReference.cxx
-  RWStepRepr_RWRepresentationContextReference.pxx
+  RWStepRepr_RWRepresentationContextReference.hpp
   RWStepRepr_RWRepresentationItem.cxx
-  RWStepRepr_RWRepresentationItem.pxx
+  RWStepRepr_RWRepresentationItem.hpp
   RWStepRepr_RWRepresentationMap.cxx
-  RWStepRepr_RWRepresentationMap.pxx
+  RWStepRepr_RWRepresentationMap.hpp
   RWStepRepr_RWRepresentationReference.cxx
-  RWStepRepr_RWRepresentationReference.pxx
+  RWStepRepr_RWRepresentationReference.hpp
   RWStepRepr_RWRepresentationRelationship.cxx
-  RWStepRepr_RWRepresentationRelationship.pxx
+  RWStepRepr_RWRepresentationRelationship.hpp
   RWStepRepr_RWRepresentationRelationshipWithTransformation.cxx
-  RWStepRepr_RWRepresentationRelationshipWithTransformation.pxx
+  RWStepRepr_RWRepresentationRelationshipWithTransformation.hpp
   RWStepRepr_RWReprItemAndLengthMeasureWithUnit.cxx
-  RWStepRepr_RWReprItemAndLengthMeasureWithUnit.pxx
+  RWStepRepr_RWReprItemAndLengthMeasureWithUnit.hpp
   RWStepRepr_RWReprItemAndLengthMeasureWithUnitAndQRI.cxx
-  RWStepRepr_RWReprItemAndLengthMeasureWithUnitAndQRI.pxx
+  RWStepRepr_RWReprItemAndLengthMeasureWithUnitAndQRI.hpp
   RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit.cxx
-  RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit.pxx
+  RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit.hpp
   RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnitAndQRI.cxx
-  RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnitAndQRI.pxx
+  RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnitAndQRI.hpp
   RWStepRepr_RWShapeAspect.cxx
-  RWStepRepr_RWShapeAspect.pxx
+  RWStepRepr_RWShapeAspect.hpp
   RWStepRepr_RWShapeAspectDerivingRelationship.cxx
-  RWStepRepr_RWShapeAspectDerivingRelationship.pxx
+  RWStepRepr_RWShapeAspectDerivingRelationship.hpp
   RWStepRepr_RWShapeAspectRelationship.cxx
-  RWStepRepr_RWShapeAspectRelationship.pxx
+  RWStepRepr_RWShapeAspectRelationship.hpp
   RWStepRepr_RWShapeAspectTransition.cxx
-  RWStepRepr_RWShapeAspectTransition.pxx
+  RWStepRepr_RWShapeAspectTransition.hpp
   RWStepRepr_RWShapeRepresentationRelationshipWithTransformation.cxx
-  RWStepRepr_RWShapeRepresentationRelationshipWithTransformation.pxx
+  RWStepRepr_RWShapeRepresentationRelationshipWithTransformation.hpp
   RWStepRepr_RWSpecifiedHigherUsageOccurrence.cxx
-  RWStepRepr_RWSpecifiedHigherUsageOccurrence.pxx
+  RWStepRepr_RWSpecifiedHigherUsageOccurrence.hpp
   RWStepRepr_RWStructuralResponseProperty.cxx
-  RWStepRepr_RWStructuralResponseProperty.pxx
+  RWStepRepr_RWStructuralResponseProperty.hpp
   RWStepRepr_RWStructuralResponsePropertyDefinitionRepresentation.cxx
-  RWStepRepr_RWStructuralResponsePropertyDefinitionRepresentation.pxx
+  RWStepRepr_RWStructuralResponsePropertyDefinitionRepresentation.hpp
   RWStepRepr_RWTangent.cxx
-  RWStepRepr_RWTangent.pxx
+  RWStepRepr_RWTangent.hpp
   RWStepRepr_RWValueRepresentationItem.cxx
-  RWStepRepr_RWValueRepresentationItem.pxx
+  RWStepRepr_RWValueRepresentationItem.hpp
 )

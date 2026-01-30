@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bisector_PolyBis.hxx>
-#include <ElCLib.hxx>
-#include <gp.hxx>
-#include <gp_Trsf2d.hxx>
+#include <Bisector_PolyBis.hpp>
+#include <ElCLib.hpp>
+#include <gp.hpp>
+#include <gp_Trsf2d.hpp>
 
 //=================================================================================================
 

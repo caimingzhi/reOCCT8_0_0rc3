@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_BlendTool.hxx>
+#include <BRepBlend_BlendTool.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBlend_HCurve2dTool.hxx>
-#include <Extrema_EPCOfExtPC2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBlend_HCurve2dTool.hpp>
+#include <Extrema_EPCOfExtPC2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
 
 //=======================================================================
 // function : Project

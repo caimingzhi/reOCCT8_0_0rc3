@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Line.hxx>
+#include <AIS_Line.hpp>
 
-#include <AIS_GraphicTool.hxx>
-#include <Aspect_TypeOfLine.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Point.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_Curve.hxx>
-#include <UnitsAPI.hxx>
+#include <AIS_GraphicTool.hpp>
+#include <Aspect_TypeOfLine.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Point.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_Curve.hpp>
+#include <UnitsAPI.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Line, AIS_InteractiveObject)
 

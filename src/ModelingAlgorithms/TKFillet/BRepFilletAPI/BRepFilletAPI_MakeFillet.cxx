@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <ChFiDS_ErrorStatus.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <Geom_Surface.hxx>
-#include <Law_Linear.hxx>
-#include <Precision.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <BRepFilletAPI_MakeFillet.hpp>
+#include <ChFiDS_ErrorStatus.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <Geom_Surface.hpp>
+#include <Law_Linear.hpp>
+#include <Precision.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 //=================================================================================================
 

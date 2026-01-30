@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_CheckCounter.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_SignText.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_CheckCounter.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_SignText.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_CheckCounter, IFSelect_SignatureList)

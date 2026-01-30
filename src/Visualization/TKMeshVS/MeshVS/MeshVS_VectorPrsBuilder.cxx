@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_EntityType.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_VectorPrsBuilder.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_EntityType.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_VectorPrsBuilder.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_VectorPrsBuilder, MeshVS_PrsBuilder)
 

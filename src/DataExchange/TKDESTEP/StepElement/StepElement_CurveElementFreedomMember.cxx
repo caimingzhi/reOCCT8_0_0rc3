@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <StepElement_CurveElementFreedomMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepElement_CurveElementFreedomMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_CurveElementFreedomMember, StepData_SelectNamed)
 

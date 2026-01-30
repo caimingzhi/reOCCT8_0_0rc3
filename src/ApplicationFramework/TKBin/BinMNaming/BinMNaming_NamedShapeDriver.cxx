@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMNaming_NamedShapeDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinTools_LocationSet.hxx>
-#include <BinTools_ShapeSet.hxx>
-#include <BinTools_ShapeWriter.hxx>
-#include <BinTools_ShapeReader.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDocStd_FormatVersion.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BinMNaming_NamedShapeDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinTools_LocationSet.hpp>
+#include <BinTools_ShapeSet.hpp>
+#include <BinTools_ShapeWriter.hpp>
+#include <BinTools_ShapeReader.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDocStd_FormatVersion.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMNaming_NamedShapeDriver, BinMDF_ADriver)
 

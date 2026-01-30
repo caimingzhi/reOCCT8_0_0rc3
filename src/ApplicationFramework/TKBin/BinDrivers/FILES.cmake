@@ -3,10 +3,10 @@ set(OCCT_BinDrivers_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinDrivers_FILES
   BinDrivers.cxx
-  BinDrivers.hxx
+  BinDrivers.hpp
   BinDrivers_DocumentRetrievalDriver.cxx
-  BinDrivers_DocumentRetrievalDriver.hxx
+  BinDrivers_DocumentRetrievalDriver.hpp
   BinDrivers_DocumentStorageDriver.cxx
-  BinDrivers_DocumentStorageDriver.hxx
-  BinDrivers_Marker.hxx
+  BinDrivers_DocumentStorageDriver.hpp
+  BinDrivers_Marker.hpp
 )

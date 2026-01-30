@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc.hxx>
+#include <BinMXCAFDoc.hpp>
 
-#include <BinMDF_ADriverTable.hxx>
-#include <BinMXCAFDoc_AssemblyItemRefDriver.hxx>
-#include <BinMXCAFDoc_CentroidDriver.hxx>
-#include <BinMXCAFDoc_ColorDriver.hxx>
-#include <BinMXCAFDoc_DatumDriver.hxx>
-#include <BinMXCAFDoc_DimTolDriver.hxx>
-#include <BinMXCAFDoc_GraphNodeDriver.hxx>
-#include <BinMXCAFDoc_LengthUnitDriver.hxx>
-#include <BinMXCAFDoc_LocationDriver.hxx>
-#include <BinMXCAFDoc_MaterialDriver.hxx>
-#include <BinMXCAFDoc_NoteBinDataDriver.hxx>
-#include <BinMXCAFDoc_NoteCommentDriver.hxx>
-#include <BinMXCAFDoc_VisMaterialDriver.hxx>
-#include <BinMXCAFDoc_VisMaterialToolDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinMXCAFDoc_AssemblyItemRefDriver.hpp>
+#include <BinMXCAFDoc_CentroidDriver.hpp>
+#include <BinMXCAFDoc_ColorDriver.hpp>
+#include <BinMXCAFDoc_DatumDriver.hpp>
+#include <BinMXCAFDoc_DimTolDriver.hpp>
+#include <BinMXCAFDoc_GraphNodeDriver.hpp>
+#include <BinMXCAFDoc_LengthUnitDriver.hpp>
+#include <BinMXCAFDoc_LocationDriver.hpp>
+#include <BinMXCAFDoc_MaterialDriver.hpp>
+#include <BinMXCAFDoc_NoteBinDataDriver.hpp>
+#include <BinMXCAFDoc_NoteCommentDriver.hpp>
+#include <BinMXCAFDoc_VisMaterialDriver.hpp>
+#include <BinMXCAFDoc_VisMaterialToolDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <TNaming_NamedShape.hpp>
 
 //=================================================================================================
 

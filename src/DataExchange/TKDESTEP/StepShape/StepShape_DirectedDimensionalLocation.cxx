@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepShape_DirectedDimensionalLocation.hxx>
+#include <Standard_Type.hpp>
+#include <StepShape_DirectedDimensionalLocation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_DirectedDimensionalLocation, StepShape_DimensionalLocation)
 

@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XDEDRAW_Common.hxx>
+#include <XDEDRAW_Common.hpp>
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Message.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_Editor.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XSDRAW.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Message.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_Editor.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XSDRAW.hpp>
 
 //=======================================================================
 // function : SetCurWS

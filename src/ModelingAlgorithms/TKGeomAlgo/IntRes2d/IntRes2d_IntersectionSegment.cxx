@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntRes2d_IntersectionSegment.hxx>
+#include <IntRes2d_IntersectionSegment.hpp>
 
 IntRes2d_IntersectionSegment::IntRes2d_IntersectionSegment()
     : oppos(false),

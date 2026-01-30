@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_MarkerImage.hxx>
+#include <Graphic3d_MarkerImage.hpp>
 
-#include <Image_PixMap.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Image_PixMap.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include "Graphic3d_MarkerImage.pxx"
+#include "Graphic3d_MarkerImage_1.hpp"
 
 #include <atomic>
 

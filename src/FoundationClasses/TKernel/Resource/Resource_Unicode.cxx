@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Resource_ConvertUnicode.hxx>
-#include <Resource_Manager.hxx>
-#include <Resource_Unicode.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_UtfString.hxx>
-#include <Standard_NotImplemented.hxx>
-#include "Resource_CodePages.pxx"
-#include "Resource_GBK.pxx"
-#include "Resource_Big5.pxx"
+#include <Resource_ConvertUnicode.hpp>
+#include <Resource_Manager.hpp>
+#include <Resource_Unicode.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_UtfString.hpp>
+#include <Standard_NotImplemented.hpp>
+#include "Resource_CodePages.hpp"
+#include "Resource_GBK.hpp"
+#include "Resource_Big5.hpp"
 
 #define isjis(c) (((c) >= 0x21 && (c) <= 0x7e))
 #define iseuc(c) (((c) >= 0xa1 && (c) <= 0xfe))

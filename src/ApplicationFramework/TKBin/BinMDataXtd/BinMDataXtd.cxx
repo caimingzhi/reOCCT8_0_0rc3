@@ -15,15 +15,15 @@
 
 // modified   13.04.2009 Sergey Zaritchny
 
-#include <BinMDataXtd.hxx>
-#include <BinMDataXtd_ConstraintDriver.hxx>
-#include <BinMDataXtd_GeometryDriver.hxx>
-#include <BinMDataXtd_PatternStdDriver.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <Message_Messenger.hxx>
-#include <BinMDataXtd_PresentationDriver.hxx>
-#include <BinMDataXtd_PositionDriver.hxx>
-#include <BinMDataXtd_TriangulationDriver.hxx>
+#include <BinMDataXtd.hpp>
+#include <BinMDataXtd_ConstraintDriver.hpp>
+#include <BinMDataXtd_GeometryDriver.hpp>
+#include <BinMDataXtd_PatternStdDriver.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <Message_Messenger.hpp>
+#include <BinMDataXtd_PresentationDriver.hpp>
+#include <BinMDataXtd_PositionDriver.hpp>
+#include <BinMDataXtd_TriangulationDriver.hpp>
 
 static int myDocumentVersion = -1;
 

@@ -11,36 +11,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <NCollection_List.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <ShapeAnalysis_TransferParametersProj.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <NCollection_List.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <ShapeAnalysis_TransferParametersProj.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_TransferParametersProj, ShapeAnalysis_TransferParameters)
 

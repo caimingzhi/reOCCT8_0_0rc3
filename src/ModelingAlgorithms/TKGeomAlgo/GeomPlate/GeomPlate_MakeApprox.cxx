@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_ApproxAFunc2Var.hxx>
-#include <AdvApprox_DichoCutting.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomPlate_MakeApprox.hxx>
-#include <GeomPlate_PlateG0Criterion.hxx>
-#include <GeomPlate_PlateG1Criterion.hxx>
-#include <GeomPlate_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XY.hxx>
-#include <Plate_Plate.hxx>
-#include <PLib.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <AdvApp2Var_ApproxAFunc2Var.hpp>
+#include <AdvApprox_DichoCutting.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomPlate_MakeApprox.hpp>
+#include <GeomPlate_PlateG0Criterion.hpp>
+#include <GeomPlate_PlateG1Criterion.hpp>
+#include <GeomPlate_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XY.hpp>
+#include <Plate_Plate.hpp>
+#include <PLib.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 class GeomPlate_MakeApprox_Eval : public AdvApp2Var_EvaluatorFunc2Var
 {

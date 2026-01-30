@@ -16,20 +16,20 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESGeom_Direction.hxx>
-#include <IGESGeom_Point.hxx>
-#include <IGESSolid_ToolToroidalSurface.hxx>
-#include <IGESSolid_ToroidalSurface.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESGeom_Direction.hpp>
+#include <IGESGeom_Point.hpp>
+#include <IGESSolid_ToolToroidalSurface.hpp>
+#include <IGESSolid_ToroidalSurface.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
 
 IGESSolid_ToolToroidalSurface::IGESSolid_ToolToroidalSurface() = default;
 

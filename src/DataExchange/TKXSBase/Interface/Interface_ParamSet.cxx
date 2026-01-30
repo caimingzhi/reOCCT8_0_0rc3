@@ -13,10 +13,10 @@
 
 // szv#4 S4163
 
-#include <Interface_FileParameter.hxx>
-#include <Interface_ParamList.hxx>
-#include <Interface_ParamSet.hxx>
-#include <Standard_Type.hxx>
+#include <Interface_FileParameter.hpp>
+#include <Interface_ParamList.hpp>
+#include <Interface_ParamSet.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_ParamSet, Standard_Transient)
 

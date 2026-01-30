@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT2d_BiInt.hxx>
+#include <MAT2d_BiInt.hpp>
 
 MAT2d_BiInt::MAT2d_BiInt(const int I1, const int I2)
     : i1(I1),

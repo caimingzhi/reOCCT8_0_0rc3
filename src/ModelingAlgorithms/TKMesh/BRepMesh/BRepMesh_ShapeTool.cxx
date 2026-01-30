@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_ShapeTool.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_Builder.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Precision.hxx>
-#include <Bnd_Box.hxx>
+#include <BRepMesh_ShapeTool.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_Builder.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <Precision.hpp>
+#include <Bnd_Box.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ShapeTool, Standard_Transient)
 

@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_FileIterator.hxx>
+#include <OSD_FileIterator.hpp>
 
-#include <OSD_Path.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_Path.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #ifndef _WIN32
 
-  #include <OSD_File.hxx>
-  #include <OSD_OSDError.hxx>
-  #include <OSD_WhoAmI.hxx>
+  #include <OSD_File.hpp>
+  #include <OSD_OSDError.hpp>
+  #include <OSD_WhoAmI.hpp>
 
   #include <dirent.h>
   #include <cstdio>
@@ -222,7 +222,7 @@ int OSD_FileIterator::Error() const
 
   #include <windows.h>
 
-  #include <TCollection_ExtendedString.hxx>
+  #include <TCollection_ExtendedString.hpp>
 
   #define _FD ((PWIN32_FIND_DATAW)myData)
 

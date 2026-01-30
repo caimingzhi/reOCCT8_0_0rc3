@@ -2,41 +2,41 @@
 set(OCCT_ChFiDS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ChFiDS_FILES
-  ChFiDS_ChamfMethod.hxx
-  ChFiDS_ChamfMode.hxx
+  ChFiDS_ChamfMethod.hpp
+  ChFiDS_ChamfMode.hpp
   ChFiDS_ChamfSpine.cxx
-  ChFiDS_ChamfSpine.hxx
+  ChFiDS_ChamfSpine.hpp
   ChFiDS_CircSection.cxx
-  ChFiDS_CircSection.hxx
+  ChFiDS_CircSection.hpp
   ChFiDS_CommonPoint.cxx
-  ChFiDS_CommonPoint.hxx
+  ChFiDS_CommonPoint.hpp
   ChFiDS_ElSpine.cxx
-  ChFiDS_ElSpine.hxx
-  ChFiDS_ErrorStatus.hxx
+  ChFiDS_ElSpine.hpp
+  ChFiDS_ErrorStatus.hpp
   ChFiDS_FaceInterference.cxx
-  ChFiDS_FaceInterference.hxx
-  ChFiDS_FaceInterference.lxx
+  ChFiDS_FaceInterference.hpp
+  ChFiDS_FaceInterference_1.hpp
   ChFiDS_FilSpine.cxx
-  ChFiDS_FilSpine.hxx
+  ChFiDS_FilSpine.hpp
 
   ChFiDS_Map.cxx
-  ChFiDS_Map.hxx
+  ChFiDS_Map.hpp
   ChFiDS_Regul.cxx
-  ChFiDS_Regul.hxx
+  ChFiDS_Regul.hpp
 
   ChFiDS_Spine.cxx
-  ChFiDS_Spine.hxx
-  ChFiDS_Spine.lxx
-  ChFiDS_State.hxx
+  ChFiDS_Spine.hpp
+  ChFiDS_Spine_1.hpp
+  ChFiDS_State.hpp
   ChFiDS_Stripe.cxx
-  ChFiDS_Stripe.hxx
-  ChFiDS_Stripe.lxx
+  ChFiDS_Stripe.hpp
+  ChFiDS_Stripe_1.hpp
 
   ChFiDS_StripeMap.cxx
-  ChFiDS_StripeMap.hxx
-  ChFiDS_StripeMap.lxx
+  ChFiDS_StripeMap.hpp
+  ChFiDS_StripeMap_1.hpp
   ChFiDS_SurfData.cxx
-  ChFiDS_SurfData.hxx
-  ChFiDS_SurfData.lxx
-  ChFiDS_TypeOfConcavity.hxx
+  ChFiDS_SurfData.hpp
+  ChFiDS_SurfData_1.hpp
+  ChFiDS_TypeOfConcavity.hpp
 )

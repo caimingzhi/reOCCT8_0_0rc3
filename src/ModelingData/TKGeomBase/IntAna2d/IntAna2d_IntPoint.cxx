@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntAna2d_IntPoint.hxx>
+#include <IntAna2d_IntPoint.hpp>
 
 IntAna2d_IntPoint::IntAna2d_IntPoint(const double X,
                                      const double Y,

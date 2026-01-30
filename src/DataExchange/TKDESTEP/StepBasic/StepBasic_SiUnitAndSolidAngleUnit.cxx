@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiUnitAndSolidAngleUnit.hxx>
-#include <StepBasic_SolidAngleUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiUnitAndSolidAngleUnit.hpp>
+#include <StepBasic_SolidAngleUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_SiUnitAndSolidAngleUnit, StepBasic_SiUnit)
 

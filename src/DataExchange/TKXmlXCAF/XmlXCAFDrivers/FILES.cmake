@@ -5,9 +5,9 @@ set(OCCT_XmlXCAFDrivers_FILES
   FILES
   GUID.txt
   XmlXCAFDrivers.cxx
-  XmlXCAFDrivers.hxx
+  XmlXCAFDrivers.hpp
   XmlXCAFDrivers_DocumentRetrievalDriver.cxx
-  XmlXCAFDrivers_DocumentRetrievalDriver.hxx
+  XmlXCAFDrivers_DocumentRetrievalDriver.hpp
   XmlXCAFDrivers_DocumentStorageDriver.cxx
-  XmlXCAFDrivers_DocumentStorageDriver.hxx
+  XmlXCAFDrivers_DocumentStorageDriver.hpp
 )

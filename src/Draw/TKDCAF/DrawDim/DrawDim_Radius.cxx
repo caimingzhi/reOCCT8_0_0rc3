@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <Draw_Display.hxx>
-#include <DrawDim_Radius.hxx>
-#include <GC_MakeCircle.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <Draw_Display.hpp>
+#include <DrawDim_Radius.hpp>
+#include <GC_MakeCircle.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Radius, DrawDim_Dimension)
 

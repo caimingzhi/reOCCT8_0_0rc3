@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_CommonBlock.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <Standard_Type.hxx>
+#include <BOPDS_CommonBlock.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BOPDS_CommonBlock, Standard_Transient)
 

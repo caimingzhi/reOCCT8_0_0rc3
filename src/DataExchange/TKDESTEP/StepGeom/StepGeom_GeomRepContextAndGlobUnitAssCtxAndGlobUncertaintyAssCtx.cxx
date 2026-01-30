@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepGeom_GeometricRepresentationContext.hxx>
-#include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hxx>
-#include <StepRepr_GlobalUncertaintyAssignedContext.hxx>
-#include <StepRepr_GlobalUnitAssignedContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Type.hpp>
+#include <StepGeom_GeometricRepresentationContext.hpp>
+#include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp>
+#include <StepRepr_GlobalUncertaintyAssignedContext.hpp>
+#include <StepRepr_GlobalUnitAssignedContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx,
                            StepRepr_RepresentationContext)

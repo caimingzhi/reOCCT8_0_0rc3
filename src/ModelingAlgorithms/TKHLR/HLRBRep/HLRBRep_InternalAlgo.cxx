@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_Hider.hxx>
-#include <HLRBRep_InternalAlgo.hxx>
-#include <HLRBRep_ShapeBounds.hxx>
-#include <HLRBRep_ShapeToHLR.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Macro.hxx>
+#include <HLRAlgo.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_Hider.hpp>
+#include <HLRBRep_InternalAlgo.hpp>
+#include <HLRBRep_ShapeBounds.hpp>
+#include <HLRBRep_ShapeToHLR.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_InternalAlgo, Standard_Transient)

@@ -16,24 +16,24 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESGeom_Flash.hxx>
-#include <IGESGeom_ToolFlash.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_DomainError.hxx>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESGeom_Flash.hpp>
+#include <IGESGeom_ToolFlash.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_DomainError.hpp>
 
 IGESGeom_ToolFlash::IGESGeom_ToolFlash() = default;
 

@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_CellsBuilder.hxx>
+#include <BOPAlgo_CellsBuilder.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_BuilderSolid.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Compound.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_BuilderSolid.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Compound.hpp>
 
 static TopAbs_ShapeEnum TypeToExplore(const int theDim);
 

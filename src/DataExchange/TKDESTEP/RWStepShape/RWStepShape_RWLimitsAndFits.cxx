@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepShape_RWLimitsAndFits.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_LimitsAndFits.hxx>
+#include "RWStepShape_RWLimitsAndFits.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_LimitsAndFits.hpp>
 
 RWStepShape_RWLimitsAndFits::RWStepShape_RWLimitsAndFits() = default;
 

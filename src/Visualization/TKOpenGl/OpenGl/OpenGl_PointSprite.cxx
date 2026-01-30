@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_PointSprite.hxx>
+#include <OpenGl_PointSprite.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Sampler.hxx>
-#include <Standard_Assert.hxx>
+#include <Graphic3d_TextureParams.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Sampler.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_PointSprite, OpenGl_Texture)
 

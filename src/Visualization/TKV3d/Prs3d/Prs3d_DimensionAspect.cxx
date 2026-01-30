@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d_DimensionAspect.hxx>
+#include <Prs3d_DimensionAspect.hpp>
 
-#include <Aspect_TypeOfLine.hxx>
-#include <Graphic3d_AspectText3d.hxx>
-#include <Standard_Dump.hxx>
+#include <Aspect_TypeOfLine.hpp>
+#include <Graphic3d_AspectText3d.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_DimensionAspect, Prs3d_BasicAspect)
 

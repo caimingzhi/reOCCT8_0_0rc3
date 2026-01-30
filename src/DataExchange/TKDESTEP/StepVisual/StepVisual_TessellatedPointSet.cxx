@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_TessellatedPointSet.hxx>
+#include <StepVisual_TessellatedPointSet.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TessellatedPointSet, StepVisual_TessellatedItem)
 

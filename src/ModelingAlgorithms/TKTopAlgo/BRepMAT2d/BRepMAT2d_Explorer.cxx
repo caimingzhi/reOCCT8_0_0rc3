@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepLib.hxx>
-#include <BRepMAT2d_Explorer.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <GCE2d_MakeSegment.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BoundedCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dConvert.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepLib.hpp>
+#include <BRepMAT2d_Explorer.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <GCE2d_MakeSegment.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BoundedCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dConvert.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 //
 //  Modified by Sergey KHROMOV - Thu Dec  5 10:38:14 2002 Begin

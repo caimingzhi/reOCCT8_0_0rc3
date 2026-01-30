@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Display.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <Standard_Type.hxx>
-#include <XSDRAWSTL_DrawableMesh.hxx>
+#include <Draw_Display.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <Standard_Type.hpp>
+#include <XSDRAWSTL_DrawableMesh.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSDRAWSTL_DrawableMesh, Draw_Drawable3D)
 

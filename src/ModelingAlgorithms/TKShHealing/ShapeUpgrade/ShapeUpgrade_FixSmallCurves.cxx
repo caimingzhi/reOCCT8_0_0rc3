@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeUpgrade_FixSmallCurves.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <ShapeUpgrade_FixSmallCurves.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_FixSmallCurves, ShapeUpgrade_Tool)
 
@@ -24,9 +24,9 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_FixSmallCurves, ShapeUpgrade_Tool)
 // #include <NCollection_HSequence<double>.hxx>
 #//include <NCollection_HArray1<occ::handle<Geom2d_Curve>>.hxx>
 // #include <NCollection_HSequence<double>.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade_SplitCurve3d.hxx>
-#include <ShapeUpgrade_SplitCurve2d.hxx>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade_SplitCurve3d.hpp>
+#include <ShapeUpgrade_SplitCurve2d.hpp>
 
 //=================================================================================================
 

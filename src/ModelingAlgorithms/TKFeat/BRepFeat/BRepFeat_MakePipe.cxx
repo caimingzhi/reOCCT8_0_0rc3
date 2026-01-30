@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepFeat_MakePipe.hxx>
-#include <Geom_Curve.hxx>
-#include <LocOpe.hxx>
-#include <LocOpe_Pipe.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepFeat_MakePipe.hpp>
+#include <Geom_Curve.hpp>
+#include <LocOpe.hpp>
+#include <LocOpe_Pipe.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool BRepFeat_GettraceFEAT();

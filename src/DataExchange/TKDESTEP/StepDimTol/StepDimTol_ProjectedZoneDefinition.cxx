@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_ProjectedZoneDefinition.hxx>
+#include <StepDimTol_ProjectedZoneDefinition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ProjectedZoneDefinition, StepDimTol_ToleranceZoneDefinition)
 

@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomLib_CheckCurveOnSurface.hxx>
+#include <GeomLib_CheckCurveOnSurface.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <math_MultipleVarFunctionWithHessian.hxx>
-#include <math_NewtonMinimum.hxx>
-#include <math_PSO.hxx>
-#include <math_PSOParticlesPool.hxx>
-#include <OSD_Parallel.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <math_MultipleVarFunctionWithHessian.hpp>
+#include <math_NewtonMinimum.hpp>
+#include <math_PSO.hpp>
+#include <math_PSOParticlesPool.hpp>
+#include <OSD_Parallel.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 typedef NCollection_Array1<occ::handle<Adaptor3d_Curve>> Array1OfHCurve;
 

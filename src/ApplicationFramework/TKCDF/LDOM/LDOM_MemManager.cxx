@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_MemManager.hxx>
-#include <LDOMBasicString.hxx>
+#include <LDOM_MemManager.hpp>
+#include <LDOMBasicString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(LDOM_MemManager, Standard_Transient)
 

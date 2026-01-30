@@ -16,23 +16,23 @@
 
 //              Convertir correctement les unites translatees
 
-#include <Resource_Manager.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Units.hxx>
-#include <Units_NoSuchType.hxx>
-#include <Units_NoSuchUnit.hxx>
-#include <Units_Operators.hxx>
-#include <Units_Quantity.hxx>
-#include <Units_ShiftedToken.hxx>
-#include <Units_ShiftedUnit.hxx>
-#include <Units_Token.hxx>
-#include <Units_Unit.hxx>
-#include <Units_UnitsDictionary.hxx>
-#include <Units_UnitSentence.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Units_UnitsSystem.hxx>
+#include <Resource_Manager.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Units.hpp>
+#include <Units_NoSuchType.hpp>
+#include <Units_NoSuchUnit.hpp>
+#include <Units_Operators.hpp>
+#include <Units_Quantity.hpp>
+#include <Units_ShiftedToken.hpp>
+#include <Units_ShiftedUnit.hpp>
+#include <Units_Token.hpp>
+#include <Units_Unit.hpp>
+#include <Units_UnitsDictionary.hpp>
+#include <Units_UnitSentence.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Units_UnitsSystem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_UnitsSystem, Standard_Transient)
 

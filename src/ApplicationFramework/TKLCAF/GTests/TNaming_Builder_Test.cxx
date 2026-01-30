@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <TDocStd_Document.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <gp_Pnt.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <TDocStd_Document.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <gp_Pnt.hpp>
 
 // Test OCC361bug: TNaming_Builder preservation of shape orientation
 TEST(TNaming_Builder_Test, OCC361_ShapeOrientationPreservation)

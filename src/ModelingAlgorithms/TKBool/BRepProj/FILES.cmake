@@ -3,6 +3,6 @@ set(OCCT_BRepProj_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepProj_FILES
   BRepProj_Projection.cxx
-  BRepProj_Projection.hxx
-  BRepProj_Projection.lxx
+  BRepProj_Projection.hpp
+  BRepProj_Projection_1.hpp
 )

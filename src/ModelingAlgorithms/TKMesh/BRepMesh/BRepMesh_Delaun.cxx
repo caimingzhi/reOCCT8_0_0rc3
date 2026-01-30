@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_Delaun.hxx>
+#include <BRepMesh_Delaun.hpp>
 
-#include <gp_XY.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <gp_XY.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
 
-#include <Precision.hxx>
-#include <Bnd_Box2d.hxx>
-#include <Bnd_B2.hxx>
+#include <Precision.hpp>
+#include <Bnd_Box2d.hpp>
+#include <Bnd_B2.hpp>
 
-#include <BRepMesh_SelectorOfDataStructureOfDelaun.hxx>
+#include <BRepMesh_SelectorOfDataStructureOfDelaun.hpp>
 
-#include <BRepMesh_Edge.hxx>
-#include <BRepMesh_Vertex.hxx>
-#include <BRepMesh_Triangle.hxx>
+#include <BRepMesh_Edge.hpp>
+#include <BRepMesh_Vertex.hpp>
+#include <BRepMesh_Triangle.hpp>
 
-#include <NCollection_Vector.hxx>
+#include <NCollection_Vector.hpp>
 
 #include <algorithm>
 #include <stack>
@@ -2537,11 +2537,11 @@ double BRepMesh_Delaun::polyArea(const IMeshData::SequenceOfInteger& thePolygon,
 #ifdef OCCT_DEBUG
 //=================================================================================================
 
-  #include <TopoDS_Compound.hxx>
-  #include <BRep_Builder.hxx>
-  #include <Standard_ErrorHandler.hxx>
-  #include <BRepBuilderAPI_MakeEdge.hxx>
-  #include <BRepTools.hxx>
+  #include <TopoDS_Compound.hpp>
+  #include <BRep_Builder.hpp>
+  #include <Standard_ErrorHandler.hpp>
+  #include <BRepBuilderAPI_MakeEdge.hpp>
+  #include <BRepTools.hpp>
 
 const char* BRepMesh_DumpPoly(void* thePolygon, void* theMeshHandlePtr, const char* theFileNameStr)
 {

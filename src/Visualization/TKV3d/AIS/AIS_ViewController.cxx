@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "AIS_ViewController.hxx"
+#include "AIS_ViewController.hpp"
 
-#include <AIS_AnimationCamera.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Point.hxx>
-#include <AIS_RubberBand.hxx>
-#include <AIS_XRTrackedDevice.hxx>
-#include <Aspect_XRSession.hxx>
-#include <Aspect_Grid.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Message.hxx>
-#include <gp_Quaternion.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
-#include <WNT_HIDSpaceMouse.hxx>
+#include <AIS_AnimationCamera.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Point.hpp>
+#include <AIS_RubberBand.hpp>
+#include <AIS_XRTrackedDevice.hpp>
+#include <Aspect_XRSession.hpp>
+#include <Aspect_Grid.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Message.hpp>
+#include <gp_Quaternion.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
+#include <WNT_HIDSpaceMouse.hpp>
 
 //=================================================================================================
 

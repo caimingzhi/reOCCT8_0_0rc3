@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Sphere.hxx>
+#include <Vrml_Sphere.hpp>
 
 Vrml_Sphere::Vrml_Sphere(const double aRadius)
 {

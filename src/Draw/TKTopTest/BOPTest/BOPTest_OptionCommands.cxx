@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <BOPAlgo_GlueEnum.hxx>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <BOPAlgo_GlueEnum.hpp>
 
 #include <cstring>
 static int boptions(Draw_Interpretor&, int, const char**);

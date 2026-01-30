@@ -11,34 +11,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_ShadedShape.hxx>
-#include <Vrml_Normal.hxx>
-#include <TopoDS.hxx>
-#include <Poly_Connect.hxx>
-#include <gp_Dir.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_HArray1.hxx>
-#include <BRepTools.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <Poly_Triangle.hxx>
-#include <Vrml_IndexedFaceSet.hxx>
-#include <Vrml_Coordinate3.hxx>
-#include <math.hxx>
-#include <Standard_Integer.hxx>
-#include <Geom_Surface.hxx>
-#include <CSLib.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Precision.hxx>
-#include <Vrml_Material.hxx>
-#include <VrmlConverter_ShadingAspect.hxx>
-#include <Vrml_ShapeHints.hxx>
-#include <Vrml_Separator.hxx>
-#include <Vrml_NormalBinding.hxx>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_ShadedShape.hpp>
+#include <Vrml_Normal.hpp>
+#include <TopoDS.hpp>
+#include <Poly_Connect.hpp>
+#include <gp_Dir.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_HArray1.hpp>
+#include <BRepTools.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <Poly_Triangle.hpp>
+#include <Vrml_IndexedFaceSet.hpp>
+#include <Vrml_Coordinate3.hpp>
+#include <math.hpp>
+#include <Standard_Integer.hpp>
+#include <Geom_Surface.hpp>
+#include <CSLib.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Precision.hpp>
+#include <Vrml_Material.hpp>
+#include <VrmlConverter_ShadingAspect.hpp>
+#include <Vrml_ShapeHints.hpp>
+#include <Vrml_Separator.hpp>
+#include <Vrml_NormalBinding.hpp>
 
 //=================================================================================================
 

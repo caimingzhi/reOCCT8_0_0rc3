@@ -14,33 +14,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepToIGES_BRShell.hxx>
-#include <BRepToIGES_BRSolid.hxx>
-#include <BRepToIGES_BRWire.hxx>
-#include <BRepTools.hxx>
-#include <IGESBasic_Group.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_CompSolid.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepToIGES_BRShell.hpp>
+#include <BRepToIGES_BRSolid.hpp>
+#include <BRepToIGES_BRWire.hpp>
+#include <BRepTools.hpp>
+#include <IGESBasic_Group.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_CompSolid.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 // At first only the geometry is translated (point, curve...)
 //=============================================================================

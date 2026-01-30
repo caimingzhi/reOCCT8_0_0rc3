@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Parallel.hxx>
+#include <OSD_Parallel.hpp>
 
-#include <OSD_ThreadPool.hxx>
+#include <OSD_ThreadPool.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <OSD_Thread.hxx>
+#include <NCollection_Array1.hpp>
+#include <OSD_Thread.hpp>
 
 #include <mutex>
 

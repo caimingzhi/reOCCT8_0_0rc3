@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dHatch_Intersector.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <Precision.hxx>
+#include <ElCLib.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dHatch_Intersector.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

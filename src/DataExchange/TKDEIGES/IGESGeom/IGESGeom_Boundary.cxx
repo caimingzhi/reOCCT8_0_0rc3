@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESGeom_Boundary.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESGeom_Boundary.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_Boundary, IGESData_IGESEntity)
 

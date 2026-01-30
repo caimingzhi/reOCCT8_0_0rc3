@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepRepr_ShapeAspectDerivingRelationship.hxx>
+#include <Standard_Type.hpp>
+#include <StepRepr_ShapeAspectDerivingRelationship.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ShapeAspectDerivingRelationship,
                            StepRepr_ShapeAspectRelationship)

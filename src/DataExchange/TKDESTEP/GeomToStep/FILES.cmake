@@ -3,77 +3,77 @@ set(OCCT_GeomToStep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomToStep_FILES
   GeomToStep_MakeAxis1Placement.cxx
-  GeomToStep_MakeAxis1Placement.hxx
-  GeomToStep_MakeAxis1Placement_gen.pxx
+  GeomToStep_MakeAxis1Placement.hpp
+  GeomToStep_MakeAxis1Placement_gen.hpp
   GeomToStep_MakeAxis2Placement2d.cxx
-  GeomToStep_MakeAxis2Placement2d.hxx
+  GeomToStep_MakeAxis2Placement2d.hpp
   GeomToStep_MakeAxis2Placement3d.cxx
-  GeomToStep_MakeAxis2Placement3d.hxx
+  GeomToStep_MakeAxis2Placement3d.hpp
   GeomToStep_MakeBoundedCurve.cxx
-  GeomToStep_MakeBoundedCurve.hxx
+  GeomToStep_MakeBoundedCurve.hpp
   GeomToStep_MakeBoundedSurface.cxx
-  GeomToStep_MakeBoundedSurface.hxx
+  GeomToStep_MakeBoundedSurface.hpp
   GeomToStep_MakeBSplineCurveWithKnots.cxx
-  GeomToStep_MakeBSplineCurveWithKnots.hxx
-  GeomToStep_MakeBSplineCurveWithKnots_gen.pxx
+  GeomToStep_MakeBSplineCurveWithKnots.hpp
+  GeomToStep_MakeBSplineCurveWithKnots_gen.hpp
   GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.cxx
-  GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hxx
-  GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.pxx
+  GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hpp
+  GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.hpp
   GeomToStep_MakeBSplineSurfaceWithKnots.cxx
-  GeomToStep_MakeBSplineSurfaceWithKnots.hxx
+  GeomToStep_MakeBSplineSurfaceWithKnots.hpp
   GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.cxx
-  GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx
+  GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp
   GeomToStep_MakeCartesianPoint.cxx
-  GeomToStep_MakeCartesianPoint.hxx
+  GeomToStep_MakeCartesianPoint.hpp
   GeomToStep_MakeCartesianTransformationOperator.cxx
-  GeomToStep_MakeCartesianTransformationOperator.hxx
+  GeomToStep_MakeCartesianTransformationOperator.hpp
   GeomToStep_MakeCircle.cxx
-  GeomToStep_MakeCircle.hxx
-  GeomToStep_MakeCircle_gen.pxx
+  GeomToStep_MakeCircle.hpp
+  GeomToStep_MakeCircle_gen.hpp
   GeomToStep_MakeConic.cxx
-  GeomToStep_MakeConic.hxx
+  GeomToStep_MakeConic.hpp
   GeomToStep_MakeConicalSurface.cxx
-  GeomToStep_MakeConicalSurface.hxx
+  GeomToStep_MakeConicalSurface.hpp
   GeomToStep_MakeCurve.cxx
-  GeomToStep_MakeCurve.hxx
+  GeomToStep_MakeCurve.hpp
   GeomToStep_MakeCylindricalSurface.cxx
-  GeomToStep_MakeCylindricalSurface.hxx
+  GeomToStep_MakeCylindricalSurface.hpp
   GeomToStep_MakeDirection.cxx
-  GeomToStep_MakeDirection.hxx
+  GeomToStep_MakeDirection.hpp
   GeomToStep_MakeElementarySurface.cxx
-  GeomToStep_MakeElementarySurface.hxx
+  GeomToStep_MakeElementarySurface.hpp
   GeomToStep_MakeEllipse.cxx
-  GeomToStep_MakeEllipse.hxx
-  GeomToStep_MakeEllipse_gen.pxx
+  GeomToStep_MakeEllipse.hpp
+  GeomToStep_MakeEllipse_gen.hpp
   GeomToStep_MakeHyperbola.cxx
-  GeomToStep_MakeHyperbola.hxx
+  GeomToStep_MakeHyperbola.hpp
   GeomToStep_MakeLine.cxx
-  GeomToStep_MakeLine.hxx
-  GeomToStep_MakeLine_gen.pxx
+  GeomToStep_MakeLine.hpp
+  GeomToStep_MakeLine_gen.hpp
   GeomToStep_MakeParabola.cxx
-  GeomToStep_MakeParabola.hxx
+  GeomToStep_MakeParabola.hpp
   GeomToStep_MakePlane.cxx
-  GeomToStep_MakePlane.hxx
+  GeomToStep_MakePlane.hpp
   GeomToStep_MakePolyline.cxx
-  GeomToStep_MakePolyline.hxx
-  GeomToStep_MakePolyline_gen.pxx
+  GeomToStep_MakePolyline.hpp
+  GeomToStep_MakePolyline_gen.hpp
   GeomToStep_MakeRectangularTrimmedSurface.cxx
-  GeomToStep_MakeRectangularTrimmedSurface.hxx
+  GeomToStep_MakeRectangularTrimmedSurface.hpp
   GeomToStep_MakeSphericalSurface.cxx
-  GeomToStep_MakeSphericalSurface.hxx
+  GeomToStep_MakeSphericalSurface.hpp
   GeomToStep_MakeSurface.cxx
-  GeomToStep_MakeSurface.hxx
+  GeomToStep_MakeSurface.hpp
   GeomToStep_MakeSurfaceOfLinearExtrusion.cxx
-  GeomToStep_MakeSurfaceOfLinearExtrusion.hxx
+  GeomToStep_MakeSurfaceOfLinearExtrusion.hpp
   GeomToStep_MakeSurfaceOfRevolution.cxx
-  GeomToStep_MakeSurfaceOfRevolution.hxx
+  GeomToStep_MakeSurfaceOfRevolution.hpp
   GeomToStep_MakeSweptSurface.cxx
-  GeomToStep_MakeSweptSurface.hxx
+  GeomToStep_MakeSweptSurface.hpp
   GeomToStep_MakeToroidalSurface.cxx
-  GeomToStep_MakeToroidalSurface.hxx
+  GeomToStep_MakeToroidalSurface.hpp
   GeomToStep_MakeVector.cxx
-  GeomToStep_MakeVector.hxx
-  GeomToStep_MakeVector_gen.pxx
+  GeomToStep_MakeVector.hpp
+  GeomToStep_MakeVector_gen.hpp
   GeomToStep_Root.cxx
-  GeomToStep_Root.hxx
+  GeomToStep_Root.hpp
 )

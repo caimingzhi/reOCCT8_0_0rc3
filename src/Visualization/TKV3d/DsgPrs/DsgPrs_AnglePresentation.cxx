@@ -13,29 +13,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_AnglePresentation.hxx>
+#include <DsgPrs_AnglePresentation.hpp>
 
-#include <DsgPrs.hxx>
-#include <ElCLib.hxx>
-#include <GC_MakeCircle.hxx>
-#include <gce_MakePln.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_Text.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <UnitsAPI.hxx>
+#include <DsgPrs.hpp>
+#include <ElCLib.hpp>
+#include <GC_MakeCircle.hpp>
+#include <gce_MakePln.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_Text.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <UnitsAPI.hpp>
 
 #include <cstdio>
 

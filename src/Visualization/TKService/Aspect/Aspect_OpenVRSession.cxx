@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_OpenVRSession.hxx>
+#include <Aspect_OpenVRSession.hpp>
 
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Image_PixMap.hxx>
-#include <Image_Texture.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <OSD.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Process.hxx>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Image_PixMap.hpp>
+#include <Image_Texture.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <OSD.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Process.hpp>
 
 #ifdef HAVE_OPENVR
   #include <openvr.h>

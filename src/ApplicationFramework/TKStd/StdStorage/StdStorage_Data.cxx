@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdStorage_Data.hxx>
-#include <StdStorage_HeaderData.hxx>
-#include <StdStorage_TypeData.hxx>
-#include <StdStorage_RootData.hxx>
+#include <StdStorage_Data.hpp>
+#include <StdStorage_HeaderData.hpp>
+#include <StdStorage_TypeData.hpp>
+#include <StdStorage_RootData.hpp>
 
 StdStorage_Data::StdStorage_Data()
     : myHeaderData(new StdStorage_HeaderData),

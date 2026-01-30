@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaMaterialPropertyRepresentation.hxx>
+#include <StepFEA_FeaMaterialPropertyRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaMaterialPropertyRepresentation,
                            StepRepr_MaterialPropertyRepresentation)

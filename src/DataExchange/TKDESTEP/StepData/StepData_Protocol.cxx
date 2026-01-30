@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <StepData_Described.hxx>
-#include <StepData_ECDescr.hxx>
-#include <StepData_EDescr.hxx>
-#include <StepData_ESDescr.hxx>
-#include <StepData_PDescr.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_UndefinedEntity.hxx>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <StepData_Described.hpp>
+#include <StepData_ECDescr.hpp>
+#include <StepData_EDescr.hpp>
+#include <StepData_ESDescr.hpp>
+#include <StepData_PDescr.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_UndefinedEntity.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(StepData_Protocol, Interface_Protocol)

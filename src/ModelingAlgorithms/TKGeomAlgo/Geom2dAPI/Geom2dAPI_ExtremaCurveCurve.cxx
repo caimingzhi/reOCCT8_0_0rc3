@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtCC2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
-#include <Geom2dAPI_ExtremaCurveCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_ExtCC2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
+#include <Geom2dAPI_ExtremaCurveCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

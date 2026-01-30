@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_FileRecognizer.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_ReadWriteModule.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepReaderTool.hxx>
-#include <StepData_UndefinedEntity.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_FileRecognizer.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_ReadWriteModule.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepReaderTool.hpp>
+#include <StepData_UndefinedEntity.hpp>
+#include <TCollection_AsciiString.hpp>
 
 //=================================================================================================
 

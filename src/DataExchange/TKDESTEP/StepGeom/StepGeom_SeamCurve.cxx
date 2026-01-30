@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_SeamCurve.hxx>
+#include <StepGeom_SeamCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_SeamCurve, StepGeom_SurfaceCurve)
 

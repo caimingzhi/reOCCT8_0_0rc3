@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepIntCurveSurface_Inter.hxx>
+#include <BRepIntCurveSurface_Inter.hpp>
 
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Lin.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Lin.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

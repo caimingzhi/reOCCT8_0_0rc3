@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_WorldInfo.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_InBuffer.hxx>
+#include <VrmlData_WorldInfo.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_InBuffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_WorldInfo, VrmlData_Node)
 

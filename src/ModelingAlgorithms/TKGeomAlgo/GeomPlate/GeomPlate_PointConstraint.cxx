@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <GeomPlate_PointConstraint.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <GeomPlate_PointConstraint.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomPlate_PointConstraint, Standard_Transient)
 

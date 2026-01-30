@@ -17,35 +17,35 @@
 
 // if define _POLYGONES_ ColorPrsBuilder use ArrayOfPolygons for drawing faces
 
-#include <Graphic3d_ArrayOfPolygons.hxx>
-#include <Graphic3d_ArrayOfPrimitives.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Image_PixMap.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshPrsBuilder.hxx>
-#include <MeshVS_NodalColorPrsBuilder.hxx>
-#include <MeshVS_SymmetricPairHasher.hxx>
-#include <MeshVS_Tool.hxx>
-#include <NCollection_Map.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <Graphic3d_ArrayOfPolygons.hpp>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Image_PixMap.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshPrsBuilder.hpp>
+#include <MeshVS_NodalColorPrsBuilder.hpp>
+#include <MeshVS_SymmetricPairHasher.hpp>
+#include <MeshVS_Tool.hpp>
+#include <NCollection_Map.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_NodalColorPrsBuilder, MeshVS_PrsBuilder)
 

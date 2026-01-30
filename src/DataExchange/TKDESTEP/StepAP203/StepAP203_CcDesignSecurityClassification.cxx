@@ -16,8 +16,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignSecurityClassification.hxx>
-#include <StepBasic_SecurityClassification.hxx>
+#include <StepAP203_CcDesignSecurityClassification.hpp>
+#include <StepBasic_SecurityClassification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignSecurityClassification,
                            StepBasic_SecurityClassificationAssignment)

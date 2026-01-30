@@ -3,107 +3,107 @@ set(OCCT_IGESDimen_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESDimen_FILES
   IGESDimen.cxx
-  IGESDimen.hxx
+  IGESDimen.hpp
   IGESDimen_AngularDimension.cxx
-  IGESDimen_AngularDimension.hxx
+  IGESDimen_AngularDimension.hpp
 
   IGESDimen_BasicDimension.cxx
-  IGESDimen_BasicDimension.hxx
+  IGESDimen_BasicDimension.hpp
   IGESDimen_CenterLine.cxx
-  IGESDimen_CenterLine.hxx
+  IGESDimen_CenterLine.hpp
   IGESDimen_CurveDimension.cxx
-  IGESDimen_CurveDimension.hxx
+  IGESDimen_CurveDimension.hpp
   IGESDimen_DiameterDimension.cxx
-  IGESDimen_DiameterDimension.hxx
+  IGESDimen_DiameterDimension.hpp
   IGESDimen_DimensionDisplayData.cxx
-  IGESDimen_DimensionDisplayData.hxx
+  IGESDimen_DimensionDisplayData.hpp
   IGESDimen_DimensionedGeometry.cxx
-  IGESDimen_DimensionedGeometry.hxx
+  IGESDimen_DimensionedGeometry.hpp
   IGESDimen_DimensionTolerance.cxx
-  IGESDimen_DimensionTolerance.hxx
+  IGESDimen_DimensionTolerance.hpp
   IGESDimen_DimensionUnits.cxx
-  IGESDimen_DimensionUnits.hxx
+  IGESDimen_DimensionUnits.hpp
   IGESDimen_FlagNote.cxx
-  IGESDimen_FlagNote.hxx
+  IGESDimen_FlagNote.hpp
   IGESDimen_GeneralLabel.cxx
-  IGESDimen_GeneralLabel.hxx
+  IGESDimen_GeneralLabel.hpp
   IGESDimen_GeneralModule.cxx
-  IGESDimen_GeneralModule.hxx
+  IGESDimen_GeneralModule.hpp
   IGESDimen_GeneralNote.cxx
-  IGESDimen_GeneralNote.hxx
+  IGESDimen_GeneralNote.hpp
   IGESDimen_GeneralSymbol.cxx
-  IGESDimen_GeneralSymbol.hxx
+  IGESDimen_GeneralSymbol.hpp
 
   IGESDimen_LeaderArrow.cxx
-  IGESDimen_LeaderArrow.hxx
+  IGESDimen_LeaderArrow.hpp
   IGESDimen_LinearDimension.cxx
-  IGESDimen_LinearDimension.hxx
+  IGESDimen_LinearDimension.hpp
   IGESDimen_NewDimensionedGeometry.cxx
-  IGESDimen_NewDimensionedGeometry.hxx
+  IGESDimen_NewDimensionedGeometry.hpp
   IGESDimen_NewGeneralNote.cxx
-  IGESDimen_NewGeneralNote.hxx
+  IGESDimen_NewGeneralNote.hpp
   IGESDimen_OrdinateDimension.cxx
-  IGESDimen_OrdinateDimension.hxx
+  IGESDimen_OrdinateDimension.hpp
   IGESDimen_PointDimension.cxx
-  IGESDimen_PointDimension.hxx
+  IGESDimen_PointDimension.hpp
   IGESDimen_Protocol.cxx
-  IGESDimen_Protocol.hxx
+  IGESDimen_Protocol.hpp
   IGESDimen_RadiusDimension.cxx
-  IGESDimen_RadiusDimension.hxx
+  IGESDimen_RadiusDimension.hpp
   IGESDimen_ReadWriteModule.cxx
-  IGESDimen_ReadWriteModule.hxx
+  IGESDimen_ReadWriteModule.hpp
   IGESDimen_Section.cxx
-  IGESDimen_Section.hxx
+  IGESDimen_Section.hpp
   IGESDimen_SectionedArea.cxx
-  IGESDimen_SectionedArea.hxx
+  IGESDimen_SectionedArea.hpp
   IGESDimen_SpecificModule.cxx
-  IGESDimen_SpecificModule.hxx
+  IGESDimen_SpecificModule.hpp
   IGESDimen_ToolAngularDimension.cxx
-  IGESDimen_ToolAngularDimension.hxx
+  IGESDimen_ToolAngularDimension.hpp
   IGESDimen_ToolBasicDimension.cxx
-  IGESDimen_ToolBasicDimension.hxx
+  IGESDimen_ToolBasicDimension.hpp
   IGESDimen_ToolCenterLine.cxx
-  IGESDimen_ToolCenterLine.hxx
+  IGESDimen_ToolCenterLine.hpp
   IGESDimen_ToolCurveDimension.cxx
-  IGESDimen_ToolCurveDimension.hxx
+  IGESDimen_ToolCurveDimension.hpp
   IGESDimen_ToolDiameterDimension.cxx
-  IGESDimen_ToolDiameterDimension.hxx
+  IGESDimen_ToolDiameterDimension.hpp
   IGESDimen_ToolDimensionDisplayData.cxx
-  IGESDimen_ToolDimensionDisplayData.hxx
+  IGESDimen_ToolDimensionDisplayData.hpp
   IGESDimen_ToolDimensionedGeometry.cxx
-  IGESDimen_ToolDimensionedGeometry.hxx
+  IGESDimen_ToolDimensionedGeometry.hpp
   IGESDimen_ToolDimensionTolerance.cxx
-  IGESDimen_ToolDimensionTolerance.hxx
+  IGESDimen_ToolDimensionTolerance.hpp
   IGESDimen_ToolDimensionUnits.cxx
-  IGESDimen_ToolDimensionUnits.hxx
+  IGESDimen_ToolDimensionUnits.hpp
   IGESDimen_ToolFlagNote.cxx
-  IGESDimen_ToolFlagNote.hxx
+  IGESDimen_ToolFlagNote.hpp
   IGESDimen_ToolGeneralLabel.cxx
-  IGESDimen_ToolGeneralLabel.hxx
+  IGESDimen_ToolGeneralLabel.hpp
   IGESDimen_ToolGeneralNote.cxx
-  IGESDimen_ToolGeneralNote.hxx
+  IGESDimen_ToolGeneralNote.hpp
   IGESDimen_ToolGeneralSymbol.cxx
-  IGESDimen_ToolGeneralSymbol.hxx
+  IGESDimen_ToolGeneralSymbol.hpp
   IGESDimen_ToolLeaderArrow.cxx
-  IGESDimen_ToolLeaderArrow.hxx
+  IGESDimen_ToolLeaderArrow.hpp
   IGESDimen_ToolLinearDimension.cxx
-  IGESDimen_ToolLinearDimension.hxx
+  IGESDimen_ToolLinearDimension.hpp
   IGESDimen_ToolNewDimensionedGeometry.cxx
-  IGESDimen_ToolNewDimensionedGeometry.hxx
+  IGESDimen_ToolNewDimensionedGeometry.hpp
   IGESDimen_ToolNewGeneralNote.cxx
-  IGESDimen_ToolNewGeneralNote.hxx
+  IGESDimen_ToolNewGeneralNote.hpp
   IGESDimen_ToolOrdinateDimension.cxx
-  IGESDimen_ToolOrdinateDimension.hxx
+  IGESDimen_ToolOrdinateDimension.hpp
   IGESDimen_ToolPointDimension.cxx
-  IGESDimen_ToolPointDimension.hxx
+  IGESDimen_ToolPointDimension.hpp
   IGESDimen_ToolRadiusDimension.cxx
-  IGESDimen_ToolRadiusDimension.hxx
+  IGESDimen_ToolRadiusDimension.hpp
   IGESDimen_ToolSection.cxx
-  IGESDimen_ToolSection.hxx
+  IGESDimen_ToolSection.hpp
   IGESDimen_ToolSectionedArea.cxx
-  IGESDimen_ToolSectionedArea.hxx
+  IGESDimen_ToolSectionedArea.hpp
   IGESDimen_ToolWitnessLine.cxx
-  IGESDimen_ToolWitnessLine.hxx
+  IGESDimen_ToolWitnessLine.hpp
   IGESDimen_WitnessLine.cxx
-  IGESDimen_WitnessLine.hxx
+  IGESDimen_WitnessLine.hpp
 )

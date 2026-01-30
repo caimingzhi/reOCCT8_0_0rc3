@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_ParamCursor.hxx>
-#include <Interface_InterfaceError.hxx>
+#include <IGESData_ParamCursor.hpp>
+#include <Interface_InterfaceError.hpp>
 
 IGESData_ParamCursor::IGESData_ParamCursor(const int num)
 {

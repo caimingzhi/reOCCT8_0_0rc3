@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_AndOrFilter.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Filter.hxx>
-#include <NCollection_List.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <Standard_Type.hxx>
+#include <SelectMgr_AndOrFilter.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Filter.hpp>
+#include <NCollection_List.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_AndOrFilter, SelectMgr_CompositionFilter)
 

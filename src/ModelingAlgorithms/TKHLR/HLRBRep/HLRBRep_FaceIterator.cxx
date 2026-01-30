@@ -18,8 +18,8 @@
   #define No_Exception
 #endif
 
-#include <HLRBRep_FaceData.hxx>
-#include <HLRBRep_FaceIterator.hxx>
+#include <HLRBRep_FaceData.hpp>
+#include <HLRBRep_FaceIterator.hpp>
 
 //=================================================================================================
 

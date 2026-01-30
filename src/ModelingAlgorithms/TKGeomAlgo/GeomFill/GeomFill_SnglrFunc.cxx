@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <GeomFill_SnglrFunc.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GeomFill_SnglrFunc.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
 
 GeomFill_SnglrFunc::GeomFill_SnglrFunc(const occ::handle<Adaptor3d_Curve>& HC)
     : myHCurve(HC),

@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_PixMap.hxx>
+#include <Image_PixMap.hpp>
 
-#include <NCollection_AlignedAllocator.hxx>
-#include <Standard_ProgramError.hxx>
+#include <NCollection_AlignedAllocator.hpp>
+#include <Standard_ProgramError.hpp>
 
 #include <algorithm>
 

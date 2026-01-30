@@ -11,34 +11,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWVRML.hxx>
+#include <XSDRAWVRML.hpp>
 
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <DEVRML_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <OSD_Path.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDocStd_Application.hxx>
-#include <TopoDS_Shape.hxx>
-#include <UnitsAPI.hxx>
-#include <UnitsMethods.hxx>
-#include <VrmlAPI_CafReader.hxx>
-#include <VrmlAPI_Writer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <VrmlData_Appearance.hxx>
-#include <TopoDS_TShape.hxx>
-#include <VrmlData_Scene.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSDRAW.hxx>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <DEVRML_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <OSD_Path.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDocStd_Application.hpp>
+#include <TopoDS_Shape.hpp>
+#include <UnitsAPI.hpp>
+#include <UnitsMethods.hpp>
+#include <VrmlAPI_CafReader.hpp>
+#include <VrmlAPI_Writer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <VrmlData_Appearance.hpp>
+#include <TopoDS_TShape.hpp>
+#include <VrmlData_Scene.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSDRAW.hpp>
 
 //=============================================================================
 // function : parseCoordinateSystem

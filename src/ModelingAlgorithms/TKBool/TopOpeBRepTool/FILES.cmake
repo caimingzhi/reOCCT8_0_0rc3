@@ -4,80 +4,80 @@ set(OCCT_TopOpeBRepTool_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_TopOpeBRepTool_FILES
   FILES
   TopOpeBRepTool.cxx
-  TopOpeBRepTool.hxx
+  TopOpeBRepTool.hpp
   TopOpeBRepTool_2d.cxx
-  TopOpeBRepTool_2d.hxx
+  TopOpeBRepTool_2d.hpp
   TopOpeBRepTool_AncestorsTool.cxx
-  TopOpeBRepTool_AncestorsTool.hxx
+  TopOpeBRepTool_AncestorsTool.hpp
   TopOpeBRepTool_box.cxx
-  TopOpeBRepTool_box.hxx
+  TopOpeBRepTool_box.hpp
   TopOpeBRepTool_BoxSort.cxx
-  TopOpeBRepTool_BoxSort.hxx
+  TopOpeBRepTool_BoxSort.hpp
   TopOpeBRepTool_C2DF.cxx
-  TopOpeBRepTool_C2DF.hxx
+  TopOpeBRepTool_C2DF.hpp
   TopOpeBRepTool_CLASSI.cxx
-  TopOpeBRepTool_CLASSI.hxx
+  TopOpeBRepTool_CLASSI.hpp
   TopOpeBRepTool_connexity.cxx
-  TopOpeBRepTool_connexity.hxx
+  TopOpeBRepTool_connexity.hpp
   TopOpeBRepTool_CORRISO.cxx
-  TopOpeBRepTool_CORRISO.hxx
+  TopOpeBRepTool_CORRISO.hpp
   TopOpeBRepTool_CurveTool.cxx
-  TopOpeBRepTool_CurveTool.hxx
+  TopOpeBRepTool_CurveTool.hpp
 
-  TopOpeBRepTool_defineG.hxx
+  TopOpeBRepTool_defineG.hpp
 
   TopOpeBRepTool_face.cxx
-  TopOpeBRepTool_face.hxx
+  TopOpeBRepTool_face.hpp
   TopOpeBRepTool_faulty.cxx
   TopOpeBRepTool_FuseEdges.cxx
-  TopOpeBRepTool_FuseEdges.hxx
+  TopOpeBRepTool_FuseEdges.hpp
   TopOpeBRepTool_GEOMETRY.cxx
-  TopOpeBRepTool_GEOMETRY.hxx
+  TopOpeBRepTool_GEOMETRY.hpp
   TopOpeBRepTool_GeomTool.cxx
-  TopOpeBRepTool_GeomTool.hxx
+  TopOpeBRepTool_GeomTool.hpp
   TopOpeBRepTool_HBoxTool.cxx
-  TopOpeBRepTool_HBoxTool.hxx
+  TopOpeBRepTool_HBoxTool.hpp
 
-  TopOpeBRepTool_KRO.hxx
+  TopOpeBRepTool_KRO.hpp
 
   TopOpeBRepTool_makeTransition.cxx
-  TopOpeBRepTool_makeTransition.hxx
+  TopOpeBRepTool_makeTransition.hpp
   TopOpeBRepTool_matter.cxx
   TopOpeBRepTool_mkTondgE.cxx
-  TopOpeBRepTool_mkTondgE.hxx
-  TopOpeBRepTool_OutCurveType.hxx
-  TopOpeBRepTool_Plos.hxx
+  TopOpeBRepTool_mkTondgE.hpp
+  TopOpeBRepTool_OutCurveType.hpp
+  TopOpeBRepTool_Plos.hpp
   TopOpeBRepTool_PROJECT.cxx
-  TopOpeBRepTool_PROJECT.hxx
-  TopOpeBRepTool_PShapeClassifier.hxx
-  TopOpeBRepTool_PSoClassif.hxx
+  TopOpeBRepTool_PROJECT.hpp
+  TopOpeBRepTool_PShapeClassifier.hpp
+  TopOpeBRepTool_PSoClassif.hpp
   TopOpeBRepTool_PURGE.cxx
-  TopOpeBRepTool_PURGE.hxx
+  TopOpeBRepTool_PURGE.hpp
   TopOpeBRepTool_PurgeInternalEdges.cxx
-  TopOpeBRepTool_PurgeInternalEdges.hxx
+  TopOpeBRepTool_PurgeInternalEdges.hpp
   TopOpeBRepTool_RegularizeS.cxx
   TopOpeBRepTool_RegularizeW.cxx
   TopOpeBRepTool_REGUS.cxx
-  TopOpeBRepTool_REGUS.hxx
+  TopOpeBRepTool_REGUS.hpp
   TopOpeBRepTool_REGUW.cxx
-  TopOpeBRepTool_REGUW.hxx
+  TopOpeBRepTool_REGUW.hpp
   TopOpeBRepTool_SC.cxx
-  TopOpeBRepTool_SC.hxx
+  TopOpeBRepTool_SC.hpp
   TopOpeBRepTool_ShapeClassifier.cxx
-  TopOpeBRepTool_ShapeClassifier.hxx
-  TopOpeBRepTool_ShapeExplorer.hxx
+  TopOpeBRepTool_ShapeClassifier.hpp
+  TopOpeBRepTool_ShapeExplorer.hpp
   TopOpeBRepTool_ShapeTool.cxx
-  TopOpeBRepTool_ShapeTool.hxx
+  TopOpeBRepTool_ShapeTool.hpp
   TopOpeBRepTool_SolidClassifier.cxx
-  TopOpeBRepTool_SolidClassifier.hxx
+  TopOpeBRepTool_SolidClassifier.hpp
   TopOpeBRepTool_STATE.cxx
-  TopOpeBRepTool_STATE.hxx
+  TopOpeBRepTool_STATE.hpp
   TopOpeBRepTool_tol.cxx
-  TopOpeBRepTool_tol.hxx
+  TopOpeBRepTool_tol.hpp
   TopOpeBRepTool_TOOL.cxx
-  TopOpeBRepTool_TOOL.hxx
+  TopOpeBRepTool_TOOL.hpp
   TopOpeBRepTool_TOPOLOGY.cxx
-  TopOpeBRepTool_TOPOLOGY.hxx
+  TopOpeBRepTool_TOPOLOGY.hpp
   TopOpeBRepTool_trace.cxx
   TopOpeBRepTool_traceSTATE.cxx
 )

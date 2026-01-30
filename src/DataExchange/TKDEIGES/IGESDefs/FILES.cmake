@@ -3,45 +3,45 @@ set(OCCT_IGESDefs_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESDefs_FILES
   IGESDefs.cxx
-  IGESDefs.hxx
+  IGESDefs.hpp
 
   IGESDefs_AssociativityDef.cxx
-  IGESDefs_AssociativityDef.hxx
+  IGESDefs_AssociativityDef.hpp
   IGESDefs_AttributeDef.cxx
-  IGESDefs_AttributeDef.hxx
+  IGESDefs_AttributeDef.hpp
   IGESDefs_AttributeTable.cxx
-  IGESDefs_AttributeTable.hxx
+  IGESDefs_AttributeTable.hpp
   IGESDefs_GeneralModule.cxx
-  IGESDefs_GeneralModule.hxx
+  IGESDefs_GeneralModule.hpp
   IGESDefs_GenericData.cxx
-  IGESDefs_GenericData.hxx
-  IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hxx
+  IGESDefs_GenericData.hpp
+  IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hpp
   IGESDefs_HArray1OfHArray1OfTextDisplayTemplate_0.cxx
 
   IGESDefs_MacroDef.cxx
-  IGESDefs_MacroDef.hxx
+  IGESDefs_MacroDef.hpp
   IGESDefs_Protocol.cxx
-  IGESDefs_Protocol.hxx
+  IGESDefs_Protocol.hpp
   IGESDefs_ReadWriteModule.cxx
-  IGESDefs_ReadWriteModule.hxx
+  IGESDefs_ReadWriteModule.hpp
   IGESDefs_SpecificModule.cxx
-  IGESDefs_SpecificModule.hxx
+  IGESDefs_SpecificModule.hpp
   IGESDefs_TabularData.cxx
-  IGESDefs_TabularData.hxx
+  IGESDefs_TabularData.hpp
   IGESDefs_ToolAssociativityDef.cxx
-  IGESDefs_ToolAssociativityDef.hxx
+  IGESDefs_ToolAssociativityDef.hpp
   IGESDefs_ToolAttributeDef.cxx
-  IGESDefs_ToolAttributeDef.hxx
+  IGESDefs_ToolAttributeDef.hpp
   IGESDefs_ToolAttributeTable.cxx
-  IGESDefs_ToolAttributeTable.hxx
+  IGESDefs_ToolAttributeTable.hpp
   IGESDefs_ToolGenericData.cxx
-  IGESDefs_ToolGenericData.hxx
+  IGESDefs_ToolGenericData.hpp
   IGESDefs_ToolMacroDef.cxx
-  IGESDefs_ToolMacroDef.hxx
+  IGESDefs_ToolMacroDef.hpp
   IGESDefs_ToolTabularData.cxx
-  IGESDefs_ToolTabularData.hxx
+  IGESDefs_ToolTabularData.hpp
   IGESDefs_ToolUnitsData.cxx
-  IGESDefs_ToolUnitsData.hxx
+  IGESDefs_ToolUnitsData.hpp
   IGESDefs_UnitsData.cxx
-  IGESDefs_UnitsData.hxx
+  IGESDefs_UnitsData.hpp
 )

@@ -14,50 +14,50 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
+#include <BRepTest.hpp>
 
-#include <BRepTest_Objects.hxx>
+#include <BRepTest_Objects.hpp>
 
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <BRepFill.hxx>
-#include <BRepFill_Generator.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <BRepPrimAPI_MakeRevol.hxx>
-#include <BRepOffsetAPI_MakePipe.hxx>
-#include <BRepOffsetAPI_MakeEvolved.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BRepOffsetAPI_MakePipeShell.hxx>
-#include <BRepOffsetAPI_MiddlePath.hxx>
+#include <BRepFill.hpp>
+#include <BRepFill_Generator.hpp>
+#include <BRepPrimAPI_MakePrism.hpp>
+#include <BRepPrimAPI_MakeRevol.hpp>
+#include <BRepOffsetAPI_MakePipe.hpp>
+#include <BRepOffsetAPI_MakeEvolved.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
+#include <BRepOffsetAPI_MakePipeShell.hpp>
+#include <BRepOffsetAPI_MiddlePath.hpp>
 
-#include <BRepLib_MakeWire.hxx>
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
+#include <BRepLib_MakeWire.hpp>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <Precision.hxx>
-#include <Law_Interpol.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Precision.hpp>
+#include <Law_Interpol.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 static BRepOffsetAPI_MakePipeShell* Sweep     = nullptr;
 static BRepOffsetAPI_ThruSections*  Generator = nullptr;
 
 #include <cstdio>
-#include <Geom_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomFill_Pipe.hxx>
-#include <Geom_Surface.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Geom_Circle.hxx>
-#include <gp_Ax2.hxx>
-#include <Message.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
+#include <Geom_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomFill_Pipe.hpp>
+#include <Geom_Surface.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Geom_Circle.hpp>
+#include <gp_Ax2.hpp>
+#include <Message.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
 
 //=======================================================================
 // prism

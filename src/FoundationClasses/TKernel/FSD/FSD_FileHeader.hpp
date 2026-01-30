@@ -1,0 +1,54 @@
+// Created on: 2008-06-20
+// Copyright (c) 1998-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _FSD_FileHeader_HeaderFile
+#define _FSD_FileHeader_HeaderFile
+
+#include <stddef.h>
+
+#include <stdlib.h>
+
+#include <Standard_Macro.hpp>
+
+#include <Standard_Boolean.hpp>
+
+#include <Standard_Integer.hpp>
+
+#include <Standard_Real.hpp>
+
+#include <Standard_Character.hpp>
+
+#include <Standard_ExtCharacter.hpp>
+
+#include <Standard_CString.hpp>
+
+struct FSD_FileHeader
+{
+  int testindian;
+  int binfo;
+  int einfo;
+  int bcomment;
+  int ecomment;
+  int btype;
+  int etype;
+  int broot;
+  int eroot;
+  int bref;
+  int eref;
+  int bdata;
+  int edata;
+};
+
+#endif

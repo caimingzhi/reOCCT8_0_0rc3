@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_C0RegularityFilter.hxx>
-#include <BRep_Tool.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <Standard_Type.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <AIS_C0RegularityFilter.hpp>
+#include <BRep_Tool.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <Standard_Type.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_C0RegularityFilter, SelectMgr_Filter)
 

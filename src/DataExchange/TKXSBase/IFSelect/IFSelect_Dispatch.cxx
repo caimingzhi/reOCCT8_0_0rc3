@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_Compare.hxx>
-#include <IFGraph_SubPartsIterator.hxx>
-#include <IFSelect_Dispatch.hxx>
-#include <IFSelect_SelectionIterator.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFGraph_Compare.hpp>
+#include <IFGraph_SubPartsIterator.hpp>
+#include <IFSelect_Dispatch.hpp>
+#include <IFSelect_SelectionIterator.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_Dispatch, Standard_Transient)
 

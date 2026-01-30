@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_RepresentationOrRepresentationReference.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationReference.hxx>
+#include <StepRepr_RepresentationOrRepresentationReference.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationReference.hpp>
 
 //=================================================================================================
 

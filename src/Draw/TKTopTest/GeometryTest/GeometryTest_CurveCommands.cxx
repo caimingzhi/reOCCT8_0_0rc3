@@ -16,86 +16,86 @@
 
 // 09/06/97 : JPI : suppression des commandes redondantes suite a la creation de GeomliteTest
 
-#include <GeometryTest.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_BSplineCurve.hxx>
-#include <DrawTrSurf_BSplineCurve2d.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_Marker2D.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Color.hxx>
+#include <GeometryTest.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_BSplineCurve.hpp>
+#include <DrawTrSurf_BSplineCurve2d.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_Marker2D.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Color.hpp>
 
-#include <GeomAPI.hxx>
-#include <GeomAPI_IntCS.hxx>
-#include <GeomAPI_IntSS.hxx>
+#include <GeomAPI.hpp>
+#include <GeomAPI_IntCS.hpp>
+#include <GeomAPI_IntSS.hpp>
 
-// #include <GeomLProp.hxx>
-#include <GeomProjLib.hxx>
-#include <BSplCLib.hxx>
+// #include <GeomLProp.hpp>
+#include <GeomProjLib.hpp>
+#include <BSplCLib.hpp>
 
-#include <gp.hxx>
-#include <gp_Pln.hxx>
+#include <gp.hpp>
+#include <gp_Pln.hpp>
 
-#include <Geom_Line.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
+#include <Geom_Line.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
 
-#include <GccAna_Lin2dBisec.hxx>
-#include <GccAna_Circ2dBisec.hxx>
-#include <GccAna_CircLin2dBisec.hxx>
-#include <GccAna_CircPnt2dBisec.hxx>
-#include <GccAna_LinPnt2dBisec.hxx>
-#include <GccAna_Pnt2dBisec.hxx>
-#include <GccInt_Bisec.hxx>
-#include <GccInt_IType.hxx>
+#include <GccAna_Lin2dBisec.hpp>
+#include <GccAna_Circ2dBisec.hpp>
+#include <GccAna_CircLin2dBisec.hpp>
+#include <GccAna_CircPnt2dBisec.hpp>
+#include <GccAna_LinPnt2dBisec.hpp>
+#include <GccAna_Pnt2dBisec.hpp>
+#include <GccInt_Bisec.hpp>
+#include <GccInt_IType.hpp>
 
-#include <Geom_Plane.hxx>
-#include <Geom_Curve.hxx>
+#include <Geom_Plane.hpp>
+#include <Geom_Curve.hpp>
 
-#include <Law_BSpline.hxx>
+#include <Law_BSpline.hpp>
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Integer.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Integer.hpp>
 
-#include <Adaptor3d_Curve.hxx>
+#include <Adaptor3d_Curve.hpp>
 
-#include <GeomAdaptor_Surface.hxx>
+#include <GeomAdaptor_Surface.hpp>
 
-#include <ProjLib_HCompProjectedCurve.hxx>
-#include <Precision.hxx>
-#include <Message.hxx>
+#include <ProjLib_HCompProjectedCurve.hpp>
+#include <Precision.hpp>
+#include <Message.hpp>
 
-#include <Geom_Surface.hxx>
+#include <Geom_Surface.hpp>
 #include <cstdio>
-#include <Geom_BSplineCurve.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <GCPnts_TangentialDeflection.hxx>
-#include <GCPnts_DistFunction.hxx>
-#include <gce_MakeLin.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <NCollection_Array2.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <DrawTrSurf_BSplineSurface.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <GCPnts_TangentialDeflection.hpp>
+#include <GCPnts_DistFunction.hpp>
+#include <gce_MakeLin.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <NCollection_Array2.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <DrawTrSurf_BSplineSurface.hpp>
 
 // epa test
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <DBRep.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <DBRep.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;
@@ -823,10 +823,10 @@ static int movelaw(Draw_Interpretor& di, int n, const char** a)
 }
 
 // Static method computing deviation of curve and polyline
-#include <math_PSO.hxx>
-#include <math_PSOParticlesPool.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_BrentMinimum.hxx>
+#include <math_PSO.hpp>
+#include <math_PSOParticlesPool.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_BrentMinimum.hpp>
 
 static double CompLocalDev(const Adaptor3d_Curve& theCurve, const double u1, const double u2);
 

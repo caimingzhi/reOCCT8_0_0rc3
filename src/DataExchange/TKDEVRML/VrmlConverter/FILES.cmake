@@ -3,33 +3,33 @@ set(OCCT_VrmlConverter_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_VrmlConverter_FILES
   VrmlConverter_Curve.cxx
-  VrmlConverter_Curve.hxx
+  VrmlConverter_Curve.hpp
   VrmlConverter_DeflectionCurve.cxx
-  VrmlConverter_DeflectionCurve.hxx
+  VrmlConverter_DeflectionCurve.hpp
   VrmlConverter_Drawer.cxx
-  VrmlConverter_Drawer.hxx
+  VrmlConverter_Drawer.hpp
   VrmlConverter_HLRShape.cxx
-  VrmlConverter_HLRShape.hxx
+  VrmlConverter_HLRShape.hpp
   VrmlConverter_IsoAspect.cxx
-  VrmlConverter_IsoAspect.hxx
+  VrmlConverter_IsoAspect.hpp
   VrmlConverter_LineAspect.cxx
-  VrmlConverter_LineAspect.hxx
+  VrmlConverter_LineAspect.hpp
   VrmlConverter_PointAspect.cxx
-  VrmlConverter_PointAspect.hxx
+  VrmlConverter_PointAspect.hpp
   VrmlConverter_Projector.cxx
-  VrmlConverter_Projector.hxx
+  VrmlConverter_Projector.hpp
   VrmlConverter_ShadedShape.cxx
-  VrmlConverter_ShadedShape.hxx
+  VrmlConverter_ShadedShape.hpp
   VrmlConverter_ShadingAspect.cxx
-  VrmlConverter_ShadingAspect.hxx
-  VrmlConverter_TypeOfCamera.hxx
-  VrmlConverter_TypeOfLight.hxx
+  VrmlConverter_ShadingAspect.hpp
+  VrmlConverter_TypeOfCamera.hpp
+  VrmlConverter_TypeOfLight.hpp
   VrmlConverter_WFDeflectionRestrictedFace.cxx
-  VrmlConverter_WFDeflectionRestrictedFace.hxx
+  VrmlConverter_WFDeflectionRestrictedFace.hpp
   VrmlConverter_WFDeflectionShape.cxx
-  VrmlConverter_WFDeflectionShape.hxx
+  VrmlConverter_WFDeflectionShape.hpp
   VrmlConverter_WFRestrictedFace.cxx
-  VrmlConverter_WFRestrictedFace.hxx
+  VrmlConverter_WFRestrictedFace.hpp
   VrmlConverter_WFShape.cxx
-  VrmlConverter_WFShape.hxx
+  VrmlConverter_WFShape.hpp
 )

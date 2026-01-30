@@ -3,176 +3,176 @@ set(OCCT_StepRepr_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepRepr_FILES
   StepRepr_AllAroundShapeAspect.cxx
-  StepRepr_AllAroundShapeAspect.hxx
+  StepRepr_AllAroundShapeAspect.hpp
   StepRepr_Apex.cxx
-  StepRepr_Apex.hxx
+  StepRepr_Apex.hpp
 
   StepRepr_AssemblyComponentUsage.cxx
-  StepRepr_AssemblyComponentUsage.hxx
+  StepRepr_AssemblyComponentUsage.hpp
   StepRepr_AssemblyComponentUsageSubstitute.cxx
-  StepRepr_AssemblyComponentUsageSubstitute.hxx
+  StepRepr_AssemblyComponentUsageSubstitute.hpp
   StepRepr_BetweenShapeAspect.cxx
-  StepRepr_BetweenShapeAspect.hxx
+  StepRepr_BetweenShapeAspect.hpp
   StepRepr_BooleanRepresentationItem.cxx
-  StepRepr_BooleanRepresentationItem.hxx
+  StepRepr_BooleanRepresentationItem.hpp
   StepRepr_CentreOfSymmetry.cxx
-  StepRepr_CentreOfSymmetry.hxx
+  StepRepr_CentreOfSymmetry.hpp
   StepRepr_CharacterizedDefinition.cxx
-  StepRepr_CharacterizedDefinition.hxx
+  StepRepr_CharacterizedDefinition.hpp
   StepRepr_CharacterizedRepresentation.cxx
-  StepRepr_CharacterizedRepresentation.hxx
+  StepRepr_CharacterizedRepresentation.hpp
   StepRepr_CompGroupShAspAndCompShAspAndDatumFeatAndShAsp.cxx
-  StepRepr_CompGroupShAspAndCompShAspAndDatumFeatAndShAsp.hxx
+  StepRepr_CompGroupShAspAndCompShAspAndDatumFeatAndShAsp.hpp
   StepRepr_CompositeGroupShapeAspect.cxx
-  StepRepr_CompositeGroupShapeAspect.hxx
+  StepRepr_CompositeGroupShapeAspect.hpp
   StepRepr_CompositeShapeAspect.cxx
-  StepRepr_CompositeShapeAspect.hxx
+  StepRepr_CompositeShapeAspect.hpp
   StepRepr_CompoundRepresentationItem.cxx
-  StepRepr_CompoundRepresentationItem.hxx
+  StepRepr_CompoundRepresentationItem.hpp
   StepRepr_CompShAspAndDatumFeatAndShAsp.cxx
-  StepRepr_CompShAspAndDatumFeatAndShAsp.hxx
+  StepRepr_CompShAspAndDatumFeatAndShAsp.hpp
   StepRepr_ConfigurationDesign.cxx
-  StepRepr_ConfigurationDesign.hxx
+  StepRepr_ConfigurationDesign.hpp
   StepRepr_ConfigurationDesignItem.cxx
-  StepRepr_ConfigurationDesignItem.hxx
+  StepRepr_ConfigurationDesignItem.hpp
   StepRepr_ConfigurationEffectivity.cxx
-  StepRepr_ConfigurationEffectivity.hxx
+  StepRepr_ConfigurationEffectivity.hpp
   StepRepr_ConfigurationItem.cxx
-  StepRepr_ConfigurationItem.hxx
+  StepRepr_ConfigurationItem.hpp
   StepRepr_ConstructiveGeometryRepresentation.cxx
-  StepRepr_ConstructiveGeometryRepresentation.hxx
+  StepRepr_ConstructiveGeometryRepresentation.hpp
   StepRepr_ConstructiveGeometryRepresentationRelationship.cxx
-  StepRepr_ConstructiveGeometryRepresentationRelationship.hxx
+  StepRepr_ConstructiveGeometryRepresentationRelationship.hpp
   StepRepr_ContinuosShapeAspect.cxx
-  StepRepr_ContinuosShapeAspect.hxx
+  StepRepr_ContinuosShapeAspect.hpp
   StepRepr_DataEnvironment.cxx
-  StepRepr_DataEnvironment.hxx
+  StepRepr_DataEnvironment.hpp
   StepRepr_DefinitionalRepresentation.cxx
-  StepRepr_DefinitionalRepresentation.hxx
+  StepRepr_DefinitionalRepresentation.hpp
   StepRepr_DerivedShapeAspect.cxx
-  StepRepr_DerivedShapeAspect.hxx
+  StepRepr_DerivedShapeAspect.hpp
   StepRepr_DescriptiveRepresentationItem.cxx
-  StepRepr_DescriptiveRepresentationItem.hxx
+  StepRepr_DescriptiveRepresentationItem.hpp
   StepRepr_Extension.cxx
-  StepRepr_Extension.hxx
+  StepRepr_Extension.hpp
   StepRepr_ExternallyDefinedRepresentation.cxx
-  StepRepr_ExternallyDefinedRepresentation.hxx
+  StepRepr_ExternallyDefinedRepresentation.hpp
   StepRepr_FeatureForDatumTargetRelationship.cxx
-  StepRepr_FeatureForDatumTargetRelationship.hxx
+  StepRepr_FeatureForDatumTargetRelationship.hpp
   StepRepr_FunctionallyDefinedTransformation.cxx
-  StepRepr_FunctionallyDefinedTransformation.hxx
+  StepRepr_FunctionallyDefinedTransformation.hpp
   StepRepr_GeometricAlignment.cxx
-  StepRepr_GeometricAlignment.hxx
+  StepRepr_GeometricAlignment.hpp
   StepRepr_GlobalUncertaintyAssignedContext.cxx
-  StepRepr_GlobalUncertaintyAssignedContext.hxx
+  StepRepr_GlobalUncertaintyAssignedContext.hpp
   StepRepr_GlobalUnitAssignedContext.cxx
-  StepRepr_GlobalUnitAssignedContext.hxx
+  StepRepr_GlobalUnitAssignedContext.hpp
 
   StepRepr_IntegerRepresentationItem.cxx
-  StepRepr_IntegerRepresentationItem.hxx
+  StepRepr_IntegerRepresentationItem.hpp
   StepRepr_ItemDefinedTransformation.cxx
-  StepRepr_ItemDefinedTransformation.hxx
+  StepRepr_ItemDefinedTransformation.hpp
   StepRepr_MakeFromUsageOption.cxx
-  StepRepr_MakeFromUsageOption.hxx
+  StepRepr_MakeFromUsageOption.hpp
   StepRepr_MappedItem.cxx
-  StepRepr_MappedItem.hxx
+  StepRepr_MappedItem.hpp
   StepRepr_MaterialDesignation.cxx
-  StepRepr_MaterialDesignation.hxx
+  StepRepr_MaterialDesignation.hpp
   StepRepr_MaterialProperty.cxx
-  StepRepr_MaterialProperty.hxx
+  StepRepr_MaterialProperty.hpp
   StepRepr_MaterialPropertyRepresentation.cxx
-  StepRepr_MaterialPropertyRepresentation.hxx
+  StepRepr_MaterialPropertyRepresentation.hpp
   StepRepr_MeasureRepresentationItem.cxx
-  StepRepr_MeasureRepresentationItem.hxx
+  StepRepr_MeasureRepresentationItem.hpp
   StepRepr_MechanicalDesignAndDraughtingRelationship.cxx
-  StepRepr_MechanicalDesignAndDraughtingRelationship.hxx
+  StepRepr_MechanicalDesignAndDraughtingRelationship.hpp
   StepRepr_NextAssemblyUsageOccurrence.cxx
-  StepRepr_NextAssemblyUsageOccurrence.hxx
+  StepRepr_NextAssemblyUsageOccurrence.hpp
   StepRepr_ParallelOffset.cxx
-  StepRepr_ParallelOffset.hxx
+  StepRepr_ParallelOffset.hpp
   StepRepr_ParametricRepresentationContext.cxx
-  StepRepr_ParametricRepresentationContext.hxx
+  StepRepr_ParametricRepresentationContext.hpp
   StepRepr_PerpendicularTo.cxx
-  StepRepr_PerpendicularTo.hxx
+  StepRepr_PerpendicularTo.hpp
   StepRepr_ProductConcept.cxx
-  StepRepr_ProductConcept.hxx
+  StepRepr_ProductConcept.hpp
   StepRepr_ProductDefinitionShape.cxx
-  StepRepr_ProductDefinitionShape.hxx
+  StepRepr_ProductDefinitionShape.hpp
   StepRepr_ProductDefinitionUsage.cxx
-  StepRepr_ProductDefinitionUsage.hxx
+  StepRepr_ProductDefinitionUsage.hpp
   StepRepr_PromissoryUsageOccurrence.cxx
-  StepRepr_PromissoryUsageOccurrence.hxx
+  StepRepr_PromissoryUsageOccurrence.hpp
   StepRepr_PropertyDefinition.cxx
-  StepRepr_PropertyDefinition.hxx
+  StepRepr_PropertyDefinition.hpp
   StepRepr_PropertyDefinitionRelationship.cxx
-  StepRepr_PropertyDefinitionRelationship.hxx
+  StepRepr_PropertyDefinitionRelationship.hpp
   StepRepr_PropertyDefinitionRepresentation.cxx
-  StepRepr_PropertyDefinitionRepresentation.hxx
+  StepRepr_PropertyDefinitionRepresentation.hpp
   StepRepr_QuantifiedAssemblyComponentUsage.cxx
-  StepRepr_QuantifiedAssemblyComponentUsage.hxx
+  StepRepr_QuantifiedAssemblyComponentUsage.hpp
   StepRepr_RealRepresentationItem.cxx
-  StepRepr_RealRepresentationItem.hxx
+  StepRepr_RealRepresentationItem.hpp
   StepRepr_Representation.cxx
-  StepRepr_Representation.hxx
+  StepRepr_Representation.hpp
   StepRepr_RepresentationContext.cxx
-  StepRepr_RepresentationContext.hxx
+  StepRepr_RepresentationContext.hpp
   StepRepr_RepresentationContextReference.cxx
-  StepRepr_RepresentationContextReference.hxx
+  StepRepr_RepresentationContextReference.hpp
   StepRepr_RepresentationItem.cxx
-  StepRepr_RepresentationItem.hxx
+  StepRepr_RepresentationItem.hpp
   StepRepr_RepresentationMap.cxx
-  StepRepr_RepresentationMap.hxx
+  StepRepr_RepresentationMap.hpp
   StepRepr_RepresentationOrRepresentationReference.cxx
-  StepRepr_RepresentationOrRepresentationReference.hxx
+  StepRepr_RepresentationOrRepresentationReference.hpp
   StepRepr_RepresentationReference.cxx
-  StepRepr_RepresentationReference.hxx
+  StepRepr_RepresentationReference.hpp
   StepRepr_RepresentationRelationship.cxx
-  StepRepr_RepresentationRelationship.hxx
+  StepRepr_RepresentationRelationship.hpp
   StepRepr_RepresentationRelationshipWithTransformation.cxx
-  StepRepr_RepresentationRelationshipWithTransformation.hxx
+  StepRepr_RepresentationRelationshipWithTransformation.hpp
   StepRepr_RepresentedDefinition.cxx
-  StepRepr_RepresentedDefinition.hxx
+  StepRepr_RepresentedDefinition.hpp
   StepRepr_ReprItemAndLengthMeasureWithUnit.cxx
-  StepRepr_ReprItemAndLengthMeasureWithUnit.hxx
+  StepRepr_ReprItemAndLengthMeasureWithUnit.hpp
   StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI.cxx
-  StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI.hxx
+  StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI.hpp
   StepRepr_ReprItemAndMeasureWithUnit.cxx
-  StepRepr_ReprItemAndMeasureWithUnit.hxx
+  StepRepr_ReprItemAndMeasureWithUnit.hpp
   StepRepr_ReprItemAndMeasureWithUnitAndQRI.cxx
-  StepRepr_ReprItemAndMeasureWithUnitAndQRI.hxx
+  StepRepr_ReprItemAndMeasureWithUnitAndQRI.hpp
   StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.cxx
-  StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.hxx
+  StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.hpp
   StepRepr_ReprItemAndPlaneAngleMeasureWithUnitAndQRI.cxx
-  StepRepr_ReprItemAndPlaneAngleMeasureWithUnitAndQRI.hxx
+  StepRepr_ReprItemAndPlaneAngleMeasureWithUnitAndQRI.hpp
 
   StepRepr_ShapeAspect.cxx
-  StepRepr_ShapeAspect.hxx
+  StepRepr_ShapeAspect.hpp
   StepRepr_ShapeAspectDerivingRelationship.cxx
-  StepRepr_ShapeAspectDerivingRelationship.hxx
+  StepRepr_ShapeAspectDerivingRelationship.hpp
   StepRepr_ShapeAspectRelationship.cxx
-  StepRepr_ShapeAspectRelationship.hxx
+  StepRepr_ShapeAspectRelationship.hpp
   StepRepr_ShapeAspectTransition.cxx
-  StepRepr_ShapeAspectTransition.hxx
+  StepRepr_ShapeAspectTransition.hpp
   StepRepr_ShapeDefinition.cxx
-  StepRepr_ShapeDefinition.hxx
+  StepRepr_ShapeDefinition.hpp
   StepRepr_ShapeRepresentationRelationship.cxx
-  StepRepr_ShapeRepresentationRelationship.hxx
+  StepRepr_ShapeRepresentationRelationship.hpp
   StepRepr_ShapeRepresentationRelationshipWithTransformation.cxx
-  StepRepr_ShapeRepresentationRelationshipWithTransformation.hxx
+  StepRepr_ShapeRepresentationRelationshipWithTransformation.hpp
   StepRepr_SpecifiedHigherUsageOccurrence.cxx
-  StepRepr_SpecifiedHigherUsageOccurrence.hxx
+  StepRepr_SpecifiedHigherUsageOccurrence.hpp
   StepRepr_StructuralResponseProperty.cxx
-  StepRepr_StructuralResponseProperty.hxx
+  StepRepr_StructuralResponseProperty.hpp
   StepRepr_StructuralResponsePropertyDefinitionRepresentation.cxx
-  StepRepr_StructuralResponsePropertyDefinitionRepresentation.hxx
+  StepRepr_StructuralResponsePropertyDefinitionRepresentation.hpp
   StepRepr_SuppliedPartRelationship.cxx
-  StepRepr_SuppliedPartRelationship.hxx
+  StepRepr_SuppliedPartRelationship.hpp
   StepRepr_Tangent.cxx
-  StepRepr_Tangent.hxx
+  StepRepr_Tangent.hpp
   StepRepr_Transformation.cxx
-  StepRepr_Transformation.hxx
+  StepRepr_Transformation.hpp
   StepRepr_ValueRange.cxx
-  StepRepr_ValueRange.hxx
+  StepRepr_ValueRange.hpp
   StepRepr_ValueRepresentationItem.cxx
-  StepRepr_ValueRepresentationItem.hxx
+  StepRepr_ValueRepresentationItem.hpp
 )

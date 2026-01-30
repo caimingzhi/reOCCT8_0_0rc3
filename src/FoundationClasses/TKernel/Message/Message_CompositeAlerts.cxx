@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_CompositeAlerts.hxx>
+#include <Message_CompositeAlerts.hpp>
 
-#include <Message_AlertExtended.hxx>
-#include <Standard_Assert.hxx>
-#include <Standard_Dump.hxx>
+#include <Message_AlertExtended.hpp>
+#include <Standard_Assert.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_CompositeAlerts, Standard_Transient)
 

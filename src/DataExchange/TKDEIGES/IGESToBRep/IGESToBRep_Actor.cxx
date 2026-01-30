@@ -11,27 +11,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESToBRep.hxx>
-#include <IGESToBRep_Actor.hxx>
-#include <IGESToBRep_CurveAndSurface.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message_ProgressScope.hxx>
-#include <ShapeExtend_Explorer.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <BRepLib.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESToBRep.hpp>
+#include <IGESToBRep_Actor.hpp>
+#include <IGESToBRep_CurveAndSurface.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message_ProgressScope.hpp>
+#include <ShapeExtend_Explorer.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESToBRep_Actor, Transfer_ActorOfTransientProcess)
 

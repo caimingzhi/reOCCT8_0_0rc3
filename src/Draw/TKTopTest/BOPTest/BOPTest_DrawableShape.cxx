@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest_DrawableShape.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTools.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_Text3D.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BOPTest_DrawableShape.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTools.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_Text3D.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(BOPTest_DrawableShape, DBRep_DrawableShape)

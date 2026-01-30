@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Vrml_IndexedFaceSet.hxx>
+#include <Standard_Type.hpp>
+#include <Vrml_IndexedFaceSet.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Vrml_IndexedFaceSet, Standard_Transient)
 

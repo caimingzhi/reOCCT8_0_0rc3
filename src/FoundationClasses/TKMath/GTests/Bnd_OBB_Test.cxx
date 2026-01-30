@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_OBB.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <Bnd_OBB.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <gtest/gtest.h>
 

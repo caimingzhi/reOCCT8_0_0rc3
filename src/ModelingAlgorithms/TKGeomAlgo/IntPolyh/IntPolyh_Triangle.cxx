@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPolyh_Triangle.hxx>
+#include <IntPolyh_Triangle.hpp>
 
 #include <cstdio>
 #define MyTolerance 10.0e-7

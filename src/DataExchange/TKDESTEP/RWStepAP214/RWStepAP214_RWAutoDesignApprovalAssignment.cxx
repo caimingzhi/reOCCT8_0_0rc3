@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWAutoDesignApprovalAssignment.pxx"
-#include <StepAP214_AutoDesignApprovalAssignment.hxx>
-#include <StepAP214_AutoDesignGeneralOrgItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWAutoDesignApprovalAssignment.hpp"
+#include <StepAP214_AutoDesignApprovalAssignment.hpp>
+#include <StepAP214_AutoDesignGeneralOrgItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepAP214_RWAutoDesignApprovalAssignment::RWStepAP214_RWAutoDesignApprovalAssignment() = default;
 

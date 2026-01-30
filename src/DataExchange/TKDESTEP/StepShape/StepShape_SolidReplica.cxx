@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_CartesianTransformationOperator3d.hxx>
-#include <StepShape_SolidReplica.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_CartesianTransformationOperator3d.hpp>
+#include <StepShape_SolidReplica.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_SolidReplica, StepShape_SolidModel)
 

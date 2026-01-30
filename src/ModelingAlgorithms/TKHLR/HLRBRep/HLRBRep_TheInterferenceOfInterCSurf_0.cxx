@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheInterferenceOfInterCSurf.hxx>
+#include <HLRBRep_TheInterferenceOfInterCSurf.hpp>
 
-#include <HLRBRep_ThePolygonOfInterCSurf.hxx>
-#include <HLRBRep_ThePolygonToolOfInterCSurf.hxx>
-#include <HLRBRep_ThePolyhedronOfInterCSurf.hxx>
-#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hxx>
-#include <gp_Lin.hxx>
-#include <Bnd_BoundSortBox.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
+#include <HLRBRep_ThePolygonOfInterCSurf.hpp>
+#include <HLRBRep_ThePolygonToolOfInterCSurf.hpp>
+#include <HLRBRep_ThePolyhedronOfInterCSurf.hpp>
+#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hpp>
+#include <gp_Lin.hpp>
+#include <Bnd_BoundSortBox.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
 
 #define Polygon3d HLRBRep_ThePolygonOfInterCSurf
-#define Polygon3d_hxx <HLRBRep_ThePolygonOfInterCSurf.hxx>
+#define Polygon3d_hxx <HLRBRep_ThePolygonOfInterCSurf.hpp>
 #define ToolPolygon3d HLRBRep_ThePolygonToolOfInterCSurf
-#define ToolPolygon3d_hxx <HLRBRep_ThePolygonToolOfInterCSurf.hxx>
+#define ToolPolygon3d_hxx <HLRBRep_ThePolygonToolOfInterCSurf.hpp>
 #define Polyhedron HLRBRep_ThePolyhedronOfInterCSurf
-#define Polyhedron_hxx <HLRBRep_ThePolyhedronOfInterCSurf.hxx>
+#define Polyhedron_hxx <HLRBRep_ThePolyhedronOfInterCSurf.hpp>
 #define ToolPolyh HLRBRep_ThePolyhedronToolOfInterCSurf
-#define ToolPolyh_hxx <HLRBRep_ThePolyhedronToolOfInterCSurf.hxx>
+#define ToolPolyh_hxx <HLRBRep_ThePolyhedronToolOfInterCSurf.hpp>
 #define Intf_InterferencePolygonPolyhedron HLRBRep_TheInterferenceOfInterCSurf
-#define Intf_InterferencePolygonPolyhedron_hxx <HLRBRep_TheInterferenceOfInterCSurf.hxx>
-#include <Intf_InterferencePolygonPolyhedron.gxx>
+#define Intf_InterferencePolygonPolyhedron_hxx <HLRBRep_TheInterferenceOfInterCSurf.hpp>
+#include <Intf_InterferencePolygonPolyhedron.hpp>

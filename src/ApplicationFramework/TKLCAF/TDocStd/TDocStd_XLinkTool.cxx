@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_XLinkTool.hxx>
+#include <TDocStd_XLinkTool.hpp>
 
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_ClosureMode.hxx>
-#include <TDF_ClosureTool.hxx>
-#include <TDF_CopyTool.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_XLink.hxx>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_ClosureMode.hpp>
+#include <TDF_ClosureTool.hpp>
+#include <TDF_CopyTool.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_XLink.hpp>
 
 // standard copy
 //=================================================================================================

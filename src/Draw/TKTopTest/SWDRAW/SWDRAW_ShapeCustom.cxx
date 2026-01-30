@@ -14,41 +14,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SweptSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <ShapeCustom.hxx>
-#include <ShapeCustom_RestrictionParameters.hxx>
-#include <ShapeFix.hxx>
-#include <SWDRAW.hxx>
-#include <SWDRAW_ShapeCustom.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array2.hxx>
-#include <TopAbs.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SweptSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <ShapeCustom.hpp>
+#include <ShapeCustom_RestrictionParameters.hpp>
+#include <ShapeFix.hpp>
+#include <SWDRAW.hpp>
+#include <SWDRAW_ShapeCustom.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array2.hpp>
+#include <TopAbs.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 static int ContToInteger(const GeomAbs_Shape Cont)
 {

@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim.hxx>
-#include <PrsDim_MaxRadiusDimension.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_EllipseRadiusPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveCurve.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TopoDS_Shape.hxx>
+#include <PrsDim.hpp>
+#include <PrsDim_MaxRadiusDimension.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_EllipseRadiusPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveCurve.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_MaxRadiusDimension, PrsDim_EllipseRadiusDimension)
 

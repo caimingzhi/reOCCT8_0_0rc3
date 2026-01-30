@@ -16,12 +16,12 @@
 
 #define No_Standard_OutOfRange
 
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_ShapeBounds.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_ShapeBounds.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_Algo, HLRBRep_InternalAlgo)
 

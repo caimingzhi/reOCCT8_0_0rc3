@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_RigidPlacement.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_SuParameters.hxx>
+#include <StepKinematics_RigidPlacement.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_SuParameters.hpp>
 
 //=================================================================================================
 

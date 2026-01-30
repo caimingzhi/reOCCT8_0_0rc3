@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bisector.hxx>
-#include <Bisector_BisecCC.hxx>
-#include <Bisector_BisecPC.hxx>
-#include <Bisector_FunctionH.hxx>
-#include <Bisector_PointOnBis.hxx>
-#include <Bisector_PolyBis.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <math_BissecNewton.hxx>
-#include <math_FunctionRoot.hxx>
-#include <math_FunctionRoots.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <Bisector.hpp>
+#include <Bisector_BisecCC.hpp>
+#include <Bisector_BisecPC.hpp>
+#include <Bisector_FunctionH.hpp>
+#include <Bisector_PointOnBis.hpp>
+#include <Bisector_PolyBis.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <math_BissecNewton.hpp>
+#include <math_FunctionRoot.hpp>
+#include <math_FunctionRoots.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Bisector_BisecCC, Bisector_Curve)
 

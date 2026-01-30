@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_Stripe.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Standard_Type.hxx>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_Stripe.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_Stripe, Standard_Transient)
 

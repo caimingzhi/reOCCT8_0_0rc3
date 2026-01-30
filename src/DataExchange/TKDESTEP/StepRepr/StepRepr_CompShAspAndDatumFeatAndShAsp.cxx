@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_CompShAspAndDatumFeatAndShAsp.hxx>
+#include <StepRepr_CompShAspAndDatumFeatAndShAsp.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_CompShAspAndDatumFeatAndShAsp, StepRepr_ShapeAspect)
 

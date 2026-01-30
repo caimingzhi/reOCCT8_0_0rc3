@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Curved.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <NCollection_Array1.hxx>
+#include <GeomFill_Curved.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

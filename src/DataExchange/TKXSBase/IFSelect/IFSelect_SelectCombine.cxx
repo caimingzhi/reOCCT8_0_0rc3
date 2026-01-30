@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_Cumulate.hxx>
-#include <IFSelect_SelectCombine.hxx>
-#include <IFSelect_Selection.hxx>
-#include <IFSelect_SelectionIterator.hxx>
-#include <Standard_Type.hxx>
+#include <IFGraph_Cumulate.hpp>
+#include <IFSelect_SelectCombine.hpp>
+#include <IFSelect_Selection.hpp>
+#include <IFSelect_SelectionIterator.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectCombine, IFSelect_Selection)
 

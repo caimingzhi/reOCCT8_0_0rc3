@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepFill_LocationLaw.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <BRepFill_LocationLaw.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_LocationLaw, Standard_Transient)
 

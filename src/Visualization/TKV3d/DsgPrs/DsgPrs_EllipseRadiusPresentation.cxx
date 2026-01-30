@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_EllipseRadiusPresentation.hxx>
+#include <DsgPrs_EllipseRadiusPresentation.hpp>
 
-#include <DsgPrs.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_Text.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <DsgPrs.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_Text.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 //=================================================================================================
 

@@ -21,26 +21,26 @@
   #include <windows.h>
 #endif
 
-#include <Media_PlayerContext.hxx>
+#include <Media_PlayerContext.hpp>
 
-#include <Image_AlienPixMap.hxx>
-#include <Media_BufferPool.hxx>
-#include <Media_FormatContext.hxx>
-#include <Media_CodecContext.hxx>
-#include <Media_Scaler.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <Media_BufferPool.hpp>
+#include <Media_FormatContext.hpp>
+#include <Media_CodecContext.hpp>
+#include <Media_Scaler.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD.hpp>
 
 #ifdef HAVE_FFMPEG
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 extern "C"
 {
   #include <libavcodec/avcodec.h>
   #include <libavformat/avformat.h>
   #include <libavutil/imgutils.h>
 };
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_PlayerContext, Standard_Transient)

@@ -13,60 +13,60 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DNaming.hxx>
-#include <DBRep.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DNaming.hpp>
+#include <DBRep.hpp>
 
-#include <BRepTools.hxx>
-#include <BRep_Builder.hxx>
-#include <Message.hxx>
-#include <TopAbs.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <BRepTools.hpp>
+#include <BRep_Builder.hpp>
+#include <Message.hpp>
+#include <TopAbs.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include <DDF.hxx>
-#include <DDocStd.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_Reference.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TFunction_Function.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TFunction_DriverTable.hxx>
-#include <TNaming_Selector.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_Name.hxx>
-#include <TDocStd_Document.hxx>
+#include <DDF.hpp>
+#include <DDocStd.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_Reference.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TFunction_Function.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TFunction_DriverTable.hpp>
+#include <TNaming_Selector.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_Name.hpp>
+#include <TDocStd_Document.hpp>
 
-#include <DNaming_BoxDriver.hxx>
-#include <DNaming_CylinderDriver.hxx>
-#include <DNaming_SelectionDriver.hxx>
-#include <DNaming_BooleanOperationDriver.hxx>
-#include <DNaming_FilletDriver.hxx>
-#include <DNaming_TransformationDriver.hxx>
-#include <DNaming_PrismDriver.hxx>
-#include <DNaming_RevolutionDriver.hxx>
-#include <DNaming_SphereDriver.hxx>
-#include <DNaming_PointDriver.hxx>
-#include <DNaming_Line3DDriver.hxx>
+#include <DNaming_BoxDriver.hpp>
+#include <DNaming_CylinderDriver.hpp>
+#include <DNaming_SelectionDriver.hpp>
+#include <DNaming_BooleanOperationDriver.hpp>
+#include <DNaming_FilletDriver.hpp>
+#include <DNaming_TransformationDriver.hpp>
+#include <DNaming_PrismDriver.hpp>
+#include <DNaming_RevolutionDriver.hpp>
+#include <DNaming_SphereDriver.hpp>
+#include <DNaming_PointDriver.hpp>
+#include <DNaming_Line3DDriver.hpp>
 #ifdef _WIN32
   #define EXCEPTION ...
 #else
   #define EXCEPTION Standard_Failure const&
 #endif
-#include <ModelDefinitions.hxx>
+#include <ModelDefinitions.hpp>
 
 // #define DEBUG
 //=======================================================================
@@ -106,7 +106,7 @@ static int DNaming_AddObject(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-#include <NCollection_DataMap.hxx>
+#include <NCollection_DataMap.hpp>
 typedef NCollection_DataMap<TCollection_AsciiString, Standard_GUID> DataMapOfAStringGUID;
 static bool                                                         isBuilt(false);
 static DataMapOfAStringGUID                                         aDMap;

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <TopOpeBRep_EdgesIntersector.hxx>
-#include <TopOpeBRep_Point2d.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <BRep_Tool.hpp>
+#include <TopOpeBRep_EdgesIntersector.hpp>
+#include <TopOpeBRep_Point2d.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 //=================================================================================================
 

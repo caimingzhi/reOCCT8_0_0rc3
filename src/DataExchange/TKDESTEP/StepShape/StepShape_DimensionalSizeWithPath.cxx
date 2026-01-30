@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepShape_DimensionalSizeWithPath.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepShape_DimensionalSizeWithPath.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_DimensionalSizeWithPath, StepShape_DimensionalSize)
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepMesh_Context.hxx>
-#include <BRepMesh_PluginMacro.hxx>
-#include <IMeshData_Face.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshTools_MeshBuilder.hxx>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <BRepMesh_Context.hpp>
+#include <BRepMesh_PluginMacro.hpp>
+#include <IMeshData_Face.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshTools_MeshBuilder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_IncrementalMesh, BRepMesh_DiscretRoot)
 

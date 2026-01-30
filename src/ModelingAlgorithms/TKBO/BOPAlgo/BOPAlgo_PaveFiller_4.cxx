@@ -15,22 +15,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_FaceInfo.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <BOPDS_SubIterator.hxx>
-#include <NCollection_Vector.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <IntTools_Context.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_FaceInfo.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <BOPDS_SubIterator.hpp>
+#include <NCollection_Vector.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <IntTools_Context.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

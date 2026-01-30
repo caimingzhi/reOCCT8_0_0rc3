@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -22,66 +22,66 @@
 
 #include <fstream>
 
-#include <ViewerTest.hxx>
-#include <ViewerTest_CmdParser.hxx>
-#include <ViewerTest_AutoUpdater.hxx>
+#include <ViewerTest.hpp>
+#include <ViewerTest_CmdParser.hpp>
+#include <ViewerTest_AutoUpdater.hpp>
 
-#include <Draw.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Map.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <StdSelect_ShapeTypeFilter.hxx>
-#include <AIS_ColoredShape.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Trihedron.hxx>
-#include <AIS_Axis.hxx>
-#include <AIS_SignatureFilter.hxx>
-#include <NCollection_List.hxx>
-#include <Aspect_InteriorStyle.hxx>
-#include <Aspect_Window.hxx>
-#include <Aspect_XRSession.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_CStructure.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Graphic3d_Texture3D.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_MediaTextureSet.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <Message.hxx>
-#include <OSD_File.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <PrsDim_Relation.hxx>
-#include <Select3D_SensitiveWire.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <Select3D_SensitiveTriangulation.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <StdSelect_ViewerSelector3d.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <V3d_Viewer.hxx>
+#include <Draw.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Map.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <StdSelect_ShapeTypeFilter.hpp>
+#include <AIS_ColoredShape.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Trihedron.hpp>
+#include <AIS_Axis.hpp>
+#include <AIS_SignatureFilter.hpp>
+#include <NCollection_List.hpp>
+#include <Aspect_InteriorStyle.hpp>
+#include <Aspect_Window.hpp>
+#include <Aspect_XRSession.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_CStructure.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Graphic3d_Texture3D.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_MediaTextureSet.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <Message.hpp>
+#include <OSD_File.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <PrsDim_Relation.hpp>
+#include <Select3D_SensitiveWire.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <Select3D_SensitiveTriangulation.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <StdSelect_ViewerSelector3d.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <V3d_Viewer.hpp>
 
 #include <cstdio>
 
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
 
 extern int ViewerMainLoop(int argc, const char** argv);
 
-#include <Quantity_Color.hxx>
-#include <Quantity_NameOfColor.hxx>
+#include <Quantity_Color.hpp>
+#include <Quantity_NameOfColor.hpp>
 
-#include <Graphic3d_NameOfMaterial.hxx>
+#include <Graphic3d_NameOfMaterial.hpp>
 
 #define DEFAULT_COLOR Quantity_NOC_GOLDENROD
 #define DEFAULT_FREEBOUNDARY_COLOR Quantity_NOC_GREEN
@@ -484,23 +484,23 @@ static void GetTypeAndSignfromString(const char*            theName,
 }
 
 #include <cstring>
-#include <Draw_Appli.hxx>
-#include <DBRep.hxx>
+#include <Draw_Appli.hpp>
+#include <DBRep.hpp>
 
-#include <V3d_View.hxx>
+#include <V3d_View.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
-#include <AIS_DisplayMode.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <ViewerTest_EventManager.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
+#include <AIS_DisplayMode.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <ViewerTest_EventManager.hpp>
 
-#include <BRep_Builder.hxx>
-#include <TopAbs_ShapeEnum.hxx>
+#include <BRep_Builder.hpp>
+#include <TopAbs_ShapeEnum.hpp>
 
-#include <BRep_Tool.hxx>
+#include <BRep_Tool.hpp>
 
-#include <Draw_Window.hxx>
+#include <Draw_Window.hpp>
 class AIS_InteractiveObject;
 
 //==============================================================================

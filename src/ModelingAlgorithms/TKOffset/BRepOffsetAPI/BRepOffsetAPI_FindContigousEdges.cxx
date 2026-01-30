@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_Sewing.hxx>
-#include <BRepOffsetAPI_FindContigousEdges.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepBuilderAPI_Sewing.hpp>
+#include <BRepOffsetAPI_FindContigousEdges.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

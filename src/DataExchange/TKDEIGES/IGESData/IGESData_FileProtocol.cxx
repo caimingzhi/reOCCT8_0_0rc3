@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_FileProtocol.hxx>
-#include <IGESData_Protocol.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESData_FileProtocol.hpp>
+#include <IGESData_Protocol.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_FileProtocol, IGESData_Protocol)
 

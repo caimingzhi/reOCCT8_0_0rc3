@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_AppSurf.hxx>
+#include <GeomFill_AppSurf.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <GeomFill_SectionGenerator.hxx>
-#include <GeomFill_Line.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <GeomFill_SectionGenerator.hpp>
+#include <GeomFill_Line.hpp>
 
 #define TheSectionGenerator GeomFill_SectionGenerator
-#define TheSectionGenerator_hxx <GeomFill_SectionGenerator.hxx>
+#define TheSectionGenerator_hxx <GeomFill_SectionGenerator.hpp>
 #define Handle_TheLine occ::handle<GeomFill_Line>
 #define TheLine GeomFill_Line
-#define TheLine_hxx <GeomFill_Line.hxx>
+#define TheLine_hxx <GeomFill_Line.hpp>
 #define AppBlend_AppSurf GeomFill_AppSurf
-#define AppBlend_AppSurf_hxx <GeomFill_AppSurf.hxx>
-#include <AppBlend_AppSurf.gxx>
+#define AppBlend_AppSurf_hxx <GeomFill_AppSurf.hpp>
+#include <AppBlend_AppSurf.hpp>

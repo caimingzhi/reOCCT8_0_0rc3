@@ -18,7 +18,7 @@
 //                            EvalBsplineBasis,
 //                            EvalPolynomial : Horners method
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -26,18 +26,18 @@
 
 #include <fstream>
 
-#include <BSplCLib.hxx>
-#include <gp_Mat2d.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <gp_Mat2d.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
-#include "BSplCLib_CurveComputation.pxx"
+#include "BSplCLib_CurveComputation.hpp"
 
 // Use 1D specialization of the template data container
 using BSplCLib_DataContainer = BSplCLib_DataContainer_T<1>;

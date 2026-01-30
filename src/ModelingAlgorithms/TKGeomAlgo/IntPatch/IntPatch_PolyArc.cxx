@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntPatch_PolyArc.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntPatch_PolyArc.hpp>
+#include <Standard_ConstructionError.hpp>
 
 inline void MinMax(const double a1, const double a2, double& amin, double& amax)
 {

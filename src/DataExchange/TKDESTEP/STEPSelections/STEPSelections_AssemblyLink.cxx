@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <STEPSelections_AssemblyComponent.hxx>
-#include <STEPSelections_AssemblyLink.hxx>
+#include <Standard_Transient.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <STEPSelections_AssemblyComponent.hpp>
+#include <STEPSelections_AssemblyLink.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_AssemblyLink, Standard_Transient)
 

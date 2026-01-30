@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Intf_Interference.hxx>
-#include <Intf_SectionLine.hxx>
-#include <Intf_SectionPoint.hxx>
-#include <Intf_TangentZone.hxx>
+#include <Intf_Interference.hpp>
+#include <Intf_SectionLine.hpp>
+#include <Intf_SectionPoint.hpp>
+#include <Intf_TangentZone.hpp>
 
 //=======================================================================
 // function : Intf_Interference

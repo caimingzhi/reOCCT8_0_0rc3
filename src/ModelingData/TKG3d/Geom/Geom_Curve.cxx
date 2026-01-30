@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Curve.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <Geom_UndefinedValue.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Curve.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <Geom_UndefinedValue.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Curve, Geom_Geometry)
 

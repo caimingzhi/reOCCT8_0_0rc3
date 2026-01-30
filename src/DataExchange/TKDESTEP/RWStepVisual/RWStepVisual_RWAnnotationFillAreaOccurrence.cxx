@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWAnnotationFillAreaOccurrence.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_GeometricRepresentationItem.hxx>
-#include <StepVisual_AnnotationFillAreaOccurrence.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWAnnotationFillAreaOccurrence.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_GeometricRepresentationItem.hpp>
+#include <StepVisual_AnnotationFillAreaOccurrence.hpp>
 
 //=================================================================================================
 

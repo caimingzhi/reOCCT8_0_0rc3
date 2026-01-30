@@ -15,10 +15,10 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_TModel.hxx>
+#include <TObj_TModel.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TModel, TDF_Attribute)
 

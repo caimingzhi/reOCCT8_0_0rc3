@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Number.hxx>
+#include <Draw_Number.hpp>
 
-#include <Draw_Display.hxx>
+#include <Draw_Display.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Number, Draw_Drawable3D)
 

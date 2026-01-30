@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Scope.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Scope.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

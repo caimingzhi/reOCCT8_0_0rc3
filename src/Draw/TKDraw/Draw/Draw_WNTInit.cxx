@@ -19,11 +19,11 @@
   // include windows.h first to have all definitions available
   #include <windows.h>
 
-  #include "Draw_Window.hxx"
-  #include "Draw_WNTRessource.pxx"
-  #include "Draw_WNTInit.pxx"
-  #include "Draw_WNTMainWindow.pxx"
-  #include "Draw_WNTCommandWindow.pxx"
+  #include "Draw_Window.hpp"
+  #include "Draw_WNTRessource.hpp"
+  #include "Draw_WNTInit.hpp"
+  #include "Draw_WNTMainWindow.hpp"
+  #include "Draw_WNTCommandWindow.hpp"
 
   #define USEDEFAULT 200
 

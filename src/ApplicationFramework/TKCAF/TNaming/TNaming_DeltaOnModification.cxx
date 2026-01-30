@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_DeltaOnModification.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <Standard_Type.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_DeltaOnModification.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_DeltaOnModification, TDF_DeltaOnModification)
 

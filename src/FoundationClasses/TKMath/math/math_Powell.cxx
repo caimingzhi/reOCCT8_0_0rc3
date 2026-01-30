@@ -19,11 +19,11 @@
 
 // #endif
 
-#include <math_BracketMinimum.hxx>
-#include <math_BrentMinimum.hxx>
-#include <math_Function.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_Powell.hxx>
+#include <math_BracketMinimum.hpp>
+#include <math_BrentMinimum.hpp>
+#include <math_Function.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_Powell.hpp>
 
 namespace
 {

@@ -3,128 +3,128 @@ set(OCCT_GeomFill_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomFill_FILES
   GeomFill.cxx
-  GeomFill.hxx
-  GeomFill_ApproxStyle.hxx
-  GeomFill_AppSurf.hxx
+  GeomFill.hpp
+  GeomFill_ApproxStyle.hpp
+  GeomFill_AppSurf.hpp
   GeomFill_AppSurf_0.cxx
-  GeomFill_AppSweep.hxx
+  GeomFill_AppSweep.hpp
   GeomFill_AppSweep_0.cxx
 
   GeomFill_BezierCurves.cxx
-  GeomFill_BezierCurves.hxx
-  GeomFill_BezierCurves.lxx
+  GeomFill_BezierCurves.hpp
+  GeomFill_BezierCurves_1.hpp
   GeomFill_Boundary.cxx
-  GeomFill_Boundary.hxx
+  GeomFill_Boundary.hpp
   GeomFill_BoundWithSurf.cxx
-  GeomFill_BoundWithSurf.hxx
+  GeomFill_BoundWithSurf.hpp
   GeomFill_BSplineCurves.cxx
-  GeomFill_BSplineCurves.hxx
-  GeomFill_BSplineCurves.lxx
+  GeomFill_BSplineCurves.hpp
+  GeomFill_BSplineCurves_1.hpp
   GeomFill_CircularBlendFunc.cxx
-  GeomFill_CircularBlendFunc.hxx
+  GeomFill_CircularBlendFunc.hpp
   GeomFill_ConstantBiNormal.cxx
-  GeomFill_ConstantBiNormal.hxx
+  GeomFill_ConstantBiNormal.hpp
   GeomFill_ConstrainedFilling.cxx
-  GeomFill_ConstrainedFilling.hxx
+  GeomFill_ConstrainedFilling.hpp
   GeomFill_Coons.cxx
-  GeomFill_Coons.hxx
+  GeomFill_Coons.hpp
   GeomFill_CoonsAlgPatch.cxx
-  GeomFill_CoonsAlgPatch.hxx
+  GeomFill_CoonsAlgPatch.hpp
   GeomFill_CornerState.cxx
-  GeomFill_CornerState.hxx
+  GeomFill_CornerState.hpp
   GeomFill_CorrectedFrenet.cxx
-  GeomFill_CorrectedFrenet.hxx
+  GeomFill_CorrectedFrenet.hpp
   GeomFill_CurveAndTrihedron.cxx
-  GeomFill_CurveAndTrihedron.hxx
+  GeomFill_CurveAndTrihedron.hpp
   GeomFill_Curved.cxx
-  GeomFill_Curved.hxx
+  GeomFill_Curved.hpp
   GeomFill_Darboux.cxx
-  GeomFill_Darboux.hxx
+  GeomFill_Darboux.hpp
   GeomFill_DegeneratedBound.cxx
-  GeomFill_DegeneratedBound.hxx
+  GeomFill_DegeneratedBound.hpp
   GeomFill_DiscreteTrihedron.cxx
-  GeomFill_DiscreteTrihedron.hxx
+  GeomFill_DiscreteTrihedron.hpp
   GeomFill_DraftTrihedron.cxx
-  GeomFill_DraftTrihedron.hxx
+  GeomFill_DraftTrihedron.hpp
   GeomFill_EvolvedSection.cxx
-  GeomFill_EvolvedSection.hxx
+  GeomFill_EvolvedSection.hpp
   GeomFill_Filling.cxx
-  GeomFill_Filling.hxx
-  GeomFill_FillingStyle.hxx
+  GeomFill_Filling.hpp
+  GeomFill_FillingStyle.hpp
   GeomFill_Fixed.cxx
-  GeomFill_Fixed.hxx
+  GeomFill_Fixed.hpp
   GeomFill_Frenet.cxx
-  GeomFill_Frenet.hxx
+  GeomFill_Frenet.hpp
   GeomFill_FunctionDraft.cxx
-  GeomFill_FunctionDraft.hxx
+  GeomFill_FunctionDraft.hpp
   GeomFill_FunctionGuide.cxx
-  GeomFill_FunctionGuide.hxx
+  GeomFill_FunctionGuide.hpp
   GeomFill_Generator.cxx
-  GeomFill_Generator.hxx
-  GeomFill_Generator.lxx
+  GeomFill_Generator.hpp
+  GeomFill_Generator_1.hpp
   GeomFill_GuideTrihedronAC.cxx
-  GeomFill_GuideTrihedronAC.hxx
+  GeomFill_GuideTrihedronAC.hpp
   GeomFill_GuideTrihedronPlan.cxx
-  GeomFill_GuideTrihedronPlan.hxx
+  GeomFill_GuideTrihedronPlan.hpp
 
   GeomFill_Line.cxx
-  GeomFill_Line.hxx
-  GeomFill_Line.lxx
+  GeomFill_Line.hpp
+  GeomFill_Line_1.hpp
   GeomFill_LocationDraft.cxx
-  GeomFill_LocationDraft.hxx
+  GeomFill_LocationDraft.hpp
   GeomFill_LocationGuide.cxx
-  GeomFill_LocationGuide.hxx
+  GeomFill_LocationGuide.hpp
   GeomFill_LocationLaw.cxx
-  GeomFill_LocationLaw.hxx
+  GeomFill_LocationLaw.hpp
   GeomFill_LocFunction.cxx
-  GeomFill_LocFunction.hxx
+  GeomFill_LocFunction.hpp
   GeomFill_NSections.cxx
-  GeomFill_NSections.hxx
+  GeomFill_NSections.hpp
   GeomFill_Pipe.cxx
-  GeomFill_Pipe.hxx
-  GeomFill_Pipe.lxx
-  GeomFill_PipeError.hxx
+  GeomFill_Pipe.hpp
+  GeomFill_Pipe_1.hpp
+  GeomFill_PipeError.hpp
   GeomFill_PlanFunc.cxx
-  GeomFill_PlanFunc.hxx
+  GeomFill_PlanFunc.hpp
   GeomFill_PolynomialConvertor.cxx
-  GeomFill_PolynomialConvertor.hxx
+  GeomFill_PolynomialConvertor.hpp
   GeomFill_Profiler.cxx
-  GeomFill_Profiler.hxx
-  GeomFill_Profiler.lxx
+  GeomFill_Profiler.hpp
+  GeomFill_Profiler_1.hpp
   GeomFill_QuasiAngularConvertor.cxx
-  GeomFill_QuasiAngularConvertor.hxx
+  GeomFill_QuasiAngularConvertor.hpp
   GeomFill_SectionGenerator.cxx
-  GeomFill_SectionGenerator.hxx
+  GeomFill_SectionGenerator.hpp
   GeomFill_SectionLaw.cxx
-  GeomFill_SectionLaw.hxx
+  GeomFill_SectionLaw.hpp
   GeomFill_SectionPlacement.cxx
-  GeomFill_SectionPlacement.hxx
+  GeomFill_SectionPlacement.hpp
 
   GeomFill_SimpleBound.cxx
-  GeomFill_SimpleBound.hxx
+  GeomFill_SimpleBound.hpp
   GeomFill_SnglrFunc.cxx
-  GeomFill_SnglrFunc.hxx
+  GeomFill_SnglrFunc.hpp
   GeomFill_Stretch.cxx
-  GeomFill_Stretch.hxx
+  GeomFill_Stretch.hpp
   GeomFill_Sweep.cxx
-  GeomFill_Sweep.hxx
+  GeomFill_Sweep.hpp
   GeomFill_SweepFunction.cxx
-  GeomFill_SweepFunction.hxx
+  GeomFill_SweepFunction.hpp
   GeomFill_SweepSectionGenerator.cxx
-  GeomFill_SweepSectionGenerator.hxx
-  GeomFill_SweepSectionGenerator.lxx
+  GeomFill_SweepSectionGenerator.hpp
+  GeomFill_SweepSectionGenerator_1.hpp
   GeomFill_Tensor.cxx
-  GeomFill_Tensor.hxx
-  GeomFill_Tensor.lxx
+  GeomFill_Tensor.hpp
+  GeomFill_Tensor_1.hpp
   GeomFill_TgtField.cxx
-  GeomFill_TgtField.hxx
+  GeomFill_TgtField.hpp
   GeomFill_TgtOnCoons.cxx
-  GeomFill_TgtOnCoons.hxx
-  GeomFill_Trihedron.hxx
+  GeomFill_TgtOnCoons.hpp
+  GeomFill_Trihedron.hpp
   GeomFill_TrihedronLaw.cxx
-  GeomFill_TrihedronLaw.hxx
+  GeomFill_TrihedronLaw.hpp
   GeomFill_TrihedronWithGuide.cxx
-  GeomFill_TrihedronWithGuide.hxx
+  GeomFill_TrihedronWithGuide.hpp
   GeomFill_UniformSection.cxx
-  GeomFill_UniformSection.hxx
+  GeomFill_UniformSection.hpp
 )

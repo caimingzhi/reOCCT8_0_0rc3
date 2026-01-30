@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <TopOpeBRep_ShapeIntersector.hxx>
-#include <TopOpeBRepTool_box.hxx>
-#include <TopOpeBRepTool_HBoxTool.hxx>
+#include <Bnd_Box.hpp>
+#include <TopOpeBRep_ShapeIntersector.hpp>
+#include <TopOpeBRepTool_box.hpp>
+#include <TopOpeBRepTool_HBoxTool.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRep_GettraceSI();
@@ -46,22 +46,22 @@ void seteefff(const int e1, const int e2, const int f1, const int f2)
 #endif
 
 // modified by NIZHNY-OFV  Thu Apr 18 17:15:38 2002 (S)
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopExp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <BRepLib_MakeWire.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Surface.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopExp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <BRepLib_MakeWire.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Surface.hpp>
 static int          OneShapeIsHalfSpace(const TopoDS_Shape& S1, const TopoDS_Shape& S2);
 static TopoDS_Solid GetNewSolid(const TopoDS_Shape& S, TopoDS_Face& F);
 

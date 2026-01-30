@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepToTopoDS_PointPair.hxx>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepToTopoDS_PointPair.hpp>
 
 //=================================================================================================
 

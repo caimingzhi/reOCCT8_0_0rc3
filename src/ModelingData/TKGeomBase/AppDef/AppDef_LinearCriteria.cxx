@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_LinearCriteria.hxx>
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_MyLineTool.hxx>
-#include <FEmTool_Curve.hxx>
-#include <FEmTool_LinearFlexion.hxx>
-#include <FEmTool_LinearJerk.hxx>
-#include <FEmTool_LinearTension.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <PLib_HermitJacobi.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <AppDef_LinearCriteria.hpp>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_MyLineTool.hpp>
+#include <FEmTool_Curve.hpp>
+#include <FEmTool_LinearFlexion.hpp>
+#include <FEmTool_LinearJerk.hpp>
+#include <FEmTool_LinearTension.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <PLib_HermitJacobi.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AppDef_LinearCriteria, AppDef_SmoothCriterion)
 

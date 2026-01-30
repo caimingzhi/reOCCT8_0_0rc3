@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Frenet.hxx>
+#include <GeomFill_Frenet.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomFill_SnglrFunc.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <GeomLib.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array1.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomFill_SnglrFunc.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <GeomLib.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array1.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HArray1.hpp>
 
 #include <algorithm>
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_Frenet, GeomFill_TrihedronLaw)

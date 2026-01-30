@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWRotationAboutDirection.pxx"
+#include "RWStepKinematics_RWRotationAboutDirection.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_RotationAboutDirection.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepGeom_Direction.hxx>
-#include <Standard_Real.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_RotationAboutDirection.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepGeom_Direction.hpp>
+#include <Standard_Real.hpp>
 
 //=================================================================================================
 

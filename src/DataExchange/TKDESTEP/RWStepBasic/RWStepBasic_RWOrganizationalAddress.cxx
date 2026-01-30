@@ -13,13 +13,13 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWOrganizationalAddress.pxx"
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_OrganizationalAddress.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWOrganizationalAddress.hpp"
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_OrganizationalAddress.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWOrganizationalAddress::RWStepBasic_RWOrganizationalAddress() = default;
 

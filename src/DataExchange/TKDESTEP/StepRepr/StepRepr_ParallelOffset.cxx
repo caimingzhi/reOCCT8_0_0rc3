@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_ParallelOffset.hxx>
+#include <StepRepr_ParallelOffset.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ParallelOffset, StepRepr_DerivedShapeAspect)
 

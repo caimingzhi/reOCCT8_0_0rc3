@@ -15,19 +15,19 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include "XmlTObjDrivers_ReferenceDriver.hxx"
+#include "XmlTObjDrivers_ReferenceDriver.hpp"
 
-#include <TDF_Tool.hxx>
-#include <TDF_Attribute.hxx>
+#include <TDF_Tool.hpp>
+#include <TDF_Attribute.hpp>
 
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
 
-#include <TObj_TReference.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_Object.hxx>
-#include <TObj_Assistant.hxx>
+#include <TObj_TReference.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_Object.hpp>
+#include <TObj_Assistant.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_ReferenceDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(MasterEntry, "master")

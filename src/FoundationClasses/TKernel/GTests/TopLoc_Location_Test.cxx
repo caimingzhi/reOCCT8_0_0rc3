@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRep_Tool.hxx>
-#include <gp.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Pnt.hxx>
-#include <OSD_Parallel.hxx>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRep_Tool.hpp>
+#include <gp.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Pnt.hpp>
+#include <OSD_Parallel.hpp>
 
 #include <gtest/gtest.h>
 

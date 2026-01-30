@@ -3,26 +3,26 @@ set(OCCT_RWMesh_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWMesh_FILES
   RWMesh.cxx
-  RWMesh.hxx
+  RWMesh.hpp
   RWMesh_CafReader.cxx
-  RWMesh_CafReader.hxx
-  RWMesh_CoordinateSystem.hxx
+  RWMesh_CafReader.hpp
+  RWMesh_CoordinateSystem.hpp
   RWMesh_CoordinateSystemConverter.cxx
-  RWMesh_CoordinateSystemConverter.hxx
+  RWMesh_CoordinateSystemConverter.hpp
   RWMesh_EdgeIterator.cxx
-  RWMesh_EdgeIterator.hxx
+  RWMesh_EdgeIterator.hpp
   RWMesh_FaceIterator.cxx
-  RWMesh_FaceIterator.hxx
+  RWMesh_FaceIterator.hpp
   RWMesh_MaterialMap.cxx
-  RWMesh_MaterialMap.hxx
-  RWMesh_NameFormat.hxx
-  RWMesh_NodeAttributes.hxx
+  RWMesh_MaterialMap.hpp
+  RWMesh_NameFormat.hpp
+  RWMesh_NodeAttributes.hpp
   RWMesh_ShapeIterator.cxx
-  RWMesh_ShapeIterator.hxx
+  RWMesh_ShapeIterator.hpp
   RWMesh_TriangulationReader.cxx
-  RWMesh_TriangulationReader.hxx
+  RWMesh_TriangulationReader.hpp
   RWMesh_TriangulationSource.cxx
-  RWMesh_TriangulationSource.hxx
+  RWMesh_TriangulationSource.hpp
   RWMesh_VertexIterator.cxx
-  RWMesh_VertexIterator.hxx
+  RWMesh_VertexIterator.hpp
 )

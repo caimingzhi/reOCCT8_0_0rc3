@@ -15,11 +15,11 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_TObject.hxx>
+#include <TObj_TObject.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_ChildIterator.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_ChildIterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TObject, TDF_Attribute)
 

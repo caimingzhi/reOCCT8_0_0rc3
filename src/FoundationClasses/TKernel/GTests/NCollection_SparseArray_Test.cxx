@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_SparseArray.hxx>
+#include <NCollection_SparseArray.hpp>
 
 #include <gtest/gtest.h>
 

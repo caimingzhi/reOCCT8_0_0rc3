@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_FontStyle.hxx>
+#include <Vrml_FontStyle.hpp>
 
 Vrml_FontStyle::Vrml_FontStyle(const double               aSize,
                                const Vrml_FontStyleFamily aFamily,

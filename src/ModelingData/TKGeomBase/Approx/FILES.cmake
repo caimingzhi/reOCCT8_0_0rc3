@@ -3,34 +3,34 @@ set(OCCT_Approx_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Approx_FILES
 
-  Approx_BSplComputeLine.gxx
-  Approx_ComputeCLine.gxx
-  Approx_ComputeLine.gxx
+  Approx_BSplComputeLine.hpp
+  Approx_ComputeCLine.hpp
+  Approx_ComputeLine.hpp
   Approx_Curve2d.cxx
-  Approx_Curve2d.hxx
+  Approx_Curve2d.hpp
   Approx_Curve3d.cxx
-  Approx_Curve3d.hxx
+  Approx_Curve3d.hpp
   Approx_CurveOnSurface.cxx
-  Approx_CurveOnSurface.hxx
+  Approx_CurveOnSurface.hpp
   Approx_CurvilinearParameter.cxx
-  Approx_CurvilinearParameter.hxx
+  Approx_CurvilinearParameter.hpp
   Approx_CurvlinFunc.cxx
-  Approx_CurvlinFunc.hxx
-  Approx_FitAndDivide.hxx
-  Approx_FitAndDivide2d.hxx
+  Approx_CurvlinFunc.hpp
+  Approx_FitAndDivide.hpp
+  Approx_FitAndDivide2d.hpp
   Approx_FitAndDivide2d_0.cxx
   Approx_FitAndDivide_0.cxx
 
   Approx_MCurvesToBSpCurve.cxx
-  Approx_MCurvesToBSpCurve.hxx
-  Approx_ParametrizationType.hxx
+  Approx_MCurvesToBSpCurve.hpp
+  Approx_ParametrizationType.hpp
   Approx_SameParameter.cxx
-  Approx_SameParameter.hxx
+  Approx_SameParameter.hpp
 
-  Approx_Status.hxx
+  Approx_Status.hpp
   Approx_SweepApproximation.cxx
-  Approx_SweepApproximation.hxx
-  Approx_SweepApproximation.lxx
+  Approx_SweepApproximation.hpp
+  Approx_SweepApproximation_1.hpp
   Approx_SweepFunction.cxx
-  Approx_SweepFunction.hxx
+  Approx_SweepFunction.hpp
 )

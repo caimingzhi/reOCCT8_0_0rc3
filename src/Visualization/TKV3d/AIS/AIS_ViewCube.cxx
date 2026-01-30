@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_ViewCube.hxx>
+#include <AIS_ViewCube.hpp>
 
-#include <AIS_AnimationCamera.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <gp_Ax2.hxx>
-#include <Graphic3d_Text.hxx>
-#include <NCollection_Lerp.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <Prs3d_ToolSphere.hxx>
-#include <NCollection_Sequence.hxx>
-#include <V3d.hxx>
-#include <V3d_View.hxx>
+#include <AIS_AnimationCamera.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <gp_Ax2.hpp>
+#include <Graphic3d_Text.hpp>
+#include <NCollection_Lerp.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_ToolSphere.hpp>
+#include <NCollection_Sequence.hpp>
+#include <V3d.hpp>
+#include <V3d_View.hpp>
 class SelectMgr_EntityOwner;
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ViewCube, AIS_InteractiveObject)

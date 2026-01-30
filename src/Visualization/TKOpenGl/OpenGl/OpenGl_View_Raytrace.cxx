@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_View.hxx>
+#include <OpenGl_View.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
-#include <OpenGl_BackgroundArray.hxx>
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_PrimitiveArray.hxx>
-#include <OpenGl_VertexBuffer.hxx>
-#include <OpenGl_SceneGeometry.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_TextureBuffer.hxx>
-#include <OpenGl_GlCore44.hxx>
-#include <OSD_Protection.hxx>
-#include <OSD_File.hxx>
+#include <Graphic3d_TextureParams.hpp>
+#include <OpenGl_BackgroundArray.hpp>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_PrimitiveArray.hpp>
+#include <OpenGl_VertexBuffer.hpp>
+#include <OpenGl_SceneGeometry.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_TextureBuffer.hpp>
+#include <OpenGl_GlCore44.hpp>
+#include <OSD_Protection.hpp>
+#include <OSD_File.hpp>
 
-#include "../../TKService/Shaders/Shaders_RaytraceBase_vs.pxx"
-#include "../../TKService/Shaders/Shaders_RaytraceBase_fs.pxx"
-#include "../../TKService/Shaders/Shaders_PathtraceBase_fs.pxx"
-#include "../../TKService/Shaders/Shaders_RaytraceRender_fs.pxx"
-#include "../../TKService/Shaders/Shaders_RaytraceSmooth_fs.pxx"
-#include "../../TKService/Shaders/Shaders_Display_fs.pxx"
-#include "../../TKService/Shaders/Shaders_TangentSpaceNormal_glsl.pxx"
+#include "../../TKService/Shaders/Shaders_RaytraceBase_vs.hpp"
+#include "../../TKService/Shaders/Shaders_RaytraceBase_fs.hpp"
+#include "../../TKService/Shaders/Shaders_PathtraceBase_fs.hpp"
+#include "../../TKService/Shaders/Shaders_RaytraceRender_fs.hpp"
+#include "../../TKService/Shaders/Shaders_RaytraceSmooth_fs.hpp"
+#include "../../TKService/Shaders/Shaders_Display_fs.hpp"
+#include "../../TKService/Shaders/Shaders_TangentSpaceNormal_glsl.hpp"
 
 //! Use this macro to output ray-tracing debug info
 // #define RAY_TRACE_PRINT_INFO
 
 #ifdef RAY_TRACE_PRINT_INFO
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 #endif
 
 namespace

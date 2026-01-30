@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESGraph_LineFontDefTemplate.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESGraph_LineFontDefTemplate.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_LineFontDefTemplate, IGESData_LineFontEntity)
 

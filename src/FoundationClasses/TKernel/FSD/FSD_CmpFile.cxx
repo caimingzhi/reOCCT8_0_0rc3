@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FSD_CmpFile.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Storage_StreamFormatError.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <Storage_StreamWriteError.hxx>
+#include <FSD_CmpFile.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Storage_StreamFormatError.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <Storage_StreamWriteError.hpp>
 
 static const char* MAGICNUMBER = "CMPFILE";
 

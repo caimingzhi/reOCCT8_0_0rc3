@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <MathInteg_Gauss.hxx>
-#include <MathInteg_Kronrod.hxx>
-#include <MathInteg_DoubleExp.hxx>
+#include <MathInteg_Gauss.hpp>
+#include <MathInteg_Kronrod.hpp>
+#include <MathInteg_DoubleExp.hpp>
 
 #include <cmath>
 

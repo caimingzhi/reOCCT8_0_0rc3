@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_CylindricalSurface.hxx>
-#include <GeomGridEval_Cylinder.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_CylindricalSurface.hpp>
+#include <GeomGridEval_Cylinder.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

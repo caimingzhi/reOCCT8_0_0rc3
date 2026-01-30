@@ -3,297 +3,297 @@ set(OCCT_StepBasic_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepBasic_FILES
   StepBasic_Action.cxx
-  StepBasic_Action.hxx
+  StepBasic_Action.hpp
   StepBasic_ActionAssignment.cxx
-  StepBasic_ActionAssignment.hxx
+  StepBasic_ActionAssignment.hpp
   StepBasic_ActionMethod.cxx
-  StepBasic_ActionMethod.hxx
+  StepBasic_ActionMethod.hpp
   StepBasic_ActionRequestAssignment.cxx
-  StepBasic_ActionRequestAssignment.hxx
+  StepBasic_ActionRequestAssignment.hpp
   StepBasic_ActionRequestSolution.cxx
-  StepBasic_ActionRequestSolution.hxx
+  StepBasic_ActionRequestSolution.hpp
   StepBasic_Address.cxx
-  StepBasic_Address.hxx
-  StepBasic_AheadOrBehind.hxx
+  StepBasic_Address.hpp
+  StepBasic_AheadOrBehind.hpp
   StepBasic_ApplicationContext.cxx
-  StepBasic_ApplicationContext.hxx
+  StepBasic_ApplicationContext.hpp
   StepBasic_ApplicationContextElement.cxx
-  StepBasic_ApplicationContextElement.hxx
+  StepBasic_ApplicationContextElement.hpp
   StepBasic_ApplicationProtocolDefinition.cxx
-  StepBasic_ApplicationProtocolDefinition.hxx
+  StepBasic_ApplicationProtocolDefinition.hpp
   StepBasic_Approval.cxx
-  StepBasic_Approval.hxx
+  StepBasic_Approval.hpp
   StepBasic_ApprovalAssignment.cxx
-  StepBasic_ApprovalAssignment.hxx
+  StepBasic_ApprovalAssignment.hpp
   StepBasic_ApprovalDateTime.cxx
-  StepBasic_ApprovalDateTime.hxx
+  StepBasic_ApprovalDateTime.hpp
   StepBasic_ApprovalPersonOrganization.cxx
-  StepBasic_ApprovalPersonOrganization.hxx
+  StepBasic_ApprovalPersonOrganization.hpp
   StepBasic_ApprovalRelationship.cxx
-  StepBasic_ApprovalRelationship.hxx
+  StepBasic_ApprovalRelationship.hpp
   StepBasic_ApprovalRole.cxx
-  StepBasic_ApprovalRole.hxx
+  StepBasic_ApprovalRole.hpp
   StepBasic_ApprovalStatus.cxx
-  StepBasic_ApprovalStatus.hxx
+  StepBasic_ApprovalStatus.hpp
   StepBasic_AreaUnit.cxx
-  StepBasic_AreaUnit.hxx
+  StepBasic_AreaUnit.hpp
 
   StepBasic_CalendarDate.cxx
-  StepBasic_CalendarDate.hxx
+  StepBasic_CalendarDate.hpp
   StepBasic_Certification.cxx
-  StepBasic_Certification.hxx
+  StepBasic_Certification.hpp
   StepBasic_CertificationAssignment.cxx
-  StepBasic_CertificationAssignment.hxx
+  StepBasic_CertificationAssignment.hpp
   StepBasic_CertificationType.cxx
-  StepBasic_CertificationType.hxx
+  StepBasic_CertificationType.hpp
   StepBasic_CharacterizedObject.cxx
-  StepBasic_CharacterizedObject.hxx
+  StepBasic_CharacterizedObject.hpp
   StepBasic_Contract.cxx
-  StepBasic_Contract.hxx
+  StepBasic_Contract.hpp
   StepBasic_ContractAssignment.cxx
-  StepBasic_ContractAssignment.hxx
+  StepBasic_ContractAssignment.hpp
   StepBasic_ContractType.cxx
-  StepBasic_ContractType.hxx
+  StepBasic_ContractType.hpp
   StepBasic_ConversionBasedUnit.cxx
-  StepBasic_ConversionBasedUnit.hxx
+  StepBasic_ConversionBasedUnit.hpp
   StepBasic_ConversionBasedUnitAndAreaUnit.cxx
-  StepBasic_ConversionBasedUnitAndAreaUnit.hxx
+  StepBasic_ConversionBasedUnitAndAreaUnit.hpp
   StepBasic_ConversionBasedUnitAndLengthUnit.cxx
-  StepBasic_ConversionBasedUnitAndLengthUnit.hxx
+  StepBasic_ConversionBasedUnitAndLengthUnit.hpp
   StepBasic_ConversionBasedUnitAndMassUnit.cxx
-  StepBasic_ConversionBasedUnitAndMassUnit.hxx
+  StepBasic_ConversionBasedUnitAndMassUnit.hpp
   StepBasic_ConversionBasedUnitAndPlaneAngleUnit.cxx
-  StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hxx
+  StepBasic_ConversionBasedUnitAndPlaneAngleUnit.hpp
   StepBasic_ConversionBasedUnitAndRatioUnit.cxx
-  StepBasic_ConversionBasedUnitAndRatioUnit.hxx
+  StepBasic_ConversionBasedUnitAndRatioUnit.hpp
   StepBasic_ConversionBasedUnitAndSolidAngleUnit.cxx
-  StepBasic_ConversionBasedUnitAndSolidAngleUnit.hxx
+  StepBasic_ConversionBasedUnitAndSolidAngleUnit.hpp
   StepBasic_ConversionBasedUnitAndTimeUnit.cxx
-  StepBasic_ConversionBasedUnitAndTimeUnit.hxx
+  StepBasic_ConversionBasedUnitAndTimeUnit.hpp
   StepBasic_ConversionBasedUnitAndVolumeUnit.cxx
-  StepBasic_ConversionBasedUnitAndVolumeUnit.hxx
+  StepBasic_ConversionBasedUnitAndVolumeUnit.hpp
   StepBasic_CoordinatedUniversalTimeOffset.cxx
-  StepBasic_CoordinatedUniversalTimeOffset.hxx
+  StepBasic_CoordinatedUniversalTimeOffset.hpp
   StepBasic_Date.cxx
-  StepBasic_Date.hxx
+  StepBasic_Date.hpp
   StepBasic_DateAndTime.cxx
-  StepBasic_DateAndTime.hxx
+  StepBasic_DateAndTime.hpp
   StepBasic_DateAndTimeAssignment.cxx
-  StepBasic_DateAndTimeAssignment.hxx
+  StepBasic_DateAndTimeAssignment.hpp
   StepBasic_DateAssignment.cxx
-  StepBasic_DateAssignment.hxx
+  StepBasic_DateAssignment.hpp
   StepBasic_DateRole.cxx
-  StepBasic_DateRole.hxx
+  StepBasic_DateRole.hpp
   StepBasic_DateTimeRole.cxx
-  StepBasic_DateTimeRole.hxx
+  StepBasic_DateTimeRole.hpp
   StepBasic_DateTimeSelect.cxx
-  StepBasic_DateTimeSelect.hxx
+  StepBasic_DateTimeSelect.hpp
   StepBasic_DerivedUnit.cxx
-  StepBasic_DerivedUnit.hxx
+  StepBasic_DerivedUnit.hpp
   StepBasic_DerivedUnitElement.cxx
-  StepBasic_DerivedUnitElement.hxx
+  StepBasic_DerivedUnitElement.hpp
   StepBasic_DesignContext.cxx
-  StepBasic_DesignContext.hxx
+  StepBasic_DesignContext.hpp
   StepBasic_DigitalDocument.cxx
-  StepBasic_DigitalDocument.hxx
+  StepBasic_DigitalDocument.hpp
   StepBasic_DimensionalExponents.cxx
-  StepBasic_DimensionalExponents.hxx
+  StepBasic_DimensionalExponents.hpp
   StepBasic_Document.cxx
-  StepBasic_Document.hxx
+  StepBasic_Document.hpp
   StepBasic_DocumentFile.cxx
-  StepBasic_DocumentFile.hxx
+  StepBasic_DocumentFile.hpp
   StepBasic_DocumentProductAssociation.cxx
-  StepBasic_DocumentProductAssociation.hxx
+  StepBasic_DocumentProductAssociation.hpp
   StepBasic_DocumentProductEquivalence.cxx
-  StepBasic_DocumentProductEquivalence.hxx
+  StepBasic_DocumentProductEquivalence.hpp
   StepBasic_DocumentReference.cxx
-  StepBasic_DocumentReference.hxx
+  StepBasic_DocumentReference.hpp
   StepBasic_DocumentRelationship.cxx
-  StepBasic_DocumentRelationship.hxx
+  StepBasic_DocumentRelationship.hpp
   StepBasic_DocumentRepresentationType.cxx
-  StepBasic_DocumentRepresentationType.hxx
+  StepBasic_DocumentRepresentationType.hpp
   StepBasic_DocumentType.cxx
-  StepBasic_DocumentType.hxx
+  StepBasic_DocumentType.hpp
   StepBasic_DocumentUsageConstraint.cxx
-  StepBasic_DocumentUsageConstraint.hxx
+  StepBasic_DocumentUsageConstraint.hpp
   StepBasic_Effectivity.cxx
-  StepBasic_Effectivity.hxx
+  StepBasic_Effectivity.hpp
   StepBasic_EffectivityAssignment.cxx
-  StepBasic_EffectivityAssignment.hxx
+  StepBasic_EffectivityAssignment.hpp
   StepBasic_EulerAngles.cxx
-  StepBasic_EulerAngles.hxx
+  StepBasic_EulerAngles.hpp
   StepBasic_ExternalIdentificationAssignment.cxx
-  StepBasic_ExternalIdentificationAssignment.hxx
+  StepBasic_ExternalIdentificationAssignment.hpp
   StepBasic_ExternallyDefinedItem.cxx
-  StepBasic_ExternallyDefinedItem.hxx
+  StepBasic_ExternallyDefinedItem.hpp
   StepBasic_ExternalSource.cxx
-  StepBasic_ExternalSource.hxx
+  StepBasic_ExternalSource.hpp
   StepBasic_GeneralProperty.cxx
-  StepBasic_GeneralProperty.hxx
+  StepBasic_GeneralProperty.hpp
   StepBasic_GeneralPropertyAssociation.cxx
-  StepBasic_GeneralPropertyAssociation.hxx
+  StepBasic_GeneralPropertyAssociation.hpp
   StepBasic_GeneralPropertyRelationship.cxx
-  StepBasic_GeneralPropertyRelationship.hxx
+  StepBasic_GeneralPropertyRelationship.hpp
   StepBasic_Group.cxx
-  StepBasic_Group.hxx
+  StepBasic_Group.hpp
   StepBasic_GroupAssignment.cxx
-  StepBasic_GroupAssignment.hxx
+  StepBasic_GroupAssignment.hpp
   StepBasic_GroupRelationship.cxx
-  StepBasic_GroupRelationship.hxx
+  StepBasic_GroupRelationship.hpp
 
   StepBasic_IdentificationAssignment.cxx
-  StepBasic_IdentificationAssignment.hxx
+  StepBasic_IdentificationAssignment.hpp
   StepBasic_IdentificationRole.cxx
-  StepBasic_IdentificationRole.hxx
+  StepBasic_IdentificationRole.hpp
   StepBasic_LengthMeasureWithUnit.cxx
-  StepBasic_LengthMeasureWithUnit.hxx
+  StepBasic_LengthMeasureWithUnit.hpp
   StepBasic_LengthUnit.cxx
-  StepBasic_LengthUnit.hxx
+  StepBasic_LengthUnit.hpp
   StepBasic_LocalTime.cxx
-  StepBasic_LocalTime.hxx
+  StepBasic_LocalTime.hpp
   StepBasic_MassMeasureWithUnit.cxx
-  StepBasic_MassMeasureWithUnit.hxx
+  StepBasic_MassMeasureWithUnit.hpp
   StepBasic_MassUnit.cxx
-  StepBasic_MassUnit.hxx
+  StepBasic_MassUnit.hpp
   StepBasic_MeasureValueMember.cxx
-  StepBasic_MeasureValueMember.hxx
+  StepBasic_MeasureValueMember.hpp
   StepBasic_MeasureWithUnit.cxx
-  StepBasic_MeasureWithUnit.hxx
+  StepBasic_MeasureWithUnit.hpp
   StepBasic_MechanicalContext.cxx
-  StepBasic_MechanicalContext.hxx
+  StepBasic_MechanicalContext.hpp
   StepBasic_NameAssignment.cxx
-  StepBasic_NameAssignment.hxx
+  StepBasic_NameAssignment.hpp
   StepBasic_NamedUnit.cxx
-  StepBasic_NamedUnit.hxx
+  StepBasic_NamedUnit.hpp
   StepBasic_ObjectRole.cxx
-  StepBasic_ObjectRole.hxx
+  StepBasic_ObjectRole.hpp
   StepBasic_OrdinalDate.cxx
-  StepBasic_OrdinalDate.hxx
+  StepBasic_OrdinalDate.hpp
   StepBasic_Organization.cxx
-  StepBasic_Organization.hxx
+  StepBasic_Organization.hpp
   StepBasic_OrganizationalAddress.cxx
-  StepBasic_OrganizationalAddress.hxx
+  StepBasic_OrganizationalAddress.hpp
   StepBasic_OrganizationAssignment.cxx
-  StepBasic_OrganizationAssignment.hxx
+  StepBasic_OrganizationAssignment.hpp
   StepBasic_OrganizationRole.cxx
-  StepBasic_OrganizationRole.hxx
+  StepBasic_OrganizationRole.hpp
   StepBasic_Person.cxx
-  StepBasic_Person.hxx
+  StepBasic_Person.hpp
   StepBasic_PersonalAddress.cxx
-  StepBasic_PersonalAddress.hxx
+  StepBasic_PersonalAddress.hpp
   StepBasic_PersonAndOrganization.cxx
-  StepBasic_PersonAndOrganization.hxx
+  StepBasic_PersonAndOrganization.hpp
   StepBasic_PersonAndOrganizationAssignment.cxx
-  StepBasic_PersonAndOrganizationAssignment.hxx
+  StepBasic_PersonAndOrganizationAssignment.hpp
   StepBasic_PersonAndOrganizationRole.cxx
-  StepBasic_PersonAndOrganizationRole.hxx
+  StepBasic_PersonAndOrganizationRole.hpp
   StepBasic_PersonOrganizationSelect.cxx
-  StepBasic_PersonOrganizationSelect.hxx
+  StepBasic_PersonOrganizationSelect.hpp
   StepBasic_PhysicallyModeledProductDefinition.cxx
-  StepBasic_PhysicallyModeledProductDefinition.hxx
+  StepBasic_PhysicallyModeledProductDefinition.hpp
   StepBasic_PlaneAngleMeasureWithUnit.cxx
-  StepBasic_PlaneAngleMeasureWithUnit.hxx
+  StepBasic_PlaneAngleMeasureWithUnit.hpp
   StepBasic_PlaneAngleUnit.cxx
-  StepBasic_PlaneAngleUnit.hxx
+  StepBasic_PlaneAngleUnit.hpp
   StepBasic_Product.cxx
-  StepBasic_Product.hxx
+  StepBasic_Product.hpp
   StepBasic_ProductCategory.cxx
-  StepBasic_ProductCategory.hxx
+  StepBasic_ProductCategory.hpp
   StepBasic_ProductCategoryRelationship.cxx
-  StepBasic_ProductCategoryRelationship.hxx
+  StepBasic_ProductCategoryRelationship.hpp
   StepBasic_ProductConceptContext.cxx
-  StepBasic_ProductConceptContext.hxx
+  StepBasic_ProductConceptContext.hpp
   StepBasic_ProductContext.cxx
-  StepBasic_ProductContext.hxx
+  StepBasic_ProductContext.hpp
   StepBasic_ProductDefinition.cxx
-  StepBasic_ProductDefinition.hxx
+  StepBasic_ProductDefinition.hpp
   StepBasic_ProductDefinitionContext.cxx
-  StepBasic_ProductDefinitionContext.hxx
+  StepBasic_ProductDefinitionContext.hpp
   StepBasic_ProductDefinitionEffectivity.cxx
-  StepBasic_ProductDefinitionEffectivity.hxx
+  StepBasic_ProductDefinitionEffectivity.hpp
   StepBasic_ProductDefinitionFormation.cxx
-  StepBasic_ProductDefinitionFormation.hxx
+  StepBasic_ProductDefinitionFormation.hpp
   StepBasic_ProductDefinitionFormationRelationship.cxx
-  StepBasic_ProductDefinitionFormationRelationship.hxx
+  StepBasic_ProductDefinitionFormationRelationship.hpp
   StepBasic_ProductDefinitionFormationWithSpecifiedSource.cxx
-  StepBasic_ProductDefinitionFormationWithSpecifiedSource.hxx
+  StepBasic_ProductDefinitionFormationWithSpecifiedSource.hpp
   StepBasic_ProductDefinitionOrReference.cxx
-  StepBasic_ProductDefinitionOrReference.hxx
+  StepBasic_ProductDefinitionOrReference.hpp
   StepBasic_ProductDefinitionReference.cxx
-  StepBasic_ProductDefinitionReference.hxx
+  StepBasic_ProductDefinitionReference.hpp
   StepBasic_ProductDefinitionReferenceWithLocalRepresentation.cxx
-  StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hxx
+  StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hpp
   StepBasic_ProductDefinitionRelationship.cxx
-  StepBasic_ProductDefinitionRelationship.hxx
+  StepBasic_ProductDefinitionRelationship.hpp
   StepBasic_ProductDefinitionWithAssociatedDocuments.cxx
-  StepBasic_ProductDefinitionWithAssociatedDocuments.hxx
+  StepBasic_ProductDefinitionWithAssociatedDocuments.hpp
   StepBasic_ProductOrFormationOrDefinition.cxx
-  StepBasic_ProductOrFormationOrDefinition.hxx
+  StepBasic_ProductOrFormationOrDefinition.hpp
   StepBasic_ProductRelatedProductCategory.cxx
-  StepBasic_ProductRelatedProductCategory.hxx
+  StepBasic_ProductRelatedProductCategory.hpp
   StepBasic_ProductType.cxx
-  StepBasic_ProductType.hxx
+  StepBasic_ProductType.hpp
   StepBasic_RatioMeasureWithUnit.cxx
-  StepBasic_RatioMeasureWithUnit.hxx
+  StepBasic_RatioMeasureWithUnit.hpp
   StepBasic_RatioUnit.cxx
-  StepBasic_RatioUnit.hxx
+  StepBasic_RatioUnit.hpp
   StepBasic_RoleAssociation.cxx
-  StepBasic_RoleAssociation.hxx
+  StepBasic_RoleAssociation.hpp
   StepBasic_RoleSelect.cxx
-  StepBasic_RoleSelect.hxx
+  StepBasic_RoleSelect.hpp
   StepBasic_SecurityClassification.cxx
-  StepBasic_SecurityClassification.hxx
+  StepBasic_SecurityClassification.hpp
   StepBasic_SecurityClassificationAssignment.cxx
-  StepBasic_SecurityClassificationAssignment.hxx
+  StepBasic_SecurityClassificationAssignment.hpp
   StepBasic_SecurityClassificationLevel.cxx
-  StepBasic_SecurityClassificationLevel.hxx
-  StepBasic_SiPrefix.hxx
+  StepBasic_SecurityClassificationLevel.hpp
+  StepBasic_SiPrefix.hpp
   StepBasic_SiUnit.cxx
-  StepBasic_SiUnit.hxx
+  StepBasic_SiUnit.hpp
   StepBasic_SiUnitAndAreaUnit.cxx
-  StepBasic_SiUnitAndAreaUnit.hxx
+  StepBasic_SiUnitAndAreaUnit.hpp
   StepBasic_SiUnitAndLengthUnit.cxx
-  StepBasic_SiUnitAndLengthUnit.hxx
+  StepBasic_SiUnitAndLengthUnit.hpp
   StepBasic_SiUnitAndMassUnit.cxx
-  StepBasic_SiUnitAndMassUnit.hxx
+  StepBasic_SiUnitAndMassUnit.hpp
   StepBasic_SiUnitAndPlaneAngleUnit.cxx
-  StepBasic_SiUnitAndPlaneAngleUnit.hxx
+  StepBasic_SiUnitAndPlaneAngleUnit.hpp
   StepBasic_SiUnitAndRatioUnit.cxx
-  StepBasic_SiUnitAndRatioUnit.hxx
+  StepBasic_SiUnitAndRatioUnit.hpp
   StepBasic_SiUnitAndSolidAngleUnit.cxx
-  StepBasic_SiUnitAndSolidAngleUnit.hxx
+  StepBasic_SiUnitAndSolidAngleUnit.hpp
   StepBasic_SiUnitAndThermodynamicTemperatureUnit.cxx
-  StepBasic_SiUnitAndThermodynamicTemperatureUnit.hxx
+  StepBasic_SiUnitAndThermodynamicTemperatureUnit.hpp
   StepBasic_SiUnitAndTimeUnit.cxx
-  StepBasic_SiUnitAndTimeUnit.hxx
+  StepBasic_SiUnitAndTimeUnit.hpp
   StepBasic_SiUnitAndVolumeUnit.cxx
-  StepBasic_SiUnitAndVolumeUnit.hxx
-  StepBasic_SiUnitName.hxx
+  StepBasic_SiUnitAndVolumeUnit.hpp
+  StepBasic_SiUnitName.hpp
   StepBasic_SizeMember.cxx
-  StepBasic_SizeMember.hxx
+  StepBasic_SizeMember.hpp
   StepBasic_SizeSelect.cxx
-  StepBasic_SizeSelect.hxx
+  StepBasic_SizeSelect.hpp
   StepBasic_SolidAngleMeasureWithUnit.cxx
-  StepBasic_SolidAngleMeasureWithUnit.hxx
+  StepBasic_SolidAngleMeasureWithUnit.hpp
   StepBasic_SolidAngleUnit.cxx
-  StepBasic_SolidAngleUnit.hxx
-  StepBasic_Source.hxx
+  StepBasic_SolidAngleUnit.hpp
+  StepBasic_Source.hpp
   StepBasic_SourceItem.cxx
-  StepBasic_SourceItem.hxx
+  StepBasic_SourceItem.hpp
   StepBasic_ThermodynamicTemperatureUnit.cxx
-  StepBasic_ThermodynamicTemperatureUnit.hxx
+  StepBasic_ThermodynamicTemperatureUnit.hpp
   StepBasic_TimeMeasureWithUnit.cxx
-  StepBasic_TimeMeasureWithUnit.hxx
+  StepBasic_TimeMeasureWithUnit.hpp
   StepBasic_TimeUnit.cxx
-  StepBasic_TimeUnit.hxx
+  StepBasic_TimeUnit.hpp
   StepBasic_UncertaintyMeasureWithUnit.cxx
-  StepBasic_UncertaintyMeasureWithUnit.hxx
+  StepBasic_UncertaintyMeasureWithUnit.hpp
   StepBasic_Unit.cxx
-  StepBasic_Unit.hxx
+  StepBasic_Unit.hpp
   StepBasic_VersionedActionRequest.cxx
-  StepBasic_VersionedActionRequest.hxx
+  StepBasic_VersionedActionRequest.hpp
   StepBasic_VolumeUnit.cxx
-  StepBasic_VolumeUnit.hxx
+  StepBasic_VolumeUnit.hpp
   StepBasic_WeekOfYearAndDayDate.cxx
-  StepBasic_WeekOfYearAndDayDate.hxx
+  StepBasic_WeekOfYearAndDayDate.hpp
 )

@@ -16,10 +16,10 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGeom_Direction.hxx>
-#include <IGESGeom_Point.hxx>
-#include <IGESSolid_CylindricalSurface.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom_Direction.hpp>
+#include <IGESGeom_Point.hpp>
+#include <IGESSolid_CylindricalSurface.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_CylindricalSurface, IGESData_IGESEntity)
 

@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Document.hxx>
-#include <PCDM.hxx>
-#include <PCDM_DOMHeaderParser.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <PCDM_ReadWriter_1.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_Data.hxx>
-#include <Storage_HeaderData.hxx>
-#include <Storage_TypeData.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <UTL.hxx>
+#include <CDM_Document.hpp>
+#include <PCDM.hpp>
+#include <PCDM_DOMHeaderParser.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <PCDM_ReadWriter_1.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_Data.hpp>
+#include <Storage_HeaderData.hpp>
+#include <Storage_TypeData.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <UTL.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PCDM_ReadWriter, Standard_Transient)
 

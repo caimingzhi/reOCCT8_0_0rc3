@@ -16,20 +16,20 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_ReferenceDesignator.hxx>
-#include <IGESAppli_ToolReferenceDesignator.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESAppli_ReferenceDesignator.hpp>
+#include <IGESAppli_ToolReferenceDesignator.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IGESAppli_ToolReferenceDesignator::IGESAppli_ToolReferenceDesignator() = default;
 

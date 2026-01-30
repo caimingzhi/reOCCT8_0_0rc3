@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_IntVal.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Transient.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_IntVal.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Transient.hpp>
 
 //  Iterator for for writing, or while with Next at the end :
 //  for (create iterator; iter.More(); iter.Next()) { val = iter.Value(); ... }

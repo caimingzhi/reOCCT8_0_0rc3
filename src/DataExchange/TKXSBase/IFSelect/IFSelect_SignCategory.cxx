@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SignCategory.hxx>
-#include <Interface_Category.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IFSelect_SignCategory.hpp>
+#include <Interface_Category.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SignCategory, IFSelect_Signature)
 

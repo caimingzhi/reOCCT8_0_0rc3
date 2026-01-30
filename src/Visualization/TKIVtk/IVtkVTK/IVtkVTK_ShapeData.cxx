@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtkVTK_ShapeData.hxx>
+#include <IVtkVTK_ShapeData.hpp>
 
 // prevent disabling some MSVC warning messages by VTK headers
-#include <Standard_WarningsDisable.hxx>
+#include <Standard_WarningsDisable.hpp>
 #include <vtkCellData.h>
 #include <vtkDoubleArray.h>
 #include <vtkFloatArray.h>
@@ -24,7 +24,7 @@
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <Standard_WarningsRestore.hxx>
+#include <Standard_WarningsRestore.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkVTK_ShapeData, IVtk_IShapeData)
 

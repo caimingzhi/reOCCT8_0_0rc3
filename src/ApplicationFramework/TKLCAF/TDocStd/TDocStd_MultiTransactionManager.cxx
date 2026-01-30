@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_MultiTransactionManager.hxx>
+#include <TDocStd_MultiTransactionManager.hpp>
 
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDocStd_ApplicationDelta.hxx>
-#include <TDocStd_Document.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDocStd_ApplicationDelta.hpp>
+#include <TDocStd_Document.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_MultiTransactionManager, Standard_Transient)
 

@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <Standard_Failure.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Vector.hxx>
-#include <BRep_Builder.hxx>
+#include <DBRep.hpp>
+#include <Standard_Failure.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Vector.hpp>
+#include <BRep_Builder.hpp>
 
 // This file defines global functions not declared in any public header,
 // intended for use from debugger prompt (Command Window in Visual Studio)

@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_MtlReader.hxx>
+#include <RWObj_MtlReader.hpp>
 
-#include <RWObj_Tools.hxx>
+#include <RWObj_Tools.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_File.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_File.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
 
 namespace
 {

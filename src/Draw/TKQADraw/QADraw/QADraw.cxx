@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QADraw.hxx>
+#include <QADraw.hpp>
 
-#include <QABugs.hxx>
-#include <QADNaming.hxx>
+#include <QABugs.hpp>
+#include <QADNaming.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Bnd_Box.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <OSD_Timer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_XYZ.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Bnd_Box.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <OSD_Timer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_XYZ.hpp>
 
 #include <cstdio>
 

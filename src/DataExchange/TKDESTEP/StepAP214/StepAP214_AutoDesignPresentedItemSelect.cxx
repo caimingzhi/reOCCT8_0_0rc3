@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_AutoDesignPresentedItemSelect.hxx>
-#include <StepBasic_DocumentRelationship.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_RepresentationRelationship.hxx>
-#include <StepRepr_ShapeAspect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AutoDesignPresentedItemSelect.hpp>
+#include <StepBasic_DocumentRelationship.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_RepresentationRelationship.hpp>
+#include <StepRepr_ShapeAspect.hpp>
 
 StepAP214_AutoDesignPresentedItemSelect::StepAP214_AutoDesignPresentedItemSelect() = default;
 

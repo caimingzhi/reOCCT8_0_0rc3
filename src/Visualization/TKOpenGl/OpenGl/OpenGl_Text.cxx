@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GlCore11.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_Text.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_VertexBufferCompat.hxx>
+#include <OpenGl_GlCore11.hpp>
+#include <OpenGl_GraphicDriver.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_Text.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_VertexBufferCompat.hpp>
 
-#include <Font_FontMgr.hxx>
-#include <Font_FTFont.hxx>
-#include <Font_TextFormatter.hxx>
-#include <Graphic3d_TransformUtils.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Font_FontMgr.hpp>
+#include <Font_FTFont.hpp>
+#include <Font_TextFormatter.hpp>
+#include <Graphic3d_TransformUtils.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 namespace
 {

@@ -13,19 +13,19 @@
 
 //    abv 28.04.99 S4137: adding method Apply for work on all types of shapes
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeBuild_ReShape, BRepTools_ReShape)
 

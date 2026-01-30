@@ -18,7 +18,7 @@
 // Version	Date		Purpose
 //		0.0	May 26 1997	Creation
 
-#include <TDF_ClosureMode.hxx>
+#include <TDF_ClosureMode.hpp>
 
 //=================================================================================================
 

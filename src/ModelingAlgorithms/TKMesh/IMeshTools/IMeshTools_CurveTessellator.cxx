@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshTools_CurveTessellator.hxx>
+#include <IMeshTools_CurveTessellator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_CurveTessellator, Standard_Transient)

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Draw_Display.hxx>
-#include <DrawDim.hxx>
-#include <DrawDim_Distance.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Draw_Display.hpp>
+#include <DrawDim.hpp>
+#include <DrawDim_Distance.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Distance, DrawDim_Dimension)
 

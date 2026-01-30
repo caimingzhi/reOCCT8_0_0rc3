@@ -26,25 +26,25 @@
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
 
-#include <BSplCLib.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <gp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <PLib.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <BSplCLib.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <gp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <PLib.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_BezierSurface, Geom_BoundedSurface)
 

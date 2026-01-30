@@ -3,98 +3,98 @@ set(OCCT_Standard_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Standard_FILES
   Standard.cxx
-  Standard.hxx
-  Standard_AbortiveTransaction.hxx
-  Standard_ArrayStreamBuffer.hxx
+  Standard.hpp
+  Standard_AbortiveTransaction.hpp
+  Standard_ArrayStreamBuffer.hpp
   Standard_ArrayStreamBuffer.cxx
-  Standard_Assert.hxx
-  Standard_Atomic.hxx
-  Standard_Boolean.hxx
-  Standard_Byte.hxx
-  Standard_Character.hxx
+  Standard_Assert.hpp
+  Standard_Atomic.hpp
+  Standard_Boolean.hpp
+  Standard_Byte.hpp
+  Standard_Character.hpp
   Standard_CLocaleSentry.cxx
-  Standard_CLocaleSentry.hxx
-  Standard_Condition.hxx
-  Standard_ConstructionError.hxx
+  Standard_CLocaleSentry.hpp
+  Standard_Condition.hpp
+  Standard_ConstructionError.hpp
   Standard_CString.cxx
-  Standard_CString.hxx
-  Standard_CStringHasher.hxx
-  Standard_DefineAlloc.hxx
-  Standard_DefineException.hxx
-  Standard_DefineHandle.hxx
-  Standard_DimensionError.hxx
-  Standard_DimensionMismatch.hxx
-  Standard_DivideByZero.hxx
-  Standard_DomainError.hxx
+  Standard_CString.hpp
+  Standard_CStringHasher.hpp
+  Standard_DefineAlloc.hpp
+  Standard_DefineException.hpp
+  Standard_DefineHandle.hpp
+  Standard_DimensionError.hpp
+  Standard_DimensionMismatch.hpp
+  Standard_DivideByZero.hpp
+  Standard_DomainError.hpp
   Standard_Dump.cxx
-  Standard_Dump.hxx
+  Standard_Dump.hpp
   Standard_ErrorHandler.cxx
-  Standard_ErrorHandler.hxx
-  Standard_ExtCharacter.hxx
+  Standard_ErrorHandler.hpp
+  Standard_ExtCharacter.hpp
   Standard_Failure.cxx
-  Standard_Failure.hxx
-  Standard_WarningDisableFunctionCast.hxx
+  Standard_Failure.hpp
+  Standard_WarningDisableFunctionCast.hpp
   Standard_GUID.cxx
-  Standard_GUID.hxx
-  Standard_Handle.hxx
-  Standard_HashUtils.hxx
-  Standard_HashUtils.lxx
-  Standard_ImmutableObject.hxx
-  Standard_Integer.hxx
-  Standard_IStream.hxx
-  Standard_LicenseError.hxx
-  Standard_LicenseNotFound.hxx
-  Standard_Macro.hxx
-  Standard_MemoryUtils.hxx
+  Standard_GUID.hpp
+  Standard_Handle.hpp
+  Standard_HashUtils.hpp
+  Standard_HashUtils_1.hpp
+  Standard_ImmutableObject.hpp
+  Standard_Integer.hpp
+  Standard_IStream.hpp
+  Standard_LicenseError.hpp
+  Standard_LicenseNotFound.hpp
+  Standard_Macro.hpp
+  Standard_MemoryUtils.hpp
   Standard_MMgrOpt.cxx
-  Standard_MMgrOpt.hxx
+  Standard_MMgrOpt.hpp
   Standard_MMgrRoot.cxx
-  Standard_MMgrRoot.hxx
-  Standard_MultiplyDefined.hxx
+  Standard_MMgrRoot.hpp
+  Standard_MultiplyDefined.hpp
   Standard_Mutex.cxx
-  Standard_Mutex.hxx
-  Standard_NegativeValue.hxx
-  Standard_NoMoreObject.hxx
-  Standard_NoSuchObject.hxx
-  Standard_NotImplemented.hxx
-  Standard_NullObject.hxx
-  Standard_NullValue.hxx
-  Standard_NumericError.hxx
-  Standard_OStream.hxx
+  Standard_Mutex.hpp
+  Standard_NegativeValue.hpp
+  Standard_NoMoreObject.hpp
+  Standard_NoSuchObject.hpp
+  Standard_NotImplemented.hpp
+  Standard_NullObject.hpp
+  Standard_NullValue.hpp
+  Standard_NumericError.hpp
+  Standard_OStream.hpp
   Standard_OutOfMemory.cxx
-  Standard_OutOfMemory.hxx
-  Standard_OutOfRange.hxx
-  Standard_Overflow.hxx
-  Standard_PByte.hxx
-  Standard_PCharacter.hxx
+  Standard_OutOfMemory.hpp
+  Standard_OutOfRange.hpp
+  Standard_Overflow.hpp
+  Standard_PByte.hpp
+  Standard_PCharacter.hpp
   Standard_Persistent.cxx
-  Standard_Persistent.hxx
-  Standard_PExtCharacter.hxx
+  Standard_Persistent.hpp
+  Standard_PExtCharacter.hpp
 
-  Standard_ProgramError.hxx
-  Standard_RangeError.hxx
-  Standard_ReadBuffer.hxx
-  Standard_ReadLineBuffer.hxx
+  Standard_ProgramError.hpp
+  Standard_RangeError.hpp
+  Standard_ReadBuffer.hpp
+  Standard_ReadLineBuffer.hpp
   Standard_Real.cxx
-  Standard_Real.hxx
-  Standard_ShortReal.hxx
-  Standard_SStream.hxx
+  Standard_Real.hpp
+  Standard_ShortReal.hpp
+  Standard_SStream.hpp
   Standard_StackTrace.cxx
-  Standard_Std.hxx
+  Standard_Std.hpp
 
   Standard_Strtod.cxx
-  Standard_ThreadId.hxx
-  Standard_Time.hxx
+  Standard_ThreadId.hpp
+  Standard_Time.hpp
   Standard_Transient.cxx
-  Standard_Transient.hxx
+  Standard_Transient.hpp
   Standard_Type.cxx
-  Standard_Type.hxx
-  Standard_TypeDef.hxx
-  Standard_TypeMismatch.hxx
-  Standard_Underflow.hxx
-  Standard_UUID.hxx
+  Standard_Type.hpp
+  Standard_TypeDef.hpp
+  Standard_TypeMismatch.hpp
+  Standard_Underflow.hpp
+  Standard_UUID.hpp
   Standard_VersionInfo.cxx
-  Standard_VersionInfo.hxx
-  Standard_WarningsDisable.hxx
-  Standard_WarningsRestore.hxx
+  Standard_VersionInfo.hpp
+  Standard_WarningsDisable.hpp
+  Standard_WarningsRestore.hpp
 )

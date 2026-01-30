@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Transient.hxx>
-#include <Transfer_ActorOfFinderProcess.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_Finder.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_ProcessForFinder.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientMapper.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <Standard_Transient.hpp>
+#include <Transfer_ActorOfFinderProcess.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_Finder.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_ProcessForFinder.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientMapper.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_ActorOfFinderProcess, Transfer_ActorOfProcessForFinder)
 

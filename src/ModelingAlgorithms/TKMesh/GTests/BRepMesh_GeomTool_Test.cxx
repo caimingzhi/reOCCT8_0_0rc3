@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepMesh_GeomTool.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Precision.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pln.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepMesh_GeomTool.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Precision.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pln.hpp>
 
 #include <gtest/gtest.h>
 

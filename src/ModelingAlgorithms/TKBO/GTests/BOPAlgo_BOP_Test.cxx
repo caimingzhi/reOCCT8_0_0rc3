@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "BOPTest_Utilities.pxx"
+#include "BOPTest_Utilities.hpp"
 
 //==================================================================================================
 // Direct BOP Operations Tests (equivalent to bcut, bfuse, bcommon, btuc commands)

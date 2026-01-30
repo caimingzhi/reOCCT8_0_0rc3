@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DNaming.hxx>
+#include <DNaming.hpp>
 
-#include <DDF.hxx>
+#include <DDF.hpp>
 
-#include <TNaming_Tool.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamingTool.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <NCollection_Map.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TNaming_Selector.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopAbs.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <TNaming_Tool.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamingTool.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <NCollection_Map.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TNaming_Selector.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopAbs.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DBRep_DrawableShape.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DBRep_DrawableShape.hpp>
 #include <cstdio>
 
 //=================================================================================================

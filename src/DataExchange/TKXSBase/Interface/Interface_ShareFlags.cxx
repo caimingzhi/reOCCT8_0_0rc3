@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GTool.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ReportEntity.hxx>
-#include <Interface_ShareFlags.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Transient.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GTool.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ReportEntity.hpp>
+#include <Interface_ShareFlags.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Transient.hpp>
 
 Interface_ShareFlags::Interface_ShareFlags(const occ::handle<Interface_InterfaceModel>& amodel,
                                            const Interface_GeneralLib&                  lib)

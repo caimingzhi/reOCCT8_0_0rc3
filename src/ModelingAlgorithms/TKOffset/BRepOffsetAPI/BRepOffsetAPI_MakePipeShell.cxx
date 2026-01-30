@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill_PipeShell.hxx>
-#include <BRepOffsetAPI_MakePipeShell.hxx>
-#include <GeomFill_PipeError.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <Law_Function.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRepFill_PipeShell.hpp>
+#include <BRepOffsetAPI_MakePipeShell.hpp>
+#include <GeomFill_PipeError.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <Law_Function.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

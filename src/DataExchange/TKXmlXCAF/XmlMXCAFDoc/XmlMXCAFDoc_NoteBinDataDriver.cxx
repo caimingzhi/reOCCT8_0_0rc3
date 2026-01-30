@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <XCAFDoc_NoteBinData.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlMXCAFDoc_NoteBinDataDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <LDOM_OSStream.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <XCAFDoc_NoteBinData.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlMXCAFDoc_NoteBinDataDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <LDOM_OSStream.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteBinDataDriver, XmlMXCAFDoc_NoteDriver)
 IMPLEMENT_DOMSTRING(Title, "title")

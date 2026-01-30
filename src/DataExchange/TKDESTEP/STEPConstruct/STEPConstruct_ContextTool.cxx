@@ -17,29 +17,29 @@
 // :j4 16.03.99 gka S4134
 // abv 18.11.99 renamed from StepPDR_ContextTool
 
-#include <GeomToStep_MakeAxis2Placement3d.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepAP203_CcDesignApproval.hxx>
-#include <StepAP203_CcDesignDateAndTimeAssignment.hxx>
-#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hxx>
-#include <StepAP203_CcDesignSecurityClassification.hxx>
-#include <StepBasic_ApplicationContext.hxx>
-#include <StepBasic_ApplicationProtocolDefinition.hxx>
-#include <StepBasic_ApprovalDateTime.hxx>
-#include <StepBasic_ApprovalPersonOrganization.hxx>
-#include <StepBasic_ProductCategoryRelationship.hxx>
-#include <StepBasic_ProductRelatedProductCategory.hxx>
-#include <STEPConstruct_Assembly.hxx>
-#include <STEPConstruct_ContextTool.hxx>
-#include <STEPConstruct_Part.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <GeomToStep_MakeAxis2Placement3d.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepAP203_CcDesignApproval.hpp>
+#include <StepAP203_CcDesignDateAndTimeAssignment.hpp>
+#include <StepAP203_CcDesignPersonAndOrganizationAssignment.hpp>
+#include <StepAP203_CcDesignSecurityClassification.hpp>
+#include <StepBasic_ApplicationContext.hpp>
+#include <StepBasic_ApplicationProtocolDefinition.hpp>
+#include <StepBasic_ApprovalDateTime.hpp>
+#include <StepBasic_ApprovalPersonOrganization.hpp>
+#include <StepBasic_ProductCategoryRelationship.hpp>
+#include <StepBasic_ProductRelatedProductCategory.hpp>
+#include <STEPConstruct_Assembly.hpp>
+#include <STEPConstruct_ContextTool.hpp>
+#include <STEPConstruct_Part.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 
-// #include <StepBasic_ProductDefinitionContext.hxx>
+// #include <StepBasic_ProductDefinitionContext.hpp>
 //: i3
 //: j4
 //=================================================================================================

@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_Chamf3dDimension.hxx>
+#include <PrsDim_Chamf3dDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <DsgPrs_Chamf2dPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Line.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <ProjLib.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <PrsDim.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <DsgPrs_Chamf2dPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Line.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <ProjLib.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Chamf3dDimension, PrsDim_Relation)
 

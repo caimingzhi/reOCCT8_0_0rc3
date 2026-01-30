@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_ViewerSelector.hxx>
+#include <SelectMgr_ViewerSelector.hpp>
 
-#include <AIS_InteractiveObject.hxx>
-#include <BVH_Tree.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <OSD_Environment.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <SelectBasics_PickResult.hxx>
-#include <SelectMgr.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_FrustumBuilder.hxx>
-#include <SelectMgr_SelectionImageFiller.hxx>
-#include <SelectMgr_SensitiveEntitySet.hxx>
-#include <SelectMgr_SortCriterion.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_List.hxx>
-#include <V3d_View.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <BVH_Tree.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <OSD_Environment.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <SelectBasics_PickResult.hpp>
+#include <SelectMgr.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_FrustumBuilder.hpp>
+#include <SelectMgr_SelectionImageFiller.hpp>
+#include <SelectMgr_SensitiveEntitySet.hpp>
+#include <SelectMgr_SortCriterion.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_List.hpp>
+#include <V3d_View.hpp>
 
 #include <algorithm>
 

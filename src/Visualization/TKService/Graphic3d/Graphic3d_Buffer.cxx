@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Buffer.hxx>
+#include <Graphic3d_Buffer.hpp>
 
-#include <Graphic3d_BoundBuffer.hxx>
-#include <Graphic3d_MutableIndexBuffer.hxx>
-#include <NCollection_AlignedAllocator.hxx>
+#include <Graphic3d_BoundBuffer.hpp>
+#include <Graphic3d_MutableIndexBuffer.hpp>
+#include <NCollection_AlignedAllocator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Buffer, NCollection_Buffer)
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_IndexBuffer, Graphic3d_Buffer)

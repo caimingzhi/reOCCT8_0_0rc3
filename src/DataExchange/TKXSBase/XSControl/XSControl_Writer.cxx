@@ -13,11 +13,11 @@
 
 //: i1 gka 03.04.99 BUC60301
 
-#include <Interface_InterfaceModel.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_WorkSession.hxx>
-#include <XSControl_Writer.hxx>
+#include <Interface_InterfaceModel.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_WorkSession.hpp>
+#include <XSControl_Writer.hpp>
 
 XSControl_Writer::XSControl_Writer()
 {

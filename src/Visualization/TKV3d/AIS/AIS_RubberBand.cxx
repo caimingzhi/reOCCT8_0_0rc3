@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_RubberBand.hxx>
-#include <BRepMesh_DataStructureOfDelaun.hxx>
-#include <BRepMesh_Delaun.hxx>
-#include <Graphic3d_ArrayOfPolygons.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_TransModeFlags.hxx>
-#include <Graphic3d_ZLayerId.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <V3d_View.hxx>
+#include <AIS_RubberBand.hpp>
+#include <BRepMesh_DataStructureOfDelaun.hpp>
+#include <BRepMesh_Delaun.hpp>
+#include <Graphic3d_ArrayOfPolygons.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_TransModeFlags.hpp>
+#include <Graphic3d_ZLayerId.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <V3d_View.hpp>
 
 #define MEMORY_BLOCK_SIZE 512 * 7
 

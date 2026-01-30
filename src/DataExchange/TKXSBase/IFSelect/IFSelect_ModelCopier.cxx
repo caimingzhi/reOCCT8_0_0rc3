@@ -11,29 +11,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_AppliedModifiers.hxx>
-#include <IFSelect_ContextModif.hxx>
-#include <IFSelect_ContextWrite.hxx>
-#include <IFSelect_GeneralModifier.hxx>
-#include <IFSelect_ModelCopier.hxx>
-#include <IFSelect_Modifier.hxx>
-#include <IFSelect_Selection.hxx>
-#include <IFSelect_ShareOut.hxx>
-#include <IFSelect_ShareOutResult.hxx>
-#include <IFSelect_WorkLibrary.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralLib.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFSelect_AppliedModifiers.hpp>
+#include <IFSelect_ContextModif.hpp>
+#include <IFSelect_ContextWrite.hpp>
+#include <IFSelect_GeneralModifier.hpp>
+#include <IFSelect_ModelCopier.hpp>
+#include <IFSelect_Modifier.hpp>
+#include <IFSelect_Selection.hpp>
+#include <IFSelect_ShareOut.hpp>
+#include <IFSelect_ShareOutResult.hpp>
+#include <IFSelect_WorkLibrary.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_ModelCopier, Standard_Transient)

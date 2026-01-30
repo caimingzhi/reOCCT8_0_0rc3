@@ -17,12 +17,12 @@
 #define No_Standard_NoMoreObject
 #define No_Standard_NoSuchObject
 
-#include <Standard_NoMoreObject.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_Explorer.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <Standard_NoMoreObject.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_Explorer.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 //=================================================================================================
 

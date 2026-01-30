@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "Aspect_VKeySet.hxx"
+#include "Aspect_VKeySet.hpp"
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_VKeySet, Standard_Transient)
 

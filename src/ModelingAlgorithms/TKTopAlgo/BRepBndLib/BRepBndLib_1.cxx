@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBndLib.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <Bnd_OBB.hxx>
-#include <BRepGProp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <GProp_PrincipalProps.hxx>
-#include <gp_Ax3.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Geom_Plane.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
+#include <BRepBndLib.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <Bnd_OBB.hpp>
+#include <BRepGProp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <GProp_PrincipalProps.hpp>
+#include <gp_Ax3.hpp>
+#include <BRepBuilderAPI_Transform.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Geom_Plane.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
 
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierSurface.hxx>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierSurface.hpp>
 
 //=======================================================================
 // Function : IsLinear

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_ShapeShapeInterference, TopOpeBRepDS_Interference)
 

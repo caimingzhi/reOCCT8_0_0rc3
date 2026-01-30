@@ -16,15 +16,15 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDimen_AngularDimension.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <IGESDimen_WitnessLine.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDimen_AngularDimension.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <IGESDimen_WitnessLine.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_AngularDimension, IGESData_IGESEntity)
 

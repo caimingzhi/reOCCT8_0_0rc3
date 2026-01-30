@@ -15,15 +15,15 @@
 
 // modified     13.04.2009 Sergey Zaritchny
 
-#include <BinMDataXtd_PatternStdDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_PatternStd.hxx>
-#include <TDF_Attribute.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <BinMDataXtd_PatternStdDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_PatternStd.hpp>
+#include <TDF_Attribute.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PatternStdDriver, BinMDF_ADriver)
 

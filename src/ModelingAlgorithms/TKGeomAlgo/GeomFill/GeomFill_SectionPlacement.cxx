@@ -14,40 +14,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <Extrema_ExtCC.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_SectionPlacement.hxx>
-#include <GeomLib.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <Extrema_ExtCC.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_SectionPlacement.hpp>
+#include <GeomLib.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

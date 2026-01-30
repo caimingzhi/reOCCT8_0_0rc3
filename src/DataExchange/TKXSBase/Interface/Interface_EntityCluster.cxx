@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityCluster.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Interface_EntityCluster.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_EntityCluster, Standard_Transient)
 

@@ -16,8 +16,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignCertification.hxx>
-#include <StepBasic_Certification.hxx>
+#include <StepAP203_CcDesignCertification.hpp>
+#include <StepBasic_Certification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignCertification, StepBasic_CertificationAssignment)
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc_VisMaterialDriver.hxx>
+#include <BinMXCAFDoc_VisMaterialDriver.hpp>
 
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <XCAFDoc_VisMaterial.hxx>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <XCAFDoc_VisMaterial.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_VisMaterialDriver, BinMDF_ADriver)
 

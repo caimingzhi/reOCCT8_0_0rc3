@@ -11,37 +11,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESDimen_Protocol.hxx>
+#include <IGESDimen_Protocol.hpp>
 
-#include <IGESDimen_AngularDimension.hxx>
-#include <IGESDimen_BasicDimension.hxx>
-#include <IGESDimen_CenterLine.hxx>
-#include <IGESDimen_CurveDimension.hxx>
-#include <IGESDimen_DiameterDimension.hxx>
-#include <IGESDimen_DimensionDisplayData.hxx>
-#include <IGESDimen_DimensionTolerance.hxx>
-#include <IGESDimen_DimensionUnits.hxx>
-#include <IGESDimen_DimensionedGeometry.hxx>
-#include <IGESDimen_FlagNote.hxx>
-#include <IGESDimen_GeneralLabel.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_GeneralSymbol.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <IGESDimen_LinearDimension.hxx>
-#include <IGESDimen_NewDimensionedGeometry.hxx>
-#include <IGESDimen_NewGeneralNote.hxx>
-#include <IGESDimen_OrdinateDimension.hxx>
-#include <IGESDimen_PointDimension.hxx>
-#include <IGESDimen_RadiusDimension.hxx>
-#include <IGESDimen_Section.hxx>
-#include <IGESDimen_SectionedArea.hxx>
-#include <IGESDimen_WitnessLine.hxx>
-#include <IGESGeom.hxx>
-#include <IGESGeom_Protocol.hxx>
-#include <IGESGraph.hxx>
-#include <IGESGraph_Protocol.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDimen_AngularDimension.hpp>
+#include <IGESDimen_BasicDimension.hpp>
+#include <IGESDimen_CenterLine.hpp>
+#include <IGESDimen_CurveDimension.hpp>
+#include <IGESDimen_DiameterDimension.hpp>
+#include <IGESDimen_DimensionDisplayData.hpp>
+#include <IGESDimen_DimensionTolerance.hpp>
+#include <IGESDimen_DimensionUnits.hpp>
+#include <IGESDimen_DimensionedGeometry.hpp>
+#include <IGESDimen_FlagNote.hpp>
+#include <IGESDimen_GeneralLabel.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_GeneralSymbol.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <IGESDimen_LinearDimension.hpp>
+#include <IGESDimen_NewDimensionedGeometry.hpp>
+#include <IGESDimen_NewGeneralNote.hpp>
+#include <IGESDimen_OrdinateDimension.hpp>
+#include <IGESDimen_PointDimension.hpp>
+#include <IGESDimen_RadiusDimension.hpp>
+#include <IGESDimen_Section.hpp>
+#include <IGESDimen_SectionedArea.hpp>
+#include <IGESDimen_WitnessLine.hpp>
+#include <IGESGeom.hpp>
+#include <IGESGeom_Protocol.hpp>
+#include <IGESGraph.hpp>
+#include <IGESGraph_Protocol.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_Protocol, IGESData_Protocol)
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_Vec4.hxx>
-#include <NCollection_Vec3.hxx>
-#include <NCollection_Mat4.hxx>
+#include <NCollection_Vec4.hpp>
+#include <NCollection_Vec3.hpp>
+#include <NCollection_Mat4.hpp>
 
 #include <gtest/gtest.h>
 #include <cmath>

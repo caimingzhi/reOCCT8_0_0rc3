@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_Context.hxx>
-#include <AdvApp2Var_Patch.hxx>
-#include <GeomPlate_PlateG1Criterion.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XY.hxx>
-#include <PLib.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <AdvApp2Var_Context.hpp>
+#include <AdvApp2Var_Patch.hpp>
+#include <GeomPlate_PlateG1Criterion.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XY.hpp>
+#include <PLib.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //  static bool  first = true;
 //=================================================================================================

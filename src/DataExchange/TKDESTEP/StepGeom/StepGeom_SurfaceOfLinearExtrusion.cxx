@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_SurfaceOfLinearExtrusion.hxx>
-#include <StepGeom_Vector.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_SurfaceOfLinearExtrusion.hpp>
+#include <StepGeom_Vector.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_SurfaceOfLinearExtrusion, StepGeom_SweptSurface)
 

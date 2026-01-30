@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OSD_Chronometer.hxx>
+#include <OSD_Chronometer.hpp>
 
-#include <Standard_ProgramError.hxx>
-#include <Standard_Macro.hxx>
+#include <Standard_ProgramError.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

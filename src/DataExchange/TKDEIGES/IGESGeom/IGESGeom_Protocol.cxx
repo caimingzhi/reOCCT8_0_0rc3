@@ -11,33 +11,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESGeom_Protocol.hxx>
+#include <IGESGeom_Protocol.hpp>
 
-#include <IGESBasic.hxx>
-#include <IGESBasic_Protocol.hxx>
-#include <IGESGeom_BSplineCurve.hxx>
-#include <IGESGeom_BSplineSurface.hxx>
-#include <IGESGeom_BoundedSurface.hxx>
-#include <IGESGeom_CircularArc.hxx>
-#include <IGESGeom_CompositeCurve.hxx>
-#include <IGESGeom_ConicArc.hxx>
-#include <IGESGeom_CopiousData.hxx>
-#include <IGESGeom_Direction.hxx>
-#include <IGESGeom_Flash.hxx>
-#include <IGESGeom_Line.hxx>
-#include <IGESGeom_OffsetCurve.hxx>
-#include <IGESGeom_OffsetSurface.hxx>
-#include <IGESGeom_Plane.hxx>
-#include <IGESGeom_Point.hxx>
-#include <IGESGeom_RuledSurface.hxx>
-#include <IGESGeom_SplineCurve.hxx>
-#include <IGESGeom_SplineSurface.hxx>
-#include <IGESGeom_SurfaceOfRevolution.hxx>
-#include <IGESGeom_TabulatedCylinder.hxx>
-#include <IGESGeom_TransformationMatrix.hxx>
-#include <IGESGeom_TrimmedSurface.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic.hpp>
+#include <IGESBasic_Protocol.hpp>
+#include <IGESGeom_BSplineCurve.hpp>
+#include <IGESGeom_BSplineSurface.hpp>
+#include <IGESGeom_BoundedSurface.hpp>
+#include <IGESGeom_CircularArc.hpp>
+#include <IGESGeom_CompositeCurve.hpp>
+#include <IGESGeom_ConicArc.hpp>
+#include <IGESGeom_CopiousData.hpp>
+#include <IGESGeom_Direction.hpp>
+#include <IGESGeom_Flash.hpp>
+#include <IGESGeom_Line.hpp>
+#include <IGESGeom_OffsetCurve.hpp>
+#include <IGESGeom_OffsetSurface.hpp>
+#include <IGESGeom_Plane.hpp>
+#include <IGESGeom_Point.hpp>
+#include <IGESGeom_RuledSurface.hpp>
+#include <IGESGeom_SplineCurve.hpp>
+#include <IGESGeom_SplineSurface.hpp>
+#include <IGESGeom_SurfaceOfRevolution.hpp>
+#include <IGESGeom_TabulatedCylinder.hpp>
+#include <IGESGeom_TransformationMatrix.hpp>
+#include <IGESGeom_TrimmedSurface.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_Protocol, IGESData_Protocol)
 

@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomProjLib.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep.hxx>
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_PointClassifier.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterClassifier.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomProjLib.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep.hpp>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_PointClassifier.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterClassifier.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
 
-// #include <BRepAdaptor_Curve2d.hxx>
+// #include <BRepAdaptor_Curve2d.hpp>
 Standard_EXPORT bool FUN_projPonL(const gp_Pnt&                 P,
                                   const TopOpeBRep_LineInter&   L,
                                   const TopOpeBRep_FacesFiller& FF,

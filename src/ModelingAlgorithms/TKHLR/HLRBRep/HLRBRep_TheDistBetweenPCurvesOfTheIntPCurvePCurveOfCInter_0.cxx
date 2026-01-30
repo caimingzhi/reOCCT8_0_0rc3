@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hxx>
+#include <HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hpp>
 
-#include <HLRBRep_CurveTool.hxx>
-#include <math_Matrix.hxx>
+#include <HLRBRep_CurveTool.hpp>
+#include <math_Matrix.hpp>
 
 #define TheCurve HLRBRep_CurvePtr
-#define TheCurve_hxx <HLRBRep_TypeDef.hxx>
+#define TheCurve_hxx <HLRBRep_TypeDef.hpp>
 #define TheCurveTool HLRBRep_CurveTool
-#define TheCurveTool_hxx <HLRBRep_CurveTool.hxx>
+#define TheCurveTool_hxx <HLRBRep_CurveTool.hpp>
 #define IntCurve_DistBetweenPCurvesGen HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter
 #define IntCurve_DistBetweenPCurvesGen_hxx                                                         \
-  <HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hxx>
-#include <IntCurve_DistBetweenPCurvesGen.gxx>
+  <HLRBRep_TheDistBetweenPCurvesOfTheIntPCurvePCurveOfCInter.hpp>
+#include <IntCurve_DistBetweenPCurvesGen.hpp>

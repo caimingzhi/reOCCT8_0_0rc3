@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductDefinition, Standard_Transient)
 

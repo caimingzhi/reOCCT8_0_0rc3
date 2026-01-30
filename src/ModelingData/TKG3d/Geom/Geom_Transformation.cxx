@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Transformation.hxx>
+#include <Geom_Transformation.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Transformation, Standard_Transient)
 

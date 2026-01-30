@@ -15,10 +15,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_Algo.hxx>
+#include <BOPAlgo_Algo.hpp>
 
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

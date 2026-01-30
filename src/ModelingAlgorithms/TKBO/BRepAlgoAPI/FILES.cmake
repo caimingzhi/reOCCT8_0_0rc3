@@ -3,23 +3,23 @@ set(OCCT_BRepAlgoAPI_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepAlgoAPI_FILES
   BRepAlgoAPI_Algo.cxx
-  BRepAlgoAPI_Algo.hxx
+  BRepAlgoAPI_Algo.hpp
   BRepAlgoAPI_BooleanOperation.cxx
-  BRepAlgoAPI_BooleanOperation.hxx
+  BRepAlgoAPI_BooleanOperation.hpp
   BRepAlgoAPI_BuilderAlgo.cxx
-  BRepAlgoAPI_BuilderAlgo.hxx
+  BRepAlgoAPI_BuilderAlgo.hpp
   BRepAlgoAPI_Check.cxx
-  BRepAlgoAPI_Check.hxx
+  BRepAlgoAPI_Check.hpp
   BRepAlgoAPI_Common.cxx
-  BRepAlgoAPI_Common.hxx
+  BRepAlgoAPI_Common.hpp
   BRepAlgoAPI_Cut.cxx
-  BRepAlgoAPI_Cut.hxx
+  BRepAlgoAPI_Cut.hpp
   BRepAlgoAPI_Defeaturing.cxx
-  BRepAlgoAPI_Defeaturing.hxx
+  BRepAlgoAPI_Defeaturing.hpp
   BRepAlgoAPI_Fuse.cxx
-  BRepAlgoAPI_Fuse.hxx
+  BRepAlgoAPI_Fuse.hpp
   BRepAlgoAPI_Section.cxx
-  BRepAlgoAPI_Section.hxx
+  BRepAlgoAPI_Section.hpp
   BRepAlgoAPI_Splitter.cxx
-  BRepAlgoAPI_Splitter.hxx
+  BRepAlgoAPI_Splitter.hpp
 )

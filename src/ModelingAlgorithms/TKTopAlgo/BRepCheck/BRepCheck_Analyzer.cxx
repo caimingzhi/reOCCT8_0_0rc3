@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepCheck_Analyzer.hxx>
+#include <BRepCheck_Analyzer.hpp>
 
-#include <BRepCheck_Edge.hxx>
-#include <BRepCheck_Face.hxx>
-#include <BRepCheck_Status.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <BRepCheck_Result.hxx>
-#include <BRepCheck_Shell.hxx>
-#include <BRepCheck_Solid.hxx>
-#include <BRepCheck_Vertex.hxx>
-#include <BRepCheck_Wire.hxx>
-#include <NCollection_Array1.hxx>
-#include <OSD_Parallel.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NullObject.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRepCheck_Edge.hpp>
+#include <BRepCheck_Face.hpp>
+#include <BRepCheck_Status.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <BRepCheck_Result.hpp>
+#include <BRepCheck_Shell.hpp>
+#include <BRepCheck_Solid.hpp>
+#include <BRepCheck_Vertex.hpp>
+#include <BRepCheck_Wire.hpp>
+#include <NCollection_Array1.hpp>
+#include <OSD_Parallel.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NullObject.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 #include <mutex>
 

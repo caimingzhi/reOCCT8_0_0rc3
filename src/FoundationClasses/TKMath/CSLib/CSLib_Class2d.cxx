@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CSLib_Class2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
+#include <CSLib_Class2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
 
 #include <cmath>
 

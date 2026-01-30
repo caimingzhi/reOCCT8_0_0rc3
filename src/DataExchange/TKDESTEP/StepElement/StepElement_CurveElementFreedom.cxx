@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <Standard_Transient.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepElement_CurveElementFreedom.hxx>
-#include <StepElement_CurveElementFreedomMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Transient.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepElement_CurveElementFreedom.hpp>
+#include <StepElement_CurveElementFreedomMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 static const char* anEnum = "ENUMERATED_CURVE_ELEMENT_FREEDOM";
 static const char* anApp  = "APPLICATION_DEFINED_DEGREE_OF_FREEDOM";

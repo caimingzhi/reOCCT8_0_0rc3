@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_ProgressScope.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_ConnectedFaceSet.hxx>
-#include <StepShape_Face.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepShape_OpenShell.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDSToStep_Builder.hxx>
-#include <TopoDSToStep_MakeStepFace.hxx>
-#include <TopoDSToStep_MakeTessellatedItem.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
+#include <Message_ProgressScope.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_ConnectedFaceSet.hpp>
+#include <StepShape_Face.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepShape_OpenShell.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDSToStep_Builder.hpp>
+#include <TopoDSToStep_MakeStepFace.hpp>
+#include <TopoDSToStep_MakeTessellatedItem.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
 
 //=================================================================================================
 

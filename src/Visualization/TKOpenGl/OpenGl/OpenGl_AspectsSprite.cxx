@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_AspectsSprite.hxx>
+#include <OpenGl_AspectsSprite.hpp>
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_PointSprite.hxx>
-#include <OpenGl_TextureSet.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_PointSprite.hpp>
+#include <OpenGl_TextureSet.hpp>
 
-#include <Image_PixMap.hxx>
-#include <Graphic3d_MarkerImage.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Image_PixMap.hpp>
+#include <Graphic3d_MarkerImage.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

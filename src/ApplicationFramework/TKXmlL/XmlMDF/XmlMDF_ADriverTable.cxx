@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDF_ADriverTable.hxx>
+#include <XmlMDF_ADriverTable.hpp>
 
-#include <Message_Messenger.hxx>
-#include <TDF_Attribute.hxx>
-#include <NCollection_List.hxx>
-#include <XmlMDF_ADriver.hxx>
-#include <XmlMDF_DerivedDriver.hxx>
+#include <Message_Messenger.hpp>
+#include <TDF_Attribute.hpp>
+#include <NCollection_List.hpp>
+#include <XmlMDF_ADriver.hpp>
+#include <XmlMDF_DerivedDriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ADriverTable, Standard_Transient)
 

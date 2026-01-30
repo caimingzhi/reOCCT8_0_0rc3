@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_PrimitiveArray.hxx>
+#include <OpenGl_PrimitiveArray.hpp>
 
-#include <OpenGl_PointSprite.hxx>
-#include <OpenGl_Sampler.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OpenGl_VertexBufferCompat.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_PointSprite.hpp>
+#include <OpenGl_Sampler.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OpenGl_VertexBufferCompat.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_Workspace.hpp>
 
 namespace
 {

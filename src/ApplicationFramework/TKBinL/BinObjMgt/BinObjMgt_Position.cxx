@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinObjMgt_Position.hxx>
+#include <BinObjMgt_Position.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinObjMgt_Position, Standard_Transient)
 

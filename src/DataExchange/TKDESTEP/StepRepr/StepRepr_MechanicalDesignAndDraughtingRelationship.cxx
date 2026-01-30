@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepRepr_MechanicalDesignAndDraughtingRelationship.hxx>
+#include <Standard_Type.hpp>
+#include <StepRepr_MechanicalDesignAndDraughtingRelationship.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_MechanicalDesignAndDraughtingRelationship,
                            StepRepr_RepresentationRelationship)

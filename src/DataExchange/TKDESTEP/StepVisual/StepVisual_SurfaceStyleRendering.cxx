@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_SurfaceStyleRendering.hxx>
+#include <StepVisual_SurfaceStyleRendering.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_SurfaceStyleRendering, Standard_Transient)
 

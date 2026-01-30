@@ -13,21 +13,21 @@
 
 // pdn S4135 05.04.99 comment uninitialized Interface_Static::IVal("iges.convert.read");
 
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESType.hxx>
-#include <IGESData_ParamCursor.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESData_Status.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_EntityList.hxx>
-#include <Interface_FileReaderData.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ParamList.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Msg.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESType.hpp>
+#include <IGESData_ParamCursor.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESData_Status.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_EntityList.hpp>
+#include <Interface_FileReaderData.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ParamList.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Msg.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 // MGE 03/08/98

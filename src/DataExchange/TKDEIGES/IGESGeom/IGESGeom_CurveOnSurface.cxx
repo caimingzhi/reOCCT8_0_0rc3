@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGeom_CurveOnSurface.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom_CurveOnSurface.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_CurveOnSurface, IGESData_IGESEntity)
 

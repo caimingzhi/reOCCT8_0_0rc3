@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_NodalResults.hxx>
-#include <IGESAppli_Node.hxx>
-#include <IGESDimen_GeneralNote.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_NodalResults.hpp>
+#include <IGESAppli_Node.hpp>
+#include <IGESDimen_GeneralNote.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_NodalResults, IGESData_IGESEntity)
 

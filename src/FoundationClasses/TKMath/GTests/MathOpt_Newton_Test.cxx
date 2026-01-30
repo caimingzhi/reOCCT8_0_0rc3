@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_Newton.hxx>
-#include <MathOpt_BFGS.hxx>
-#include <math_NewtonMinimum.hxx>
-#include <math_MultipleVarFunctionWithHessian.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
+#include <MathOpt_Newton.hpp>
+#include <MathOpt_BFGS.hpp>
+#include <math_NewtonMinimum.hpp>
+#include <math_MultipleVarFunctionWithHessian.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
 
 #include <cmath>
 

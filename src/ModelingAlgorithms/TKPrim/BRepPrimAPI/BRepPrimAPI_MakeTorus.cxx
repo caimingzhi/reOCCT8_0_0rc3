@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrimAPI_MakeTorus.hxx>
-#include <gp_Ax2.hxx>
+#include <BRepPrimAPI_MakeTorus.hpp>
+#include <gp_Ax2.hpp>
 
 //=================================================================================================
 

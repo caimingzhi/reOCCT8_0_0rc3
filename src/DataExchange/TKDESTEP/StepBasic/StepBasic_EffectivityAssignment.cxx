@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Effectivity.hxx>
-#include <StepBasic_EffectivityAssignment.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Effectivity.hpp>
+#include <StepBasic_EffectivityAssignment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_EffectivityAssignment, Standard_Transient)
 

@@ -2,8 +2,8 @@
 set(OCCT_Cocoa_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Cocoa_FILES
-  Cocoa_LocalPool.hxx
+  Cocoa_LocalPool.hpp
   Cocoa_LocalPool.mm
-  Cocoa_Window.hxx
+  Cocoa_Window.hpp
   Cocoa_Window.mm
 )

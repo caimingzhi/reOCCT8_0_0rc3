@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWConstructiveGeometryRepresentation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_ConstructiveGeometryRepresentation.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWConstructiveGeometryRepresentation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_ConstructiveGeometryRepresentation.hpp>
 
 //=================================================================================================
 

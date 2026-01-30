@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_RadiusPresentation.hxx>
+#include <DsgPrs_RadiusPresentation.hpp>
 
-#include <DsgPrs.hxx>
-#include <ElCLib.hxx>
-#include <gce_MakeDir.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_Text.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <DsgPrs.hpp>
+#include <ElCLib.hpp>
+#include <gce_MakeDir.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_Text.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 static bool DsgPrs_InDomain(const double fpar, const double lpar, const double para)
 {

@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopOpeBRepTool_CORRISO.hxx>
-#include <TopOpeBRepTool_C2DF.hxx>
-#include <gp_Pnt2d.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Array1.hxx>
+#include <TopOpeBRepTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopOpeBRepTool_CORRISO.hpp>
+#include <TopOpeBRepTool_C2DF.hpp>
+#include <gp_Pnt2d.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Array1.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <Standard_Failure.hxx>
-#include <TopOpeBRepTool_PURGE.hxx>
+#include <TopExp_Explorer.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <Standard_Failure.hpp>
+#include <TopOpeBRepTool_PURGE.hpp>
 
 #ifdef OCCT_DEBUG
 // Standard_EXPORT int STATIC_PURGE_iwi = 0;

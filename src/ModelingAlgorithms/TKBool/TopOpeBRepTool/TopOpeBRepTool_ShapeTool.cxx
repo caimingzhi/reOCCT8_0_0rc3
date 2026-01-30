@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepLProp_CLProps.hxx>
-#include <BRepTools.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepLProp_CLProps.hpp>
+#include <BRepTools.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 //=================================================================================================
 
@@ -77,8 +77,8 @@ gp_Pnt TopOpeBRepTool_ShapeTool::Pnt(const TopoDS_Shape& S)
   return BRep_Tool::Pnt(TopoDS::Vertex(S));
 }
 
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
 
 //=================================================================================================
 
@@ -102,10 +102,10 @@ occ::handle<Geom_Curve> TopOpeBRepTool_ShapeTool::BASISCURVE(const TopoDS_Edge& 
   return BASISCURVE(C);
 }
 
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
 
 //=================================================================================================
 

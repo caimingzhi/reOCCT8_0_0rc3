@@ -15,12 +15,12 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <XmlTObjDrivers_IntSparseArrayDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <TObj_TIntSparseArray.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Tool.hxx>
+#include <XmlTObjDrivers_IntSparseArrayDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <TObj_TIntSparseArray.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_IntSparseArrayDriver, XmlMDF_ADriver)
 

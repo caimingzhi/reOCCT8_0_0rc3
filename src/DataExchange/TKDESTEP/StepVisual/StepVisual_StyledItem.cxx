@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_StyledItem.hxx>
-#include <StepVisual_StyledItemTarget.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_StyledItem.hpp>
+#include <StepVisual_StyledItemTarget.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_StyledItem, StepRepr_RepresentationItem)
 

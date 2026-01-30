@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Placement.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Placement.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Placement, TDataStd_GenericEmpty)
 

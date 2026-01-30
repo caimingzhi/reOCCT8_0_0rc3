@@ -18,16 +18,16 @@
 // Version	Date		Purpose
 //		0.0	Sep 30 1997	Creation
 
-#include <DDF.hxx>
-#include <DDF_Data.hxx>
-#include <DDF_Transaction.hxx>
-#include <NCollection_List.hxx>
+#include <DDF.hpp>
+#include <DDF_Data.hpp>
+#include <DDF_Transaction.hpp>
+#include <NCollection_List.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
 
-#include <TDF_Data.hxx>
-#include <TDF_Delta.hxx>
+#include <TDF_Data.hpp>
+#include <TDF_Delta.hpp>
 
 static NCollection_List<occ::handle<DDF_Transaction>> DDF_TStack;
 static occ::handle<TDF_Delta>                         DDF_LastDelta;

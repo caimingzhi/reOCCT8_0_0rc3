@@ -13,10 +13,10 @@
 
 #include <gtest/gtest.h>
 
-#include <MathLin_Gauss.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <MathLin_Gauss.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 #include <cmath>
 

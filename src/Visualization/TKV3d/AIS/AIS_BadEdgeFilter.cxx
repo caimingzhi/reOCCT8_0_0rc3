@@ -16,12 +16,12 @@
 
 //		<g_design>
 
-#include <AIS_BadEdgeFilter.hxx>
-#include <Standard_Type.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <AIS_BadEdgeFilter.hpp>
+#include <Standard_Type.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_BadEdgeFilter, SelectMgr_Filter)
 

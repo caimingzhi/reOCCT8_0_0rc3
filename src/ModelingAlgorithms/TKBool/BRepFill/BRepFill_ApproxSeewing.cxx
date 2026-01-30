@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_Compute.hxx>
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_MultiPointConstraint.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <BRepFill_ApproxSeewing.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Integer.hxx>
+#include <AppDef_Compute.hpp>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_MultiPointConstraint.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <BRepFill_ApproxSeewing.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

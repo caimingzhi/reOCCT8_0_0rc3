@@ -13,32 +13,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <IGESControl_IGESBoundary.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESGeom_BSplineCurve.hxx>
-#include <IGESToBRep.hxx>
-#include <IGESToBRep_CurveAndSurface.hxx>
-#include <IGESToBRep_TopoCurve.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Msg.hxx>
-#include <Precision.hxx>
-#include <ShapeAlgo.hxx>
-#include <ShapeAlgo_AlgoContainer.hxx>
-#include <ShapeAnalysis_ShapeTolerance.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <IGESControl_IGESBoundary.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESGeom_BSplineCurve.hpp>
+#include <IGESToBRep.hpp>
+#include <IGESToBRep_CurveAndSurface.hpp>
+#include <IGESToBRep_TopoCurve.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Msg.hpp>
+#include <Precision.hpp>
+#include <ShapeAlgo.hpp>
+#include <ShapeAlgo_AlgoContainer.hpp>
+#include <ShapeAnalysis_ShapeTolerance.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_IGESBoundary, IGESToBRep_IGESBoundary)
 

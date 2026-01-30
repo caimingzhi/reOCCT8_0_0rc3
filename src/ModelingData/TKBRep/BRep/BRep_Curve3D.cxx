@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Curve3D.hxx>
-#include <BRep_CurveRepresentation.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
+#include <BRep_Curve3D.hpp>
+#include <BRep_CurveRepresentation.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_Curve3D, BRep_GCurve)
 

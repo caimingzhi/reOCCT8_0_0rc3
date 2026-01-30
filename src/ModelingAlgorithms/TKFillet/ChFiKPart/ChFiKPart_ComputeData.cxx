@@ -14,38 +14,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <ChFiDS_ChamfSpine.hxx>
-#include <ChFiDS_FilSpine.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <ChFiKPart_ComputeData_ChAsymPlnCon.hxx>
-#include <ChFiKPart_ComputeData_ChAsymPlnCyl.hxx>
-#include <ChFiKPart_ComputeData_ChAsymPlnPln.hxx>
-#include <ChFiKPart_ComputeData_ChPlnCon.hxx>
-#include <ChFiKPart_ComputeData_ChPlnCyl.hxx>
-#include <ChFiKPart_ComputeData_ChPlnPln.hxx>
-#include <ChFiKPart_ComputeData_CS.hxx>
-#include <ChFiKPart_ComputeData_Fcts.hxx>
-#include <ChFiKPart_ComputeData_FilPlnCon.hxx>
-#include <ChFiKPart_ComputeData_FilPlnCyl.hxx>
-#include <ChFiKPart_ComputeData_FilPlnPln.hxx>
-#include <ChFiKPart_ComputeData_Rotule.hxx>
-#include <ChFiKPart_ComputeData_Sphere.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <TopExp.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <ChFiDS_ChamfSpine.hpp>
+#include <ChFiDS_FilSpine.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <ChFiKPart_ComputeData_ChAsymPlnCon.hpp>
+#include <ChFiKPart_ComputeData_ChAsymPlnCyl.hpp>
+#include <ChFiKPart_ComputeData_ChAsymPlnPln.hpp>
+#include <ChFiKPart_ComputeData_ChPlnCon.hpp>
+#include <ChFiKPart_ComputeData_ChPlnCyl.hpp>
+#include <ChFiKPart_ComputeData_ChPlnPln.hpp>
+#include <ChFiKPart_ComputeData_CS.hpp>
+#include <ChFiKPart_ComputeData_Fcts.hpp>
+#include <ChFiKPart_ComputeData_FilPlnCon.hpp>
+#include <ChFiKPart_ComputeData_FilPlnCyl.hpp>
+#include <ChFiKPart_ComputeData_FilPlnPln.hpp>
+#include <ChFiKPart_ComputeData_Rotule.hpp>
+#include <ChFiKPart_ComputeData_Sphere.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <TopExp.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
 
-// #include <BRepAdaptor_Curve2d.hxx>
-// #include <BRepAdaptor_Curve2d.hxx>
+// #include <BRepAdaptor_Curve2d.hpp>
+// #include <BRepAdaptor_Curve2d.hpp>
 //=================================================================================================
 
 bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,

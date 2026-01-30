@@ -22,20 +22,20 @@
 // jct : 19-01-99 ; permutation de urational et vrational dans Rational.
 #define No_Standard_OutOfRange
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_BSplineSurface, Geom_BoundedSurface)
 

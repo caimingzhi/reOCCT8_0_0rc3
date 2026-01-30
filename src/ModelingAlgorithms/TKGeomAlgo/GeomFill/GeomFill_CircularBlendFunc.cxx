@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <GeomFill.hxx>
-#include <GeomFill_CircularBlendFunc.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <GeomFill.hpp>
+#include <GeomFill_CircularBlendFunc.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Sequence.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CircularBlendFunc, Approx_SweepFunction)
 

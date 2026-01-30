@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopOpeBRepBuild_VertexInfo.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <TopoDS.hpp>
+#include <TopOpeBRepBuild_VertexInfo.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 #include <cstdio>
 

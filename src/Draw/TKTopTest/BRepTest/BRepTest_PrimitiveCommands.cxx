@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <BRepBuilderAPI.hxx>
-#include <BRepPreviewAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeWedge.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <BRepPrimAPI_MakeTorus.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <Message.hxx>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <BRepBuilderAPI.hpp>
+#include <BRepPreviewAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeWedge.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakeCone.hpp>
+#include <BRepPrimAPI_MakeTorus.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <Message.hpp>
 
 //=======================================================================
 // box

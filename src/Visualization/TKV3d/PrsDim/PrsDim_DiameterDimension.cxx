@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_DiameterDimension.hxx>
+#include <PrsDim_DiameterDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <ElCLib.hxx>
-#include <GeomAPI_IntCS.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Plane.hxx>
-#include <gce_MakeDir.hxx>
+#include <PrsDim.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <ElCLib.hpp>
+#include <GeomAPI_IntCS.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Plane.hpp>
+#include <gce_MakeDir.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_DiameterDimension, PrsDim_Dimension)
 

@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_GeometricToleranceTarget.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepShape_DimensionalLocation.hxx>
-#include <StepShape_DimensionalSize.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeAspect.hxx>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepShape_DimensionalLocation.hpp>
+#include <StepShape_DimensionalSize.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeAspect.hpp>
 
 //=================================================================================================
 

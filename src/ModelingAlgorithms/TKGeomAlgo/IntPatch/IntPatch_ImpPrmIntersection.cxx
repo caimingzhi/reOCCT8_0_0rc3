@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_ImpPrmIntersection.hxx>
+#include <IntPatch_ImpPrmIntersection.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <IntPatch_ArcFunction.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_RstInt.hxx>
-#include <IntPatch_SpecialPoints.hxx>
-#include <IntPatch_TheIWalking.hxx>
-#include <IntPatch_TheSurfFunction.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntSurf.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <IntSurf_QuadricTool.hxx>
-#include <IntSurf_PathPoint.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopTrans_CurveTransition.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <IntPatch_ArcFunction.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_RstInt.hpp>
+#include <IntPatch_SpecialPoints.hpp>
+#include <IntPatch_TheIWalking.hpp>
+#include <IntPatch_TheSurfFunction.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntSurf.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <IntSurf_QuadricTool.hpp>
+#include <IntSurf_PathPoint.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopTrans_CurveTransition.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 #ifndef OCCT_DEBUG
   #define No_Standard_RangeError

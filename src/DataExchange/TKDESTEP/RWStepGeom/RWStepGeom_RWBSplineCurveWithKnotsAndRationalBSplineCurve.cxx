@@ -13,25 +13,25 @@
 
 // sln 04.10.2001. BUC61003. Correction of looking for items of complex entity
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include "RWStepGeom_RWBSplineCurveWithKnots.pxx"
-#include "RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve.pxx"
-#include "RWStepGeom_RWRationalBSplineCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_BSplineCurveWithKnots.hxx>
-#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepGeom_KnotType.hxx>
-#include <StepGeom_RationalBSplineCurve.hxx>
-#include <Standard_Integer.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include "RWStepGeom_RWBSplineCurveWithKnots.hpp"
+#include "RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve.hpp"
+#include "RWStepGeom_RWRationalBSplineCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_BSplineCurveWithKnots.hpp>
+#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepGeom_KnotType.hpp>
+#include <StepGeom_RationalBSplineCurve.hpp>
+#include <Standard_Integer.hpp>
 
-#include "RWStepGeom_RWBSplineCurveForm.pxx"
-#include "RWStepGeom_RWKnotType.pxx"
+#include "RWStepGeom_RWBSplineCurveForm.hpp"
+#include "RWStepGeom_RWKnotType.hpp"
 
 RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve::
   RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve() = default;

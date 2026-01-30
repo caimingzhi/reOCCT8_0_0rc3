@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <Standard_Transient.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepElement_ElementAspect.hxx>
-#include <StepElement_ElementAspectMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Transient.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepElement_ElementAspect.hpp>
+#include <StepElement_ElementAspectMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=================================================================================================
 

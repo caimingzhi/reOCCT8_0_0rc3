@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Texture2Transform.hxx>
+#include <Vrml_Texture2Transform.hpp>
 
 Vrml_Texture2Transform::Vrml_Texture2Transform()
 {

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntRes2d_Intersection.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <IntRes2d_Position.hxx>
-#include <NCollection_Sequence.hxx>
-#include <StdFail_NotDone.hxx>
+#include <IntRes2d_Intersection.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <IntRes2d_Position.hpp>
+#include <NCollection_Sequence.hpp>
+#include <StdFail_NotDone.hpp>
 
 #define PARAMEQUAL(a, b) (std::abs((a) - (b)) < (1e-8))
 

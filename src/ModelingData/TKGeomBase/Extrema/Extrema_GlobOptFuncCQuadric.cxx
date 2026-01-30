@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement
 
-#include <Extrema_GlobOptFuncCQuadric.hxx>
+#include <Extrema_GlobOptFuncCQuadric.hpp>
 
-#include <gp_Pnt.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
+#include <gp_Pnt.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
 
 //=================================================================================================
 

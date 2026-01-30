@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_Operation.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Section.hxx>
-#include <BOPAlgo_Splitter.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPTest.hxx>
-#include <BOPTest_DrawableShape.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BRepTest_Objects.hxx>
-#include <DBRep.hxx>
-#include <OSD_Timer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_Operation.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Section.hpp>
+#include <BOPAlgo_Splitter.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPTest.hpp>
+#include <BOPTest_DrawableShape.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BRepTest_Objects.hpp>
+#include <DBRep.hpp>
+#include <OSD_Timer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
 #include <cstdio>
 #include <cstring>

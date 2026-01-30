@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Units.hxx>
-#include <Units_Dimensions.hxx>
-#include <Units_Operators.hxx>
-#include <Units_UnitsDictionary.hxx>
+#include <Standard_Type.hpp>
+#include <Units.hpp>
+#include <Units_Dimensions.hpp>
+#include <Units_Operators.hpp>
+#include <Units_UnitsDictionary.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Dimensions, Standard_Transient)
 

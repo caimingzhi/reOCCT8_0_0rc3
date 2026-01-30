@@ -3,45 +3,45 @@ set(OCCT_HLRAlgo_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_HLRAlgo_FILES
   HLRAlgo.cxx
-  HLRAlgo.hxx
+  HLRAlgo.hpp
 
   HLRAlgo_BiPoint.cxx
-  HLRAlgo_BiPoint.hxx
-  HLRAlgo_Coincidence.hxx
+  HLRAlgo_BiPoint.hpp
+  HLRAlgo_Coincidence.hpp
   HLRAlgo_EdgeIterator.cxx
-  HLRAlgo_EdgeIterator.hxx
-  HLRAlgo_EdgeIterator.lxx
+  HLRAlgo_EdgeIterator.hpp
+  HLRAlgo_EdgeIterator_1.hpp
   HLRAlgo_EdgesBlock.cxx
-  HLRAlgo_EdgesBlock.hxx
+  HLRAlgo_EdgesBlock.hpp
   HLRAlgo_EdgeStatus.cxx
-  HLRAlgo_EdgeStatus.hxx
+  HLRAlgo_EdgeStatus.hpp
 
-  HLRAlgo_Interference.hxx
+  HLRAlgo_Interference.hpp
   HLRAlgo_Interference_0.cxx
 
   HLRAlgo_Intersection.cxx
-  HLRAlgo_Intersection.hxx
-  HLRAlgo_Intersection.lxx
+  HLRAlgo_Intersection.hpp
+  HLRAlgo_Intersection_1.hpp
 
   HLRAlgo_PolyAlgo.cxx
-  HLRAlgo_PolyAlgo.hxx
+  HLRAlgo_PolyAlgo.hpp
   HLRAlgo_PolyData.cxx
-  HLRAlgo_PolyData.hxx
-  HLRAlgo_PolyData.lxx
-  HLRAlgo_PolyHidingData.hxx
+  HLRAlgo_PolyData.hpp
+  HLRAlgo_PolyData_1.hpp
+  HLRAlgo_PolyHidingData.hpp
   HLRAlgo_PolyInternalData.cxx
-  HLRAlgo_PolyInternalData.hxx
-  HLRAlgo_PolyInternalData.lxx
+  HLRAlgo_PolyInternalData.hpp
+  HLRAlgo_PolyInternalData_1.hpp
   HLRAlgo_PolyInternalNode.cxx
-  HLRAlgo_PolyInternalNode.hxx
-  HLRAlgo_PolyInternalSegment.hxx
-  HLRAlgo_PolyMask.hxx
+  HLRAlgo_PolyInternalNode.hpp
+  HLRAlgo_PolyInternalSegment.hpp
+  HLRAlgo_PolyMask.hpp
   HLRAlgo_PolyShellData.cxx
-  HLRAlgo_PolyShellData.hxx
+  HLRAlgo_PolyShellData.hpp
   HLRAlgo_Projector.cxx
-  HLRAlgo_Projector.hxx
-  HLRAlgo_Projector.lxx
-  HLRAlgo_TriangleData.hxx
+  HLRAlgo_Projector.hpp
+  HLRAlgo_Projector_1.hpp
+  HLRAlgo_TriangleData.hpp
   HLRAlgo_WiresBlock.cxx
-  HLRAlgo_WiresBlock.hxx
+  HLRAlgo_WiresBlock.hpp
 )

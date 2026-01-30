@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_BaseFrustum.hxx>
+#include <SelectMgr_BaseFrustum.hpp>
 
-#include <Message.hxx>
-#include <SelectMgr_FrustumBuilder.hxx>
-#include <Standard_Dump.hxx>
+#include <Message.hpp>
+#include <SelectMgr_FrustumBuilder.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_BaseFrustum, SelectMgr_BaseIntersector)
 

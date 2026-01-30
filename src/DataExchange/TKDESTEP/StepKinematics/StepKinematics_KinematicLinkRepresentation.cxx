@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_KinematicLinkRepresentation.hxx>
+#include <StepKinematics_KinematicLinkRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_KinematicLinkRepresentation, StepRepr_Representation)
 

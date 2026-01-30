@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextWrite.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESSelect_AddFileComment.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFSelect_ContextWrite.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESSelect_AddFileComment.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_AddFileComment, IGESSelect_FileModifier)

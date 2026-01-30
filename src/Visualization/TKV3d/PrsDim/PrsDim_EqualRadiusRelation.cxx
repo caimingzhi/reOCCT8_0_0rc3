@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_EqualRadiusRelation.hxx>
+#include <PrsDim_EqualRadiusRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <DsgPrs_EqualRadiusPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <gp_Circ.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
+#include <PrsDim.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <DsgPrs_EqualRadiusPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <gp_Circ.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EqualRadiusRelation, PrsDim_Relation)
 

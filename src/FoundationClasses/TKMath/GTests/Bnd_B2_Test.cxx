@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Bnd_B2.hxx>
-#include <gp_XY.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Ax2d.hxx>
-#include <Precision.hxx>
+#include <Bnd_B2.hpp>
+#include <gp_XY.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Ax2d.hpp>
+#include <Precision.hpp>
 
 TEST(Bnd_B2dTest, DefaultConstructor)
 {

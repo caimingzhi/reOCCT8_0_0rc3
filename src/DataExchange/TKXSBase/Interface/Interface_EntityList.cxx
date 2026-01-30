@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityCluster.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_EntityList.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
+#include <Interface_EntityCluster.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_EntityList.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
 
 // An EntityList is basically a well-wrapped "Handle":
 // If it is null, the list is empty

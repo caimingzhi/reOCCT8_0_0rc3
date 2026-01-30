@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEGLTF_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
+#include <DEGLTF_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
 
 //! Plugin factory function to register DEGLTF configuration node.
 //! Call PLUGINFACTORY() to register the DEGLTF_ConfigurationNode with the global DE_Wrapper.

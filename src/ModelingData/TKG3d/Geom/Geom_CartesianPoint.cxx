@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Geometry.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Geometry.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_CartesianPoint, Geom_Point)
 

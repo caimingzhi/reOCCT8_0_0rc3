@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <Interface_Check.hxx>
-#include <Message_Msg.hxx>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <Interface_Check.hpp>
+#include <Message_Msg.hpp>
 
 #include <cstdio>
 

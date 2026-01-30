@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_LocateExtCC2d.hxx>
+#include <Extrema_LocateExtCC2d.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Extrema_POnCurv2d.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Extrema_POnCurv2d.hpp>
 
-#include <Extrema_Curve2dTool.hxx>
-#include <Extrema_LocECC2d.hxx>
+#include <Extrema_Curve2dTool.hpp>
+#include <Extrema_LocECC2d.hpp>
 
 //=================================================================================================
 

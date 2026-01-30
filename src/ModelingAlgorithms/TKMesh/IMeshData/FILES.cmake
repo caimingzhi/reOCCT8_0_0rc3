@@ -2,26 +2,26 @@
 set(OCCT_IMeshData_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IMeshData_FILES
-  IMeshData_Curve.hxx
+  IMeshData_Curve.hpp
   IMeshData_Curve.cxx
-  IMeshData_Edge.hxx
+  IMeshData_Edge.hpp
   IMeshData_Edge.cxx
-  IMeshData_Face.hxx
+  IMeshData_Face.hpp
   IMeshData_Face.cxx
-  IMeshData_Model.hxx
+  IMeshData_Model.hpp
   IMeshData_Model.cxx
-  IMeshData_ParametersList.hxx
+  IMeshData_ParametersList.hpp
   IMeshData_ParametersList.cxx
-  IMeshData_ParametersListArrayAdaptor.hxx
-  IMeshData_PCurve.hxx
+  IMeshData_ParametersListArrayAdaptor.hpp
+  IMeshData_PCurve.hpp
   IMeshData_PCurve.cxx
-  IMeshData_Shape.hxx
+  IMeshData_Shape.hpp
   IMeshData_Shape.cxx
-  IMeshData_Status.hxx
-  IMeshData_StatusOwner.hxx
-  IMeshData_TessellatedShape.hxx
+  IMeshData_Status.hpp
+  IMeshData_StatusOwner.hpp
+  IMeshData_TessellatedShape.hpp
   IMeshData_TessellatedShape.cxx
-  IMeshData_Types.hxx
-  IMeshData_Wire.hxx
+  IMeshData_Types.hpp
+  IMeshData_Wire.hpp
   IMeshData_Wire.cxx
 )

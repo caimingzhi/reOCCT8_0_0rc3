@@ -14,29 +14,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Axis.hxx>
+#include <AIS_Axis.hpp>
 
-#include <Aspect_TypeOfLine.hxx>
-#include <DsgPrs_XYZAxisPresentation.hxx>
-#include <Geom_Axis1Placement.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_Line.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_NumericError.hxx>
-#include <StdPrs_Curve.hxx>
-#include <UnitsAPI.hxx>
+#include <Aspect_TypeOfLine.hpp>
+#include <DsgPrs_XYZAxisPresentation.hpp>
+#include <Geom_Axis1Placement.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_Line.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_NumericError.hpp>
+#include <StdPrs_Curve.hpp>
+#include <UnitsAPI.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Axis, AIS_InteractiveObject)
 

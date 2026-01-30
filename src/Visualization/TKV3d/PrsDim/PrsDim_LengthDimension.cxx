@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_LengthDimension.hxx>
+#include <PrsDim_LengthDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <BRepTools.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gce_MakeDir.hxx>
-#include <gce_MakePln.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ExtremaSurfaceSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
+#include <PrsDim.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <BRepTools.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gce_MakeDir.hpp>
+#include <gce_MakePln.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ExtremaSurfaceSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_LengthDimension, PrsDim_Dimension)
 

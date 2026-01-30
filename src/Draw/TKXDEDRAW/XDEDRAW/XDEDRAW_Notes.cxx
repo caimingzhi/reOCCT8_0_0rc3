@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Protection.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDF_Tool.hxx>
-#include <XCAFDoc_AssemblyItemRef.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_NoteBalloon.hxx>
-#include <XCAFDoc_NoteComment.hxx>
-#include <XCAFDoc_NoteBinData.hxx>
-#include <XCAFDoc_NotesTool.hxx>
-#include <XDEDRAW_Notes.hxx>
+#include <DDocStd.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Protection.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDF_Tool.hpp>
+#include <XCAFDoc_AssemblyItemRef.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_NoteBalloon.hpp>
+#include <XCAFDoc_NoteComment.hpp>
+#include <XCAFDoc_NoteBinData.hpp>
+#include <XCAFDoc_NotesTool.hpp>
+#include <XDEDRAW_Notes.hpp>
 
 struct cmd
 {

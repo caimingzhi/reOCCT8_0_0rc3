@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_FunctionRoots.hxx>
-#include <math_FunctionWithDerivative.hxx>
+#include <math_FunctionRoots.hpp>
+#include <math_FunctionWithDerivative.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_RangeError.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_RangeError.hpp>
 
 #include <algorithm>
 #include <cmath>

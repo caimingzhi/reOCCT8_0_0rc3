@@ -14,36 +14,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_Sewing.hxx>
-#include <Geom2d_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_WireOrder.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeFix_Face.hxx>
-#include <ShapeFix_FaceConnect.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_Sewing.hpp>
+#include <Geom2d_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_WireOrder.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeFix_Face.hpp>
+#include <ShapeFix_FaceConnect.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <NCollection_Map.hxx>
+  #include <NCollection_Map.hpp>
 #endif
 
 //=======================================================================

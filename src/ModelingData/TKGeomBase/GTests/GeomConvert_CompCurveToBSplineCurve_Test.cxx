@@ -13,19 +13,19 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_CompCurveToBSplineCurve.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 //==================================================================================================
 // Basic concatenation tests

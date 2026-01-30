@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_Viewer.hxx>
+#include <V3d_Viewer.hpp>
 
-#include <Aspect_IdentDefinitionError.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_AspectText3d.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Graphic3d_Text.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <V3d.hxx>
-#include <V3d_BadValue.hxx>
-#include <V3d_CircularGrid.hxx>
-#include <V3d_AmbientLight.hxx>
-#include <V3d_DirectionalLight.hxx>
-#include <V3d_RectangularGrid.hxx>
-#include <V3d_View.hxx>
+#include <Aspect_IdentDefinitionError.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_AspectText3d.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Graphic3d_Text.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <V3d.hpp>
+#include <V3d_BadValue.hpp>
+#include <V3d_CircularGrid.hpp>
+#include <V3d_AmbientLight.hpp>
+#include <V3d_DirectionalLight.hpp>
+#include <V3d_RectangularGrid.hpp>
+#include <V3d_View.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_Viewer, Standard_Transient)
 

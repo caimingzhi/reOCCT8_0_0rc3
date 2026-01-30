@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEPLY_ConfigurationNode.hxx>
-#include <DE_PluginHolder.hxx>
+#include <DEPLY_ConfigurationNode.hpp>
+#include <DE_PluginHolder.hpp>
 
 //! Plugin factory function to register DEPLY configuration node.
 //! Call PLUGINFACTORY() to register the DEPLY_ConfigurationNode with the global DE_Wrapper.

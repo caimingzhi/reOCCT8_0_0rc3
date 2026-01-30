@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd_AsciiStringDriver.hxx>
-#include <BinMDF_ADriver.hxx>
-#include <BinObjMgt_RRelocationTable.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <BinMDataStd.hxx>
+#include <BinMDataStd_AsciiStringDriver.hpp>
+#include <BinMDF_ADriver.hpp>
+#include <BinObjMgt_RRelocationTable.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <BinMDataStd.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_AsciiStringDriver, BinMDF_ADriver)
 

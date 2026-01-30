@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_GenExtCS.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Extrema_GlobOptFuncCS.hxx>
-#include <Extrema_GlobOptFuncConicS.hxx>
-#include <Extrema_GlobOptFuncCQuadric.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_PSO.hxx>
-#include <math_PSOParticlesPool.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
+#include <Extrema_GenExtCS.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Extrema_GlobOptFuncCS.hpp>
+#include <Extrema_GlobOptFuncConicS.hpp>
+#include <Extrema_GlobOptFuncCQuadric.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_PSO.hpp>
+#include <math_PSOParticlesPool.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
 
 const double MaxParamVal    = 1.0e+10;
 const double aBorderDivisor = 1.0e+4;

@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_Deflection.hxx>
+#include <BRepMesh_Deflection.hpp>
 
-#include <BRepBndLib.hxx>
-#include <BRepMesh_ShapeTool.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshTools_Parameters.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRepBndLib.hpp>
+#include <BRepMesh_ShapeTool.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshTools_Parameters.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Deflection, Standard_Transient)
 

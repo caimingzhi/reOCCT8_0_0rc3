@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_DateTimeSelect.hxx>
-#include <StepBasic_LocalTime.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_DateTimeSelect.hpp>
+#include <StepBasic_LocalTime.hpp>
 
 StepBasic_DateTimeSelect::StepBasic_DateTimeSelect() = default;
 

@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_ComputeKronrodPointsAndWeights.hxx>
+#include <math_ComputeKronrodPointsAndWeights.hpp>
 
 #include <gtest/gtest.h>
 

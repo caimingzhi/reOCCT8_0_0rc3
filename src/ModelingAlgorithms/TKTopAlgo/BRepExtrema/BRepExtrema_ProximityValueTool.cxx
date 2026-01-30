@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepExtrema_ProximityValueTool.hxx>
-#include <BRepExtrema_ProximityDistTool.hxx>
+#include <BRepExtrema_ProximityValueTool.hpp>
+#include <BRepExtrema_ProximityDistTool.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepGProp.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GCPnts_QuasiUniformAbscissa.hxx>
-#include <GProp_GProps.hxx>
-#include <Poly_Connect.hxx>
-#include <TopoDS.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepGProp.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GCPnts_QuasiUniformAbscissa.hpp>
+#include <GProp_GProps.hpp>
+#include <Poly_Connect.hpp>
+#include <TopoDS.hpp>
 
 //=======================================================================
 // function : BRepExtrema_ProximityValueTool

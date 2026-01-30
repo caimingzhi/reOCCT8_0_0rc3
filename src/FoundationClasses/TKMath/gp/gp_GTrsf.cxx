@@ -14,16 +14,16 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_GTrsf.hxx>
+#include <gp_GTrsf.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_OutOfRange.hpp>
 
 void gp_GTrsf::SetTranslationPart(const gp_XYZ& Coord)
 {

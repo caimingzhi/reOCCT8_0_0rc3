@@ -16,19 +16,19 @@
 //    sln 29.11.01 Bug22: correction of methods Replace and Value for case when mode
 //    myConsiderLocation is on
 
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools_ReShape.hxx>
-#include <Geom_Surface.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Standard_Type.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools_ReShape.hpp>
+#include <Geom_Surface.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Standard_Type.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_ReShape, Standard_Transient)
 
@@ -57,7 +57,7 @@ void Add(TMap& theMap, const TopoDS_Shape& theShape)
 
 } // namespace
 
-// include <ShapeExtend.hxx>
+// include <ShapeExtend.hpp>
 // #include <BRepTools_Edge.hxx>
 static void CopyRanges(const TopoDS_Shape& toedge,
                        const TopoDS_Shape& fromedge,

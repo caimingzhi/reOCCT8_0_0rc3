@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_AssemblyGraph.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <Standard_NullObject.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_AssemblyGraph.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 // =======================================================================
 // function : XCAFDoc_AssemblyGraph constructor

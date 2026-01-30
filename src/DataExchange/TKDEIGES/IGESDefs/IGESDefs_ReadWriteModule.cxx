@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDefs_AssociativityDef.hxx>
-#include <IGESDefs_AttributeDef.hxx>
-#include <IGESDefs_AttributeTable.hxx>
-#include <IGESDefs_GenericData.hxx>
-#include <IGESDefs_MacroDef.hxx>
-#include <IGESDefs_ReadWriteModule.hxx>
-#include <IGESDefs_TabularData.hxx>
-#include <IGESDefs_ToolAssociativityDef.hxx>
-#include <IGESDefs_ToolAttributeDef.hxx>
-#include <IGESDefs_ToolAttributeTable.hxx>
-#include <IGESDefs_ToolGenericData.hxx>
-#include <IGESDefs_ToolMacroDef.hxx>
-#include <IGESDefs_ToolTabularData.hxx>
-#include <IGESDefs_ToolUnitsData.hxx>
-#include <IGESDefs_UnitsData.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDefs_AssociativityDef.hpp>
+#include <IGESDefs_AttributeDef.hpp>
+#include <IGESDefs_AttributeTable.hpp>
+#include <IGESDefs_GenericData.hpp>
+#include <IGESDefs_MacroDef.hpp>
+#include <IGESDefs_ReadWriteModule.hpp>
+#include <IGESDefs_TabularData.hpp>
+#include <IGESDefs_ToolAssociativityDef.hpp>
+#include <IGESDefs_ToolAttributeDef.hpp>
+#include <IGESDefs_ToolAttributeTable.hpp>
+#include <IGESDefs_ToolGenericData.hpp>
+#include <IGESDefs_ToolMacroDef.hpp>
+#include <IGESDefs_ToolTabularData.hpp>
+#include <IGESDefs_ToolUnitsData.hpp>
+#include <IGESDefs_UnitsData.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_ReadWriteModule, IGESData_ReadWriteModule)
 

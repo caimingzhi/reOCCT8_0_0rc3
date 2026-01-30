@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_ActorOfFinderProcess.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientMapper.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_TransferWriter.hxx>
-#include <XSControl_Utils.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_ActorOfFinderProcess.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientMapper.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_TransferWriter.hpp>
+#include <XSControl_Utils.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_TransferWriter, Standard_Transient)
 

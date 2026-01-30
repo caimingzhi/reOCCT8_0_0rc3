@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_GearPair.hxx>
+#include <StepKinematics_GearPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_GearPair,
                            StepKinematics_LowOrderKinematicPairWithMotionCoupling)

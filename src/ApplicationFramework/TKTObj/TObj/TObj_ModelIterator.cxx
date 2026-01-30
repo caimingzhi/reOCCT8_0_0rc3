@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_ModelIterator.hxx>
+#include <TObj_ModelIterator.hpp>
 
-#include <TObj_Model.hxx>
+#include <TObj_Model.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_ModelIterator, TObj_ObjectIterator)
 

@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
+#include <Standard_Type.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ShapeRepresentation, StepRepr_Representation)
 

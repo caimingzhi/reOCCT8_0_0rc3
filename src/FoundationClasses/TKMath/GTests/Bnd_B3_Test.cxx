@@ -13,13 +13,13 @@
 
 #include <gtest/gtest.h>
 
-#include <Bnd_B3.hxx>
-#include <gp_XYZ.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax3.hxx>
-#include <Precision.hxx>
+#include <Bnd_B3.hpp>
+#include <gp_XYZ.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax3.hpp>
+#include <Precision.hpp>
 
 TEST(Bnd_B3dTest, DefaultConstructor)
 {

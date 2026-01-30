@@ -14,41 +14,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_AngleDimension.hxx>
+#include <PrsDim_AngleDimension.hpp>
 
-#include <PrsDim.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRep_Tool.hxx>
-#include <ElCLib.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <GC_MakeArcOfCircle.hxx>
-#include <gce_MakeLin2d.hxx>
-#include <gce_MakeLin.hxx>
-#include <gce_MakeCirc.hxx>
-#include <gce_MakeCone.hxx>
-#include <gce_MakePln.hxx>
-#include <gce_MakeDir.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <ProjLib.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Select3D_SensitiveGroup.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_ProgramError.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
+#include <PrsDim.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRep_Tool.hpp>
+#include <ElCLib.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <GC_MakeArcOfCircle.hpp>
+#include <gce_MakeLin2d.hpp>
+#include <gce_MakeLin.hpp>
+#include <gce_MakeCirc.hpp>
+#include <gce_MakeCone.hpp>
+#include <gce_MakePln.hpp>
+#include <gce_MakeDir.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <ProjLib.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Select3D_SensitiveGroup.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_ProgramError.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_AngleDimension, PrsDim_Dimension)
 

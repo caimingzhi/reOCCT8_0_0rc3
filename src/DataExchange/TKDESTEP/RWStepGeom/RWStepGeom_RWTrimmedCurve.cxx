@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWTrimmedCurve.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
-#include <StepGeom_TrimmingPreference.hxx>
-#include <StepGeom_TrimmingSelect.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWTrimmedCurve.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <StepGeom_TrimmingPreference.hpp>
+#include <StepGeom_TrimmingSelect.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepGeom_RWTrimmingPreference.pxx"
+#include "RWStepGeom_RWTrimmingPreference.hpp"
 
 RWStepGeom_RWTrimmedCurve::RWStepGeom_RWTrimmedCurve() = default;
 

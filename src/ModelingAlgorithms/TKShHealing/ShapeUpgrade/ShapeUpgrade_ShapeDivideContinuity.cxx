@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Precision.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_ShapeDivideContinuity.hxx>
-#include <ShapeUpgrade_SplitCurve2dContinuity.hxx>
-#include <ShapeUpgrade_SplitCurve3dContinuity.hxx>
-#include <ShapeUpgrade_SplitSurfaceContinuity.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Precision.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_ShapeDivideContinuity.hpp>
+#include <ShapeUpgrade_SplitCurve2dContinuity.hpp>
+#include <ShapeUpgrade_SplitCurve3dContinuity.hpp>
+#include <ShapeUpgrade_SplitSurfaceContinuity.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

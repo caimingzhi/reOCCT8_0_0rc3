@@ -13,15 +13,15 @@
 
 // Modified by rmi, Thu Dec  4 14:24:24 1997
 
-#include <CDF_Application.hxx>
-#include <CDF_MetaDataDriver.hxx>
-#include <CDF_Store.hxx>
-#include <CDF_StoreList.hxx>
-#include <CDF_StoreSetNameStatus.hxx>
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <PCDM_StoreStatus.hxx>
-#include <Standard_ProgramError.hxx>
+#include <CDF_Application.hpp>
+#include <CDF_MetaDataDriver.hpp>
+#include <CDF_Store.hpp>
+#include <CDF_StoreList.hpp>
+#include <CDF_StoreSetNameStatus.hpp>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <PCDM_StoreStatus.hpp>
+#include <Standard_ProgramError.hpp>
 
 #define theMetaDataDriver                                                                          \
   occ::down_cast<CDF_Application>((myCurrentDocument->Application()))->MetaDataDriver()

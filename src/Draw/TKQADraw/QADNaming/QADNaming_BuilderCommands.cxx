@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QADNaming.hxx>
-#include <TDF_Label.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TNaming_Builder.hxx>
-#include <TopoDS_Shape.hxx>
-#include <DBRep.hxx>
+#include <QADNaming.hpp>
+#include <TDF_Label.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TNaming_Builder.hpp>
+#include <TopoDS_Shape.hpp>
+#include <DBRep.hpp>
 
 static int BuildNamedShape(Draw_Interpretor& di, int nb, const char** arg)
 {

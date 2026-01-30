@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <Hatch_Hatcher.hxx>
-#include <Precision.hxx>
-#include <StdPrs_ToolRFace.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlConverter_Curve.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
-#include <VrmlConverter_WFRestrictedFace.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <Hatch_Hatcher.hpp>
+#include <Precision.hpp>
+#include <StdPrs_ToolRFace.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlConverter_Curve.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
+#include <VrmlConverter_WFRestrictedFace.hpp>
 
 //=================================================================================================
 

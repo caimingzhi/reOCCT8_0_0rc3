@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_Flow.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESDraw_ConnectPoint.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESAppli_Flow.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESDraw_ConnectPoint.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_Flow, IGESData_IGESEntity)
 

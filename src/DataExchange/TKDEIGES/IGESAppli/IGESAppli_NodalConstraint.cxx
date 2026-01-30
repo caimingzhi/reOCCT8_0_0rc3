@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_NodalConstraint.hxx>
-#include <IGESAppli_Node.hxx>
-#include <IGESDefs_TabularData.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_NodalConstraint.hpp>
+#include <IGESAppli_Node.hpp>
+#include <IGESDefs_TabularData.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_NodalConstraint, IGESData_IGESEntity)
 

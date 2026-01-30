@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_GroupWithoutBackP.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_GroupWithoutBackP.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_GroupWithoutBackP, IGESBasic_Group)
 

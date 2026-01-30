@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Curve3D.hxx>
-#include <BRep_CurveOn2Surfaces.hxx>
-#include <BRep_CurveOnClosedSurface.hxx>
-#include <BRep_CurveOnSurface.hxx>
-#include <BRep_CurveRepresentation.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <NCollection_List.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <BRep_Polygon3D.hxx>
-#include <BRep_PolygonOnClosedSurface.hxx>
-#include <BRep_PolygonOnClosedTriangulation.hxx>
-#include <BRep_PolygonOnSurface.hxx>
-#include <BRep_PolygonOnTriangulation.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
-#include <BRep_TVertex.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
-#include <TNaming_CopyShape.hxx>
-#include <TNaming_TranslateTool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Curve3D.hpp>
+#include <BRep_CurveOn2Surfaces.hpp>
+#include <BRep_CurveOnClosedSurface.hpp>
+#include <BRep_CurveOnSurface.hpp>
+#include <BRep_CurveRepresentation.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <NCollection_List.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <BRep_Polygon3D.hpp>
+#include <BRep_PolygonOnClosedSurface.hpp>
+#include <BRep_PolygonOnClosedTriangulation.hpp>
+#include <BRep_PolygonOnSurface.hpp>
+#include <BRep_PolygonOnTriangulation.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
+#include <BRep_TVertex.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
+#include <TNaming_CopyShape.hpp>
+#include <TNaming_TranslateTool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_TranslateTool, Standard_Transient)
 

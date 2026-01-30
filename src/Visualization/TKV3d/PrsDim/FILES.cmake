@@ -3,59 +3,59 @@ set(OCCT_PrsDim_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_PrsDim_FILES
   PrsDim.cxx
-  PrsDim.hxx
+  PrsDim.hpp
   PrsDim_AngleDimension.cxx
-  PrsDim_AngleDimension.hxx
+  PrsDim_AngleDimension.hpp
   PrsDim_Chamf2dDimension.cxx
-  PrsDim_Chamf2dDimension.hxx
+  PrsDim_Chamf2dDimension.hpp
   PrsDim_Chamf3dDimension.cxx
-  PrsDim_Chamf3dDimension.hxx
+  PrsDim_Chamf3dDimension.hpp
   PrsDim_ConcentricRelation.cxx
-  PrsDim_ConcentricRelation.hxx
+  PrsDim_ConcentricRelation.hpp
   PrsDim_DiameterDimension.cxx
-  PrsDim_DiameterDimension.hxx
+  PrsDim_DiameterDimension.hpp
   PrsDim_Dimension.cxx
-  PrsDim_Dimension.hxx
+  PrsDim_Dimension.hpp
   PrsDim_DimensionOwner.cxx
-  PrsDim_DimensionOwner.hxx
+  PrsDim_DimensionOwner.hpp
   PrsDim_EllipseRadiusDimension.cxx
-  PrsDim_EllipseRadiusDimension.hxx
+  PrsDim_EllipseRadiusDimension.hpp
   PrsDim_EqualDistanceRelation.cxx
-  PrsDim_EqualDistanceRelation.hxx
+  PrsDim_EqualDistanceRelation.hpp
   PrsDim_EqualRadiusRelation.cxx
-  PrsDim_EqualRadiusRelation.hxx
+  PrsDim_EqualRadiusRelation.hpp
   PrsDim_FixRelation.cxx
-  PrsDim_FixRelation.hxx
+  PrsDim_FixRelation.hpp
   PrsDim_IdenticRelation.cxx
-  PrsDim_IdenticRelation.hxx
+  PrsDim_IdenticRelation.hpp
   PrsDim_LengthDimension.cxx
-  PrsDim_LengthDimension.hxx
+  PrsDim_LengthDimension.hpp
   PrsDim_MaxRadiusDimension.cxx
-  PrsDim_MaxRadiusDimension.hxx
+  PrsDim_MaxRadiusDimension.hpp
   PrsDim_MidPointRelation.cxx
-  PrsDim_MidPointRelation.hxx
+  PrsDim_MidPointRelation.hpp
   PrsDim_MinRadiusDimension.cxx
-  PrsDim_MinRadiusDimension.hxx
+  PrsDim_MinRadiusDimension.hpp
   PrsDim_OffsetDimension.cxx
-  PrsDim_OffsetDimension.hxx
+  PrsDim_OffsetDimension.hpp
   PrsDim_ParallelRelation.cxx
-  PrsDim_ParallelRelation.hxx
+  PrsDim_ParallelRelation.hpp
   PrsDim_PerpendicularRelation.cxx
-  PrsDim_PerpendicularRelation.hxx
+  PrsDim_PerpendicularRelation.hpp
   PrsDim_RadiusDimension.cxx
-  PrsDim_RadiusDimension.hxx
+  PrsDim_RadiusDimension.hpp
   PrsDim_Relation.cxx
-  PrsDim_Relation.hxx
+  PrsDim_Relation.hpp
   PrsDim_SymmetricRelation.cxx
-  PrsDim_SymmetricRelation.hxx
+  PrsDim_SymmetricRelation.hpp
   PrsDim_TangentRelation.cxx
-  PrsDim_TangentRelation.hxx
-  PrsDim_DimensionSelectionMode.hxx
-  PrsDim_DisplaySpecialSymbol.hxx
-  PrsDim_KindOfDimension.hxx
-  PrsDim_KindOfRelation.hxx
-  PrsDim_KindOfSurface.hxx
-  PrsDim_TypeOfAngle.hxx
-  PrsDim_TypeOfAngleArrowVisibility.hxx
-  PrsDim_TypeOfDist.hxx
+  PrsDim_TangentRelation.hpp
+  PrsDim_DimensionSelectionMode.hpp
+  PrsDim_DisplaySpecialSymbol.hpp
+  PrsDim_KindOfDimension.hpp
+  PrsDim_KindOfRelation.hpp
+  PrsDim_KindOfSurface.hpp
+  PrsDim_TypeOfAngle.hpp
+  PrsDim_TypeOfAngleArrowVisibility.hpp
+  PrsDim_TypeOfDist.hpp
 )

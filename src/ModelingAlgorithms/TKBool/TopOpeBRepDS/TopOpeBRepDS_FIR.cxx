@@ -14,18 +14,18 @@
 
 // Robert Boehne 30 May 2000 : Dec Osf
 
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRepDS_FaceInterferenceTool.hxx>
-#include <TopOpeBRepDS_FIR.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_ShapeData.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRepDS_FaceInterferenceTool.hpp>
+#include <TopOpeBRepDS_FIR.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_ShapeData.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
 
 #define MDSke TopOpeBRepDS_EDGE
 #define MDSkf TopOpeBRepDS_FACE

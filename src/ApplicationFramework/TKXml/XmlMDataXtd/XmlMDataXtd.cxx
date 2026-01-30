@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDataXtd.hxx>
+#include <XmlMDataXtd.hpp>
 
-#include <Message_Messenger.hxx>
-#include <XmlMDataXtd_ConstraintDriver.hxx>
-#include <XmlMDataXtd_GeometryDriver.hxx>
-#include <XmlMDataXtd_PatternStdDriver.hxx>
-#include <XmlMDataXtd_TriangulationDriver.hxx>
-#include <XmlMDF_ADriverTable.hxx>
+#include <Message_Messenger.hpp>
+#include <XmlMDataXtd_ConstraintDriver.hpp>
+#include <XmlMDataXtd_GeometryDriver.hpp>
+#include <XmlMDataXtd_PatternStdDriver.hpp>
+#include <XmlMDataXtd_TriangulationDriver.hpp>
+#include <XmlMDF_ADriverTable.hpp>
 
-#include <XmlMDataXtd_PresentationDriver.hxx>
-#include <XmlMDataXtd_PositionDriver.hxx>
+#include <XmlMDataXtd_PresentationDriver.hpp>
+#include <XmlMDataXtd_PositionDriver.hpp>
 
 static int myDocumentVersion = -1;
 

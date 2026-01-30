@@ -16,10 +16,10 @@
 
 // rln 06.01.98 new method SetUnit
 
-#include <Geom2dToIGES_Geom2dCurve.hxx>
-#include <Geom2dToIGES_Geom2dEntity.hxx>
-#include <Geom2dToIGES_Geom2dPoint.hxx>
-#include <IGESData_IGESModel.hxx>
+#include <Geom2dToIGES_Geom2dCurve.hpp>
+#include <Geom2dToIGES_Geom2dEntity.hpp>
+#include <Geom2dToIGES_Geom2dPoint.hpp>
+#include <IGESData_IGESModel.hpp>
 
 //=================================================================================================
 

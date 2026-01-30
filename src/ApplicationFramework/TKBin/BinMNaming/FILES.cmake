@@ -3,10 +3,10 @@ set(OCCT_BinMNaming_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMNaming_FILES
   BinMNaming.cxx
-  BinMNaming.hxx
+  BinMNaming.hpp
   BinMNaming_NamedShapeDriver.cxx
-  BinMNaming_NamedShapeDriver.hxx
-  BinMNaming_NamedShapeDriver.lxx
+  BinMNaming_NamedShapeDriver.hpp
+  BinMNaming_NamedShapeDriver_1.hpp
   BinMNaming_NamingDriver.cxx
-  BinMNaming_NamingDriver.hxx
+  BinMNaming_NamingDriver.hpp
 )

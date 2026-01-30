@@ -15,13 +15,13 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <Message_Messenger.hxx>
-#include "XmlTObjDrivers_ObjectDriver.hxx"
-#include <TObj_TObject.hxx>
-#include <TObj_Persistence.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
-#include <XmlObjMgt.hxx>
+#include <Message_Messenger.hpp>
+#include "XmlTObjDrivers_ObjectDriver.hpp"
+#include <TObj_TObject.hpp>
+#include <TObj_Persistence.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
+#include <XmlObjMgt.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_ObjectDriver, XmlMDF_ADriver)
 

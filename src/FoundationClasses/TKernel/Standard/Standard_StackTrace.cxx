@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard.hxx>
+#include <Standard.hpp>
 
-#include <Message.hxx>
+#include <Message.hpp>
 
 #include <mutex>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 #if defined(__APPLE__)
   #import <TargetConditionals.h>
@@ -34,10 +34,10 @@
   #include <execinfo.h>
 #elif defined(_WIN32) && !defined(OCCT_UWP)
 
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
   #include <windows.h>
   #include <dbghelp.h>
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 
 //! This is a wrapper of DbgHelp library loaded dynamically.
 //! DbgHelp is coming with Windows SDK, so that technically it is always available.

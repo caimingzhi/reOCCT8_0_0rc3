@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_ProgramError.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_FuseEdges.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_ProgramError.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_FuseEdges.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
-// #include <BRepAdaptor_Curve2d.hxx>
+// #include <BRepAdaptor_Curve2d.hpp>
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GetcontextNOFE();
 #endif

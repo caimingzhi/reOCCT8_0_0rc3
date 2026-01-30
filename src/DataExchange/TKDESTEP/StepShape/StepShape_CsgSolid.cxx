@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_CsgSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_CsgSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_CsgSolid, StepShape_SolidModel)
 

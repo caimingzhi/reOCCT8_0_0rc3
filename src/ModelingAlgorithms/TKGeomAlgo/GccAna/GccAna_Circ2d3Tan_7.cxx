@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccAna_CircPnt2dBisec.hxx>
-#include <GccAna_Pnt2dBisec.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccInt_BElips.hxx>
-#include <GccInt_IType.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccAna_CircPnt2dBisec.hpp>
+#include <GccAna_Pnt2dBisec.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccInt_BElips.hpp>
+#include <GccInt_IType.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
 
 //=======================================================================
 //   Creation of a circle tangent to a circle and two points.           +

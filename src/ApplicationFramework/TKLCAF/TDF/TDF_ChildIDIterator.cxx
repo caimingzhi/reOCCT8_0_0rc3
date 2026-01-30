@@ -18,10 +18,10 @@
 // Version	Date		Purpose
 //		0.0	Nov 20 1997	Creation
 
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_LabelNode.hxx>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_LabelNode.hpp>
 
 #define ChildIDIterator_FindNext                                                                   \
   {                                                                                                \

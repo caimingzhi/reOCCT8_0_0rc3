@@ -15,14 +15,14 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Object.hxx>
-#include <TObj_TReference.hxx>
-#include <TObj_TObject.hxx>
+#include <TObj_Object.hpp>
+#include <TObj_TReference.hpp>
+#include <TObj_TObject.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TReference, TDF_Attribute)
 

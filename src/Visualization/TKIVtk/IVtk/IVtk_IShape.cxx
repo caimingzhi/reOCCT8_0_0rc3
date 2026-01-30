@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtk_IShape.hxx>
+#include <IVtk_IShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtk_IShape, IVtk_Interface)
 

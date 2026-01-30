@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StlAPI_Writer.hxx>
+#include <StlAPI_Writer.hpp>
 
-#include <Bnd_Box.hxx>
-#include <Message.hxx>
-#include <OSD_OpenFile.hxx>
-#include <RWStl.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopExp_Explorer.hxx>
-#include <Poly_Triangulation.hxx>
+#include <Bnd_Box.hpp>
+#include <Message.hpp>
+#include <OSD_OpenFile.hpp>
+#include <RWStl.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopExp_Explorer.hpp>
+#include <Poly_Triangulation.hpp>
 #include <fstream>
 
 //=================================================================================================

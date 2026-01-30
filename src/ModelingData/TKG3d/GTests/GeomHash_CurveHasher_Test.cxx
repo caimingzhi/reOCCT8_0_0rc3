@@ -13,23 +13,23 @@
 
 #include <gtest/gtest.h>
 
-#include <GeomHash_CurveHasher.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <GeomHash_CurveHasher.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 class GeomHash_CurveHasherTest : public ::testing::Test
 {

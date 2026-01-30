@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
+#include <AIS_InteractiveContext.hpp>
 
-#include <AIS_InteractiveObject.hxx>
+#include <AIS_InteractiveObject.hpp>
 
-#include <AIS_GlobalStatus.hxx>
+#include <AIS_GlobalStatus.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <AIS_ConnectedInteractive.hxx>
-#include <AIS_MultipleConnectedInteractive.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PlaneAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Map.hxx>
-#include <TopLoc_Location.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
+#include <NCollection_DataMap.hpp>
+#include <AIS_ConnectedInteractive.hpp>
+#include <AIS_MultipleConnectedInteractive.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PlaneAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Map.hpp>
+#include <TopLoc_Location.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
 
-#include <AIS_Shape.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <TopoDS_Shape.hxx>
+#include <AIS_Shape.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_InteractiveContext, Standard_Transient)
 

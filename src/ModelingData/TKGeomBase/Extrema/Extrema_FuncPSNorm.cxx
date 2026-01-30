@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_FuncPSNorm.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
-#include <Standard_TypeMismatch.hxx>
+#include <Extrema_FuncPSNorm.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
+#include <Standard_TypeMismatch.hpp>
 
 Extrema_FuncPSNorm::Extrema_FuncPSNorm()
     : myS(nullptr),

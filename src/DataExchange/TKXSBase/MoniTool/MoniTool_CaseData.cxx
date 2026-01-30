@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <Message_Msg.hxx>
-#include <MoniTool_CaseData.hxx>
-#include <OSD_Timer.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TopoDS_HShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <Message_Msg.hpp>
+#include <MoniTool_CaseData.hpp>
+#include <OSD_Timer.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TopoDS_HShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_CaseData, Standard_Transient)
 

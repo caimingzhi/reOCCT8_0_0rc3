@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElSLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ProjLib_Cone.hxx>
+#include <ElSLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ProjLib_Cone.hpp>
 
 //=================================================================================================
 

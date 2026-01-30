@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Text.hxx>
+#include <Graphic3d_Text.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Text, Standard_Transient)
 

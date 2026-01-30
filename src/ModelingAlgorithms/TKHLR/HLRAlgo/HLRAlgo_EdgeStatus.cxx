@@ -18,7 +18,7 @@
   #define No_Exception
 #endif
 
-#include <HLRAlgo_EdgeStatus.hxx>
+#include <HLRAlgo_EdgeStatus.hpp>
 
 //=================================================================================================
 

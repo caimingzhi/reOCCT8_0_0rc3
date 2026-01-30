@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_CompCurve.hxx>
+#include <BRepAdaptor_CompCurve.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_CompCurve, Adaptor3d_Curve)
 

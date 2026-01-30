@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMDataXtd_PositionDriver.hxx>
+#include <XmlMDataXtd_PositionDriver.hpp>
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Position.hxx>
-#include <TDF_Attribute.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Position.hpp>
+#include <TDF_Attribute.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 #include <cstdio>
 

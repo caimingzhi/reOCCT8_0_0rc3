@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_GeomTolerance.hxx>
+#include <XCAFDoc_GeomTolerance.hpp>
 
-#include <TDF_RelocationTable.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <XCAFDoc.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <XCAFDimTolObjects_GeomToleranceObject.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_Builder.hxx>
-#include <TDataStd_Name.hxx>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <XCAFDoc.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <XCAFDimTolObjects_GeomToleranceObject.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_Builder.hpp>
+#include <TDataStd_Name.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(XCAFDoc_GeomTolerance, TDataStd_GenericEmpty)
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppStd_Application.hxx>
-#include <DDataStd.hxx>
-#include <DDF.hxx>
-#include <DDocStd.hxx>
-#include <DNaming.hxx>
-#include <DPrsStd.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
+#include <AppStd_Application.hpp>
+#include <DDataStd.hpp>
+#include <DDF.hpp>
+#include <DDocStd.hpp>
+#include <DNaming.hpp>
+#include <DPrsStd.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
 
 //=================================================================================================
 

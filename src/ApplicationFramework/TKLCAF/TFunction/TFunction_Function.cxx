@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TFunction_Function.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TFunction_Function.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TFunction_Function, TDF_Attribute)
 

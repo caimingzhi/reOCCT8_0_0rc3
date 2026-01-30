@@ -11,34 +11,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
+#include <Standard_NullObject.hpp>
 
-#include <ShapePersistent_BRep.hxx>
+#include <ShapePersistent_BRep.hpp>
 
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_PointOnCurveOnSurface.hxx>
-#include <BRep_PointOnSurface.hxx>
-#include <BRep_Curve3D.hxx>
-#include <BRep_CurveOnClosedSurface.hxx>
-#include <BRep_Polygon3D.hxx>
-#include <BRep_PolygonOnClosedTriangulation.hxx>
-#include <BRep_PolygonOnClosedSurface.hxx>
-#include <BRep_CurveOn2Surfaces.hxx>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_PointOnCurveOnSurface.hpp>
+#include <BRep_PointOnSurface.hpp>
+#include <BRep_Curve3D.hpp>
+#include <BRep_CurveOnClosedSurface.hpp>
+#include <BRep_Polygon3D.hpp>
+#include <BRep_PolygonOnClosedTriangulation.hpp>
+#include <BRep_PolygonOnClosedSurface.hpp>
+#include <BRep_CurveOn2Surfaces.hpp>
 
-#include <BRep_TVertex.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_TFace.hxx>
+#include <BRep_TVertex.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_TFace.hpp>
 
-#include <Geom_Surface.hxx>
+#include <Geom_Surface.hpp>
 
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
 
 enum
 {

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pnt2d.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <TopOpeBRep_WPointInter.hxx>
+#include <gp_Pnt2d.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <TopOpeBRep_WPointInter.hpp>
 
 //=================================================================================================
 

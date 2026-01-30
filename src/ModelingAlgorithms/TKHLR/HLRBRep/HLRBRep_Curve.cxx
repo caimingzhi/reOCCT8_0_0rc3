@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <HLRAlgo.hxx>
-#include <HLRAlgo_Projector.hxx>
-#include <HLRBRep_CLProps.hxx>
-#include <HLRBRep_Curve.hxx>
-#include <Precision.hxx>
-#include <ProjLib.hxx>
-#include <Standard_DomainError.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopoDS_Edge.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <HLRAlgo.hpp>
+#include <HLRAlgo_Projector.hpp>
+#include <HLRBRep_CLProps.hpp>
+#include <HLRBRep_Curve.hpp>
+#include <Precision.hpp>
+#include <ProjLib.hpp>
+#include <Standard_DomainError.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopoDS_Edge.hpp>
 
 // OCC155 // jfa 05.03.2002 // bad vectors projection
 //=================================================================================================

@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_DatumOrCommonDatum.hxx>
+#include <StepDimTol_DatumOrCommonDatum.hpp>
 
-#include <MoniTool_Macros.hxx>
-#include <StepDimTol_Datum.hxx>
-#include <StepDimTol_DatumReferenceElement.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <MoniTool_Macros.hpp>
+#include <StepDimTol_Datum.hpp>
+#include <StepDimTol_DatumReferenceElement.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

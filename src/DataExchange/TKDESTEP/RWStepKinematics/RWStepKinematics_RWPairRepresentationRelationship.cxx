@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWPairRepresentationRelationship.pxx"
+#include "RWStepKinematics_RWPairRepresentationRelationship.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_PairRepresentationRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationRelationshipWithTransformation.hxx>
-#include <StepRepr_RepresentationOrRepresentationReference.hxx>
-#include <StepRepr_Transformation.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_PairRepresentationRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationRelationshipWithTransformation.hpp>
+#include <StepRepr_RepresentationOrRepresentationReference.hpp>
+#include <StepRepr_Transformation.hpp>
 
 //=================================================================================================
 

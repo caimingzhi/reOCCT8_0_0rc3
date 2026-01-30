@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool_2d.hxx>
-#include <BRep_Tool.hxx>
+#include <TopOpeBRepTool_2d.hpp>
+#include <BRep_Tool.hpp>
 
 #define M_FORWARD(sta) (sta == TopAbs_FORWARD)
 #define M_REVERSED(sta) (sta == TopAbs_REVERSED)

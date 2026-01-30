@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <XmlMNaming_Shape1.hxx>
-#include <XmlObjMgt.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <XmlMNaming_Shape1.hpp>
+#include <XmlObjMgt.hpp>
 
 #include <cstdio>
 IMPLEMENT_DOMSTRING(TShapeString, "tshape")

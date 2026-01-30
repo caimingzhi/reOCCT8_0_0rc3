@@ -14,41 +14,41 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_FuseFace.hxx>
+#include <TopOpeBRepBuild_FuseFace.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
 
-#include <TopExp_Explorer.hxx>
+#include <TopExp_Explorer.hpp>
 
-#include <TopoDS.hxx>
+#include <TopoDS.hpp>
 
-#include <BRepLib_MakeWire.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepLib_MakeEdge.hxx>
+#include <BRepLib_MakeWire.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepLib_MakeEdge.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepCheck_Analyzer.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepCheck_Analyzer.hpp>
 
-#include <Geom_Surface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <ElCLib.hxx>
-#include <Precision.hxx>
+#include <Geom_Surface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <ElCLib.hpp>
+#include <Precision.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceFUFA();

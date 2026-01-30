@@ -16,7 +16,7 @@
 
 #include <cstdio>
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -34,18 +34,18 @@
 //==                           C Y L I N D R E   Q U A D R I Q U E
 //======================================================================
 
-#include <ElSLib.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pnt.hxx>
-#include <IntAna_IntQuadQuad.hxx>
-#include <IntAna_Quadric.hxx>
-#include <math_TrigonometricFunctionRoots.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElSLib.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pnt.hpp>
+#include <IntAna_IntQuadQuad.hpp>
+#include <IntAna_Quadric.hpp>
+#include <math_TrigonometricFunctionRoots.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=======================================================================
 // function : AddSpecialPoints

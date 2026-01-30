@@ -3,79 +3,79 @@ set(OCCT_ShapeUpgrade_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeUpgrade_FILES
   ShapeUpgrade.cxx
-  ShapeUpgrade.hxx
+  ShapeUpgrade.hpp
   ShapeUpgrade_ClosedEdgeDivide.cxx
-  ShapeUpgrade_ClosedEdgeDivide.hxx
+  ShapeUpgrade_ClosedEdgeDivide.hpp
   ShapeUpgrade_ClosedFaceDivide.cxx
-  ShapeUpgrade_ClosedFaceDivide.hxx
+  ShapeUpgrade_ClosedFaceDivide.hpp
   ShapeUpgrade_ConvertCurve2dToBezier.cxx
-  ShapeUpgrade_ConvertCurve2dToBezier.hxx
+  ShapeUpgrade_ConvertCurve2dToBezier.hpp
   ShapeUpgrade_ConvertCurve3dToBezier.cxx
-  ShapeUpgrade_ConvertCurve3dToBezier.hxx
-  ShapeUpgrade_ConvertCurve3dToBezier.lxx
+  ShapeUpgrade_ConvertCurve3dToBezier.hpp
+  ShapeUpgrade_ConvertCurve3dToBezier_1.hpp
   ShapeUpgrade_ConvertSurfaceToBezierBasis.cxx
-  ShapeUpgrade_ConvertSurfaceToBezierBasis.hxx
-  ShapeUpgrade_ConvertSurfaceToBezierBasis.lxx
+  ShapeUpgrade_ConvertSurfaceToBezierBasis.hpp
+  ShapeUpgrade_ConvertSurfaceToBezierBasis_1.hpp
   ShapeUpgrade_EdgeDivide.cxx
-  ShapeUpgrade_EdgeDivide.hxx
-  ShapeUpgrade_EdgeDivide.lxx
+  ShapeUpgrade_EdgeDivide.hpp
+  ShapeUpgrade_EdgeDivide_1.hpp
   ShapeUpgrade_FaceDivide.cxx
-  ShapeUpgrade_FaceDivide.hxx
+  ShapeUpgrade_FaceDivide.hpp
   ShapeUpgrade_FaceDivideArea.cxx
-  ShapeUpgrade_FaceDivideArea.hxx
-  ShapeUpgrade_FaceDivideArea.lxx
+  ShapeUpgrade_FaceDivideArea.hpp
+  ShapeUpgrade_FaceDivideArea_1.hpp
   ShapeUpgrade_FixSmallBezierCurves.cxx
-  ShapeUpgrade_FixSmallBezierCurves.hxx
+  ShapeUpgrade_FixSmallBezierCurves.hpp
   ShapeUpgrade_FixSmallCurves.cxx
-  ShapeUpgrade_FixSmallCurves.hxx
+  ShapeUpgrade_FixSmallCurves.hpp
   ShapeUpgrade_RemoveInternalWires.cxx
-  ShapeUpgrade_RemoveInternalWires.hxx
-  ShapeUpgrade_RemoveInternalWires.lxx
+  ShapeUpgrade_RemoveInternalWires.hpp
+  ShapeUpgrade_RemoveInternalWires_1.hpp
   ShapeUpgrade_RemoveLocations.cxx
-  ShapeUpgrade_RemoveLocations.hxx
-  ShapeUpgrade_RemoveLocations.lxx
+  ShapeUpgrade_RemoveLocations.hpp
+  ShapeUpgrade_RemoveLocations_1.hpp
   ShapeUpgrade_ShapeConvertToBezier.cxx
-  ShapeUpgrade_ShapeConvertToBezier.hxx
-  ShapeUpgrade_ShapeConvertToBezier.lxx
+  ShapeUpgrade_ShapeConvertToBezier.hpp
+  ShapeUpgrade_ShapeConvertToBezier_1.hpp
   ShapeUpgrade_ShapeDivide.cxx
-  ShapeUpgrade_ShapeDivide.hxx
+  ShapeUpgrade_ShapeDivide.hpp
   ShapeUpgrade_ShapeDivideAngle.cxx
-  ShapeUpgrade_ShapeDivideAngle.hxx
+  ShapeUpgrade_ShapeDivideAngle.hpp
   ShapeUpgrade_ShapeDivideArea.cxx
-  ShapeUpgrade_ShapeDivideArea.hxx
-  ShapeUpgrade_ShapeDivideArea.lxx
+  ShapeUpgrade_ShapeDivideArea.hpp
+  ShapeUpgrade_ShapeDivideArea_1.hpp
   ShapeUpgrade_ShapeDivideClosed.cxx
-  ShapeUpgrade_ShapeDivideClosed.hxx
+  ShapeUpgrade_ShapeDivideClosed.hpp
   ShapeUpgrade_ShapeDivideClosedEdges.cxx
-  ShapeUpgrade_ShapeDivideClosedEdges.hxx
+  ShapeUpgrade_ShapeDivideClosedEdges.hpp
   ShapeUpgrade_ShapeDivideContinuity.cxx
-  ShapeUpgrade_ShapeDivideContinuity.hxx
+  ShapeUpgrade_ShapeDivideContinuity.hpp
   ShapeUpgrade_ShellSewing.cxx
-  ShapeUpgrade_ShellSewing.hxx
+  ShapeUpgrade_ShellSewing.hpp
   ShapeUpgrade_SplitCurve.cxx
-  ShapeUpgrade_SplitCurve.hxx
+  ShapeUpgrade_SplitCurve.hpp
   ShapeUpgrade_SplitCurve2d.cxx
-  ShapeUpgrade_SplitCurve2d.hxx
+  ShapeUpgrade_SplitCurve2d.hpp
   ShapeUpgrade_SplitCurve2dContinuity.cxx
-  ShapeUpgrade_SplitCurve2dContinuity.hxx
+  ShapeUpgrade_SplitCurve2dContinuity.hpp
   ShapeUpgrade_SplitCurve3d.cxx
-  ShapeUpgrade_SplitCurve3d.hxx
+  ShapeUpgrade_SplitCurve3d.hpp
   ShapeUpgrade_SplitCurve3dContinuity.cxx
-  ShapeUpgrade_SplitCurve3dContinuity.hxx
+  ShapeUpgrade_SplitCurve3dContinuity.hpp
   ShapeUpgrade_SplitSurface.cxx
-  ShapeUpgrade_SplitSurface.hxx
+  ShapeUpgrade_SplitSurface.hpp
   ShapeUpgrade_SplitSurfaceAngle.cxx
-  ShapeUpgrade_SplitSurfaceAngle.hxx
+  ShapeUpgrade_SplitSurfaceAngle.hpp
   ShapeUpgrade_SplitSurfaceArea.cxx
-  ShapeUpgrade_SplitSurfaceArea.hxx
-  ShapeUpgrade_SplitSurfaceArea.lxx
+  ShapeUpgrade_SplitSurfaceArea.hpp
+  ShapeUpgrade_SplitSurfaceArea_1.hpp
   ShapeUpgrade_SplitSurfaceContinuity.cxx
-  ShapeUpgrade_SplitSurfaceContinuity.hxx
+  ShapeUpgrade_SplitSurfaceContinuity.hpp
   ShapeUpgrade_Tool.cxx
-  ShapeUpgrade_Tool.hxx
-  ShapeUpgrade_Tool.lxx
+  ShapeUpgrade_Tool.hpp
+  ShapeUpgrade_Tool_1.hpp
   ShapeUpgrade_UnifySameDomain.cxx
-  ShapeUpgrade_UnifySameDomain.hxx
+  ShapeUpgrade_UnifySameDomain.hpp
   ShapeUpgrade_WireDivide.cxx
-  ShapeUpgrade_WireDivide.hxx
+  ShapeUpgrade_WireDivide.hpp
 )

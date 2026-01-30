@@ -14,17 +14,17 @@
 #include <gtest/gtest.h>
 
 // New API
-#include <MathRoot_Newton.hxx>
-#include <MathRoot_Brent.hxx>
-#include <MathRoot_Bisection.hxx>
-#include <MathRoot_Secant.hxx>
+#include <MathRoot_Newton.hpp>
+#include <MathRoot_Brent.hpp>
+#include <MathRoot_Bisection.hpp>
+#include <MathRoot_Secant.hpp>
 
 // Old API
-#include <math_BissecNewton.hxx>
-#include <math_BracketedRoot.hxx>
-#include <math_FunctionRoot.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <math_NewtonFunctionRoot.hxx>
+#include <math_BissecNewton.hpp>
+#include <math_BracketedRoot.hpp>
+#include <math_FunctionRoot.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <math_NewtonFunctionRoot.hpp>
 
 #include <cmath>
 

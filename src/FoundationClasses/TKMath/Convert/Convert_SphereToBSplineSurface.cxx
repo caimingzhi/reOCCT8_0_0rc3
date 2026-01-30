@@ -14,11 +14,11 @@
 
 // JCV 16/10/91
 
-#include <Convert_SphereToBSplineSurface.hxx>
-#include <gp.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_DomainError.hxx>
+#include <Convert_SphereToBSplineSurface.hpp>
+#include <gp.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_DomainError.hpp>
 
 namespace
 {

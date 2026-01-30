@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWRepositionedTessellatedItem.pxx"
+#include "RWStepVisual_RWRepositionedTessellatedItem.hpp"
 
-#include <Interface_Check.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_RepositionedTessellatedItem.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
+#include <Interface_Check.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_RepositionedTessellatedItem.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
 
 //=================================================================================================
 

@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTest.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntTools_FClass2d.hxx>
-#include <TopAbs_State.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BOPTest.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntTools_FClass2d.hpp>
+#include <TopAbs_State.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <cstdio>
 static void                      PrintState(Draw_Interpretor& aDI, const TopAbs_State& aState);

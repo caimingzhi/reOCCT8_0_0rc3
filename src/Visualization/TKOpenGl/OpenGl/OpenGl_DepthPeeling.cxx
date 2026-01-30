@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_DepthPeeling.hxx>
+#include <OpenGl_DepthPeeling.hpp>
 
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_Texture.hxx>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_Texture.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_DepthPeeling, OpenGl_NamedResource)
 

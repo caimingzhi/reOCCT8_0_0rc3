@@ -12,20 +12,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_ConstraintEnum.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_ConstraintEnum.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Constraint, TDF_Attribute)
 

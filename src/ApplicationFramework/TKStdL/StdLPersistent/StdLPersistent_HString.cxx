@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_HString.hxx>
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_WriteData.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <StdLPersistent_HString.hpp>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_WriteData.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 //=======================================================================
 // function : Read

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NLPlate_HPG2Constraint.hxx>
-#include <Plate_D1.hxx>
-#include <Plate_D2.hxx>
-#include <Standard_Type.hxx>
+#include <NLPlate_HPG2Constraint.hpp>
+#include <Plate_D1.hpp>
+#include <Plate_D2.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(NLPlate_HPG2Constraint, NLPlate_HPG1Constraint)
 

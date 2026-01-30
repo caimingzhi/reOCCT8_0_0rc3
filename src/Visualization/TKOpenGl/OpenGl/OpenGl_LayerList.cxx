@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_GlCore15.hxx>
+#include <OpenGl_GlCore15.hpp>
 
-#include <BVH_LinearBuilder.hxx>
-#include <OpenGl_DepthPeeling.hxx>
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_LayerList.hxx>
-#include <OpenGl_RenderFilter.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShadowMap.hxx>
-#include <OpenGl_VertexBuffer.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <BVH_LinearBuilder.hpp>
+#include <OpenGl_DepthPeeling.hpp>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_LayerList.hpp>
+#include <OpenGl_RenderFilter.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShadowMap.hpp>
+#include <OpenGl_VertexBuffer.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_Workspace.hpp>
 
 namespace
 {

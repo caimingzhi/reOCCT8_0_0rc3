@@ -16,15 +16,15 @@
 //-- lbr : la methode avec les coefficients est catastrophique.
 //--       Mise en place d'une vraie solution.
 
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Trsf.hxx>
-#include <IntAna_IntLinTorus.hxx>
-#include <math_DirectPolynomialRoots.hxx>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Trsf.hpp>
+#include <IntAna_IntLinTorus.hpp>
+#include <math_DirectPolynomialRoots.hpp>
 
 IntAna_IntLinTorus::IntAna_IntLinTorus()
     : done(false),

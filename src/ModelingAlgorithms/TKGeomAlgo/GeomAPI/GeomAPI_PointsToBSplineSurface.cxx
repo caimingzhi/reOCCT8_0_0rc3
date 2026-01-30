@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_BSplineCompute.hxx>
-#include <AppDef_Variational.hxx>
-#include <AppParCurves_ConstraintCouple.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <BSplCLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAPI_PointsToBSpline.hxx>
-#include <GeomAPI_PointsToBSplineSurface.hxx>
-#include <GeomFill_AppSurf.hxx>
-#include <GeomFill_Line.hxx>
-#include <GeomFill_SectionGenerator.hxx>
-#include <gp_Pnt.hxx>
-#include <math_Vector.hxx>
-#include <StdFail_NotDone.hxx>
-#include <AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hxx>
+#include <AppDef_BSplineCompute.hpp>
+#include <AppDef_Variational.hpp>
+#include <AppParCurves_ConstraintCouple.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <BSplCLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAPI_PointsToBSpline.hpp>
+#include <GeomAPI_PointsToBSplineSurface.hpp>
+#include <GeomFill_AppSurf.hpp>
+#include <GeomFill_Line.hpp>
+#include <GeomFill_SectionGenerator.hpp>
+#include <gp_Pnt.hpp>
+#include <math_Vector.hpp>
+#include <StdFail_NotDone.hpp>
+#include <AppDef_BSpParLeastSquareOfMyBSplGradientOfBSplineCompute.hpp>
 
 static void BuildParameters(const AppDef_MultiLine&          theLine,
                             const Approx_ParametrizationType theParT,

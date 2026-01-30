@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HelixGeom_BuilderApproxCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <NCollection_Sequence.hxx>
+#include <HelixGeom_BuilderApproxCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <NCollection_Sequence.hpp>
 
 //=================================================================================================
 

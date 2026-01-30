@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Intf.hxx>
+#include <Intf.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
 
 //=================================================================================================
 

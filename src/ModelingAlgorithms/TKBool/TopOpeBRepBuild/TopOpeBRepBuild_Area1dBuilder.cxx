@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_Area1dBuilder.hxx>
-#include <TopOpeBRepBuild_Loop.hxx>
-#include <TopOpeBRepBuild_LoopEnum.hxx>
-#include <TopOpeBRepBuild_PaveClassifier.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
+#include <TopOpeBRepBuild_Area1dBuilder.hpp>
+#include <TopOpeBRepBuild_Loop.hpp>
+#include <TopOpeBRepBuild_LoopEnum.hpp>
+#include <TopOpeBRepBuild_PaveClassifier.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceAREA();

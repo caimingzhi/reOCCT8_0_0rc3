@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData.hxx>
-#include <IGESData_DefaultSpecific.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_SpecificLib.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_UndefinedContent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData.hpp>
+#include <IGESData_DefaultSpecific.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_SpecificLib.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_UndefinedContent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_DefaultSpecific, IGESData_SpecificModule)
 

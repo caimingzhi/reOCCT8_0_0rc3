@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hxx>
+#include <Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <Bnd_Box2d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <Bnd_Box2d.hpp>
+#include <gp_Pnt2d.hpp>
 
 #define TheCurve Adaptor2d_Curve2d
-#define TheCurve_hxx <Adaptor2d_Curve2d.hxx>
+#define TheCurve_hxx <Adaptor2d_Curve2d.hpp>
 #define TheCurveTool Geom2dInt_Geom2dCurveTool
-#define TheCurveTool_hxx <Geom2dInt_Geom2dCurveTool.hxx>
+#define TheCurveTool_hxx <Geom2dInt_Geom2dCurveTool.hpp>
 #define IntCurve_Polygon2dGen Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter
-#define IntCurve_Polygon2dGen_hxx <Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hxx>
-#include <IntCurve_Polygon2dGen.gxx>
+#define IntCurve_Polygon2dGen_hxx <Geom2dInt_ThePolygon2dOfTheIntPCurvePCurveOfGInter.hpp>
+#include <IntCurve_Polygon2dGen.hpp>

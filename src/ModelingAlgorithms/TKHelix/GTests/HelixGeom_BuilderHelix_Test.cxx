@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixGeom_BuilderHelix.hxx>
-#include <Geom_Curve.hxx>
-#include <NCollection_Sequence.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
+#include <HelixGeom_BuilderHelix.hpp>
+#include <Geom_Curve.hpp>
+#include <NCollection_Sequence.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
 
 class HelixGeom_BuilderHelix_Test : public ::testing::Test
 {

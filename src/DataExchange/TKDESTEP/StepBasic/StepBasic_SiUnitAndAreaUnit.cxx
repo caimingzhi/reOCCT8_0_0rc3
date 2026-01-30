@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_AreaUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiUnitAndAreaUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_AreaUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiUnitAndAreaUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_SiUnitAndAreaUnit, StepBasic_SiUnit)
 

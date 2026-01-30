@@ -4,17 +4,17 @@ set(OCCT_Quantity_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Quantity_FILES
 
   Quantity_Color.cxx
-  Quantity_Color.hxx
-  Quantity_ColorTable.pxx
+  Quantity_Color.hpp
+  Quantity_ColorTable.hpp
   Quantity_ColorRGBA.cxx
-  Quantity_ColorRGBA.hxx
+  Quantity_ColorRGBA.hpp
   Quantity_Date.cxx
-  Quantity_Date.hxx
-  Quantity_DateDefinitionError.hxx
+  Quantity_Date.hpp
+  Quantity_DateDefinitionError.hpp
 
-  Quantity_NameOfColor.hxx
+  Quantity_NameOfColor.hpp
   Quantity_Period.cxx
-  Quantity_Period.hxx
-  Quantity_PeriodDefinitionError.hxx
-  Quantity_TypeOfColor.hxx
+  Quantity_Period.hpp
+  Quantity_PeriodDefinitionError.hpp
+  Quantity_TypeOfColor.hpp
 )

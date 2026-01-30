@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_Product, Standard_Transient)
 

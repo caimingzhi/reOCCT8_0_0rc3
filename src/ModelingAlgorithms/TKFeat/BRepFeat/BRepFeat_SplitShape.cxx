@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFeat_SplitShape.hxx>
-#include <LocOpe_WiresOnShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopExp_Explorer.hxx>
+#include <BRepFeat_SplitShape.hpp>
+#include <LocOpe_WiresOnShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopExp_Explorer.hpp>
 
 //=================================================================================================
 

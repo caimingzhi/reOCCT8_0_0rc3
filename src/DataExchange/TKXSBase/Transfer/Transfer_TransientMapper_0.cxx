@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_TransientMapper.hxx>
+#include <Transfer_TransientMapper.hpp>
 
-#include <Standard_Type.hxx>
-#include <Standard_Transient.hxx>
-#include <Transfer_DataInfo.hxx>
-#include <Transfer_Finder.hxx>
+#include <Standard_Type.hpp>
+#include <Standard_Transient.hpp>
+#include <Transfer_DataInfo.hpp>
+#include <Transfer_Finder.hpp>
 
 //=================================================================================================
 

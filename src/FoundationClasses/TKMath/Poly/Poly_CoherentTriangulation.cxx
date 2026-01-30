@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly_CoherentTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_List.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
+#include <Poly_CoherentTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_List.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_CoherentTriangulation, Standard_Transient)
 

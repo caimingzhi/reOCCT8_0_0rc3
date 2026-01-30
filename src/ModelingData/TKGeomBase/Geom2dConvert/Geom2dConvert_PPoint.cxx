@@ -14,10 +14,10 @@
 // performance of this software, and specifically disclaims any responsibility
 // for any damages, special or consequential, connected with its use.
 
-#include <Geom2dConvert_PPoint.hxx>
+#include <Geom2dConvert_PPoint.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Precision.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

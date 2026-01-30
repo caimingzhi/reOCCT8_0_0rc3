@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGraph_Pick.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGraph_Pick.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_Pick, IGESData_IGESEntity)
 

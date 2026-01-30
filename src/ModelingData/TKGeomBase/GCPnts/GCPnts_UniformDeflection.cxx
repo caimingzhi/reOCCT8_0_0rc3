@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_UniformDeflection.hxx>
+#include <GCPnts_UniformDeflection.hpp>
 
-#include <CPnts_UniformDeflection.hxx>
-#include <GCPnts_DeflectionType.hxx>
-#include <GCPnts_TCurveTypes.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
+#include <CPnts_UniformDeflection.hpp>
+#include <GCPnts_DeflectionType.hpp>
+#include <GCPnts_TCurveTypes.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
 
 // mask the return of a Adaptor2d_Curve2d as a gp_Pnt
 static gp_Pnt Value(const Adaptor3d_Curve& theC, const double theParameter)

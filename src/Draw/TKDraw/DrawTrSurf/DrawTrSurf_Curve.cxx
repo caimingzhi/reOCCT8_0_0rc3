@@ -12,22 +12,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_Curve.hxx>
+#include <DrawTrSurf_Curve.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomLProp_CLProps.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <gp.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomLProp_CLProps.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <gp.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Curve, DrawTrSurf_Drawable)
 

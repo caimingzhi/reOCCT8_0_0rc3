@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_TrimmedCurve.hxx>
-#include <BRepBndLib.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Sphere.hxx>
-#include <gp_Torus.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <BRep_Builder.hxx>
-#include <ElCLib.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_2d.hxx>
+#include <Geom_TrimmedCurve.hpp>
+#include <BRepBndLib.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Sphere.hpp>
+#include <gp_Torus.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <BRep_Builder.hpp>
+#include <ElCLib.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_2d.hpp>
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 //---------------------------------------------
 #define M_FORWARD(ori) (ori == TopAbs_FORWARD)

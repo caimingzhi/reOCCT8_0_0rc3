@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_NoteBalloon.hxx>
+#include <XCAFDoc_NoteBalloon.hpp>
 
-#include <Standard_GUID.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_GUID.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(XCAFDoc_NoteBalloon, XCAFDoc_NoteComment)
 

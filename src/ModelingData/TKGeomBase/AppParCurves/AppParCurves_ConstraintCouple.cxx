@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppParCurves_ConstraintCouple.hxx>
+#include <AppParCurves_ConstraintCouple.hpp>
 
 AppParCurves_ConstraintCouple::AppParCurves_ConstraintCouple()
     : myIndex(-1),

@@ -4,192 +4,192 @@ set(OCCT_StepGeom_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_StepGeom_FILES
 
   StepGeom_Axis1Placement.cxx
-  StepGeom_Axis1Placement.hxx
+  StepGeom_Axis1Placement.hpp
   StepGeom_Axis2Placement.cxx
-  StepGeom_Axis2Placement.hxx
+  StepGeom_Axis2Placement.hpp
   StepGeom_Axis2Placement2d.cxx
-  StepGeom_Axis2Placement2d.hxx
+  StepGeom_Axis2Placement2d.hpp
   StepGeom_Axis2Placement3d.cxx
-  StepGeom_Axis2Placement3d.hxx
+  StepGeom_Axis2Placement3d.hpp
   StepGeom_BezierCurve.cxx
-  StepGeom_BezierCurve.hxx
+  StepGeom_BezierCurve.hpp
   StepGeom_BezierCurveAndRationalBSplineCurve.cxx
-  StepGeom_BezierCurveAndRationalBSplineCurve.hxx
+  StepGeom_BezierCurveAndRationalBSplineCurve.hpp
   StepGeom_BezierSurface.cxx
-  StepGeom_BezierSurface.hxx
+  StepGeom_BezierSurface.hpp
   StepGeom_BezierSurfaceAndRationalBSplineSurface.cxx
-  StepGeom_BezierSurfaceAndRationalBSplineSurface.hxx
+  StepGeom_BezierSurfaceAndRationalBSplineSurface.hpp
   StepGeom_BoundaryCurve.cxx
-  StepGeom_BoundaryCurve.hxx
+  StepGeom_BoundaryCurve.hpp
   StepGeom_BoundedCurve.cxx
-  StepGeom_BoundedCurve.hxx
+  StepGeom_BoundedCurve.hpp
   StepGeom_BoundedSurface.cxx
-  StepGeom_BoundedSurface.hxx
+  StepGeom_BoundedSurface.hpp
   StepGeom_BSplineCurve.cxx
-  StepGeom_BSplineCurve.hxx
-  StepGeom_BSplineCurveForm.hxx
+  StepGeom_BSplineCurve.hpp
+  StepGeom_BSplineCurveForm.hpp
   StepGeom_BSplineCurveWithKnots.cxx
-  StepGeom_BSplineCurveWithKnots.hxx
+  StepGeom_BSplineCurveWithKnots.hpp
   StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.cxx
-  StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hxx
+  StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp
   StepGeom_BSplineSurface.cxx
-  StepGeom_BSplineSurface.hxx
-  StepGeom_BSplineSurfaceForm.hxx
+  StepGeom_BSplineSurface.hpp
+  StepGeom_BSplineSurfaceForm.hpp
   StepGeom_BSplineSurfaceWithKnots.cxx
-  StepGeom_BSplineSurfaceWithKnots.hxx
+  StepGeom_BSplineSurfaceWithKnots.hpp
   StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.cxx
-  StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx
+  StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp
   StepGeom_CartesianPoint.cxx
-  StepGeom_CartesianPoint.hxx
+  StepGeom_CartesianPoint.hpp
   StepGeom_CartesianTransformationOperator.cxx
-  StepGeom_CartesianTransformationOperator.hxx
+  StepGeom_CartesianTransformationOperator.hpp
   StepGeom_CartesianTransformationOperator2d.cxx
-  StepGeom_CartesianTransformationOperator2d.hxx
+  StepGeom_CartesianTransformationOperator2d.hpp
   StepGeom_CartesianTransformationOperator3d.cxx
-  StepGeom_CartesianTransformationOperator3d.hxx
+  StepGeom_CartesianTransformationOperator3d.hpp
   StepGeom_Circle.cxx
-  StepGeom_Circle.hxx
+  StepGeom_Circle.hpp
   StepGeom_CompositeCurve.cxx
-  StepGeom_CompositeCurve.hxx
+  StepGeom_CompositeCurve.hpp
   StepGeom_CompositeCurveOnSurface.cxx
-  StepGeom_CompositeCurveOnSurface.hxx
+  StepGeom_CompositeCurveOnSurface.hpp
   StepGeom_CompositeCurveSegment.cxx
-  StepGeom_CompositeCurveSegment.hxx
+  StepGeom_CompositeCurveSegment.hpp
   StepGeom_Conic.cxx
-  StepGeom_Conic.hxx
+  StepGeom_Conic.hpp
   StepGeom_ConicalSurface.cxx
-  StepGeom_ConicalSurface.hxx
+  StepGeom_ConicalSurface.hpp
   StepGeom_Curve.cxx
-  StepGeom_Curve.hxx
+  StepGeom_Curve.hpp
   StepGeom_CurveBoundedSurface.cxx
-  StepGeom_CurveBoundedSurface.hxx
+  StepGeom_CurveBoundedSurface.hpp
   StepGeom_CurveOnSurface.cxx
-  StepGeom_CurveOnSurface.hxx
+  StepGeom_CurveOnSurface.hpp
   StepGeom_CurveReplica.cxx
-  StepGeom_CurveReplica.hxx
+  StepGeom_CurveReplica.hpp
   StepGeom_CylindricalSurface.cxx
-  StepGeom_CylindricalSurface.hxx
+  StepGeom_CylindricalSurface.hpp
   StepGeom_DegeneratePcurve.cxx
-  StepGeom_DegeneratePcurve.hxx
+  StepGeom_DegeneratePcurve.hpp
   StepGeom_DegenerateToroidalSurface.cxx
-  StepGeom_DegenerateToroidalSurface.hxx
+  StepGeom_DegenerateToroidalSurface.hpp
   StepGeom_Direction.cxx
-  StepGeom_Direction.hxx
+  StepGeom_Direction.hpp
   StepGeom_ElementarySurface.cxx
-  StepGeom_ElementarySurface.hxx
+  StepGeom_ElementarySurface.hpp
   StepGeom_Ellipse.cxx
-  StepGeom_Ellipse.hxx
+  StepGeom_Ellipse.hpp
   StepGeom_EvaluatedDegeneratePcurve.cxx
-  StepGeom_EvaluatedDegeneratePcurve.hxx
+  StepGeom_EvaluatedDegeneratePcurve.hpp
   StepGeom_GeometricRepresentationContext.cxx
-  StepGeom_GeometricRepresentationContext.hxx
+  StepGeom_GeometricRepresentationContext.hpp
   StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext.cxx
-  StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext.hxx
+  StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext.hpp
   StepGeom_GeometricRepresentationContextAndParametricRepresentationContext.cxx
-  StepGeom_GeometricRepresentationContextAndParametricRepresentationContext.hxx
+  StepGeom_GeometricRepresentationContextAndParametricRepresentationContext.hpp
   StepGeom_GeometricRepresentationItem.cxx
-  StepGeom_GeometricRepresentationItem.hxx
+  StepGeom_GeometricRepresentationItem.hpp
   StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.cxx
-  StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hxx
+  StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp
 
   StepGeom_Hyperbola.cxx
-  StepGeom_Hyperbola.hxx
+  StepGeom_Hyperbola.hpp
   StepGeom_IntersectionCurve.cxx
-  StepGeom_IntersectionCurve.hxx
-  StepGeom_KnotType.hxx
+  StepGeom_IntersectionCurve.hpp
+  StepGeom_KnotType.hpp
   StepGeom_Line.cxx
-  StepGeom_Line.hxx
+  StepGeom_Line.hpp
   StepGeom_OffsetCurve3d.cxx
-  StepGeom_OffsetCurve3d.hxx
+  StepGeom_OffsetCurve3d.hpp
   StepGeom_OffsetSurface.cxx
-  StepGeom_OffsetSurface.hxx
+  StepGeom_OffsetSurface.hpp
   StepGeom_OrientedSurface.cxx
-  StepGeom_OrientedSurface.hxx
+  StepGeom_OrientedSurface.hpp
   StepGeom_OuterBoundaryCurve.cxx
-  StepGeom_OuterBoundaryCurve.hxx
+  StepGeom_OuterBoundaryCurve.hpp
   StepGeom_Parabola.cxx
-  StepGeom_Parabola.hxx
+  StepGeom_Parabola.hpp
   StepGeom_Pcurve.cxx
-  StepGeom_Pcurve.hxx
+  StepGeom_Pcurve.hpp
   StepGeom_PcurveOrSurface.cxx
-  StepGeom_PcurveOrSurface.hxx
+  StepGeom_PcurveOrSurface.hpp
   StepGeom_Placement.cxx
-  StepGeom_Placement.hxx
+  StepGeom_Placement.hpp
   StepGeom_Plane.cxx
-  StepGeom_Plane.hxx
+  StepGeom_Plane.hpp
   StepGeom_Point.cxx
-  StepGeom_Point.hxx
+  StepGeom_Point.hpp
   StepGeom_PointOnCurve.cxx
-  StepGeom_PointOnCurve.hxx
+  StepGeom_PointOnCurve.hpp
   StepGeom_PointOnSurface.cxx
-  StepGeom_PointOnSurface.hxx
+  StepGeom_PointOnSurface.hpp
   StepGeom_PointReplica.cxx
-  StepGeom_PointReplica.hxx
+  StepGeom_PointReplica.hpp
   StepGeom_Polyline.cxx
-  StepGeom_Polyline.hxx
-  StepGeom_PreferredSurfaceCurveRepresentation.hxx
+  StepGeom_Polyline.hpp
+  StepGeom_PreferredSurfaceCurveRepresentation.hpp
   StepGeom_QuasiUniformCurve.cxx
-  StepGeom_QuasiUniformCurve.hxx
+  StepGeom_QuasiUniformCurve.hpp
   StepGeom_QuasiUniformCurveAndRationalBSplineCurve.cxx
-  StepGeom_QuasiUniformCurveAndRationalBSplineCurve.hxx
+  StepGeom_QuasiUniformCurveAndRationalBSplineCurve.hpp
   StepGeom_QuasiUniformSurface.cxx
-  StepGeom_QuasiUniformSurface.hxx
+  StepGeom_QuasiUniformSurface.hpp
   StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface.cxx
-  StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface.hxx
+  StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface.hpp
   StepGeom_RationalBSplineCurve.cxx
-  StepGeom_RationalBSplineCurve.hxx
+  StepGeom_RationalBSplineCurve.hpp
   StepGeom_RationalBSplineSurface.cxx
-  StepGeom_RationalBSplineSurface.hxx
+  StepGeom_RationalBSplineSurface.hpp
   StepGeom_RectangularCompositeSurface.cxx
-  StepGeom_RectangularCompositeSurface.hxx
+  StepGeom_RectangularCompositeSurface.hpp
   StepGeom_RectangularTrimmedSurface.cxx
-  StepGeom_RectangularTrimmedSurface.hxx
+  StepGeom_RectangularTrimmedSurface.hpp
   StepGeom_ReparametrisedCompositeCurveSegment.cxx
-  StepGeom_ReparametrisedCompositeCurveSegment.hxx
+  StepGeom_ReparametrisedCompositeCurveSegment.hpp
   StepGeom_SeamCurve.cxx
-  StepGeom_SeamCurve.hxx
+  StepGeom_SeamCurve.hpp
   StepGeom_SphericalSurface.cxx
-  StepGeom_SphericalSurface.hxx
+  StepGeom_SphericalSurface.hpp
   StepGeom_SuParameters.cxx
-  StepGeom_SuParameters.hxx
+  StepGeom_SuParameters.hpp
   StepGeom_Surface.cxx
-  StepGeom_Surface.hxx
+  StepGeom_Surface.hpp
   StepGeom_SurfaceBoundary.cxx
-  StepGeom_SurfaceBoundary.hxx
+  StepGeom_SurfaceBoundary.hpp
   StepGeom_SurfaceCurve.cxx
-  StepGeom_SurfaceCurve.hxx
+  StepGeom_SurfaceCurve.hpp
   StepGeom_SurfaceCurveAndBoundedCurve.cxx
-  StepGeom_SurfaceCurveAndBoundedCurve.hxx
+  StepGeom_SurfaceCurveAndBoundedCurve.hpp
   StepGeom_SurfaceOfLinearExtrusion.cxx
-  StepGeom_SurfaceOfLinearExtrusion.hxx
+  StepGeom_SurfaceOfLinearExtrusion.hpp
   StepGeom_SurfaceOfRevolution.cxx
-  StepGeom_SurfaceOfRevolution.hxx
+  StepGeom_SurfaceOfRevolution.hpp
   StepGeom_SurfacePatch.cxx
-  StepGeom_SurfacePatch.hxx
+  StepGeom_SurfacePatch.hpp
   StepGeom_SurfaceReplica.cxx
-  StepGeom_SurfaceReplica.hxx
+  StepGeom_SurfaceReplica.hpp
   StepGeom_SweptSurface.cxx
-  StepGeom_SweptSurface.hxx
+  StepGeom_SweptSurface.hpp
   StepGeom_ToroidalSurface.cxx
-  StepGeom_ToroidalSurface.hxx
-  StepGeom_TransitionCode.hxx
+  StepGeom_ToroidalSurface.hpp
+  StepGeom_TransitionCode.hpp
   StepGeom_TrimmedCurve.cxx
-  StepGeom_TrimmedCurve.hxx
+  StepGeom_TrimmedCurve.hpp
   StepGeom_TrimmingMember.cxx
-  StepGeom_TrimmingMember.hxx
-  StepGeom_TrimmingPreference.hxx
+  StepGeom_TrimmingMember.hpp
+  StepGeom_TrimmingPreference.hpp
   StepGeom_TrimmingSelect.cxx
-  StepGeom_TrimmingSelect.hxx
+  StepGeom_TrimmingSelect.hpp
   StepGeom_UniformCurve.cxx
-  StepGeom_UniformCurve.hxx
+  StepGeom_UniformCurve.hpp
   StepGeom_UniformCurveAndRationalBSplineCurve.cxx
-  StepGeom_UniformCurveAndRationalBSplineCurve.hxx
+  StepGeom_UniformCurveAndRationalBSplineCurve.hpp
   StepGeom_UniformSurface.cxx
-  StepGeom_UniformSurface.hxx
+  StepGeom_UniformSurface.hpp
   StepGeom_UniformSurfaceAndRationalBSplineSurface.cxx
-  StepGeom_UniformSurfaceAndRationalBSplineSurface.hxx
+  StepGeom_UniformSurfaceAndRationalBSplineSurface.hpp
   StepGeom_Vector.cxx
-  StepGeom_Vector.hxx
+  StepGeom_Vector.hpp
   StepGeom_VectorOrDirection.cxx
-  StepGeom_VectorOrDirection.hxx
+  StepGeom_VectorOrDirection.hpp
 )

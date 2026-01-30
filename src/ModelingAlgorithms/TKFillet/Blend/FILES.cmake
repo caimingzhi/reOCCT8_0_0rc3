@@ -3,28 +3,28 @@ set(OCCT_Blend_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Blend_FILES
   Blend_AppFunction.cxx
-  Blend_AppFunction.hxx
+  Blend_AppFunction.hpp
   Blend_CSFunction.cxx
-  Blend_CSFunction.hxx
+  Blend_CSFunction.hpp
   Blend_CurvPointFuncInv.cxx
-  Blend_CurvPointFuncInv.hxx
+  Blend_CurvPointFuncInv.hpp
   Blend_Debug.cxx
-  Blend_DecrochStatus.hxx
+  Blend_DecrochStatus.hpp
   Blend_FuncInv.cxx
-  Blend_FuncInv.hxx
+  Blend_FuncInv.hpp
   Blend_Function.cxx
-  Blend_Function.hxx
+  Blend_Function.hpp
   Blend_Point.cxx
-  Blend_Point.hxx
-  Blend_Point.lxx
+  Blend_Point.hpp
+  Blend_Point_1.hpp
   Blend_RstRstFunction.cxx
-  Blend_RstRstFunction.hxx
+  Blend_RstRstFunction.hpp
 
-  Blend_Status.hxx
+  Blend_Status.hpp
   Blend_SurfCurvFuncInv.cxx
-  Blend_SurfCurvFuncInv.hxx
+  Blend_SurfCurvFuncInv.hpp
   Blend_SurfPointFuncInv.cxx
-  Blend_SurfPointFuncInv.hxx
+  Blend_SurfPointFuncInv.hpp
   Blend_SurfRstFunction.cxx
-  Blend_SurfRstFunction.hxx
+  Blend_SurfRstFunction.hpp
 )

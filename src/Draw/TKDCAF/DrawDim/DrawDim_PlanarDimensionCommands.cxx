@@ -16,28 +16,28 @@
 
 #include <cstdio>
 
-#include <DrawDim.hxx>
+#include <DrawDim.hpp>
 
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw.hxx>
-#include <DBRep.hxx>
-#include <DrawDim_PlanarDistance.hxx>
-#include <DrawDim_PlanarRadius.hxx>
-#include <DrawDim_PlanarAngle.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <Geom_Circle.hxx>
-#include <BRep_Builder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Circ.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <TopExp_Explorer.hxx>
-#include <gp_Pln.hxx>
-#include <DrawTrSurf.hxx>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw.hpp>
+#include <DBRep.hpp>
+#include <DrawDim_PlanarDistance.hpp>
+#include <DrawDim_PlanarRadius.hpp>
+#include <DrawDim_PlanarAngle.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <Geom_Circle.hpp>
+#include <BRep_Builder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Circ.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <TopExp_Explorer.hpp>
+#include <gp_Pln.hpp>
+#include <DrawTrSurf.hpp>
 
 //=================================================================================================
 

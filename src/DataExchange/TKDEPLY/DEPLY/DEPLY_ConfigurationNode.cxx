@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEPLY_ConfigurationNode.hxx>
+#include <DEPLY_ConfigurationNode.hpp>
 
-#include <DEPLY_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <NCollection_Buffer.hxx>
+#include <DEPLY_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <NCollection_Buffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEPLY_ConfigurationNode, DE_ConfigurationNode)
 

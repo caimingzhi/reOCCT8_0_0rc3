@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Display.hxx>
-#include <Draw_Segment2D.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Display.hpp>
+#include <Draw_Segment2D.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Segment2D, Draw_Drawable2D)
 

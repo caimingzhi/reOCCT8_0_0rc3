@@ -3,49 +3,49 @@ set(OCCT_XmlMDataStd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XmlMDataStd_FILES
   XmlMDataStd.cxx
-  XmlMDataStd.hxx
+  XmlMDataStd.hpp
   XmlMDataStd_AsciiStringDriver.cxx
-  XmlMDataStd_AsciiStringDriver.hxx
+  XmlMDataStd_AsciiStringDriver.hpp
   XmlMDataStd_BooleanArrayDriver.cxx
-  XmlMDataStd_BooleanArrayDriver.hxx
+  XmlMDataStd_BooleanArrayDriver.hpp
   XmlMDataStd_BooleanListDriver.cxx
-  XmlMDataStd_BooleanListDriver.hxx
+  XmlMDataStd_BooleanListDriver.hpp
   XmlMDataStd_ByteArrayDriver.cxx
-  XmlMDataStd_ByteArrayDriver.hxx
+  XmlMDataStd_ByteArrayDriver.hpp
   XmlMDataStd_ExpressionDriver.cxx
-  XmlMDataStd_ExpressionDriver.hxx
+  XmlMDataStd_ExpressionDriver.hpp
   XmlMDataStd_ExtStringArrayDriver.cxx
-  XmlMDataStd_ExtStringArrayDriver.hxx
+  XmlMDataStd_ExtStringArrayDriver.hpp
   XmlMDataStd_ExtStringListDriver.cxx
-  XmlMDataStd_ExtStringListDriver.hxx
+  XmlMDataStd_ExtStringListDriver.hpp
   XmlMDataStd_IntegerArrayDriver.cxx
-  XmlMDataStd_IntegerArrayDriver.hxx
+  XmlMDataStd_IntegerArrayDriver.hpp
   XmlMDataStd_IntegerDriver.cxx
-  XmlMDataStd_IntegerDriver.hxx
+  XmlMDataStd_IntegerDriver.hpp
   XmlMDataStd_IntegerListDriver.cxx
-  XmlMDataStd_IntegerListDriver.hxx
+  XmlMDataStd_IntegerListDriver.hpp
   XmlMDataStd_IntPackedMapDriver.cxx
-  XmlMDataStd_IntPackedMapDriver.hxx
+  XmlMDataStd_IntPackedMapDriver.hpp
   XmlMDataStd_NamedDataDriver.cxx
-  XmlMDataStd_NamedDataDriver.hxx
+  XmlMDataStd_NamedDataDriver.hpp
   XmlMDataStd_GenericExtStringDriver.cxx
-  XmlMDataStd_GenericExtStringDriver.hxx
+  XmlMDataStd_GenericExtStringDriver.hpp
   XmlMDataStd_RealArrayDriver.cxx
-  XmlMDataStd_RealArrayDriver.hxx
+  XmlMDataStd_RealArrayDriver.hpp
   XmlMDataStd_RealDriver.cxx
-  XmlMDataStd_RealDriver.hxx
+  XmlMDataStd_RealDriver.hpp
   XmlMDataStd_RealListDriver.cxx
-  XmlMDataStd_RealListDriver.hxx
+  XmlMDataStd_RealListDriver.hpp
   XmlMDataStd_ReferenceArrayDriver.cxx
-  XmlMDataStd_ReferenceArrayDriver.hxx
+  XmlMDataStd_ReferenceArrayDriver.hpp
   XmlMDataStd_ReferenceListDriver.cxx
-  XmlMDataStd_ReferenceListDriver.hxx
+  XmlMDataStd_ReferenceListDriver.hpp
   XmlMDataStd_GenericEmptyDriver.cxx
-  XmlMDataStd_GenericEmptyDriver.hxx
+  XmlMDataStd_GenericEmptyDriver.hpp
   XmlMDataStd_TreeNodeDriver.cxx
-  XmlMDataStd_TreeNodeDriver.hxx
+  XmlMDataStd_TreeNodeDriver.hpp
   XmlMDataStd_UAttributeDriver.cxx
-  XmlMDataStd_UAttributeDriver.hxx
+  XmlMDataStd_UAttributeDriver.hpp
   XmlMDataStd_VariableDriver.cxx
-  XmlMDataStd_VariableDriver.hxx
+  XmlMDataStd_VariableDriver.hpp
 )

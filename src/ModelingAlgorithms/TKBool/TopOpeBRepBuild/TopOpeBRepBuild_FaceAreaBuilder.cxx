@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_FaceAreaBuilder.hxx>
-#include <TopOpeBRepBuild_LoopClassifier.hxx>
-#include <TopOpeBRepBuild_LoopSet.hxx>
+#include <TopOpeBRepBuild_FaceAreaBuilder.hpp>
+#include <TopOpeBRepBuild_LoopClassifier.hpp>
+#include <TopOpeBRepBuild_LoopSet.hpp>
 
 //=================================================================================================
 

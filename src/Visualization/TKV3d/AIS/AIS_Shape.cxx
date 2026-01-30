@@ -14,38 +14,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Shape.hxx>
+#include <AIS_Shape.hpp>
 
-#include <AIS_GraphicTool.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_ShapeSet.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <HLRBRep.hxx>
-#include <OSD_Timer.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_BndBox.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_HLRPolyShape.hxx>
-#include <StdPrs_HLRShape.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <StdSelect.hxx>
-#include <StdSelect_BRepSelectionTool.hxx>
+#include <AIS_GraphicTool.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_ShapeSet.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <HLRBRep.hpp>
+#include <OSD_Timer.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_BndBox.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_HLRPolyShape.hpp>
+#include <StdPrs_HLRShape.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <StdSelect.hpp>
+#include <StdSelect_BRepSelectionTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Shape, AIS_InteractiveObject)
 

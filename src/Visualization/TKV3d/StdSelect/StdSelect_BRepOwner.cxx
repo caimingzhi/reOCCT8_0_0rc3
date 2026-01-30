@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdSelect_BRepOwner.hxx>
+#include <StdSelect_BRepOwner.hpp>
 
-#include <Graphic3d_StructureManager.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_SelectableObject.hxx>
-#include <Standard_Type.hxx>
-#include <StdSelect_Shape.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Graphic3d_StructureManager.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_SelectableObject.hpp>
+#include <Standard_Type.hpp>
+#include <StdSelect_Shape.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_BRepOwner, SelectMgr_EntityOwner)
 

@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units_Operators.hxx>
-#include <Units_Quantity.hxx>
-#include <Units_Unit.hxx>
+#include <Units_Operators.hpp>
+#include <Units_Quantity.hpp>
+#include <Units_Unit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Quantity, Standard_Transient)
 

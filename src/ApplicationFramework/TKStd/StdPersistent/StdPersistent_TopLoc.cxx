@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPersistent_TopLoc.hxx>
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_WriteData.hxx>
-#include <StdObject_gp_Trsfs.hxx>
+#include <StdPersistent_TopLoc.hpp>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_WriteData.hpp>
+#include <StdObject_gp_Trsfs.hpp>
 
 //=======================================================================
 // function : Read

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_UniformBuffer.hxx>
+#include <OpenGl_UniformBuffer.hpp>
 
-#include <OpenGl_GlCore15.hxx>
-#include <Standard_Assert.hxx>
+#include <OpenGl_GlCore15.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_UniformBuffer, OpenGl_Buffer)
 

@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAlgoAPI_Algo.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepAlgoAPI_Algo.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

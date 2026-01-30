@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEOBJ_Provider.hxx>
+#include <DEOBJ_Provider.hpp>
 
-#include <BRep_Builder.hxx>
-#include <DE_ValidationUtils.hxx>
-#include <DEOBJ_ConfigurationNode.hxx>
-#include <RWObj_CafReader.hxx>
-#include <RWObj_CafWriter.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRep_Builder.hpp>
+#include <DE_ValidationUtils.hpp>
+#include <DEOBJ_ConfigurationNode.hpp>
+#include <RWObj_CafReader.hpp>
+#include <RWObj_CafWriter.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEOBJ_Provider, DE_Provider)
 

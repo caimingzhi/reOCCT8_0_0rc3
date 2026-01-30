@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_InterCSurf.hxx>
+#include <HLRBRep_InterCSurf.hpp>
 
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Parab.hxx>
-#include <HLRBRep_LineTool.hxx>
-#include <HLRBRep_SurfaceTool.hxx>
-#include <HLRBRep_TheCSFunctionOfInterCSurf.hxx>
-#include <HLRBRep_TheExactInterCSurf.hxx>
-#include <HLRBRep_TheInterferenceOfInterCSurf.hxx>
-#include <HLRBRep_ThePolygonOfInterCSurf.hxx>
-#include <HLRBRep_ThePolygonToolOfInterCSurf.hxx>
-#include <HLRBRep_ThePolyhedronOfInterCSurf.hxx>
-#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hxx>
-#include <HLRBRep_TheQuadCurvExactInterCSurf.hxx>
-#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hxx>
-#include <IntAna_IntConicQuad.hxx>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Parab.hpp>
+#include <HLRBRep_LineTool.hpp>
+#include <HLRBRep_SurfaceTool.hpp>
+#include <HLRBRep_TheCSFunctionOfInterCSurf.hpp>
+#include <HLRBRep_TheExactInterCSurf.hpp>
+#include <HLRBRep_TheInterferenceOfInterCSurf.hpp>
+#include <HLRBRep_ThePolygonOfInterCSurf.hpp>
+#include <HLRBRep_ThePolygonToolOfInterCSurf.hpp>
+#include <HLRBRep_ThePolyhedronOfInterCSurf.hpp>
+#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hpp>
+#include <HLRBRep_TheQuadCurvExactInterCSurf.hpp>
+#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hpp>
+#include <IntAna_IntConicQuad.hpp>
 
-#include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_Inter.pxx"
+#include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_Inter.hpp"
 
-#include <HLRBRep_Surface.hxx>
+#include <HLRBRep_Surface.hpp>
 
 // Type aliases for readability
 using TheCurve              = gp_Lin;

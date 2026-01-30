@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_QuasiUniformAbscissa.hxx>
+#include <GCPnts_QuasiUniformAbscissa.hpp>
 
-#include <GCPnts_TCurveTypes.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array1.hxx>
+#include <GCPnts_TCurveTypes.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

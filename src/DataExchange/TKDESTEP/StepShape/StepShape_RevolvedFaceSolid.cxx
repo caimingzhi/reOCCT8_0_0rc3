@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_RevolvedFaceSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_RevolvedFaceSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_RevolvedFaceSolid, StepShape_SweptFaceSolid)
 

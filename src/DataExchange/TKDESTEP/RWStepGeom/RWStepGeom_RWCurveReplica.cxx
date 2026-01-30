@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWCurveReplica.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_CartesianTransformationOperator.hxx>
-#include <StepGeom_CurveReplica.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWCurveReplica.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_CartesianTransformationOperator.hpp>
+#include <StepGeom_CurveReplica.hpp>
 
 RWStepGeom_RWCurveReplica::RWStepGeom_RWCurveReplica() = default;
 

@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FeaModel3d.hxx>
+#include <StepFEA_FeaModel3d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaModel3d, StepFEA_FeaModel)
 

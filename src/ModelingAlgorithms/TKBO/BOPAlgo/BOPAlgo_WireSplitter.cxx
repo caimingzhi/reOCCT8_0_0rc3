@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_WireEdgeSet.hxx>
-#include <BOPAlgo_WireSplitter.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <NCollection_Vector.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_List.hxx>
+#include <BOPAlgo_WireEdgeSet.hpp>
+#include <BOPAlgo_WireSplitter.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <NCollection_Vector.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

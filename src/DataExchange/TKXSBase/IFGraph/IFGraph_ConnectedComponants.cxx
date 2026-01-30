@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_AllConnected.hxx>
-#include <IFGraph_ConnectedComponants.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_AllConnected.hpp>
+#include <IFGraph_ConnectedComponants.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
 
 // To work, ConnectedComponants exploits AllConnected:
 // Take a 1st Vertex, determine its AllConnected -> here is a 1st

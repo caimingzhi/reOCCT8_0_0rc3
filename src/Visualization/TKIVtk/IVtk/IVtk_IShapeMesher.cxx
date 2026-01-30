@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtk_IShapeMesher.hxx>
+#include <IVtk_IShapeMesher.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtk_IShapeMesher, IVtk_Interface)
 

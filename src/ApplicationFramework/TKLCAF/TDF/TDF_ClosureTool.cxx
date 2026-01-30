@@ -18,16 +18,16 @@
 // Version	Date		Purpose
 //		0.0	Sep  8 1998	Creation
 
-#include <Standard_TypeMismatch.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_ClosureMode.hxx>
-#include <TDF_ClosureTool.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
+#include <Standard_TypeMismatch.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_ClosureMode.hpp>
+#include <TDF_ClosureTool.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
 
 //=======================================================================
 // function : Closure

@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPolyh_Edge.hxx>
+#include <IntPolyh_Edge.hpp>
 #include <cstdio>
 
 //=================================================================================================

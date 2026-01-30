@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_AllShared.hxx>
-#include <IFGraph_Compare.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_AllShared.hpp>
+#include <IFGraph_Compare.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
 
 //  Comparator of two subsets of a Model
 //  To the first subset, Status 1 is assigned

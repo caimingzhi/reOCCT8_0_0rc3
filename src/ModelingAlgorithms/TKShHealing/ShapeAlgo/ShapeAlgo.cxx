@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeAlgo.hxx>
-#include <ShapeAlgo_AlgoContainer.hxx>
-#include <ShapeExtend.hxx>
+#include <ShapeAlgo.hpp>
+#include <ShapeAlgo_AlgoContainer.hpp>
+#include <ShapeExtend.hpp>
 
 static occ::handle<ShapeAlgo_AlgoContainer> theContainer;
 

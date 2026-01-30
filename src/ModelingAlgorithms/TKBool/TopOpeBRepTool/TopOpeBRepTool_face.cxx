@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Standard_Failure.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopOpeBRepTool_face.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Standard_Failure.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopOpeBRepTool_face.hpp>
 
 //=================================================================================================
 

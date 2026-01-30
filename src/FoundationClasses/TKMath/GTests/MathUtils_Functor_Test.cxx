@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <MathUtils_FunctorScalar.hxx>
-#include <MathUtils_FunctorVector.hxx>
-#include <MathRoot_Brent.hxx>
-#include <MathRoot_Newton.hxx>
-#include <MathOpt_Powell.hxx>
-#include <MathOpt_BFGS.hxx>
+#include <MathUtils_FunctorScalar.hpp>
+#include <MathUtils_FunctorVector.hpp>
+#include <MathRoot_Brent.hpp>
+#include <MathRoot_Newton.hpp>
+#include <MathOpt_Powell.hpp>
+#include <MathOpt_BFGS.hpp>
 
 #include <cmath>
 

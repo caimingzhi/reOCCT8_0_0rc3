@@ -13,30 +13,30 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixBRep_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <HelixGeom_HelixCurve.hxx>
-#include <HelixGeom_Tools.hxx>
+#include <HelixBRep_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <HelixGeom_HelixCurve.hpp>
+#include <HelixGeom_Tools.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepGProp.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Dir.hxx>
-#include <GProp_GProps.hxx>
-#include <Precision.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepGProp.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Dir.hpp>
+#include <GProp_GProps.hpp>
+#include <Precision.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
 
 class TKHelixTest : public ::testing::Test
 {

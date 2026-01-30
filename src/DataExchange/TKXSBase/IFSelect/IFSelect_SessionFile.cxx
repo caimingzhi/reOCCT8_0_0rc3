@@ -11,29 +11,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_BasicDumper.hxx>
-#include <IFSelect_IntParam.hxx>
-#include <IFSelect_SelectAnyList.hxx>
-#include <IFSelect_SelectCombine.hxx>
-#include <IFSelect_SelectControl.hxx>
-#include <IFSelect_SelectDeduct.hxx>
-#include <IFSelect_SelectExtract.hxx>
-#include <IFSelect_Selection.hxx>
-#include <IFSelect_SessionDumper.hxx>
-#include <IFSelect_SessionFile.hxx>
-#include <IFSelect_ShareOut.hxx>
-#include <IFSelect_Transformer.hxx>
-#include <IFSelect_WorkSession.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_OpenFile.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <IFSelect_BasicDumper.hpp>
+#include <IFSelect_IntParam.hpp>
+#include <IFSelect_SelectAnyList.hpp>
+#include <IFSelect_SelectCombine.hpp>
+#include <IFSelect_SelectControl.hpp>
+#include <IFSelect_SelectDeduct.hpp>
+#include <IFSelect_SelectExtract.hpp>
+#include <IFSelect_Selection.hpp>
+#include <IFSelect_SessionDumper.hpp>
+#include <IFSelect_SessionFile.hpp>
+#include <IFSelect_ShareOut.hpp>
+#include <IFSelect_Transformer.hpp>
+#include <IFSelect_WorkSession.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_OpenFile.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 #include <cstdio>
 static int deja = 0;

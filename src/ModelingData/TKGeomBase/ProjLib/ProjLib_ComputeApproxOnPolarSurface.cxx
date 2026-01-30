@@ -13,51 +13,51 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ProjLib_ComputeApproxOnPolarSurface.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Geom_UndefinedDerivative.hxx>
-#include <Precision.hxx>
-#include <Approx_FitAndDivide2d.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_TrimmedCurve.hxx>
+#include <ProjLib_ComputeApproxOnPolarSurface.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Geom_UndefinedDerivative.hpp>
+#include <Precision.hpp>
+#include <Approx_FitAndDivide2d.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_TrimmedCurve.hpp>
 
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_List.hxx>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_List.hpp>
 
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor.hxx>
-#include <GeomAdaptor_Surface.hxx>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor.hpp>
+#include <GeomAdaptor_Surface.hpp>
 
-#include <gp_Vec2d.hxx>
-#include <Extrema_GenLocateExtPS.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <GCPnts_QuasiUniformAbscissa.hxx>
-#include <Standard_DomainError.hxx>
+#include <gp_Vec2d.hpp>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <GCPnts_QuasiUniformAbscissa.hpp>
+#include <Standard_DomainError.hpp>
 // #include <GeomLib_IsIso.hxx>
 // #include <GeomLib_CheckSameParameter.hxx>
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_Colour.hxx>
-#include <StepVisual_FillAreaStyleColour.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_Colour.hpp>
+#include <StepVisual_FillAreaStyleColour.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_FillAreaStyleColour, Standard_Transient)
 

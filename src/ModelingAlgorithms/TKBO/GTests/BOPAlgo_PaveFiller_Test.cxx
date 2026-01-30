@@ -13,36 +13,36 @@
 
 #include <gtest/gtest.h>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepGProp.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <GProp_GProps.hxx>
-#include <Precision.hxx>
-#include <ShapeFix_Shape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepGProp.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeCone.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <GProp_GProps.hpp>
+#include <Precision.hpp>
+#include <ShapeFix_Shape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //==================================================================================================
 // BOPAlgo_PaveFiller Tests - Regression tests for edge cases in Boolean operations

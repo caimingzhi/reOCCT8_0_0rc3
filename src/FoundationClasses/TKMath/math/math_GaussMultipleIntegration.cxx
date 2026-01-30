@@ -40,12 +40,12 @@ de Gauss.
 
 // #endif
 
-#include <math.hxx>
-#include <math_GaussMultipleIntegration.hxx>
-#include <math_IntegerVector.hxx>
-#include <math_Matrix.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_Vector.hxx>
+#include <math.hpp>
+#include <math_GaussMultipleIntegration.hpp>
+#include <math_IntegerVector.hpp>
+#include <math_Matrix.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_Vector.hpp>
 
 class IntegrationFunction
 {

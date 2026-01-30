@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_PresentationStyleByContext.hxx>
-#include <StepVisual_StyleContextSelect.hxx>
+#include <StepVisual_PresentationStyleByContext.hpp>
+#include <StepVisual_StyleContextSelect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_PresentationStyleByContext,
                            StepVisual_PresentationStyleAssignment)

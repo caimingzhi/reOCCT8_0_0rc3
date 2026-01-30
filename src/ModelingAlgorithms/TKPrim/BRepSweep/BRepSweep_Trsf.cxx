@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepLProp.hxx>
-#include <BRepSweep_Iterator.hxx>
-#include <BRepSweep_Trsf.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <Precision.hxx>
-#include <Sweep_NumShape.hxx>
-#include <Sweep_NumShapeIterator.hxx>
-#include <TopExp.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepLProp.hpp>
+#include <BRepSweep_Iterator.hpp>
+#include <BRepSweep_Trsf.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <Precision.hpp>
+#include <Sweep_NumShape.hpp>
+#include <Sweep_NumShapeIterator.hpp>
+#include <TopExp.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 BRepSweep_Trsf::BRepSweep_Trsf(const BRep_Builder&    aBuilder,
                                const TopoDS_Shape&    aGenShape,

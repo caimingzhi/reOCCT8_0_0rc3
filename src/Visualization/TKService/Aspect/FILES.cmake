@@ -2,87 +2,87 @@
 set(OCCT_Aspect_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Aspect_FILES
-  Aspect_AspectFillAreaDefinitionError.hxx
-  Aspect_AspectLineDefinitionError.hxx
-  Aspect_AspectMarkerDefinitionError.hxx
+  Aspect_AspectFillAreaDefinitionError.hpp
+  Aspect_AspectLineDefinitionError.hpp
+  Aspect_AspectMarkerDefinitionError.hpp
   Aspect_Background.cxx
-  Aspect_Background.hxx
+  Aspect_Background.hpp
   Aspect_CircularGrid.cxx
-  Aspect_CircularGrid.hxx
-  Aspect_ColorSpace.hxx
-  Aspect_Display.hxx
+  Aspect_CircularGrid.hpp
+  Aspect_ColorSpace.hpp
+  Aspect_Display.hpp
   Aspect_DisplayConnection.cxx
-  Aspect_DisplayConnection.hxx
-  Aspect_DisplayConnectionDefinitionError.hxx
-  Aspect_Drawable.hxx
-  Aspect_Eye.hxx
-  Aspect_FBConfig.hxx
-  Aspect_FillMethod.hxx
-  Aspect_FrustumLRBT.hxx
+  Aspect_DisplayConnection.hpp
+  Aspect_DisplayConnectionDefinitionError.hpp
+  Aspect_Drawable.hpp
+  Aspect_Eye.hpp
+  Aspect_FBConfig.hpp
+  Aspect_FillMethod.hpp
+  Aspect_FrustumLRBT.hpp
   Aspect_GenId.cxx
-  Aspect_GenId.hxx
+  Aspect_GenId.hpp
   Aspect_GradientBackground.cxx
-  Aspect_GradientBackground.hxx
-  Aspect_GradientFillMethod.hxx
-  Aspect_GraphicDeviceDefinitionError.hxx
-  Aspect_GraphicsLibrary.hxx
+  Aspect_GradientBackground.hpp
+  Aspect_GradientFillMethod.hpp
+  Aspect_GraphicDeviceDefinitionError.hpp
+  Aspect_GraphicsLibrary.hpp
   Aspect_Grid.cxx
-  Aspect_Grid.hxx
-  Aspect_GridDrawMode.hxx
-  Aspect_GridType.hxx
+  Aspect_Grid.hpp
+  Aspect_GridDrawMode.hpp
+  Aspect_GridType.hpp
   Aspect_NeutralWindow.cxx
-  Aspect_NeutralWindow.hxx
+  Aspect_NeutralWindow.hpp
   Aspect_OpenVRSession.cxx
-  Aspect_OpenVRSession.hxx
-  Aspect_Handle.hxx
-  Aspect_HatchStyle.hxx
-  Aspect_IdentDefinitionError.hxx
-  Aspect_InteriorStyle.hxx
-  Aspect_PolygonOffsetMode.hxx
+  Aspect_OpenVRSession.hpp
+  Aspect_Handle.hpp
+  Aspect_HatchStyle.hpp
+  Aspect_IdentDefinitionError.hpp
+  Aspect_InteriorStyle.hpp
+  Aspect_PolygonOffsetMode.hpp
   Aspect_RectangularGrid.cxx
-  Aspect_RectangularGrid.hxx
-  Aspect_RenderingContext.hxx
+  Aspect_RectangularGrid.hpp
+  Aspect_RenderingContext.hpp
 
-  Aspect_ScrollDelta.hxx
+  Aspect_ScrollDelta.hpp
   Aspect_SkydomeBackground.cxx
-  Aspect_SkydomeBackground.hxx
-  Aspect_Touch.hxx
+  Aspect_SkydomeBackground.hpp
+  Aspect_Touch.hpp
 
-  Aspect_TrackedDevicePose.hxx
-  Aspect_TypeOfColorScaleData.hxx
-  Aspect_TypeOfColorScaleOrientation.hxx
-  Aspect_TypeOfColorScalePosition.hxx
-  Aspect_TypeOfDeflection.hxx
-  Aspect_TypeOfDisplayText.hxx
-  Aspect_TypeOfFacingModel.hxx
-  Aspect_TypeOfHighlightMethod.hxx
-  Aspect_TypeOfLine.hxx
-  Aspect_TypeOfMarker.hxx
-  Aspect_TypeOfResize.hxx
-  Aspect_TypeOfStyleText.hxx
-  Aspect_TypeOfTriedronPosition.hxx
-  Aspect_Units.hxx
-  Aspect_VKey.hxx
-  Aspect_VKeyFlags.hxx
+  Aspect_TrackedDevicePose.hpp
+  Aspect_TypeOfColorScaleData.hpp
+  Aspect_TypeOfColorScaleOrientation.hpp
+  Aspect_TypeOfColorScalePosition.hpp
+  Aspect_TypeOfDeflection.hpp
+  Aspect_TypeOfDisplayText.hpp
+  Aspect_TypeOfFacingModel.hpp
+  Aspect_TypeOfHighlightMethod.hpp
+  Aspect_TypeOfLine.hpp
+  Aspect_TypeOfMarker.hpp
+  Aspect_TypeOfResize.hpp
+  Aspect_TypeOfStyleText.hpp
+  Aspect_TypeOfTriedronPosition.hpp
+  Aspect_Units.hpp
+  Aspect_VKey.hpp
+  Aspect_VKeyFlags.hpp
   Aspect_VKeySet.cxx
-  Aspect_VKeySet.hxx
-  Aspect_WidthOfLine.hxx
+  Aspect_VKeySet.hpp
+  Aspect_WidthOfLine.hpp
   Aspect_Window.cxx
-  Aspect_Window.hxx
-  Aspect_WindowDefinitionError.hxx
-  Aspect_WindowError.hxx
+  Aspect_Window.hpp
+  Aspect_WindowDefinitionError.hpp
+  Aspect_WindowError.hpp
   Aspect_WindowInputListener.cxx
-  Aspect_WindowInputListener.hxx
-  Aspect_XAtom.hxx
-  Aspect_XRAction.hxx
-  Aspect_XRActionSet.hxx
-  Aspect_XRActionType.hxx
-  Aspect_XRAnalogActionData.hxx
-  Aspect_XRDigitalActionData.hxx
-  Aspect_XRGenericAction.hxx
-  Aspect_XRHapticActionData.hxx
-  Aspect_XRPoseActionData.hxx
+  Aspect_WindowInputListener.hpp
+  Aspect_XAtom.hpp
+  Aspect_XRAction.hpp
+  Aspect_XRActionSet.hpp
+  Aspect_XRActionType.hpp
+  Aspect_XRAnalogActionData.hpp
+  Aspect_XRDigitalActionData.hpp
+  Aspect_XRGenericAction.hpp
+  Aspect_XRHapticActionData.hpp
+  Aspect_XRPoseActionData.hpp
   Aspect_XRSession.cxx
-  Aspect_XRSession.hxx
-  Aspect_XRTrackedDeviceRole.hxx
+  Aspect_XRSession.hpp
+  Aspect_XRTrackedDeviceRole.hpp
 )

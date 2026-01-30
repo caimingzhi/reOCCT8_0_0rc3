@@ -17,29 +17,29 @@
 // pdn 11.01.99 #144 bm1_pe_t4 protection of exceptions in draw
 //     abv 13.04.99 S4136: eliminate BRepAPI::Precision()
 
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <Precision.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Direction.hxx>
-#include <StepGeom_Line.hxx>
-#include <StepGeom_Pcurve.hxx>
-#include <StepGeom_SeamCurve.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepGeom_SurfaceCurve.hxx>
-#include <StepGeom_Vector.hxx>
-#include <StepRepr_DefinitionalRepresentation.hxx>
-#include <StepShape_EdgeLoop.hxx>
-#include <StepShape_OrientedEdge.hxx>
-#include <StepToTopoDS.hxx>
-#include <StepToTopoDS_GeometricTool.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <Precision.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Direction.hpp>
+#include <StepGeom_Line.hpp>
+#include <StepGeom_Pcurve.hpp>
+#include <StepGeom_SeamCurve.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepGeom_SurfaceCurve.hpp>
+#include <StepGeom_Vector.hpp>
+#include <StepRepr_DefinitionalRepresentation.hpp>
+#include <StepShape_EdgeLoop.hpp>
+#include <StepShape_OrientedEdge.hpp>
+#include <StepToTopoDS.hpp>
+#include <StepToTopoDS_GeometricTool.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 // ----------------------------------------------------------------------------
 // Method  : HasPCurve

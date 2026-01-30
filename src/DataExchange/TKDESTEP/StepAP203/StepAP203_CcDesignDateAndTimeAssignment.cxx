@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignDateAndTimeAssignment.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_DateTimeRole.hxx>
+#include <StepAP203_CcDesignDateAndTimeAssignment.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_DateTimeRole.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignDateAndTimeAssignment, StepBasic_DateAndTimeAssignment)
 

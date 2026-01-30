@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWSeamEdge.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Pcurve.hxx>
-#include <StepShape_SeamEdge.hxx>
-#include <StepShape_Vertex.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWSeamEdge.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Pcurve.hpp>
+#include <StepShape_SeamEdge.hpp>
+#include <StepShape_Vertex.hpp>
 
 //=================================================================================================
 

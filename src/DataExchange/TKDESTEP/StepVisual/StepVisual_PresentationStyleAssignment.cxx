@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_PresentationStyleAssignment.hxx>
-#include <StepVisual_PresentationStyleSelect.hxx>
+#include <StepVisual_PresentationStyleAssignment.hpp>
+#include <StepVisual_PresentationStyleSelect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_PresentationStyleAssignment, Standard_Transient)
 

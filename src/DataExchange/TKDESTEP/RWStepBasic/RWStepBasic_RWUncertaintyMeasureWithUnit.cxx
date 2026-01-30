@@ -13,14 +13,14 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_MSG.hxx>
-#include "RWStepBasic_RWUncertaintyMeasureWithUnit.pxx"
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_UncertaintyMeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_MSG.hpp>
+#include "RWStepBasic_RWUncertaintyMeasureWithUnit.hpp"
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_UncertaintyMeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

@@ -3,213 +3,213 @@ set(OCCT_StepShape_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepShape_FILES
   StepShape_AdvancedBrepShapeRepresentation.cxx
-  StepShape_AdvancedBrepShapeRepresentation.hxx
+  StepShape_AdvancedBrepShapeRepresentation.hpp
   StepShape_AdvancedFace.cxx
-  StepShape_AdvancedFace.hxx
-  StepShape_AngleRelator.hxx
+  StepShape_AdvancedFace.hpp
+  StepShape_AngleRelator.hpp
   StepShape_AngularLocation.cxx
-  StepShape_AngularLocation.hxx
+  StepShape_AngularLocation.hpp
   StepShape_AngularSize.cxx
-  StepShape_AngularSize.hxx
+  StepShape_AngularSize.hpp
 
   StepShape_Block.cxx
-  StepShape_Block.hxx
+  StepShape_Block.hpp
   StepShape_BooleanOperand.cxx
-  StepShape_BooleanOperand.hxx
-  StepShape_BooleanOperator.hxx
+  StepShape_BooleanOperand.hpp
+  StepShape_BooleanOperator.hpp
   StepShape_BooleanResult.cxx
-  StepShape_BooleanResult.hxx
+  StepShape_BooleanResult.hpp
   StepShape_BoxDomain.cxx
-  StepShape_BoxDomain.hxx
+  StepShape_BoxDomain.hpp
   StepShape_BoxedHalfSpace.cxx
-  StepShape_BoxedHalfSpace.hxx
+  StepShape_BoxedHalfSpace.hpp
   StepShape_BrepWithVoids.cxx
-  StepShape_BrepWithVoids.hxx
+  StepShape_BrepWithVoids.hpp
   StepShape_ClosedShell.cxx
-  StepShape_ClosedShell.hxx
+  StepShape_ClosedShell.hpp
   StepShape_CompoundShapeRepresentation.cxx
-  StepShape_CompoundShapeRepresentation.hxx
+  StepShape_CompoundShapeRepresentation.hpp
   StepShape_ConnectedEdgeSet.cxx
-  StepShape_ConnectedEdgeSet.hxx
+  StepShape_ConnectedEdgeSet.hpp
   StepShape_ConnectedFaceSet.cxx
-  StepShape_ConnectedFaceSet.hxx
+  StepShape_ConnectedFaceSet.hpp
   StepShape_ConnectedFaceShapeRepresentation.cxx
-  StepShape_ConnectedFaceShapeRepresentation.hxx
+  StepShape_ConnectedFaceShapeRepresentation.hpp
   StepShape_ConnectedFaceSubSet.cxx
-  StepShape_ConnectedFaceSubSet.hxx
+  StepShape_ConnectedFaceSubSet.hpp
   StepShape_ContextDependentShapeRepresentation.cxx
-  StepShape_ContextDependentShapeRepresentation.hxx
+  StepShape_ContextDependentShapeRepresentation.hpp
   StepShape_CsgPrimitive.cxx
-  StepShape_CsgPrimitive.hxx
+  StepShape_CsgPrimitive.hpp
   StepShape_CsgSelect.cxx
-  StepShape_CsgSelect.hxx
+  StepShape_CsgSelect.hpp
   StepShape_CsgShapeRepresentation.cxx
-  StepShape_CsgShapeRepresentation.hxx
+  StepShape_CsgShapeRepresentation.hpp
   StepShape_CsgSolid.cxx
-  StepShape_CsgSolid.hxx
+  StepShape_CsgSolid.hpp
   StepShape_DefinitionalRepresentationAndShapeRepresentation.cxx
-  StepShape_DefinitionalRepresentationAndShapeRepresentation.hxx
+  StepShape_DefinitionalRepresentationAndShapeRepresentation.hpp
   StepShape_DimensionalCharacteristic.cxx
-  StepShape_DimensionalCharacteristic.hxx
+  StepShape_DimensionalCharacteristic.hpp
   StepShape_DimensionalCharacteristicRepresentation.cxx
-  StepShape_DimensionalCharacteristicRepresentation.hxx
+  StepShape_DimensionalCharacteristicRepresentation.hpp
   StepShape_DimensionalLocation.cxx
-  StepShape_DimensionalLocation.hxx
+  StepShape_DimensionalLocation.hpp
   StepShape_DimensionalLocationWithPath.cxx
-  StepShape_DimensionalLocationWithPath.hxx
+  StepShape_DimensionalLocationWithPath.hpp
   StepShape_DimensionalSize.cxx
-  StepShape_DimensionalSize.hxx
+  StepShape_DimensionalSize.hpp
   StepShape_DimensionalSizeWithPath.cxx
-  StepShape_DimensionalSizeWithPath.hxx
+  StepShape_DimensionalSizeWithPath.hpp
   StepShape_DirectedDimensionalLocation.cxx
-  StepShape_DirectedDimensionalLocation.hxx
+  StepShape_DirectedDimensionalLocation.hpp
   StepShape_Edge.cxx
-  StepShape_Edge.hxx
+  StepShape_Edge.hpp
   StepShape_EdgeBasedWireframeModel.cxx
-  StepShape_EdgeBasedWireframeModel.hxx
+  StepShape_EdgeBasedWireframeModel.hpp
   StepShape_EdgeBasedWireframeShapeRepresentation.cxx
-  StepShape_EdgeBasedWireframeShapeRepresentation.hxx
+  StepShape_EdgeBasedWireframeShapeRepresentation.hpp
   StepShape_EdgeCurve.cxx
-  StepShape_EdgeCurve.hxx
+  StepShape_EdgeCurve.hpp
   StepShape_EdgeLoop.cxx
-  StepShape_EdgeLoop.hxx
+  StepShape_EdgeLoop.hpp
   StepShape_ExtrudedAreaSolid.cxx
-  StepShape_ExtrudedAreaSolid.hxx
+  StepShape_ExtrudedAreaSolid.hpp
   StepShape_ExtrudedFaceSolid.cxx
-  StepShape_ExtrudedFaceSolid.hxx
+  StepShape_ExtrudedFaceSolid.hpp
   StepShape_Face.cxx
-  StepShape_Face.hxx
+  StepShape_Face.hpp
   StepShape_FaceBasedSurfaceModel.cxx
-  StepShape_FaceBasedSurfaceModel.hxx
+  StepShape_FaceBasedSurfaceModel.hpp
   StepShape_FaceBound.cxx
-  StepShape_FaceBound.hxx
+  StepShape_FaceBound.hpp
   StepShape_FaceOuterBound.cxx
-  StepShape_FaceOuterBound.hxx
+  StepShape_FaceOuterBound.hpp
   StepShape_FaceSurface.cxx
-  StepShape_FaceSurface.hxx
+  StepShape_FaceSurface.hpp
   StepShape_FacetedBrep.cxx
-  StepShape_FacetedBrep.hxx
+  StepShape_FacetedBrep.hpp
   StepShape_FacetedBrepAndBrepWithVoids.cxx
-  StepShape_FacetedBrepAndBrepWithVoids.hxx
+  StepShape_FacetedBrepAndBrepWithVoids.hpp
   StepShape_FacetedBrepShapeRepresentation.cxx
-  StepShape_FacetedBrepShapeRepresentation.hxx
+  StepShape_FacetedBrepShapeRepresentation.hpp
   StepShape_GeometricallyBoundedSurfaceShapeRepresentation.cxx
-  StepShape_GeometricallyBoundedSurfaceShapeRepresentation.hxx
+  StepShape_GeometricallyBoundedSurfaceShapeRepresentation.hpp
   StepShape_GeometricallyBoundedWireframeShapeRepresentation.cxx
-  StepShape_GeometricallyBoundedWireframeShapeRepresentation.hxx
+  StepShape_GeometricallyBoundedWireframeShapeRepresentation.hpp
   StepShape_GeometricCurveSet.cxx
-  StepShape_GeometricCurveSet.hxx
+  StepShape_GeometricCurveSet.hpp
   StepShape_GeometricSet.cxx
-  StepShape_GeometricSet.hxx
+  StepShape_GeometricSet.hpp
   StepShape_GeometricSetSelect.cxx
-  StepShape_GeometricSetSelect.hxx
+  StepShape_GeometricSetSelect.hpp
   StepShape_HalfSpaceSolid.cxx
-  StepShape_HalfSpaceSolid.hxx
+  StepShape_HalfSpaceSolid.hpp
 
   StepShape_LimitsAndFits.cxx
-  StepShape_LimitsAndFits.hxx
+  StepShape_LimitsAndFits.hpp
   StepShape_Loop.cxx
-  StepShape_Loop.hxx
+  StepShape_Loop.hpp
   StepShape_LoopAndPath.cxx
-  StepShape_LoopAndPath.hxx
+  StepShape_LoopAndPath.hpp
   StepShape_ManifoldSolidBrep.cxx
-  StepShape_ManifoldSolidBrep.hxx
+  StepShape_ManifoldSolidBrep.hpp
   StepShape_ManifoldSurfaceShapeRepresentation.cxx
-  StepShape_ManifoldSurfaceShapeRepresentation.hxx
+  StepShape_ManifoldSurfaceShapeRepresentation.hpp
   StepShape_MeasureQualification.cxx
-  StepShape_MeasureQualification.hxx
+  StepShape_MeasureQualification.hpp
   StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem.cxx
-  StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem.hxx
+  StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem.hpp
   StepShape_NonManifoldSurfaceShapeRepresentation.cxx
-  StepShape_NonManifoldSurfaceShapeRepresentation.hxx
+  StepShape_NonManifoldSurfaceShapeRepresentation.hpp
   StepShape_OpenShell.cxx
-  StepShape_OpenShell.hxx
+  StepShape_OpenShell.hpp
   StepShape_OrientedClosedShell.cxx
-  StepShape_OrientedClosedShell.hxx
+  StepShape_OrientedClosedShell.hpp
   StepShape_OrientedEdge.cxx
-  StepShape_OrientedEdge.hxx
+  StepShape_OrientedEdge.hpp
   StepShape_OrientedFace.cxx
-  StepShape_OrientedFace.hxx
+  StepShape_OrientedFace.hpp
   StepShape_OrientedOpenShell.cxx
-  StepShape_OrientedOpenShell.hxx
+  StepShape_OrientedOpenShell.hpp
   StepShape_OrientedPath.cxx
-  StepShape_OrientedPath.hxx
+  StepShape_OrientedPath.hpp
   StepShape_Path.cxx
-  StepShape_Path.hxx
+  StepShape_Path.hpp
   StepShape_PlusMinusTolerance.cxx
-  StepShape_PlusMinusTolerance.hxx
+  StepShape_PlusMinusTolerance.hpp
   StepShape_PointRepresentation.cxx
-  StepShape_PointRepresentation.hxx
+  StepShape_PointRepresentation.hpp
   StepShape_PolyLoop.cxx
-  StepShape_PolyLoop.hxx
+  StepShape_PolyLoop.hpp
   StepShape_PrecisionQualifier.cxx
-  StepShape_PrecisionQualifier.hxx
+  StepShape_PrecisionQualifier.hpp
   StepShape_QualifiedRepresentationItem.cxx
-  StepShape_QualifiedRepresentationItem.hxx
+  StepShape_QualifiedRepresentationItem.hpp
   StepShape_ReversibleTopologyItem.cxx
-  StepShape_ReversibleTopologyItem.hxx
+  StepShape_ReversibleTopologyItem.hpp
   StepShape_RevolvedAreaSolid.cxx
-  StepShape_RevolvedAreaSolid.hxx
+  StepShape_RevolvedAreaSolid.hpp
   StepShape_RevolvedFaceSolid.cxx
-  StepShape_RevolvedFaceSolid.hxx
+  StepShape_RevolvedFaceSolid.hpp
   StepShape_RightAngularWedge.cxx
-  StepShape_RightAngularWedge.hxx
+  StepShape_RightAngularWedge.hpp
   StepShape_RightCircularCone.cxx
-  StepShape_RightCircularCone.hxx
+  StepShape_RightCircularCone.hpp
   StepShape_RightCircularCylinder.cxx
-  StepShape_RightCircularCylinder.hxx
+  StepShape_RightCircularCylinder.hpp
   StepShape_SeamEdge.cxx
-  StepShape_SeamEdge.hxx
+  StepShape_SeamEdge.hpp
   StepShape_ShapeDefinitionRepresentation.cxx
-  StepShape_ShapeDefinitionRepresentation.hxx
+  StepShape_ShapeDefinitionRepresentation.hpp
   StepShape_ShapeDimensionRepresentation.cxx
-  StepShape_ShapeDimensionRepresentation.hxx
+  StepShape_ShapeDimensionRepresentation.hpp
   StepShape_ShapeDimensionRepresentationItem.cxx
-  StepShape_ShapeDimensionRepresentationItem.hxx
+  StepShape_ShapeDimensionRepresentationItem.hpp
   StepShape_ShapeRepresentation.cxx
-  StepShape_ShapeRepresentation.hxx
+  StepShape_ShapeRepresentation.hpp
   StepShape_ShapeRepresentationWithParameters.cxx
-  StepShape_ShapeRepresentationWithParameters.hxx
+  StepShape_ShapeRepresentationWithParameters.hpp
   StepShape_Shell.cxx
-  StepShape_Shell.hxx
+  StepShape_Shell.hpp
   StepShape_ShellBasedSurfaceModel.cxx
-  StepShape_ShellBasedSurfaceModel.hxx
+  StepShape_ShellBasedSurfaceModel.hpp
   StepShape_SolidModel.cxx
-  StepShape_SolidModel.hxx
+  StepShape_SolidModel.hpp
   StepShape_SolidReplica.cxx
-  StepShape_SolidReplica.hxx
+  StepShape_SolidReplica.hpp
   StepShape_Sphere.cxx
-  StepShape_Sphere.hxx
+  StepShape_Sphere.hpp
   StepShape_Subedge.cxx
-  StepShape_Subedge.hxx
+  StepShape_Subedge.hpp
   StepShape_Subface.cxx
-  StepShape_Subface.hxx
+  StepShape_Subface.hpp
   StepShape_SurfaceModel.cxx
-  StepShape_SurfaceModel.hxx
+  StepShape_SurfaceModel.hpp
   StepShape_SweptAreaSolid.cxx
-  StepShape_SweptAreaSolid.hxx
+  StepShape_SweptAreaSolid.hpp
   StepShape_SweptFaceSolid.cxx
-  StepShape_SweptFaceSolid.hxx
+  StepShape_SweptFaceSolid.hpp
   StepShape_ToleranceMethodDefinition.cxx
-  StepShape_ToleranceMethodDefinition.hxx
+  StepShape_ToleranceMethodDefinition.hpp
   StepShape_ToleranceValue.cxx
-  StepShape_ToleranceValue.hxx
+  StepShape_ToleranceValue.hpp
   StepShape_TopologicalRepresentationItem.cxx
-  StepShape_TopologicalRepresentationItem.hxx
+  StepShape_TopologicalRepresentationItem.hpp
   StepShape_Torus.cxx
-  StepShape_Torus.hxx
+  StepShape_Torus.hpp
   StepShape_TransitionalShapeRepresentation.cxx
-  StepShape_TransitionalShapeRepresentation.hxx
+  StepShape_TransitionalShapeRepresentation.hpp
   StepShape_TypeQualifier.cxx
-  StepShape_TypeQualifier.hxx
+  StepShape_TypeQualifier.hpp
   StepShape_ValueFormatTypeQualifier.cxx
-  StepShape_ValueFormatTypeQualifier.hxx
+  StepShape_ValueFormatTypeQualifier.hpp
   StepShape_ValueQualifier.cxx
-  StepShape_ValueQualifier.hxx
+  StepShape_ValueQualifier.hpp
   StepShape_Vertex.cxx
-  StepShape_Vertex.hxx
+  StepShape_Vertex.hpp
   StepShape_VertexLoop.cxx
-  StepShape_VertexLoop.hxx
+  StepShape_VertexLoop.hpp
   StepShape_VertexPoint.cxx
-  StepShape_VertexPoint.hxx
+  StepShape_VertexPoint.hpp
 )

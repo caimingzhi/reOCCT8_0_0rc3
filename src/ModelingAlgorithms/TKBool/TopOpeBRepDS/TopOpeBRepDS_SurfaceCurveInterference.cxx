@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <Standard_Type.hxx>
-#include <TopOpeBRepDS_SurfaceCurveInterference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Standard_Type.hpp>
+#include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_SurfaceCurveInterference, TopOpeBRepDS_Interference)
 

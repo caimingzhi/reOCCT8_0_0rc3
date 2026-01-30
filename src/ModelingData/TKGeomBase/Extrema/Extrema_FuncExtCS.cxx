@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Extrema_FuncExtCS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
-#include <Standard_TypeMismatch.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Extrema_FuncExtCS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
+#include <Standard_TypeMismatch.hpp>
 
 /*-----------------------------------------------------------------------------
  Fonction permettant de rechercher une distance extremale entre une courbe C

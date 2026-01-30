@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_Grid.hxx>
+#include <Aspect_Grid.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_Grid, Standard_Transient)
 

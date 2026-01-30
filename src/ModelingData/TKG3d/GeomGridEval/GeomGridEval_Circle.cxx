@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Circle.hxx>
+#include <GeomGridEval_Circle.hpp>
 
-#include <gp_Circ.hxx>
+#include <gp_Circ.hpp>
 
 #include <cmath>
 

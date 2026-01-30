@@ -13,30 +13,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BuilderFace.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_FaceInfo.hxx>
-#include <NCollection_List.hxx>
-#include <BOPDS_Pave.hxx>
-#include <Standard_Handle.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <BOPDS_ShapeInfo.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BOPTools_Set.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepFeat_Builder.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BOPAlgo_BuilderFace.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_FaceInfo.hpp>
+#include <NCollection_List.hpp>
+#include <BOPDS_Pave.hpp>
+#include <Standard_Handle.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <BOPDS_ShapeInfo.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BOPTools_Set.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepFeat_Builder.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 class BOPDS_PaveBlock;
 
 //=================================================================================================

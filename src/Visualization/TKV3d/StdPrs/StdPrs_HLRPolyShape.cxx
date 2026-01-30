@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_HLRPolyShape.hxx>
+#include <StdPrs_HLRPolyShape.hpp>
 
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Group.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <HLRBRep_BiPoint.hxx>
-#include <NCollection_List.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepMesh_IncrementalMesh.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Group.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <HLRBRep_BiPoint.hpp>
+#include <NCollection_List.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
 
 #define PntX1 ((double*)Coordinates)[0]
 #define PntY1 ((double*)Coordinates)[1]

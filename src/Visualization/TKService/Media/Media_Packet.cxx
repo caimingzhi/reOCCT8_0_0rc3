@@ -17,15 +17,15 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Media_Packet.hxx>
+#include <Media_Packet.hpp>
 
 #ifdef HAVE_FFMPEG
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 extern "C"
 {
   #include <libavcodec/avcodec.h>
 };
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Packet, Standard_Transient)

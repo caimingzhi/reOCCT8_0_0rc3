@@ -16,14 +16,14 @@
 
 // Programme cree
 
-#include <BSplCLib.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_Interpolate.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_Interpolate.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

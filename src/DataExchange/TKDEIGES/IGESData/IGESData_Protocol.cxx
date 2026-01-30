@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_FreeFormatEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IGESData_FreeFormatEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_Protocol, Interface_Protocol)
 

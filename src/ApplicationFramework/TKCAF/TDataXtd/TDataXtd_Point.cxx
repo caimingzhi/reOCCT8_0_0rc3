@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Point, TDataStd_GenericEmpty)
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Units.hxx>
-#include <Units_UnitsDictionary.hxx>
-#include <Units_UnitSentence.hxx>
-#include <UnitsAPI.hxx>
+#include <Draw.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Units.hpp>
+#include <Units_UnitsDictionary.hpp>
+#include <Units_UnitSentence.hpp>
+#include <UnitsAPI.hpp>
 
 //=======================================================================
 // function : parsing

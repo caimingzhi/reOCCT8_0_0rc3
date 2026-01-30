@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWAppliedDocumentReference.pxx"
-#include <StepAP214_AppliedDocumentReference.hxx>
-#include <StepAP214_DocumentReferenceItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepBasic_Document.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWAppliedDocumentReference.hpp"
+#include <StepAP214_AppliedDocumentReference.hpp>
+#include <StepAP214_DocumentReferenceItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepBasic_Document.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepAP214_RWAppliedDocumentReference::RWStepAP214_RWAppliedDocumentReference() = default;
 

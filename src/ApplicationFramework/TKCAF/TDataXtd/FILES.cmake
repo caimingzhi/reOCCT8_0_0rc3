@@ -3,34 +3,34 @@ set(OCCT_TDataXtd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TDataXtd_FILES
   TDataXtd.cxx
-  TDataXtd.hxx
+  TDataXtd.hpp
 
   TDataXtd_Axis.cxx
-  TDataXtd_Axis.hxx
+  TDataXtd_Axis.hpp
   TDataXtd_Constraint.cxx
-  TDataXtd_Constraint.hxx
-  TDataXtd_ConstraintEnum.hxx
+  TDataXtd_Constraint.hpp
+  TDataXtd_ConstraintEnum.hpp
   TDataXtd_Geometry.cxx
-  TDataXtd_Geometry.hxx
-  TDataXtd_GeometryEnum.hxx
+  TDataXtd_Geometry.hpp
+  TDataXtd_GeometryEnum.hpp
 
   TDataXtd_Pattern.cxx
-  TDataXtd_Pattern.hxx
+  TDataXtd_Pattern.hpp
   TDataXtd_PatternStd.cxx
-  TDataXtd_PatternStd.hxx
-  TDataXtd_PatternStd.lxx
+  TDataXtd_PatternStd.hpp
+  TDataXtd_PatternStd_1.hpp
   TDataXtd_Placement.cxx
-  TDataXtd_Placement.hxx
+  TDataXtd_Placement.hpp
   TDataXtd_Plane.cxx
-  TDataXtd_Plane.hxx
+  TDataXtd_Plane.hpp
   TDataXtd_Point.cxx
-  TDataXtd_Point.hxx
+  TDataXtd_Point.hpp
   TDataXtd_Position.cxx
-  TDataXtd_Position.hxx
-  TDataXtd_Presentation.hxx
+  TDataXtd_Position.hpp
+  TDataXtd_Presentation.hpp
   TDataXtd_Presentation.cxx
   TDataXtd_Shape.cxx
-  TDataXtd_Shape.hxx
+  TDataXtd_Shape.hpp
   TDataXtd_Triangulation.cxx
-  TDataXtd_Triangulation.hxx
+  TDataXtd_Triangulation.hpp
 )

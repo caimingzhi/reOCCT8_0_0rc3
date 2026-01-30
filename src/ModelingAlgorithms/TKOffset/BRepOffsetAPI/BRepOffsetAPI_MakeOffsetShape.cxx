@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepOffsetAPI_MakeOffsetShape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepOffsetAPI_MakeOffsetShape.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

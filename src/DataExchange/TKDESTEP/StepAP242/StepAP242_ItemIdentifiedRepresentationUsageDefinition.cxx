@@ -13,25 +13,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepAP214_AppliedApprovalAssignment.hxx>
-#include <StepAP214_AppliedDateAndTimeAssignment.hxx>
-#include <StepAP214_AppliedDateAssignment.hxx>
-#include <StepAP214_AppliedDocumentReference.hxx>
-#include <StepAP214_AppliedExternalIdentificationAssignment.hxx>
-#include <StepAP214_AppliedGroupAssignment.hxx>
-#include <StepAP214_AppliedOrganizationAssignment.hxx>
-#include <StepAP214_AppliedPersonAndOrganizationAssignment.hxx>
-#include <StepAP214_AppliedSecurityClassificationAssignment.hxx>
-#include <StepBasic_GeneralProperty.hxx>
-#include <StepBasic_ProductDefinitionRelationship.hxx>
-#include <StepDimTol_GeometricTolerance.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_PropertyDefinitionRelationship.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <StepShape_DimensionalSize.hxx>
+#include <StepAP242_ItemIdentifiedRepresentationUsageDefinition.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepAP214_AppliedApprovalAssignment.hpp>
+#include <StepAP214_AppliedDateAndTimeAssignment.hpp>
+#include <StepAP214_AppliedDateAssignment.hpp>
+#include <StepAP214_AppliedDocumentReference.hpp>
+#include <StepAP214_AppliedExternalIdentificationAssignment.hpp>
+#include <StepAP214_AppliedGroupAssignment.hpp>
+#include <StepAP214_AppliedOrganizationAssignment.hpp>
+#include <StepAP214_AppliedPersonAndOrganizationAssignment.hpp>
+#include <StepAP214_AppliedSecurityClassificationAssignment.hpp>
+#include <StepBasic_GeneralProperty.hpp>
+#include <StepBasic_ProductDefinitionRelationship.hpp>
+#include <StepDimTol_GeometricTolerance.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_PropertyDefinitionRelationship.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <StepShape_DimensionalSize.hpp>
 
 //=================================================================================================
 

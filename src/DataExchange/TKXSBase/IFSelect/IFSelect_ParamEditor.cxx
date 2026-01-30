@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_EditForm.hxx>
-#include <IFSelect_ParamEditor.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Static.hxx>
-#include <Interface_TypedValue.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IFSelect_EditForm.hpp>
+#include <IFSelect_ParamEditor.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Static.hpp>
+#include <Interface_TypedValue.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_ParamEditor, IFSelect_Editor)
 

@@ -14,11 +14,11 @@
 
 // JCV 16/10/91
 
-#include <Convert_TorusToBSplineSurface.hxx>
-#include <gp.hxx>
-#include <gp_Torus.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_DomainError.hxx>
+#include <Convert_TorusToBSplineSurface.hpp>
+#include <gp.hpp>
+#include <gp_Torus.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_DomainError.hpp>
 
 namespace
 {

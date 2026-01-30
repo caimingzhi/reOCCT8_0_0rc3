@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_ResultFromTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <Interface_Check.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_ResultFromTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_ResultFromTransient, Standard_Transient)
 

@@ -13,31 +13,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd.hxx>
-#include <BinMDataStd_AsciiStringDriver.hxx>
-#include <BinMDataStd_BooleanArrayDriver.hxx>
-#include <BinMDataStd_BooleanListDriver.hxx>
-#include <BinMDataStd_ByteArrayDriver.hxx>
-#include <BinMDataStd_ExpressionDriver.hxx>
-#include <BinMDataStd_ExtStringArrayDriver.hxx>
-#include <BinMDataStd_ExtStringListDriver.hxx>
-#include <BinMDataStd_IntegerArrayDriver.hxx>
-#include <BinMDataStd_IntegerDriver.hxx>
-#include <BinMDataStd_IntegerListDriver.hxx>
-#include <BinMDataStd_IntPackedMapDriver.hxx>
-#include <BinMDataStd_NamedDataDriver.hxx>
-#include <BinMDataStd_GenericExtStringDriver.hxx>
-#include <BinMDataStd_RealArrayDriver.hxx>
-#include <BinMDataStd_RealDriver.hxx>
-#include <BinMDataStd_RealListDriver.hxx>
-#include <BinMDataStd_ReferenceArrayDriver.hxx>
-#include <BinMDataStd_ReferenceListDriver.hxx>
-#include <BinMDataStd_GenericEmptyDriver.hxx>
-#include <BinMDataStd_TreeNodeDriver.hxx>
-#include <BinMDataStd_UAttributeDriver.hxx>
-#include <BinMDataStd_VariableDriver.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <Message_Messenger.hxx>
+#include <BinMDataStd.hpp>
+#include <BinMDataStd_AsciiStringDriver.hpp>
+#include <BinMDataStd_BooleanArrayDriver.hpp>
+#include <BinMDataStd_BooleanListDriver.hpp>
+#include <BinMDataStd_ByteArrayDriver.hpp>
+#include <BinMDataStd_ExpressionDriver.hpp>
+#include <BinMDataStd_ExtStringArrayDriver.hpp>
+#include <BinMDataStd_ExtStringListDriver.hpp>
+#include <BinMDataStd_IntegerArrayDriver.hpp>
+#include <BinMDataStd_IntegerDriver.hpp>
+#include <BinMDataStd_IntegerListDriver.hpp>
+#include <BinMDataStd_IntPackedMapDriver.hpp>
+#include <BinMDataStd_NamedDataDriver.hpp>
+#include <BinMDataStd_GenericExtStringDriver.hpp>
+#include <BinMDataStd_RealArrayDriver.hpp>
+#include <BinMDataStd_RealDriver.hpp>
+#include <BinMDataStd_RealListDriver.hpp>
+#include <BinMDataStd_ReferenceArrayDriver.hpp>
+#include <BinMDataStd_ReferenceListDriver.hpp>
+#include <BinMDataStd_GenericEmptyDriver.hpp>
+#include <BinMDataStd_TreeNodeDriver.hpp>
+#include <BinMDataStd_UAttributeDriver.hpp>
+#include <BinMDataStd_VariableDriver.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <Message_Messenger.hpp>
 
 //=================================================================================================
 

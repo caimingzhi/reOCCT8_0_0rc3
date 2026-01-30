@@ -17,12 +17,12 @@
 //--------------------------------------------------------------------
 // ptv and rln 14.09.2000 BUC60743
 
-#include <IGESBasic_Group.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_Group.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_Group, IGESData_IGESEntity)
 

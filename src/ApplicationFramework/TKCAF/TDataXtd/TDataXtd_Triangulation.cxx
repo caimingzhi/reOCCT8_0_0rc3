@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataXtd_Triangulation.hxx>
-#include <Standard_GUID.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <TDataXtd_Triangulation.hpp>
+#include <Standard_GUID.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 //=======================================================================
 // function : GetID

@@ -18,13 +18,13 @@
 // Version	Date		Purpose
 //		0.0	Oct  1 1997	Creation
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_NullObject.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Delta.hxx>
-#include <TDF_Transaction.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_NullObject.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Delta.hpp>
+#include <TDF_Transaction.hpp>
 
 #undef DEB_TRANSACTION
 #ifdef OCCT_DEBUG
@@ -32,7 +32,7 @@
 #endif
 #undef DEB_TRANSACTION_DUMP
 
-#include <TDF_Tool.hxx>
+#include <TDF_Tool.hpp>
 
 //=================================================================================================
 

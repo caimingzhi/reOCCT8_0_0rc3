@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_AnnotationPlaneElement.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepVisual_DraughtingCallout.hxx>
-#include <StepVisual_StyledItem.hxx>
+#include <StepVisual_AnnotationPlaneElement.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepVisual_DraughtingCallout.hpp>
+#include <StepVisual_StyledItem.hpp>
 
 //=================================================================================================
 

@@ -21,41 +21,41 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <Geom2dAdaptor_Curve.hxx>
+#include <Geom2dAdaptor_Curve.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BSplCLib.hxx>
-#include <BSplCLib_Cache.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_OffsetCurveUtils.pxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_UndefinedDerivative.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <gp.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_NullValue.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BSplCLib.hpp>
+#include <BSplCLib_Cache.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_OffsetCurveUtils.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_UndefinedDerivative.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <gp.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_NullValue.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
-// #include <Geom2dConvert_BSplineCurveKnotSplitting.hxx>
+// #include <Geom2dConvert_BSplineCurveKnotSplitting.hpp>
 static const double PosTol = Precision::PConfusion() / 2;
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2dAdaptor_Curve, Adaptor2d_Curve2d)

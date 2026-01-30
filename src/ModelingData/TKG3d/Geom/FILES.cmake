@@ -3,89 +3,89 @@ set(OCCT_Geom_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Geom_FILES
   Geom_Axis1Placement.cxx
-  Geom_Axis1Placement.hxx
+  Geom_Axis1Placement.hpp
   Geom_Axis2Placement.cxx
-  Geom_Axis2Placement.hxx
+  Geom_Axis2Placement.hpp
   Geom_AxisPlacement.cxx
-  Geom_AxisPlacement.hxx
+  Geom_AxisPlacement.hpp
   Geom_BezierCurve.cxx
-  Geom_BezierCurve.hxx
+  Geom_BezierCurve.hpp
   Geom_BezierSurface.cxx
-  Geom_BezierSurface.hxx
+  Geom_BezierSurface.hpp
   Geom_BoundedCurve.cxx
-  Geom_BoundedCurve.hxx
+  Geom_BoundedCurve.hpp
   Geom_BoundedSurface.cxx
-  Geom_BoundedSurface.hxx
+  Geom_BoundedSurface.hpp
   Geom_BSplineCurve.cxx
-  Geom_BSplineCurve.hxx
+  Geom_BSplineCurve.hpp
   Geom_BSplineCurve_1.cxx
   Geom_BSplineSurface.cxx
-  Geom_BSplineSurface.hxx
+  Geom_BSplineSurface.hpp
   Geom_BSplineSurface_1.cxx
   Geom_CartesianPoint.cxx
-  Geom_CartesianPoint.hxx
+  Geom_CartesianPoint.hpp
   Geom_Circle.cxx
-  Geom_Circle.hxx
+  Geom_Circle.hpp
   Geom_Conic.cxx
-  Geom_Conic.hxx
+  Geom_Conic.hpp
   Geom_ConicalSurface.cxx
-  Geom_ConicalSurface.hxx
+  Geom_ConicalSurface.hpp
   Geom_Curve.cxx
-  Geom_Curve.hxx
+  Geom_Curve.hpp
   Geom_CylindricalSurface.cxx
-  Geom_CylindricalSurface.hxx
+  Geom_CylindricalSurface.hpp
   Geom_Direction.cxx
-  Geom_Direction.hxx
+  Geom_Direction.hpp
   Geom_ElementarySurface.cxx
-  Geom_ExtrusionUtils.pxx
-  Geom_ElementarySurface.hxx
+  Geom_ExtrusionUtils.hpp
+  Geom_ElementarySurface.hpp
   Geom_Ellipse.cxx
-  Geom_Ellipse.hxx
+  Geom_Ellipse.hpp
   Geom_Geometry.cxx
-  Geom_Geometry.hxx
+  Geom_Geometry.hpp
 
   Geom_Hyperbola.cxx
-  Geom_Hyperbola.hxx
+  Geom_Hyperbola.hpp
   Geom_Line.cxx
-  Geom_Line.hxx
+  Geom_Line.hpp
   Geom_OffsetCurve.cxx
-  Geom_OffsetCurve.hxx
-  Geom_OffsetCurveUtils.pxx
+  Geom_OffsetCurve.hpp
+  Geom_OffsetCurveUtils.hpp
   Geom_OffsetSurface.cxx
-  Geom_OffsetSurface.hxx
-  Geom_OffsetSurfaceUtils.pxx
+  Geom_OffsetSurface.hpp
+  Geom_OffsetSurfaceUtils.hpp
   Geom_OsculatingSurface.cxx
-  Geom_OsculatingSurface.pxx
+  Geom_OsculatingSurface.hpp
   Geom_Parabola.cxx
-  Geom_Parabola.hxx
+  Geom_Parabola.hpp
   Geom_Plane.cxx
-  Geom_Plane.hxx
+  Geom_Plane.hpp
   Geom_Point.cxx
-  Geom_Point.hxx
+  Geom_Point.hpp
   Geom_RectangularTrimmedSurface.cxx
-  Geom_RectangularTrimmedSurface.hxx
-  Geom_RevolutionUtils.pxx
+  Geom_RectangularTrimmedSurface.hpp
+  Geom_RevolutionUtils.hpp
 
   Geom_SphericalSurface.cxx
-  Geom_SphericalSurface.hxx
+  Geom_SphericalSurface.hpp
   Geom_Surface.cxx
-  Geom_Surface.hxx
+  Geom_Surface.hpp
   Geom_SurfaceOfLinearExtrusion.cxx
-  Geom_SurfaceOfLinearExtrusion.hxx
+  Geom_SurfaceOfLinearExtrusion.hpp
   Geom_SurfaceOfRevolution.cxx
-  Geom_SurfaceOfRevolution.hxx
+  Geom_SurfaceOfRevolution.hpp
   Geom_SweptSurface.cxx
-  Geom_SweptSurface.hxx
+  Geom_SweptSurface.hpp
   Geom_ToroidalSurface.cxx
-  Geom_ToroidalSurface.hxx
+  Geom_ToroidalSurface.hpp
   Geom_Transformation.cxx
-  Geom_Transformation.hxx
+  Geom_Transformation.hpp
   Geom_TrimmedCurve.cxx
-  Geom_TrimmedCurve.hxx
-  Geom_UndefinedDerivative.hxx
-  Geom_UndefinedValue.hxx
+  Geom_TrimmedCurve.hpp
+  Geom_UndefinedDerivative.hpp
+  Geom_UndefinedValue.hpp
   Geom_Vector.cxx
-  Geom_Vector.hxx
+  Geom_Vector.hpp
   Geom_VectorWithMagnitude.cxx
-  Geom_VectorWithMagnitude.hxx
+  Geom_VectorWithMagnitude.hpp
 )

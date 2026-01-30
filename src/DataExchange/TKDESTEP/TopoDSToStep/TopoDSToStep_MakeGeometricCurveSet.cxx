@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_Shape.hxx>
-#include <Standard_Transient.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepShape_GeometricCurveSet.hxx>
-#include <StepShape_GeometricSetSelect.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopoDSToStep.hxx>
-#include <TopoDSToStep_MakeGeometricCurveSet.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <TopoDSToStep_WireframeBuilder.hxx>
-#include <Transfer_FinderProcess.hxx>
+#include <TopoDS_Shape.hpp>
+#include <Standard_Transient.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepShape_GeometricCurveSet.hpp>
+#include <StepShape_GeometricSetSelect.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopoDSToStep.hpp>
+#include <TopoDSToStep_MakeGeometricCurveSet.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <TopoDSToStep_WireframeBuilder.hpp>
+#include <Transfer_FinderProcess.hpp>
 
 //=============================================================================
 // Create a GeometricCurveSet of StepShape from a Shape of TopoDS

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Direction.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_Vector.hxx>
-#include <gp.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
+#include <Geom2d_Direction.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_Vector.hpp>
+#include <gp.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_Direction, Geom2d_Vector)
 

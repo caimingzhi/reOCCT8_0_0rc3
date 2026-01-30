@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWSubedge.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_Subedge.hxx>
-#include <StepShape_Vertex.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWSubedge.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_Subedge.hpp>
+#include <StepShape_Vertex.hpp>
 
 //=================================================================================================
 

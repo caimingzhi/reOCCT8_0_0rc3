@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_StripeMap.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <ChFiDS_StripeMap.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

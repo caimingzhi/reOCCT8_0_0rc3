@@ -13,18 +13,18 @@
 
 // szv#4 S4163
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_ShareFlags.hxx>
-#include <Standard_Transient.hxx>
-#include <Transfer_ActorOfTransientProcess.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_TransferFailure.hxx>
-#include <Transfer_TransferOutput.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <Message_ProgressScope.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_ShareFlags.hpp>
+#include <Standard_Transient.hpp>
+#include <Transfer_ActorOfTransientProcess.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_TransferFailure.hpp>
+#include <Transfer_TransferOutput.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <Message_ProgressScope.hpp>
 
 Transfer_TransferOutput::Transfer_TransferOutput(
   const occ::handle<Transfer_ActorOfTransientProcess>& actor,

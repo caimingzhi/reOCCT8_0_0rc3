@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWLengthMeasureWithUnit.pxx"
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWLengthMeasureWithUnit.hpp"
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_XYZPlanePresentation.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_PlaneAspect.hxx>
-#include <Prs3d_Presentation.hxx>
+#include <DsgPrs_XYZPlanePresentation.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_PlaneAspect.hpp>
+#include <Prs3d_Presentation.hpp>
 
 //=================================================================================================
 

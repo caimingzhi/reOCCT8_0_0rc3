@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWOrientedJoint.pxx"
+#include "RWStepKinematics_RWOrientedJoint.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_OrientedJoint.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepShape_Vertex.hxx>
-#include <StepShape_Edge.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_OrientedJoint.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepShape_Vertex.hpp>
+#include <StepShape_Edge.hpp>
 
 //=================================================================================================
 

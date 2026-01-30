@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Sphere.hxx>
+#include <GeomGridEval_Sphere.hpp>
 
-#include <gp_Sphere.hxx>
+#include <gp_Sphere.hpp>
 
 #include <cmath>
 

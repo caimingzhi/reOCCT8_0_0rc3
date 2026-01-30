@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d_SolidPassiveClassifier.hxx>
+#include <BRepClass3d_SolidPassiveClassifier.hpp>
 
-#include <BRepClass3d_Intersector3d.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_TransitionOnCurve.hxx>
-#include <Standard_DomainError.hxx>
-#include <TopoDS_Face.hxx>
-#include <gp_Lin.hxx>
+#include <BRepClass3d_Intersector3d.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_TransitionOnCurve.hpp>
+#include <Standard_DomainError.hpp>
+#include <TopoDS_Face.hpp>
+#include <gp_Lin.hpp>
 
 BRepClass3d_SolidPassiveClassifier::BRepClass3d_SolidPassiveClassifier()
     : isSet(false),

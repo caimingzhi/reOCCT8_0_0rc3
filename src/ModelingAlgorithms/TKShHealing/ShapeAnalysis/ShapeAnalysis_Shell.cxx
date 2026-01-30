@@ -13,15 +13,15 @@
 
 // szv#4 S4163
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <ShapeAnalysis_Shell.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <ShapeAnalysis_Shell.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

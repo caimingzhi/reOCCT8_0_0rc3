@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_SubIterator.hxx>
+#include <BOPDS_SubIterator.hpp>
 
-#include <Bnd_Tools.hxx>
+#include <Bnd_Tools.hpp>
 
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Pair.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Pair.hpp>
+#include <NCollection_Map.hpp>
 
-#include <BOPTools_BoxTree.hxx>
+#include <BOPTools_BoxTree.hpp>
 
 #include <algorithm>
 

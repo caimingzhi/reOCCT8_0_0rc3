@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <TopOpeBRepDS_GapTool.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <TopOpeBRepDS_GapTool.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_GapTool, Standard_Transient)
 

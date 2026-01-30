@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMNaming.hxx>
+#include <BinMNaming.hpp>
 
-#include <BinMDF_ADriverTable.hxx>
-#include <BinMNaming_NamedShapeDriver.hxx>
-#include <BinMNaming_NamingDriver.hxx>
-#include <Message_Messenger.hxx>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinMNaming_NamedShapeDriver.hpp>
+#include <BinMNaming_NamingDriver.hpp>
+#include <Message_Messenger.hpp>
 
 //=================================================================================================
 

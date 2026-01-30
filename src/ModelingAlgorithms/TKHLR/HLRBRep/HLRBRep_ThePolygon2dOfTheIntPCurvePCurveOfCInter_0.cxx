@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hxx>
+#include <HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <HLRBRep_CurveTool.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <Bnd_Box2d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <HLRBRep_CurveTool.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <Bnd_Box2d.hpp>
+#include <gp_Pnt2d.hpp>
 
 #define TheCurve HLRBRep_CurvePtr
-#define TheCurve_hxx <HLRBRep_TypeDef.hxx>
+#define TheCurve_hxx <HLRBRep_TypeDef.hpp>
 #define TheCurveTool HLRBRep_CurveTool
-#define TheCurveTool_hxx <HLRBRep_CurveTool.hxx>
+#define TheCurveTool_hxx <HLRBRep_CurveTool.hpp>
 #define IntCurve_Polygon2dGen HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter
-#define IntCurve_Polygon2dGen_hxx <HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hxx>
-#include <IntCurve_Polygon2dGen.gxx>
+#define IntCurve_Polygon2dGen_hxx <HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter.hpp>
+#include <IntCurve_Polygon2dGen.hpp>

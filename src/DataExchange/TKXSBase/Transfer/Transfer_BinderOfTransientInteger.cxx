@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Transfer_BinderOfTransientInteger.hxx>
+#include <Standard_Type.hpp>
+#include <Transfer_BinderOfTransientInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_BinderOfTransientInteger, Transfer_SimpleBinderOfTransient)
 

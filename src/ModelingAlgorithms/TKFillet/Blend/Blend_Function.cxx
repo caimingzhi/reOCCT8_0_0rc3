@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_Function.hxx>
-#include <Blend_Point.hxx>
-#include <gp_Pnt.hxx>
+#include <Blend_Function.hpp>
+#include <Blend_Point.hpp>
+#include <gp_Pnt.hpp>
 
 int Blend_Function::NbVariables() const
 {

@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_BaseMeshAlgo.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <IMeshData_Curve.hxx>
-#include <BRepMesh_Delaun.hxx>
-#include <BRepMesh_ShapeTool.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <BRepMesh_BaseMeshAlgo.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <IMeshData_Curve.hpp>
+#include <BRepMesh_Delaun.hpp>
+#include <BRepMesh_ShapeTool.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_BaseMeshAlgo, IMeshTools_MeshAlgo)
 

@@ -15,12 +15,12 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Partition.hxx>
+#include <TObj_Partition.hpp>
 
-#include <TObj_Model.hxx>
-#include <TObj_TNameContainer.hxx>
+#include <TObj_Model.hpp>
+#include <TObj_TNameContainer.hpp>
 
-#include <TDataStd_Name.hxx>
+#include <TDataStd_Name.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_Partition, TObj_Object)
 IMPLEMENT_TOBJOCAF_PERSISTENCE(TObj_Partition)

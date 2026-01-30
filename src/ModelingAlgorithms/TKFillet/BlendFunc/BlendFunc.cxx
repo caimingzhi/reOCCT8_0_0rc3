@@ -18,22 +18,22 @@
 // 30/12/1996 PMN Ajout de GetMinimalWeight
 // 23/09/1997 PMN Supprimme GetCircle et GetTol (passe dans GeomFill)
 
-#include <BlendFunc.hxx>
+#include <BlendFunc.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <CSLib.hxx>
-#include <CSLib_NormalStatus.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array2.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <CSLib.hpp>
+#include <CSLib_NormalStatus.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array2.hpp>
 
 //=================================================================================================
 

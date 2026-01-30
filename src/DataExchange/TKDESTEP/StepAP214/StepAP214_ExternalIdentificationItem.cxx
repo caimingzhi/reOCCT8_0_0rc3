@@ -15,23 +15,23 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Standard_Transient.hxx>
-#include <StepAP214_AppliedOrganizationAssignment.hxx>
-#include <StepAP214_AppliedPersonAndOrganizationAssignment.hxx>
-#include <StepAP214_ExternalIdentificationItem.hxx>
-#include <StepAP214_ExternallyDefinedClass.hxx>
-#include <StepAP214_ExternallyDefinedGeneralProperty.hxx>
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_ApprovalStatus.hxx>
-#include <StepBasic_DateAndTimeAssignment.hxx>
-#include <StepBasic_DateAssignment.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_OrganizationalAddress.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_SecurityClassification.hxx>
-#include <StepBasic_VersionedActionRequest.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
+#include <Standard_Transient.hpp>
+#include <StepAP214_AppliedOrganizationAssignment.hpp>
+#include <StepAP214_AppliedPersonAndOrganizationAssignment.hpp>
+#include <StepAP214_ExternalIdentificationItem.hpp>
+#include <StepAP214_ExternallyDefinedClass.hpp>
+#include <StepAP214_ExternallyDefinedGeneralProperty.hpp>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_ApprovalStatus.hpp>
+#include <StepBasic_DateAndTimeAssignment.hpp>
+#include <StepBasic_DateAssignment.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_OrganizationalAddress.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_SecurityClassification.hpp>
+#include <StepBasic_VersionedActionRequest.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
 
 //=================================================================================================
 

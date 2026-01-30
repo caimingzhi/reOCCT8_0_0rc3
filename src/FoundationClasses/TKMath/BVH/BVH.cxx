@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BVH_DistanceField.hxx>
-#include <BVH_LinearBuilder.hxx>
-#include <BVH_BinnedBuilder.hxx>
-#include <BVH_SweepPlaneBuilder.hxx>
-#include <BVH_SpatialMedianBuilder.hxx>
+#include <BVH_DistanceField.hpp>
+#include <BVH_LinearBuilder.hpp>
+#include <BVH_BinnedBuilder.hpp>
+#include <BVH_SweepPlaneBuilder.hpp>
+#include <BVH_SpatialMedianBuilder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BVH_BuilderTransient, Standard_Transient)
 IMPLEMENT_STANDARD_RTTIEXT(BVH_TreeBaseTransient, Standard_Transient)

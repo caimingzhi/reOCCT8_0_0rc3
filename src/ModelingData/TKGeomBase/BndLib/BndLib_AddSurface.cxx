@@ -16,25 +16,25 @@
 
 //  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503
 
-#include <Adaptor3d_Surface.hxx>
-#include <Bnd_Box.hxx>
-#include <BndLib.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Cone.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <math_PSO.hxx>
-#include <math_Powell.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Bnd_Box.hpp>
+#include <BndLib.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Cone.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <math_PSO.hpp>
+#include <math_Powell.hpp>
 //
 static int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax);
 //

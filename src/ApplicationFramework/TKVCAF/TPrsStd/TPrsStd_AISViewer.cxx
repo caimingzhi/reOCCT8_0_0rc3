@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <V3d_Viewer.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_AISViewer, TDF_Attribute)
 

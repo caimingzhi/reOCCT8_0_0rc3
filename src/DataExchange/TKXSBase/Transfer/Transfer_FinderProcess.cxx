@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_MSG.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_TransientMapper.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_MSG.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_TransientMapper.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_FinderProcess, Transfer_ProcessForFinder)
 

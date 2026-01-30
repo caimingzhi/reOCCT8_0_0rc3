@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource.pxx"
-#include <StepBasic_Product.hxx>
-#include <StepBasic_ProductDefinitionFormationWithSpecifiedSource.hxx>
-#include <StepBasic_Source.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource.hpp"
+#include <StepBasic_Product.hpp>
+#include <StepBasic_ProductDefinitionFormationWithSpecifiedSource.hpp>
+#include <StepBasic_Source.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepBasic_RWSource.pxx"
+#include "RWStepBasic_RWSource.hpp"
 
 RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource::
   RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource() = default;

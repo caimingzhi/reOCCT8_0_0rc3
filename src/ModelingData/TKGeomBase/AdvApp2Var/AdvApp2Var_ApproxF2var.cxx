@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApp2Var_SysBase.hxx>
-#include <AdvApp2Var_MathBase.hxx>
-#include <AdvApp2Var_Data_f2c.hxx>
-#include <AdvApp2Var_Data.hxx>
-#include <AdvApp2Var_ApproxF2var.hxx>
+#include <AdvApp2Var_SysBase.hpp>
+#include <AdvApp2Var_MathBase.hpp>
+#include <AdvApp2Var_Data_f2c.hpp>
+#include <AdvApp2Var_Data.hpp>
+#include <AdvApp2Var_ApproxF2var.hpp>
 
 #include <cmath>
 

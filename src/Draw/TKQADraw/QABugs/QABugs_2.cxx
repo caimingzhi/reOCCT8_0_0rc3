@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS.hxx>
-#include <BRepBndLib.hxx>
-#include <gp_Pln.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS.hpp>
+#include <BRepBndLib.hpp>
+#include <gp_Pln.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #include <cstdio>
 

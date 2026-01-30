@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_IGESEntity.hxx>
-#include <IGESSelect_SignStatus.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESSelect_SignStatus.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_SignStatus, IFSelect_Signature)

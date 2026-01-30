@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Vertex.hxx>
+#include <Graphic3d_Vertex.hpp>
 
-#include <gp_XYZ.hxx>
-#include <Standard_Dump.hxx>
+#include <gp_XYZ.hpp>
+#include <Standard_Dump.hpp>
 
 #include <cmath>
 

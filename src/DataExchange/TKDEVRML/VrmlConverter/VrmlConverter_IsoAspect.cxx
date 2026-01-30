@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Material.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
+#include <Vrml_Material.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlConverter_IsoAspect, VrmlConverter_LineAspect)
 

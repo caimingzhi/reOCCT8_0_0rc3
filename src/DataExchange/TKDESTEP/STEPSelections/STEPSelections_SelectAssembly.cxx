@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_NextAssemblyUsageOccurrence.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <STEPSelections_SelectAssembly.hxx>
-#include <StepShape_ContextDependentShapeRepresentation.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_NextAssemblyUsageOccurrence.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <STEPSelections_SelectAssembly.hpp>
+#include <StepShape_ContextDependentShapeRepresentation.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_SelectAssembly, IFSelect_SelectExplore)
 

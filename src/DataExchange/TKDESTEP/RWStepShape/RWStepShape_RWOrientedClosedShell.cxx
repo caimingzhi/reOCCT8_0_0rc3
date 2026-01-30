@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWOrientedClosedShell.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_OrientedClosedShell.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWOrientedClosedShell.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_OrientedClosedShell.hpp>
 
 RWStepShape_RWOrientedClosedShell::RWStepShape_RWOrientedClosedShell() = default;
 

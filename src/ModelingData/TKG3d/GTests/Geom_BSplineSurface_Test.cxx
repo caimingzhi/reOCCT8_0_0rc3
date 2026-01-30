@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BSplineSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 class Geom_BSplineSurface_Test : public ::testing::Test
 {

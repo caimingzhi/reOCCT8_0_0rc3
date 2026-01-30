@@ -3,49 +3,49 @@ set(OCCT_BinMDataStd_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinMDataStd_FILES
   BinMDataStd.cxx
-  BinMDataStd.hxx
+  BinMDataStd.hpp
   BinMDataStd_AsciiStringDriver.cxx
-  BinMDataStd_AsciiStringDriver.hxx
+  BinMDataStd_AsciiStringDriver.hpp
   BinMDataStd_BooleanArrayDriver.cxx
-  BinMDataStd_BooleanArrayDriver.hxx
+  BinMDataStd_BooleanArrayDriver.hpp
   BinMDataStd_BooleanListDriver.cxx
-  BinMDataStd_BooleanListDriver.hxx
+  BinMDataStd_BooleanListDriver.hpp
   BinMDataStd_ByteArrayDriver.cxx
-  BinMDataStd_ByteArrayDriver.hxx
+  BinMDataStd_ByteArrayDriver.hpp
   BinMDataStd_ExpressionDriver.cxx
-  BinMDataStd_ExpressionDriver.hxx
+  BinMDataStd_ExpressionDriver.hpp
   BinMDataStd_ExtStringArrayDriver.cxx
-  BinMDataStd_ExtStringArrayDriver.hxx
+  BinMDataStd_ExtStringArrayDriver.hpp
   BinMDataStd_ExtStringListDriver.cxx
-  BinMDataStd_ExtStringListDriver.hxx
+  BinMDataStd_ExtStringListDriver.hpp
   BinMDataStd_IntegerArrayDriver.cxx
-  BinMDataStd_IntegerArrayDriver.hxx
+  BinMDataStd_IntegerArrayDriver.hpp
   BinMDataStd_IntegerDriver.cxx
-  BinMDataStd_IntegerDriver.hxx
+  BinMDataStd_IntegerDriver.hpp
   BinMDataStd_IntegerListDriver.cxx
-  BinMDataStd_IntegerListDriver.hxx
+  BinMDataStd_IntegerListDriver.hpp
   BinMDataStd_IntPackedMapDriver.cxx
-  BinMDataStd_IntPackedMapDriver.hxx
+  BinMDataStd_IntPackedMapDriver.hpp
   BinMDataStd_NamedDataDriver.cxx
-  BinMDataStd_NamedDataDriver.hxx
+  BinMDataStd_NamedDataDriver.hpp
   BinMDataStd_GenericExtStringDriver.cxx
-  BinMDataStd_GenericExtStringDriver.hxx
+  BinMDataStd_GenericExtStringDriver.hpp
   BinMDataStd_RealArrayDriver.cxx
-  BinMDataStd_RealArrayDriver.hxx
+  BinMDataStd_RealArrayDriver.hpp
   BinMDataStd_RealDriver.cxx
-  BinMDataStd_RealDriver.hxx
+  BinMDataStd_RealDriver.hpp
   BinMDataStd_RealListDriver.cxx
-  BinMDataStd_RealListDriver.hxx
+  BinMDataStd_RealListDriver.hpp
   BinMDataStd_ReferenceArrayDriver.cxx
-  BinMDataStd_ReferenceArrayDriver.hxx
+  BinMDataStd_ReferenceArrayDriver.hpp
   BinMDataStd_ReferenceListDriver.cxx
-  BinMDataStd_ReferenceListDriver.hxx
+  BinMDataStd_ReferenceListDriver.hpp
   BinMDataStd_GenericEmptyDriver.cxx
-  BinMDataStd_GenericEmptyDriver.hxx
+  BinMDataStd_GenericEmptyDriver.hpp
   BinMDataStd_TreeNodeDriver.cxx
-  BinMDataStd_TreeNodeDriver.hxx
+  BinMDataStd_TreeNodeDriver.hpp
   BinMDataStd_UAttributeDriver.cxx
-  BinMDataStd_UAttributeDriver.hxx
+  BinMDataStd_UAttributeDriver.hpp
   BinMDataStd_VariableDriver.cxx
-  BinMDataStd_VariableDriver.hxx
+  BinMDataStd_VariableDriver.hpp
 )

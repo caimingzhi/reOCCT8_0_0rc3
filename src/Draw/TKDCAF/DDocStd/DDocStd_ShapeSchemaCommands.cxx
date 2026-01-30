@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
-#include <DBRep.hxx>
-#include <FSD_CmpFile.hxx>
-#include <FSD_BinaryFile.hxx>
-#include <BRep_Builder.hxx>
-#include <NCollection_Handle.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <StdStorage.hxx>
-#include <StdStorage_Data.hxx>
-#include <StdStorage_HeaderData.hxx>
-#include <StdStorage_RootData.hxx>
-#include <StdStorage_TypeData.hxx>
-#include <ShapePersistent_TopoDS.hxx>
+#include <DDocStd.hpp>
+#include <DBRep.hpp>
+#include <FSD_CmpFile.hpp>
+#include <FSD_BinaryFile.hpp>
+#include <BRep_Builder.hpp>
+#include <NCollection_Handle.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <StdStorage.hpp>
+#include <StdStorage_Data.hpp>
+#include <StdStorage_HeaderData.hpp>
+#include <StdStorage_RootData.hpp>
+#include <StdStorage_TypeData.hpp>
+#include <ShapePersistent_TopoDS.hpp>
 
 //==========================================================
 // ErrorMessage

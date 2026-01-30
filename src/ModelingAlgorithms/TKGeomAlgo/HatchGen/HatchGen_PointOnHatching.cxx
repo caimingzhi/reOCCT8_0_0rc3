@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HatchGen_PointOnHatching.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Standard_Macro.hxx>
+#include <HatchGen_PointOnHatching.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

@@ -13,25 +13,25 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_Parabola.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomGridEval_BSplineCurve.hxx>
-#include <GeomGridEval_Circle.hxx>
-#include <GeomGridEval_Curve.hxx>
-#include <GeomGridEval_Line.hxx>
-#include <GeomGridEval_OtherCurve.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_Parabola.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomGridEval_BSplineCurve.hpp>
+#include <GeomGridEval_Circle.hpp>
+#include <GeomGridEval_Curve.hpp>
+#include <GeomGridEval_Line.hpp>
+#include <GeomGridEval_OtherCurve.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

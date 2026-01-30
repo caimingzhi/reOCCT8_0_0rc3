@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_FaceDiscret.hxx>
-#include <IMeshData_Model.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshTools_MeshAlgo.hxx>
-#include <OSD_Parallel.hxx>
+#include <BRepMesh_FaceDiscret.hpp>
+#include <IMeshData_Model.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshTools_MeshAlgo.hpp>
+#include <OSD_Parallel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_FaceDiscret, IMeshTools_ModelAlgo)
 

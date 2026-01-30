@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_ObjectRole.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ObjectRole.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ObjectRole, Standard_Transient)
 

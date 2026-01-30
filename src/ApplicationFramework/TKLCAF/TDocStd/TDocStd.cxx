@@ -20,9 +20,9 @@
 //=======================================================================
 // Declarations:
 
-#include <TDocStd.hxx>
+#include <TDocStd.hpp>
 
-#include <TDocStd_XLink.hxx>
+#include <TDocStd_XLink.hpp>
 
 // #include <LCTLOFF.h>
 //=================================================================================================

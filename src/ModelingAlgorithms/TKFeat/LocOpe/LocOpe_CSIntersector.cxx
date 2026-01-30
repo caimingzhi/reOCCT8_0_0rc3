@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_Circle.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <IntCurvesFace_Intersector.hxx>
-#include <LocOpe_CSIntersector.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Geom_Circle.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <IntCurvesFace_Intersector.hpp>
+#include <LocOpe_CSIntersector.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>&,
                      const double,

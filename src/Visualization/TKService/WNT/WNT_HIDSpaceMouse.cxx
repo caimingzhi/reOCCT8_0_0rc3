@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <WNT_HIDSpaceMouse.hxx>
+#include <WNT_HIDSpaceMouse.hpp>
 
 namespace
 {

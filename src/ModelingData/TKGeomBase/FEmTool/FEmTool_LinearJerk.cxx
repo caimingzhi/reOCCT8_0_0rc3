@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FEmTool_ElementsOfRefMatrix.hxx>
-#include <FEmTool_LinearJerk.hxx>
-#include <math.hxx>
-#include <math_GaussSetIntegration.hxx>
-#include <math_IntegerVector.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <PLib.hxx>
-#include <PLib_HermitJacobi.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <FEmTool_ElementsOfRefMatrix.hpp>
+#include <FEmTool_LinearJerk.hpp>
+#include <math.hpp>
+#include <math_GaussSetIntegration.hpp>
+#include <math_IntegerVector.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <PLib.hpp>
+#include <PLib_HermitJacobi.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_LinearJerk, FEmTool_ElementaryCriterion)
 

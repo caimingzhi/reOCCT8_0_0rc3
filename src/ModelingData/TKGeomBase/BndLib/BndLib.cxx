@@ -12,28 +12,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BndLib.hxx>
+#include <BndLib.hpp>
 
-#include <Bnd_Box.hxx>
-#include <Bnd_Box2d.hxx>
-#include <ElCLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <Standard_Failure.hxx>
-#include <ElSLib.hxx>
+#include <Bnd_Box.hpp>
+#include <Bnd_Box2d.hpp>
+#include <ElCLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <Standard_Failure.hpp>
+#include <ElSLib.hpp>
 
 static int ComputeBox(const gp_Hypr& aHypr, const double aT1, const double aT2, Bnd_Box& aBox);
 

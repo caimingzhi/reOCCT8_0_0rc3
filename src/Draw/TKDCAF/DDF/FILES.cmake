@@ -3,19 +3,19 @@ set(OCCT_DDF_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_DDF_FILES
   DDF.cxx
-  DDF.hxx
+  DDF.hpp
   DDF_AttributeBrowser.cxx
-  DDF_AttributeBrowser.hxx
+  DDF_AttributeBrowser.hpp
   DDF_BasicCommands.cxx
   DDF_Browser.cxx
-  DDF_Browser.hxx
+  DDF_Browser.hpp
   DDF_BrowserCommands.cxx
   DDF_Data.cxx
-  DDF_Data.hxx
+  DDF_Data.hpp
   DDF_DataCommands.cxx
 
   DDF_Transaction.cxx
-  DDF_Transaction.hxx
+  DDF_Transaction.hpp
   DDF_TransactionCommands.cxx
 
   FILES

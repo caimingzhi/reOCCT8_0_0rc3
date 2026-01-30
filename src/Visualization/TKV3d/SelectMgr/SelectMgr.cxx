@@ -11,31 +11,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr.hxx>
+#include <SelectMgr.hpp>
 
-#include <Geom_Circle.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitiveCircle.hxx>
-#include <Select3D_SensitiveCylinder.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <Select3D_SensitiveFace.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <Select3D_SensitiveTriangle.hxx>
-#include <Select3D_SensitiveTriangulation.hxx>
-#include <Select3D_SensitiveWire.hxx>
-#include <SelectMgr_Selection.hxx>
+#include <Geom_Circle.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitiveCircle.hpp>
+#include <Select3D_SensitiveCylinder.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <Select3D_SensitiveFace.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <Select3D_SensitiveTriangle.hpp>
+#include <Select3D_SensitiveTriangulation.hpp>
+#include <Select3D_SensitiveWire.hpp>
+#include <SelectMgr_Selection.hpp>
 
 namespace
 {

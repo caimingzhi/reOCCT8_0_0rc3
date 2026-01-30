@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_SingleRelation.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_SingleRelation.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_SingleRelation, Expr_GeneralRelation)
 

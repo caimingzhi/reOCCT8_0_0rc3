@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomConvert_ApproxCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomConvert_ApproxCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=======================================================================
 // class : GeomConvert_ApproxCurve_Eval

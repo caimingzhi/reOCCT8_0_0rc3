@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomToStep_MakeCartesianTransformationOperator.hxx>
+#include <GeomToStep_MakeCartesianTransformationOperator.hpp>
 
-#include <GeomToStep_MakeCartesianPoint.hxx>
-#include <GeomToStep_MakeDirection.hxx>
-#include <gp_Trsf.hxx>
-#include <StepGeom_CartesianTransformationOperator3d.hxx>
+#include <GeomToStep_MakeCartesianPoint.hpp>
+#include <GeomToStep_MakeDirection.hpp>
+#include <gp_Trsf.hpp>
+#include <StepGeom_CartesianTransformationOperator3d.hpp>
 
 //=============================================================================
 

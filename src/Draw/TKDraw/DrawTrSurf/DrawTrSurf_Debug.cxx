@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf.hxx>
-#include <GeomTools.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom2d_Curve.hxx>
+#include <DrawTrSurf.hpp>
+#include <GeomTools.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom2d_Curve.hpp>
 
 // This file defines global functions not declared in any public header,
 // intended for use from debugger prompt (Command Window in Visual Studio)

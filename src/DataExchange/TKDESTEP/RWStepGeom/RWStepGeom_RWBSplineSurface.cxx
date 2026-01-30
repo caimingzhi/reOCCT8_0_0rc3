@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWBSplineSurface.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_BSplineSurface.hxx>
-#include <StepGeom_BSplineSurfaceForm.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWBSplineSurface.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_BSplineSurface.hpp>
+#include <StepGeom_BSplineSurfaceForm.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepGeom_RWBSplineSurfaceForm.pxx"
+#include "RWStepGeom_RWBSplineSurfaceForm.hpp"
 
 RWStepGeom_RWBSplineSurface::RWStepGeom_RWBSplineSurface() = default;
 

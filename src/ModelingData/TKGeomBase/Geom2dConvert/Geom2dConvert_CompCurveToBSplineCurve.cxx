@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BoundedCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom2dConvert_CompCurveToBSplineCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <Geom2d_BoundedCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom2dConvert_CompCurveToBSplineCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

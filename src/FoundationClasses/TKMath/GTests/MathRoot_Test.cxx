@@ -13,10 +13,10 @@
 
 #include <gtest/gtest.h>
 
-#include <MathRoot_Newton.hxx>
-#include <MathRoot_Brent.hxx>
-#include <MathRoot_Bisection.hxx>
-#include <MathRoot_Secant.hxx>
+#include <MathRoot_Newton.hpp>
+#include <MathRoot_Brent.hpp>
+#include <MathRoot_Bisection.hpp>
+#include <MathRoot_Secant.hpp>
 
 #include <cmath>
 

@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
+#include <Standard_NullObject.hpp>
 
-#include <ShapePersistent_Geom2d_Curve.hxx>
+#include <ShapePersistent_Geom2d_Curve.hpp>
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
 
 occ::handle<Geom2d_Curve> ShapePersistent_Geom2d_Curve::pBezier::Import() const
 {

@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools.hxx>
-#include <BinTools_ShapeSet.hxx>
-#include <FSD_FileHeader.hxx>
-#include <OSD_FileSystem.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
+#include <BinTools.hpp>
+#include <BinTools_ShapeSet.hpp>
+#include <FSD_FileHeader.hpp>
+#include <OSD_FileSystem.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
 
 //=================================================================================================
 

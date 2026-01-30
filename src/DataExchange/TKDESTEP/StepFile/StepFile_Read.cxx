@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepFile_Read.hxx>
+#include <StepFile_Read.hpp>
 
-#include <StepFile_ReadData.hxx>
+#include <StepFile_ReadData.hpp>
 
-#include <Interface_Check.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Interface_ParamType.hxx>
-#include <Interface_Protocol.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Interface_ParamType.hpp>
+#include <Interface_Protocol.hpp>
 
-#include <StepData_FileRecognizer.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepReaderTool.hxx>
+#include <StepData_FileRecognizer.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepReaderTool.hpp>
 
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
-#include <OSD_FileSystem.hxx>
-#include <OSD_Timer.hxx>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Timer.hpp>
 
-#include "step.tab.hxx"
+#include "step.tab.hpp"
 
 #include <cstdio>
 #include <mutex>

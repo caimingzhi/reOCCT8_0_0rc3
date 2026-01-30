@@ -12,26 +12,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPTools_AlgoTools2D.hxx>
+#include <BOPTools_AlgoTools2D.hpp>
 
-#include <gp_Vec2d.hxx>
-#include <gp_Dir2d.hxx>
+#include <gp_Vec2d.hpp>
+#include <gp_Dir2d.hpp>
 
-#include <Geom2d_TrimmedCurve.hxx>
-#include <GeomLib.hxx>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <GeomLib.hpp>
 
-#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
 
-#include <TopExp_Explorer.hxx>
+#include <TopExp_Explorer.hpp>
 
-#include <IntTools_Context.hxx>
-#include <IntTools_Tools.hxx>
+#include <IntTools_Context.hpp>
+#include <IntTools_Tools.hpp>
 
-#include <BOPTools_AlgoTools.hxx>
+#include <BOPTools_AlgoTools.hpp>
 
 static int  UpdateClosedPCurve(const TopoDS_Edge&,
                                const TopoDS_Edge&,

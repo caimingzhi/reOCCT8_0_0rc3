@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElSLib.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Precision.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
+#include <ElSLib.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Precision.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Plane, Geom_ElementarySurface)
 

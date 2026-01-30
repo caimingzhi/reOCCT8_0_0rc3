@@ -18,32 +18,32 @@
 // + (-1) selection mode token into account
 // (SAMTECH specific)
 
-#include <AIS_Line.hxx>
-#include <AIS_PlaneTrihedron.hxx>
-#include <AIS_Point.hxx>
-#include <DsgPrs_XYZAxisPresentation.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <UnitsAPI.hxx>
+#include <AIS_Line.hpp>
+#include <AIS_PlaneTrihedron.hpp>
+#include <AIS_Point.hpp>
+#include <DsgPrs_XYZAxisPresentation.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <UnitsAPI.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_PlaneTrihedron, AIS_InteractiveObject)
 

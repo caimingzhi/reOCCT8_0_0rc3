@@ -16,7 +16,7 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <TopOpeBRepTool_STATE.hxx>
+  #include <TopOpeBRepTool_STATE.hpp>
 
 TopOpeBRepTool_STATE::TopOpeBRepTool_STATE(const char* name, const bool b)
     : myin(false),

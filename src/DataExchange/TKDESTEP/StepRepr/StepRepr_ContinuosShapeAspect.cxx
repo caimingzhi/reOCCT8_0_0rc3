@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_ContinuosShapeAspect.hxx>
+#include <StepRepr_ContinuosShapeAspect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ContinuosShapeAspect, StepRepr_CompositeShapeAspect)
 

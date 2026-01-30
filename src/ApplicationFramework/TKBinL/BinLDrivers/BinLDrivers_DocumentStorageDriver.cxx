@@ -13,29 +13,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinLDrivers.hxx>
-#include <BinLDrivers_DocumentStorageDriver.hxx>
-#include <BinLDrivers_Marker.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinObjMgt_Position.hxx>
-#include <CDM_Application.hxx>
-#include <Message_Messenger.hxx>
-#include <FSD_BinaryFile.hxx>
-#include <FSD_FileHeader.hxx>
-#include <OSD_FileSystem.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <Standard_Type.hxx>
-#include <Storage_Schema.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <Message_ProgressScope.hxx>
+#include <BinLDrivers.hpp>
+#include <BinLDrivers_DocumentStorageDriver.hpp>
+#include <BinLDrivers_Marker.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinObjMgt_Position.hpp>
+#include <CDM_Application.hpp>
+#include <Message_Messenger.hpp>
+#include <FSD_BinaryFile.hpp>
+#include <FSD_FileHeader.hpp>
+#include <OSD_FileSystem.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <Standard_Type.hpp>
+#include <Storage_Schema.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <Message_ProgressScope.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinLDrivers_DocumentStorageDriver, PCDM_StorageDriver)
 

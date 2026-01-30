@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_SurfaceTool.hxx>
+#include <BRepApprox_SurfaceTool.hpp>
 
-#include <BRepAdaptor_Surface.hxx>
-#include <Geom_BezierSurface.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <Geom_BezierSurface.hpp>
 
 int BRepApprox_SurfaceTool::NbSamplesU(const BRepAdaptor_Surface&)
 {

@@ -15,17 +15,17 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <AdvApprox_EvaluatorFunction.hxx>
-#include <AdvApprox_SimpleApprox.hxx>
-#include <math_Vector.hxx>
-#include <PLib.hxx>
-#include <PLib_JacobiPolynomial.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <AdvApprox_EvaluatorFunction.hpp>
+#include <AdvApprox_SimpleApprox.hpp>
+#include <math_Vector.hpp>
+#include <PLib.hpp>
+#include <PLib_JacobiPolynomial.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 //=================================================================================================
 

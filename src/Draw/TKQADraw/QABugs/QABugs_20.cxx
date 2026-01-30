@@ -13,63 +13,63 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Extrema_GenLocateExtPS.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Array1.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert.hxx>
-#include <Geom2d_Line.hxx>
-#include <GeomFill_BSplineCurves.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <ShapeConstruct_ProjectCurveOnSurface.hxx>
+#include <Extrema_GenLocateExtPS.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Array1.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert.hpp>
+#include <Geom2d_Line.hpp>
+#include <GeomFill_BSplineCurves.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <ShapeConstruct_ProjectCurveOnSurface.hpp>
 
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS_Compound.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <TopoDS.hxx>
-#include <DBRep.hxx>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS_Compound.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <TopoDS.hpp>
+#include <DBRep.hpp>
 
-#include <BRepGProp.hxx>
-#include <DDocStd.hxx>
-#include <GProp_GProps.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDimTolObjects_DatumObject.hxx>
-#include <XCAFDimTolObjects_DimensionObject.hxx>
-#include <XCAFDimTolObjects_GeomToleranceObject.hxx>
-#include <XCAFDoc_Datum.hxx>
-#include <XCAFDoc_Dimension.hxx>
-#include <XCAFDoc_DimTolTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_GeomTolerance.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRepGProp.hpp>
+#include <DDocStd.hpp>
+#include <GProp_GProps.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDimTolObjects_DatumObject.hpp>
+#include <XCAFDimTolObjects_DimensionObject.hpp>
+#include <XCAFDimTolObjects_GeomToleranceObject.hpp>
+#include <XCAFDoc_Datum.hpp>
+#include <XCAFDoc_Dimension.hpp>
+#include <XCAFDoc_DimTolTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_GeomTolerance.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
-#include <HLRBRep_PolyHLRToShape.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
+#include <HLRBRep_PolyHLRToShape.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
 
-#include <Standard_Failure.hxx>
+#include <Standard_Failure.hpp>
 
-#include <Bnd_OBB.hxx>
-#include <BRepBndLib.hxx>
-#include <OSD_MemInfo.hxx>
-#include <OSD_Timer.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_Name.hxx>
-#include <AppCont_Function.hxx>
-#include <math_ComputeKronrodPointsAndWeights.hxx>
-#include <STEPCAFControl_Writer.hxx>
-#include <STEPCAFControl_Controller.hxx>
-#include <ShapeAnalysis_ShapeContents.hxx>
+#include <Bnd_OBB.hpp>
+#include <BRepBndLib.hpp>
+#include <OSD_MemInfo.hpp>
+#include <OSD_Timer.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_Name.hpp>
+#include <AppCont_Function.hpp>
+#include <math_ComputeKronrodPointsAndWeights.hpp>
+#include <STEPCAFControl_Writer.hpp>
+#include <STEPCAFControl_Controller.hpp>
+#include <ShapeAnalysis_ShapeContents.hpp>
 
 #include <limits>
 
@@ -2133,10 +2133,10 @@ static int OCC27466(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
   return 0;
 }
 
-#include <GCE2d_MakeParabola.hxx>
-#include <gp_Ax22d.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <gp_Parab2d.hxx>
+#include <GCE2d_MakeParabola.hpp>
+#include <gp_Ax22d.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <gp_Parab2d.hpp>
 
 namespace Parab2d_Bug26747
 {
@@ -2389,13 +2389,13 @@ static int OCC26747_3(Draw_Interpretor& theDI, int theNArg, const char** theArgV
   return 0;
 }
 
-#include "Geom2d_BezierCurve.hxx"
-#include "Geom2dGcc_QualifiedCurve.hxx"
-#include "Geom2dAdaptor_Curve.hxx"
+#include "Geom2d_BezierCurve.hpp"
+#include "Geom2dGcc_QualifiedCurve.hpp"
+#include "Geom2dAdaptor_Curve.hpp"
 
-#include <Standard_ErrorHandler.hxx>
-#include <GeomFill_NSections.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <GeomFill_NSections.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
 
 //=================================================================================================
 
@@ -2441,7 +2441,7 @@ static int OCC26270(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
   return 0;
 }
 
-#include <NCollection_IncAllocator.hxx>
+#include <NCollection_IncAllocator.hpp>
 
 static int OCC27875(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
@@ -2466,9 +2466,9 @@ static int OCC27875(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
   return 0;
 }
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepClass_FaceClassifier.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepClass_FaceClassifier.hpp>
 
 static int OCC27884(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -2585,11 +2585,11 @@ static int OCC27884(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   return 0;
 }
 
-#include <TDF_Tool.hxx>
-#include <XCAFDoc_View.hxx>
-#include <XCAFDoc_ViewTool.hxx>
-#include <XCAFView_Object.hxx>
-#include <XCAFView_ProjectionType.hxx>
+#include <TDF_Tool.hpp>
+#include <XCAFDoc_View.hpp>
+#include <XCAFDoc_ViewTool.hpp>
+#include <XCAFView_Object.hpp>
+#include <XCAFView_ProjectionType.hpp>
 
 static int OCC28389(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -2710,11 +2710,11 @@ static int OCC28389(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <gp_Pnt2d.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dAPI_Interpolate.hxx>
-#include <GeomAPI.hxx>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dAPI_Interpolate.hpp>
+#include <GeomAPI.hpp>
 
 static int OCC28594(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -2795,10 +2795,10 @@ static int OCC28829(Draw_Interpretor&, int, const char**)
   return 0;
 }
 
-#include <NCollection_Buffer.hxx>
-#include <DDocStd_DrawDocument.hxx>
-#include <OSD_FileSystem.hxx>
-#include <TDocStd_Application.hxx>
+#include <NCollection_Buffer.hpp>
+#include <DDocStd_DrawDocument.hpp>
+#include <OSD_FileSystem.hpp>
+#include <TDocStd_Application.hpp>
 
 #ifdef max
   #undef max
@@ -2902,14 +2902,14 @@ static int OCC28131(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-#include <math_NewtonFunctionRoot.hxx>
-#include <math_TrigonometricEquationFunction.hxx>
-#include <gp_Elips2d.hxx>
+#include <math_NewtonFunctionRoot.hpp>
+#include <math_TrigonometricEquationFunction.hpp>
+#include <gp_Elips2d.hpp>
 
-#include <NCollection_DoubleMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <NCollection_DoubleMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 // check that copying of empty maps does not allocate extra memory
 template <typename T>
@@ -2963,10 +2963,10 @@ static int OCC29064(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-#include <BRepOffsetAPI_MakePipeShell.hxx>
-#include <GC_MakeArcOfCircle.hxx>
-#include <BRepAdaptor_CompCurve.hxx>
-#include <gp_Circ.hxx>
+#include <BRepOffsetAPI_MakePipeShell.hpp>
+#include <GC_MakeArcOfCircle.hpp>
+#include <BRepAdaptor_CompCurve.hpp>
+#include <gp_Circ.hpp>
 
 //=================================================================================================
 
@@ -2998,7 +2998,7 @@ static int OCC29430(Draw_Interpretor& theDI, int /*theNArg*/, const char** theAr
   return 0;
 }
 
-#include <STEPCAFControl_Reader.hxx>
+#include <STEPCAFControl_Reader.hpp>
 
 //=================================================================================================
 
@@ -3030,9 +3030,9 @@ static int OCC29531(Draw_Interpretor&, int, const char** theArgV)
 
 //=================================================================================================
 
-#include <GeomAdaptor_Surface.hxx>
-#include <IntPatch_PointLine.hxx>
-#include <IntSurf_PntOn2S.hxx>
+#include <GeomAdaptor_Surface.hpp>
+#include <IntPatch_PointLine.hpp>
+#include <IntSurf_PntOn2S.hpp>
 
 static int OCC29807(Draw_Interpretor& theDI, int theNArg, const char** theArgV)
 {
@@ -3110,7 +3110,7 @@ static int OCC29311(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
 //=================================================================================================
 
-#include <BRepOffset_Tool.hxx>
+#include <BRepOffset_Tool.hpp>
 
 static int OCC30391(Draw_Interpretor& theDI, int theNArg, const char** theArgV)
 {
@@ -3222,19 +3222,19 @@ static int OCC29745(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-#include <NCollection_Sequence.hxx>
-#include <BinLDrivers.hxx>
-#include <BinDrivers.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlDrivers.hxx>
-#include <StdLDrivers.hxx>
-#include <StdDrivers.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDocStd_PathParser.hxx>
-#include <OSD.hxx>
-#include <OSD_Parallel.hxx>
-#include <OSD_Thread.hxx>
-#include <OSD_Environment.hxx>
+#include <NCollection_Sequence.hpp>
+#include <BinLDrivers.hpp>
+#include <BinDrivers.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlDrivers.hpp>
+#include <StdLDrivers.hpp>
+#include <StdDrivers.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDocStd_PathParser.hpp>
+#include <OSD.hpp>
+#include <OSD_Parallel.hpp>
+#include <OSD_Thread.hpp>
+#include <OSD_Environment.hpp>
 
 typedef struct
 {
@@ -3453,7 +3453,7 @@ static int QAEndsWith(Draw_Interpretor& di, int n, const char** a)
 }
 
 // Class is used in OCC30435
-#include <Adaptor3d_Curve.hxx>
+#include <Adaptor3d_Curve.hpp>
 
 class CurveEvaluator : public AppCont_Function
 
@@ -3491,9 +3491,9 @@ public:
   }
 };
 
-#include <GeomAdaptor_Curve.hxx>
-#include <Approx_FitAndDivide.hxx>
-#include <Convert_CompBezierCurvesToBSplineCurve.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <Approx_FitAndDivide.hpp>
+#include <Convert_CompBezierCurvesToBSplineCurve.hpp>
 
 static int OCC30435(Draw_Interpretor& di, int, const char** a)
 {
@@ -3565,9 +3565,9 @@ static int OCC30435(Draw_Interpretor& di, int, const char** a)
 
 //=================================================================================================
 
-#include <GCE2d_MakeCircle.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dConvert_CompCurveToBSplineCurve.hxx>
+#include <GCE2d_MakeCircle.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dConvert_CompCurveToBSplineCurve.hpp>
 
 static int OCC30747(Draw_Interpretor& theDI, int theArgc, const char** theArgV)
 {
@@ -3650,7 +3650,7 @@ static int OCC30869(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-#include <BRepExtrema_ExtCF.hxx>
+#include <BRepExtrema_ExtCF.hpp>
 
 //=================================================================================================
 
@@ -3719,7 +3719,7 @@ static int OCC30880(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
 
 //=======================================================================
 // function : OCC30990
@@ -3829,9 +3829,9 @@ static int OCC30990(Draw_Interpretor& theDI, int theNArg, const char** theArgV)
   return 0;
 }
 
-#include <ExprIntrp_GenExp.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_NamedUnknown.hxx>
+#include <ExprIntrp_GenExp.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_NamedUnknown.hpp>
 
 //=================================================================================================
 
@@ -3877,9 +3877,9 @@ static int OCC31697(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <TObj_Model.hxx>
-#include <TObj_TModel.hxx>
-#include <TObj_ObjectIterator.hxx>
+#include <TObj_Model.hpp>
+#include <TObj_TModel.hpp>
+#include <TObj_ObjectIterator.hpp>
 
 //=================================================================================================
 
@@ -3939,8 +3939,8 @@ static int OCC31320(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BinXCAFDrivers.hxx>
-#include <Message.hxx>
+#include <BinXCAFDrivers.hpp>
+#include <Message.hpp>
 
 namespace
 {
@@ -4034,8 +4034,8 @@ static int QANullifyShape(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-#include <BRepCheck_Analyzer.hxx>
-#include <GCPnts_UniformDeflection.hxx>
+#include <BRepCheck_Analyzer.hpp>
+#include <GCPnts_UniformDeflection.hpp>
 
 static int OCC32744(Draw_Interpretor& theDi, int theNbArgs, const char** theArgVec)
 {

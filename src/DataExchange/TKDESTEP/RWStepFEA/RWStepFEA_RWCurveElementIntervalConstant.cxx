@@ -15,14 +15,14 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWCurveElementIntervalConstant.pxx"
-#include <StepBasic_EulerAngles.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepElement_CurveElementSectionDefinition.hxx>
-#include <StepFEA_CurveElementIntervalConstant.hxx>
-#include <StepFEA_CurveElementLocation.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWCurveElementIntervalConstant.hpp"
+#include <StepBasic_EulerAngles.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepElement_CurveElementSectionDefinition.hpp>
+#include <StepFEA_CurveElementIntervalConstant.hpp>
+#include <StepFEA_CurveElementLocation.hpp>
 
 //=================================================================================================
 

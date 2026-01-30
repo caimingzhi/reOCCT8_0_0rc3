@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Curve.hxx>
+#include <GeomGridEval_Curve.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_TrimmedCurve.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_TrimmedCurve.hpp>
 
 namespace
 {

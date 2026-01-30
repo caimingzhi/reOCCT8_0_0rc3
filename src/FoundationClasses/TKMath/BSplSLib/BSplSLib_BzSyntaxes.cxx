@@ -20,9 +20,9 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <BSplSLib.hxx>
-#include <BSplCLib.hxx>
-#include <NCollection_Array1.hxx>
+#include <BSplSLib.hpp>
+#include <BSplCLib.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

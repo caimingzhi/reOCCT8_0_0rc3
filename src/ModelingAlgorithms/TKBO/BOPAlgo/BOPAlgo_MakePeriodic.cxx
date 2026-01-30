@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_MakePeriodic.hxx>
+#include <BOPAlgo_MakePeriodic.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
+#include <BOPAlgo_Alerts.hpp>
 
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
 
-#include <BRepAlgoAPI_Common.hxx>
-#include <BRepAlgoAPI_Splitter.hxx>
+#include <BRepAlgoAPI_Common.hpp>
+#include <BRepAlgoAPI_Splitter.hpp>
 
-#include <BRepBndLib.hxx>
+#include <BRepBndLib.hpp>
 
-#include <BRepBuilderAPI_Transform.hxx>
+#include <BRepBuilderAPI_Transform.hpp>
 
-#include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
 
-#include <gp_Pln.hxx>
+#include <gp_Pln.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 // Periodic/Trim/Repeat directions
 static const gp_Dir MY_DIRECTIONS[3] = {gp::DX(), gp::DY(), gp::DZ()};

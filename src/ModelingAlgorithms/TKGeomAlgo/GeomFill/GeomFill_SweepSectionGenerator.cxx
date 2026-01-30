@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <ElCLib.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomFill_Profiler.hxx>
-#include <GeomFill_SweepSectionGenerator.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_RangeError.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <ElCLib.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomFill_Profiler.hpp>
+#include <GeomFill_SweepSectionGenerator.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_RangeError.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cstdio>
 

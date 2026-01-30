@@ -17,22 +17,22 @@
 // Modified 10/09/1996 PMN Ajout de (Nb)Intervalles, IsRationnal
 //                       + Utilisation de GeomFill::GetCircle dans Section.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Blend_Point.hxx>
-#include <BlendFunc.hxx>
-#include <BlendFunc_CSConstRad.hxx>
-#include <ElCLib.hxx>
-#include <GeomFill.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Blend_Point.hpp>
+#include <BlendFunc.hpp>
+#include <BlendFunc_CSConstRad.hpp>
+#include <ElCLib.hpp>
+#include <GeomFill.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

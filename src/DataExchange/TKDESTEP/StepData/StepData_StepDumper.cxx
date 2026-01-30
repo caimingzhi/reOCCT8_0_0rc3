@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Message.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_Protocol.hxx>
-#include <StepData_ReadWriteModule.hxx>
-#include <StepData_StepDumper.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepData_StepWriter.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Message.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_Protocol.hpp>
+#include <StepData_ReadWriteModule.hpp>
+#include <StepData_StepDumper.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepData_StepWriter.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Sequence.hpp>
 
 #include <cstdio>
 

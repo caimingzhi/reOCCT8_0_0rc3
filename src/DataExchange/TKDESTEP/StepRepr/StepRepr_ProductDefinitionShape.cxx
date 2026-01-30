@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ProductDefinitionShape, StepRepr_PropertyDefinition)
 

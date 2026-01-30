@@ -18,24 +18,24 @@
 //  CREATION D UNE LIGNE TANGENTE A DEUX COURBES.                        +
 //========================================================================
 
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_FunctionTanCirCu.hxx>
-#include <Geom2dGcc_FunctionTanCuCu.hxx>
-#include <Geom2dGcc_FunctionTanCuPnt.hxx>
-#include <Geom2dGcc_Lin2d2TanIter.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <math_FunctionRoot.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_Vector.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_FunctionTanCirCu.hpp>
+#include <Geom2dGcc_FunctionTanCuCu.hpp>
+#include <Geom2dGcc_FunctionTanCuPnt.hpp>
+#include <Geom2dGcc_Lin2d2TanIter.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <math_FunctionRoot.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_Vector.hpp>
+#include <StdFail_NotDone.hpp>
 
 Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const GccEnt_QualifiedCirc& Qualified1,
                                                  const Geom2dGcc_QCurve&     Qualified2,

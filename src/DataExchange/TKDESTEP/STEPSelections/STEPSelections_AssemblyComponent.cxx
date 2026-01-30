@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPSelections_AssemblyComponent.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
+#include <STEPSelections_AssemblyComponent.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_AssemblyComponent, Standard_Transient)
 

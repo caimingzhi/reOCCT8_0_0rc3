@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_GeneralProperty.hxx>
-#include <StepBasic_GeneralPropertyRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_GeneralProperty.hpp>
+#include <StepBasic_GeneralPropertyRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_GeneralPropertyRelationship, Standard_Transient)
 

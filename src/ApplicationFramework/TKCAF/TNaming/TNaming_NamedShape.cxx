@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <Standard.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_CopyShape.hxx>
-#include <TNaming_DeltaOnModification.hxx>
-#include <TNaming_DeltaOnRemoval.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_PtrNode.hxx>
-#include <TNaming_RefShape.hxx>
-#include <TNaming_SameShapeIterator.hxx>
-#include <TNaming_Tool.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <Standard.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_CopyShape.hpp>
+#include <TNaming_DeltaOnModification.hpp>
+#include <TNaming_DeltaOnRemoval.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_PtrNode.hpp>
+#include <TNaming_RefShape.hpp>
+#include <TNaming_SameShapeIterator.hpp>
+#include <TNaming_Tool.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_NamedShape, TDF_Attribute)
 

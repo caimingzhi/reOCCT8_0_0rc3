@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Stat.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <MoniTool_Stat.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 // static MoniTool_Stat Statvoid("");
 // static MoniTool_Stat Statact ("");

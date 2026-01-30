@@ -16,7 +16,7 @@
 
 #define No_Standard_NoSuchObject
 
-#include <TopoDS_Iterator.hxx>
+#include <TopoDS_Iterator.hpp>
 
 //=================================================================================================
 

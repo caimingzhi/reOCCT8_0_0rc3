@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_FileProtocol.hxx>
-#include <StepData_Protocol.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_FileProtocol.hpp>
+#include <StepData_Protocol.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_FileProtocol, StepData_Protocol)
 

@@ -3,54 +3,54 @@ set(OCCT_DsgPrs_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_DsgPrs_FILES
   DsgPrs.cxx
-  DsgPrs.hxx
+  DsgPrs.hpp
   DsgPrs_AnglePresentation.cxx
-  DsgPrs_AnglePresentation.hxx
-  DsgPrs_ArrowSide.hxx
+  DsgPrs_AnglePresentation.hpp
+  DsgPrs_ArrowSide.hpp
   DsgPrs_Chamf2dPresentation.cxx
-  DsgPrs_Chamf2dPresentation.hxx
+  DsgPrs_Chamf2dPresentation.hpp
   DsgPrs_ConcentricPresentation.cxx
-  DsgPrs_ConcentricPresentation.hxx
+  DsgPrs_ConcentricPresentation.hpp
   DsgPrs_DatumPrs.cxx
-  DsgPrs_DatumPrs.hxx
+  DsgPrs_DatumPrs.hpp
   DsgPrs_DiameterPresentation.cxx
-  DsgPrs_DiameterPresentation.hxx
+  DsgPrs_DiameterPresentation.hpp
   DsgPrs_EllipseRadiusPresentation.cxx
-  DsgPrs_EllipseRadiusPresentation.hxx
+  DsgPrs_EllipseRadiusPresentation.hpp
   DsgPrs_EqualDistancePresentation.cxx
-  DsgPrs_EqualDistancePresentation.hxx
+  DsgPrs_EqualDistancePresentation.hpp
   DsgPrs_EqualRadiusPresentation.cxx
-  DsgPrs_EqualRadiusPresentation.hxx
+  DsgPrs_EqualRadiusPresentation.hpp
   DsgPrs_FilletRadiusPresentation.cxx
-  DsgPrs_FilletRadiusPresentation.hxx
+  DsgPrs_FilletRadiusPresentation.hpp
   DsgPrs_FixPresentation.cxx
-  DsgPrs_FixPresentation.hxx
+  DsgPrs_FixPresentation.hpp
   DsgPrs_IdenticPresentation.cxx
-  DsgPrs_IdenticPresentation.hxx
+  DsgPrs_IdenticPresentation.hpp
   DsgPrs_LengthPresentation.cxx
-  DsgPrs_LengthPresentation.hxx
+  DsgPrs_LengthPresentation.hpp
   DsgPrs_MidPointPresentation.cxx
-  DsgPrs_MidPointPresentation.hxx
+  DsgPrs_MidPointPresentation.hpp
   DsgPrs_OffsetPresentation.cxx
-  DsgPrs_OffsetPresentation.hxx
+  DsgPrs_OffsetPresentation.hpp
   DsgPrs_ParalPresentation.cxx
-  DsgPrs_ParalPresentation.hxx
+  DsgPrs_ParalPresentation.hpp
   DsgPrs_PerpenPresentation.cxx
-  DsgPrs_PerpenPresentation.hxx
+  DsgPrs_PerpenPresentation.hpp
   DsgPrs_RadiusPresentation.cxx
-  DsgPrs_RadiusPresentation.hxx
+  DsgPrs_RadiusPresentation.hpp
   DsgPrs_ShadedPlanePresentation.cxx
-  DsgPrs_ShadedPlanePresentation.hxx
+  DsgPrs_ShadedPlanePresentation.hpp
   DsgPrs_ShapeDirPresentation.cxx
-  DsgPrs_ShapeDirPresentation.hxx
+  DsgPrs_ShapeDirPresentation.hpp
   DsgPrs_SymbPresentation.cxx
-  DsgPrs_SymbPresentation.hxx
+  DsgPrs_SymbPresentation.hpp
   DsgPrs_SymmetricPresentation.cxx
-  DsgPrs_SymmetricPresentation.hxx
+  DsgPrs_SymmetricPresentation.hpp
   DsgPrs_TangentPresentation.cxx
-  DsgPrs_TangentPresentation.hxx
+  DsgPrs_TangentPresentation.hpp
   DsgPrs_XYZAxisPresentation.cxx
-  DsgPrs_XYZAxisPresentation.hxx
+  DsgPrs_XYZAxisPresentation.hpp
   DsgPrs_XYZPlanePresentation.cxx
-  DsgPrs_XYZPlanePresentation.hxx
+  DsgPrs_XYZPlanePresentation.hpp
 )

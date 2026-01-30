@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_HShape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XSControl_Vars.hxx>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_HShape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XSControl_Vars.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_Vars, Standard_Transient)
 

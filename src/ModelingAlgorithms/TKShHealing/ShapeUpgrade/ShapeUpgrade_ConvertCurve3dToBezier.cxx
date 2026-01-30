@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomConvert_ApproxCurve.hxx>
-#include <GeomConvert_BSplineCurveToBezierCurve.hxx>
-#include <Precision.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade_ConvertCurve3dToBezier.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomConvert_ApproxCurve.hpp>
+#include <GeomConvert_BSplineCurveToBezierCurve.hpp>
+#include <Precision.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade_ConvertCurve3dToBezier.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ConvertCurve3dToBezier, ShapeUpgrade_SplitCurve3d)
 

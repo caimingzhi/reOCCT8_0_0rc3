@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_ProductDefinitionOrReference.hxx>
-#include <StepBasic_ProductDefinitionReference.hxx>
-#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_ProductDefinitionOrReference.hpp>
+#include <StepBasic_ProductDefinitionReference.hpp>
+#include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hpp>
 
 //=================================================================================================
 

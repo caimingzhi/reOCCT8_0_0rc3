@@ -13,18 +13,18 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <GeomGridEval_SurfaceOfRevolution.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <GeomGridEval_SurfaceOfRevolution.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

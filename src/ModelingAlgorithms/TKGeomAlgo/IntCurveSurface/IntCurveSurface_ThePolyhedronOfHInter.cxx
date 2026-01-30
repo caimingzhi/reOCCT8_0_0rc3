@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_ThePolyhedronOfHInter.hxx>
+#include <IntCurveSurface_ThePolyhedronOfHInter.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Bnd_Box.hxx>
-#include <NCollection_Array1.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <gp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Bnd_Box.hpp>
+#include <NCollection_Array1.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <gp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_OutOfRange.hpp>
 
-#include "IntCurveSurface_PolyhedronUtils.pxx"
+#include "IntCurveSurface_PolyhedronUtils.hpp"
 
 // Namespace alias for brevity
 namespace PolyUtils = IntCurveSurface_PolyhedronUtils;

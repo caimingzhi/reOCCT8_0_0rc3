@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_WLineTool.hxx>
+#include <IntPatch_WLineTool.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <Bnd_Range.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <IntPatch_SpecialPoints.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <TopAbs_State.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <Bnd_Range.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <IntPatch_SpecialPoints.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <TopAbs_State.hpp>
 
 // It is pure empirical value.
 const double IntPatch_WLineTool::myMaxConcatAngle = M_PI / 6;

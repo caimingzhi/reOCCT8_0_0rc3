@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepElement_SurfaceSection.hxx>
-#include <StepElement_SurfaceSectionFieldConstant.hxx>
+#include <StepElement_SurfaceSection.hpp>
+#include <StepElement_SurfaceSectionFieldConstant.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_SurfaceSectionFieldConstant, StepElement_SurfaceSectionField)
 

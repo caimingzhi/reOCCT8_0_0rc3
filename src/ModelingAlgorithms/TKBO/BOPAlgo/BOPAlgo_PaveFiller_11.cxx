@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Alerts.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Alerts.hpp>
 
-#include <BOPDS_DS.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_CommonBlock.hxx>
+#include <BOPDS_DS.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_CommonBlock.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <TopoDS_Compound.hxx>
+#include <TopoDS_Compound.hpp>
 
 //=================================================================================================
 

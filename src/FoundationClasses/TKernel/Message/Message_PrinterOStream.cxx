@@ -17,11 +17,11 @@
   #include <windows.h>
 #endif
 
-#include <Message_PrinterOStream.hxx>
+#include <Message_PrinterOStream.hpp>
 
-#include <OSD_OpenFile.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <OSD_OpenFile.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterOStream, Message_Printer)
 

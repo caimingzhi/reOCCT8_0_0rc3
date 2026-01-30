@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <StepFEA_DegreeOfFreedomMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_DegreeOfFreedomMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_DegreeOfFreedomMember, StepData_SelectNamed)
 

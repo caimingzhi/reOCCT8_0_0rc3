@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_TriangulationReader.hxx>
+#include <RWMesh_TriangulationReader.hpp>
 
-#include <Message.hxx>
-#include <RWMesh_TriangulationSource.hxx>
+#include <Message.hpp>
+#include <RWMesh_TriangulationSource.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_TriangulationReader, Standard_Transient)
 

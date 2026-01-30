@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESGeom_Line.hxx>
-#include <IGESControl_Writer.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_FinderProcess.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESGeom_Line.hpp>
+#include <IGESControl_Writer.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_FinderProcess.hpp>
 
 #include <gtest/gtest.h>
 

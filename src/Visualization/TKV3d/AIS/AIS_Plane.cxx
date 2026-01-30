@@ -14,37 +14,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Plane.hxx>
+#include <AIS_Plane.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <DsgPrs_ShadedPlanePresentation.hxx>
-#include <DsgPrs_XYZPlanePresentation.hxx>
-#include <ElSLib.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfQuadrangles.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Graphic3d_TransformPersScaledAbove.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Precision.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PlaneAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitiveTriangulation.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_Plane.hxx>
-#include <NCollection_Array1.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <DsgPrs_ShadedPlanePresentation.hpp>
+#include <DsgPrs_XYZPlanePresentation.hpp>
+#include <ElSLib.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfQuadrangles.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Graphic3d_TransformPersScaledAbove.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Precision.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PlaneAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitiveTriangulation.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_Plane.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Plane, AIS_InteractiveObject)
 

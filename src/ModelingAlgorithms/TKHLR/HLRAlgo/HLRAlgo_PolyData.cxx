@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_PolyData.hxx>
+#include <HLRAlgo_PolyData.hpp>
 
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <HLRAlgo_PolyMask.hxx>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <HLRAlgo_PolyMask.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyData, Standard_Transient)
 

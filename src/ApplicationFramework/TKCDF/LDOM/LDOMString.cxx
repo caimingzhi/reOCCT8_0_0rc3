@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOMString.hxx>
-#include <LDOM_MemManager.hxx>
+#include <LDOMString.hpp>
+#include <LDOM_MemManager.hpp>
 
 //=======================================================================
 // function : CreateDirectString

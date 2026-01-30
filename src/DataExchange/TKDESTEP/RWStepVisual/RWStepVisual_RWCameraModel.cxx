@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWCameraModel.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_CameraModel.hxx>
+#include "RWStepVisual_RWCameraModel.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_CameraModel.hpp>
 
 RWStepVisual_RWCameraModel::RWStepVisual_RWCameraModel() = default;
 

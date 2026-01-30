@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol.pxx"
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_GeoTolAndGeoTolWthMaxTol.hxx>
-#include <StepDimTol_GeometricToleranceWithModifiers.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol.hpp"
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_GeoTolAndGeoTolWthMaxTol.hpp>
+#include <StepDimTol_GeometricToleranceWithModifiers.hpp>
 
 //=================================================================================================
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepPrimAPI_MakePrism.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
 
 #include <gtest/gtest.h>
 

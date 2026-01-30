@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRep_PointClassifier.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterClassifier.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRep_PointClassifier.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterClassifier.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 // modified by NIZHNY-MKK  Fri Jun 16 15:04:09 2000.BEGIN
 // modified by NIZHNY-MKK  Fri Jun 16 15:04:09 2000.END

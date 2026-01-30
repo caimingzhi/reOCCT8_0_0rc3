@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_RollingSurfacePair.hxx>
+#include <StepKinematics_RollingSurfacePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_RollingSurfacePair, StepKinematics_SurfacePair)
 

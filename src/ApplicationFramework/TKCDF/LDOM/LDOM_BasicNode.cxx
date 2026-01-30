@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_BasicNode.hxx>
+#include <LDOM_BasicNode.hpp>
 
-#include <LDOM_BasicAttribute.hxx>
-#include <LDOM_BasicElement.hxx>
-#include <LDOM_BasicText.hxx>
+#include <LDOM_BasicAttribute.hpp>
+#include <LDOM_BasicElement.hpp>
+#include <LDOM_BasicText.hpp>
 
 //=======================================================================
 // function : operator =
@@ -51,7 +51,7 @@ const LDOM_BasicNode* LDOM_BasicNode::GetSibling() const
     //=======================================================================
     // Debug Function for DBX: use "print -p <Variable> or pp <Variable>"
     //=======================================================================
-    #include <LDOM_OSStream.hxx>
+    #include <LDOM_OSStream.hpp>
     #define FLITERAL 0x10
     #define MAX_SIBLINGS 8
 

@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_ProcessForTransient.hxx>
+#include <Transfer_ProcessForTransient.hpp>
 
-#include <Interface_Check.hxx>
-#include <Interface_CheckIterator.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <Message_ProgressScope.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Map.hxx>
-#include <Transfer_ActorOfProcessForTransient.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_FindHasher.hxx>
-#include <Transfer_IteratorOfProcessForTransient.hxx>
-#include <Transfer_MultipleBinder.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_StatusResult.hxx>
-#include <Transfer_TransferFailure.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Transfer_VoidBinder.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_CheckIterator.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <Message_ProgressScope.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Map.hpp>
+#include <Transfer_ActorOfProcessForTransient.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_FindHasher.hpp>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
+#include <Transfer_MultipleBinder.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_StatusResult.hpp>
+#include <Transfer_TransferFailure.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Transfer_VoidBinder.hpp>
 
 //=================================================================================================
 

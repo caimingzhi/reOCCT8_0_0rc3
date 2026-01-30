@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_UniformAbscissa.hxx>
+#include <GCPnts_UniformAbscissa.hpp>
 
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GCPnts_AbscissaType.hxx>
-#include <GCPnts_TCurveTypes.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GCPnts_AbscissaType.hpp>
+#include <GCPnts_TCurveTypes.hpp>
+#include <Standard_ConstructionError.hpp>
 
 //=================================================================================================
 

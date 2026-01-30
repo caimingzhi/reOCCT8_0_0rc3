@@ -18,25 +18,25 @@
 //                         Optimisation, use of GetCircle
 // Modified 20/02/1998 PMN Singular surfaces management
 
-#include <Adaptor3d_Curve.hxx>
-#include <Blend_Point.hxx>
-#include <BlendFunc.hxx>
-#include <BlendFunc_ConstRad.hxx>
-#include <ElCLib.hxx>
-#include <GeomFill.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_SVD.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_TypeDef.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Blend_Point.hpp>
+#include <BlendFunc.hpp>
+#include <BlendFunc_ConstRad.hpp>
+#include <ElCLib.hpp>
+#include <GeomFill.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_SVD.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_TypeDef.hpp>
 
 #define Eps 1.e-15
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest_V3dView.hxx>
+#include <ViewerTest_V3dView.hpp>
 
-#include <ViewerTest.hxx>
+#include <ViewerTest.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ViewerTest_V3dView, V3d_View)
 

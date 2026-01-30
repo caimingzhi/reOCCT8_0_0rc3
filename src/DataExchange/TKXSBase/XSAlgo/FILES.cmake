@@ -3,9 +3,9 @@ set(OCCT_XSAlgo_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XSAlgo_FILES
   XSAlgo.cxx
-  XSAlgo.hxx
+  XSAlgo.hpp
   XSAlgo_AlgoContainer.cxx
-  XSAlgo_AlgoContainer.hxx
+  XSAlgo_AlgoContainer.hpp
   XSAlgo_ShapeProcessor.cxx
-  XSAlgo_ShapeProcessor.hxx
+  XSAlgo_ShapeProcessor.hpp
 )

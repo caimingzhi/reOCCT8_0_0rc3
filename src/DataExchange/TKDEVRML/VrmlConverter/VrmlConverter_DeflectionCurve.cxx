@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Vrml_Coordinate3.hxx>
-#include <Vrml_IndexedLineSet.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlConverter_DeflectionCurve.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_LineAspect.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <GCPnts_QuasiUniformDeflection.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Vrml_Coordinate3.hpp>
+#include <Vrml_IndexedLineSet.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlConverter_DeflectionCurve.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_LineAspect.hpp>
 
 //=================================================================================================
 

@@ -14,13 +14,13 @@
 
 // pmn -> modified 17/01/1996 : utilisation de Curve() et SetCurve()
 
-#include <gp_Pnt2d.hxx>
-#include <Law_Interpol.hxx>
-#include <Law_Interpolate.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <gp_Pnt2d.hpp>
+#include <Law_Interpol.hpp>
+#include <Law_Interpolate.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_Interpol, Law_BSpFunc)
 

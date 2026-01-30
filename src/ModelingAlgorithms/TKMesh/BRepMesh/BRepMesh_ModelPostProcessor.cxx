@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_ModelPostProcessor.hxx>
+#include <BRepMesh_ModelPostProcessor.hpp>
 
-#include <BRepMesh_ShapeTool.hxx>
-#include <IMeshData_Model.hxx>
-#include <IMeshData_Edge.hxx>
-#include <IMeshData_PCurve.hxx>
-#include <IMeshTools_Parameters.hxx>
-#include <OSD_Parallel.hxx>
-#include <BRepLib.hxx>
-#include <Poly_TriangulationParameters.hxx>
+#include <BRepMesh_ShapeTool.hpp>
+#include <IMeshData_Model.hpp>
+#include <IMeshData_Edge.hpp>
+#include <IMeshData_PCurve.hpp>
+#include <IMeshTools_Parameters.hpp>
+#include <OSD_Parallel.hpp>
+#include <BRepLib.hpp>
+#include <Poly_TriangulationParameters.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelPostProcessor, IMeshTools_ModelAlgo)
 

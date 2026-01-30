@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_TypeQualifier.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_TypeQualifier.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_TypeQualifier, Standard_Transient)
 

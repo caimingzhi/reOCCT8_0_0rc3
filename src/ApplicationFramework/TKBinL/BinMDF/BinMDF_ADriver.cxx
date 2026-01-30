@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDF_ADriver.hxx>
+#include <BinMDF_ADriver.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDF_ADriver, Standard_Transient)
 

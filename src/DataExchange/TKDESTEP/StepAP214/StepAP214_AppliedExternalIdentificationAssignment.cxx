@@ -15,10 +15,10 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepAP214_AppliedExternalIdentificationAssignment.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_IdentificationRole.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepAP214_AppliedExternalIdentificationAssignment.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_IdentificationRole.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedExternalIdentificationAssignment,
                            StepBasic_ExternalIdentificationAssignment)

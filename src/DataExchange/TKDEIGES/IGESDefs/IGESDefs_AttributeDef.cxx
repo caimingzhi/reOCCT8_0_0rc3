@@ -16,18 +16,18 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESDefs_AttributeDef.hxx>
-#include <IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESDefs_AttributeDef.hpp>
+#include <IGESDefs_HArray1OfHArray1OfTextDisplayTemplate.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_AttributeDef, IGESData_IGESEntity)
 

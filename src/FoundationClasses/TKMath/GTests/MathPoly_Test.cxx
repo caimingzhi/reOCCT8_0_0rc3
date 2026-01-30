@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <MathPoly_Quadratic.hxx>
-#include <MathPoly_Cubic.hxx>
-#include <MathPoly_Quartic.hxx>
+#include <MathPoly_Quadratic.hpp>
+#include <MathPoly_Cubic.hpp>
+#include <MathPoly_Quartic.hpp>
 
 #include <cmath>
 

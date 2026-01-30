@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Convert_CompPolynomialToPoles.hxx>
-#include <GeomFill_QuasiAngularConvertor.hxx>
-#include <gp_Mat.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <PLib.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <Convert_CompPolynomialToPoles.hpp>
+#include <GeomFill_QuasiAngularConvertor.hpp>
+#include <gp_Mat.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <PLib.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 #define NullAngle 1.e-6
 

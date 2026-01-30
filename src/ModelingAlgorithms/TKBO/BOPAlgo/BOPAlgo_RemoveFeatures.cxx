@@ -12,45 +12,45 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_RemoveFeatures.hxx>
+#include <BOPAlgo_RemoveFeatures.hpp>
 
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_BuilderSolid.hxx>
-#include <BOPAlgo_MakerVolume.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_BuilderSolid.hpp>
+#include <BOPAlgo_MakerVolume.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <Standard_ErrorHandler.hpp>
 
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <BOPTools_Set.hxx>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <BOPTools_Set.hpp>
 
-#include <Bnd_Box.hxx>
+#include <Bnd_Box.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <BRepBndLib.hxx>
+#include <BRepBndLib.hpp>
 
-#include <BRepLib.hxx>
+#include <BRepLib.hpp>
 
-#include <NCollection_Vector.hxx>
+#include <NCollection_Vector.hpp>
 
-#include <ShapeUpgrade_UnifySameDomain.hxx>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
 
-#include <TopAbs_ShapeEnum.hxx>
+#include <TopAbs_ShapeEnum.hpp>
 
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 //=======================================================================
 // static methods declaration

@@ -15,43 +15,43 @@
 
 #ifdef _WIN32
   #include <windows.h>
-  #include <WNT_WClass.hxx>
-  #include <WNT_Window.hxx>
+  #include <WNT_WClass.hpp>
+  #include <WNT_Window.hpp>
 #endif
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_PluginMacro.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Shape.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <DBRep.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <V3d.hxx>
-#include <V3d_TypeOfOrientation.hxx>
-#include <Aspect_DisplayConnection.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_PluginMacro.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Shape.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <DBRep.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <OpenGl_GraphicDriver.hpp>
+#include <V3d.hpp>
+#include <V3d_TypeOfOrientation.hpp>
+#include <Aspect_DisplayConnection.hpp>
 
-#include <IVtk_Types.hxx>
-#include <IVtkVTK_ShapeData.hxx>
-#include <IVtkOCC_Shape.hxx>
-#include <IVtkOCC_ShapeMesher.hxx>
-#include <IVtkTools_ShapeDataSource.hxx>
-#include <IVtkTools_ShapeObject.hxx>
-#include <IVtkTools_SubPolyDataFilter.hxx>
-#include <IVtkTools_DisplayModeFilter.hxx>
-#include <IVtkTools_ShapePicker.hxx>
+#include <IVtk_Types.hpp>
+#include <IVtkVTK_ShapeData.hpp>
+#include <IVtkOCC_Shape.hpp>
+#include <IVtkOCC_ShapeMesher.hpp>
+#include <IVtkTools_ShapeDataSource.hpp>
+#include <IVtkTools_ShapeObject.hpp>
+#include <IVtkTools_SubPolyDataFilter.hpp>
+#include <IVtkTools_DisplayModeFilter.hpp>
+#include <IVtkTools_ShapePicker.hpp>
 
-#include <IVtkDraw.hxx>
-#include <IVtkDraw_HighlightAndSelectionPipeline.hxx>
-#include <IVtkDraw_Interactor.hxx>
+#include <IVtkDraw.hpp>
+#include <IVtkDraw_HighlightAndSelectionPipeline.hpp>
+#include <IVtkDraw_Interactor.hpp>
 
 // prevent disabling some MSVC warning messages by VTK headers
-#include <Standard_WarningsDisable.hxx>
+#include <Standard_WarningsDisable.hpp>
 #include <vtkAlgorithmOutput.h>
 #include <vtkAppendPolyData.h>
 #include <vtkBMPWriter.h>
@@ -80,11 +80,11 @@
   #include <X11/Xlib.h>
   #include <X11/Xutil.h>
   #include <GL/glx.h>
-  #include <Xw_Window.hxx>
+  #include <Xw_Window.hpp>
   #include <vtkXRenderWindowInteractor.h>
   #include <vtkXOpenGLRenderWindow.h>
 #endif
-#include <Standard_WarningsRestore.hxx>
+#include <Standard_WarningsRestore.hpp>
 
 #if (VTK_MAJOR_VERSION > 8) || (VTK_MAJOR_VERSION == 8 && VTK_MINOR_VERSION >= 1)
   #define HAVE_VTK_SRGB

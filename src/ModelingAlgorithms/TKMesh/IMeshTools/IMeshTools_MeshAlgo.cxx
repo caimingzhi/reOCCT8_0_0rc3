@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshTools_MeshAlgo.hxx>
+#include <IMeshTools_MeshAlgo.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_MeshAlgo, Standard_Transient)

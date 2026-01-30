@@ -11,31 +11,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "XSAlgo_ShapeProcessor.hxx"
+#include "XSAlgo_ShapeProcessor.hpp"
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepTools_ReShape.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Msg.hxx>
-#include <NCollection_List.hxx>
-#include <Resource_Manager.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeExtend_MsgRegistrator.hxx>
-#include <ShapeFix_Edge.hxx>
-#include <ShapeProcess_ShapeContext.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_TransientListBinder.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <UnitsMethods.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepTools_ReShape.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Msg.hpp>
+#include <NCollection_List.hpp>
+#include <Resource_Manager.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeExtend_MsgRegistrator.hpp>
+#include <ShapeFix_Edge.hpp>
+#include <ShapeProcess_ShapeContext.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_TransientListBinder.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <UnitsMethods.hpp>
 
 #include <sstream>
 #include <unordered_set>

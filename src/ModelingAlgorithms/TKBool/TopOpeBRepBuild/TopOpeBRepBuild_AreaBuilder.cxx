@@ -20,10 +20,10 @@
 //                         Celine
 //                         Voyage au bout de la nuit
 
-#include <TopOpeBRepBuild_AreaBuilder.hxx>
-#include <TopOpeBRepBuild_Loop.hxx>
-#include <TopOpeBRepBuild_LoopClassifier.hxx>
-#include <TopOpeBRepBuild_LoopSet.hxx>
+#include <TopOpeBRepBuild_AreaBuilder.hpp>
+#include <TopOpeBRepBuild_Loop.hpp>
+#include <TopOpeBRepBuild_LoopClassifier.hpp>
+#include <TopOpeBRepBuild_LoopSet.hpp>
 
 //=================================================================================================
 

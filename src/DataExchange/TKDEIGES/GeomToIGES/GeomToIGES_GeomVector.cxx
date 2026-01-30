@@ -15,14 +15,14 @@
 // taking into account the unit chosen by the user
 // for writing the IGES file.
 
-#include <Geom_Direction.hxx>
-#include <Geom_Vector.hxx>
-#include <Geom_VectorWithMagnitude.hxx>
-#include <GeomToIGES_GeomVector.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESGeom_CopiousData.hxx>
-#include <IGESGeom_Direction.hxx>
-#include <MoniTool_Macros.hxx>
+#include <Geom_Direction.hpp>
+#include <Geom_Vector.hpp>
+#include <Geom_VectorWithMagnitude.hpp>
+#include <GeomToIGES_GeomVector.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESGeom_CopiousData.hpp>
+#include <IGESGeom_Direction.hpp>
+#include <MoniTool_Macros.hpp>
 
 //=============================================================================
 // GeomToIGES_GeomVector

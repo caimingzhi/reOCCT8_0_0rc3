@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_Pave.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <Standard.hxx>
-#include <Standard_Type.hxx>
+#include <BOPDS_Pave.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <Standard.hpp>
+#include <Standard_Type.hpp>
 
 #include <algorithm>
 IMPLEMENT_STANDARD_RTTIEXT(BOPDS_PaveBlock, Standard_Transient)

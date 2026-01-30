@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Element.hxx>
-#include <Standard_Type.hxx>
+#include <MoniTool_Element.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_Element, Standard_Transient)
 

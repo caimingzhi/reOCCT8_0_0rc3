@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <APIHeaderSection_EditHeader.hxx>
-#include <APIHeaderSection_MakeHeader.hxx>
-#include <IFSelect_EditForm.hxx>
-#include <Interface_TypedValue.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_StepModel.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <APIHeaderSection_EditHeader.hpp>
+#include <APIHeaderSection_MakeHeader.hpp>
+#include <IFSelect_EditForm.hpp>
+#include <Interface_TypedValue.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_StepModel.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(APIHeaderSection_EditHeader, IFSelect_Editor)
 

@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Law.hxx>
+#include <Law.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <BSplCLib.hxx>
-#include <gp_Pnt.hxx>
-#include <Law_BSpFunc.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_Interpolate.hxx>
-#include <Law_Linear.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <BSplCLib.hpp>
+#include <gp_Pnt.hpp>
+#include <Law_BSpFunc.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_Interpolate.hpp>
+#include <Law_Linear.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 occ::handle<Law_BSpFunc> Law::MixBnd(const occ::handle<Law_Linear>& Lin)
 {

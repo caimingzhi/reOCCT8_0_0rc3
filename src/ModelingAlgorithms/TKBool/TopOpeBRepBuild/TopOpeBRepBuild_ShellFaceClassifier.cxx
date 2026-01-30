@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Surface.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_BlockBuilder.hxx>
-#include <TopOpeBRepBuild_ShellFaceClassifier.hxx>
+#include <BRepAdaptor_Surface.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_BlockBuilder.hpp>
+#include <TopOpeBRepBuild_ShellFaceClassifier.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceCHK();
@@ -168,9 +168,9 @@ bool TopOpeBRepBuild_ShellFaceClassifier::CompareElement(const TopoDS_Shape& F)
 }
 
 #ifdef OCCT_DEBUG
-  #include <BRepTools.hxx>
-  #include <BRep_Builder.hxx>
-  #include <TCollection_AsciiString.hxx>
+  #include <BRepTools.hpp>
+  #include <BRep_Builder.hpp>
+  #include <TCollection_AsciiString.hpp>
 static int STATIC_ishell = 0;
 #endif
 

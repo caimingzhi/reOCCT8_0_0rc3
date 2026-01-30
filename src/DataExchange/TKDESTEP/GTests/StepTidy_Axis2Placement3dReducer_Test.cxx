@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "StepTidy_BaseTestFixture.pxx"
+#include "StepTidy_BaseTestFixture.hpp"
 
-#include <StepTidy_Axis2Placement3dReducer.pxx>
+#include <StepTidy_Axis2Placement3dReducer.hpp>
 
-#include <StepGeom_Plane.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepGeom_CylindricalSurface.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <StepRepr_ConstructiveGeometryRepresentation.hxx>
-#include <StepGeom_Circle.hxx>
-#include <StepVisual_PresentationLayerAssignment.hxx>
-#include <StepVisual_StyledItem.hxx>
-#include <StepGeom_Ellipse.hxx>
-#include <StepGeom_ConicalSurface.hxx>
-#include <StepGeom_ToroidalSurface.hxx>
-#include <StepShape_AdvancedBrepShapeRepresentation.hxx>
-#include <StepGeom_SphericalSurface.hxx>
+#include <StepGeom_Plane.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepGeom_CylindricalSurface.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <StepRepr_ConstructiveGeometryRepresentation.hpp>
+#include <StepGeom_Circle.hpp>
+#include <StepVisual_PresentationLayerAssignment.hpp>
+#include <StepVisual_StyledItem.hpp>
+#include <StepGeom_Ellipse.hpp>
+#include <StepGeom_ConicalSurface.hpp>
+#include <StepGeom_ToroidalSurface.hpp>
+#include <StepShape_AdvancedBrepShapeRepresentation.hpp>
+#include <StepGeom_SphericalSurface.hpp>
 
 class StepTidy_Axis2Placement3dReducerTest : public StepTidy_BaseTestFixture
 {

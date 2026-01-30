@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bisector_Bisec.hxx>
-#include <BRepMAT2d_BisectingLocus.hxx>
-#include <BRepMAT2d_Explorer.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <MAT2d_BiInt.hxx>
-#include <MAT2d_Circuit.hxx>
-#include <MAT2d_CutCurve.hxx>
-#include <MAT2d_Mat2d.hxx>
-#include <NCollection_Sequence.hxx>
-#include <MAT2d_Tool2d.hxx>
-#include <MAT_BasicElt.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <MAT_Graph.hxx>
-#include <MAT_ListOfBisector.hxx>
-#include <MAT_Node.hxx>
-#include <Precision.hxx>
-#include <Geom2d_Curve.hxx>
+#include <Bisector_Bisec.hpp>
+#include <BRepMAT2d_BisectingLocus.hpp>
+#include <BRepMAT2d_Explorer.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <MAT2d_BiInt.hpp>
+#include <MAT2d_Circuit.hpp>
+#include <MAT2d_CutCurve.hpp>
+#include <MAT2d_Mat2d.hpp>
+#include <NCollection_Sequence.hpp>
+#include <MAT2d_Tool2d.hpp>
+#include <MAT_BasicElt.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <MAT_Graph.hpp>
+#include <MAT_ListOfBisector.hpp>
+#include <MAT_Node.hpp>
+#include <Precision.hpp>
+#include <Geom2d_Curve.hpp>
 
 static void CutSketch(
   NCollection_Sequence<NCollection_Sequence<occ::handle<Geom2d_Geometry>>>& Figure,

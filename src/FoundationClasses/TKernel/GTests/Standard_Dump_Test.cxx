@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <Standard_Dump.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Ax3.hxx>
-#include <Bnd_Box.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Standard_Dump.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Ax3.hpp>
+#include <Bnd_Box.hpp>
+#include <TCollection_AsciiString.hpp>
 
 //==================================================================================================
 // AddValuesSeparator Direct Tests

@@ -18,7 +18,7 @@
   #define No_Exception
 #endif
 
-#include <HLRAlgo_BiPoint.hxx>
+#include <HLRAlgo_BiPoint.hpp>
 
 //=================================================================================================
 

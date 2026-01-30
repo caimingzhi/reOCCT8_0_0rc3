@@ -16,9 +16,9 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESSolid_BooleanTree.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_Type.hxx>
+#include <IGESSolid_BooleanTree.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSolid_BooleanTree, IGESData_IGESEntity)
 

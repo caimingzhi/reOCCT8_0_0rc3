@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Units_ShiftedToken.hxx>
-#include <Units_Token.hxx>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Units_ShiftedToken.hpp>
+#include <Units_Token.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_ShiftedToken, Units_Token)
 

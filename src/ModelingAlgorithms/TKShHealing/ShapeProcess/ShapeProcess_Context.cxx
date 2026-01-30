@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Resource_Manager.hxx>
-#include <ShapeProcess_Context.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Resource_Manager.hpp>
+#include <ShapeProcess_Context.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <mutex>
 

@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_MakeShapeOnMesh.hxx>
+#include <BRepBuilderAPI_MakeShapeOnMesh.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Standard_HashUtils.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Standard_HashUtils.hpp>
 
 namespace
 {

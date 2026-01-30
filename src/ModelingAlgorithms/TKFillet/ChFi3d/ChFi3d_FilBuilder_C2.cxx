@@ -14,61 +14,61 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepLProp_CLProps.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <BSplCLib.hxx>
-#include <ChFi3d.hxx>
-#include <ChFi3d_Builder_0.hxx>
-#include <ChFi3d_FilBuilder.hxx>
-#include <ChFiDS_CommonPoint.hxx>
-#include <ChFiDS_FaceInterference.hxx>
-#include <ChFiDS_FilSpine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <ChFiDS_Regul.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_State.hxx>
-#include <ChFiDS_Stripe.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dConvert.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_ConstrainedFilling.hxx>
-#include <GeomFill_SimpleBound.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopAbs.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepLProp_CLProps.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <BSplCLib.hpp>
+#include <ChFi3d.hpp>
+#include <ChFi3d_Builder_0.hpp>
+#include <ChFi3d_FilBuilder.hpp>
+#include <ChFiDS_CommonPoint.hpp>
+#include <ChFiDS_FaceInterference.hpp>
+#include <ChFiDS_FilSpine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <ChFiDS_Regul.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_State.hpp>
+#include <ChFiDS_Stripe.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dConvert.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_ConstrainedFilling.hpp>
+#include <GeomFill_SimpleBound.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopAbs.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <Geom_TrimmedCurve.hxx>
+  #include <Geom_TrimmedCurve.hpp>
 extern bool ChFi3d_GettraceDRAWSPINE();
 extern bool ChFi3d_GetcontextFORCEFILLING();
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 
 extern double t_t2cornerinit, t_perf2cornerbyinter, t_chfikpartcompdata, t_cheminement,
   t_remplissage, t_t2cornerDS;

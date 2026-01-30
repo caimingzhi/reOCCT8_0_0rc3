@@ -14,40 +14,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PrsDim_IdenticRelation.hxx>
+#include <PrsDim_IdenticRelation.hpp>
 
-#include <PrsDim.hxx>
-#include <AIS_Shape.hxx>
-#include <BRep_Tool.hxx>
-#include <DsgPrs_IdenticPresentation.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveCurve.hxx>
-#include <Select3D_SensitiveSegment.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <PrsDim.hpp>
+#include <AIS_Shape.hpp>
+#include <BRep_Tool.hpp>
+#include <DsgPrs_IdenticPresentation.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveCurve.hpp>
+#include <Select3D_SensitiveSegment.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_IdenticRelation, PrsDim_Relation)
 

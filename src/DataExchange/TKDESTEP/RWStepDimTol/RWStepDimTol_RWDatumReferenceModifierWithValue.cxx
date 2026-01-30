@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepDimTol_RWDatumReferenceModifierWithValue.pxx"
+#include "RWStepDimTol_RWDatumReferenceModifierWithValue.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_DatumReferenceModifierWithValue.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 
 //=================================================================================================
 

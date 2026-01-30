@@ -13,10 +13,10 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include "RWStepBasic_RWOrganization.pxx"
-#include <StepBasic_Organization.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWOrganization.hpp"
+#include <StepBasic_Organization.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWOrganization::RWStepBasic_RWOrganization() = default;
 

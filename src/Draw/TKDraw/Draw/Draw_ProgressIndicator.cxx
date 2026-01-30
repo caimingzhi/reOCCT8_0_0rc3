@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_ProgressIndicator.hxx>
+#include <Draw_ProgressIndicator.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_List.hxx>
-#include <Precision.hxx>
-#include <OSD.hxx>
-#include <OSD_Exception_CTRL_BREAK.hxx>
-#include <OSD_Thread.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_List.hpp>
+#include <Precision.hpp>
+#include <OSD.hpp>
+#include <OSD_Exception_CTRL_BREAK.hpp>
+#include <OSD_Thread.hpp>
 
 #include <cstdio>
 #include <ctime>

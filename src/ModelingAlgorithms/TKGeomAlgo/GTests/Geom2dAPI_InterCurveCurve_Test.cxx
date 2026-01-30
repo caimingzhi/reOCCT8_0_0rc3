@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <math_NewtonFunctionRoot.hxx>
-#include <math_TrigonometricEquationFunction.hxx>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <math_NewtonFunctionRoot.hpp>
+#include <math_TrigonometricEquationFunction.hpp>
 
 #include <gtest/gtest.h>
 

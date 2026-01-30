@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_ExternallyDefinedItem.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepBasic_SourceItem.hxx>
+#include <StepBasic_ExternallyDefinedItem.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepBasic_SourceItem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ExternallyDefinedItem, Standard_Transient)
 

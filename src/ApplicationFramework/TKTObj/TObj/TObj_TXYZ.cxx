@@ -15,9 +15,9 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_TXYZ.hxx>
-#include <Standard_GUID.hxx>
-#include <TDF_Label.hxx>
+#include <TObj_TXYZ.hpp>
+#include <Standard_GUID.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TXYZ, TDF_Attribute)
 

@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshData_Wire.hxx>
+#include <IMeshData_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshData_Wire, IMeshData_TessellatedShape)

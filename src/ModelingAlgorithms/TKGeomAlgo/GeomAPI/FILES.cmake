@@ -3,30 +3,30 @@ set(OCCT_GeomAPI_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_GeomAPI_FILES
   GeomAPI.cxx
-  GeomAPI.hxx
+  GeomAPI.hpp
   GeomAPI_ExtremaCurveCurve.cxx
-  GeomAPI_ExtremaCurveCurve.hxx
-  GeomAPI_ExtremaCurveCurve.lxx
+  GeomAPI_ExtremaCurveCurve.hpp
+  GeomAPI_ExtremaCurveCurve_1.hpp
   GeomAPI_ExtremaCurveSurface.cxx
-  GeomAPI_ExtremaCurveSurface.hxx
-  GeomAPI_ExtremaCurveSurface.lxx
+  GeomAPI_ExtremaCurveSurface.hpp
+  GeomAPI_ExtremaCurveSurface_1.hpp
   GeomAPI_ExtremaSurfaceSurface.cxx
-  GeomAPI_ExtremaSurfaceSurface.hxx
-  GeomAPI_ExtremaSurfaceSurface.lxx
+  GeomAPI_ExtremaSurfaceSurface.hpp
+  GeomAPI_ExtremaSurfaceSurface_1.hpp
   GeomAPI_IntCS.cxx
-  GeomAPI_IntCS.hxx
+  GeomAPI_IntCS.hpp
   GeomAPI_Interpolate.cxx
-  GeomAPI_Interpolate.hxx
-  GeomAPI_IntSS.hxx
-  GeomAPI_IntSS.lxx
+  GeomAPI_Interpolate.hpp
+  GeomAPI_IntSS.hpp
+  GeomAPI_IntSS_1.hpp
   GeomAPI_PointsToBSpline.cxx
-  GeomAPI_PointsToBSpline.hxx
+  GeomAPI_PointsToBSpline.hpp
   GeomAPI_PointsToBSplineSurface.cxx
-  GeomAPI_PointsToBSplineSurface.hxx
+  GeomAPI_PointsToBSplineSurface.hpp
   GeomAPI_ProjectPointOnCurve.cxx
-  GeomAPI_ProjectPointOnCurve.hxx
-  GeomAPI_ProjectPointOnCurve.lxx
+  GeomAPI_ProjectPointOnCurve.hpp
+  GeomAPI_ProjectPointOnCurve_1.hpp
   GeomAPI_ProjectPointOnSurf.cxx
-  GeomAPI_ProjectPointOnSurf.hxx
-  GeomAPI_ProjectPointOnSurf.lxx
+  GeomAPI_ProjectPointOnSurf.hpp
+  GeomAPI_ProjectPointOnSurf_1.hpp
 )

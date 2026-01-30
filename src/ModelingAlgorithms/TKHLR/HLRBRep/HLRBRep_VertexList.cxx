@@ -18,10 +18,10 @@
   #define No_Exception
 #endif
 
-#include <HLRBRep_VertexList.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
+#include <HLRBRep_VertexList.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
 
 //=================================================================================================
 

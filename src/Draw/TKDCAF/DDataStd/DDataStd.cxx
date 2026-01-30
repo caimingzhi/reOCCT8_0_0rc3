@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <TDataStd.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataStd_RealEnum.hxx>
-#include <TDataXtd.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <DDataStd.hpp>
+#include <TDataStd.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataStd_RealEnum.hpp>
+#include <TDataXtd.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming_NamedShape.hpp>
 
 //=================================================================================================
 

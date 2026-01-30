@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_HatchStyle.hxx>
+#include <Graphic3d_HatchStyle.hpp>
 
-#include <Standard_ProgramError.hxx>
+#include <Standard_ProgramError.hpp>
 
 #include <atomic>
 

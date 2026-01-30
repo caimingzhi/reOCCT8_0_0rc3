@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_DataMap.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <gp_Vec.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <BRepTools.hxx>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_DataMap.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <gp_Vec.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <BRepTools.hpp>
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
 
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_FaceEdgeInterference.hxx>
-#include <TopOpeBRepDS_FaceInterferenceTool.hxx>
-#include <TopOpeBRepDS_ListOfShapeOn1State.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <TopOpeBRepTool_ShapeClassifier.hxx>
-#include <TopOpeBRepTool_PShapeClassifier.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_FaceEdgeInterference.hpp>
+#include <TopOpeBRepDS_FaceInterferenceTool.hpp>
+#include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <TopOpeBRepTool_ShapeClassifier.hpp>
+#include <TopOpeBRepTool_PShapeClassifier.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
 
 Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
                                     const TopoDS_Face&              FS,

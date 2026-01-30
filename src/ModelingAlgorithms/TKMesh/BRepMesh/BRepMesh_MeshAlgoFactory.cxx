@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_MeshAlgoFactory.hxx>
-#include <BRepMesh_SphereRangeSplitter.hxx>
-#include <BRepMesh_CylinderRangeSplitter.hxx>
-#include <BRepMesh_ConeRangeSplitter.hxx>
-#include <BRepMesh_TorusRangeSplitter.hxx>
-#include <BRepMesh_DelaunayBaseMeshAlgo.hxx>
-#include <BRepMesh_DelaunayDeflectionControlMeshAlgo.hxx>
-#include <BRepMesh_BoundaryParamsRangeSplitter.hxx>
-#include <BRepMesh_ExtrusionRangeSplitter.hxx>
-#include <BRepMesh_UndefinedRangeSplitter.hxx>
+#include <BRepMesh_MeshAlgoFactory.hpp>
+#include <BRepMesh_SphereRangeSplitter.hpp>
+#include <BRepMesh_CylinderRangeSplitter.hpp>
+#include <BRepMesh_ConeRangeSplitter.hpp>
+#include <BRepMesh_TorusRangeSplitter.hpp>
+#include <BRepMesh_DelaunayBaseMeshAlgo.hpp>
+#include <BRepMesh_DelaunayDeflectionControlMeshAlgo.hpp>
+#include <BRepMesh_BoundaryParamsRangeSplitter.hpp>
+#include <BRepMesh_ExtrusionRangeSplitter.hpp>
+#include <BRepMesh_UndefinedRangeSplitter.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_MeshAlgoFactory, IMeshTools_MeshAlgoFactory)
 

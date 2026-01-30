@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_IndexBuffer.hxx>
+#include <OpenGl_IndexBuffer.hpp>
 
-#include <OpenGl_Context.hxx>
-#include <OpenGl_GlCore15.hxx>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_GlCore15.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_IndexBuffer, OpenGl_Buffer)
 

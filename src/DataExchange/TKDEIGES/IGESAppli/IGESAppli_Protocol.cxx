@@ -11,33 +11,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESAppli_Protocol.hxx>
+#include <IGESAppli_Protocol.hpp>
 
-#include <IGESAppli_DrilledHole.hxx>
-#include <IGESAppli_ElementResults.hxx>
-#include <IGESAppli_FiniteElement.hxx>
-#include <IGESAppli_Flow.hxx>
-#include <IGESAppli_FlowLineSpec.hxx>
-#include <IGESAppli_LevelFunction.hxx>
-#include <IGESAppli_LevelToPWBLayerMap.hxx>
-#include <IGESAppli_LineWidening.hxx>
-#include <IGESAppli_NodalConstraint.hxx>
-#include <IGESAppli_NodalDisplAndRot.hxx>
-#include <IGESAppli_NodalResults.hxx>
-#include <IGESAppli_Node.hxx>
-#include <IGESAppli_PWBArtworkStackup.hxx>
-#include <IGESAppli_PWBDrilledHole.hxx>
-#include <IGESAppli_PartNumber.hxx>
-#include <IGESAppli_PinNumber.hxx>
-#include <IGESAppli_PipingFlow.hxx>
-#include <IGESAppli_ReferenceDesignator.hxx>
-#include <IGESAppli_RegionRestriction.hxx>
-#include <IGESDefs.hxx>
-#include <IGESDefs_Protocol.hxx>
-#include <IGESDraw.hxx>
-#include <IGESDraw_Protocol.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_DrilledHole.hpp>
+#include <IGESAppli_ElementResults.hpp>
+#include <IGESAppli_FiniteElement.hpp>
+#include <IGESAppli_Flow.hpp>
+#include <IGESAppli_FlowLineSpec.hpp>
+#include <IGESAppli_LevelFunction.hpp>
+#include <IGESAppli_LevelToPWBLayerMap.hpp>
+#include <IGESAppli_LineWidening.hpp>
+#include <IGESAppli_NodalConstraint.hpp>
+#include <IGESAppli_NodalDisplAndRot.hpp>
+#include <IGESAppli_NodalResults.hpp>
+#include <IGESAppli_Node.hpp>
+#include <IGESAppli_PWBArtworkStackup.hpp>
+#include <IGESAppli_PWBDrilledHole.hpp>
+#include <IGESAppli_PartNumber.hpp>
+#include <IGESAppli_PinNumber.hpp>
+#include <IGESAppli_PipingFlow.hpp>
+#include <IGESAppli_ReferenceDesignator.hpp>
+#include <IGESAppli_RegionRestriction.hpp>
+#include <IGESDefs.hpp>
+#include <IGESDefs_Protocol.hpp>
+#include <IGESDraw.hpp>
+#include <IGESDraw_Protocol.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_Protocol, IGESData_Protocol)
 

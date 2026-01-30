@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMAT2d_BisectingLocus.hxx>
-#include <BRepMAT2d_Explorer.hxx>
-#include <BRepMAT2d_LinkTopoBilo.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <MAT_BasicElt.hxx>
-#include <MAT_Graph.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRepMAT2d_BisectingLocus.hpp>
+#include <BRepMAT2d_Explorer.hpp>
+#include <BRepMAT2d_LinkTopoBilo.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <MAT_BasicElt.hpp>
+#include <MAT_Graph.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

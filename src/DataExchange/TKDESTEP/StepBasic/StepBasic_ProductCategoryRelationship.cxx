@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepBasic_ProductCategory.hxx>
-#include <StepBasic_ProductCategoryRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ProductCategory.hpp>
+#include <StepBasic_ProductCategoryRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductCategoryRelationship, Standard_Transient)
 

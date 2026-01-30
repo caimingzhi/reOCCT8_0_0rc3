@@ -3,6 +3,6 @@ set(OCCT_TopBas_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopBas_FILES
 
-  TopBas_TestInterference.hxx
+  TopBas_TestInterference.hpp
   TopBas_TestInterference_0.cxx
 )

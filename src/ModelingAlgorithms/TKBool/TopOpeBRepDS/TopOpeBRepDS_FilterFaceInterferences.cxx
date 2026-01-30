@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_Filter.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <NCollection_List.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
+#include <TopOpeBRepDS_Filter.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <NCollection_List.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
 
 Standard_EXPORT int FUN_unkeepFdoubleGBoundinterferences(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,

@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntImpParGen_Tool.hxx>
-#include <gp.hxx>
+#include <IntImpParGen_Tool.hpp>
+#include <gp.hpp>
 
 #define TOLERANCE_ANGULAIRE 0.00000001
 

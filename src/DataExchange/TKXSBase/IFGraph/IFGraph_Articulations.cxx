@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_Articulations.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_Articulations.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
 
 // Articulation Points of a Graph: these are the "required passages" of the graph
 // Algorithm taken from Sedgewick, p 392

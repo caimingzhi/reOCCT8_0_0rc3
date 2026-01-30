@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_InterFunc.hxx>
+#include <Adaptor3d_InterFunc.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_ConstructionError.hpp>
 
 Adaptor3d_InterFunc::Adaptor3d_InterFunc(const occ::handle<Adaptor2d_Curve2d>& C,
                                          const double                          FixVal,

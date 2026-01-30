@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_SkydomeBackground.hxx>
+#include <Aspect_SkydomeBackground.hpp>
 
-#include <Standard_RangeError.hxx>
+#include <Standard_RangeError.hpp>
 
 //=================================================================================================
 

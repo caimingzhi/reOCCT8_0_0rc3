@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Handle.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_HeapAllocator.hxx>
+#include <Standard_Handle.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_HeapAllocator.hpp>
 
 #include <gtest/gtest.h>
 
@@ -173,9 +173,9 @@ TEST_F(HandleOperationsTest, HandleCopyAndAssignment)
   EXPECT_EQ(aDerived1.get(), aDerived3.get());
 
   // Test self-assignment (suppress warning)
-#include <Standard_WarningsDisable.hxx>
+#include <Standard_WarningsDisable.hpp>
   aDerived1 = aDerived1;
-#include <Standard_WarningsRestore.hxx>
+#include <Standard_WarningsRestore.hpp>
   EXPECT_FALSE(aDerived1.IsNull());
 
   // Test assignment to null

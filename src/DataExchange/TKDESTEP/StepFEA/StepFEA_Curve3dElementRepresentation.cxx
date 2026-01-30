@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepElement_Curve3dElementDescriptor.hxx>
-#include <StepElement_ElementMaterial.hxx>
-#include <StepFEA_Curve3dElementProperty.hxx>
-#include <StepFEA_Curve3dElementRepresentation.hxx>
-#include <StepFEA_FeaModel3d.hxx>
-#include <StepRepr_RepresentationContext.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepElement_Curve3dElementDescriptor.hpp>
+#include <StepElement_ElementMaterial.hpp>
+#include <StepFEA_Curve3dElementProperty.hpp>
+#include <StepFEA_Curve3dElementRepresentation.hpp>
+#include <StepFEA_FeaModel3d.hpp>
+#include <StepRepr_RepresentationContext.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_Curve3dElementRepresentation, StepFEA_ElementRepresentation)
 

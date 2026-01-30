@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_IteratorOfProcessForTransient.hxx>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
 
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Transient.hxx>
-#include <Transfer_ProcessForTransient.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_ActorOfProcessForTransient.hxx>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Transient.hpp>
+#include <Transfer_ProcessForTransient.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_ActorOfProcessForTransient.hpp>
 
 //=================================================================================================
 

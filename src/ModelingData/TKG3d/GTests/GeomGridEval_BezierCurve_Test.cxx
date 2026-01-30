@@ -13,10 +13,10 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BezierCurve.hxx>
-#include <GeomGridEval_BezierCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_BezierCurve.hpp>
+#include <GeomGridEval_BezierCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

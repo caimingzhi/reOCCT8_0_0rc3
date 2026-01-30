@@ -15,11 +15,11 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_XYZDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <TDF_Attribute.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <TObj_TXYZ.hxx>
+#include <BinTObjDrivers_XYZDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <TDF_Attribute.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <TObj_TXYZ.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_XYZDriver, BinMDF_ADriver)
 

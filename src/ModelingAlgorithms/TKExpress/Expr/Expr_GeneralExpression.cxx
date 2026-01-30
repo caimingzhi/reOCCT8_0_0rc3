@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_NotEvaluable.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_NotEvaluable.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_GeneralExpression, Standard_Transient)
 

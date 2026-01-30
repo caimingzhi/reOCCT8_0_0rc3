@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <V3d_View.hxx>
+#include <V3d_View.hpp>
 
-#include <BRepOffsetAPI_Sewing.hxx>
+#include <BRepOffsetAPI_Sewing.hpp>
 
-#include <AIS_InteractiveObject.hxx>
-#include <NCollection_List.hxx>
+#include <AIS_InteractiveObject.hpp>
+#include <NCollection_List.hpp>
 
-#include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
 
 static int OCC162(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -129,9 +129,9 @@ static int OCC204(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <gp_Lin.hxx>
-#include <BRepClass3d_Intersector3d.hxx>
-#include <TopoDS.hxx>
+#include <gp_Lin.hpp>
+#include <BRepClass3d_Intersector3d.hpp>
+#include <TopoDS.hpp>
 
 static int OCC1651(Draw_Interpretor& di, int argc, const char** argv)
 {

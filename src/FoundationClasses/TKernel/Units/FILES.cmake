@@ -3,51 +3,51 @@ set(OCCT_Units_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Units_FILES
   Units.cxx
-  Units.hxx
+  Units.hpp
   Units_Dimensions.cxx
-  Units_Dimensions.hxx
-  Units_Dimensions.lxx
+  Units_Dimensions.hpp
+  Units_Dimensions_1.hpp
   Units_Explorer.cxx
-  Units_Explorer.hxx
+  Units_Explorer.hpp
   Units_Lexicon.cxx
-  Units_Lexicon.hxx
-  Units_Lexicon.lxx
+  Units_Lexicon.hpp
+  Units_Lexicon_1.hpp
   Units_MathSentence.cxx
-  Units_MathSentence.hxx
+  Units_MathSentence.hpp
   Units_Measurement.cxx
-  Units_Measurement.hxx
-  Units_NoSuchType.hxx
-  Units_NoSuchUnit.hxx
-  Units_Operators.hxx
+  Units_Measurement.hpp
+  Units_NoSuchType.hpp
+  Units_NoSuchUnit.hpp
+  Units_Operators.hpp
 
   Units_Quantity.cxx
-  Units_Quantity.hxx
-  Units_Quantity.lxx
+  Units_Quantity.hpp
+  Units_Quantity_1.hpp
   Units_Sentence.cxx
-  Units_Sentence.hxx
-  Units_Sentence.lxx
+  Units_Sentence.hpp
+  Units_Sentence_1.hpp
   Units_ShiftedToken.cxx
-  Units_ShiftedToken.hxx
+  Units_ShiftedToken.hpp
   Units_ShiftedUnit.cxx
-  Units_ShiftedUnit.hxx
+  Units_ShiftedUnit.hpp
 
   Units_Token.cxx
-  Units_Token.hxx
-  Units_Token.lxx
+  Units_Token.hpp
+  Units_Token_1.hpp
 
   Units_Unit.cxx
-  Units_Unit.hxx
-  Units_Unit.lxx
+  Units_Unit.hpp
+  Units_Unit_1.hpp
   Units_UnitsDictionary.cxx
-  Units_UnitsDictionary.hxx
-  Units_UnitsDictionary.lxx
+  Units_UnitsDictionary.hpp
+  Units_UnitsDictionary_1.hpp
   Units_UnitSentence.cxx
-  Units_UnitSentence.hxx
+  Units_UnitSentence.hpp
   Units_UnitsLexicon.cxx
-  Units_UnitsLexicon.hxx
-  Units_UnitsLexicon.lxx
+  Units_UnitsLexicon.hpp
+  Units_UnitsLexicon_1.hpp
 
   Units_UnitsSystem.cxx
-  Units_UnitsSystem.hxx
+  Units_UnitsSystem.hpp
 
 )

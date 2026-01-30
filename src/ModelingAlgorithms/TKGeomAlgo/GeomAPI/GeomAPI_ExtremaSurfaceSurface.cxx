@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtSS.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAPI_ExtremaSurfaceSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_ExtSS.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAPI_ExtremaSurfaceSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

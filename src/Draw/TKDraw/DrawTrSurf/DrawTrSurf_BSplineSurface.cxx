@@ -12,22 +12,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_BSplineSurface.hxx>
+#include <DrawTrSurf_BSplineSurface.hpp>
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_MarkerShape.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_BSplineCurve.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_MarkerShape.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_BSplineCurve.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_BSplineSurface, DrawTrSurf_Surface)
 

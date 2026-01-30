@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWSurfaceOfLinearExtrusion.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_SurfaceOfLinearExtrusion.hxx>
-#include <StepGeom_Vector.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWSurfaceOfLinearExtrusion.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_SurfaceOfLinearExtrusion.hpp>
+#include <StepGeom_Vector.hpp>
 
 RWStepGeom_RWSurfaceOfLinearExtrusion::RWStepGeom_RWSurfaceOfLinearExtrusion() = default;
 

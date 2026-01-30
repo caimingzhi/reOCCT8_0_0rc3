@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_PlaneAngleMeasureWithUnit.hxx>
-#include <StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_PlaneAngleMeasureWithUnit.hpp>
+#include <StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ReprItemAndPlaneAngleMeasureWithUnit,
                            StepRepr_ReprItemAndMeasureWithUnit)

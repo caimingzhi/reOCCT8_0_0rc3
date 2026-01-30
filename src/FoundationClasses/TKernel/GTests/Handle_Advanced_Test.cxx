@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Handle.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Assert.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_HeapAllocator.hxx>
-#include <OSD_Timer.hxx>
+#include <Standard_Handle.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Assert.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_HeapAllocator.hpp>
+#include <OSD_Timer.hpp>
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -242,7 +242,7 @@ TEST_F(HandleAdvancedTest, TypeInfoCompatibility)
 #ifdef __cpp_rtti
   // Test C++ RTTI compatibility
   // Use OCCT standard warning suppression for RTTI operations
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
 
   const std::type_info& aTypeInfo = typeid(*aHandle.get());
 
@@ -270,7 +270,7 @@ TEST_F(HandleAdvancedTest, TypeInfoCompatibility)
   EXPECT_FALSE(typeid(anAnon) == typeid(QaClass50_50));
   EXPECT_FALSE(typeid(aNamed) == typeid(QaClass50_50));
 
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 
 #endif // __cpp_rtti
 

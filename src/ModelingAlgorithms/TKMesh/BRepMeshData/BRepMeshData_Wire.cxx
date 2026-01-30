@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_Wire.hxx>
-#include <IMeshData_Edge.hxx>
+#include <BRepMeshData_Wire.hpp>
+#include <IMeshData_Edge.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Wire, IMeshData_Wire)
 

@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_SensitiveSegment.hxx>
+#include <MeshVS_SensitiveSegment.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveSegment, Select3D_SensitiveSegment)
 

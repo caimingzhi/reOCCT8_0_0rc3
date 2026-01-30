@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_ApprovalPersonOrganization.hxx>
-#include <StepBasic_ApprovalRole.hxx>
-#include <StepBasic_PersonOrganizationSelect.hxx>
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_ApprovalPersonOrganization.hpp>
+#include <StepBasic_ApprovalRole.hpp>
+#include <StepBasic_PersonOrganizationSelect.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ApprovalPersonOrganization, Standard_Transient)
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_BrepWithVoids.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_OrientedClosedShell.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_BrepWithVoids.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_OrientedClosedShell.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_BrepWithVoids, StepShape_ManifoldSolidBrep)
 

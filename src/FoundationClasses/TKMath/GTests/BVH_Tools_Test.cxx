@@ -13,9 +13,9 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_Box.hxx>
-#include <BVH_Tools.hxx>
-#include <Precision.hxx>
+#include <BVH_Box.hpp>
+#include <BVH_Tools.hpp>
+#include <Precision.hpp>
 
 TEST(BVH_ToolsTest, PointBoxSquareDistance)
 {

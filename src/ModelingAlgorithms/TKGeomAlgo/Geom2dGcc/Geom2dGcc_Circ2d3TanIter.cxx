@@ -24,22 +24,22 @@
 //                                                  Courbes.              +
 //=========================================================================
 
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <Geom2dGcc_Circ2d3TanIter.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_FunctionTanCuCuCu.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <Geom2dGcc_Circ2d3TanIter.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_FunctionTanCuCuCu.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <StdFail_NotDone.hpp>
 
 Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const Geom2dGcc_QCurve& Qualified1,
                                                    const Geom2dGcc_QCurve& Qualified2,

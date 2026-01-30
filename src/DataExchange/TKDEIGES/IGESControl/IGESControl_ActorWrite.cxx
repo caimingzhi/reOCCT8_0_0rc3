@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepToIGESBRep_Entity.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomToIGES_GeomCurve.hxx>
-#include <GeomToIGES_GeomSurface.hxx>
-#include <IGESControl_ActorWrite.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_Finder.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransientMapper.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <BRepToIGESBRep_Entity.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomToIGES_GeomCurve.hpp>
+#include <GeomToIGES_GeomSurface.hpp>
+#include <IGESControl_ActorWrite.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_Finder.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransientMapper.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_ActorWrite, Transfer_ActorOfFinderProcess)
 

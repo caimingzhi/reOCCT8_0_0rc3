@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_Modified.hxx>
+#include <TDocStd_Modified.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_Modified, TDF_Attribute)
 

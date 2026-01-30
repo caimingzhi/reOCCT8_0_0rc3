@@ -17,41 +17,41 @@
 // abv 06.01.99 fix of misprint
 //: p6 abv 26.02.99: make ConvertToPeriodic() return Null if nothing done
 
-#include <ElSLib.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomLib_IsPlanarSurface.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <GeomConvert_CurveToAnaCurve.hxx>
-#include <GeomConvert_SurfToAnaSurf.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Extrema_ExtElC.hxx>
-#include <GeomLProp_SLProps.hxx>
-#include <gp_XYZ.hxx>
-#include <NCollection_HArray1.hxx>
-#include <math_Vector.hxx>
-#include <math_PSO.hxx>
-#include <math_Powell.hxx>
-#include <GeomConvert_FuncCylinderLSDist.hxx>
+#include <ElSLib.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomLib_IsPlanarSurface.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <GeomConvert_CurveToAnaCurve.hpp>
+#include <GeomConvert_SurfToAnaSurf.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Extrema_ExtElC.hpp>
+#include <GeomLProp_SLProps.hpp>
+#include <gp_XYZ.hpp>
+#include <NCollection_HArray1.hpp>
+#include <math_Vector.hpp>
+#include <math_PSO.hpp>
+#include <math_Powell.hpp>
+#include <GeomConvert_FuncCylinderLSDist.hpp>
 
 //=======================================================================
 // function : CheckVTrimForRevSurf

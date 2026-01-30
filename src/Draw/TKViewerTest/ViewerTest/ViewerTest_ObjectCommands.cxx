@@ -14,143 +14,143 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest.hxx>
+#include <ViewerTest.hpp>
 
-#include <AIS_PlaneTrihedron.hxx>
+#include <AIS_PlaneTrihedron.hpp>
 
-#include <Quantity_NameOfColor.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <DBRep.hxx>
-#include <DBRep_DrawableShape.hxx>
+#include <Quantity_NameOfColor.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <DBRep.hpp>
+#include <DBRep_DrawableShape.hpp>
 
-#include <Font_BRepFont.hxx>
-#include <Font_BRepTextBuilder.hxx>
-#include <Font_FontMgr.hxx>
-#include <Message.hxx>
-#include <NCollection_List.hxx>
+#include <Font_BRepFont.hpp>
+#include <Font_BRepTextBuilder.hpp>
+#include <Font_FontMgr.hpp>
+#include <Message.hpp>
+#include <NCollection_List.hpp>
 
-#include <OSD_Chronometer.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <V3d_Viewer.hxx>
-#include <V3d_View.hxx>
-#include <V3d.hxx>
+#include <OSD_Chronometer.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <V3d_Viewer.hpp>
+#include <V3d_View.hpp>
+#include <V3d.hpp>
 
-#include <AIS_Shape.hxx>
-#include <AIS_DisplayMode.hxx>
-#include <AIS_PointCloud.hxx>
-#include <BRepLib_PointCloudShape.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <ViewerTest_AutoUpdater.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_DoubleMap.hxx>
-#include <ViewerTest_EventManager.hxx>
+#include <AIS_Shape.hpp>
+#include <AIS_DisplayMode.hpp>
+#include <AIS_PointCloud.hpp>
+#include <BRepLib_PointCloudShape.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <ViewerTest_AutoUpdater.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_DoubleMap.hpp>
+#include <ViewerTest_EventManager.hpp>
 
-#include <TopoDS_Solid.hxx>
-#include <BRepTools.hxx>
-#include <BRep_Builder.hxx>
-#include <TopAbs_ShapeEnum.hxx>
+#include <TopoDS_Solid.hpp>
+#include <BRepTools.hpp>
+#include <BRep_Builder.hpp>
+#include <TopAbs_ShapeEnum.hpp>
 
-#include <TopoDS.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp_Explorer.hxx>
+#include <TopoDS.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
 
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Face.hxx>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Face.hpp>
 
-#include <Draw_Window.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_ColoredShape.hxx>
+#include <Draw_Window.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_ColoredShape.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <GC_MakePlane.hxx>
-#include <gp_Circ.hxx>
-#include <AIS_Axis.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <Geom_Axis1Placement.hxx>
-#include <AIS_Trihedron.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Quaternion.hxx>
-#include <TopLoc_Location.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <GC_MakePlane.hpp>
+#include <gp_Circ.hpp>
+#include <AIS_Axis.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <Geom_Axis1Placement.hpp>
+#include <AIS_Trihedron.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Quaternion.hpp>
+#include <TopLoc_Location.hpp>
 
-#include <HLRAlgo_Projector.hxx>
-#include <HLRBRep_Algo.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <HLRBRep_PolyHLRToShape.hxx>
-#include <HLRBRep_HLRToShape.hxx>
-#include <Aspect_Window.hxx>
+#include <HLRAlgo_Projector.hpp>
+#include <HLRBRep_Algo.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <HLRBRep_PolyHLRToShape.hpp>
+#include <HLRBRep_HLRToShape.hpp>
+#include <Aspect_Window.hpp>
 
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_ArrayOfTriangleFans.hxx>
-#include <Graphic3d_ArrayOfTriangleStrips.hxx>
-#include <Graphic3d_ArrayOfQuadrangles.hxx>
-#include <Graphic3d_ArrayOfQuadrangleStrips.hxx>
-#include <Graphic3d_ArrayOfPolygons.hxx>
-#include <Graphic3d_AttribBuffer.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Standard_Real.hxx>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_ArrayOfTriangleFans.hpp>
+#include <Graphic3d_ArrayOfTriangleStrips.hpp>
+#include <Graphic3d_ArrayOfQuadrangles.hpp>
+#include <Graphic3d_ArrayOfQuadrangleStrips.hpp>
+#include <Graphic3d_ArrayOfPolygons.hpp>
+#include <Graphic3d_AttribBuffer.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Standard_Real.hpp>
 
-#include <AIS_Circle.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <Geom_Circle.hxx>
-#include <GC_MakeCircle.hxx>
-#include <Select3D_SensitiveCircle.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <TopoDS_Wire.hxx>
+#include <AIS_Circle.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <Geom_Circle.hpp>
+#include <GC_MakeCircle.hpp>
+#include <Select3D_SensitiveCircle.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <TopoDS_Wire.hpp>
 
-#include <AIS_MultipleConnectedInteractive.hxx>
-#include <AIS_ConnectedInteractive.hxx>
-#include <AIS_TextLabel.hxx>
+#include <AIS_MultipleConnectedInteractive.hpp>
+#include <AIS_ConnectedInteractive.hpp>
+#include <AIS_TextLabel.hpp>
 
-#include <Select3D_SensitiveSegment.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitivePoly.hxx>
-#include <StdPrs_Curve.hxx>
+#include <Select3D_SensitiveSegment.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitivePoly.hpp>
+#include <StdPrs_Curve.hpp>
 
-#include <BRepExtrema_ExtPC.hxx>
-#include <BRepExtrema_ExtPF.hxx>
+#include <BRepExtrema_ExtPC.hpp>
+#include <BRepExtrema_ExtPF.hpp>
 
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_DatumAttribute.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_VertexDrawMode.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Prs3d_ToolCylinder.hxx>
-#include <Prs3d_ToolSphere.hxx>
-#include <Prs3d_ToolTorus.hxx>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_DatumAttribute.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_VertexDrawMode.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Prs3d_ToolCylinder.hpp>
+#include <Prs3d_ToolSphere.hpp>
+#include <Prs3d_ToolTorus.hpp>
 
-#include <Image_AlienPixMap.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Image_AlienPixMap.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 extern NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>&
             GetMapOfAIS();
@@ -853,7 +853,7 @@ static int VSize(Draw_Interpretor& di, int argc, const char** argv)
 // purpose  : Create a plane from a trihedron selection. If no arguments are set, the default
 // Draw arg : vplanetri  name
 //==============================================================================
-#include <AIS_Plane.hxx>
+#include <AIS_Plane.hpp>
 
 static int VPlaneTrihedron(Draw_Interpretor& di, int argc, const char** argv)
 
@@ -906,8 +906,8 @@ static int VPlaneTrihedron(Draw_Interpretor& di, int argc, const char** argv)
 // purpose  :
 // Draw arg : vaxis AxisName Xa Ya Za Xb Yb Zb
 //==============================================================================
-#include <TopoDS_Edge.hxx>
-#include <Geom_Line.hxx>
+#include <TopoDS_Edge.hpp>
+#include <Geom_Line.hpp>
 
 static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1079,8 +1079,8 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
 
 //=================================================================================================
 
-#include <AIS_Point.hxx>
-#include <Geom_CartesianPoint.hxx>
+#include <AIS_Point.hpp>
+#include <Geom_CartesianPoint.hpp>
 
 static int VPointBuilder(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
@@ -1837,7 +1837,7 @@ static int VChangePlane(Draw_Interpretor& /*theDi*/, int theArgsNb, const char**
 // Draw arg : vline LineName  [AIS_PointName] [AIS_PointName]
 //                           [Xa] [Ya] [Za]   [Xb] [Yb] [Zb]
 //==============================================================================
-#include <AIS_Line.hxx>
+#include <AIS_Line.hpp>
 
 static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -2701,23 +2701,23 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
 }
 
 #include <cmath>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfPrimitives.hxx>
-#include <Poly_Triangle.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Standard_ShortReal.hxx>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfPrimitives.hpp>
+#include <Poly_Triangle.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Standard_ShortReal.hpp>
 
-#include <AIS_Triangulation.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <Poly_Connect.hxx>
-#include <gp_Dir.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
+#include <AIS_Triangulation.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <Poly_Connect.hpp>
+#include <gp_Dir.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
 
-#include <Prs3d_ShadingAspect.hxx>
-#include <Graphic3d_MaterialAspect.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Graphic3d_MaterialAspect.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
 
-#include <BRepPrimAPI_MakeCylinder.hxx>
+#include <BRepPrimAPI_MakeCylinder.hpp>
 #include <utility>
 class AIS_InteractiveObject;
 

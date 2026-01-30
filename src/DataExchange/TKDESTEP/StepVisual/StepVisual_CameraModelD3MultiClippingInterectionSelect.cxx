@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CameraModelD3MultiClippingInterectionSelect.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepGeom_Plane.hxx>
-#include <StepVisual_CameraModelD3MultiClippingUnion.hxx>
+#include <StepVisual_CameraModelD3MultiClippingInterectionSelect.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepGeom_Plane.hpp>
+#include <StepVisual_CameraModelD3MultiClippingUnion.hpp>
 
 //=================================================================================================
 

@@ -13,24 +13,24 @@
 
 #include <gtest/gtest.h>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_Sewing.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <ShapeUpgrade_UnifySameDomain.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_Sewing.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <ShapeUpgrade_UnifySameDomain.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
 
 //==================================================================================================
 // ShapeUpgrade_UnifySameDomain Tests

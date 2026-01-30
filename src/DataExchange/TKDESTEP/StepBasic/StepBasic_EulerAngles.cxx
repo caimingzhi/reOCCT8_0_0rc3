@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Standard_Type.hxx>
-#include <StepBasic_EulerAngles.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_EulerAngles.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_EulerAngles, Standard_Transient)
 

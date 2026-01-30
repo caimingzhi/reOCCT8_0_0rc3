@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_GeomTool.hxx>
+#include <BRepMesh_GeomTool.hpp>
 
-#include <BRepMesh_DefaultRangeSplitter.hxx>
+#include <BRepMesh_DefaultRangeSplitter.hpp>
 
-#include <TopAbs_Orientation.hxx>
-#include <CSLib.hxx>
-#include <Precision.hxx>
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRep_Tool.hxx>
+#include <TopAbs_Orientation.hpp>
+#include <CSLib.hpp>
+#include <Precision.hpp>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRep_Tool.hpp>
 
 namespace
 {

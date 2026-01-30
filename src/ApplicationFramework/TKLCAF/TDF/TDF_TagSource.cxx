@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_TagSource.hxx>
+#include <TDF_TagSource.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_TagSource, TDF_Attribute)
 

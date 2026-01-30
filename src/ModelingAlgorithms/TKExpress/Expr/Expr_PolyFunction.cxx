@@ -19,18 +19,18 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <Expr.hxx>
-#include <NCollection_Array1.hxx>
-#include <Expr_FunctionDerivative.hxx>
-#include <Expr_GeneralFunction.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_NotEvaluable.hxx>
-#include <Expr_Operators.hxx>
-#include <Expr_PolyFunction.hxx>
-#include <Expr_Product.hxx>
-#include <Expr_Sum.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr.hpp>
+#include <NCollection_Array1.hpp>
+#include <Expr_FunctionDerivative.hpp>
+#include <Expr_GeneralFunction.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_NotEvaluable.hpp>
+#include <Expr_Operators.hpp>
+#include <Expr_PolyFunction.hpp>
+#include <Expr_Product.hpp>
+#include <Expr_Sum.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 class Expr_NamedUnknown;
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_PolyFunction, Expr_PolyExpression)

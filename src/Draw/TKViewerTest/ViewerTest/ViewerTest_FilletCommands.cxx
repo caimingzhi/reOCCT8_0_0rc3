@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest.hxx>
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
+#include <ViewerTest.hpp>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <BRepFilletAPI_MakeFillet.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
 
-#include <ChFi3d_FilletShape.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <ChFi3d_FilletShape.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <AIS_Shape.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <AIS_Shape.hpp>
 
 #ifdef _WIN32
   #include <stdio.h>

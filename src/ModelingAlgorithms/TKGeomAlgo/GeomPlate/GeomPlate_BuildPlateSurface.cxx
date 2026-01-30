@@ -14,57 +14,57 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomPlate_BuildPlateSurface.hxx>
+#include <GeomPlate_BuildPlateSurface.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomLProp_SLProps.hxx>
-#include <GeomPlate_BuildAveragePlane.hxx>
-#include <GeomPlate_CurveConstraint.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomPlate_MakeApprox.hxx>
-#include <GeomPlate_PointConstraint.hxx>
-#include <GeomPlate_Aij.hxx>
-#include <GeomPlate_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Law_Interpol.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
-#include <Plate_D2.hxx>
-#include <Plate_FreeGtoCConstraint.hxx>
-#include <Plate_GtoCConstraint.hxx>
-#include <Plate_PinpointConstraint.hxx>
-#include <Plate_Plate.hxx>
-#include <Precision.hxx>
-#include <ProjLib_HCompProjectedCurve.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Integer.hxx>
-#include <Message_ProgressScope.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomLProp_SLProps.hpp>
+#include <GeomPlate_BuildAveragePlane.hpp>
+#include <GeomPlate_CurveConstraint.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomPlate_MakeApprox.hpp>
+#include <GeomPlate_PointConstraint.hpp>
+#include <GeomPlate_Aij.hpp>
+#include <GeomPlate_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Law_Interpol.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
+#include <Plate_D2.hpp>
+#include <Plate_FreeGtoCConstraint.hpp>
+#include <Plate_GtoCConstraint.hpp>
+#include <Plate_PinpointConstraint.hpp>
+#include <Plate_Plate.hpp>
+#include <Precision.hpp>
+#include <ProjLib_HCompProjectedCurve.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Integer.hpp>
+#include <Message_ProgressScope.hpp>
 
 #include <cstdio>
 
 #ifdef OCCT_DEBUG
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 static int Affich = 0;
 #endif
 

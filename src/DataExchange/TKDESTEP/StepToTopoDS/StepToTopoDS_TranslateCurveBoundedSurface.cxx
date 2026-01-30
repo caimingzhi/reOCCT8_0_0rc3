@@ -17,25 +17,25 @@
 // #4  szv          S4163: optimization
 //:   abv 07.04.99 S4136: turn off fixing intersection of non-adjacent edges
 
-#include <BRep_Builder.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <Geom_BoundedSurface.hxx>
-#include <Precision.hxx>
-#include <ShapeAlgo.hxx>
-#include <ShapeAlgo_AlgoContainer.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BoundaryCurve.hxx>
-#include <StepGeom_BSplineSurface.hxx>
-#include <StepGeom_CurveBoundedSurface.hxx>
-#include <StepGeom_SurfaceBoundary.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepToGeom.hxx>
-#include <StepToTopoDS_TranslateCompositeCurve.hxx>
-#include <StepToTopoDS_TranslateCurveBoundedSurface.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <Transfer_TransientProcess.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <Geom_BoundedSurface.hpp>
+#include <Precision.hpp>
+#include <ShapeAlgo.hpp>
+#include <ShapeAlgo_AlgoContainer.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BoundaryCurve.hpp>
+#include <StepGeom_BSplineSurface.hpp>
+#include <StepGeom_CurveBoundedSurface.hpp>
+#include <StepGeom_SurfaceBoundary.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepToGeom.hpp>
+#include <StepToTopoDS_TranslateCompositeCurve.hpp>
+#include <StepToTopoDS_TranslateCurveBoundedSurface.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <Transfer_TransientProcess.hpp>
 
 //=================================================================================================
 

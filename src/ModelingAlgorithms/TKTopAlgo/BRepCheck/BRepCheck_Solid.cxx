@@ -12,28 +12,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepCheck.hxx>
-#include <BRepCheck_Status.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <BRepCheck_Solid.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Builder.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepCheck.hpp>
+#include <BRepCheck_Status.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <BRepCheck_Solid.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Builder.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepCheck_Solid, BRepCheck_Result)
 

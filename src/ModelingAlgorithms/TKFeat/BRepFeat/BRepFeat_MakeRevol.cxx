@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepFeat.hxx>
-#include <BRepFeat_MakeRevol.hxx>
-#include <BRepSweep_Revol.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <ElCLib.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <LocOpe_BuildShape.hxx>
-#include <LocOpe_CSIntersector.hxx>
-#include <LocOpe_FindEdges.hxx>
-#include <LocOpe_PntFace.hxx>
-#include <LocOpe_Revol.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Solid.hxx>
+#include <Bnd_Box.hpp>
+#include <BRepAlgoAPI_Cut.hpp>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepFeat.hpp>
+#include <BRepFeat_MakeRevol.hpp>
+#include <BRepSweep_Revol.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <ElCLib.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <LocOpe_BuildShape.hpp>
+#include <LocOpe_CSIntersector.hpp>
+#include <LocOpe_FindEdges.hpp>
+#include <LocOpe_PntFace.hpp>
+#include <LocOpe_Revol.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Solid.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool BRepFeat_GettraceFEAT();

@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gce_MakeParab2d.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <StdFail_NotDone.hxx>
+#include <gce_MakeParab2d.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <StdFail_NotDone.hpp>
 
 gce_MakeParab2d::gce_MakeParab2d(const gp_Ax22d& A, const double Focal)
 {

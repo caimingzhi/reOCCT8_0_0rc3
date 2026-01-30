@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlObjMgt.hxx>
+#include <XmlObjMgt.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <XmlObjMgt_Document.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <XmlObjMgt_Document.hpp>
 
 #include <cerrno>
 #include <cstdio>

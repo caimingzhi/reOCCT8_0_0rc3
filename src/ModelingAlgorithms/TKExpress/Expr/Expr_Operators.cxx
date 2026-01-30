@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_Operators.hxx>
+#include <Expr_Operators.hpp>
 
 occ::handle<Expr_Sum> operator+(const occ::handle<Expr_GeneralExpression>& x,
                                 const occ::handle<Expr_GeneralExpression>& y)

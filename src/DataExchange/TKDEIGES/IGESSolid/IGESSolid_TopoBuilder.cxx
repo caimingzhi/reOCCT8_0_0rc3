@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_XYZ.hxx>
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESBasic_HArray1OfHArray1OfInteger.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESSolid_EdgeList.hxx>
-#include <IGESSolid_VertexList.hxx>
-#include <IGESSolid_Loop.hxx>
-#include <IGESSolid_ManifoldSolid.hxx>
-#include <IGESSolid_Shell.hxx>
-#include <IGESSolid_TopoBuilder.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Integer.hxx>
+#include <gp_XYZ.hpp>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESSolid_EdgeList.hpp>
+#include <IGESSolid_VertexList.hpp>
+#include <IGESSolid_Loop.hpp>
+#include <IGESSolid_ManifoldSolid.hpp>
+#include <IGESSolid_Shell.hpp>
+#include <IGESSolid_TopoBuilder.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Integer.hpp>
 
 IGESSolid_TopoBuilder::IGESSolid_TopoBuilder()
 {

@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Precision.hxx>
-#include <TopOpeBRepTool_GeomTool.hxx>
+#include <Precision.hpp>
+#include <TopOpeBRepTool_GeomTool.hpp>
 
 //=================================================================================================
 

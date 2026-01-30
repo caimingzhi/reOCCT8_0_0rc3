@@ -14,34 +14,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools3D.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepOffset_Analyse.hxx>
-#include <BRepOffset_Interval.hxx>
-#include <BRepOffset_Tool.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <BRepTools.hxx>
-#include <Geom_Curve.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <IntTools_Context.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <ChFi3d.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools3D.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepOffset_Analyse.hpp>
+#include <BRepOffset_Interval.hpp>
+#include <BRepOffset_Tool.hpp>
+#include <BRepPrimAPI_MakePrism.hpp>
+#include <BRepTools.hpp>
+#include <Geom_Curve.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <IntTools_Context.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <ChFi3d.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
 
 static void CorrectOrientationOfTangent(gp_Vec&              TangVec,
                                         const TopoDS_Vertex& aVertex,

@@ -17,24 +17,24 @@
 //     abv 16.06.99 general function ApplyModifier() implemented
 //     gka 21.06.99 general LimitDegreeShape renamed to BSplineRestriction
 //     szv 03.01.01 PositiveCones merged with DirectFaces
-#include <ShapeCustom.hxx>
-#include <ShapeCustom_DirectModification.hxx>
-#include <ShapeCustom_TrsfModification.hxx>
-#include <ShapeCustom_ConvertToRevolution.hxx>
-#include <ShapeCustom_BSplineRestriction.hxx>
-#include <ShapeCustom_ConvertToBSpline.hxx>
-#include <ShapeCustom_SweptToElementary.hxx>
+#include <ShapeCustom.hpp>
+#include <ShapeCustom_DirectModification.hpp>
+#include <ShapeCustom_TrsfModification.hpp>
+#include <ShapeCustom_ConvertToRevolution.hpp>
+#include <ShapeCustom_BSplineRestriction.hpp>
+#include <ShapeCustom_ConvertToBSpline.hpp>
+#include <ShapeCustom_SweptToElementary.hpp>
 
-#include <gp_Trsf.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <BRep_Builder.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <gp_Trsf.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <BRep_Builder.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <Standard_ErrorHandler.hpp>
 
-#include <Message_ProgressScope.hxx>
+#include <Message_ProgressScope.hpp>
 
 namespace
 {

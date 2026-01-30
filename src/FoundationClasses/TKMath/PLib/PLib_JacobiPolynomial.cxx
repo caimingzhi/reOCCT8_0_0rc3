@@ -12,21 +12,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PLib_JacobiPolynomial.hxx>
+#include <PLib_JacobiPolynomial.hpp>
 
-#include <math.hxx>
-#include <math_Vector.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array2.hxx>
+#include <math.hpp>
+#include <math_Vector.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array2.hpp>
 
 #include <array>
 
 namespace
 {
-#include "PLib_JacobiPolynomial_Data.pxx"
-#include "PLib_JacobiPolynomial_Coeffs.pxx"
+#include "PLib_JacobiPolynomial_Data.hpp"
+#include "PLib_JacobiPolynomial_Coeffs.hpp"
 
 // The possible values for NbGaussPoints
 constexpr int THE_NB_GAUSS_POINTS_8 = 8, THE_NB_GAUSS_POINTS_10 = 10, THE_NB_GAUSS_POINTS_15 = 15,

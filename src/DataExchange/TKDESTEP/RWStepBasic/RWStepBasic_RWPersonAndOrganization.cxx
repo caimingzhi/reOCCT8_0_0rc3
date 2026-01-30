@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWPersonAndOrganization.pxx"
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_Person.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWPersonAndOrganization.hpp"
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_Person.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWPersonAndOrganization::RWStepBasic_RWPersonAndOrganization() = default;
 

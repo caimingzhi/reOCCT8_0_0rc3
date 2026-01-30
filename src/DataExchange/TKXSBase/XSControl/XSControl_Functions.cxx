@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_Act.hxx>
-#include <IFSelect_CheckCounter.hxx>
-#include <IFSelect_Functions.hxx>
-#include <IFSelect_SessionPilot.hxx>
-#include <Interface_Static.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Transfer_ResultFromModel.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSControl.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_Functions.hxx>
-#include <XSControl_SelectForTransfer.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <IFSelect_Act.hpp>
+#include <IFSelect_CheckCounter.hpp>
+#include <IFSelect_Functions.hpp>
+#include <IFSelect_SessionPilot.hpp>
+#include <Interface_Static.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Transfer_ResultFromModel.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSControl.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_Functions.hpp>
+#include <XSControl_SelectForTransfer.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_WorkSession.hpp>
 
 // #######################################################################
 // ##									##

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlAPI_CafReader.hxx>
+#include <VrmlAPI_CafReader.hpp>
 
-#include <OSD_FileSystem.hxx>
-#include <OSD_OpenFile.hxx>
-#include <OSD_Path.hxx>
-#include <Message.hxx>
-#include <Standard_CLocaleSentry.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <VrmlData_Scene.hxx>
+#include <OSD_FileSystem.hpp>
+#include <OSD_OpenFile.hpp>
+#include <OSD_Path.hpp>
+#include <Message.hpp>
+#include <Standard_CLocaleSentry.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <VrmlData_Scene.hpp>
 
 #include <memory>
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_DraughtingModel.hxx>
-#include <StepVisual_InvisibilityContext.hxx>
-#include <StepVisual_PresentationRepresentation.hxx>
-#include <StepVisual_PresentationSet.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_DraughtingModel.hpp>
+#include <StepVisual_InvisibilityContext.hpp>
+#include <StepVisual_PresentationRepresentation.hpp>
+#include <StepVisual_PresentationSet.hpp>
 
 StepVisual_InvisibilityContext::StepVisual_InvisibilityContext() = default;
 

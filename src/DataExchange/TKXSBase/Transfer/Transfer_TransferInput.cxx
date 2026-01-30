@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <Transfer_IteratorOfProcessForFinder.hxx>
-#include <Transfer_IteratorOfProcessForTransient.hxx>
-#include <Transfer_MultipleBinder.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <Transfer_TransferFailure.hxx>
-#include <Transfer_TransferInput.hxx>
-#include <Transfer_TransferIterator.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <Transfer_VoidBinder.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <Transfer_IteratorOfProcessForFinder.hpp>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
+#include <Transfer_MultipleBinder.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <Transfer_TransferFailure.hpp>
+#include <Transfer_TransferInput.hpp>
+#include <Transfer_TransferIterator.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <Transfer_VoidBinder.hpp>
 
 Transfer_TransferInput::Transfer_TransferInput() = default;
 

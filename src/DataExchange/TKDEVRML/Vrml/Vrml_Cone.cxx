@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_Cone.hxx>
+#include <Vrml_Cone.hpp>
 
 Vrml_Cone::Vrml_Cone(const Vrml_ConeParts aParts, const double aBottomRadius, const double aHeight)
 {

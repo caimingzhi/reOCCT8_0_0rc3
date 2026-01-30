@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPersistent_PPrsStd.hxx>
+#include <StdPersistent_PPrsStd.hpp>
 
 //=======================================================================
 // function : Import

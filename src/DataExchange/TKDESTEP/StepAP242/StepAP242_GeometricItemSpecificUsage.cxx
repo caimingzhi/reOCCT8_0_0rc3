@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP242_GeometricItemSpecificUsage.hxx>
+#include <StepAP242_GeometricItemSpecificUsage.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP242_GeometricItemSpecificUsage,
                            StepAP242_ItemIdentifiedRepresentationUsage)

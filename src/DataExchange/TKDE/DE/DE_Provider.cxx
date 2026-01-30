@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_Provider.hxx>
+#include <DE_Provider.hpp>
 
-#include <DE_ConfigurationNode.hxx>
-#include <Message.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <DE_ConfigurationNode.hpp>
+#include <Message.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_Provider, Standard_Transient)
 

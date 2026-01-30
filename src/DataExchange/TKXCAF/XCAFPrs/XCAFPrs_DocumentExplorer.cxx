@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFPrs_DocumentExplorer.hxx>
+#include <XCAFPrs_DocumentExplorer.hpp>
 
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
-#include <XCAFPrs_DocumentIdIterator.hxx>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
+#include <XCAFPrs_DocumentIdIterator.hpp>
 
 namespace
 {

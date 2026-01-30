@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_DataInfo.hxx>
-#include <Standard_Transient.hxx>
+#include <MoniTool_DataInfo.hpp>
+#include <Standard_Transient.hpp>
 
 occ::handle<Standard_Type> MoniTool_DataInfo::Type(const occ::handle<Standard_Transient>& ent)
 {

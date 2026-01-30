@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Application.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <CDM_MetaData.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_Path.hxx>
-#include <PCDM_DOMHeaderParser.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF_Data.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Owner.hxx>
-#include <UTL.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlLDrivers_DocumentRetrievalDriver.hxx>
-#include <XmlMDF.hxx>
-#include <XmlMDF_ADriver.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
+#include <CDM_Application.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <CDM_MetaData.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Path.hpp>
+#include <PCDM_DOMHeaderParser.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF_Data.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Owner.hpp>
+#include <UTL.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlLDrivers_DocumentRetrievalDriver.hpp>
+#include <XmlMDF.hpp>
+#include <XmlMDF_ADriver.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 
@@ -41,8 +41,8 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDr
   #include <tchar.h>
 #endif // _MSC_VER
 
-#include <Standard_Failure.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <Standard_Failure.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #define START_REF "START_REF"
 #define END_REF "END_REF"

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMXCAFDoc_VisMaterialToolDriver.hxx>
+#include <XmlMXCAFDoc_VisMaterialToolDriver.hpp>
 
-#include <Message_Messenger.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_VisMaterialToolDriver, XmlMDF_ADriver)
 

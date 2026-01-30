@@ -17,20 +17,20 @@
   #include <windows.h>
 #endif
 
-#include <OpenGl_GlCore12.hxx>
+#include <OpenGl_GlCore12.hpp>
 
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <OpenGl_Window.hxx>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_GraphicDriver.hpp>
+#include <OpenGl_Window.hpp>
 
-#include <Aspect_GraphicDeviceDefinitionError.hxx>
-#include <Aspect_Handle.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Aspect_GraphicDeviceDefinitionError.hpp>
+#include <Aspect_Handle.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 #include <memory>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Window, Standard_Transient)
 

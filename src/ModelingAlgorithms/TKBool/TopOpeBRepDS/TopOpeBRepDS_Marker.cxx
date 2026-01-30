@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepDS_Marker.hxx>
+#include <Standard_Type.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepDS_Marker.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Marker, Standard_Transient)
 
-// #include <TopExp.hxx>
+// #include <TopExp.hpp>
 // #include <NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>.hxx>
 TopOpeBRepDS_Marker::TopOpeBRepDS_Marker()
 {

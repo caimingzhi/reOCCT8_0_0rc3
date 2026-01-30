@@ -11,24 +11,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pnt2d.hxx>
-#include <IFSelect_ContextModif.hxx>
-#include <IFSelect_PacketList.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESDraw_Drawing.hxx>
-#include <IGESDraw_DrawingWithRotation.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESSelect_RebuildDrawings.hxx>
-#include <IGESSelect_ViewSorter.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <gp_XY.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
+#include <gp_Pnt2d.hpp>
+#include <IFSelect_ContextModif.hpp>
+#include <IFSelect_PacketList.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESDraw_Drawing.hpp>
+#include <IGESDraw_DrawingWithRotation.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESSelect_RebuildDrawings.hpp>
+#include <IGESSelect_ViewSorter.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <gp_XY.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_RebuildDrawings, IGESSelect_ModelModifier)
 

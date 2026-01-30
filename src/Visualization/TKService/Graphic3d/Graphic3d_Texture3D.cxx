@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_Texture3D.hxx>
+#include <Graphic3d_Texture3D.hpp>
 
-#include <Graphic3d_TextureParams.hxx>
-#include <Image_AlienPixMap.hxx>
-#include <Message.hxx>
+#include <Graphic3d_TextureParams.hpp>
+#include <Image_AlienPixMap.hpp>
+#include <Message.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture3D, Graphic3d_TextureMap)
 

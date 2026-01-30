@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GCE2d_MakeArcOfCircle.hxx>
-#include <gce_MakeCirc2d.hxx>
-#include <gce_MakeLin2d.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GCE2d_MakeArcOfCircle.hpp>
+#include <gce_MakeCirc2d.hpp>
+#include <gce_MakeLin2d.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <StdFail_NotDone.hpp>
 
 GCE2d_MakeArcOfCircle::GCE2d_MakeArcOfCircle(const gp_Pnt2d& P1,
                                              const gp_Pnt2d& P2,

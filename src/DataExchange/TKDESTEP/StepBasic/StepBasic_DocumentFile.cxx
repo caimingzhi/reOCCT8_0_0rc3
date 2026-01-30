@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Standard_Type.hxx>
-#include <StepBasic_CharacterizedObject.hxx>
-#include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_DocumentType.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_CharacterizedObject.hpp>
+#include <StepBasic_DocumentFile.hpp>
+#include <StepBasic_DocumentType.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DocumentFile, StepBasic_Document)
 

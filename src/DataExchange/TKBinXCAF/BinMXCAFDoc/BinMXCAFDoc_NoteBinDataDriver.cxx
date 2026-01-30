@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <BinMXCAFDoc_NoteBinDataDriver.hxx>
-#include <XCAFDoc_NoteBinData.hxx>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <BinMXCAFDoc_NoteBinDataDriver.hpp>
+#include <XCAFDoc_NoteBinData.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_NoteBinDataDriver, BinMXCAFDoc_NoteDriver)
 

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <Geom2dLProp_Curve2dTool.hxx>
-#include <Geom2dLProp_FuncCurExt.hxx>
-#include <Geom2dLProp_FuncCurNul.hxx>
-#include <Geom2dLProp_NumericCurInf2d.hxx>
-#include <LProp_CurAndInf.hxx>
-#include <math_BracketedRoot.hxx>
-#include <math_FunctionRoots.hxx>
-#include <Precision.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom2dLProp_Curve2dTool.hpp>
+#include <Geom2dLProp_FuncCurExt.hpp>
+#include <Geom2dLProp_FuncCurNul.hpp>
+#include <Geom2dLProp_NumericCurInf2d.hpp>
+#include <LProp_CurAndInf.hpp>
+#include <math_BracketedRoot.hpp>
+#include <math_FunctionRoots.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

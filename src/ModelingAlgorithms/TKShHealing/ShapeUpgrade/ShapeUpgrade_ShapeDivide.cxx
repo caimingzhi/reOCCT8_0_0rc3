@@ -18,26 +18,26 @@
 //    sln 29.11.01 Bug21: in method Perform(..) nullify location of compound's faces only if mode
 //    myConsiderLocation is on
 
-#include <BRep_Builder.hxx>
-#include <Message_Msg.hxx>
-#include <Precision.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeExtend_BasicMsgRegistrator.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_ShapeDivide.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <Message_Msg.hpp>
+#include <Precision.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeExtend_BasicMsgRegistrator.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_ShapeDivide.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 //=================================================================================================
 

@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_TexturedShape.hxx>
+#include <AIS_TexturedShape.hpp>
 
-#include <AIS_GraphicTool.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <BRepTools.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_StructureManager.hxx>
-#include <Graphic3d_Texture2D.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <PrsMgr_PresentationManager.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Prs3d_BndBox.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <StdPrs_WFShape.hxx>
+#include <AIS_GraphicTool.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <BRepTools.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_StructureManager.hpp>
+#include <Graphic3d_Texture2D.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <PrsMgr_PresentationManager.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Prs3d_BndBox.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <StdPrs_WFShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TexturedShape, AIS_Shape)
 

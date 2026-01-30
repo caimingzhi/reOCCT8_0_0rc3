@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <PLib_HermitJacobi.hxx>
-#include <PLib_JacobiPolynomial.hxx>
+#include <PLib_HermitJacobi.hpp>
+#include <PLib_JacobiPolynomial.hpp>
 
 #include <gtest/gtest.h>
 
-#include <Standard_Real.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <Precision.hxx>
+#include <Standard_Real.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <Precision.hpp>
 
 // Test fixture for PLib_HermitJacobi tests
 class PLibHermitJacobiTest : public ::testing::Test

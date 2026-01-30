@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF.hxx>
-#include <TFunction_Driver.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TFunction_DriverTable.hxx>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF.hpp>
+#include <TFunction_Driver.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TFunction_DriverTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TFunction_DriverTable, Standard_Transient)
 

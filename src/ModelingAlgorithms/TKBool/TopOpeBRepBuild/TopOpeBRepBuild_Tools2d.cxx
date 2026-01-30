@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopOpeBRepBuild_Tools2d.hxx>
-#include <TopOpeBRepBuild_VertexInfo.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopOpeBRepBuild_Tools2d.hpp>
+#include <TopOpeBRepBuild_VertexInfo.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 #include <cstdio>
 static void BuildPath(

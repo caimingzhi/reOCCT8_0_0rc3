@@ -13,56 +13,56 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <BRepGProp.hxx>
-#include <AIS_Trihedron.hxx>
-#include <Geom_Axis2Placement.hxx>
-#include <gp_Ax2.hxx>
-#include <Geom_Circle.hxx>
-#include <AIS_Circle.hxx>
-#include <gp_Pln.hxx>
-#include <PrsDim_AngleDimension.hxx>
+#include <BRepGProp.hpp>
+#include <AIS_Trihedron.hpp>
+#include <Geom_Axis2Placement.hpp>
+#include <gp_Ax2.hpp>
+#include <Geom_Circle.hpp>
+#include <AIS_Circle.hpp>
+#include <gp_Pln.hpp>
+#include <PrsDim_AngleDimension.hpp>
 
-#include <Aspect_Window.hxx>
-#include <V3d_View.hxx>
+#include <Aspect_Window.hpp>
+#include <V3d_View.hpp>
 
-#include <TopExp_Explorer.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <GC_MakePlane.hxx>
-#include <AIS_PlaneTrihedron.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DoubleMap.hxx>
+#include <TopExp_Explorer.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <GC_MakePlane.hpp>
+#include <AIS_PlaneTrihedron.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DoubleMap.hpp>
 
-#include <BRep_Tool.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Precision.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomConvert_CompCurveToBSplineCurve.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Precision.hpp>
 
-#include <GProp_PrincipalProps.hxx>
+#include <GProp_PrincipalProps.hpp>
 
-#include <OSD_Path.hxx>
-#include <Standard_ProgramError.hxx>
+#include <OSD_Path.hpp>
+#include <Standard_ProgramError.hpp>
 
-#include <ShapeFix_Wireframe.hxx>
-#include <ShapeBuild_ReShape.hxx>
+#include <ShapeFix_Wireframe.hpp>
+#include <ShapeBuild_ReShape.hpp>
 
-#include <ViewerTest_EventManager.hxx>
+#include <ViewerTest_EventManager.hpp>
 
-#include <DDocStd.hxx>
-#include <TDocStd_Document.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <DDocStd.hpp>
+#include <TDocStd_Document.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 #if !defined(_WIN32)
 extern NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>&
@@ -638,7 +638,7 @@ static int OCC261(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
 }
 
-#include <OSD_File.hxx>
+#include <OSD_File.hpp>
 
 static int OCC710(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -657,8 +657,8 @@ static int OCC710(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <ShapeFix_Shell.hxx>
-#include <AIS_InteractiveObject.hxx>
+#include <ShapeFix_Shell.hpp>
+#include <AIS_InteractiveObject.hpp>
 class AIS_InteractiveObject;
 
 static int OCC904(Draw_Interpretor& di, int argc, const char** argv)

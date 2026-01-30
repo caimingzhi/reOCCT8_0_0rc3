@@ -13,39 +13,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XDEDRAW_GDTs.hxx>
+#include <XDEDRAW_GDTs.hpp>
 
-#include <Draw.hxx>
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom_Plane.hxx>
+#include <Draw.hpp>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom_Plane.hpp>
 
-#include <TDF_Tool.hxx>
-#include <TDF_Label.hxx>
-#include <XCAFDoc_GraphNode.hxx>
+#include <TDF_Tool.hpp>
+#include <TDF_Label.hpp>
+#include <XCAFDoc_GraphNode.hpp>
 
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFDoc_Dimension.hxx>
-#include <XCAFDimTolObjects_DimensionObject.hxx>
-#include <XCAFDoc_Datum.hxx>
-#include <XCAFDoc_GeomTolerance.hxx>
-#include <XCAFDimTolObjects_DatumSingleModif.hxx>
-#include <XCAFDimTolObjects_DimensionModif.hxx>
-#include <XCAFDimTolObjects_GeomToleranceModif.hxx>
-#include <NCollection_Sequence.hxx>
-#include <XCAFDimTolObjects_Tool.hxx>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFDoc_Dimension.hpp>
+#include <XCAFDimTolObjects_DimensionObject.hpp>
+#include <XCAFDoc_Datum.hpp>
+#include <XCAFDoc_GeomTolerance.hpp>
+#include <XCAFDimTolObjects_DatumSingleModif.hpp>
+#include <XCAFDimTolObjects_DimensionModif.hpp>
+#include <XCAFDimTolObjects_GeomToleranceModif.hpp>
+#include <NCollection_Sequence.hpp>
+#include <XCAFDimTolObjects_Tool.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <BRep_Tool.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <BRep_Tool.hpp>
 
 static int DumpDGTs(Draw_Interpretor& di, int argc, const char** argv)
 {

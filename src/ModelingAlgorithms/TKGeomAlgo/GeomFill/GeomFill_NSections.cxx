@@ -20,27 +20,27 @@
 // Modified:    Mon Jan 18 11:06:46 1999
 //              mise au point de D1, D2 et IsConstant
 
-#include <GeomFill_NSections.hxx>
+#include <GeomFill_NSections.hpp>
 
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomConvert.hxx>
-#include <GeomFill_AppSurf.hxx>
-#include <GeomFill_Line.hxx>
-#include <GeomFill_SectionGenerator.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomConvert.hpp>
+#include <GeomFill_AppSurf.hpp>
+#include <GeomFill_Line.hpp>
+#include <GeomFill_SectionGenerator.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_NSections, GeomFill_SectionLaw)

@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <STEPCAFControl_ActorWrite.hxx>
-#include <TopoDS_Shape.hxx>
+#include <STEPCAFControl_ActorWrite.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPCAFControl_ActorWrite, STEPControl_ActorWrite)
 

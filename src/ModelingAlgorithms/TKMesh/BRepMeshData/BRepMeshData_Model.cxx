@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_Model.hxx>
+#include <BRepMeshData_Model.hpp>
 
-#include <BRepMeshData_Face.hxx>
-#include <BRepMeshData_Edge.hxx>
-#include <NCollection_IncAllocator.hxx>
+#include <BRepMeshData_Face.hpp>
+#include <BRepMeshData_Edge.hpp>
+#include <NCollection_IncAllocator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Model, IMeshData_Model)
 

@@ -15,12 +15,12 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepDimTol_RWDatum.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_Datum.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepDimTol_RWDatum.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_Datum.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 //=================================================================================================
 

@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepSweep_Revol.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <LocOpe.hxx>
-#include <LocOpe_BuildShape.hxx>
-#include <LocOpe_Revol.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepSweep_Revol.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <LocOpe.hpp>
+#include <LocOpe_BuildShape.hpp>
+#include <LocOpe_Revol.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 static bool FindCircle(const gp_Ax1&, const gp_Pnt&, gp_Circ&);
 

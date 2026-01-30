@@ -3,204 +3,204 @@ set(OCCT_RWStepVisual_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWStepVisual_FILES
   RWStepVisual_RWAnnotationCurveOccurrence.cxx
-  RWStepVisual_RWAnnotationCurveOccurrence.pxx
+  RWStepVisual_RWAnnotationCurveOccurrence.hpp
   RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem.cxx
-  RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem.pxx
+  RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem.hpp
   RWStepVisual_RWAnnotationFillArea.cxx
-  RWStepVisual_RWAnnotationFillArea.pxx
+  RWStepVisual_RWAnnotationFillArea.hpp
   RWStepVisual_RWAnnotationFillAreaOccurrence.cxx
-  RWStepVisual_RWAnnotationFillAreaOccurrence.pxx
+  RWStepVisual_RWAnnotationFillAreaOccurrence.hpp
   RWStepVisual_RWAnnotationOccurrence.cxx
-  RWStepVisual_RWAnnotationOccurrence.pxx
+  RWStepVisual_RWAnnotationOccurrence.hpp
   RWStepVisual_RWAnnotationPlane.cxx
-  RWStepVisual_RWAnnotationPlane.pxx
+  RWStepVisual_RWAnnotationPlane.hpp
   RWStepVisual_RWAreaInSet.cxx
-  RWStepVisual_RWAreaInSet.pxx
+  RWStepVisual_RWAreaInSet.hpp
   RWStepVisual_RWBackgroundColour.cxx
-  RWStepVisual_RWBackgroundColour.pxx
+  RWStepVisual_RWBackgroundColour.hpp
   RWStepVisual_RWCameraImage.cxx
-  RWStepVisual_RWCameraImage.pxx
+  RWStepVisual_RWCameraImage.hpp
   RWStepVisual_RWCameraModel.cxx
-  RWStepVisual_RWCameraModel.pxx
+  RWStepVisual_RWCameraModel.hpp
   RWStepVisual_RWCameraModelD2.cxx
-  RWStepVisual_RWCameraModelD2.pxx
+  RWStepVisual_RWCameraModelD2.hpp
   RWStepVisual_RWCameraModelD3.cxx
-  RWStepVisual_RWCameraModelD3.pxx
+  RWStepVisual_RWCameraModelD3.hpp
   RWStepVisual_RWCameraModelD3MultiClipping.cxx
-  RWStepVisual_RWCameraModelD3MultiClipping.pxx
+  RWStepVisual_RWCameraModelD3MultiClipping.hpp
   RWStepVisual_RWCameraModelD3MultiClippingIntersection.cxx
-  RWStepVisual_RWCameraModelD3MultiClippingIntersection.pxx
+  RWStepVisual_RWCameraModelD3MultiClippingIntersection.hpp
   RWStepVisual_RWCameraModelD3MultiClippingUnion.cxx
-  RWStepVisual_RWCameraModelD3MultiClippingUnion.pxx
+  RWStepVisual_RWCameraModelD3MultiClippingUnion.hpp
   RWStepVisual_RWCameraUsage.cxx
-  RWStepVisual_RWCameraUsage.pxx
-  RWStepVisual_RWCentralOrParallel.pxx
+  RWStepVisual_RWCameraUsage.hpp
+  RWStepVisual_RWCentralOrParallel.hpp
   RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel.cxx
-  RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel.pxx
+  RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel.hpp
   RWStepVisual_RWColour.cxx
-  RWStepVisual_RWColour.pxx
+  RWStepVisual_RWColour.hpp
   RWStepVisual_RWColourRgb.cxx
-  RWStepVisual_RWColourRgb.pxx
+  RWStepVisual_RWColourRgb.hpp
   RWStepVisual_RWColourSpecification.cxx
-  RWStepVisual_RWColourSpecification.pxx
+  RWStepVisual_RWColourSpecification.hpp
   RWStepVisual_RWCompositeText.cxx
-  RWStepVisual_RWCompositeText.pxx
+  RWStepVisual_RWCompositeText.hpp
   RWStepVisual_RWCompositeTextWithExtent.cxx
-  RWStepVisual_RWCompositeTextWithExtent.pxx
+  RWStepVisual_RWCompositeTextWithExtent.hpp
   RWStepVisual_RWContextDependentInvisibility.cxx
-  RWStepVisual_RWContextDependentInvisibility.pxx
+  RWStepVisual_RWContextDependentInvisibility.hpp
   RWStepVisual_RWContextDependentOverRidingStyledItem.cxx
-  RWStepVisual_RWContextDependentOverRidingStyledItem.pxx
+  RWStepVisual_RWContextDependentOverRidingStyledItem.hpp
   RWStepVisual_RWCurveStyle.cxx
-  RWStepVisual_RWCurveStyle.pxx
+  RWStepVisual_RWCurveStyle.hpp
   RWStepVisual_RWCurveStyleFont.cxx
-  RWStepVisual_RWCurveStyleFont.pxx
+  RWStepVisual_RWCurveStyleFont.hpp
   RWStepVisual_RWCurveStyleFontPattern.cxx
-  RWStepVisual_RWCurveStyleFontPattern.pxx
+  RWStepVisual_RWCurveStyleFontPattern.hpp
   RWStepVisual_RWDraughtingCallout.cxx
-  RWStepVisual_RWDraughtingCallout.pxx
+  RWStepVisual_RWDraughtingCallout.hpp
   RWStepVisual_RWDraughtingModel.cxx
-  RWStepVisual_RWDraughtingModel.pxx
+  RWStepVisual_RWDraughtingModel.hpp
   RWStepVisual_RWDraughtingPreDefinedColour.cxx
-  RWStepVisual_RWDraughtingPreDefinedColour.pxx
+  RWStepVisual_RWDraughtingPreDefinedColour.hpp
   RWStepVisual_RWDraughtingPreDefinedCurveFont.cxx
-  RWStepVisual_RWDraughtingPreDefinedCurveFont.pxx
+  RWStepVisual_RWDraughtingPreDefinedCurveFont.hpp
   RWStepVisual_RWExternallyDefinedCurveFont.cxx
-  RWStepVisual_RWExternallyDefinedCurveFont.pxx
+  RWStepVisual_RWExternallyDefinedCurveFont.hpp
   RWStepVisual_RWFillAreaStyle.cxx
-  RWStepVisual_RWFillAreaStyle.pxx
+  RWStepVisual_RWFillAreaStyle.hpp
   RWStepVisual_RWFillAreaStyleColour.cxx
-  RWStepVisual_RWFillAreaStyleColour.pxx
+  RWStepVisual_RWFillAreaStyleColour.hpp
   RWStepVisual_RWInvisibility.cxx
-  RWStepVisual_RWInvisibility.pxx
+  RWStepVisual_RWInvisibility.hpp
   RWStepVisual_RWMechanicalDesignGeometricPresentationArea.cxx
-  RWStepVisual_RWMechanicalDesignGeometricPresentationArea.pxx
+  RWStepVisual_RWMechanicalDesignGeometricPresentationArea.hpp
   RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation.cxx
-  RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation.pxx
+  RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation.hpp
   RWStepVisual_RWOverRidingStyledItem.cxx
-  RWStepVisual_RWOverRidingStyledItem.pxx
+  RWStepVisual_RWOverRidingStyledItem.hpp
   RWStepVisual_RWPlanarBox.cxx
-  RWStepVisual_RWPlanarBox.pxx
+  RWStepVisual_RWPlanarBox.hpp
   RWStepVisual_RWPlanarExtent.cxx
-  RWStepVisual_RWPlanarExtent.pxx
+  RWStepVisual_RWPlanarExtent.hpp
   RWStepVisual_RWPointStyle.cxx
-  RWStepVisual_RWPointStyle.pxx
+  RWStepVisual_RWPointStyle.hpp
   RWStepVisual_RWPreDefinedColour.cxx
-  RWStepVisual_RWPreDefinedColour.pxx
+  RWStepVisual_RWPreDefinedColour.hpp
   RWStepVisual_RWPreDefinedCurveFont.cxx
-  RWStepVisual_RWPreDefinedCurveFont.pxx
+  RWStepVisual_RWPreDefinedCurveFont.hpp
   RWStepVisual_RWPreDefinedItem.cxx
-  RWStepVisual_RWPreDefinedItem.pxx
+  RWStepVisual_RWPreDefinedItem.hpp
   RWStepVisual_RWPresentationArea.cxx
-  RWStepVisual_RWPresentationArea.pxx
+  RWStepVisual_RWPresentationArea.hpp
   RWStepVisual_RWPresentationLayerAssignment.cxx
-  RWStepVisual_RWPresentationLayerAssignment.pxx
+  RWStepVisual_RWPresentationLayerAssignment.hpp
   RWStepVisual_RWPresentationLayerUsage.cxx
-  RWStepVisual_RWPresentationLayerUsage.pxx
+  RWStepVisual_RWPresentationLayerUsage.hpp
   RWStepVisual_RWPresentationRepresentation.cxx
-  RWStepVisual_RWPresentationRepresentation.pxx
+  RWStepVisual_RWPresentationRepresentation.hpp
   RWStepVisual_RWPresentationSet.cxx
-  RWStepVisual_RWPresentationSet.pxx
+  RWStepVisual_RWPresentationSet.hpp
   RWStepVisual_RWPresentationSize.cxx
-  RWStepVisual_RWPresentationSize.pxx
+  RWStepVisual_RWPresentationSize.hpp
   RWStepVisual_RWPresentationStyleAssignment.cxx
-  RWStepVisual_RWPresentationStyleAssignment.pxx
+  RWStepVisual_RWPresentationStyleAssignment.hpp
   RWStepVisual_RWPresentationStyleByContext.cxx
-  RWStepVisual_RWPresentationStyleByContext.pxx
+  RWStepVisual_RWPresentationStyleByContext.hpp
   RWStepVisual_RWPresentationView.cxx
-  RWStepVisual_RWPresentationView.pxx
+  RWStepVisual_RWPresentationView.hpp
   RWStepVisual_RWPresentedItemRepresentation.cxx
-  RWStepVisual_RWPresentedItemRepresentation.pxx
+  RWStepVisual_RWPresentedItemRepresentation.hpp
   RWStepVisual_RWRepositionedTessellatedGeometricSet.cxx
-  RWStepVisual_RWRepositionedTessellatedGeometricSet.pxx
+  RWStepVisual_RWRepositionedTessellatedGeometricSet.hpp
   RWStepVisual_RWRepositionedTessellatedItem.cxx
-  RWStepVisual_RWRepositionedTessellatedItem.pxx
+  RWStepVisual_RWRepositionedTessellatedItem.hpp
   RWStepVisual_RWStyledItem.cxx
-  RWStepVisual_RWStyledItem.pxx
-  RWStepVisual_RWSurfaceSide.pxx
+  RWStepVisual_RWStyledItem.hpp
+  RWStepVisual_RWSurfaceSide.hpp
   RWStepVisual_RWSurfaceSideStyle.cxx
-  RWStepVisual_RWSurfaceSideStyle.pxx
+  RWStepVisual_RWSurfaceSideStyle.hpp
   RWStepVisual_RWSurfaceStyleBoundary.cxx
-  RWStepVisual_RWSurfaceStyleBoundary.pxx
+  RWStepVisual_RWSurfaceStyleBoundary.hpp
   RWStepVisual_RWSurfaceStyleControlGrid.cxx
-  RWStepVisual_RWSurfaceStyleControlGrid.pxx
+  RWStepVisual_RWSurfaceStyleControlGrid.hpp
   RWStepVisual_RWSurfaceStyleFillArea.cxx
-  RWStepVisual_RWSurfaceStyleFillArea.pxx
+  RWStepVisual_RWSurfaceStyleFillArea.hpp
   RWStepVisual_RWSurfaceStyleParameterLine.cxx
-  RWStepVisual_RWSurfaceStyleParameterLine.pxx
+  RWStepVisual_RWSurfaceStyleParameterLine.hpp
   RWStepVisual_RWSurfaceStyleReflectanceAmbient.cxx
-  RWStepVisual_RWSurfaceStyleReflectanceAmbient.pxx
+  RWStepVisual_RWSurfaceStyleReflectanceAmbient.hpp
   RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuse.cxx
-  RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuse.pxx
+  RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuse.hpp
   RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular.cxx
-  RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular.pxx
+  RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular.hpp
   RWStepVisual_RWSurfaceStyleRendering.cxx
-  RWStepVisual_RWSurfaceStyleRendering.pxx
+  RWStepVisual_RWSurfaceStyleRendering.hpp
   RWStepVisual_RWSurfaceStyleRenderingWithProperties.cxx
-  RWStepVisual_RWSurfaceStyleRenderingWithProperties.pxx
+  RWStepVisual_RWSurfaceStyleRenderingWithProperties.hpp
   RWStepVisual_RWSurfaceStyleSegmentationCurve.cxx
-  RWStepVisual_RWSurfaceStyleSegmentationCurve.pxx
+  RWStepVisual_RWSurfaceStyleSegmentationCurve.hpp
   RWStepVisual_RWSurfaceStyleSilhouette.cxx
-  RWStepVisual_RWSurfaceStyleSilhouette.pxx
+  RWStepVisual_RWSurfaceStyleSilhouette.hpp
   RWStepVisual_RWSurfaceStyleTransparent.cxx
-  RWStepVisual_RWSurfaceStyleTransparent.pxx
+  RWStepVisual_RWSurfaceStyleTransparent.hpp
   RWStepVisual_RWSurfaceStyleUsage.cxx
-  RWStepVisual_RWSurfaceStyleUsage.pxx
+  RWStepVisual_RWSurfaceStyleUsage.hpp
   RWStepVisual_RWTemplate.cxx
-  RWStepVisual_RWTemplate.pxx
+  RWStepVisual_RWTemplate.hpp
   RWStepVisual_RWTemplateInstance.cxx
-  RWStepVisual_RWTemplateInstance.pxx
+  RWStepVisual_RWTemplateInstance.hpp
   RWStepVisual_RWTextLiteral.cxx
-  RWStepVisual_RWTextLiteral.pxx
-  RWStepVisual_RWTextPath.pxx
+  RWStepVisual_RWTextLiteral.hpp
+  RWStepVisual_RWTextPath.hpp
   RWStepVisual_RWTextStyle.cxx
-  RWStepVisual_RWTextStyle.pxx
+  RWStepVisual_RWTextStyle.hpp
   RWStepVisual_RWTextStyleForDefinedFont.cxx
-  RWStepVisual_RWTextStyleForDefinedFont.pxx
+  RWStepVisual_RWTextStyleForDefinedFont.hpp
   RWStepVisual_RWTextStyleWithBoxCharacteristics.cxx
-  RWStepVisual_RWTextStyleWithBoxCharacteristics.pxx
+  RWStepVisual_RWTextStyleWithBoxCharacteristics.hpp
   RWStepVisual_RWViewVolume.cxx
-  RWStepVisual_RWViewVolume.pxx
-  RWStepVisual_RWTessellatedItem.pxx
+  RWStepVisual_RWViewVolume.hpp
+  RWStepVisual_RWTessellatedItem.hpp
   RWStepVisual_RWTessellatedItem.cxx
-  RWStepVisual_RWTessellatedAnnotationOccurrence.pxx
+  RWStepVisual_RWTessellatedAnnotationOccurrence.hpp
   RWStepVisual_RWTessellatedAnnotationOccurrence.cxx
-  RWStepVisual_RWTessellatedGeometricSet.pxx
+  RWStepVisual_RWTessellatedGeometricSet.hpp
   RWStepVisual_RWTessellatedGeometricSet.cxx
-  RWStepVisual_RWCoordinatesList.pxx
+  RWStepVisual_RWCoordinatesList.hpp
   RWStepVisual_RWCoordinatesList.cxx
-  RWStepVisual_RWTessellatedCurveSet.pxx
+  RWStepVisual_RWTessellatedCurveSet.hpp
   RWStepVisual_RWTessellatedCurveSet.cxx
   RWStepVisual_RWComplexTriangulatedFace.cxx
-  RWStepVisual_RWComplexTriangulatedFace.pxx
+  RWStepVisual_RWComplexTriangulatedFace.hpp
   RWStepVisual_RWComplexTriangulatedSurfaceSet.cxx
-  RWStepVisual_RWComplexTriangulatedSurfaceSet.pxx
+  RWStepVisual_RWComplexTriangulatedSurfaceSet.hpp
   RWStepVisual_RWCubicBezierTessellatedEdge.cxx
-  RWStepVisual_RWCubicBezierTessellatedEdge.pxx
+  RWStepVisual_RWCubicBezierTessellatedEdge.hpp
   RWStepVisual_RWCubicBezierTriangulatedFace.cxx
-  RWStepVisual_RWCubicBezierTriangulatedFace.pxx
+  RWStepVisual_RWCubicBezierTriangulatedFace.hpp
   RWStepVisual_RWTessellatedConnectingEdge.cxx
-  RWStepVisual_RWTessellatedConnectingEdge.pxx
+  RWStepVisual_RWTessellatedConnectingEdge.hpp
   RWStepVisual_RWTessellatedEdge.cxx
-  RWStepVisual_RWTessellatedEdge.pxx
+  RWStepVisual_RWTessellatedEdge.hpp
   RWStepVisual_RWTessellatedPointSet.cxx
-  RWStepVisual_RWTessellatedPointSet.pxx
+  RWStepVisual_RWTessellatedPointSet.hpp
   RWStepVisual_RWTessellatedShapeRepresentation.cxx
-  RWStepVisual_RWTessellatedShapeRepresentation.pxx
+  RWStepVisual_RWTessellatedShapeRepresentation.hpp
   RWStepVisual_RWTessellatedShapeRepresentationWithAccuracyParameters.cxx
-  RWStepVisual_RWTessellatedShapeRepresentationWithAccuracyParameters.pxx
+  RWStepVisual_RWTessellatedShapeRepresentationWithAccuracyParameters.hpp
   RWStepVisual_RWTessellatedShell.cxx
-  RWStepVisual_RWTessellatedShell.pxx
+  RWStepVisual_RWTessellatedShell.hpp
   RWStepVisual_RWTessellatedSolid.cxx
-  RWStepVisual_RWTessellatedSolid.pxx
+  RWStepVisual_RWTessellatedSolid.hpp
   RWStepVisual_RWTessellatedStructuredItem.cxx
-  RWStepVisual_RWTessellatedStructuredItem.pxx
+  RWStepVisual_RWTessellatedStructuredItem.hpp
   RWStepVisual_RWTessellatedVertex.cxx
-  RWStepVisual_RWTessellatedVertex.pxx
+  RWStepVisual_RWTessellatedVertex.hpp
   RWStepVisual_RWTessellatedWire.cxx
-  RWStepVisual_RWTessellatedWire.pxx
+  RWStepVisual_RWTessellatedWire.hpp
   RWStepVisual_RWTriangulatedFace.cxx
-  RWStepVisual_RWTriangulatedFace.pxx
+  RWStepVisual_RWTriangulatedFace.hpp
   RWStepVisual_RWTriangulatedSurfaceSet.cxx
-  RWStepVisual_RWTriangulatedSurfaceSet.pxx
+  RWStepVisual_RWTriangulatedSurfaceSet.hpp
 )

@@ -3,56 +3,56 @@ set(OCCT_BRepBuilderAPI_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepBuilderAPI_FILES
   BRepBuilderAPI.cxx
-  BRepBuilderAPI.hxx
-  BRepBuilderAPI_BndBoxTreeSelector.hxx
+  BRepBuilderAPI.hpp
+  BRepBuilderAPI_BndBoxTreeSelector.hpp
 
   BRepBuilderAPI_Collect.cxx
-  BRepBuilderAPI_Collect.hxx
+  BRepBuilderAPI_Collect.hpp
   BRepBuilderAPI_Command.cxx
-  BRepBuilderAPI_Command.hxx
+  BRepBuilderAPI_Command.hpp
   BRepBuilderAPI_Copy.cxx
-  BRepBuilderAPI_Copy.hxx
-  BRepBuilderAPI_EdgeError.hxx
-  BRepBuilderAPI_FaceError.hxx
+  BRepBuilderAPI_Copy.hpp
+  BRepBuilderAPI_EdgeError.hpp
+  BRepBuilderAPI_FaceError.hpp
   BRepBuilderAPI_FastSewing.cxx
-  BRepBuilderAPI_FastSewing.hxx
+  BRepBuilderAPI_FastSewing.hpp
   BRepBuilderAPI_FindPlane.cxx
-  BRepBuilderAPI_FindPlane.hxx
+  BRepBuilderAPI_FindPlane.hpp
   BRepBuilderAPI_GTransform.cxx
-  BRepBuilderAPI_GTransform.hxx
+  BRepBuilderAPI_GTransform.hpp
   BRepBuilderAPI_MakeEdge.cxx
-  BRepBuilderAPI_MakeEdge.hxx
+  BRepBuilderAPI_MakeEdge.hpp
   BRepBuilderAPI_MakeEdge2d.cxx
-  BRepBuilderAPI_MakeEdge2d.hxx
+  BRepBuilderAPI_MakeEdge2d.hpp
   BRepBuilderAPI_MakeFace.cxx
-  BRepBuilderAPI_MakeFace.hxx
+  BRepBuilderAPI_MakeFace.hpp
   BRepBuilderAPI_MakePolygon.cxx
-  BRepBuilderAPI_MakePolygon.hxx
+  BRepBuilderAPI_MakePolygon.hpp
   BRepBuilderAPI_MakeShape.cxx
-  BRepBuilderAPI_MakeShape.hxx
+  BRepBuilderAPI_MakeShape.hpp
   BRepBuilderAPI_MakeShapeOnMesh.cxx
-  BRepBuilderAPI_MakeShapeOnMesh.hxx
+  BRepBuilderAPI_MakeShapeOnMesh.hpp
   BRepBuilderAPI_MakeShell.cxx
-  BRepBuilderAPI_MakeShell.hxx
+  BRepBuilderAPI_MakeShell.hpp
   BRepBuilderAPI_MakeSolid.cxx
-  BRepBuilderAPI_MakeSolid.hxx
+  BRepBuilderAPI_MakeSolid.hpp
   BRepBuilderAPI_MakeVertex.cxx
-  BRepBuilderAPI_MakeVertex.hxx
+  BRepBuilderAPI_MakeVertex.hpp
   BRepBuilderAPI_MakeWire.cxx
-  BRepBuilderAPI_MakeWire.hxx
+  BRepBuilderAPI_MakeWire.hpp
   BRepBuilderAPI_ModifyShape.cxx
-  BRepBuilderAPI_ModifyShape.hxx
+  BRepBuilderAPI_ModifyShape.hpp
   BRepBuilderAPI_NurbsConvert.cxx
-  BRepBuilderAPI_NurbsConvert.hxx
-  BRepBuilderAPI_PipeError.hxx
+  BRepBuilderAPI_NurbsConvert.hpp
+  BRepBuilderAPI_PipeError.hpp
   BRepBuilderAPI_Sewing.cxx
-  BRepBuilderAPI_Sewing.hxx
-  BRepBuilderAPI_Sewing.lxx
-  BRepBuilderAPI_ShapeModification.hxx
-  BRepBuilderAPI_ShellError.hxx
+  BRepBuilderAPI_Sewing.hpp
+  BRepBuilderAPI_Sewing_1.hpp
+  BRepBuilderAPI_ShapeModification.hpp
+  BRepBuilderAPI_ShellError.hpp
   BRepBuilderAPI_Transform.cxx
-  BRepBuilderAPI_Transform.hxx
-  BRepBuilderAPI_TransitionMode.hxx
-  BRepBuilderAPI_VertexInspector.hxx
-  BRepBuilderAPI_WireError.hxx
+  BRepBuilderAPI_Transform.hpp
+  BRepBuilderAPI_TransitionMode.hpp
+  BRepBuilderAPI_VertexInspector.hpp
+  BRepBuilderAPI_WireError.hpp
 )

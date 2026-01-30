@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextModif.hxx>
-#include <IGESBasic_GroupWithoutBackP.hxx>
-#include <IGESBasic_OrderedGroup.hxx>
-#include <IGESBasic_OrderedGroupWithoutBackP.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESSelect_RebuildGroups.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
+#include <IFSelect_ContextModif.hpp>
+#include <IGESBasic_GroupWithoutBackP.hpp>
+#include <IGESBasic_OrderedGroup.hpp>
+#include <IGESBasic_OrderedGroupWithoutBackP.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESSelect_RebuildGroups.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_RebuildGroups, IGESSelect_ModelModifier)
 

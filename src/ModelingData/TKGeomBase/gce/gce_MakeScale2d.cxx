@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gce_MakeScale2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
+#include <gce_MakeScale2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
 
 //=========================================================================
 //   Creation d un homothetie de gp de centre Point et de rapport Scale.  +

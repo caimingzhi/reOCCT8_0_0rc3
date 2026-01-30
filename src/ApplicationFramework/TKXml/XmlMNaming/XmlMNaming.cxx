@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlMNaming.hxx>
+#include <XmlMNaming.hpp>
 
-#include <Message_Messenger.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMNaming_NamedShapeDriver.hxx>
-#include <XmlMNaming_NamingDriver.hxx>
+#include <Message_Messenger.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMNaming_NamedShapeDriver.hpp>
+#include <XmlMNaming_NamingDriver.hpp>
 
 //=================================================================================================
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Macro.hxx>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <Standard_Dump.hxx>
-#include <TopLoc_Datum3D.hxx>
+#include <Standard_Type.hpp>
+#include <Standard_Dump.hpp>
+#include <TopLoc_Datum3D.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopLoc_Datum3D, Standard_Transient)
 

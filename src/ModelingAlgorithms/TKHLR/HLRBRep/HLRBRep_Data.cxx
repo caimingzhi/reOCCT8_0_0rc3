@@ -16,30 +16,30 @@
 
 // #define No_Standard_OutOfRange
 
-#include <BRepTopAdaptor_Tool.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <GeomInt.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <HLRAlgo.hxx>
-#include <HLRAlgo_Interference.hxx>
-#include <NCollection_List.hxx>
-#include <HLRAlgo_Projector.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_EdgeData.hxx>
-#include <HLRBRep_EdgeFaceTool.hxx>
-#include <HLRBRep_FaceData.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_TransitionOnCurve.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
-#include <Standard_Integer.hxx>
+#include <BRepTopAdaptor_Tool.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <GeomInt.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <HLRAlgo.hpp>
+#include <HLRAlgo_Interference.hpp>
+#include <NCollection_List.hpp>
+#include <HLRAlgo_Projector.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_EdgeData.hpp>
+#include <HLRBRep_EdgeFaceTool.hpp>
+#include <HLRBRep_FaceData.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_TransitionOnCurve.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
+#include <Standard_Integer.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_Data, Standard_Transient)
@@ -62,9 +62,9 @@ static const double DERIVEE_PREMIERE_NULLE = 0.000000000001;
 //-- ======================================================================
 //--
 
-#include <IntRes2d_TypeTrans.hxx>
-#include <IntRes2d_Position.hxx>
-#include <IntRes2d_Transition.hxx>
+#include <IntRes2d_TypeTrans.hpp>
+#include <IntRes2d_Position.hpp>
+#include <IntRes2d_Transition.hpp>
 
 static long unsigned Mask32[32] = {
   1,        2,        4,        8,         16,        32,        64,         128,

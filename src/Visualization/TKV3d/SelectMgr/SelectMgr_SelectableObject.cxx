@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_SelectableObject.hxx>
+#include <SelectMgr_SelectableObject.hpp>
 
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Shared.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <SelectMgr_SelectionManager.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <TopLoc_Location.hxx>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Shared.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <SelectMgr_SelectionManager.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <TopLoc_Location.hpp>
 class SelectMgr_EntityOwner;
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_SelectableObject, PrsMgr_PresentableObject)

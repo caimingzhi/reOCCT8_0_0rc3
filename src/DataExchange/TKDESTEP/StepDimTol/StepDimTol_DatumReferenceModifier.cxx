@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_DatumReferenceModifier.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepDimTol_DatumReferenceModifierWithValue.hxx>
-#include <StepDimTol_SimpleDatumReferenceModifierMember.hxx>
+#include <StepDimTol_DatumReferenceModifier.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepDimTol_DatumReferenceModifierWithValue.hpp>
+#include <StepDimTol_SimpleDatumReferenceModifierMember.hpp>
 
 //=================================================================================================
 

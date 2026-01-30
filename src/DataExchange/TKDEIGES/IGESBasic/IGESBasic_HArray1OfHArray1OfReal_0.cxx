@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESBasic_HArray1OfHArray1OfReal.hxx>
+#include <IGESBasic_HArray1OfHArray1OfReal.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IGESBasic_HArray1OfHArray1OfReal::IGESBasic_HArray1OfHArray1OfReal(const int low, const int up)
     : thelist(low, up)

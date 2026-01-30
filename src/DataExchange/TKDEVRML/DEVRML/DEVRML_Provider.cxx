@@ -11,18 +11,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEVRML_Provider.hxx>
+#include <DEVRML_Provider.hpp>
 
-#include <DE_ValidationUtils.hxx>
-#include <DEVRML_ConfigurationNode.hxx>
-#include <Message.hxx>
-#include <OSD_Path.hxx>
-#include <TDocStd_Document.hxx>
-#include <VrmlAPI_CafReader.hxx>
-#include <VrmlAPI_Writer.hxx>
-#include <VrmlData_Scene.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <DE_ValidationUtils.hpp>
+#include <DEVRML_ConfigurationNode.hpp>
+#include <Message.hpp>
+#include <OSD_Path.hpp>
+#include <TDocStd_Document.hpp>
+#include <VrmlAPI_CafReader.hpp>
+#include <VrmlAPI_Writer.hpp>
+#include <VrmlData_Scene.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 #include <stdexcept>
 

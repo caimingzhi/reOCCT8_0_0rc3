@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_Hyperbola.hxx>
-#include <GeomGridEval_Hyperbola.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_Hyperbola.hpp>
+#include <GeomGridEval_Hyperbola.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

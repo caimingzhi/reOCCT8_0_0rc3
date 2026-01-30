@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_ConversionBasedUnitAndRatioUnit.hxx>
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_RatioUnit.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_ConversionBasedUnitAndRatioUnit.hpp>
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_RatioUnit.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ConversionBasedUnitAndRatioUnit, StepBasic_ConversionBasedUnit)
 

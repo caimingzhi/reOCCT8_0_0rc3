@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <ElCLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <ElCLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
 
 extern bool Draw_Bounds;
 

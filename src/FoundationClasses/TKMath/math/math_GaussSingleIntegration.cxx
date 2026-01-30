@@ -42,10 +42,10 @@ Etapes du calcul:
 
 // #endif
 
-#include <math.hxx>
-#include <math_Function.hxx>
-#include <math_GaussSingleIntegration.hxx>
-#include <math_Vector.hxx>
+#include <math.hpp>
+#include <math_Function.hpp>
+#include <math_GaussSingleIntegration.hpp>
+#include <math_Vector.hpp>
 
 math_GaussSingleIntegration::math_GaussSingleIntegration()
     : Done(false)

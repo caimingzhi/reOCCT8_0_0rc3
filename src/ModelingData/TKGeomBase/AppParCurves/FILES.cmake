@@ -3,24 +3,24 @@ set(OCCT_AppParCurves_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_AppParCurves_FILES
   AppParCurves.cxx
-  AppParCurves.hxx
+  AppParCurves.hpp
 
-  AppParCurves_BSpFunction.gxx
-  AppParCurves_BSpGradient.gxx
-  AppParCurves_Constraint.hxx
+  AppParCurves_BSpFunction.hpp
+  AppParCurves_BSpGradient.hpp
+  AppParCurves_Constraint.hpp
   AppParCurves_ConstraintCouple.cxx
-  AppParCurves_ConstraintCouple.hxx
-  AppParCurves_Function.gxx
-  AppParCurves_Gradient.gxx
+  AppParCurves_ConstraintCouple.hpp
+  AppParCurves_Function.hpp
+  AppParCurves_Gradient.hpp
 
-  AppParCurves_LeastSquare.gxx
+  AppParCurves_LeastSquare.hpp
   AppParCurves_MultiBSpCurve.cxx
-  AppParCurves_MultiBSpCurve.hxx
+  AppParCurves_MultiBSpCurve.hpp
   AppParCurves_MultiCurve.cxx
-  AppParCurves_MultiCurve.hxx
+  AppParCurves_MultiCurve.hpp
   AppParCurves_MultiPoint.cxx
-  AppParCurves_MultiPoint.hxx
-  AppParCurves_MultiPoint.lxx
-  AppParCurves_ResolConstraint.gxx
+  AppParCurves_MultiPoint.hpp
+  AppParCurves_MultiPoint_1.hpp
+  AppParCurves_ResolConstraint.hpp
 
 )

@@ -16,23 +16,23 @@
 
 //  Modified by skv - Mon May 31 12:58:34 2004 OCC5865
 
-#include <BRep_Builder.hxx>
-#include <LocOpe_BuildWires.hxx>
-#include <LocOpe_WiresOnShape.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <LocOpe_BuildWires.hpp>
+#include <LocOpe_WiresOnShape.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 
 static int FindFirstEdge(const NCollection_IndexedDataMap<TopoDS_Shape,
                                                           NCollection_List<TopoDS_Shape>,

@@ -12,14 +12,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Persistent.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Storage_RootData.hxx>
-#include <Storage_Root.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Standard_Persistent.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Storage_RootData.hpp>
+#include <Storage_Root.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Storage_RootData, Standard_Transient)
 

@@ -14,43 +14,43 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_PolyAlgo.hxx>
+#include <HLRAlgo_PolyAlgo.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <CSLib.hxx>
-#include <CSLib_DerivativeStatus.hxx>
-#include <CSLib_NormalStatus.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <HLRAlgo_BiPoint.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <HLRAlgo_PolyData.hxx>
-#include <HLRAlgo_PolyInternalData.hxx>
-#include <HLRAlgo_PolyMask.hxx>
-#include <HLRAlgo_PolyShellData.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Precision.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Macro.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <CSLib.hpp>
+#include <CSLib_DerivativeStatus.hpp>
+#include <CSLib_NormalStatus.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <HLRAlgo_BiPoint.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <HLRAlgo_PolyData.hpp>
+#include <HLRAlgo_PolyInternalData.hpp>
+#include <HLRAlgo_PolyMask.hpp>
+#include <HLRAlgo_PolyShellData.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Precision.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_PolyAlgo, Standard_Transient)
 

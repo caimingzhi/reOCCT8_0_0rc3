@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_Point.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopOpeBRepDS_CurveExplorer.hxx>
-#include <TopOpeBRepDS.hxx>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_Point.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopOpeBRepDS_CurveExplorer.hpp>
+#include <TopOpeBRepDS.hpp>
 
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
 
 int BREP_findPDSamongIDMOVP(
   const TopOpeBRepDS_Point& PDS,

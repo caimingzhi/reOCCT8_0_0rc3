@@ -11,33 +11,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomHash_SurfaceHasher.hxx>
+#include <GeomHash_SurfaceHasher.hpp>
 
-#include <Standard_CStringHasher.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
+#include <Standard_CStringHasher.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
 
-#include <GeomHash_PlaneHasher.pxx>
-#include <GeomHash_CylindricalSurfaceHasher.pxx>
-#include <GeomHash_ConicalSurfaceHasher.pxx>
-#include <GeomHash_SphericalSurfaceHasher.pxx>
-#include <GeomHash_ToroidalSurfaceHasher.pxx>
-#include <GeomHash_SurfaceOfRevolutionHasher.pxx>
-#include <GeomHash_SurfaceOfLinearExtrusionHasher.pxx>
-#include <GeomHash_BezierSurfaceHasher.pxx>
-#include <GeomHash_BSplineSurfaceHasher.pxx>
-#include <GeomHash_RectangularTrimmedSurfaceHasher.pxx>
-#include <GeomHash_OffsetSurfaceHasher.pxx>
+#include <GeomHash_PlaneHasher.hpp>
+#include <GeomHash_CylindricalSurfaceHasher.hpp>
+#include <GeomHash_ConicalSurfaceHasher.hpp>
+#include <GeomHash_SphericalSurfaceHasher.hpp>
+#include <GeomHash_ToroidalSurfaceHasher.hpp>
+#include <GeomHash_SurfaceOfRevolutionHasher.hpp>
+#include <GeomHash_SurfaceOfLinearExtrusionHasher.hpp>
+#include <GeomHash_BezierSurfaceHasher.hpp>
+#include <GeomHash_BSplineSurfaceHasher.hpp>
+#include <GeomHash_RectangularTrimmedSurfaceHasher.hpp>
+#include <GeomHash_OffsetSurfaceHasher.hpp>
 
 //=================================================================================================
 

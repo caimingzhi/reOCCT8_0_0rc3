@@ -14,33 +14,33 @@
 // gka 06.01.99 S3767
 // abv 10.04.99 S4136: eliminate using BRepAPI::Precision()
 
-#include <BRepLib.hxx>
-#include <DEIGES_Parameters.hxx>
-#include <DE_ShapeFixParameters.hxx>
-#include <IFSelect_CheckCounter.hxx>
-#include <IFSelect_Functions.hxx>
-#include <IGESControl_Controller.hxx>
-#include <IGESControl_Reader.hxx>
-#include <IGESData_FileProtocol.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESToBRep_Actor.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareFlags.hxx>
-#include <Interface_Static.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Msg.hxx>
-#include <NCollection_DataMap.hxx>
-#include <OSD_Timer.hxx>
-#include <Transfer_ActorOfTransientProcess.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_IteratorOfProcessForTransient.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <XSControl_Controller.hxx>
-#include <XSControl_TransferReader.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <BRepLib.hpp>
+#include <DEIGES_Parameters.hpp>
+#include <DE_ShapeFixParameters.hpp>
+#include <IFSelect_CheckCounter.hpp>
+#include <IFSelect_Functions.hpp>
+#include <IGESControl_Controller.hpp>
+#include <IGESControl_Reader.hpp>
+#include <IGESData_FileProtocol.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESToBRep_Actor.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareFlags.hpp>
+#include <Interface_Static.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Msg.hpp>
+#include <NCollection_DataMap.hpp>
+#include <OSD_Timer.hpp>
+#include <Transfer_ActorOfTransientProcess.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <XSControl_Controller.hpp>
+#include <XSControl_TransferReader.hpp>
+#include <XSControl_WorkSession.hpp>
 
 #include <cstdio>
 

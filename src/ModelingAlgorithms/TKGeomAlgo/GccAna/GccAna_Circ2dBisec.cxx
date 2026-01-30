@@ -18,20 +18,20 @@
 //   CREATION of the BISSECTICE between two CIRCLES.                        +
 //=========================================================================
 
-#include <GccAna_Circ2dBisec.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <GccInt_BCirc.hxx>
-#include <GccInt_BElips.hxx>
-#include <GccInt_BHyper.hxx>
-#include <GccInt_Bisec.hxx>
-#include <GccInt_BLine.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccAna_Circ2dBisec.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <GccInt_BCirc.hpp>
+#include <GccInt_BElips.hpp>
+#include <GccInt_BHyper.hpp>
+#include <GccInt_Bisec.hpp>
+#include <GccInt_BLine.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 GccAna_Circ2dBisec::GccAna_Circ2dBisec(const gp_Circ2d& Circ1, const gp_Circ2d& Circ2)

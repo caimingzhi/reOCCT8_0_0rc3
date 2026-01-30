@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccInt_BHyper.hxx>
-#include <gp_Hypr2d.hxx>
-#include <Standard_Type.hxx>
+#include <GccInt_BHyper.hpp>
+#include <gp_Hypr2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GccInt_BHyper, GccInt_Bisec)
 

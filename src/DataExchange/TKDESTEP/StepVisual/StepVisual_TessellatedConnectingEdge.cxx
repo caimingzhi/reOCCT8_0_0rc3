@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_TessellatedConnectingEdge.hxx>
+#include <StepVisual_TessellatedConnectingEdge.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TessellatedConnectingEdge, StepVisual_TessellatedEdge)
 

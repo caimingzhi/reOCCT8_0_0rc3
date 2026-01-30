@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveSet.hxx>
+#include <Select3D_SensitiveSet.hpp>
 
-#include <BVH_LinearBuilder.hxx>
+#include <BVH_LinearBuilder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSet, Select3D_SensitiveEntity)
 

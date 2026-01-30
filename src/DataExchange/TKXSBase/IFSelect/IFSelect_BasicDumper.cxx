@@ -11,34 +11,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_BasicDumper.hxx>
-#include <IFSelect_DispGlobal.hxx>
-#include <IFSelect_DispPerCount.hxx>
-#include <IFSelect_DispPerOne.hxx>
-#include <IFSelect_IntParam.hxx>
-#include <IFSelect_Modifier.hxx>
-#include <IFSelect_SelectDiff.hxx>
-#include <IFSelect_SelectEntityNumber.hxx>
-#include <IFSelect_SelectErrorEntities.hxx>
-#include <IFSelect_SelectIncorrectEntities.hxx>
-#include <IFSelect_SelectIntersection.hxx>
-#include <IFSelect_SelectModelEntities.hxx>
-#include <IFSelect_SelectModelRoots.hxx>
-#include <IFSelect_SelectPointed.hxx>
-#include <IFSelect_SelectRange.hxx>
-#include <IFSelect_SelectRootComps.hxx>
-#include <IFSelect_SelectRoots.hxx>
-#include <IFSelect_SelectShared.hxx>
-#include <IFSelect_SelectSharing.hxx>
-#include <IFSelect_SelectUnion.hxx>
-#include <IFSelect_SelectUnknownEntities.hxx>
-#include <IFSelect_SessionFile.hxx>
-#include <IFSelect_TransformStandard.hxx>
-#include <IFSelect_WorkSession.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_BasicDumper.hpp>
+#include <IFSelect_DispGlobal.hpp>
+#include <IFSelect_DispPerCount.hpp>
+#include <IFSelect_DispPerOne.hpp>
+#include <IFSelect_IntParam.hpp>
+#include <IFSelect_Modifier.hpp>
+#include <IFSelect_SelectDiff.hpp>
+#include <IFSelect_SelectEntityNumber.hpp>
+#include <IFSelect_SelectErrorEntities.hpp>
+#include <IFSelect_SelectIncorrectEntities.hpp>
+#include <IFSelect_SelectIntersection.hpp>
+#include <IFSelect_SelectModelEntities.hpp>
+#include <IFSelect_SelectModelRoots.hpp>
+#include <IFSelect_SelectPointed.hpp>
+#include <IFSelect_SelectRange.hpp>
+#include <IFSelect_SelectRootComps.hpp>
+#include <IFSelect_SelectRoots.hpp>
+#include <IFSelect_SelectShared.hpp>
+#include <IFSelect_SelectSharing.hpp>
+#include <IFSelect_SelectUnion.hpp>
+#include <IFSelect_SelectUnknownEntities.hpp>
+#include <IFSelect_SessionFile.hpp>
+#include <IFSelect_TransformStandard.hpp>
+#include <IFSelect_WorkSession.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_BasicDumper, IFSelect_SessionDumper)
 

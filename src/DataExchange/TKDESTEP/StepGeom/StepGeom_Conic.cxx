@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Conic.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Conic.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_Conic, StepGeom_Curve)
 

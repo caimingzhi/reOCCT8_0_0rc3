@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Color.hxx>
+#include <Draw_Color.hpp>
 
 Draw_Color::Draw_Color()
     : myKind(Draw_blanc)

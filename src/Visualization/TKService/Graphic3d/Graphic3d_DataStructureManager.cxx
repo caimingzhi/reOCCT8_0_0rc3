@@ -22,9 +22,9 @@
 //-Declarations
 // for the class
 
-#include <Graphic3d_DataStructureManager.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
+#include <Graphic3d_DataStructureManager.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_DataStructureManager, Standard_Transient)
 

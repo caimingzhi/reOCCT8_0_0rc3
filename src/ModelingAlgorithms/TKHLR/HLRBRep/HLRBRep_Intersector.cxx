@@ -18,24 +18,24 @@
   #define No_Exception
 #endif
 
-#include <Bnd_Box.hxx>
-#include <ElCLib.hxx>
-#include <gp_Lin.hxx>
-#include <HLRBRep_CurveTool.hxx>
-#include <HLRBRep_EdgeData.hxx>
-#include <HLRBRep_Intersector.hxx>
-#include <HLRBRep_Surface.hxx>
-#include <HLRBRep_SurfaceTool.hxx>
-#include <HLRBRep_ThePolygonOfInterCSurf.hxx>
-#include <HLRBRep_ThePolyhedronOfInterCSurf.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_IntersectionSegment.hxx>
-#include <IntImpParGen.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <IntRes2d_Position.hxx>
-#include <IntRes2d_Transition.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
+#include <Bnd_Box.hpp>
+#include <ElCLib.hpp>
+#include <gp_Lin.hpp>
+#include <HLRBRep_CurveTool.hpp>
+#include <HLRBRep_EdgeData.hpp>
+#include <HLRBRep_Intersector.hpp>
+#include <HLRBRep_Surface.hpp>
+#include <HLRBRep_SurfaceTool.hpp>
+#include <HLRBRep_ThePolygonOfInterCSurf.hpp>
+#include <HLRBRep_ThePolyhedronOfInterCSurf.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_IntersectionSegment.hpp>
+#include <IntImpParGen.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <IntRes2d_Position.hpp>
+#include <IntRes2d_Transition.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
 
 // #define PERF
 

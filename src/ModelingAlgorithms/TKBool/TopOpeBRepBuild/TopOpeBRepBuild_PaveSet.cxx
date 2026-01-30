@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
+#include <BRep_Tool.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepTool_GettraceVC();
-  #include <TopOpeBRepBuild_Builder.hxx>
+  #include <TopOpeBRepBuild_Builder.hpp>
 #endif
 
 //=================================================================================================
@@ -56,8 +56,8 @@ void TopOpeBRepBuild_PaveSet::Append(const occ::handle<TopOpeBRepBuild_Pave>& PV
   myPrepareDone = false;
 }
 
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

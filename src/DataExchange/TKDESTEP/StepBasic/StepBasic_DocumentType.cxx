@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_DocumentType.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_DocumentType.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DocumentType, Standard_Transient)
 

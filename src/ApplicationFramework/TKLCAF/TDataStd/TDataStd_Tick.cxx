@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_Tick.hxx>
+#include <TDataStd_Tick.hpp>
 
-#include <TDF_Label.hxx>
-#include <Standard_GUID.hxx>
+#include <TDF_Label.hpp>
+#include <Standard_GUID.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_Tick, TDataStd_GenericEmpty)
 

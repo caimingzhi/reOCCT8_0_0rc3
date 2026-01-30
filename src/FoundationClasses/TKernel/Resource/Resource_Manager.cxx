@@ -12,23 +12,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Resource_Manager.hxx>
+#include <Resource_Manager.hpp>
 
-#include <OSD_Directory.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
-#include <Resource_LexicalCompare.hxx>
-#include <Resource_NoSuchResource.hxx>
-#include <Resource_Unicode.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_TypeMismatch.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Array1.hxx>
+#include <OSD_Directory.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
+#include <Resource_LexicalCompare.hpp>
+#include <Resource_NoSuchResource.hpp>
+#include <Resource_Unicode.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_TypeMismatch.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <algorithm>
 #include <cerrno>

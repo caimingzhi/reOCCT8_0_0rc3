@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_NodeOfGeneralLib.hxx>
+#include <Interface_NodeOfGeneralLib.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <Interface_GlobalNodeOfGeneralLib.hxx>
-#include <Standard_Transient.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_GeneralLib.hxx>
+#include <Interface_GlobalNodeOfGeneralLib.hpp>
+#include <Standard_Transient.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_GeneralLib.hpp>
 
 Interface_NodeOfGeneralLib::Interface_NodeOfGeneralLib() = default;
 

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Display.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <HLRTest_OutLiner.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw_Display.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <HLRTest_OutLiner.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_OutLiner, Draw_Drawable3D)
 

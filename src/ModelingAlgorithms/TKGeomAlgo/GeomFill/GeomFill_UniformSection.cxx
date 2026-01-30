@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Geometry.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomFill_UniformSection.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Geometry.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomFill_UniformSection.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_UniformSection, GeomFill_SectionLaw)

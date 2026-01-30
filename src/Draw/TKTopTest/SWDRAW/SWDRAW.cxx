@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SWDRAW.hxx>
+#include <SWDRAW.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <DBRep.hxx>
-#include <gp_Trsf.hxx>
-#include <ShapeProcess_OperLibrary.hxx>
-#include <SWDRAW_ShapeAnalysis.hxx>
-#include <SWDRAW_ShapeCustom.hxx>
-#include <SWDRAW_ShapeExtend.hxx>
-#include <SWDRAW_ShapeFix.hxx>
-#include <SWDRAW_ShapeProcess.hxx>
-#include <SWDRAW_ShapeProcessAPI.hxx>
-#include <SWDRAW_ShapeTool.hxx>
-#include <SWDRAW_ShapeUpgrade.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <DBRep.hpp>
+#include <gp_Trsf.hpp>
+#include <ShapeProcess_OperLibrary.hpp>
+#include <SWDRAW_ShapeAnalysis.hpp>
+#include <SWDRAW_ShapeCustom.hpp>
+#include <SWDRAW_ShapeExtend.hpp>
+#include <SWDRAW_ShapeFix.hpp>
+#include <SWDRAW_ShapeProcess.hpp>
+#include <SWDRAW_ShapeProcessAPI.hpp>
+#include <SWDRAW_ShapeTool.hpp>
+#include <SWDRAW_ShapeUpgrade.hpp>
 
 // #72 rln 09.03.99 Packaging of SWDRAW
 //   for NSPApply -- CKY 12 JUL 2001

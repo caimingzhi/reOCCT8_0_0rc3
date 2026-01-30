@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtPElC.hxx>
-#include <GC_MakeConicalSurface.hxx>
-#include <GC_MakeTrimmedCone.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_ExtPElC.hpp>
+#include <GC_MakeConicalSurface.hpp>
+#include <GC_MakeTrimmedCone.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=========================================================================
 //   Creation of a cone by four points.                                   +

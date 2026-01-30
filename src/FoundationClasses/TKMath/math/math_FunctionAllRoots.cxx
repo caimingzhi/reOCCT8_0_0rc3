@@ -19,11 +19,11 @@
 
 // #endif
 
-#include <math_FunctionAllRoots.hxx>
-#include <math_FunctionRoots.hxx>
-#include <math_FunctionSample.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <Standard_NumericError.hxx>
+#include <math_FunctionAllRoots.hpp>
+#include <math_FunctionRoots.hpp>
+#include <math_FunctionSample.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <Standard_NumericError.hpp>
 
 math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
                                              const math_FunctionSample&   S,

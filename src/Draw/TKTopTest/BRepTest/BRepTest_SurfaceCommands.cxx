@@ -15,34 +15,34 @@
 // commercial license or contractual agreement.
 
 #include <cstdio>
-#include <BRepTest.hxx>
-#include <GeometryTest.hxx>
+#include <BRepTest.hpp>
+#include <GeometryTest.hpp>
 
-#include <DrawTrSurf.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <DrawTrSurf.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <BRepLib.hxx>
-#include <BRepTools_Quilt.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeShell.hxx>
-#include <BRepBuilderAPI_Sewing.hxx>
-#include <BRepOffsetAPI_FindContigousEdges.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Precision.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <BRepBuilderAPI_FastSewing.hxx>
+#include <BRepLib.hpp>
+#include <BRepTools_Quilt.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeShell.hpp>
+#include <BRepBuilderAPI_Sewing.hpp>
+#include <BRepOffsetAPI_FindContigousEdges.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Precision.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <BRepBuilderAPI_FastSewing.hpp>
 
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <Message.hxx>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <Message.hpp>
 
 //=================================================================================================
 

@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DefaultRangeSplitter.hxx>
+#include <BRepMesh_DefaultRangeSplitter.hpp>
 
-#include <GeomAdaptor_Curve.hxx>
-#include <BRep_Tool.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <BRep_Tool.hpp>
 
 //=================================================================================================
 

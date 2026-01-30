@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepExtrema_DistShapeShape.hxx>
-#include <BRepLProp_SLProps.hxx>
-#include <BRepPrimAPI_MakeHalfSpace.hxx>
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepExtrema_DistShapeShape.hpp>
+#include <BRepLProp_SLProps.hpp>
+#include <BRepPrimAPI_MakeHalfSpace.hpp>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

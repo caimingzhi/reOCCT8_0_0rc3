@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESSelect_ModelModifier.hxx>
+#include <IGESSelect_ModelModifier.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IFSelect_ContextModif.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_Check.hxx>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IFSelect_ContextModif.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_Check.hpp>
 
 IGESSelect_ModelModifier::IGESSelect_ModelModifier(const bool grf)
     : IFSelect_Modifier(grf)

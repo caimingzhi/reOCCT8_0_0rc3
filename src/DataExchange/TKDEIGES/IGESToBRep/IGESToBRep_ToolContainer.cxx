@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESToBRep_IGESBoundary.hxx>
-#include <IGESToBRep_ToolContainer.hxx>
-#include <Standard_Type.hxx>
+#include <IGESToBRep_IGESBoundary.hpp>
+#include <IGESToBRep_ToolContainer.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESToBRep_ToolContainer, Standard_Transient)
 

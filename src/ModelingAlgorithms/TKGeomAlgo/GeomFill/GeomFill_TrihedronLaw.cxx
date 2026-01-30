@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_TrihedronLaw, Standard_Transient)
 

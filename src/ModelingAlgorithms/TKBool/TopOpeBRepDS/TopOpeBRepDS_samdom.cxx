@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_samdom.hxx>
+#include <TopOpeBRepDS_samdom.hpp>
 
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRepDS_define.hxx>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRepDS_define.hpp>
 
 static NCollection_IndexedDataMap<TopoDS_Shape,
                                   NCollection_List<TopoDS_Shape>,

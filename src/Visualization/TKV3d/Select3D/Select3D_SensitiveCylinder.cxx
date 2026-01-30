@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitiveCylinder.hxx>
+#include <Select3D_SensitiveCylinder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCylinder, Select3D_SensitiveEntity)
 

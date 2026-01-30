@@ -13,10 +13,10 @@
 
 #include <gtest/gtest.h>
 
-#include <MathOpt_GlobOpt.hxx>
-#include <math_GlobOptMin.hxx>
-#include <math_MultipleVarFunction.hxx>
-#include <math_Vector.hxx>
+#include <MathOpt_GlobOpt.hpp>
+#include <math_GlobOptMin.hpp>
+#include <math_MultipleVarFunction.hpp>
+#include <math_Vector.hpp>
 
 #include <cmath>
 

@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_Label.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TFunction_DriverTable.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_GraphNode.hxx>
-#include <TFunction_IFunction.hxx>
-#include <TFunction_Scope.hxx>
+#include <TDF_Label.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TFunction_DriverTable.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_GraphNode.hpp>
+#include <TFunction_IFunction.hpp>
+#include <TFunction_Scope.hpp>
 
 //=======================================================================
 // function : NewFunction

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_EdgeLoop.hxx>
-#include <StepShape_OrientedEdge.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepShape_EdgeLoop.hpp>
+#include <StepShape_OrientedEdge.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_EdgeLoop, StepShape_Loop)
 

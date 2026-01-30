@@ -15,40 +15,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <Bnd_Tools.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPDS_CoupleOfPaveBlocks.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <BOPDS_Pave.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_AlgoTools2D.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_CommonPrt.hxx>
-#include <IntTools_Context.hxx>
-#include <IntTools_EdgeFace.hxx>
-#include <IntTools_Range.hxx>
-#include <NCollection_Sequence.hxx>
-#include <IntTools_Tools.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Bnd_Box.hpp>
+#include <Bnd_Tools.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPDS_CoupleOfPaveBlocks.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <BOPDS_Pave.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_AlgoTools2D.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_CommonPrt.hpp>
+#include <IntTools_Context.hpp>
+#include <IntTools_EdgeFace.hpp>
+#include <IntTools_Range.hpp>
+#include <NCollection_Sequence.hpp>
+#include <IntTools_Tools.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

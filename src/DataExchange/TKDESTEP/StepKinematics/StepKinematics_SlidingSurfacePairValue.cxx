@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_SlidingSurfacePairValue.hxx>
+#include <StepKinematics_SlidingSurfacePairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_SlidingSurfacePairValue, StepKinematics_PairValue)
 

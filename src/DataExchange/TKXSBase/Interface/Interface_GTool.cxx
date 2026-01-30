@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_GeneralLib.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_GTool.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_Protocol.hxx>
-#include <Interface_SignType.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <Interface_GeneralLib.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_GTool.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_Protocol.hpp>
+#include <Interface_SignType.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_GTool, Standard_Transient)
 

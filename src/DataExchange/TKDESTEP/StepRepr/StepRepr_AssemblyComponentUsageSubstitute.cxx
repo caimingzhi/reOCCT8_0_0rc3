@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepRepr_AssemblyComponentUsage.hxx>
-#include <StepRepr_AssemblyComponentUsageSubstitute.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_AssemblyComponentUsage.hpp>
+#include <StepRepr_AssemblyComponentUsageSubstitute.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_AssemblyComponentUsageSubstitute, Standard_Transient)
 

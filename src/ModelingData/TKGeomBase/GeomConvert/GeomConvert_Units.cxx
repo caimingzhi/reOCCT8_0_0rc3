@@ -11,27 +11,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomConvert_Units.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <gp.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
+#include <GeomConvert_Units.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <gp.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
 
 //=================================================================================================
 

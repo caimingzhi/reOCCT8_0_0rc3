@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Msg.hxx>
-#include <ShapeExtend_BasicMsgRegistrator.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Message_Msg.hpp>
+#include <ShapeExtend_BasicMsgRegistrator.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeExtend_BasicMsgRegistrator, Standard_Transient)
 

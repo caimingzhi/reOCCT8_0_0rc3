@@ -3,34 +3,34 @@ set(OCCT_XmlMXCAFDoc_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_XmlMXCAFDoc_FILES
   XmlMXCAFDoc.cxx
-  XmlMXCAFDoc.hxx
+  XmlMXCAFDoc.hpp
   XmlMXCAFDoc_AssemblyItemRefDriver.cxx
-  XmlMXCAFDoc_AssemblyItemRefDriver.hxx
+  XmlMXCAFDoc_AssemblyItemRefDriver.hpp
   XmlMXCAFDoc_CentroidDriver.cxx
-  XmlMXCAFDoc_CentroidDriver.hxx
+  XmlMXCAFDoc_CentroidDriver.hpp
   XmlMXCAFDoc_ColorDriver.cxx
-  XmlMXCAFDoc_ColorDriver.hxx
+  XmlMXCAFDoc_ColorDriver.hpp
   XmlMXCAFDoc_DatumDriver.cxx
-  XmlMXCAFDoc_DatumDriver.hxx
+  XmlMXCAFDoc_DatumDriver.hpp
   XmlMXCAFDoc_DimTolDriver.cxx
-  XmlMXCAFDoc_DimTolDriver.hxx
+  XmlMXCAFDoc_DimTolDriver.hpp
   XmlMXCAFDoc_GraphNodeDriver.cxx
-  XmlMXCAFDoc_GraphNodeDriver.hxx
+  XmlMXCAFDoc_GraphNodeDriver.hpp
   XmlMXCAFDoc_LengthUnitDriver.cxx
-  XmlMXCAFDoc_LengthUnitDriver.hxx
+  XmlMXCAFDoc_LengthUnitDriver.hpp
   XmlMXCAFDoc_LocationDriver.cxx
-  XmlMXCAFDoc_LocationDriver.hxx
-  XmlMXCAFDoc_LocationDriver.lxx
+  XmlMXCAFDoc_LocationDriver.hpp
+  XmlMXCAFDoc_LocationDriver_1.hpp
   XmlMXCAFDoc_MaterialDriver.cxx
-  XmlMXCAFDoc_MaterialDriver.hxx
+  XmlMXCAFDoc_MaterialDriver.hpp
   XmlMXCAFDoc_NoteDriver.cxx
-  XmlMXCAFDoc_NoteDriver.hxx
+  XmlMXCAFDoc_NoteDriver.hpp
   XmlMXCAFDoc_NoteCommentDriver.cxx
-  XmlMXCAFDoc_NoteCommentDriver.hxx
+  XmlMXCAFDoc_NoteCommentDriver.hpp
   XmlMXCAFDoc_NoteBinDataDriver.cxx
-  XmlMXCAFDoc_NoteBinDataDriver.hxx
+  XmlMXCAFDoc_NoteBinDataDriver.hpp
   XmlMXCAFDoc_VisMaterialDriver.cxx
-  XmlMXCAFDoc_VisMaterialDriver.hxx
+  XmlMXCAFDoc_VisMaterialDriver.hpp
   XmlMXCAFDoc_VisMaterialToolDriver.cxx
-  XmlMXCAFDoc_VisMaterialToolDriver.hxx
+  XmlMXCAFDoc_VisMaterialToolDriver.hpp
 )

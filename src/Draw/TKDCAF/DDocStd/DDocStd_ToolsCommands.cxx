@@ -13,22 +13,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDocStd.hxx>
+#include <DDocStd.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TDocStd_Document.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Tool.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_Delta.hxx>
-#include <TDF_DeltaOnAddition.hxx>
-#include <TDF_DeltaOnForget.hxx>
-#include <TDF_DeltaOnResume.hxx>
-#include <TDF_DeltaOnRemoval.hxx>
-#include <TDF_DeltaOnModification.hxx>
-#include <NCollection_List.hxx>
-#include <Standard_DomainError.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TDocStd_Document.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Tool.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_Delta.hpp>
+#include <TDF_DeltaOnAddition.hpp>
+#include <TDF_DeltaOnForget.hpp>
+#include <TDF_DeltaOnResume.hpp>
+#include <TDF_DeltaOnRemoval.hpp>
+#include <TDF_DeltaOnModification.hpp>
+#include <NCollection_List.hpp>
+#include <Standard_DomainError.hpp>
 
 //=======================================================================
 // function : UpdateXLinks

@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_FrustumBuilder.hxx>
+#include <SelectMgr_FrustumBuilder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_FrustumBuilder, Standard_Transient)
 

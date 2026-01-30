@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Plate_PinpointConstraint.hxx>
+#include <Plate_PinpointConstraint.hpp>
 
 Plate_PinpointConstraint::Plate_PinpointConstraint()
 {

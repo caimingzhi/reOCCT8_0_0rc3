@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterClassifier.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterClassifier.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
-#include <TopoDS.hxx>
-// #include <BRepAdaptor_Curve2d.hxx>
-#include <gp_Vec.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp.hxx>
+#include <TopoDS.hpp>
+// #include <BRepAdaptor_Curve2d.hpp>
+#include <gp_Vec.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp.hpp>
 
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRep.hxx>
-#include <TopOpeBRep_define.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_mkTondgE.hxx>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRep.hpp>
+#include <TopOpeBRep_define.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_mkTondgE.hpp>
 
 #define M_ON(st) (st == TopAbs_ON)
 #define M_REVERSED(st) (st == TopAbs_REVERSED)

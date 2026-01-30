@@ -19,12 +19,12 @@
 
 // #endif
 
-#include <math_Matrix.hxx>
-#include <math_Recipes.hxx>
-#include <math_SVD.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Matrix.hpp>
+#include <math_Recipes.hpp>
+#include <math_SVD.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_SVD::math_SVD(const math_Matrix& A)
     : U(1, std::max(A.RowNumber(), A.ColNumber()), 1, A.ColNumber()),

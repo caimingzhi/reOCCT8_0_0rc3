@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepGeom_Axis2Placement.hxx>
-#include <StepGeom_Axis2Placement2d.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepGeom_Axis2Placement.hpp>
+#include <StepGeom_Axis2Placement2d.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
 
 StepGeom_Axis2Placement::StepGeom_Axis2Placement() = default;
 

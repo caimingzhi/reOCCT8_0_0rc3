@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_TShape.hxx>
-#include <TransferBRep_ShapeInfo.hxx>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_TShape.hpp>
+#include <TransferBRep_ShapeInfo.hpp>
 
 occ::handle<Standard_Type> TransferBRep_ShapeInfo::Type(const TopoDS_Shape& /*ent*/)
 {

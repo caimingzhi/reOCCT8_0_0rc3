@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TColStd_HPackedMapOfInteger.hxx>
+#include <TColStd_HPackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TColStd_HPackedMapOfInteger, Standard_Transient)
 

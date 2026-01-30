@@ -16,9 +16,9 @@
 
 // modified by jct (15.04.97) ajout de ModificationCommands
 
-#include <GeomliteTest.hxx>
-#include <Standard_Boolean.hxx>
-#include <Draw_Interpretor.hxx>
+#include <GeomliteTest.hpp>
+#include <Standard_Boolean.hpp>
+#include <Draw_Interpretor.hpp>
 
 void GeomliteTest::AllCommands(Draw_Interpretor& theCommands)
 {

@@ -18,9 +18,9 @@
   #define No_Exception
 #endif
 
-#include <HLRBRep_EdgeIList.hxx>
-#include <HLRBRep_EdgeInterferenceTool.hxx>
-#include <TopCnx_EdgeFaceTransition.hxx>
+#include <HLRBRep_EdgeIList.hpp>
+#include <HLRBRep_EdgeInterferenceTool.hpp>
+#include <TopCnx_EdgeFaceTransition.hpp>
 
 //=======================================================================
 // function : AddInterference

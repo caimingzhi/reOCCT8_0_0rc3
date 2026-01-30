@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_Surface.hxx>
+#include <DrawTrSurf_Surface.hpp>
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <Precision.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <Precision.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Surface, DrawTrSurf_Drawable)
 

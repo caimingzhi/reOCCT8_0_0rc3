@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_Variable.hxx>
+#include <TDataStd_Variable.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDataStd_Expression.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDataStd_Expression.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_Variable, TDF_Attribute)
 

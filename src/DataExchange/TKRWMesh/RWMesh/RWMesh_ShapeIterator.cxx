@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWMesh_ShapeIterator.hxx>
+#include <RWMesh_ShapeIterator.hpp>
 
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs.hxx>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs.hpp>
 
 //=================================================================================================
 

@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMFunction.hxx>
+#include <BinMFunction.hpp>
 
-#include <BinMDF_ADriverTable.hxx>
-#include <BinMFunction_FunctionDriver.hxx>
-#include <BinMFunction_GraphNodeDriver.hxx>
-#include <BinMFunction_ScopeDriver.hxx>
-#include <Message_Messenger.hxx>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinMFunction_FunctionDriver.hpp>
+#include <BinMFunction_GraphNodeDriver.hpp>
+#include <BinMFunction_ScopeDriver.hpp>
+#include <Message_Messenger.hpp>
 
 //=================================================================================================
 

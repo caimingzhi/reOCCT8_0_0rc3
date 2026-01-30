@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccInt_BParab.hxx>
-#include <gp_Parab2d.hxx>
-#include <Standard_Type.hxx>
+#include <GccInt_BParab.hpp>
+#include <gp_Parab2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GccInt_BParab, GccInt_Bisec)
 

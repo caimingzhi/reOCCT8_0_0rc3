@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_AspectsProgram.hxx>
+#include <OpenGl_AspectsProgram.hpp>
 
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShaderProgram.hxx>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShaderProgram.hpp>
 
 //=================================================================================================
 

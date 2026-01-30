@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ProgramError.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <Standard_Integer.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
+#include <Standard_ProgramError.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <Standard_Integer.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
 
 // extras define
 #define MDSdmoiloi                                                                                 \

@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_DelabellaMeshAlgoFactory.hxx>
-#include <BRepMesh_SphereRangeSplitter.hxx>
-#include <BRepMesh_CylinderRangeSplitter.hxx>
-#include <BRepMesh_ConeRangeSplitter.hxx>
-#include <BRepMesh_TorusRangeSplitter.hxx>
-#include <BRepMesh_DelaunayBaseMeshAlgo.hxx>
-#include <BRepMesh_DelabellaBaseMeshAlgo.hxx>
-#include <BRepMesh_CustomDelaunayBaseMeshAlgo.hxx>
-#include <BRepMesh_DelaunayDeflectionControlMeshAlgo.hxx>
-#include <BRepMesh_BoundaryParamsRangeSplitter.hxx>
+#include <BRepMesh_DelabellaMeshAlgoFactory.hpp>
+#include <BRepMesh_SphereRangeSplitter.hpp>
+#include <BRepMesh_CylinderRangeSplitter.hpp>
+#include <BRepMesh_ConeRangeSplitter.hpp>
+#include <BRepMesh_TorusRangeSplitter.hpp>
+#include <BRepMesh_DelaunayBaseMeshAlgo.hpp>
+#include <BRepMesh_DelabellaBaseMeshAlgo.hpp>
+#include <BRepMesh_CustomDelaunayBaseMeshAlgo.hpp>
+#include <BRepMesh_DelaunayDeflectionControlMeshAlgo.hpp>
+#include <BRepMesh_BoundaryParamsRangeSplitter.hpp>
 
 namespace
 {

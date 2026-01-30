@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc_ColorDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <XCAFDoc_Color.hxx>
+#include <BinMXCAFDoc_ColorDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <XCAFDoc_Color.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_ColorDriver, BinMDF_ADriver)
 

@@ -3,39 +3,39 @@ set(OCCT_Poly_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Poly_FILES
   Poly.cxx
-  Poly.hxx
+  Poly.hpp
 
   Poly_ArrayOfNodes.cxx
-  Poly_ArrayOfNodes.hxx
+  Poly_ArrayOfNodes.hpp
   Poly_ArrayOfUVNodes.cxx
-  Poly_ArrayOfUVNodes.hxx
+  Poly_ArrayOfUVNodes.hpp
   Poly_CoherentLink.cxx
-  Poly_CoherentLink.hxx
+  Poly_CoherentLink.hpp
   Poly_CoherentNode.cxx
-  Poly_CoherentNode.hxx
+  Poly_CoherentNode.hpp
   Poly_CoherentTriangle.cxx
-  Poly_CoherentTriangle.hxx
+  Poly_CoherentTriangle.hpp
   Poly_CoherentTriangulation.cxx
-  Poly_CoherentTriangulation.hxx
+  Poly_CoherentTriangulation.hpp
   Poly_CoherentTriPtr.cxx
-  Poly_CoherentTriPtr.hxx
+  Poly_CoherentTriPtr.hpp
   Poly_Connect.cxx
-  Poly_Connect.hxx
+  Poly_Connect.hpp
 
   Poly_MakeLoops.cxx
-  Poly_MakeLoops.hxx
-  Poly_MeshPurpose.hxx
+  Poly_MakeLoops.hpp
+  Poly_MeshPurpose.hpp
   Poly_MergeNodesTool.cxx
-  Poly_MergeNodesTool.hxx
+  Poly_MergeNodesTool.hpp
   Poly_Polygon2D.cxx
-  Poly_Polygon2D.hxx
+  Poly_Polygon2D.hpp
   Poly_Polygon3D.cxx
-  Poly_Polygon3D.hxx
+  Poly_Polygon3D.hpp
   Poly_PolygonOnTriangulation.cxx
-  Poly_PolygonOnTriangulation.hxx
-  Poly_Triangle.hxx
-  Poly_TriangulationParameters.hxx
+  Poly_PolygonOnTriangulation.hpp
+  Poly_Triangle.hpp
+  Poly_TriangulationParameters.hpp
   Poly_TriangulationParameters.cxx
   Poly_Triangulation.cxx
-  Poly_Triangulation.hxx
+  Poly_Triangulation.hpp
 )

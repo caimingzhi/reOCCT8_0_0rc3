@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
+#include <BRepBuilderAPI.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
 
 inline gp_Pnt pmin(const gp_Pnt& p, const double dx, const double dy, const double dz)
 {

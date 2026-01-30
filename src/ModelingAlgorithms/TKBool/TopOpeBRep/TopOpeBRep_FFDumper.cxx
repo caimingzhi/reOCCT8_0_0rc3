@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <IntPatch_GLine.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRep.hxx>
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <IntPatch_GLine.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRep.hpp>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRep_FFDumper, Standard_Transient)
 

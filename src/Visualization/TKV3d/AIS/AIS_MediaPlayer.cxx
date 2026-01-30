@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_MediaPlayer.hxx>
+#include <AIS_MediaPlayer.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Media_PlayerContext.hxx>
-#include <Message_Messenger.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <V3d_Viewer.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Media_PlayerContext.hpp>
+#include <Message_Messenger.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_MediaPlayer, AIS_InteractiveObject)
 

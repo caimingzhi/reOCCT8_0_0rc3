@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XmlObjMgt_RRelocationTable.hxx>
+#include <XmlObjMgt_RRelocationTable.hpp>
 
 //=======================================================================
 // function : GetHeaderData

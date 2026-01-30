@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ExprIntrp_Generator.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <ExprIntrp_Generator.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ExprIntrp_Generator, Standard_Transient)
 
-#include <ExprIntrp_yaccanal.hxx>
+#include <ExprIntrp_yaccanal.hpp>
 ExprIntrp_Analysis ExprIntrp_Recept;
 
 ExprIntrp_Generator::ExprIntrp_Generator() = default;

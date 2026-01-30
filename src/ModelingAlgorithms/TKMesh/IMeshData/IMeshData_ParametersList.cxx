@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshData_ParametersList.hxx>
+#include <IMeshData_ParametersList.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshData_ParametersList, Standard_Transient)

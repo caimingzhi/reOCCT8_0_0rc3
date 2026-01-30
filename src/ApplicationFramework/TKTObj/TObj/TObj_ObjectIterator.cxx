@@ -15,8 +15,8 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_ObjectIterator.hxx>
-#include <TObj_Object.hxx>
+#include <TObj_ObjectIterator.hpp>
+#include <TObj_Object.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_ObjectIterator, Standard_Transient)
 

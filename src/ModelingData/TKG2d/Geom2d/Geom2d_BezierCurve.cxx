@@ -26,20 +26,20 @@
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_RangeError.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_RangeError.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_BezierCurve, Geom2d_BoundedCurve)
 

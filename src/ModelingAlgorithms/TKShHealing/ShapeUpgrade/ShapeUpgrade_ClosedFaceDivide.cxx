@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box2d.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <ShapeAnalysis.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <ShapeBuild_ReShape.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeExtend_CompositeSurface.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_ComposeShell.hxx>
-#include <ShapeUpgrade_ClosedFaceDivide.hxx>
-#include <ShapeUpgrade_SplitSurface.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Wire.hxx>
+#include <Bnd_Box2d.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <ShapeAnalysis.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <ShapeBuild_ReShape.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeExtend_CompositeSurface.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_ComposeShell.hpp>
+#include <ShapeUpgrade_ClosedFaceDivide.hpp>
+#include <ShapeUpgrade_SplitSurface.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Wire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ClosedFaceDivide, ShapeUpgrade_FaceDivide)
 

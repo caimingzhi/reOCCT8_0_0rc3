@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_Report.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_Report.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 

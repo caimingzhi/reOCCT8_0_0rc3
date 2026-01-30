@@ -10,11 +10,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepGProp_MeshCinert.hxx>
-#include <gp_Pnt.hxx>
-#include <math.hxx>
-#include <TopoDS_Edge.hxx>
-#include <BRep_Tool.hxx>
+#include <BRepGProp_MeshCinert.hpp>
+#include <gp_Pnt.hpp>
+#include <math.hpp>
+#include <TopoDS_Edge.hpp>
+#include <BRep_Tool.hpp>
 
 //=================================================================================================
 

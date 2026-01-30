@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CameraModelD3MultiClippingUnion.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_CameraModelD3MultiClippingUnion.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CameraModelD3MultiClippingUnion,
                            StepGeom_GeometricRepresentationItem)

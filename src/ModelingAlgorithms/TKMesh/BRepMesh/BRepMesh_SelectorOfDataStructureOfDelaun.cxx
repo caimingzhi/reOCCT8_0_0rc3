@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_SelectorOfDataStructureOfDelaun.hxx>
-#include <BRepMesh_PairOfIndex.hxx>
-#include <BRepMesh_Edge.hxx>
+#include <BRepMesh_SelectorOfDataStructureOfDelaun.hpp>
+#include <BRepMesh_PairOfIndex.hpp>
+#include <BRepMesh_Edge.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_SelectorOfDataStructureOfDelaun, Standard_Transient)
 

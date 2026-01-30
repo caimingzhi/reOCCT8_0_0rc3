@@ -3,37 +3,37 @@ set(OCCT_IntSurf_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IntSurf_FILES
   IntSurf.cxx
-  IntSurf.hxx
-  IntSurf_Allocator.hxx
-  IntSurf_Couple.hxx
-  IntSurf_Couple.lxx
+  IntSurf.hpp
+  IntSurf_Allocator.hpp
+  IntSurf_Couple.hpp
+  IntSurf_Couple_1.hpp
   IntSurf_InteriorPoint.cxx
-  IntSurf_InteriorPoint.hxx
-  IntSurf_InteriorPoint.lxx
-  IntSurf_InteriorPointTool.hxx
-  IntSurf_InteriorPointTool.lxx
+  IntSurf_InteriorPoint.hpp
+  IntSurf_InteriorPoint_1.hpp
+  IntSurf_InteriorPointTool.hpp
+  IntSurf_InteriorPointTool_1.hpp
   IntSurf_LineOn2S.cxx
-  IntSurf_LineOn2S.hxx
-  IntSurf_LineOn2S.lxx
+  IntSurf_LineOn2S.hpp
+  IntSurf_LineOn2S_1.hpp
 
   IntSurf_PathPoint.cxx
-  IntSurf_PathPoint.hxx
-  IntSurf_PathPoint.lxx
-  IntSurf_PathPointTool.hxx
-  IntSurf_PathPointTool.lxx
+  IntSurf_PathPoint.hpp
+  IntSurf_PathPoint_1.hpp
+  IntSurf_PathPointTool.hpp
+  IntSurf_PathPointTool_1.hpp
   IntSurf_PntOn2S.cxx
-  IntSurf_PntOn2S.hxx
-  IntSurf_PntOn2S.lxx
+  IntSurf_PntOn2S.hpp
+  IntSurf_PntOn2S_1.hpp
   IntSurf_Quadric.cxx
-  IntSurf_Quadric.hxx
-  IntSurf_Quadric.lxx
+  IntSurf_Quadric.hpp
+  IntSurf_Quadric_1.hpp
   IntSurf_QuadricTool.cxx
-  IntSurf_QuadricTool.hxx
-  IntSurf_QuadricTool.lxx
+  IntSurf_QuadricTool.hpp
+  IntSurf_QuadricTool_1.hpp
 
-  IntSurf_Situation.hxx
+  IntSurf_Situation.hpp
   IntSurf_Transition.cxx
-  IntSurf_Transition.hxx
-  IntSurf_Transition.lxx
-  IntSurf_TypeTrans.hxx
+  IntSurf_Transition.hpp
+  IntSurf_Transition_1.hpp
+  IntSurf_TypeTrans.hpp
 )

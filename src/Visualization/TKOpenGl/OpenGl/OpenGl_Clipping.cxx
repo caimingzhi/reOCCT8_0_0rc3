@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Clipping.hxx>
+#include <OpenGl_Clipping.hpp>
 
-#include <OpenGl_ClippingIterator.hxx>
+#include <OpenGl_ClippingIterator.hpp>
 
 //=================================================================================================
 

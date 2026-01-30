@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_Builder.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Section.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BOPAlgo_CellsBuilder.hxx>
-#include <BOPAlgo_Splitter.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <Precision.hxx>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_Builder.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Section.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BOPAlgo_CellsBuilder.hpp>
+#include <BOPAlgo_Splitter.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <Precision.hpp>
 
 static occ::handle<NCollection_BaseAllocator>& Allocator1();
 

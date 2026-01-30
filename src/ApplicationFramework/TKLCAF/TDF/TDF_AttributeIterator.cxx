@@ -19,7 +19,7 @@
 // Version	Date		Purpose
 //		0.0	Feb  7 1997	Creation
 
-#include <TDF_AttributeIterator.hxx>
+#include <TDF_AttributeIterator.hpp>
 
 //=================================================================================================
 

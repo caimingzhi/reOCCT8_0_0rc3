@@ -17,14 +17,14 @@
 // LPA, JCV  07/92 passage sur C1.
 // JCV 07/92 Introduction de la method Dump
 
-#include <gp_Ax22d.hxx>
+#include <gp_Ax22d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Dump.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Dump.hpp>
 
 void gp_Ax22d::Mirror(const gp_Pnt2d& P) noexcept
 {

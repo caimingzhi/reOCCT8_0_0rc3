@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDF_MetaDataDriver.hxx>
-#include <CDF_MetaDataDriverFactory.hxx>
-#include <Standard_Type.hxx>
+#include <CDF_MetaDataDriver.hpp>
+#include <CDF_MetaDataDriverFactory.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(CDF_MetaDataDriverFactory, Standard_Transient)

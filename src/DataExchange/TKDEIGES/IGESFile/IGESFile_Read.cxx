@@ -15,17 +15,17 @@
 
 #include <cstdio>
 // declarations of basic C programs:
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESReaderTool.hxx>
-#include <IGESData_GeneralModule.hxx>
-#include <Interface_Check.hxx>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESReaderTool.hpp>
+#include <IGESData_GeneralModule.hpp>
+#include <Interface_Check.hpp>
 
 //  To handle exceptions:
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
 // basic definition, to include for use
-#include <IGESFile_Read.hxx>
+#include <IGESFile_Read.hpp>
 
 #include "igesread.h"
 
@@ -33,7 +33,7 @@
 
 // MGE 16/06/98
 // To use Msg class
-#include <Message_Msg.hxx>
+#include <Message_Msg.hpp>
 
 // internal breakdown to facilitate error recovery
 static int recupne, recupnp; // for display in case of problem

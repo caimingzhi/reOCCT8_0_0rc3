@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData_FieldListN.hxx>
+#include <StepData_FieldListN.hpp>
 
 StepData_FieldListN::StepData_FieldListN(const int nb)
     : thefields((nb == 0 ? 0 : 1), nb)

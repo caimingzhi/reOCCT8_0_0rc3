@@ -40,71 +40,71 @@
 
 #define TEST 1
 
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_PointRepresentation.hxx>
-#include <NCollection_List.hxx>
-#include <BRep_PointOnCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRepBuilderAPI_BndBoxTreeSelector.hxx>
-#include <BRepBuilderAPI_VertexInspector.hxx>
-#include <BRepBuilderAPI_Sewing.hxx>
-#include <BRepLib.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_Quilt.hxx>
-#include <BRepTools_ReShape.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_UBTreeFiller.hxx>
-#include <Precision.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array2.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
-#include <TopAbs.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_PointRepresentation.hpp>
+#include <NCollection_List.hpp>
+#include <BRep_PointOnCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRepBuilderAPI_BndBoxTreeSelector.hpp>
+#include <BRepBuilderAPI_VertexInspector.hpp>
+#include <BRepBuilderAPI_Sewing.hpp>
+#include <BRepLib.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_Quilt.hpp>
+#include <BRepTools_ReShape.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_UBTreeFiller.hpp>
+#include <Precision.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array2.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
+#include <TopAbs.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 #include <utility>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBuilderAPI_Sewing, Standard_Transient)
 
-// #include <LocalAnalysis_SurfaceContinuity.hxx>
+// #include <LocalAnalysis_SurfaceContinuity.hpp>
 //=================================================================================================
 
 occ::handle<Geom2d_Curve> BRepBuilderAPI_Sewing::SameRange(
@@ -1949,7 +1949,7 @@ void BRepBuilderAPI_Sewing::Add(const TopoDS_Shape& aShape)
 //=================================================================================================
 
 #ifdef OCCT_DEBUG
-  #include <OSD_Timer.hxx>
+  #include <OSD_Timer.hpp>
 #endif
 
 void BRepBuilderAPI_Sewing::Perform(const Message_ProgressRange& theProgress)

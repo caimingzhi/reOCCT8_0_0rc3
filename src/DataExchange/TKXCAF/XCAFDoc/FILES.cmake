@@ -5,79 +5,79 @@ set(OCCT_XCAFDoc_FILES
   FILES
   GUID.txt
   XCAFDoc.cxx
-  XCAFDoc.hxx
+  XCAFDoc.hpp
   XCAFDoc_AssemblyItemId.cxx
-  XCAFDoc_AssemblyItemId.hxx
+  XCAFDoc_AssemblyItemId.hpp
   XCAFDoc_AssemblyItemRef.cxx
-  XCAFDoc_AssemblyItemRef.hxx
-  XCAFDoc_AssemblyIterator.hxx
+  XCAFDoc_AssemblyItemRef.hpp
+  XCAFDoc_AssemblyIterator.hpp
   XCAFDoc_AssemblyIterator.cxx
-  XCAFDoc_AssemblyGraph.hxx
+  XCAFDoc_AssemblyGraph.hpp
   XCAFDoc_AssemblyGraph.cxx
-  XCAFDoc_AssemblyTool.hxx
-  XCAFDoc_PartId.hxx
+  XCAFDoc_AssemblyTool.hpp
+  XCAFDoc_PartId.hpp
   XCAFDoc_Area.cxx
-  XCAFDoc_Area.hxx
+  XCAFDoc_Area.hpp
   XCAFDoc_Centroid.cxx
-  XCAFDoc_Centroid.hxx
+  XCAFDoc_Centroid.hpp
   XCAFDoc_ClippingPlaneTool.cxx
-  XCAFDoc_ClippingPlaneTool.hxx
+  XCAFDoc_ClippingPlaneTool.hpp
   XCAFDoc_Color.cxx
-  XCAFDoc_Color.hxx
+  XCAFDoc_Color.hpp
   XCAFDoc_ColorTool.cxx
-  XCAFDoc_ColorTool.hxx
-  XCAFDoc_ColorType.hxx
+  XCAFDoc_ColorTool.hpp
+  XCAFDoc_ColorType.hpp
 
   XCAFDoc_Datum.cxx
-  XCAFDoc_Datum.hxx
+  XCAFDoc_Datum.hpp
   XCAFDoc_Dimension.cxx
-  XCAFDoc_Dimension.hxx
+  XCAFDoc_Dimension.hpp
   XCAFDoc_GeomTolerance.cxx
-  XCAFDoc_GeomTolerance.hxx
+  XCAFDoc_GeomTolerance.hpp
   XCAFDoc_DimTol.cxx
-  XCAFDoc_DimTol.hxx
+  XCAFDoc_DimTol.hpp
   XCAFDoc_DimTolTool.cxx
-  XCAFDoc_DimTolTool.hxx
+  XCAFDoc_DimTolTool.hpp
   XCAFDoc_DocumentTool.cxx
-  XCAFDoc_DocumentTool.hxx
+  XCAFDoc_DocumentTool.hpp
   XCAFDoc_Editor.cxx
-  XCAFDoc_Editor.hxx
+  XCAFDoc_Editor.hpp
   XCAFDoc_GraphNode.cxx
-  XCAFDoc_GraphNode.hxx
+  XCAFDoc_GraphNode.hpp
   XCAFDoc_LayerTool.cxx
-  XCAFDoc_LayerTool.hxx
+  XCAFDoc_LayerTool.hpp
   XCAFDoc_LengthUnit.cxx
-  XCAFDoc_LengthUnit.hxx
+  XCAFDoc_LengthUnit.hpp
   XCAFDoc_Location.cxx
-  XCAFDoc_Location.hxx
+  XCAFDoc_Location.hpp
   XCAFDoc_Material.cxx
-  XCAFDoc_Material.hxx
+  XCAFDoc_Material.hpp
   XCAFDoc_MaterialTool.cxx
-  XCAFDoc_MaterialTool.hxx
+  XCAFDoc_MaterialTool.hpp
   XCAFDoc_Note.cxx
-  XCAFDoc_Note.hxx
+  XCAFDoc_Note.hpp
   XCAFDoc_NoteBalloon.cxx
-  XCAFDoc_NoteBalloon.hxx
+  XCAFDoc_NoteBalloon.hpp
   XCAFDoc_NoteComment.cxx
-  XCAFDoc_NoteComment.hxx
+  XCAFDoc_NoteComment.hpp
   XCAFDoc_NoteBinData.cxx
-  XCAFDoc_NoteBinData.hxx
+  XCAFDoc_NoteBinData.hpp
   XCAFDoc_NotesTool.cxx
-  XCAFDoc_NotesTool.hxx
+  XCAFDoc_NotesTool.hpp
   XCAFDoc_ShapeMapTool.cxx
-  XCAFDoc_ShapeMapTool.hxx
+  XCAFDoc_ShapeMapTool.hpp
   XCAFDoc_ShapeTool.cxx
-  XCAFDoc_ShapeTool.hxx
+  XCAFDoc_ShapeTool.hpp
   XCAFDoc_View.cxx
-  XCAFDoc_View.hxx
+  XCAFDoc_View.hpp
   XCAFDoc_ViewTool.cxx
-  XCAFDoc_ViewTool.hxx
+  XCAFDoc_ViewTool.hpp
   XCAFDoc_VisMaterial.cxx
-  XCAFDoc_VisMaterial.hxx
-  XCAFDoc_VisMaterialCommon.hxx
-  XCAFDoc_VisMaterialPBR.hxx
+  XCAFDoc_VisMaterial.hpp
+  XCAFDoc_VisMaterialCommon.hpp
+  XCAFDoc_VisMaterialPBR.hpp
   XCAFDoc_VisMaterialTool.cxx
-  XCAFDoc_VisMaterialTool.hxx
+  XCAFDoc_VisMaterialTool.hpp
   XCAFDoc_Volume.cxx
-  XCAFDoc_Volume.hxx
+  XCAFDoc_Volume.hpp
 )

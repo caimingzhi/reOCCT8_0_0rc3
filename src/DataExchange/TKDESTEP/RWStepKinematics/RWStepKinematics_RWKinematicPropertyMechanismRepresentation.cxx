@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWKinematicPropertyMechanismRepresentation.pxx"
+#include "RWStepKinematics_RWKinematicPropertyMechanismRepresentation.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_KinematicPropertyMechanismRepresentation.hxx>
-#include <StepRepr_RepresentedDefinition.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepKinematics_KinematicLinkRepresentation.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_KinematicPropertyMechanismRepresentation.hpp>
+#include <StepRepr_RepresentedDefinition.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepKinematics_KinematicLinkRepresentation.hpp>
 
 //=================================================================================================
 

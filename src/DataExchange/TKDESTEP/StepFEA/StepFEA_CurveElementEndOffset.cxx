@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_CurveElementEndOffset.hxx>
+#include <StepFEA_CurveElementEndOffset.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_CurveElementEndOffset, Standard_Transient)
 

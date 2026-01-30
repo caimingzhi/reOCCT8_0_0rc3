@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <XmlMDataStd_AsciiStringDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
-#include <XmlObjMgt_RRelocationTable.hxx>
-#include <XmlObjMgt_SRelocationTable.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <XmlMDataStd_AsciiStringDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
+#include <XmlObjMgt_RRelocationTable.hpp>
+#include <XmlObjMgt_SRelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_AsciiStringDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "asciiguid")

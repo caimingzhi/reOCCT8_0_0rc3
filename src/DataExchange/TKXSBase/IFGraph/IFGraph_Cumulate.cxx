@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_AllShared.hxx>
-#include <IFGraph_Cumulate.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_AllShared.hpp>
+#include <IFGraph_Cumulate.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_Transient.hpp>
 
 // Cumulation calculation
 // Very simple, we note the requested entities, and at the end

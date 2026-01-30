@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_Placement.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_Placement.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_Placement, StepGeom_GeometricRepresentationItem)
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect.hxx>
-#include <IFSelect_SessionFile.hxx>
-#include <IFSelect_WorkSession.hxx>
+#include <IFSelect.hpp>
+#include <IFSelect_SessionFile.hpp>
+#include <IFSelect_WorkSession.hpp>
 
 //  Convenience methods, avoiding having to know SessionFile, which is a
 //  Tool not intended for export (in particular, not a Handle)

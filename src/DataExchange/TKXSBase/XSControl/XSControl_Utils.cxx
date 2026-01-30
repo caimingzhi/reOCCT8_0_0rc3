@@ -11,34 +11,34 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepTools.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_MSG.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_TypeMismatch.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TCollection_HExtendedString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_HShape.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <TransferBRep.hxx>
-#include <TransferBRep_ShapeBinder.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
-#include <XSControl_Utils.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepTools.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_MSG.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_TypeMismatch.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TCollection_HExtendedString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_HShape.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <TransferBRep.hpp>
+#include <TransferBRep_ShapeBinder.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
+#include <XSControl_Utils.hpp>
 
 static TCollection_AsciiString    bufasc;
 static TCollection_ExtendedString bufext;

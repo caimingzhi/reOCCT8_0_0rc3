@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Pcurve.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepRepr_DefinitionalRepresentation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Pcurve.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepRepr_DefinitionalRepresentation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_Pcurve, StepGeom_Curve)
 

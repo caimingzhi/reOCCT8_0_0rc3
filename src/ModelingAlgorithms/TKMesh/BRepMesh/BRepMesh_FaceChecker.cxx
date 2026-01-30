@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_FaceChecker.hxx>
-#include <IMeshData_Wire.hxx>
-#include <IMeshData_Edge.hxx>
-#include <OSD_Parallel.hxx>
-#include <BRepMesh_GeomTool.hxx>
+#include <BRepMesh_FaceChecker.hpp>
+#include <IMeshData_Wire.hpp>
+#include <IMeshData_Edge.hpp>
+#include <OSD_Parallel.hpp>
+#include <BRepMesh_GeomTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_FaceChecker, Standard_Transient)
 

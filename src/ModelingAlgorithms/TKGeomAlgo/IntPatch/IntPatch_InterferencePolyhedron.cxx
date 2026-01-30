@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <Intf.hxx>
-#include <IntPatch_InterferencePolyhedron.hxx>
-#include <IntPatch_Polyhedron.hxx>
-#include <IntPatch_PolyhedronTool.hxx>
-#include <NCollection_LocalArray.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <Intf.hpp>
+#include <IntPatch_InterferencePolyhedron.hpp>
+#include <IntPatch_Polyhedron.hpp>
+#include <IntPatch_PolyhedronTool.hpp>
+#include <NCollection_LocalArray.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
 
 static const int Pourcent3[9] = {0, 1, 2, 0, 1, 2, 0, 1, 2};
 

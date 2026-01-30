@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_HDataMapOfStringReal.hxx>
+#include <TDataStd_HDataMapOfStringReal.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_HDataMapOfStringReal, Standard_Transient)
 

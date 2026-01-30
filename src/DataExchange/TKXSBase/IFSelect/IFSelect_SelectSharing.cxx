@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SelectSharing.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_SelectSharing.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectSharing, IFSelect_SelectDeduct)
 

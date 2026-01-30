@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TFunction_Scope.hxx>
-#include <XmlMFunction_ScopeDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Document.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TFunction_Scope.hpp>
+#include <XmlMFunction_ScopeDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Document.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMFunction_ScopeDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(LastIDIndex, "lastid")

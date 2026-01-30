@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRTest_Projector.hxx>
+#include <HLRTest_Projector.hpp>
 
-#include <Draw_Display.hxx>
-#include <gp_Ax3.hxx>
-#include <HLRAlgo_Projector.hxx>
+#include <Draw_Display.hpp>
+#include <gp_Ax3.hpp>
+#include <HLRAlgo_Projector.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_Projector, Draw_Drawable3D)
 

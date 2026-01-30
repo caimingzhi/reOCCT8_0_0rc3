@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepTidy_VectorReducer.pxx>
+#include <StepTidy_VectorReducer.hpp>
 
-#include <Interface_Graph.hxx>
-#include <StepGeom_Line.hxx>
-#include <StepGeom_Vector.hxx>
+#include <Interface_Graph.hpp>
+#include <StepGeom_Line.hpp>
+#include <StepGeom_Vector.hpp>
 
 //==================================================================================================
 

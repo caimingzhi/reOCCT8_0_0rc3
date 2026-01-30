@@ -13,19 +13,19 @@
 
 // szv#4 S4163
 
-#include <BRep_Builder.hxx>
-#include <gp_Pnt.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <ShapeFix_WireVertex.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <gp_Pnt.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <ShapeFix_WireVertex.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Shape.hpp>
 
 // ied_modif_for_compil_Nov-19-1998
 //=================================================================================================

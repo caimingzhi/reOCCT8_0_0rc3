@@ -17,12 +17,12 @@
 // Modified : 20/08/96 PMN Ajout des methodes (Nb)Intervals et IsRationnal
 // Modified : 30/12/96 PMN Ajout GetMinimalWeight, GetSectionSize;
 
-#include <BlendFunc_Chamfer.hxx>
-#include <ElCLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <BlendFunc_Chamfer.hpp>
+#include <ElCLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

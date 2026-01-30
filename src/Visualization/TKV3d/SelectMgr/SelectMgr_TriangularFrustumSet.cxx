@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_TriangularFrustumSet.hxx>
+#include <SelectMgr_TriangularFrustumSet.hpp>
 
-#include <BRepMesh_DataStructureOfDelaun.hxx>
-#include <BRepMesh_Delaun.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomInt_IntSS.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Line.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <SelectMgr_FrustumBuilder.hxx>
+#include <BRepMesh_DataStructureOfDelaun.hpp>
+#include <BRepMesh_Delaun.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomInt_IntSS.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Line.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <SelectMgr_FrustumBuilder.hpp>
 
 namespace
 {

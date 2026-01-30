@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_FileParameter.hxx>
-#include <Interface_ParamList.hxx>
-#include <Standard_OutOfMemory.hxx>
-#include <Standard_Type.hxx>
+#include <Interface_FileParameter.hpp>
+#include <Interface_ParamList.hpp>
+#include <Standard_OutOfMemory.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_ParamList, Standard_Transient)
 

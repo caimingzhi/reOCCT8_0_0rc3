@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Vrml_TransformSeparator.hxx>
+#include <Vrml_TransformSeparator.hpp>
 
 Vrml_TransformSeparator::Vrml_TransformSeparator()
 {

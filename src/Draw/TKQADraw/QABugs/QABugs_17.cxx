@@ -15,47 +15,47 @@
 
 #include <cstdio>
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <ViewerTest_EventManager.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <ViewerTest_EventManager.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <gp_Pln.hxx>
-#include <Geom2d_Curve.hxx>
-#include <GeomAPI.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dGcc_Lin2d2Tan.hxx>
-#include <Geom2d_Line.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <Precision.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <Geom2dGcc_Lin2d2TanIter.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRepOffsetAPI_MakePipeShell.hxx>
-#include <V3d_View.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <PrsDim_LengthDimension.hxx>
-#include <PrsDim_RadiusDimension.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <Geom_CartesianPoint.hxx>
-#include <Geom2d_CartesianPoint.hxx>
-#include <Geom2dGcc_Circ2d3Tan.hxx>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_Pln.hpp>
+#include <Geom2d_Curve.hpp>
+#include <GeomAPI.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dGcc_Lin2d2Tan.hpp>
+#include <Geom2d_Line.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <Precision.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <Geom2dGcc_Lin2d2TanIter.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRepOffsetAPI_MakePipeShell.hpp>
+#include <V3d_View.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <PrsDim_LengthDimension.hpp>
+#include <PrsDim_RadiusDimension.hpp>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Geom2dGcc_Circ2d3Tan.hpp>
 
-#include <Standard_ErrorHandler.hxx>
+#include <Standard_ErrorHandler.hpp>
 
 static int BUC60842(Draw_Interpretor& di, int /*argc*/, const char** /*argv*/)
 {
@@ -435,7 +435,7 @@ static int OCC138LC(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <BRepBndLib.hxx>
+#include <BRepBndLib.hpp>
 
 //=================================================================================================
 
@@ -466,7 +466,7 @@ static int OCC566(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-#include <BRepFilletAPI_MakeFillet.hxx>
+#include <BRepFilletAPI_MakeFillet.hpp>
 
 //=================================================================================================
 
@@ -532,7 +532,7 @@ static int OCC570(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <Law_Interpol.hxx>
+#include <Law_Interpol.hpp>
 
 static double        tesp       = 1.e-4;
 static double        t3d        = 1.e-4;
@@ -647,9 +647,9 @@ static int BUILDEVOL(Draw_Interpretor& di, int, const char**)
   return 1;
 }
 
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomFill_NSections.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomFill_NSections.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
 
 //=================================================================================================
 
@@ -875,7 +875,7 @@ static int OCC814(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <ShapeFix_Wire.hxx>
+#include <ShapeFix_Wire.hpp>
 
 //=================================================================================================
 
@@ -1010,8 +1010,8 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <TopoDS_Solid.hxx>
-#include <BRepFeat_MakeDPrism.hxx>
+#include <TopoDS_Solid.hpp>
+#include <BRepFeat_MakeDPrism.hpp>
 
 //=======================================================================
 // function : OCCN1
@@ -1070,9 +1070,9 @@ static int OCCN1(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepAlgoAPI_Section.hxx>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <BRepAlgoAPI_Section.hpp>
 
 //=================================================================================================
 
@@ -1112,9 +1112,9 @@ static int OCCN2(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Geom_BezierCurve.hxx>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Geom_BezierCurve.hpp>
 
 static int OCC2569(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1152,9 +1152,9 @@ static int OCC2569(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopExp.hxx>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopExp.hpp>
 
 static int OCC1642(Draw_Interpretor& di, int argc, const char** argv)
 {

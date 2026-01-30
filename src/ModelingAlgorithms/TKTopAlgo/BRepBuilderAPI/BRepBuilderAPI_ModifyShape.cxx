@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_ModifyShape.hxx>
-#include <BRepTools_Modification.hxx>
-#include <Standard_NullObject.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepBuilderAPI_ModifyShape.hpp>
+#include <BRepTools_Modification.hpp>
+#include <Standard_NullObject.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

@@ -23,58 +23,58 @@
 //       abv 31.01.00 inheriting from BRepToIGES_BREntity to remove code duplication
 // eap: Tue Aug 29 11:02:56 2000: Shape Processing moved to upper levels
 
-#include <BRep_Tool.hxx>
-#include <BRepLib.hxx>
-#include <BRepToIGES_BRWire.hxx>
-#include <BRepToIGESBRep_Entity.hxx>
-#include <BRepTools.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomToIGES_GeomSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESBasic_Group.hxx>
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESBasic_HArray1OfHArray1OfInteger.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESSolid_EdgeList.hxx>
-#include <IGESSolid_VertexList.hxx>
-#include <IGESSolid_Loop.hxx>
-#include <IGESSolid_ManifoldSolid.hxx>
-#include <IGESSolid_Shell.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message_ProgressScope.hxx>
-#include <ShapeAlgo.hxx>
-#include <ShapeAlgo_AlgoContainer.hxx>
-#include <Standard_Integer.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_CompSolid.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <Transfer_FinderProcess.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepLib.hpp>
+#include <BRepToIGES_BRWire.hpp>
+#include <BRepToIGESBRep_Entity.hpp>
+#include <BRepTools.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomToIGES_GeomSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESBasic_Group.hpp>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESSolid_EdgeList.hpp>
+#include <IGESSolid_VertexList.hpp>
+#include <IGESSolid_Loop.hpp>
+#include <IGESSolid_ManifoldSolid.hpp>
+#include <IGESSolid_Shell.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message_ProgressScope.hpp>
+#include <ShapeAlgo.hpp>
+#include <ShapeAlgo_AlgoContainer.hpp>
+#include <Standard_Integer.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_CompSolid.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <Transfer_FinderProcess.hpp>
 
-// #include <GeomConvert.hxx>
-// #include <Geom2dConvert.hxx>
-// #include <ShapeAnalysis.hxx>
-// #include <ShapeCustom.hxx>
+// #include <GeomConvert.hpp>
+// #include <Geom2dConvert.hpp>
+// #include <ShapeAnalysis.hpp>
+// #include <ShapeCustom.hpp>
 //=================================================================================================
 
 BRepToIGESBRep_Entity::BRepToIGESBRep_Entity()

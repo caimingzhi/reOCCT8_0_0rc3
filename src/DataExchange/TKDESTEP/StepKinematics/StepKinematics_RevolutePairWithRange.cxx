@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_RevolutePairWithRange.hxx>
+#include <StepKinematics_RevolutePairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_RevolutePairWithRange, StepKinematics_RevolutePair)
 

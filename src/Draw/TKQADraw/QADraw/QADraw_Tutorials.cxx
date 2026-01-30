@@ -11,31 +11,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QADraw.hxx>
+#include <QADraw.hpp>
 
-#include <ViewerTest.hxx>
-#include <ViewerTest_EventManager.hxx>
+#include <ViewerTest.hpp>
+#include <ViewerTest_EventManager.hpp>
 
-#include <AIS_Animation.hxx>
-#include <AIS_AnimationObject.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepBndLib.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_BndBox.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_ToolCylinder.hxx>
-#include <Prs3d_ToolDisk.hxx>
-#include <Prs3d_PresentationShadow.hxx>
-#include <StdPrs_ShadedShape.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <StdSelect_BRepSelectionTool.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <Select3D_SensitiveBox.hxx>
-#include <Select3D_SensitivePrimitiveArray.hxx>
-#include <V3d_Viewer.hxx>
-#include <math_BullardGenerator.hxx>
+#include <AIS_Animation.hpp>
+#include <AIS_AnimationObject.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepBndLib.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_BndBox.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_ToolCylinder.hpp>
+#include <Prs3d_ToolDisk.hpp>
+#include <Prs3d_PresentationShadow.hpp>
+#include <StdPrs_ShadedShape.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <StdSelect_BRepSelectionTool.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <Select3D_SensitiveBox.hpp>
+#include <Select3D_SensitivePrimitiveArray.hpp>
+#include <V3d_Viewer.hpp>
+#include <math_BullardGenerator.hpp>
 
 namespace
 {

@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli_DrilledHole.hxx>
-#include <Standard_Type.hxx>
+#include <IGESAppli_DrilledHole.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_DrilledHole, IGESData_IGESEntity)
 

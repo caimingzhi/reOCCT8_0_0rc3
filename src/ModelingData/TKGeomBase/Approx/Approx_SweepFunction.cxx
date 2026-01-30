@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_SweepFunction.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt.hxx>
+#include <Approx_SweepFunction.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Approx_SweepFunction, Standard_Transient)
 

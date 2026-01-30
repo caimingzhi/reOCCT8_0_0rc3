@@ -15,23 +15,23 @@
 //    abv 28.04.99  S4137: added method Add(WireData), method SetLast fixed
 //    abv 05.05.99  S4174: protection against INTERNAL/EXTERNAL edges
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom2d_Curve.hxx>
-#include <ShapeExtend_WireData.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom2d_Curve.hpp>
+#include <ShapeExtend_WireData.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeExtend_WireData, Standard_Transient)
 

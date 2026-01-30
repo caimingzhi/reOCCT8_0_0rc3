@@ -25,24 +25,24 @@
 //--      - Pour rester coherent avec cette facon de faire,
 //--      Chercher(Nbvtx++).
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_TopolTool.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntPatch_CurvIntSurf.hxx>
-#include <IntPatch_HInterTool.hxx>
-#include <IntPatch_PolyArc.hxx>
-#include <IntPatch_PolyLine.hxx>
-#include <IntPatch_RLine.hxx>
-#include <IntPatch_RstInt.hxx>
-#include <IntPatch_SearchPnt.hxx>
-#include <IntPatch_WLine.hxx>
-#include <IntSurf.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_TopolTool.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntPatch_CurvIntSurf.hpp>
+#include <IntPatch_HInterTool.hpp>
+#include <IntPatch_PolyArc.hpp>
+#include <IntPatch_PolyLine.hpp>
+#include <IntPatch_RLine.hpp>
+#include <IntPatch_RstInt.hpp>
+#include <IntPatch_SearchPnt.hpp>
+#include <IntPatch_WLine.hpp>
+#include <IntSurf.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
 
-#include <ElCLib.hxx>
+#include <ElCLib.hpp>
 
 #define myInfinite 1.e15 // the same as was in Adaptor3d_TopolTool
 

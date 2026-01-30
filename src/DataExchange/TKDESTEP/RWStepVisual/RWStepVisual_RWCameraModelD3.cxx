@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWCameraModelD3.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepVisual_CameraModelD3.hxx>
-#include <StepVisual_ViewVolume.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWCameraModelD3.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepVisual_CameraModelD3.hpp>
+#include <StepVisual_ViewVolume.hpp>
 
 RWStepVisual_RWCameraModelD3::RWStepVisual_RWCameraModelD3() = default;
 

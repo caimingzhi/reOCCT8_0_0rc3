@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_HArray2.hxx>
+#include <StdLPersistent_HArray2.hpp>
 
 //=======================================================================
 // function : Read

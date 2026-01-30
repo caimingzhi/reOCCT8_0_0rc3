@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMXCAFDoc_CentroidDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <XCAFDoc_Centroid.hxx>
+#include <BinMXCAFDoc_CentroidDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <XCAFDoc_Centroid.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_CentroidDriver, BinMDF_ADriver)
 

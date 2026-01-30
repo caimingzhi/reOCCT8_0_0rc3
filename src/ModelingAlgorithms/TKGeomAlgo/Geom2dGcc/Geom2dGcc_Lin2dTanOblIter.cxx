@@ -18,21 +18,21 @@
 // CREATION D UNE LIGNE TANGENTE A UNE COURBE ET PARALLELE A UNE DROITE. +
 //========================================================================
 
-#include <GccEnt_BadQualifier.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_FunctionTanObl.hxx>
-#include <Geom2dGcc_IsParallel.hxx>
-#include <Geom2dGcc_Lin2dTanOblIter.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <math_FunctionRoot.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccEnt_BadQualifier.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_FunctionTanObl.hpp>
+#include <Geom2dGcc_IsParallel.hpp>
+#include <Geom2dGcc_Lin2dTanOblIter.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <math_FunctionRoot.hpp>
+#include <StdFail_NotDone.hpp>
 
 Geom2dGcc_Lin2dTanOblIter::Geom2dGcc_Lin2dTanOblIter(const Geom2dGcc_QCurve& Qualified1,
                                                      const gp_Lin2d&         TheLin,

@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BoundedSurface.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <GeomConvert.hxx>
-#include <GeomToStep_MakeBoundedSurface.hxx>
-#include <GeomToStep_MakeBSplineSurfaceWithKnots.hxx>
-#include <GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx>
-#include <GeomToStep_MakeRectangularTrimmedSurface.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BoundedSurface.hxx>
-#include <StepGeom_BSplineSurfaceWithKnots.hxx>
-#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hxx>
-#include <StepGeom_RectangularTrimmedSurface.hxx>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BoundedSurface.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <GeomConvert.hpp>
+#include <GeomToStep_MakeBoundedSurface.hpp>
+#include <GeomToStep_MakeBSplineSurfaceWithKnots.hpp>
+#include <GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
+#include <GeomToStep_MakeRectangularTrimmedSurface.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BoundedSurface.hpp>
+#include <StepGeom_BSplineSurfaceWithKnots.hpp>
+#include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
+#include <StepGeom_RectangularTrimmedSurface.hpp>
 
 //=============================================================================
 // Creation d' une BoundedSurface de prostep a partir d' une BoundedSurface

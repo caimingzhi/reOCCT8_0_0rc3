@@ -19,28 +19,28 @@
 
 //  Modified by skv - Thu Sep  4 12:29:30 2003 OCC578
 
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepClass3d_SolidExplorer.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepClass_FacePassiveClassifier.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <gp.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntCurvesFace_Intersector.hxx>
-#include <Precision.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopExp.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepClass3d_SolidExplorer.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepClass_FacePassiveClassifier.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <gp.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntCurvesFace_Intersector.hpp>
+#include <Precision.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopExp.hpp>
 
 //=======================================================================
 // function : FindAPointInTheFace

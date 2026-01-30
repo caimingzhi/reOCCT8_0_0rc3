@@ -23,19 +23,19 @@
 //  by successive iteration find the point and its associated parameter
 //  call to FunctionRoot
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <CPnts_AbscissaPoint.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_FunctionRoot.hxx>
-#include <math_GaussSingleIntegration.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <CPnts_AbscissaPoint.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_FunctionRoot.hpp>
+#include <math_GaussSingleIntegration.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 // auxiliary functions to compute the length of the derivative
 static double f3d(const double X, void* const C)

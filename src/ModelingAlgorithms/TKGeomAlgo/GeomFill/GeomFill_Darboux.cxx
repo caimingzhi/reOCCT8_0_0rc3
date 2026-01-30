@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomFill_Darboux.hxx>
+#include <GeomFill_Darboux.hpp>
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <CSLib.hxx>
-#include <Geom_UndefinedValue.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_TrihedronLaw.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array2.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <CSLib.hpp>
+#include <Geom_UndefinedValue.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_TrihedronLaw.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array2.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_Darboux, GeomFill_TrihedronLaw)
 

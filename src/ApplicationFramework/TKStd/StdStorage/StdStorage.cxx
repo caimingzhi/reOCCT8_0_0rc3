@@ -11,29 +11,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_Handle.hxx>
-#include <NCollection_Array1.hxx>
-#include <PCDM.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NullObject.hxx>
-#include <StdObjMgt_Persistent.hxx>
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_WriteData.hxx>
-#include <StdStorage.hxx>
-#include <StdStorage_Data.hxx>
-#include <StdStorage_HeaderData.hxx>
-#include <StdStorage_TypeData.hxx>
-#include <StdStorage_RootData.hxx>
-#include <StdStorage_Root.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <StdStorage_BacketOfPersistent.hxx>
-#include <Storage.hxx>
-#include <Storage_BaseDriver.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
-#include <Storage_StreamFormatError.hxx>
-#include <Storage_StreamWriteError.hxx>
+#include <NCollection_Handle.hpp>
+#include <NCollection_Array1.hpp>
+#include <PCDM.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NullObject.hpp>
+#include <StdObjMgt_Persistent.hpp>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_WriteData.hpp>
+#include <StdStorage.hpp>
+#include <StdStorage_Data.hpp>
+#include <StdStorage_HeaderData.hpp>
+#include <StdStorage_TypeData.hpp>
+#include <StdStorage_RootData.hpp>
+#include <StdStorage_Root.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <StdStorage_BacketOfPersistent.hpp>
+#include <Storage.hpp>
+#include <Storage_BaseDriver.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
+#include <Storage_StreamFormatError.hpp>
+#include <Storage_StreamWriteError.hpp>
 
 #include <cstdio>
 

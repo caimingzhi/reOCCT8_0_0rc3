@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Cone.hxx>
+#include <GeomGridEval_Cone.hpp>
 
-#include <gp_Cone.hxx>
+#include <gp_Cone.hpp>
 
 #include <cmath>
 

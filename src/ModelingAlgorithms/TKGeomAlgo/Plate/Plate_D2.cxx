@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Plate_D2.hxx>
+#include <Plate_D2.hpp>
 
 Plate_D2::Plate_D2(const gp_XYZ& duu, const gp_XYZ& duv, const gp_XYZ& dvv)
     : Duu(duu),

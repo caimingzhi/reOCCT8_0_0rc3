@@ -13,18 +13,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWStl_Reader.hxx>
+#include <RWStl_Reader.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_ProgressScope.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <FSD_BinaryFile.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_Timer.hxx>
-#include <Poly_MergeNodesTool.hxx>
-#include <Standard_CLocaleSentry.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_ProgressScope.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <FSD_BinaryFile.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_Timer.hpp>
+#include <Poly_MergeNodesTool.hpp>
+#include <Standard_CLocaleSentry.hpp>
 
 #include <algorithm>
 #include <limits>

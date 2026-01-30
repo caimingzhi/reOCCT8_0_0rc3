@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BlendFunc.hxx>
-#include <BlendFunc_ChamfInv.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BlendFunc.hpp>
+#include <BlendFunc_ChamfInv.hpp>
+#include <math_Matrix.hpp>
 
 //=================================================================================================
 

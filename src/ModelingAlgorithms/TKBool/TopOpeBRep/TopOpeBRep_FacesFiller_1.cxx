@@ -14,36 +14,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BndLib_Add3dCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <Standard_CString.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_GeomTool.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_PointGeomTool.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
-#include <TopOpeBRepTool_defineG.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_makeTransition.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BndLib_Add3dCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <Standard_CString.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_GeomTool.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_PointGeomTool.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
+#include <TopOpeBRepTool_defineG.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_makeTransition.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT void debrest(const int i)

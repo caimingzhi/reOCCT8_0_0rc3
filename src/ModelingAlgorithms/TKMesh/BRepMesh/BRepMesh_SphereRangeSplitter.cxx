@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_SphereRangeSplitter.hxx>
-#include <GCPnts_TangentialDeflection.hxx>
+#include <BRepMesh_SphereRangeSplitter.hpp>
+#include <GCPnts_TangentialDeflection.hpp>
 
 //=================================================================================================
 

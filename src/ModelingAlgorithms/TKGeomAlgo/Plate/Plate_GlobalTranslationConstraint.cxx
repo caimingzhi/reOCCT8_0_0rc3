@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Plate_GlobalTranslationConstraint.hxx>
-#include <Plate_LinearXYZConstraint.hxx>
+#include <Plate_GlobalTranslationConstraint.hpp>
+#include <Plate_LinearXYZConstraint.hpp>
 
 Plate_GlobalTranslationConstraint::Plate_GlobalTranslationConstraint(
   const NCollection_Sequence<gp_XY>& SOfXY)

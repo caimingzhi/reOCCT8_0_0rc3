@@ -23,12 +23,12 @@
 #define No_Standard_DimensionError
 // #endif
 
-#include <math_TrigonometricFunctionRoots.hxx>
-#include <math_TrigonometricEquationFunction.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <math_NewtonFunctionRoot.hxx>
-#include <Precision.hxx>
+#include <math_TrigonometricFunctionRoots.hpp>
+#include <math_TrigonometricEquationFunction.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <math_NewtonFunctionRoot.hpp>
+#include <Precision.hpp>
 
 math_TrigonometricFunctionRoots::math_TrigonometricFunctionRoots(const double theD,
                                                                  const double theE,

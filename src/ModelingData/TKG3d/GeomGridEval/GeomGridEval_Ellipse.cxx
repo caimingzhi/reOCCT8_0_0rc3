@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_Ellipse.hxx>
+#include <GeomGridEval_Ellipse.hpp>
 
-#include <gp_Elips.hxx>
+#include <gp_Elips.hpp>
 
 #include <cmath>
 

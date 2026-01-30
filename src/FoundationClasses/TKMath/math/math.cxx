@@ -19,8 +19,8 @@
 
 // #endif
 
-#include <math.hxx>
-#include <math_ComputeGaussPointsAndWeights.hxx>
+#include <math.hpp>
+#include <math_ComputeGaussPointsAndWeights.hpp>
 
 int math::GaussPointsMax()
 {

@@ -12,36 +12,36 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_DS.hxx>
-#include <BOPDS_FaceInfo.hxx>
-#include <BOPDS_IndexRange.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_Pave.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <BOPDS_Pair.hxx>
-#include <BOPDS_ShapeInfo.hxx>
-#include <NCollection_Array1.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBndLib.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_Tools.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <Precision.hxx>
-#include <Standard_Assert.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_FaceInfo.hpp>
+#include <BOPDS_IndexRange.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_Pave.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <BOPDS_Pair.hpp>
+#include <BOPDS_ShapeInfo.hpp>
+#include <NCollection_Array1.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBndLib.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_Tools.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <Precision.hpp>
+#include <Standard_Assert.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
 #include <algorithm>
 //
 

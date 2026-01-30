@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hxx>
+#include <HLRBRep_ThePolyhedronToolOfInterCSurf.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <HLRBRep_ThePolyhedronOfInterCSurf.hxx>
-#include <Bnd_Box.hxx>
-#include <gp_Pnt.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <HLRBRep_ThePolyhedronOfInterCSurf.hpp>
+#include <Bnd_Box.hpp>
+#include <gp_Pnt.hpp>
 
 void HLRBRep_ThePolyhedronToolOfInterCSurf::Dump(const HLRBRep_ThePolyhedronOfInterCSurf& polyh)
 {

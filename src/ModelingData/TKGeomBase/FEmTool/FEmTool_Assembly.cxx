@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FEmTool_Assembly.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_List.hxx>
-#include <FEmTool_ProfileMatrix.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_DomainError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <FEmTool_Assembly.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_List.hpp>
+#include <FEmTool_ProfileMatrix.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_DomainError.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

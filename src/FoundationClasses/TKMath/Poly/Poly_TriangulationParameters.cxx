@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Poly_TriangulationParameters.hxx>
+#include <Poly_TriangulationParameters.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_TriangulationParameters, Standard_Transient)

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_SelectPointed.hxx>
-#include <IFSelect_Transformer.hxx>
-#include <Interface_CopyControl.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Map.hxx>
+#include <IFSelect_SelectPointed.hpp>
+#include <IFSelect_Transformer.hpp>
+#include <Interface_CopyControl.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectPointed, IFSelect_SelectBase)
 

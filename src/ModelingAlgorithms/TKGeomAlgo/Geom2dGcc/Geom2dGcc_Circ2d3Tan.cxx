@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccAna_Circ2d3Tan.hxx>
-#include <GccEnt_QualifiedCirc.hxx>
-#include <GccEnt_QualifiedLin.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Point.hxx>
-#include <Geom2dGcc_Circ2d3Tan.hxx>
-#include <Geom2dGcc_Circ2d3TanIter.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GccAna_Circ2d3Tan.hpp>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <GccEnt_QualifiedLin.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Point.hpp>
+#include <Geom2dGcc_Circ2d3Tan.hpp>
+#include <Geom2dGcc_Circ2d3TanIter.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
 
 Geom2dGcc_Circ2d3Tan::Geom2dGcc_Circ2d3Tan(const Geom2dGcc_QualifiedCurve& Qualified1,
                                            const Geom2dGcc_QualifiedCurve& Qualified2,

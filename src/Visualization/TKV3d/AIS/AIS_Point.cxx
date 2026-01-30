@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Point.hxx>
+#include <AIS_Point.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_Point.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_Point.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Point, AIS_InteractiveObject)
 

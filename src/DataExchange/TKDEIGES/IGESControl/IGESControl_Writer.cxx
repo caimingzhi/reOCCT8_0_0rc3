@@ -14,38 +14,38 @@
 // cky 16.01.99 Remove couts.
 // rln 28.12.98 CCI60005
 
-#include <Bnd_Box.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <BndLib_AddSurface.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepToIGESBRep_Entity.hxx>
-#include <DEIGES_Parameters.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomToIGES_GeomCurve.hxx>
-#include <GeomToIGES_GeomSurface.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESControl_Controller.hxx>
-#include <IGESControl_Writer.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESSelect_WorkLibrary.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_Static.hxx>
-#include <Message_ProgressScope.hxx>
-#include <OSD_FileSystem.hxx>
-#include <ShapeAnalysis_ShapeTolerance.hxx>
-#include <Standard_Macro.hxx>
+#include <Bnd_Box.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <BndLib_AddSurface.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepToIGESBRep_Entity.hpp>
+#include <DEIGES_Parameters.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomToIGES_GeomCurve.hpp>
+#include <GeomToIGES_GeomSurface.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESControl_Controller.hpp>
+#include <IGESControl_Writer.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESSelect_WorkLibrary.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_Static.hpp>
+#include <Message_ProgressScope.hpp>
+#include <OSD_FileSystem.hpp>
+#include <ShapeAnalysis_ShapeTolerance.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <Standard_Transient.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
+#include <Standard_Transient.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
 
 #include <cerrno>
 

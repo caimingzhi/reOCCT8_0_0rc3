@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_FreeFormEntity.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Transient.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_FreeFormEntity.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Transient.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepData_FreeFormEntity, Standard_Transient)
 

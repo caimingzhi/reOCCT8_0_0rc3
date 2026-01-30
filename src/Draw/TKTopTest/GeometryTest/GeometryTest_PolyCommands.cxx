@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_Triangulation.hxx>
-#include <GeometryTest.hxx>
-#include <Poly.hxx>
-#include <Poly_Triangle.hxx>
-#include <NCollection_Array1.hxx>
-#include <Poly_Polygon2D.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_Triangulation.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_Triangulation.hpp>
+#include <GeometryTest.hpp>
+#include <Poly.hpp>
+#include <Poly_Triangle.hpp>
+#include <NCollection_Array1.hpp>
+#include <Poly_Polygon2D.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_Triangulation.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

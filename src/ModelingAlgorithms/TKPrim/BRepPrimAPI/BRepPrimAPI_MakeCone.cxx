@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <gp.hxx>
-#include <gp_Ax2.hxx>
+#include <BRepPrimAPI_MakeCone.hpp>
+#include <gp.hpp>
+#include <gp_Ax2.hpp>
 
 //=================================================================================================
 

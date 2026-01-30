@@ -61,9 +61,9 @@ public:
 static StatistiquesBRepClass3d STAT;
 #endif
 
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS_Shape.hpp>
 
 BRepClass3d_SolidClassifier::BRepClass3d_SolidClassifier()
 {

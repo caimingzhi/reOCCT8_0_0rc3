@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPreviewAPI_MakeBox.hxx>
+#include <BRepPreviewAPI_MakeBox.hpp>
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
 
 //=================================================================================================
 

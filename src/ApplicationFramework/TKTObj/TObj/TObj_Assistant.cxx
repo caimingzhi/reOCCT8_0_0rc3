@@ -15,14 +15,14 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_Assistant.hxx>
+#include <TObj_Assistant.hpp>
 
-#include <TObj_Model.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Standard_Type.hxx>
+#include <TObj_Model.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Standard_Type.hpp>
 
 //=================================================================================================
 

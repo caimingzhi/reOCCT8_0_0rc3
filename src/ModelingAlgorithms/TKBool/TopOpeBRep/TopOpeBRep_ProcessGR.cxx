@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
-#include <Geom_Curve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-// #include <BRepAdaptor_Curve2d.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRep_GeomTool.hxx>
-#include <Precision.hxx>
-#include <Standard_CString.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopOpeBRep.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
+#include <Geom_Curve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+// #include <BRepAdaptor_Curve2d.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRep_GeomTool.hpp>
+#include <Precision.hpp>
+#include <Standard_CString.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopOpeBRep.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <Geom_TrimmedCurve.hxx>
-  #include <Geom_Line.hxx>
+  #include <Geom_TrimmedCurve.hpp>
+  #include <Geom_Line.hpp>
 extern bool TopOpeBRep_GettraceBIPS();
 extern bool TopOpeBRep_GettraceDEGEN();
 

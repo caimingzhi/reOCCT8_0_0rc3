@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_SubPartsIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
-#include <Interface_InterfaceError.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <IFGraph_SubPartsIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
+#include <Interface_InterfaceError.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 // SubPartsIterator allows grouping entities into several sub-parts
 // To each sub-part is attached a Status : the 1st has 1, the 2nd has 2, etc...

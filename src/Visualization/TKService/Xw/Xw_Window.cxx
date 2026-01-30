@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Xw_Window.hxx>
+#include <Xw_Window.hpp>
 
-#include <Aspect_ScrollDelta.hxx>
-#include <Aspect_WindowDefinitionError.hxx>
-#include <Aspect_WindowInputListener.hxx>
-#include <Message.hxx>
+#include <Aspect_ScrollDelta.hpp>
+#include <Aspect_WindowDefinitionError.hpp>
+#include <Aspect_WindowInputListener.hpp>
+#include <Message.hpp>
 
 #if defined(HAVE_XLIB)
   #include <X11/Xlib.h>
@@ -26,7 +26,7 @@
 // #include <X11/XF86keysym.h>
 #endif
 
-#include <Aspect_DisplayConnection.hxx>
+#include <Aspect_DisplayConnection.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Xw_Window, Aspect_Window)
 

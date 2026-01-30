@@ -39,16 +39,16 @@
 
 #include <algorithm>
 
-#include <ElSLib.hxx>
-#include <gp_Cone.hxx>
-#include <gp_Cylinder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <IntAna_Curve.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <Precision.hxx>
-#include <Standard_DomainError.hxx>
+#include <ElSLib.hpp>
+#include <gp_Cone.hpp>
+#include <gp_Cylinder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <IntAna_Curve.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <Precision.hpp>
+#include <Standard_DomainError.hpp>
 
 //=================================================================================================
 

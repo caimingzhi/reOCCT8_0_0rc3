@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BoundedCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BoundedCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomToStep_MakeBoundedCurve.hxx>
-#include <GeomToStep_MakeConic.hxx>
-#include <GeomToStep_MakeCurve.hxx>
-#include <GeomToStep_MakeLine.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Axis2Placement3d.hxx>
-#include <StepGeom_BoundedCurve.hxx>
-#include <StepGeom_Conic.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
+#include <Geom2d_BoundedCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BoundedCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomToStep_MakeBoundedCurve.hpp>
+#include <GeomToStep_MakeConic.hpp>
+#include <GeomToStep_MakeCurve.hpp>
+#include <GeomToStep_MakeLine.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Axis2Placement3d.hpp>
+#include <StepGeom_BoundedCurve.hpp>
+#include <StepGeom_Conic.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
 
 //=============================================================================
 // Creation d' une Curve de prostep a partir d' une Curve de Geom

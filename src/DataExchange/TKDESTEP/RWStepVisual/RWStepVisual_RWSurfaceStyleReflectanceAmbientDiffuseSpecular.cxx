@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular.pxx"
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hxx>
-#include <StepVisual_Colour.hxx>
-#include <Standard_Real.hxx>
+#include "RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular.hpp"
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hpp>
+#include <StepVisual_Colour.hpp>
+#include <Standard_Real.hpp>
 
 //=================================================================================================
 

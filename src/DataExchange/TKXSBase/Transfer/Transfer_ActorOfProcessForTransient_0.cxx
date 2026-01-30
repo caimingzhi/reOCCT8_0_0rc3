@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_ActorOfProcessForTransient.hxx>
+#include <Transfer_ActorOfProcessForTransient.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_IteratorOfProcessForTransient.hxx>
-#include <Transfer_ProcessForTransient.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_IteratorOfProcessForTransient.hpp>
+#include <Transfer_ProcessForTransient.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 //=================================================================================================
 

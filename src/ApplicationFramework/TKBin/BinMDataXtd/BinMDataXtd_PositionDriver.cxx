@@ -15,12 +15,12 @@
 
 // modified     13.04.2009 Sergey ZARITCHNY
 
-#include <BinMDataXtd_PositionDriver.hxx>
+#include <BinMDataXtd_PositionDriver.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDataXtd_Position.hxx>
-#include <TDF_Attribute.hxx>
-#include <BinObjMgt_Persistent.hxx>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Position.hpp>
+#include <TDF_Attribute.hpp>
+#include <BinObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PositionDriver, BinMDF_ADriver)
 

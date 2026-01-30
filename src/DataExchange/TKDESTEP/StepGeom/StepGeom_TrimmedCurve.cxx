@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_TrimmedCurve.hxx>
-#include <StepGeom_TrimmingSelect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <StepGeom_TrimmingSelect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_TrimmedCurve, StepGeom_BoundedCurve)
 

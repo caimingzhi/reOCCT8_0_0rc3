@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepDimTol_RWToleranceZone.pxx"
+#include "RWStepDimTol_RWToleranceZone.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_ToleranceZone.hxx>
-#include <StepDimTol_ToleranceZoneForm.hxx>
-#include <StepDimTol_ToleranceZoneTarget.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_ToleranceZone.hpp>
+#include <StepDimTol_ToleranceZoneForm.hpp>
+#include <StepDimTol_ToleranceZoneTarget.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
 
 //=================================================================================================
 

@@ -18,12 +18,12 @@
   #define No_Standard_OutOfRange
   #define No_Standard_RangeError
 #endif
-#include <AppCont_LeastSquare.hxx>
+#include <AppCont_LeastSquare.hpp>
 
-#include <math.hxx>
-#include <AppParCurves_MultiPoint.hxx>
-#include <AppCont_ContMatrices.hxx>
-#include <PLib.hxx>
+#include <math.hpp>
+#include <AppParCurves_MultiPoint.hpp>
+#include <AppCont_ContMatrices.hpp>
+#include <PLib.hpp>
 
 //=================================================================================================
 

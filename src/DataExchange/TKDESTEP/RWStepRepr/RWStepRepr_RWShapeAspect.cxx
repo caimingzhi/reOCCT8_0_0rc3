@@ -13,12 +13,12 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWShapeAspect.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepRepr_ShapeAspect.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWShapeAspect.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepRepr_ShapeAspect.hpp>
 
 RWStepRepr_RWShapeAspect::RWStepRepr_RWShapeAspect() = default;
 

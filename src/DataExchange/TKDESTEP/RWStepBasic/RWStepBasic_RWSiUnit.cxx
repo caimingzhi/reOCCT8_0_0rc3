@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWSiUnit.pxx"
-#include <StepBasic_DimensionalExponents.hxx>
-#include <StepBasic_SiUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_AsciiString.hxx>
+#include "RWStepBasic_RWSiUnit.hpp"
+#include <StepBasic_DimensionalExponents.hpp>
+#include <StepBasic_SiUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepBasic_RWSiPrefix.pxx"
-#include "RWStepBasic_RWSiUnitName.pxx"
+#include "RWStepBasic_RWSiPrefix.hpp"
+#include "RWStepBasic_RWSiUnitName.hpp"
 
 RWStepBasic_RWSiUnit::RWStepBasic_RWSiUnit() = default;
 

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_TypedValue.hxx>
+#include <MoniTool_TypedValue.hpp>
 
-#include <MoniTool_Element.hxx>
-#include <OSD_Path.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <MoniTool_Element.hpp>
+#include <OSD_Path.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_TypedValue, Standard_Transient)

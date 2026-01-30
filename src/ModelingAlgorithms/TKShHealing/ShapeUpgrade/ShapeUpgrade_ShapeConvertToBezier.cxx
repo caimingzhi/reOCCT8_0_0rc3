@@ -16,35 +16,35 @@
 
 // 15.06 2000 gka fix against small edges ; merging ends pcurves and 3d curves
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Message_Msg.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <ShapeUpgrade_ConvertCurve2dToBezier.hxx>
-#include <ShapeUpgrade_ConvertCurve3dToBezier.hxx>
-#include <ShapeUpgrade_ConvertSurfaceToBezierBasis.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_FixSmallBezierCurves.hxx>
-#include <ShapeUpgrade_ShapeConvertToBezier.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Message_Msg.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <ShapeUpgrade_ConvertCurve2dToBezier.hpp>
+#include <ShapeUpgrade_ConvertCurve3dToBezier.hpp>
+#include <ShapeUpgrade_ConvertSurfaceToBezierBasis.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_FixSmallBezierCurves.hpp>
+#include <ShapeUpgrade_ShapeConvertToBezier.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

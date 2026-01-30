@@ -16,34 +16,34 @@
 
 // szv#4 S4163
 
-#include <BRep_Tool.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeFix_Wire.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepShape_EdgeLoop.hxx>
-#include <StepShape_OrientedEdge.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepShape_PolyLoop.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <StepShape_Vertex.hxx>
-#include <StepShape_VertexLoop.hxx>
-#include <StepShape_VertexPoint.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopoDSToStep_MakeStepEdge.hxx>
-#include <TopoDSToStep_MakeStepVertex.hxx>
-#include <TopoDSToStep_MakeStepWire.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeFix_Wire.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepShape_EdgeLoop.hpp>
+#include <StepShape_OrientedEdge.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepShape_PolyLoop.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <StepShape_Vertex.hpp>
+#include <StepShape_VertexLoop.hpp>
+#include <StepShape_VertexPoint.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDSToStep_MakeStepEdge.hpp>
+#include <TopoDSToStep_MakeStepVertex.hpp>
+#include <TopoDSToStep_MakeStepWire.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 //=================================================================================================
 

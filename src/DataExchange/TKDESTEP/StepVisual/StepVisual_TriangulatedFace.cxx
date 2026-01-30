@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_TriangulatedFace.hxx>
+#include <StepVisual_TriangulatedFace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TriangulatedFace, StepVisual_TessellatedFace)
 

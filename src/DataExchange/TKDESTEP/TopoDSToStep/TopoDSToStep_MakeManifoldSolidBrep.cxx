@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d.hxx>
-#include <Message_ProgressScope.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepShape_ClosedShell.hxx>
-#include <StepShape_Face.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepShape_ManifoldSolidBrep.hxx>
-#include <StepShape_OpenShell.hxx>
-#include <StepVisual_TessellatedShell.hxx>
-#include <StepVisual_TessellatedSolid.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDSToStep.hxx>
-#include <TopoDSToStep_Builder.hxx>
-#include <TopoDSToStep_MakeManifoldSolidBrep.hxx>
-#include <TopoDSToStep_Tool.hxx>
-#include <Transfer_FinderProcess.hxx>
-#include <TransferBRep_ShapeMapper.hxx>
+#include <BRepClass3d.hpp>
+#include <Message_ProgressScope.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepShape_ClosedShell.hpp>
+#include <StepShape_Face.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepShape_ManifoldSolidBrep.hpp>
+#include <StepShape_OpenShell.hpp>
+#include <StepVisual_TessellatedShell.hpp>
+#include <StepVisual_TessellatedSolid.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDSToStep.hpp>
+#include <TopoDSToStep_Builder.hpp>
+#include <TopoDSToStep_MakeManifoldSolidBrep.hpp>
+#include <TopoDSToStep_Tool.hpp>
+#include <Transfer_FinderProcess.hpp>
+#include <TransferBRep_ShapeMapper.hpp>
 
 static std::pair<occ::handle<StepShape_ManifoldSolidBrep>, occ::handle<StepVisual_TessellatedItem>>
   MakeManifoldSolidBrep(const TopoDS_Shell&                        aShell,

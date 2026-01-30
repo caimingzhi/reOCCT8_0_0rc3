@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_TheIWLineOfTheIWalking.hxx>
+#include <IntPatch_TheIWLineOfTheIWalking.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <IntSurf_LineOn2S.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_DomainError.hxx>
-#include <IntSurf_PathPoint.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <gp_Vec.hxx>
+#include <IntSurf_LineOn2S.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_DomainError.hpp>
+#include <IntSurf_PathPoint.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <gp_Vec.hpp>
 
 IntPatch_TheIWLineOfTheIWalking::IntPatch_TheIWLineOfTheIWalking(
   const IntSurf_Allocator& theAllocator)

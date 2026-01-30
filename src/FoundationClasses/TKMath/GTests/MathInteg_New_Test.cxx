@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <MathInteg_Kronrod.hxx>
-#include <MathInteg_DoubleExp.hxx>
-#include <MathInteg_Gauss.hxx>
-#include <math_KronrodSingleIntegration.hxx>
-#include <math_GaussSingleIntegration.hxx>
-#include <math_Function.hxx>
+#include <MathInteg_Kronrod.hpp>
+#include <MathInteg_DoubleExp.hpp>
+#include <MathInteg_Gauss.hpp>
+#include <math_KronrodSingleIntegration.hpp>
+#include <math_GaussSingleIntegration.hpp>
+#include <math_Function.hpp>
 
 #include <cmath>
 

@@ -15,19 +15,19 @@
 
 #include <cstdio>
 
-#include <DDF.hxx>
-#include <DDF_Browser.hxx>
+#include <DDF.hpp>
+#include <DDF_Browser.hpp>
 
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Message.hxx>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Message.hpp>
 
-#include <TDF_Label.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Tool.hxx>
+#include <TDF_Label.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Tool.hpp>
 
-#include <TCollection_AsciiString.hxx>
-#include <OSD_File.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <OSD_File.hpp>
 
 //=======================================================================
 // function : DFBrowse

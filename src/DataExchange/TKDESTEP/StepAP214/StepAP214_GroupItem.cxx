@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepAP214_GroupItem.hxx>
-#include <StepBasic_GroupRelationship.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepGeom_GeometricRepresentationItem.hxx>
-#include <StepRepr_MappedItem.hxx>
-#include <StepRepr_PropertyDefinitionRepresentation.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_RepresentationRelationshipWithTransformation.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <StepRepr_ShapeRepresentationRelationship.hxx>
-#include <StepShape_TopologicalRepresentationItem.hxx>
-#include <StepVisual_StyledItem.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepAP214_GroupItem.hpp>
+#include <StepBasic_GroupRelationship.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepGeom_GeometricRepresentationItem.hpp>
+#include <StepRepr_MappedItem.hpp>
+#include <StepRepr_PropertyDefinitionRepresentation.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_RepresentationRelationshipWithTransformation.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <StepRepr_ShapeRepresentationRelationship.hpp>
+#include <StepShape_TopologicalRepresentationItem.hpp>
+#include <StepVisual_StyledItem.hpp>
 
 StepAP214_GroupItem::StepAP214_GroupItem() = default;
 

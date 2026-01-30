@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWTorus.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepShape_Torus.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWTorus.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepShape_Torus.hpp>
 
 RWStepShape_RWTorus::RWStepShape_RWTorus() = default;
 

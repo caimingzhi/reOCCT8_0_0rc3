@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_NonUniformZoneDefinition.hxx>
+#include <StepDimTol_NonUniformZoneDefinition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_NonUniformZoneDefinition, StepDimTol_ToleranceZoneDefinition)
 

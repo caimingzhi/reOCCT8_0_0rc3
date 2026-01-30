@@ -14,11 +14,11 @@
 
 // Modif JCV 12/12/90
 
-#include <gp_Elips.hxx>
+#include <gp_Elips.hpp>
 
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
 
 void gp_Elips::Mirror(const gp_Pnt& P) noexcept
 {

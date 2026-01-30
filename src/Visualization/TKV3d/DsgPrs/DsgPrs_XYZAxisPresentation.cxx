@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_XYZAxisPresentation.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_Text.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_TextAspect.hxx>
+#include <DsgPrs_XYZAxisPresentation.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_Text.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_TextAspect.hpp>
 
 //=================================================================================================
 

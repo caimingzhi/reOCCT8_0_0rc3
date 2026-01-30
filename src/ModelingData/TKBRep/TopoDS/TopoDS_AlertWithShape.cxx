@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopoDS_AlertWithShape.hxx>
+#include <TopoDS_AlertWithShape.hpp>
 
-#include <Message_Msg.hxx>
+#include <Message_Msg.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_AlertWithShape, Message_Alert)
 

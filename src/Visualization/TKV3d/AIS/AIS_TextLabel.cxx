@@ -12,25 +12,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_TextLabel.hxx>
+#include <AIS_TextLabel.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <Font_FTFont.hxx>
-#include <Font_FontMgr.hxx>
-#include <Font_Rect.hxx>
-#include <Graphic3d_AspectText3d.hxx>
-#include <Graphic3d_RenderingParams.hxx>
-#include <Graphic3d_Text.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <Font_FTFont.hpp>
+#include <Font_FontMgr.hpp>
+#include <Font_Rect.hpp>
+#include <Graphic3d_AspectText3d.hpp>
+#include <Graphic3d_RenderingParams.hpp>
+#include <Graphic3d_Text.hpp>
 
-#include <Prs3d_Text.hxx>
-#include <Prs3d_TextAspect.hxx>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_TextAspect.hpp>
 
-#include <Select3D_SensitiveFace.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <SelectMgr_EntityOwner.hxx>
+#include <Select3D_SensitiveFace.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <SelectMgr_EntityOwner.hpp>
 
-#include <V3d_Viewer.hxx>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TextLabel, AIS_InteractiveObject)
 

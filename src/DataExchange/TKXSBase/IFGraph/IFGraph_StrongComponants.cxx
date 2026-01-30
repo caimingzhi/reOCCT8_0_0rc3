@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_StrongComponants.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
+#include <IFGraph_StrongComponants.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
 
 // #include <IFGraph_SortedStrongs.hxx>
 IFGraph_StrongComponants::IFGraph_StrongComponants(const Interface_Graph& agraph, const bool whole)

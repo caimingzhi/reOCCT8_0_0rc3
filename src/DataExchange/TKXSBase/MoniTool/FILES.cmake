@@ -3,37 +3,37 @@ set(OCCT_MoniTool_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_MoniTool_FILES
   MoniTool_AttrList.cxx
-  MoniTool_AttrList.hxx
+  MoniTool_AttrList.hpp
   MoniTool_CaseData.cxx
-  MoniTool_CaseData.hxx
+  MoniTool_CaseData.hpp
   MoniTool_DataInfo.cxx
-  MoniTool_DataInfo.hxx
+  MoniTool_DataInfo.hpp
 
   MoniTool_Element.cxx
-  MoniTool_Element.hxx
+  MoniTool_Element.hpp
 
   MoniTool_IntVal.cxx
-  MoniTool_IntVal.hxx
-  MoniTool_Macros.hxx
+  MoniTool_IntVal.hpp
+  MoniTool_Macros.hpp
   MoniTool_RealVal.cxx
-  MoniTool_RealVal.hxx
+  MoniTool_RealVal.hpp
 
   MoniTool_SignShape.cxx
-  MoniTool_SignShape.hxx
+  MoniTool_SignShape.hpp
   MoniTool_SignText.cxx
-  MoniTool_SignText.hxx
+  MoniTool_SignText.hpp
   MoniTool_Stat.cxx
-  MoniTool_Stat.hxx
+  MoniTool_Stat.hpp
   MoniTool_Timer.cxx
-  MoniTool_Timer.hxx
-  MoniTool_Timer.lxx
-  MoniTool_TimerSentry.hxx
-  MoniTool_TimerSentry.lxx
+  MoniTool_Timer.hpp
+  MoniTool_Timer_1.hpp
+  MoniTool_TimerSentry.hpp
+  MoniTool_TimerSentry_1.hpp
   MoniTool_TransientElem.cxx
-  MoniTool_TransientElem.hxx
+  MoniTool_TransientElem.hpp
   MoniTool_TypedValue.cxx
-  MoniTool_TypedValue.hxx
-  MoniTool_ValueInterpret.hxx
-  MoniTool_ValueSatisfies.hxx
-  MoniTool_ValueType.hxx
+  MoniTool_TypedValue.hpp
+  MoniTool_ValueInterpret.hpp
+  MoniTool_ValueSatisfies.hpp
+  MoniTool_ValueType.hpp
 )

@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_HCurveTool.hxx>
+#include <BRepBlend_HCurveTool.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAbs_CurveType.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAbs_CurveType.hpp>
 
 //============================================================
 int BRepBlend_HCurveTool::NbSamples(const occ::handle<Adaptor3d_Curve>& C,

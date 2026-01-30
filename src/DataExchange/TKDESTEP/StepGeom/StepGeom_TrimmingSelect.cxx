@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <StepGeom_TrimmingMember.hxx>
-#include <StepGeom_TrimmingSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <StepGeom_TrimmingMember.hpp>
+#include <StepGeom_TrimmingSelect.hpp>
 
 StepGeom_TrimmingSelect::StepGeom_TrimmingSelect() = default;
 

@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
+#include <BRepTest.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
 
-#include <BRepPrimAPI_MakeHalfSpace.hxx>
-#include <BRepAlgo_FaceRestrictor.hxx>
-#include <TopoDS.hxx>
-#include <TopOpeBRepBuild_HBuilder.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
+#include <BRepPrimAPI_MakeHalfSpace.hpp>
+#include <BRepAlgo_FaceRestrictor.hpp>
+#include <TopoDS.hpp>
+#include <TopOpeBRepBuild_HBuilder.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
 
 static int halfspace(Draw_Interpretor& di, int n, const char** a)
 {

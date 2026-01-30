@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEVRML_ConfigurationNode.hxx>
+#include <DEVRML_ConfigurationNode.hpp>
 
-#include <DEVRML_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
+#include <DEVRML_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEVRML_ConfigurationNode, DE_ConfigurationNode)
 

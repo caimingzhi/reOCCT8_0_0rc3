@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeBuild.hxx>
+#include <ShapeBuild.hpp>
 
-#include <Geom_Plane.hxx>
+#include <Geom_Plane.hpp>
 
 //=================================================================================================
 

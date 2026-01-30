@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_Datum.hxx>
+#include <XCAFDoc_Datum.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_IntegerArray.hxx>
-#include <TDataStd_RealArray.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TDataStd_Name.hxx>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_IntegerArray.hpp>
+#include <TDataStd_RealArray.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TDataStd_Name.hpp>
 
-#include <XCAFDimTolObjects_DatumObject.hxx>
+#include <XCAFDimTolObjects_DatumObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_Datum, TDF_Attribute)
 

@@ -3,21 +3,21 @@ set(OCCT_StdSelect_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StdSelect_FILES
   StdSelect.cxx
-  StdSelect.hxx
+  StdSelect.hpp
   StdSelect_BRepOwner.cxx
-  StdSelect_BRepOwner.hxx
+  StdSelect_BRepOwner.hpp
   StdSelect_BRepSelectionTool.cxx
-  StdSelect_BRepSelectionTool.hxx
+  StdSelect_BRepSelectionTool.hpp
   StdSelect_EdgeFilter.cxx
-  StdSelect_EdgeFilter.hxx
+  StdSelect_EdgeFilter.hpp
   StdSelect_FaceFilter.cxx
-  StdSelect_FaceFilter.hxx
+  StdSelect_FaceFilter.hpp
   StdSelect_Shape.cxx
-  StdSelect_Shape.hxx
+  StdSelect_Shape.hpp
   StdSelect_ShapeTypeFilter.cxx
-  StdSelect_ShapeTypeFilter.hxx
-  StdSelect_TypeOfEdge.hxx
-  StdSelect_TypeOfFace.hxx
-  StdSelect_TypeOfSelectionImage.hxx
-  StdSelect_ViewerSelector3d.hxx
+  StdSelect_ShapeTypeFilter.hpp
+  StdSelect_TypeOfEdge.hpp
+  StdSelect_TypeOfFace.hpp
+  StdSelect_TypeOfSelectionImage.hpp
+  StdSelect_ViewerSelector3d.hpp
 )

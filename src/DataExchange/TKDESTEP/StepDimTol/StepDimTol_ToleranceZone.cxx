@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepDimTol_ToleranceZone.hxx>
+#include <StepDimTol_ToleranceZone.hpp>
 
-#include <StepDimTol_ToleranceZoneTarget.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <StepDimTol_ToleranceZoneTarget.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ToleranceZone, StepRepr_ShapeAspect)
 

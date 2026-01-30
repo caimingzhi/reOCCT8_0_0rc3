@@ -3,89 +3,89 @@ set(OCCT_IGESBasic_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESBasic_FILES
   IGESBasic.cxx
-  IGESBasic.hxx
+  IGESBasic.hpp
 
   IGESBasic_AssocGroupType.cxx
-  IGESBasic_AssocGroupType.hxx
+  IGESBasic_AssocGroupType.hpp
   IGESBasic_ExternalReferenceFile.cxx
-  IGESBasic_ExternalReferenceFile.hxx
+  IGESBasic_ExternalReferenceFile.hpp
   IGESBasic_ExternalRefFile.cxx
-  IGESBasic_ExternalRefFile.hxx
+  IGESBasic_ExternalRefFile.hpp
   IGESBasic_ExternalRefFileIndex.cxx
-  IGESBasic_ExternalRefFileIndex.hxx
+  IGESBasic_ExternalRefFileIndex.hpp
   IGESBasic_ExternalRefFileName.cxx
-  IGESBasic_ExternalRefFileName.hxx
+  IGESBasic_ExternalRefFileName.hpp
   IGESBasic_ExternalRefLibName.cxx
-  IGESBasic_ExternalRefLibName.hxx
+  IGESBasic_ExternalRefLibName.hpp
   IGESBasic_ExternalRefName.cxx
-  IGESBasic_ExternalRefName.hxx
+  IGESBasic_ExternalRefName.hpp
   IGESBasic_GeneralModule.cxx
-  IGESBasic_GeneralModule.hxx
+  IGESBasic_GeneralModule.hpp
   IGESBasic_Group.cxx
-  IGESBasic_Group.hxx
+  IGESBasic_Group.hpp
   IGESBasic_GroupWithoutBackP.cxx
-  IGESBasic_GroupWithoutBackP.hxx
-  IGESBasic_HArray1OfHArray1OfIGESEntity.hxx
+  IGESBasic_GroupWithoutBackP.hpp
+  IGESBasic_HArray1OfHArray1OfIGESEntity.hpp
   IGESBasic_HArray1OfHArray1OfIGESEntity_0.cxx
-  IGESBasic_HArray1OfHArray1OfInteger.hxx
+  IGESBasic_HArray1OfHArray1OfInteger.hpp
   IGESBasic_HArray1OfHArray1OfInteger_0.cxx
-  IGESBasic_HArray1OfHArray1OfReal.hxx
+  IGESBasic_HArray1OfHArray1OfReal.hpp
   IGESBasic_HArray1OfHArray1OfReal_0.cxx
-  IGESBasic_HArray1OfHArray1OfXY.hxx
+  IGESBasic_HArray1OfHArray1OfXY.hpp
   IGESBasic_HArray1OfHArray1OfXY_0.cxx
-  IGESBasic_HArray1OfHArray1OfXYZ.hxx
+  IGESBasic_HArray1OfHArray1OfXYZ.hpp
   IGESBasic_HArray1OfHArray1OfXYZ_0.cxx
 
   IGESBasic_Hierarchy.cxx
-  IGESBasic_Hierarchy.hxx
+  IGESBasic_Hierarchy.hpp
   IGESBasic_Name.cxx
-  IGESBasic_Name.hxx
+  IGESBasic_Name.hpp
   IGESBasic_OrderedGroup.cxx
-  IGESBasic_OrderedGroup.hxx
+  IGESBasic_OrderedGroup.hpp
   IGESBasic_OrderedGroupWithoutBackP.cxx
-  IGESBasic_OrderedGroupWithoutBackP.hxx
+  IGESBasic_OrderedGroupWithoutBackP.hpp
   IGESBasic_Protocol.cxx
-  IGESBasic_Protocol.hxx
+  IGESBasic_Protocol.hpp
   IGESBasic_ReadWriteModule.cxx
-  IGESBasic_ReadWriteModule.hxx
+  IGESBasic_ReadWriteModule.hpp
   IGESBasic_SingleParent.cxx
-  IGESBasic_SingleParent.hxx
+  IGESBasic_SingleParent.hpp
   IGESBasic_SingularSubfigure.cxx
-  IGESBasic_SingularSubfigure.hxx
+  IGESBasic_SingularSubfigure.hpp
   IGESBasic_SpecificModule.cxx
-  IGESBasic_SpecificModule.hxx
+  IGESBasic_SpecificModule.hpp
   IGESBasic_SubfigureDef.cxx
-  IGESBasic_SubfigureDef.hxx
+  IGESBasic_SubfigureDef.hpp
   IGESBasic_ToolAssocGroupType.cxx
-  IGESBasic_ToolAssocGroupType.hxx
+  IGESBasic_ToolAssocGroupType.hpp
   IGESBasic_ToolExternalReferenceFile.cxx
-  IGESBasic_ToolExternalReferenceFile.hxx
+  IGESBasic_ToolExternalReferenceFile.hpp
   IGESBasic_ToolExternalRefFile.cxx
-  IGESBasic_ToolExternalRefFile.hxx
+  IGESBasic_ToolExternalRefFile.hpp
   IGESBasic_ToolExternalRefFileIndex.cxx
-  IGESBasic_ToolExternalRefFileIndex.hxx
+  IGESBasic_ToolExternalRefFileIndex.hpp
   IGESBasic_ToolExternalRefFileName.cxx
-  IGESBasic_ToolExternalRefFileName.hxx
+  IGESBasic_ToolExternalRefFileName.hpp
   IGESBasic_ToolExternalRefLibName.cxx
-  IGESBasic_ToolExternalRefLibName.hxx
+  IGESBasic_ToolExternalRefLibName.hpp
   IGESBasic_ToolExternalRefName.cxx
-  IGESBasic_ToolExternalRefName.hxx
+  IGESBasic_ToolExternalRefName.hpp
   IGESBasic_ToolGroup.cxx
-  IGESBasic_ToolGroup.hxx
+  IGESBasic_ToolGroup.hpp
   IGESBasic_ToolGroupWithoutBackP.cxx
-  IGESBasic_ToolGroupWithoutBackP.hxx
+  IGESBasic_ToolGroupWithoutBackP.hpp
   IGESBasic_ToolHierarchy.cxx
-  IGESBasic_ToolHierarchy.hxx
+  IGESBasic_ToolHierarchy.hpp
   IGESBasic_ToolName.cxx
-  IGESBasic_ToolName.hxx
+  IGESBasic_ToolName.hpp
   IGESBasic_ToolOrderedGroup.cxx
-  IGESBasic_ToolOrderedGroup.hxx
+  IGESBasic_ToolOrderedGroup.hpp
   IGESBasic_ToolOrderedGroupWithoutBackP.cxx
-  IGESBasic_ToolOrderedGroupWithoutBackP.hxx
+  IGESBasic_ToolOrderedGroupWithoutBackP.hpp
   IGESBasic_ToolSingleParent.cxx
-  IGESBasic_ToolSingleParent.hxx
+  IGESBasic_ToolSingleParent.hpp
   IGESBasic_ToolSingularSubfigure.cxx
-  IGESBasic_ToolSingularSubfigure.hxx
+  IGESBasic_ToolSingularSubfigure.hpp
   IGESBasic_ToolSubfigureDef.cxx
-  IGESBasic_ToolSubfigureDef.hxx
+  IGESBasic_ToolSubfigureDef.hpp
 )

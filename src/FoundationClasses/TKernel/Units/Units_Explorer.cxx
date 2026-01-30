@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Units_Explorer.hxx>
-#include <Units_Unit.hxx>
-#include <Units_UnitsDictionary.hxx>
-#include <Units_UnitsSystem.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Units_Explorer.hpp>
+#include <Units_Unit.hpp>
+#include <Units_UnitsDictionary.hpp>
+#include <Units_UnitsSystem.hpp>
 
 //=================================================================================================
 

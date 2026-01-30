@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepBasic_IdentificationAssignment.hxx>
-#include <StepBasic_IdentificationRole.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_IdentificationAssignment.hpp>
+#include <StepBasic_IdentificationRole.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_IdentificationAssignment, Standard_Transient)
 

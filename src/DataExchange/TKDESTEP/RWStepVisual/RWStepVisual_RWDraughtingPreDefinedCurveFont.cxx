@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepVisual_RWDraughtingPreDefinedCurveFont.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_DraughtingPreDefinedCurveFont.hxx>
+#include "RWStepVisual_RWDraughtingPreDefinedCurveFont.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_DraughtingPreDefinedCurveFont.hpp>
 
 RWStepVisual_RWDraughtingPreDefinedCurveFont::RWStepVisual_RWDraughtingPreDefinedCurveFont() =
   default;

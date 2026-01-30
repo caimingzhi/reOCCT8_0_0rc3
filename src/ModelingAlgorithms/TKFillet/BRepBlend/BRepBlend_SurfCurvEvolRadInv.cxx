@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <BRepBlend_SurfCurvEvolRadInv.hxx>
-#include <Law_Function.hxx>
-#include <math_Matrix.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <BRepBlend_SurfCurvEvolRadInv.hpp>
+#include <Law_Function.hpp>
+#include <math_Matrix.hpp>
 
 //=================================================================================================
 

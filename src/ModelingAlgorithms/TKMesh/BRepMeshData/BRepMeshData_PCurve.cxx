@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMeshData_PCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <BRepMesh_Vertex.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <BRepMeshData_PCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <BRepMesh_Vertex.hpp>
+#include <Standard_OutOfRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_PCurve, IMeshData_PCurve)
 

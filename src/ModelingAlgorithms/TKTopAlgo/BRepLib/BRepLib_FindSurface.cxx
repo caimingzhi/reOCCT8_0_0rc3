@@ -14,37 +14,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepLib_FindSurface.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Vec.hxx>
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_Vector.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepLib_FindSurface.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Vec.hpp>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_Vector.hpp>
 
 //=================================================================================================
 

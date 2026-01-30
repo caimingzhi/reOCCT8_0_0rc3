@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_StructureManager.hxx>
+#include <Graphic3d_StructureManager.hpp>
 
-#include <Graphic3d_DataStructureManager.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_Structure.hxx>
+#include <Graphic3d_DataStructureManager.hpp>
+#include <Graphic3d_GraphicDriver.hpp>
+#include <Graphic3d_Structure.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_StructureManager, Standard_Transient)
 
-#include <NCollection_Map.hxx>
-#include <Graphic3d_CView.hxx>
+#include <NCollection_Map.hpp>
+#include <Graphic3d_CView.hpp>
 class Graphic3d_Structure;
 
 //=================================================================================================

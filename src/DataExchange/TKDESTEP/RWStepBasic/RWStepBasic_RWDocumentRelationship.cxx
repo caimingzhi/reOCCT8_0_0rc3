@@ -13,13 +13,13 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWDocumentRelationship.pxx"
-#include <StepBasic_Document.hxx>
-#include <StepBasic_DocumentRelationship.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWDocumentRelationship.hpp"
+#include <StepBasic_Document.hpp>
+#include <StepBasic_DocumentRelationship.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 RWStepBasic_RWDocumentRelationship::RWStepBasic_RWDocumentRelationship() = default;
 

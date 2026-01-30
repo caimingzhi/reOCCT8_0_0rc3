@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TCollection_AsciiString.hxx>
-#include <Vrml_WWWInline.hxx>
+#include <TCollection_AsciiString.hpp>
+#include <Vrml_WWWInline.hpp>
 
 Vrml_WWWInline::Vrml_WWWInline()
 {

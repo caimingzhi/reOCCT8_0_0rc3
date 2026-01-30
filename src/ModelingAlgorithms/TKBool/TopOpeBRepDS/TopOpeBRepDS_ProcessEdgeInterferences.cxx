@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_EdgeInterferenceTool.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopExp.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <Geom_Curve.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepDS_connex.hxx>
-#include <TopOpeBRepTool_SC.hxx>
+#include <TopOpeBRepDS_EdgeInterferenceTool.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopExp.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <Geom_Curve.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepDS_connex.hpp>
+#include <TopOpeBRepTool_SC.hpp>
 
 #define MDShcpi occ::handle<TopOpeBRepDS_CurvePointInterference>
 #define MAKECPI(IJKLM) (occ::down_cast<TopOpeBRepDS_CurvePointInterference>(IJKLM))

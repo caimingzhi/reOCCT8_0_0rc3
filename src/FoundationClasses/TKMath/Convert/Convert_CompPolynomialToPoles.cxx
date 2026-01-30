@@ -24,13 +24,13 @@
 
 #define No_Standard_OutOfRange
 
-#include <BSplCLib.hxx>
-#include <Convert_CompPolynomialToPoles.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <Convert_CompPolynomialToPoles.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

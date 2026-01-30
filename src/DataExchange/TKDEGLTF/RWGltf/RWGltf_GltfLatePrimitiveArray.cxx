@@ -12,12 +12,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWGltf_GltfLatePrimitiveArray.hxx>
+#include <RWGltf_GltfLatePrimitiveArray.hpp>
 
-#include <RWGltf_GltfPrimArrayData.hxx>
-#include <RWGltf_MaterialMetallicRoughness.hxx>
-#include <RWGltf_MaterialCommon.hxx>
-#include <RWGltf_TriangulationReader.hxx>
+#include <RWGltf_GltfPrimArrayData.hpp>
+#include <RWGltf_MaterialMetallicRoughness.hpp>
+#include <RWGltf_MaterialCommon.hpp>
+#include <RWGltf_TriangulationReader.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_GltfLatePrimitiveArray, RWMesh_TriangulationSource)
 

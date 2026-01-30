@@ -14,11 +14,11 @@
 // AdvApp2Var_SysBase.cxx
 #include <cassert>
 #include <cmath>
-#include <NCollection_Array1.hxx>
+#include <NCollection_Array1.hpp>
 #include <cstring>
-#include <AdvApp2Var_SysBase.hxx>
-#include <AdvApp2Var_Data.hxx>
-#include <Standard.hxx>
+#include <AdvApp2Var_SysBase.hpp>
+#include <AdvApp2Var_Data.hpp>
+#include <Standard.hpp>
 
 static int __i__len();
 

@@ -15,30 +15,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <BOPDS_ShapeInfo.hxx>
-#include <NCollection_Vector.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_Context.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <Precision.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
+#include <Bnd_Box.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <BOPDS_ShapeInfo.hpp>
+#include <NCollection_Vector.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_Context.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <Precision.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
 
 //=================================================================================================
 

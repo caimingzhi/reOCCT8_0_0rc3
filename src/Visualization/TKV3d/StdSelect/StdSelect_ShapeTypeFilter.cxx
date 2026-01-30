@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StdSelect_BRepOwner.hxx>
-#include <StdSelect_ShapeTypeFilter.hxx>
+#include <Standard_Type.hpp>
+#include <StdSelect_BRepOwner.hpp>
+#include <StdSelect_ShapeTypeFilter.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_ShapeTypeFilter, SelectMgr_Filter)
 

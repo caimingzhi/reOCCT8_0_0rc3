@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_ArcFunction.hxx>
-#include <IntPatch_HInterTool.hxx>
-#include <IntSurf_Quadric.hxx>
+#include <IntPatch_ArcFunction.hpp>
+#include <IntPatch_HInterTool.hpp>
+#include <IntSurf_Quadric.hpp>
 
 IntPatch_ArcFunction::IntPatch_ArcFunction() = default;
 

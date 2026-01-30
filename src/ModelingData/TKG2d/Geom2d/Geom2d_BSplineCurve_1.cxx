@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_UndefinedDerivative.hxx>
-#include <gp.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_RangeError.hxx>
+#include <BSplCLib.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_UndefinedDerivative.hpp>
+#include <gp.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_RangeError.hpp>
 
 #define POLES (poles->Array1())
 #define KNOTS (knots->Array1())

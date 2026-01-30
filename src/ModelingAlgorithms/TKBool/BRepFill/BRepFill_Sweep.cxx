@@ -14,81 +14,81 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <Approx_SameParameter.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRep_Tool.hxx>
-#include <BRep_TVertex.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepCheck_Edge.hxx>
-#include <BRepFill_LocationLaw.hxx>
-#include <BRepFill_SectionLaw.hxx>
-#include <BRepFill_Sweep.hxx>
-#include <BRepFill_TrimShellCorner.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_FindSurface.hxx>
-#include <BRepLib_MakeEdge.hxx>
-#include <BRepLib_MakeFace.hxx>
-#include <BRepTools_Substitution.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_LocationLaw.hxx>
-#include <GeomFill_SectionLaw.hxx>
-#include <GeomFill_Sweep.hxx>
-#include <GeomLib.hxx>
-#include <GeomLib_IsPlanarSurface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <NCollection_Array2.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_HArray2.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <GeomLib_CheckCurveOnSurface.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <Approx_SameParameter.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRep_Tool.hpp>
+#include <BRep_TVertex.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepCheck_Edge.hpp>
+#include <BRepFill_LocationLaw.hpp>
+#include <BRepFill_SectionLaw.hpp>
+#include <BRepFill_Sweep.hpp>
+#include <BRepFill_TrimShellCorner.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_FindSurface.hpp>
+#include <BRepLib_MakeEdge.hpp>
+#include <BRepLib_MakeFace.hpp>
+#include <BRepTools_Substitution.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <GCPnts_AbscissaPoint.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_LocationLaw.hpp>
+#include <GeomFill_SectionLaw.hpp>
+#include <GeomFill_Sweep.hpp>
+#include <GeomLib.hpp>
+#include <GeomLib_IsPlanarSurface.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <NCollection_Array2.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_HArray2.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <GeomLib_CheckCurveOnSurface.hpp>
 
 #include <cstdio>
 
 // #include <BRepFill_TrimCorner.hxx>
 //  modified by NIZHNY-MKK  Wed Oct 22 12:25:45 2003
-// #include <GeomPlate_BuildPlateSurface.hxx>
-// #include <GeomPlate_Surface.hxx>
-// #include <GeomPlate_PointConstraint.hxx>
+// #include <GeomPlate_BuildPlateSurface.hpp>
+// #include <GeomPlate_Surface.hpp>
+// #include <GeomPlate_PointConstraint.hpp>
 // OCC500(apo)
 
 //=================================================================================================

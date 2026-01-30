@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Circ.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Vec.hxx>
-#include <ProjLib_Plane.hxx>
+#include <gp_Circ.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Vec.hpp>
+#include <ProjLib_Plane.hpp>
 
 //=================================================================================================
 

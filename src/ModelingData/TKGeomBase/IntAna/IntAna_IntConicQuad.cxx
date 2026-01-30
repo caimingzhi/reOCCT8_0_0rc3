@@ -22,25 +22,25 @@
 #define CREATE IntAna_IntConicQuad::IntAna_IntConicQuad
 #define PERFORM void IntAna_IntConicQuad::Perform
 
-#include <ElCLib.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <IntAna_Quadric.hxx>
-#include <IntAna_ResultType.hxx>
-#include <math_DirectPolynomialRoots.hxx>
-#include <math_TrigonometricFunctionRoots.hxx>
+#include <ElCLib.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <IntAna_Quadric.hpp>
+#include <IntAna_ResultType.hpp>
+#include <math_DirectPolynomialRoots.hpp>
+#include <math_TrigonometricFunctionRoots.hpp>
 
 static double PIpPI = M_PI + M_PI;
 

@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_QuasiUniformDeflection.hxx>
+#include <GCPnts_QuasiUniformDeflection.hpp>
 
-#include <GCPnts_DeflectionType.hxx>
-#include <GCPnts_TCurveTypes.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GCPnts_DeflectionType.hpp>
+#include <GCPnts_TCurveTypes.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <StdFail_NotDone.hpp>
 
 static const int MyMaxQuasiFleshe = 2000;
 

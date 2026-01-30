@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepFill_MultiLine.hxx>
+#include <BRepFill_MultiLine.hpp>
 
-#include <BRepIntCurveSurface_Inter.hxx>
-#include <gp.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <Precision.hxx>
-#include <BRep_Tool.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom2d_Line.hxx>
-#include <GeomProjLib.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <ElCLib.hxx>
-#include <GeomAdaptor_Curve.hxx>
+#include <BRepIntCurveSurface_Inter.hpp>
+#include <gp.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <Precision.hpp>
+#include <BRep_Tool.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom2d_Line.hpp>
+#include <GeomProjLib.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <ElCLib.hpp>
+#include <GeomAdaptor_Curve.hpp>
 
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomAbs_SurfaceType.hxx>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomAbs_SurfaceType.hpp>
 
 // POP pour NT
 #include <cstdio>

@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Chronometer.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_PrinterOStream.hxx>
-#include <OSD.hxx>
-#include <OSD_Chronometer.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_Exception_CTRL_BREAK.hxx>
-#include <OSD_MemInfo.hxx>
-#include <OSD_Parallel.hxx>
-#include <OSD_PerfMeter.hxx>
-#include <OSD_ThreadPool.hxx>
-#include <Standard_Macro.hxx>
-#include <Standard_SStream.hxx>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Chronometer.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_PrinterOStream.hpp>
+#include <OSD.hpp>
+#include <OSD_Chronometer.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_Exception_CTRL_BREAK.hpp>
+#include <OSD_MemInfo.hpp>
+#include <OSD_Parallel.hpp>
+#include <OSD_PerfMeter.hpp>
+#include <OSD_ThreadPool.hpp>
+#include <Standard_Macro.hpp>
+#include <Standard_SStream.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <Standard_Version.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <TCollection_AsciiString.hpp>
 
 #ifdef _WIN32
 

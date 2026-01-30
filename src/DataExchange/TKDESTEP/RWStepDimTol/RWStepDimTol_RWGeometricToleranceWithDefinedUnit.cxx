@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepDimTol_RWGeometricToleranceWithDefinedUnit.pxx"
+#include "RWStepDimTol_RWGeometricToleranceWithDefinedUnit.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepDimTol_GeometricToleranceWithDefinedUnit.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepDimTol_GeometricToleranceWithDefinedUnit.hpp>
 
 //=================================================================================================
 

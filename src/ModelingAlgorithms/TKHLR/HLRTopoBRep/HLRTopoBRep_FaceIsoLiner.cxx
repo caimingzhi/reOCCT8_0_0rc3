@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dHatch_Hatcher.hxx>
-#include <Geom2dHatch_Intersector.hxx>
-#include <gp_Pnt.hxx>
-#include <HatchGen_Domain.hxx>
-#include <HatchGen_PointOnElement.hxx>
-#include <HatchGen_PointOnHatching.hxx>
-#include <HLRTopoBRep_Data.hxx>
-#include <HLRTopoBRep_FaceIsoLiner.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dHatch_Hatcher.hpp>
+#include <Geom2dHatch_Intersector.hpp>
+#include <gp_Pnt.hpp>
+#include <HatchGen_Domain.hpp>
+#include <HatchGen_PointOnElement.hpp>
+#include <HatchGen_PointOnHatching.hpp>
+#include <HLRTopoBRep_Data.hpp>
+#include <HLRTopoBRep_FaceIsoLiner.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Shape.hpp>
 
-// #include <BRepAdaptor_Curve2d.hxx>
+// #include <BRepAdaptor_Curve2d.hpp>
 const double IntersectorConfusion = 1.e-10;
 const double IntersectorTangency  = 1.e-10;
 const double HatcherConfusion2d   = 1.e-8;

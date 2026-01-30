@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Contap_ThePathPointOfTheSearch.hxx>
+#include <Contap_ThePathPointOfTheSearch.hpp>
 
-#include <Adaptor3d_HVertex.hxx>
-#include <Adaptor2d_Curve2d.hxx>
-#include <Standard_DomainError.hxx>
-#include <gp_Pnt.hxx>
+#include <Adaptor3d_HVertex.hpp>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt.hpp>
 
 Contap_ThePathPointOfTheSearch::Contap_ThePathPointOfTheSearch()
     : tol(0.0),

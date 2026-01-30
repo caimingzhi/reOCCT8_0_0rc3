@@ -2,24 +2,24 @@
 set(OCCT_IMeshTools_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IMeshTools_FILES
-  IMeshTools_Context.hxx
+  IMeshTools_Context.hpp
   IMeshTools_Context.cxx
-  IMeshTools_CurveTessellator.hxx
+  IMeshTools_CurveTessellator.hpp
   IMeshTools_CurveTessellator.cxx
-  IMeshTools_MeshAlgo.hxx
+  IMeshTools_MeshAlgo.hpp
   IMeshTools_MeshAlgo.cxx
-  IMeshTools_MeshAlgoFactory.hxx
+  IMeshTools_MeshAlgoFactory.hpp
   IMeshTools_MeshAlgoFactory.cxx
-  IMeshTools_MeshAlgoType.hxx
-  IMeshTools_MeshBuilder.hxx
+  IMeshTools_MeshAlgoType.hpp
+  IMeshTools_MeshBuilder.hpp
   IMeshTools_MeshBuilder.cxx
-  IMeshTools_ModelAlgo.hxx
+  IMeshTools_ModelAlgo.hpp
   IMeshTools_ModelAlgo.cxx
-  IMeshTools_ModelBuilder.hxx
+  IMeshTools_ModelBuilder.hpp
   IMeshTools_ModelBuilder.cxx
-  IMeshTools_Parameters.hxx
-  IMeshTools_ShapeExplorer.hxx
+  IMeshTools_Parameters.hpp
+  IMeshTools_ShapeExplorer.hpp
   IMeshTools_ShapeExplorer.cxx
-  IMeshTools_ShapeVisitor.hxx
+  IMeshTools_ShapeVisitor.hpp
   IMeshTools_ShapeVisitor.cxx
 )

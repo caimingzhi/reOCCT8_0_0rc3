@@ -12,9 +12,9 @@
 // commercial license or contractual agreement.
 
 #include <gtest/gtest.h>
-#include <math_TrigonometricFunctionRoots.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_DimensionError.hxx>
+#include <math_TrigonometricFunctionRoots.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DimensionError.hpp>
 
 namespace
 {

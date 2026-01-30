@@ -15,8 +15,8 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_TNameContainer.hxx>
-#include <Standard_GUID.hxx>
+#include <TObj_TNameContainer.hpp>
+#include <Standard_GUID.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TNameContainer, TDF_Attribute)
 

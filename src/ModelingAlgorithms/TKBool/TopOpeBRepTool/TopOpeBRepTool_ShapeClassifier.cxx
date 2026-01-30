@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepClass3d_SolidExplorer.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <BRepClass_FacePassiveClassifier.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <TopOpeBRepTool_CurveTool.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_State.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopOpeBRepTool_ShapeClassifier.hxx>
-#include <TopOpeBRepTool_SolidClassifier.hxx>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepClass3d_SolidExplorer.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <BRepClass_FacePassiveClassifier.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <TopOpeBRepTool_CurveTool.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_State.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopOpeBRepTool_ShapeClassifier.hpp>
+#include <TopOpeBRepTool_SolidClassifier.hpp>
 
 //=================================================================================================
 

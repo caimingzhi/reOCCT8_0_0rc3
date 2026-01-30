@@ -3,19 +3,19 @@ set(OCCT_BinTObjDrivers_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BinTObjDrivers_FILES
   BinTObjDrivers.cxx
-  BinTObjDrivers.hxx
+  BinTObjDrivers.hpp
   BinTObjDrivers_DocumentRetrievalDriver.cxx
-  BinTObjDrivers_DocumentRetrievalDriver.hxx
+  BinTObjDrivers_DocumentRetrievalDriver.hpp
   BinTObjDrivers_DocumentStorageDriver.cxx
-  BinTObjDrivers_DocumentStorageDriver.hxx
+  BinTObjDrivers_DocumentStorageDriver.hpp
   BinTObjDrivers_IntSparseArrayDriver.cxx
-  BinTObjDrivers_IntSparseArrayDriver.hxx
+  BinTObjDrivers_IntSparseArrayDriver.hpp
   BinTObjDrivers_ModelDriver.cxx
-  BinTObjDrivers_ModelDriver.hxx
+  BinTObjDrivers_ModelDriver.hpp
   BinTObjDrivers_ObjectDriver.cxx
-  BinTObjDrivers_ObjectDriver.hxx
+  BinTObjDrivers_ObjectDriver.hpp
   BinTObjDrivers_ReferenceDriver.cxx
-  BinTObjDrivers_ReferenceDriver.hxx
+  BinTObjDrivers_ReferenceDriver.hpp
   BinTObjDrivers_XYZDriver.cxx
-  BinTObjDrivers_XYZDriver.hxx
+  BinTObjDrivers_XYZDriver.hpp
 )

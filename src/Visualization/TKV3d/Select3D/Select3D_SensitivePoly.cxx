@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Select3D_SensitivePoly.hxx>
+#include <Select3D_SensitivePoly.hpp>
 
-#include <ElCLib.hxx>
+#include <ElCLib.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitivePoly, Select3D_SensitiveSet)
 

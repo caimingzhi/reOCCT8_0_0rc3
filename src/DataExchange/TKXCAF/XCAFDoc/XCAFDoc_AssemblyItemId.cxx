@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_AssemblyItemId.hxx>
+#include <XCAFDoc_AssemblyItemId.hpp>
 
-#include <Standard_Dump.hxx>
+#include <Standard_Dump.hpp>
 
 XCAFDoc_AssemblyItemId::XCAFDoc_AssemblyItemId() = default;
 

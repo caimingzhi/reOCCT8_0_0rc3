@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_MechanicalDesignAndDraughtingRelationship.hxx>
+#include <Standard_Type.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_MechanicalDesignAndDraughtingRelationship.hpp>
 
 RWStepRepr_RWMechanicalDesignAndDraughtingRelationship::
   RWStepRepr_RWMechanicalDesignAndDraughtingRelationship() = default;

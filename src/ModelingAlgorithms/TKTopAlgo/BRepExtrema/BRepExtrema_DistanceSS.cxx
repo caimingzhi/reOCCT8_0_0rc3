@@ -16,41 +16,41 @@
 
 // Modified: Sergey ZERCHANINOV
 
-#include <BRepExtrema_DistanceSS.hxx>
+#include <BRepExtrema_DistanceSS.hpp>
 
-#include <TopExp.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepExtrema_SupportType.hxx>
-#include <Standard_Real.hxx>
-#include <BRepExtrema_SolutionElem.hxx>
-#include <NCollection_Sequence.hxx>
-#include <Standard_Boolean.hxx>
-#include <Standard_Integer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopoDS.hxx>
-#include <Bnd_Box.hxx>
-#include <BRepExtrema_ExtPC.hxx>
-#include <BRepExtrema_ExtPF.hxx>
-#include <BRepExtrema_ExtCC.hxx>
-#include <BRepExtrema_ExtCF.hxx>
-#include <BRepExtrema_ExtFF.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <NCollection_Array1.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepTools.hxx>
+#include <TopExp.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepExtrema_SupportType.hpp>
+#include <Standard_Real.hpp>
+#include <BRepExtrema_SolutionElem.hpp>
+#include <NCollection_Sequence.hpp>
+#include <Standard_Boolean.hpp>
+#include <Standard_Integer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopoDS.hpp>
+#include <Bnd_Box.hpp>
+#include <BRepExtrema_ExtPC.hpp>
+#include <BRepExtrema_ExtPF.hpp>
+#include <BRepExtrema_ExtCC.hpp>
+#include <BRepExtrema_ExtCF.hpp>
+#include <BRepExtrema_ExtFF.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <NCollection_Array1.hpp>
+#include <BRepBuilderAPI_MakeVertex.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepTools.hpp>
 
 /*********************************************************************************/
 

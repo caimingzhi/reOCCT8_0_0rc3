@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d.hxx>
+#include <V3d.hpp>
 
-#include <Aspect_Grid.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
+#include <Aspect_Grid.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <V3d_View.hpp>
+#include <V3d_Viewer.hpp>
 
 namespace
 {

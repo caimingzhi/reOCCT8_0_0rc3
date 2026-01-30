@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <math_BrentMinimum.hxx>
-#include <math_Function.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_BrentMinimum.hpp>
+#include <math_Function.hpp>
+#include <StdFail_NotDone.hpp>
 
 namespace
 {

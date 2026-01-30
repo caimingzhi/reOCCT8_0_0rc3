@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFPrs.hxx>
+#include <XCAFPrs.hpp>
 
-#include <TDF_Label.hxx>
-#include <TopLoc_Location.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <XCAFDoc_ColorTool.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_LayerTool.hxx>
-#include <XCAFDoc_VisMaterialTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_Style.hxx>
+#include <TDF_Label.hpp>
+#include <TopLoc_Location.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <XCAFDoc_ColorTool.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_LayerTool.hpp>
+#include <XCAFDoc_VisMaterialTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_Style.hpp>
 
 static bool viewnameMode = false;
 

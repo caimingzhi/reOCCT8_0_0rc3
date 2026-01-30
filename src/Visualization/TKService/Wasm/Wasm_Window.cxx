@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Wasm_Window.hxx>
+#include <Wasm_Window.hpp>
 
-#include <Aspect_ScrollDelta.hxx>
-#include <Aspect_WindowInputListener.hxx>
+#include <Aspect_ScrollDelta.hpp>
+#include <Aspect_WindowInputListener.hpp>
 
 #if defined(__EMSCRIPTEN__)
   #include <emscripten.h>

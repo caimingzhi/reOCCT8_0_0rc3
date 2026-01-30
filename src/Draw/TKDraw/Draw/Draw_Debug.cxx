@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
+#include <Draw.hpp>
 
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
 
 // This file defines global functions not declared in any public header,
 // intended for use from debugger prompt (Command Window in Visual Studio)

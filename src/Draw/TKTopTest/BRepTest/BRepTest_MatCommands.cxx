@@ -14,38 +14,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTest.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf_Curve2d.hxx>
+#include <BRepTest.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf_Curve2d.hpp>
 
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_Hyperbola.hxx>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_Hyperbola.hpp>
 
-#include <MAT_Bisector.hxx>
-#include <MAT_Zone.hxx>
-#include <MAT_Graph.hxx>
-#include <MAT_BasicElt.hxx>
-#include <MAT_Side.hxx>
+#include <MAT_Bisector.hpp>
+#include <MAT_Zone.hpp>
+#include <MAT_Graph.hpp>
+#include <MAT_BasicElt.hpp>
+#include <MAT_Side.hpp>
 
-#include <Bisector_BisecAna.hxx>
-#include <Precision.hxx>
+#include <Bisector_BisecAna.hpp>
+#include <Precision.hpp>
 
-#include <BRepOffsetAPI_MakeOffset.hxx>
-#include <BRepMAT2d_Explorer.hxx>
-#include <BRepMAT2d_BisectingLocus.hxx>
-#include <BRepMAT2d_LinkTopoBilo.hxx>
+#include <BRepOffsetAPI_MakeOffset.hpp>
+#include <BRepMAT2d_Explorer.hpp>
+#include <BRepMAT2d_BisectingLocus.hpp>
+#include <BRepMAT2d_LinkTopoBilo.hpp>
 
-#include <gp_Parab2d.hxx>
-#include <gp_Hypr2d.hxx>
+#include <gp_Parab2d.hpp>
+#include <gp_Hypr2d.hpp>
 
-#include <DBRep.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
+#include <DBRep.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

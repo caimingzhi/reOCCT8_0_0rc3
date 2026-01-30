@@ -3,107 +3,107 @@ set(OCCT_IGESGeom_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESGeom_FILES
   IGESGeom.cxx
-  IGESGeom.hxx
+  IGESGeom.hpp
 
   IGESGeom_Boundary.cxx
-  IGESGeom_Boundary.hxx
+  IGESGeom_Boundary.hpp
   IGESGeom_BoundedSurface.cxx
-  IGESGeom_BoundedSurface.hxx
+  IGESGeom_BoundedSurface.hpp
   IGESGeom_BSplineCurve.cxx
-  IGESGeom_BSplineCurve.hxx
+  IGESGeom_BSplineCurve.hpp
   IGESGeom_BSplineSurface.cxx
-  IGESGeom_BSplineSurface.hxx
+  IGESGeom_BSplineSurface.hpp
   IGESGeom_CircularArc.cxx
-  IGESGeom_CircularArc.hxx
+  IGESGeom_CircularArc.hpp
   IGESGeom_CompositeCurve.cxx
-  IGESGeom_CompositeCurve.hxx
+  IGESGeom_CompositeCurve.hpp
   IGESGeom_ConicArc.cxx
-  IGESGeom_ConicArc.hxx
+  IGESGeom_ConicArc.hpp
   IGESGeom_CopiousData.cxx
-  IGESGeom_CopiousData.hxx
+  IGESGeom_CopiousData.hpp
   IGESGeom_CurveOnSurface.cxx
-  IGESGeom_CurveOnSurface.hxx
+  IGESGeom_CurveOnSurface.hpp
   IGESGeom_Direction.cxx
-  IGESGeom_Direction.hxx
+  IGESGeom_Direction.hpp
   IGESGeom_Flash.cxx
-  IGESGeom_Flash.hxx
+  IGESGeom_Flash.hpp
   IGESGeom_GeneralModule.cxx
-  IGESGeom_GeneralModule.hxx
+  IGESGeom_GeneralModule.hpp
 
   IGESGeom_Line.cxx
-  IGESGeom_Line.hxx
+  IGESGeom_Line.hpp
   IGESGeom_OffsetCurve.cxx
-  IGESGeom_OffsetCurve.hxx
+  IGESGeom_OffsetCurve.hpp
   IGESGeom_OffsetSurface.cxx
-  IGESGeom_OffsetSurface.hxx
+  IGESGeom_OffsetSurface.hpp
   IGESGeom_Plane.cxx
-  IGESGeom_Plane.hxx
+  IGESGeom_Plane.hpp
   IGESGeom_Point.cxx
-  IGESGeom_Point.hxx
+  IGESGeom_Point.hpp
   IGESGeom_Protocol.cxx
-  IGESGeom_Protocol.hxx
+  IGESGeom_Protocol.hpp
   IGESGeom_ReadWriteModule.cxx
-  IGESGeom_ReadWriteModule.hxx
+  IGESGeom_ReadWriteModule.hpp
   IGESGeom_RuledSurface.cxx
-  IGESGeom_RuledSurface.hxx
+  IGESGeom_RuledSurface.hpp
   IGESGeom_SpecificModule.cxx
-  IGESGeom_SpecificModule.hxx
+  IGESGeom_SpecificModule.hpp
   IGESGeom_SplineCurve.cxx
-  IGESGeom_SplineCurve.hxx
+  IGESGeom_SplineCurve.hpp
   IGESGeom_SplineSurface.cxx
-  IGESGeom_SplineSurface.hxx
+  IGESGeom_SplineSurface.hpp
   IGESGeom_SurfaceOfRevolution.cxx
-  IGESGeom_SurfaceOfRevolution.hxx
+  IGESGeom_SurfaceOfRevolution.hpp
   IGESGeom_TabulatedCylinder.cxx
-  IGESGeom_TabulatedCylinder.hxx
+  IGESGeom_TabulatedCylinder.hpp
   IGESGeom_ToolBoundary.cxx
-  IGESGeom_ToolBoundary.hxx
+  IGESGeom_ToolBoundary.hpp
   IGESGeom_ToolBoundedSurface.cxx
-  IGESGeom_ToolBoundedSurface.hxx
+  IGESGeom_ToolBoundedSurface.hpp
   IGESGeom_ToolBSplineCurve.cxx
-  IGESGeom_ToolBSplineCurve.hxx
+  IGESGeom_ToolBSplineCurve.hpp
   IGESGeom_ToolBSplineSurface.cxx
-  IGESGeom_ToolBSplineSurface.hxx
+  IGESGeom_ToolBSplineSurface.hpp
   IGESGeom_ToolCircularArc.cxx
-  IGESGeom_ToolCircularArc.hxx
+  IGESGeom_ToolCircularArc.hpp
   IGESGeom_ToolCompositeCurve.cxx
-  IGESGeom_ToolCompositeCurve.hxx
+  IGESGeom_ToolCompositeCurve.hpp
   IGESGeom_ToolConicArc.cxx
-  IGESGeom_ToolConicArc.hxx
+  IGESGeom_ToolConicArc.hpp
   IGESGeom_ToolCopiousData.cxx
-  IGESGeom_ToolCopiousData.hxx
+  IGESGeom_ToolCopiousData.hpp
   IGESGeom_ToolCurveOnSurface.cxx
-  IGESGeom_ToolCurveOnSurface.hxx
+  IGESGeom_ToolCurveOnSurface.hpp
   IGESGeom_ToolDirection.cxx
-  IGESGeom_ToolDirection.hxx
+  IGESGeom_ToolDirection.hpp
   IGESGeom_ToolFlash.cxx
-  IGESGeom_ToolFlash.hxx
+  IGESGeom_ToolFlash.hpp
   IGESGeom_ToolLine.cxx
-  IGESGeom_ToolLine.hxx
+  IGESGeom_ToolLine.hpp
   IGESGeom_ToolOffsetCurve.cxx
-  IGESGeom_ToolOffsetCurve.hxx
+  IGESGeom_ToolOffsetCurve.hpp
   IGESGeom_ToolOffsetSurface.cxx
-  IGESGeom_ToolOffsetSurface.hxx
+  IGESGeom_ToolOffsetSurface.hpp
   IGESGeom_ToolPlane.cxx
-  IGESGeom_ToolPlane.hxx
+  IGESGeom_ToolPlane.hpp
   IGESGeom_ToolPoint.cxx
-  IGESGeom_ToolPoint.hxx
+  IGESGeom_ToolPoint.hpp
   IGESGeom_ToolRuledSurface.cxx
-  IGESGeom_ToolRuledSurface.hxx
+  IGESGeom_ToolRuledSurface.hpp
   IGESGeom_ToolSplineCurve.cxx
-  IGESGeom_ToolSplineCurve.hxx
+  IGESGeom_ToolSplineCurve.hpp
   IGESGeom_ToolSplineSurface.cxx
-  IGESGeom_ToolSplineSurface.hxx
+  IGESGeom_ToolSplineSurface.hpp
   IGESGeom_ToolSurfaceOfRevolution.cxx
-  IGESGeom_ToolSurfaceOfRevolution.hxx
+  IGESGeom_ToolSurfaceOfRevolution.hpp
   IGESGeom_ToolTabulatedCylinder.cxx
-  IGESGeom_ToolTabulatedCylinder.hxx
+  IGESGeom_ToolTabulatedCylinder.hpp
   IGESGeom_ToolTransformationMatrix.cxx
-  IGESGeom_ToolTransformationMatrix.hxx
+  IGESGeom_ToolTransformationMatrix.hpp
   IGESGeom_ToolTrimmedSurface.cxx
-  IGESGeom_ToolTrimmedSurface.hxx
+  IGESGeom_ToolTrimmedSurface.hpp
   IGESGeom_TransformationMatrix.cxx
-  IGESGeom_TransformationMatrix.hxx
+  IGESGeom_TransformationMatrix.hpp
   IGESGeom_TrimmedSurface.cxx
-  IGESGeom_TrimmedSurface.hxx
+  IGESGeom_TrimmedSurface.hpp
 )

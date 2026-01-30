@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepFill_Section.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <ShapeUpgrade_RemoveLocations.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepFill_Section.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <ShapeUpgrade_RemoveLocations.hpp>
 
 BRepFill_Section::BRepFill_Section()
     : islaw(false),

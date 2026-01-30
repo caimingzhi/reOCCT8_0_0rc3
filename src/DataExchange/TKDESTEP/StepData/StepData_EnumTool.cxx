@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData_EnumTool.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <StepData_EnumTool.hpp>
+#include <TCollection_AsciiString.hpp>
 
 StepData_EnumTool::StepData_EnumTool(const char* e0,
                                      const char* e1,

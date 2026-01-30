@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_SurfData.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <ChFiDS_SurfData.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_SurfData, Standard_Transient)
 

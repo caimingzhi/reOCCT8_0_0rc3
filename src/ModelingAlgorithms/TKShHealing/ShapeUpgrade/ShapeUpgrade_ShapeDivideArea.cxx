@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Precision.hxx>
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_FaceDivideArea.hxx>
-#include <ShapeUpgrade_ShapeDivideArea.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Precision.hpp>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_FaceDivideArea.hpp>
+#include <ShapeUpgrade_ShapeDivideArea.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

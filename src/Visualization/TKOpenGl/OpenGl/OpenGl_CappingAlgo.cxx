@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_CappingAlgo.hxx>
+#include <OpenGl_CappingAlgo.hpp>
 
-#include <OpenGl_ClippingIterator.hxx>
-#include <OpenGl_RenderFilter.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_CappingPlaneResource.hxx>
-#include <OpenGl_Structure.hxx>
-#include <OpenGl_ShaderManager.hxx>
+#include <OpenGl_ClippingIterator.hpp>
+#include <OpenGl_RenderFilter.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_CappingPlaneResource.hpp>
+#include <OpenGl_Structure.hpp>
+#include <OpenGl_ShaderManager.hpp>
 
 namespace
 {

@@ -3,14 +3,14 @@ set(OCCT_STEPControl_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_STEPControl_FILES
   STEPControl_ActorRead.cxx
-  STEPControl_ActorRead.hxx
+  STEPControl_ActorRead.hpp
   STEPControl_ActorWrite.cxx
-  STEPControl_ActorWrite.hxx
+  STEPControl_ActorWrite.hpp
   STEPControl_Controller.cxx
-  STEPControl_Controller.hxx
+  STEPControl_Controller.hpp
   STEPControl_Reader.cxx
-  STEPControl_Reader.hxx
-  STEPControl_StepModelType.hxx
+  STEPControl_Reader.hpp
+  STEPControl_StepModelType.hpp
   STEPControl_Writer.cxx
-  STEPControl_Writer.hxx
+  STEPControl_Writer.hpp
 )

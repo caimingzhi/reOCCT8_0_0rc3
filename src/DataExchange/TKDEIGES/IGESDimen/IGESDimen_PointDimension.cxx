@@ -16,13 +16,13 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESDimen_GeneralNote.hxx>
-#include <IGESDimen_LeaderArrow.hxx>
-#include <IGESDimen_PointDimension.hxx>
-#include <IGESGeom_CircularArc.hxx>
-#include <IGESGeom_CompositeCurve.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDimen_GeneralNote.hpp>
+#include <IGESDimen_LeaderArrow.hpp>
+#include <IGESDimen_PointDimension.hpp>
+#include <IGESGeom_CircularArc.hpp>
+#include <IGESGeom_CompositeCurve.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_PointDimension, IGESData_IGESEntity)
 

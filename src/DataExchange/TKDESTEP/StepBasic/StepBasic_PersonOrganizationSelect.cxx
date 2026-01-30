@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepBasic_Organization.hxx>
-#include <StepBasic_Person.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepBasic_PersonOrganizationSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepBasic_Organization.hpp>
+#include <StepBasic_Person.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepBasic_PersonOrganizationSelect.hpp>
 
 StepBasic_PersonOrganizationSelect::StepBasic_PersonOrganizationSelect() = default;
 

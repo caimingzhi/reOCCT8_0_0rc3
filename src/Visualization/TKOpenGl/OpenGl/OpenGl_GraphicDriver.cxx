@@ -17,27 +17,27 @@
   #include <windows.h> // for UWP
 #endif
 
-#include <OpenGl_GraphicDriver.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_View.hxx>
-#include <OpenGl_Text.hxx>
-#include <OpenGl_Window.hxx>
+#include <OpenGl_GraphicDriver.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_View.hpp>
+#include <OpenGl_Text.hpp>
+#include <OpenGl_Window.hpp>
 
-#include <Aspect_GraphicDeviceDefinitionError.hxx>
-#include <Graphic3d_StructureManager.hxx>
-#include <OSD_Environment.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Aspect_GraphicDeviceDefinitionError.hpp>
+#include <Graphic3d_StructureManager.hpp>
+#include <OSD_Environment.hpp>
+#include <Standard_NotImplemented.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_GraphicDriver, Graphic3d_GraphicDriver)
 
 #if defined(_WIN32)
-  #include <WNT_Window.hxx>
+  #include <WNT_Window.hpp>
 #elif defined(HAVE_XLIB)
-  #include <Xw_Window.hxx>
+  #include <Xw_Window.hpp>
 #elif defined(__APPLE__)
-  #include <Cocoa_Window.hxx>
+  #include <Cocoa_Window.hpp>
 #else
-  #include <Aspect_NeutralWindow.hxx>
+  #include <Aspect_NeutralWindow.hpp>
 #endif
 
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__QNX__)                                 \

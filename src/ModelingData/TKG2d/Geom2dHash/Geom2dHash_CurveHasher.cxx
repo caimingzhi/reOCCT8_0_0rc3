@@ -11,29 +11,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dHash_CurveHasher.hxx>
+#include <Geom2dHash_CurveHasher.hpp>
 
-#include <Standard_CStringHasher.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2d_OffsetCurve.hxx>
+#include <Standard_CStringHasher.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2d_OffsetCurve.hpp>
 
-#include <Geom2dHash_LineHasher.pxx>
-#include <Geom2dHash_CircleHasher.pxx>
-#include <Geom2dHash_EllipseHasher.pxx>
-#include <Geom2dHash_HyperbolaHasher.pxx>
-#include <Geom2dHash_ParabolaHasher.pxx>
-#include <Geom2dHash_BezierCurveHasher.pxx>
-#include <Geom2dHash_BSplineCurveHasher.pxx>
-#include <Geom2dHash_TrimmedCurveHasher.pxx>
-#include <Geom2dHash_OffsetCurveHasher.pxx>
+#include <Geom2dHash_LineHasher.hpp>
+#include <Geom2dHash_CircleHasher.hpp>
+#include <Geom2dHash_EllipseHasher.hpp>
+#include <Geom2dHash_HyperbolaHasher.hpp>
+#include <Geom2dHash_ParabolaHasher.hpp>
+#include <Geom2dHash_BezierCurveHasher.hpp>
+#include <Geom2dHash_BSplineCurveHasher.hpp>
+#include <Geom2dHash_TrimmedCurveHasher.hpp>
+#include <Geom2dHash_OffsetCurveHasher.hpp>
 
 //=================================================================================================
 

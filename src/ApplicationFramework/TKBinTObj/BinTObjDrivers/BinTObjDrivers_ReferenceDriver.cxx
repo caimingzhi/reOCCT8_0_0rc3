@@ -15,13 +15,13 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_ReferenceDriver.hxx>
-#include <TDF_Attribute.hxx>
-#include <TObj_TReference.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <TObj_Model.hxx>
-#include <TObj_Assistant.hxx>
-#include <TDF_Tool.hxx>
+#include <BinTObjDrivers_ReferenceDriver.hpp>
+#include <TDF_Attribute.hpp>
+#include <TObj_TReference.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <TObj_Model.hpp>
+#include <TObj_Assistant.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_ReferenceDriver, BinMDF_ADriver)
 

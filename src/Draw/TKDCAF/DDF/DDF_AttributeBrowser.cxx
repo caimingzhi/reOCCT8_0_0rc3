@@ -19,7 +19,7 @@
 // Version	Date		Purpose
 //		0.0	Oct  6 1997	Creation
 
-#include <DDF_AttributeBrowser.hxx>
+#include <DDF_AttributeBrowser.hpp>
 
 static DDF_AttributeBrowser* DDF_FirstBrowser = nullptr;
 

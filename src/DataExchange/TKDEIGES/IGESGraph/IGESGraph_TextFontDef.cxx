@@ -16,11 +16,11 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_HArray1OfHArray1OfInteger.hxx>
-#include <IGESGraph_TextFontDef.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
+#include <IGESGraph_TextFontDef.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_TextFontDef, IGESData_IGESEntity)
 

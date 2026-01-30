@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_HVertex.hxx>
-#include <gp_Pnt.hxx>
-#include <IntPatch_Point.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <IntSurf_Transition.hxx>
+#include <Adaptor3d_HVertex.hpp>
+#include <gp_Pnt.hpp>
+#include <IntPatch_Point.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <IntSurf_Transition.hpp>
 
 #include <cstdio>
 
@@ -136,8 +136,8 @@ void IntPatch_Point::ReverseTransition()
   }
 }
 
-#include <IntSurf_Situation.hxx>
-#include <IntSurf_TypeTrans.hxx>
+#include <IntSurf_Situation.hpp>
+#include <IntSurf_TypeTrans.hpp>
 
 static void DumpTransition(const IntSurf_Transition& T)
 {
@@ -172,7 +172,7 @@ static void DumpTransition(const IntSurf_Transition& T)
   }
 }
 
-#include <Standard_Transient.hxx>
+#include <Standard_Transient.hpp>
 
 void IntPatch_Point::Dump() const
 {

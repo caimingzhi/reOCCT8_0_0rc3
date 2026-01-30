@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <ChFiKPart_ComputeData_Fcts.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_Line.hxx>
-#include <gp.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <Precision.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <ChFiKPart_ComputeData_Fcts.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_Line.hpp>
+#include <gp.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <Precision.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
 
 //=================================================================================================
 

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <GeomAbs_CurveType.hxx>
-#include <Precision.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <GeomAbs_CurveType.hpp>
+#include <Precision.hpp>
 
 //============================================================
 int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,

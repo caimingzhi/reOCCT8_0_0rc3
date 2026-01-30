@@ -16,34 +16,34 @@
 
 //  Modified by skv - Thu Sep 30 15:21:07 2004 OCC593
 
-#include <Extrema_GenExtPS.hxx>
+#include <Extrema_GenExtPS.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Bnd_Sphere.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <GeomAbs_IsoType.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <Extrema_ExtFlag.hxx>
-#include <NCollection_UBTreeFiller.hxx>
-#include <NCollection_Handle.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <Extrema_POnSurfParams.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array2.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Bnd_Sphere.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <GeomAbs_IsoType.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <Extrema_ExtFlag.hpp>
+#include <NCollection_UBTreeFiller.hpp>
+#include <NCollection_Handle.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <Extrema_POnSurfParams.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array2.hpp>
 
 // IMPLEMENT_HARRAY1(Extrema_HArray1OfSphere)
 class Bnd_SphereUBTreeSelector : public NCollection_UBTree<int, Bnd_Sphere>::Selector

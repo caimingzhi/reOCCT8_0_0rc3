@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepLProp_SLProps.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Sphere.hxx>
-#include <Precision.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS_FaceInterferenceTool.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_ShapeShapeInterference.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepLProp_SLProps.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Sphere.hpp>
+#include <Precision.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS_FaceInterferenceTool.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_ShapeShapeInterference.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 static bool STATIC_TOREVERSE = false; // xpu150498
 #define M_FORWARD(ori) (ori == TopAbs_FORWARD)

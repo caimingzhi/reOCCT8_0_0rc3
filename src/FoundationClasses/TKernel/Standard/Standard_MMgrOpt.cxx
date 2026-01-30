@@ -17,9 +17,9 @@
   #include <windows.h>
 #endif
 
-#include <Standard_MMgrOpt.hxx>
-#include <Standard_OutOfMemory.hxx>
-#include <Standard_Assert.hxx>
+#include <Standard_MMgrOpt.hpp>
+#include <Standard_OutOfMemory.hpp>
+#include <Standard_Assert.hpp>
 
 #include <cstring>
 #include <cstdio>

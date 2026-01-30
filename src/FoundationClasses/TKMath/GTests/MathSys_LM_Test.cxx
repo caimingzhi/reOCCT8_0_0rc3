@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <MathSys_LevenbergMarquardt.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Vector.hxx>
-#include <math_Matrix.hxx>
+#include <MathSys_LevenbergMarquardt.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Vector.hpp>
+#include <math_Matrix.hpp>
 
 #include <cmath>
 

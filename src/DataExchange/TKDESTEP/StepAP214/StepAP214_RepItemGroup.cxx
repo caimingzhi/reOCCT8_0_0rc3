@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <StepAP214_RepItemGroup.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepAP214_RepItemGroup.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_RepItemGroup, StepBasic_Group)
 

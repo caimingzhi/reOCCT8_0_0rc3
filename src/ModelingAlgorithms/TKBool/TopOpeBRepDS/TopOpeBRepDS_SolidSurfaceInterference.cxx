@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_SolidSurfaceInterference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <TopOpeBRepDS_SolidSurfaceInterference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_SolidSurfaceInterference, TopOpeBRepDS_Interference)
 

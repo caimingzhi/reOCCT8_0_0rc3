@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESType.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ReadWriteModule.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_FileReaderData.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESType.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ReadWriteModule.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_FileReaderData.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_ReadWriteModule, Interface_ReaderModule)
 

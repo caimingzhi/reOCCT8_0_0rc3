@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_BasicElement.hxx>
-#include <LDOM_BasicAttribute.hxx>
-#include <LDOM_Element.hxx>
+#include <LDOM_BasicElement.hpp>
+#include <LDOM_BasicAttribute.hpp>
+#include <LDOM_Element.hpp>
 
-#include <Standard_ProgramError.hxx>
+#include <Standard_ProgramError.hpp>
 
 #include <cstdio>
 

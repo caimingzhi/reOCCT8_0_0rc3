@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FairCurve_BattenLaw.hxx>
-#include <FairCurve_EnergyOfMVC.hxx>
-#include <math_GaussSetIntegration.hxx>
-#include <math_IntegerVector.hxx>
-#include <Standard_DomainError.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <FairCurve_BattenLaw.hpp>
+#include <FairCurve_EnergyOfMVC.hpp>
+#include <math_GaussSetIntegration.hpp>
+#include <math_IntegerVector.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=====================================================================================
 FairCurve_EnergyOfMVC::FairCurve_EnergyOfMVC(

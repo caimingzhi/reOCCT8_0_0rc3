@@ -13,30 +13,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_BOP.hxx>
-#include <BOPAlgo_MakerVolume.hxx>
-#include <BOPAlgo_Operation.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Section.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPTest.hxx>
-#include <BOPTest_Objects.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <BRepTest_Objects.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <IntTools_Curve.hxx>
-#include <IntTools_FaceFace.hxx>
-#include <IntTools_PntOn2Faces.hxx>
-#include <NCollection_BaseAllocator.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <BOPAlgo_BOP.hpp>
+#include <BOPAlgo_MakerVolume.hpp>
+#include <BOPAlgo_Operation.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Section.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPTest.hpp>
+#include <BOPTest_Objects.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <BRepTest_Objects.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <IntTools_Curve.hpp>
+#include <IntTools_FaceFace.hpp>
+#include <IntTools_PntOn2Faces.hpp>
+#include <NCollection_BaseAllocator.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
 #include <cstdio>
 //

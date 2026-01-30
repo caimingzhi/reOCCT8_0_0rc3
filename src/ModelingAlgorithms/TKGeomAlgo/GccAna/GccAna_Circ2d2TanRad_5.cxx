@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GccAna_Circ2d2TanRad.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <Standard_NegativeValue.hxx>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2d2TanRad.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <Standard_NegativeValue.hpp>
 
 //   Circle passing by two points of given radius.
 //   ==============================================

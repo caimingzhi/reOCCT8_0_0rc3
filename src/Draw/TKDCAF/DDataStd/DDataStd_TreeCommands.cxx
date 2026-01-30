@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DDataStd.hxx>
-#include <DDataStd_TreeBrowser.hxx>
-#include <DDF.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Message.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDataStd_ChildNodeIterator.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
+#include <DDataStd.hpp>
+#include <DDataStd_TreeBrowser.hpp>
+#include <DDF.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Message.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDataStd_ChildNodeIterator.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
 
 #include <cstdio>
 

@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_Colour.hxx>
-#include <StepVisual_PointStyle.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_Colour.hpp>
+#include <StepVisual_PointStyle.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_PointStyle, Standard_Transient)
 

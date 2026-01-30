@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <StepGeom_Surface.hxx>
-#include <STEPSelections_SelectFaces.hxx>
-#include <StepShape_FaceSurface.hxx>
-#include <StepShape_GeometricSet.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <StepGeom_Surface.hpp>
+#include <STEPSelections_SelectFaces.hpp>
+#include <StepShape_FaceSurface.hpp>
+#include <StepShape_GeometricSet.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_SelectFaces, IFSelect_SelectExplore)
 

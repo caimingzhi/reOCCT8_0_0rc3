@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_Intersection.hxx>
-#include <HLRBRep_AreaLimit.hxx>
-#include <Standard_Type.hxx>
+#include <HLRAlgo_Intersection.hpp>
+#include <HLRBRep_AreaLimit.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_AreaLimit, Standard_Transient)
 

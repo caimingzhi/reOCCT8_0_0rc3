@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_Date.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_LocalTime.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_Date.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_LocalTime.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DateAndTime, Standard_Transient)
 

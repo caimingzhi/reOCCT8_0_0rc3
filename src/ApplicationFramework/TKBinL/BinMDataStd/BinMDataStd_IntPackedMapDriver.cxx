@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd.hxx>
-#include <BinMDataStd_IntPackedMapDriver.hxx>
-#include <BinMDF_ADriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinObjMgt_RRelocationTable.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TColStd_PackedMapOfInteger.hxx>
-#include <TDataStd_IntPackedMap.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDocStd_FormatVersion.hxx>
+#include <BinMDataStd.hpp>
+#include <BinMDataStd_IntPackedMapDriver.hpp>
+#include <BinMDF_ADriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinObjMgt_RRelocationTable.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TColStd_PackedMapOfInteger.hpp>
+#include <TDataStd_IntPackedMap.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDocStd_FormatVersion.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntPackedMapDriver, BinMDF_ADriver)
 

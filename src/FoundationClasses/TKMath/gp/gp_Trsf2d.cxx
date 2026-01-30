@@ -16,17 +16,17 @@
 
 #define No_Standard_OutOfRange
 
-#include <gp_Trsf2d.hxx>
+#include <gp_Trsf2d.hpp>
 
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_GTrsf2d.hxx>
-#include <gp_Mat2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Mat2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_ConstructionError.hpp>
 
 void gp_Trsf2d::SetMirror(const gp_Ax2d& A) noexcept
 {

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dInt_TheProjPCurOfGInter.hxx>
+#include <Geom2dInt_TheProjPCurOfGInter.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Geom2dInt_Geom2dCurveTool.hxx>
-#include <Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hxx>
-#include <Geom2dInt_TheLocateExtPCOfTheProjPCurOfGInter.hxx>
-#include <Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Geom2dInt_Geom2dCurveTool.hpp>
+#include <Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hpp>
+#include <Geom2dInt_TheLocateExtPCOfTheProjPCurOfGInter.hpp>
+#include <Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
 
 double Geom2dInt_TheProjPCurOfGInter::FindParameter(const Adaptor2d_Curve2d& C,
                                                     const gp_Pnt2d&          P,

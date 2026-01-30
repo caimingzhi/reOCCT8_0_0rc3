@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AdvApprox_PrefCutting.hxx>
-#include <Precision.hxx>
+#include <AdvApprox_PrefCutting.hpp>
+#include <Precision.hpp>
 
 AdvApprox_PrefCutting::AdvApprox_PrefCutting(const NCollection_Array1<double>& CutPnts)
     : myPntOfCutting(1, CutPnts.Length())

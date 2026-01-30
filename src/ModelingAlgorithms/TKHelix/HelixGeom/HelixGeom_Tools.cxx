@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_DichoCutting.hxx>
-#include <AdvApprox_EvaluatorFunction.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <HelixGeom_HelixCurve.hxx>
-#include <HelixGeom_Tools.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_DichoCutting.hpp>
+#include <AdvApprox_EvaluatorFunction.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <HelixGeom_HelixCurve.hpp>
+#include <HelixGeom_Tools.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=======================================================================
 // class : HelixGeom_Tools_Eval

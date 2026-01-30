@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TNaming_IteratorOnShapesSet.hxx>
-#include <TNaming_ShapesSet.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TNaming_IteratorOnShapesSet.hpp>
+#include <TNaming_ShapesSet.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
 
 // #define MDTV_DEB_INT
 //=================================================================================================

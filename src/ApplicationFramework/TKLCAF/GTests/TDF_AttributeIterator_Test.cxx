@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDF_AttributeIterator.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
+#include <TDF_AttributeIterator.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
 
 #include <gtest/gtest.h>
 

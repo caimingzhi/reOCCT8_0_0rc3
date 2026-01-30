@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_CircularGrid.hxx>
+#include <V3d_CircularGrid.hpp>
 
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_AspectMarker3d.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <V3d_Viewer.hxx>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_AspectMarker3d.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_CircularGrid, Aspect_CircularGrid)
 

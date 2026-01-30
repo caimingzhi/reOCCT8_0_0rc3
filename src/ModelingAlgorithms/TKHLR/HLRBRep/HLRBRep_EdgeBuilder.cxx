@@ -18,14 +18,14 @@
   #define No_Exception
 #endif
 
-#include <HLRAlgo_Intersection.hxx>
-#include <HLRBRep_AreaLimit.hxx>
-#include <HLRBRep_EdgeBuilder.hxx>
-#include <HLRBRep_VertexList.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <TopAbs.hxx>
+#include <HLRAlgo_Intersection.hpp>
+#include <HLRBRep_AreaLimit.hpp>
+#include <HLRBRep_EdgeBuilder.hpp>
+#include <HLRBRep_VertexList.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <TopAbs.hpp>
 
 //=================================================================================================
 

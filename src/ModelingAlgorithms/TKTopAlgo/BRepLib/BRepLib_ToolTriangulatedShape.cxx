@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepLib_ToolTriangulatedShape.hxx>
+#include <BRepLib_ToolTriangulatedShape.hpp>
 
-#include <BRep_Tool.hxx>
-#include <GeomLib.hxx>
-#include <Poly.hxx>
-#include <Poly_Connect.hxx>
-#include <Precision.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRep_Tool.hpp>
+#include <GeomLib.hpp>
+#include <Poly.hpp>
+#include <Poly_Connect.hpp>
+#include <Precision.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

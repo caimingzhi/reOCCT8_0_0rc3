@@ -19,19 +19,19 @@
   #define No_Standard_OutOfRange
 #endif
 
-#include <BSplCLib.hxx>
-#include <FairCurve_EnergyOfMVC.hxx>
-#include <FairCurve_MinimalVariation.hxx>
-#include <FairCurve_Newton.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Matrix.hxx>
-#include <PLib.hxx>
-#include <Standard_NullValue.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <FairCurve_EnergyOfMVC.hpp>
+#include <FairCurve_MinimalVariation.hpp>
+#include <FairCurve_Newton.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Matrix.hpp>
+#include <PLib.hpp>
+#include <Standard_NullValue.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Standard_Integer.hpp>
 
 //======================================================================================
 FairCurve_MinimalVariation::FairCurve_MinimalVariation(const gp_Pnt2d& P1,

@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass_FClassifier.hxx>
+#include <BRepClass_FClassifier.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <BRepClass_FaceExplorer.hxx>
-#include <BRepClass_Edge.hxx>
-#include <BRepClass_Intersector.hxx>
-#include <BRepClass_FClass2dOfFClassifier.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Standard_DomainError.hpp>
+#include <BRepClass_FaceExplorer.hpp>
+#include <BRepClass_Edge.hpp>
+#include <BRepClass_Intersector.hpp>
+#include <BRepClass_FClass2dOfFClassifier.hpp>
+#include <gp_Pnt2d.hpp>
 
 #define TheFaceExplorer BRepClass_FaceExplorer
-#define TheFaceExplorer_hxx <BRepClass_FaceExplorer.hxx>
+#define TheFaceExplorer_hxx <BRepClass_FaceExplorer.hpp>
 #define TheEdge BRepClass_Edge
-#define TheEdge_hxx <BRepClass_Edge.hxx>
+#define TheEdge_hxx <BRepClass_Edge.hpp>
 #define TheIntersection2d BRepClass_Intersector
-#define TheIntersection2d_hxx <BRepClass_Intersector.hxx>
+#define TheIntersection2d_hxx <BRepClass_Intersector.hpp>
 #define TopClass_FClass2d BRepClass_FClass2dOfFClassifier
-#define TopClass_FClass2d_hxx <BRepClass_FClass2dOfFClassifier.hxx>
+#define TopClass_FClass2d_hxx <BRepClass_FClass2dOfFClassifier.hpp>
 #define TopClass_FaceClassifier BRepClass_FClassifier
-#define TopClass_FaceClassifier_hxx <BRepClass_FClassifier.hxx>
-#include <TopClass_FaceClassifier.gxx>
+#define TopClass_FaceClassifier_hxx <BRepClass_FClassifier.hpp>
+#include <TopClass_FaceClassifier.hpp>

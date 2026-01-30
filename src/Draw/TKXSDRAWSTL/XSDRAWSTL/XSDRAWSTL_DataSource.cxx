@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XSDRAWSTL_DataSource.hxx>
+#include <XSDRAWSTL_DataSource.hpp>
 
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XSDRAWSTL_DataSource, MeshVS_DataSource)
 

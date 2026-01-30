@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_LengthUnit.hxx>
+#include <XCAFDoc_LengthUnit.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <UnitsMethods.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <UnitsMethods.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_LengthUnit, TDF_Attribute, "xcaf", "LengthUnit")
 

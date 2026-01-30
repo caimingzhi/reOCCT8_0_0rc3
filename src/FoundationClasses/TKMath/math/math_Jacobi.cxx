@@ -19,10 +19,10 @@
 
 // #endif
 
-#include <math_Jacobi.hxx>
-#include <math_Matrix.hxx>
-#include <math_NotSquare.hxx>
-#include <math_Recipes.hxx>
+#include <math_Jacobi.hpp>
+#include <math_Matrix.hpp>
+#include <math_NotSquare.hpp>
+#include <math_Recipes.hpp>
 
 math_Jacobi::math_Jacobi(const math_Matrix& A)
     : Done(false),

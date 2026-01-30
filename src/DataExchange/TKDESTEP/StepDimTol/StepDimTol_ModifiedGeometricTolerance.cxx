@@ -15,11 +15,11 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepDimTol_ModifiedGeometricTolerance.hxx>
-#include <StepDimTol_GeometricToleranceTarget.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepDimTol_ModifiedGeometricTolerance.hpp>
+#include <StepDimTol_GeometricToleranceTarget.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ModifiedGeometricTolerance, StepDimTol_GeometricTolerance)
 

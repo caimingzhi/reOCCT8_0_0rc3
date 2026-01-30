@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
 
 // Template a respecter
 double Geom2dGcc_CurveTool::EpsX(const Geom2dAdaptor_Curve& C, const double Tol)

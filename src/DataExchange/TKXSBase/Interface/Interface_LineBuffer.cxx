@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_LineBuffer.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Interface_LineBuffer.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 Interface_LineBuffer::Interface_LineBuffer(const int size)
     : myLine(1, size + 1)

@@ -3,55 +3,55 @@ set(OCCT_StdPrs_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StdPrs_FILES
   StdPrs_BRepFont.cxx
-  StdPrs_BRepFont.hxx
+  StdPrs_BRepFont.hpp
   StdPrs_BRepTextBuilder.cxx
-  StdPrs_BRepTextBuilder.hxx
-  StdPrs_BndBox.hxx
+  StdPrs_BRepTextBuilder.hpp
+  StdPrs_BndBox.hpp
   StdPrs_Curve.cxx
-  StdPrs_Curve.hxx
+  StdPrs_Curve.hpp
   StdPrs_DeflectionCurve.cxx
-  StdPrs_DeflectionCurve.hxx
+  StdPrs_DeflectionCurve.hpp
   StdPrs_HLRPolyShape.cxx
-  StdPrs_HLRPolyShape.hxx
+  StdPrs_HLRPolyShape.hpp
   StdPrs_HLRShape.cxx
-  StdPrs_HLRShape.hxx
+  StdPrs_HLRShape.hpp
   StdPrs_HLRShapeI.cxx
-  StdPrs_HLRShapeI.hxx
+  StdPrs_HLRShapeI.hpp
   StdPrs_HLRToolShape.cxx
-  StdPrs_HLRToolShape.hxx
+  StdPrs_HLRToolShape.hpp
   StdPrs_Isolines.cxx
-  StdPrs_Isolines.hxx
+  StdPrs_Isolines.hpp
   StdPrs_Plane.cxx
-  StdPrs_Plane.hxx
-  StdPrs_Point.hxx
+  StdPrs_Plane.hpp
+  StdPrs_Point.hpp
   StdPrs_PoleCurve.cxx
-  StdPrs_PoleCurve.hxx
+  StdPrs_PoleCurve.hpp
   StdPrs_ShadedShape.cxx
-  StdPrs_ShadedShape.hxx
+  StdPrs_ShadedShape.hpp
   StdPrs_ShadedSurface.cxx
-  StdPrs_ShadedSurface.hxx
+  StdPrs_ShadedSurface.hpp
   StdPrs_ShapeTool.cxx
-  StdPrs_ShapeTool.hxx
+  StdPrs_ShapeTool.hpp
   StdPrs_ToolPoint.cxx
-  StdPrs_ToolPoint.hxx
+  StdPrs_ToolPoint.hpp
   StdPrs_ToolRFace.cxx
-  StdPrs_ToolRFace.hxx
+  StdPrs_ToolRFace.hpp
   StdPrs_ToolTriangulatedShape.cxx
-  StdPrs_ToolTriangulatedShape.hxx
+  StdPrs_ToolTriangulatedShape.hpp
   StdPrs_ToolVertex.cxx
-  StdPrs_ToolVertex.hxx
-  StdPrs_Vertex.hxx
-  StdPrs_Volume.hxx
+  StdPrs_ToolVertex.hpp
+  StdPrs_Vertex.hpp
+  StdPrs_Volume.hpp
   StdPrs_WFDeflectionRestrictedFace.cxx
-  StdPrs_WFDeflectionRestrictedFace.hxx
+  StdPrs_WFDeflectionRestrictedFace.hpp
   StdPrs_WFDeflectionSurface.cxx
-  StdPrs_WFDeflectionSurface.hxx
+  StdPrs_WFDeflectionSurface.hpp
   StdPrs_WFPoleSurface.cxx
-  StdPrs_WFPoleSurface.hxx
+  StdPrs_WFPoleSurface.hpp
   StdPrs_WFRestrictedFace.cxx
-  StdPrs_WFRestrictedFace.hxx
+  StdPrs_WFRestrictedFace.hpp
   StdPrs_WFShape.cxx
-  StdPrs_WFShape.hxx
+  StdPrs_WFShape.hpp
   StdPrs_WFSurface.cxx
-  StdPrs_WFSurface.hxx
+  StdPrs_WFSurface.hpp
 )

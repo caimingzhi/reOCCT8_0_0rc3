@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_NamedData.hxx>
+#include <TDataStd_NamedData.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_GUID.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TDataStd_HDataMapOfStringByte.hxx>
-#include <TDataStd_HDataMapOfStringHArray1OfInteger.hxx>
-#include <TDataStd_HDataMapOfStringHArray1OfReal.hxx>
-#include <TDataStd_HDataMapOfStringInteger.hxx>
-#include <TDataStd_HDataMapOfStringReal.hxx>
-#include <TDataStd_HDataMapOfStringString.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_GUID.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TDataStd_HDataMapOfStringByte.hpp>
+#include <TDataStd_HDataMapOfStringHArray1OfInteger.hpp>
+#include <TDataStd_HDataMapOfStringHArray1OfReal.hpp>
+#include <TDataStd_HDataMapOfStringInteger.hpp>
+#include <TDataStd_HDataMapOfStringReal.hpp>
+#include <TDataStd_HDataMapOfStringString.hpp>
 
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_NamedData, TDF_Attribute)
 

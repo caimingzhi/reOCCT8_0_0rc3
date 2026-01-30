@@ -13,16 +13,16 @@
 
 // szv#4 S4163
 
-#include <gp_GTrsf.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <gp_XYZ.hxx>
-#include <GProp_PGProps.hxx>
-#include <GProp_PrincipalProps.hxx>
-#include <ShapeAnalysis_Geom.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <gp_XYZ.hpp>
+#include <GProp_PGProps.hpp>
+#include <GProp_PrincipalProps.hpp>
+#include <ShapeAnalysis_Geom.hpp>
+#include <Standard_ErrorHandler.hpp>
 
 //=================================================================================================
 

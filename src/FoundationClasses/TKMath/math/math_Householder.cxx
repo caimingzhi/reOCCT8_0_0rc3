@@ -19,10 +19,10 @@
 
 // #endif
 
-#include <math_Householder.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_Householder.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 // Cette classe decrit la methode de Householder qui transforme A en un
 // produit de matrice orthogonale par une triangulaire superieure. Les seconds

@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_BaseAllocator.hxx>
-#include <NCollection_Vector.hxx>
+#include <NCollection_BaseAllocator.hpp>
+#include <NCollection_Vector.hpp>
 
 #include <gtest/gtest.h>
 

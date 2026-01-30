@@ -13,14 +13,14 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <GccEnt_Position.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <GccEnt_Position.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Pnt2d.hpp>
 
 // Test OCC24303: Geom2dGcc_Circ2d2TanRad - Circle tangent to two ellipses
 // Migrated from QABugs_9.cxx

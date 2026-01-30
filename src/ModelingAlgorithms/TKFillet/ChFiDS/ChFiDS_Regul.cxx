@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFiDS_Regul.hxx>
+#include <ChFiDS_Regul.hpp>
 
 //=================================================================================================
 

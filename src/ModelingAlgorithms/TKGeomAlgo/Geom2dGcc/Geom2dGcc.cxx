@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dGcc.hxx>
+#include <Geom2dGcc.hpp>
 
-#include <Geom2dGcc_QualifiedCurve.hxx>
+#include <Geom2dGcc_QualifiedCurve.hpp>
 
 Geom2dGcc_QualifiedCurve Geom2dGcc::Unqualified(const Geom2dAdaptor_Curve& Curve)
 {

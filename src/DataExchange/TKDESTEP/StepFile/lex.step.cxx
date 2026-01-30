@@ -521,7 +521,7 @@ static const flex_int16_t yy_chk[373] = {
 */
 #define YY_NO_INPUT 1
 
-#include <step.tab.hxx>
+#include <step.tab.hpp>
 
 // Tell flex which function to define
 #ifdef YY_DECL
@@ -538,7 +538,7 @@ typedef step::parser::token token;
 
 /* skl 31.01.2002 for OCC133(OCC96,97) - incorrect
 long string in files Henri.stp and 401.stp*/
-#include <Standard_Failure.hxx>
+#include <Standard_Failure.hpp>
 #define YY_FATAL_ERROR(msg) throw Standard_Failure(msg);
 
 /* abv 07.06.02: force inclusion of stdlib.h on WNT to avoid warnings */
@@ -1998,7 +1998,7 @@ static int yy_flex_strlen(const char* s)
 
 #define YYTABLES_NAME "yytables"
 
-#include <Standard.hxx>
+#include <Standard.hpp>
 
 void* yyalloc(size_t theNbBytes)
 {

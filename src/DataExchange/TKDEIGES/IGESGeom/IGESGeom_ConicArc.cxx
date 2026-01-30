@@ -17,13 +17,13 @@
 //--------------------------------------------------------------------
 // #59 rln 29.12.98 PRO17015
 
-#include <gp_Dir.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <IGESGeom_ConicArc.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Dir.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <IGESGeom_ConicArc.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_ConicArc, IGESData_IGESEntity)
 

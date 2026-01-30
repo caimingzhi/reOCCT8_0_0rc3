@@ -3,43 +3,43 @@ set(OCCT_TopoDSToStep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopoDSToStep_FILES
   TopoDSToStep.cxx
-  TopoDSToStep.hxx
+  TopoDSToStep.hpp
   TopoDSToStep_Builder.cxx
-  TopoDSToStep_Builder.hxx
-  TopoDSToStep_BuilderError.hxx
-  TopoDSToStep_FacetedError.hxx
+  TopoDSToStep_Builder.hpp
+  TopoDSToStep_BuilderError.hpp
+  TopoDSToStep_FacetedError.hpp
   TopoDSToStep_FacetedTool.cxx
-  TopoDSToStep_FacetedTool.hxx
+  TopoDSToStep_FacetedTool.hpp
   TopoDSToStep_MakeBrepWithVoids.cxx
-  TopoDSToStep_MakeBrepWithVoids.hxx
-  TopoDSToStep_MakeEdgeError.hxx
-  TopoDSToStep_MakeFaceError.hxx
+  TopoDSToStep_MakeBrepWithVoids.hpp
+  TopoDSToStep_MakeEdgeError.hpp
+  TopoDSToStep_MakeFaceError.hpp
   TopoDSToStep_MakeFacetedBrep.cxx
-  TopoDSToStep_MakeFacetedBrep.hxx
+  TopoDSToStep_MakeFacetedBrep.hpp
   TopoDSToStep_MakeFacetedBrepAndBrepWithVoids.cxx
-  TopoDSToStep_MakeFacetedBrepAndBrepWithVoids.hxx
+  TopoDSToStep_MakeFacetedBrepAndBrepWithVoids.hpp
   TopoDSToStep_MakeGeometricCurveSet.cxx
-  TopoDSToStep_MakeGeometricCurveSet.hxx
+  TopoDSToStep_MakeGeometricCurveSet.hpp
   TopoDSToStep_MakeManifoldSolidBrep.cxx
-  TopoDSToStep_MakeManifoldSolidBrep.hxx
+  TopoDSToStep_MakeManifoldSolidBrep.hpp
   TopoDSToStep_MakeShellBasedSurfaceModel.cxx
-  TopoDSToStep_MakeShellBasedSurfaceModel.hxx
+  TopoDSToStep_MakeShellBasedSurfaceModel.hpp
   TopoDSToStep_MakeStepEdge.cxx
-  TopoDSToStep_MakeStepEdge.hxx
+  TopoDSToStep_MakeStepEdge.hpp
   TopoDSToStep_MakeStepFace.cxx
-  TopoDSToStep_MakeStepFace.hxx
+  TopoDSToStep_MakeStepFace.hpp
   TopoDSToStep_MakeStepVertex.cxx
-  TopoDSToStep_MakeStepVertex.hxx
+  TopoDSToStep_MakeStepVertex.hpp
   TopoDSToStep_MakeStepWire.cxx
-  TopoDSToStep_MakeStepWire.hxx
-  TopoDSToStep_MakeVertexError.hxx
-  TopoDSToStep_MakeWireError.hxx
+  TopoDSToStep_MakeStepWire.hpp
+  TopoDSToStep_MakeVertexError.hpp
+  TopoDSToStep_MakeWireError.hpp
   TopoDSToStep_Root.cxx
-  TopoDSToStep_Root.hxx
+  TopoDSToStep_Root.hpp
   TopoDSToStep_Tool.cxx
-  TopoDSToStep_Tool.hxx
+  TopoDSToStep_Tool.hpp
   TopoDSToStep_WireframeBuilder.cxx
-  TopoDSToStep_WireframeBuilder.hxx
+  TopoDSToStep_WireframeBuilder.hpp
   TopoDSToStep_MakeTessellatedItem.cxx
-  TopoDSToStep_MakeTessellatedItem.hxx
+  TopoDSToStep_MakeTessellatedItem.hpp
 )

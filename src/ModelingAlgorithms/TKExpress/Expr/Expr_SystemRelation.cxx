@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_NamedUnknown.hxx>
-#include <Expr_SystemRelation.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_NamedUnknown.hpp>
+#include <Expr_SystemRelation.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Expr_SystemRelation, Expr_GeneralRelation)
 

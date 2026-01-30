@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_Arrow.hxx>
-#include <Prs3d_PlaneAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <StdPrs_Plane.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_Arrow.hpp>
+#include <Prs3d_PlaneAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <StdPrs_Plane.hpp>
 
 void StdPrs_Plane::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                        const Adaptor3d_Surface&               aPlane,

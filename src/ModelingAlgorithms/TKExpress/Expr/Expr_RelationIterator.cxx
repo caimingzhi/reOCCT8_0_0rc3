@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_RelationIterator.hxx>
-#include <Expr_SingleRelation.hxx>
-#include <Expr_SystemRelation.hxx>
-#include <Standard_NoMoreObject.hxx>
-#include <Standard_NoSuchObject.hxx>
+#include <Expr_RelationIterator.hpp>
+#include <Expr_SingleRelation.hpp>
+#include <Expr_SystemRelation.hpp>
+#include <Standard_NoMoreObject.hpp>
+#include <Standard_NoSuchObject.hpp>
 
 Expr_RelationIterator::Expr_RelationIterator(const occ::handle<Expr_GeneralRelation>& rel)
     : myRelation(1, rel->NbOfSingleRelations())

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomTools.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <GeomTools_CurveSet.hxx>
-#include <GeomTools_Curve2dSet.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom2d_Curve.hxx>
+#include <GeomTools.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <GeomTools_CurveSet.hpp>
+#include <GeomTools_Curve2dSet.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom2d_Curve.hpp>
 
 // This file defines global functions not declared in any public header,
 // intended for use from debugger prompt (Command Window in Visual Studio)

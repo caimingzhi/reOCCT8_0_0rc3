@@ -12,22 +12,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_ExtPC2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
-#include <GccEnt_BadQualifier.hxx>
-#include <Geom2dGcc_Circ2dTanCenGeo.hxx>
-#include <Geom2dGcc_CurveTool.hxx>
-#include <Geom2dGcc_QCurve.hxx>
-#include <gp.hxx>
-#include <gp_Ax2d.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Extrema_ExtPC2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
+#include <GccEnt_BadQualifier.hpp>
+#include <Geom2dGcc_Circ2dTanCenGeo.hpp>
+#include <Geom2dGcc_CurveTool.hpp>
+#include <Geom2dGcc_QCurve.hpp>
+#include <gp.hpp>
+#include <gp_Ax2d.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 //=========================================================================
 //   Creation d un cercle tangent a une courbe centre en un point.        +

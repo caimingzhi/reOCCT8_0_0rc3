@@ -14,21 +14,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_SLProps.hxx>
+#include <HLRBRep_SLProps.hpp>
 
-#include <LProp_BadContinuity.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <LProp_NotDefined.hxx>
-#include <HLRBRep_SLPropsATool.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Dir.hxx>
+#include <LProp_BadContinuity.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <LProp_NotDefined.hpp>
+#include <HLRBRep_SLPropsATool.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Dir.hpp>
 
 #define Surface HLRBRep_SurfacePtr
-#define Surface_hxx <HLRBRep_TypeDef.hxx>
+#define Surface_hxx <HLRBRep_TypeDef.hpp>
 #define Tool HLRBRep_SLPropsATool
-#define Tool_hxx <HLRBRep_SLPropsATool.hxx>
+#define Tool_hxx <HLRBRep_SLPropsATool.hpp>
 #define LProp_SLProps HLRBRep_SLProps
-#define LProp_SLProps_hxx <HLRBRep_SLProps.hxx>
-#include <LProp_SLProps.gxx>
+#define LProp_SLProps_hxx <HLRBRep_SLProps.hpp>
+#include <LProp_SLProps.hpp>

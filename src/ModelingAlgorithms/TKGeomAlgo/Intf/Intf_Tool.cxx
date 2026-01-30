@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <Bnd_Box2d.hxx>
-#include <ElCLib.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Parab.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pln.hxx>
-#include <gp_XY.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <IntAna2d_Conic.hxx>
-#include <IntAna2d_IntPoint.hxx>
-#include <IntAna_IntConicQuad.hxx>
-#include <Intf_Tool.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Bnd_Box.hpp>
+#include <Bnd_Box2d.hpp>
+#include <ElCLib.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Parab.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pln.hpp>
+#include <gp_XY.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <IntAna2d_Conic.hpp>
+#include <IntAna2d_IntPoint.hpp>
+#include <IntAna_IntConicQuad.hpp>
+#include <Intf_Tool.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
 
 //=================================================================================================
 

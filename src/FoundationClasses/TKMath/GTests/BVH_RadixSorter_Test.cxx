@@ -13,7 +13,7 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_RadixSorter.hxx>
+#include <BVH_RadixSorter.hpp>
 
 // =============================================================================
 // Morton Code Tests

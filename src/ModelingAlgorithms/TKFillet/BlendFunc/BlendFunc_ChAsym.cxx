@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Blend_Point.hxx>
-#include <BlendFunc.hxx>
-#include <BlendFunc_ChAsym.hxx>
-#include <ElCLib.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <math_Gauss.hxx>
-#include <math_Matrix.hxx>
-#include <math_SVD.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <Blend_Point.hpp>
+#include <BlendFunc.hpp>
+#include <BlendFunc_ChAsym.hpp>
+#include <ElCLib.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <math_Gauss.hpp>
+#include <math_Matrix.hpp>
+#include <math_SVD.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
 
 //=================================================================================================
 

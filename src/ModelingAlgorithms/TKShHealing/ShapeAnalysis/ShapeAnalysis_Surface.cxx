@@ -29,33 +29,33 @@
 //: r9 abv 09.04.99: id_turbine-C.stp #3865: check degenerated 2d point by recomputing to 3d instead
 //: of Resolution s5 abv 22.04.99  Adding debug printouts in catch {} blocks
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_IsoCurve.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <ElSLib.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <Geom_BoundedSurface.hxx>
-#include <Geom_ConicalSurface.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SurfaceOfLinearExtrusion.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <Geom_ToroidalSurface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Message.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_Type.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <ElSLib.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <Geom_BoundedSurface.hpp>
+#include <Geom_ConicalSurface.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SurfaceOfLinearExtrusion.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <Geom_ToroidalSurface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Message.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_Type.hpp>
 
 #include <cassert>
 

@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Circle.hxx>
+#include <AIS_Circle.hpp>
 
-#include <AIS_GraphicTool.hxx>
-#include <Aspect_TypeOfLine.hxx>
-#include <Geom_Circle.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Graphic3d_AspectLine3d.hxx>
-#include <Graphic3d_Structure.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Quantity_Color.hxx>
-#include <Select3D_SensitiveCircle.hxx>
-#include <Select3D_SensitivePoly.hxx>
-#include <SelectMgr_EntityOwner.hxx>
-#include <SelectMgr_Selection.hxx>
-#include <Standard_Type.hxx>
-#include <StdPrs_DeflectionCurve.hxx>
+#include <AIS_GraphicTool.hpp>
+#include <Aspect_TypeOfLine.hpp>
+#include <Geom_Circle.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Graphic3d_AspectLine3d.hpp>
+#include <Graphic3d_Structure.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Quantity_Color.hpp>
+#include <Select3D_SensitiveCircle.hpp>
+#include <Select3D_SensitivePoly.hpp>
+#include <SelectMgr_EntityOwner.hpp>
+#include <SelectMgr_Selection.hpp>
+#include <Standard_Type.hpp>
+#include <StdPrs_DeflectionCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Circle, AIS_InteractiveObject)
 

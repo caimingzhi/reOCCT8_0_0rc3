@@ -15,7 +15,7 @@
 
 // Purpose:     Implementation of the BaseList class
 
-#include <NCollection_BaseList.hxx>
+#include <NCollection_BaseList.hpp>
 
 //=======================================================================
 // function : PClear

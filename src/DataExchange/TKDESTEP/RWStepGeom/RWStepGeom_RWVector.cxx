@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include "RWStepGeom_RWVector.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Direction.hxx>
-#include <StepGeom_Vector.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include "RWStepGeom_RWVector.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Direction.hpp>
+#include <StepGeom_Vector.hpp>
 
 RWStepGeom_RWVector::RWStepGeom_RWVector() = default;
 

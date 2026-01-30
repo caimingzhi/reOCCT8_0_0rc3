@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ShaderObject.hxx>
-#include <OpenGl_Context.hxx>
-#include <OpenGl_ShaderObject.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Process.hxx>
-#include <OSD_Protection.hxx>
-#include <Standard_Assert.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Graphic3d_ShaderObject.hpp>
+#include <OpenGl_Context.hpp>
+#include <OpenGl_ShaderObject.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Process.hpp>
+#include <OSD_Protection.hpp>
+#include <Standard_Assert.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #ifdef _WIN32
   #include <malloc.h> // for alloca()

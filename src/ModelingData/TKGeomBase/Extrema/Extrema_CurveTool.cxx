@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <Extrema_CurveTool.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <GCPnts_TangentialDeflection.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Extrema_CurveTool.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <GCPnts_TangentialDeflection.hpp>
 
 //=================================================================================================
 

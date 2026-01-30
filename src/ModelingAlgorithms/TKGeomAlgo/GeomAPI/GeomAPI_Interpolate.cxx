@@ -16,16 +16,16 @@
 
 // 08-Aug-95 : xab : interpolation uses BSplCLib::Interpolate
 
-#include <BSplCLib.hxx>
-#include <GeomAPI_Interpolate.hxx>
-#include <gp_Vec.hxx>
-#include <PLib.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <StdFail_NotDone.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <GeomAPI_Interpolate.hpp>
+#include <gp_Vec.hpp>
+#include <PLib.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <StdFail_NotDone.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
 //=================================================================================================
 

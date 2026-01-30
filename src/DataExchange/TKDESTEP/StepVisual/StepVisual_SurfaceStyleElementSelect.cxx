@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_SurfaceStyleBoundary.hxx>
-#include <StepVisual_SurfaceStyleControlGrid.hxx>
-#include <StepVisual_SurfaceStyleElementSelect.hxx>
-#include <StepVisual_SurfaceStyleFillArea.hxx>
-#include <StepVisual_SurfaceStyleParameterLine.hxx>
-#include <StepVisual_SurfaceStyleRendering.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_SurfaceStyleBoundary.hpp>
+#include <StepVisual_SurfaceStyleControlGrid.hpp>
+#include <StepVisual_SurfaceStyleElementSelect.hpp>
+#include <StepVisual_SurfaceStyleFillArea.hpp>
+#include <StepVisual_SurfaceStyleParameterLine.hpp>
+#include <StepVisual_SurfaceStyleRendering.hpp>
 
 StepVisual_SurfaceStyleElementSelect::StepVisual_SurfaceStyleElementSelect() = default;
 

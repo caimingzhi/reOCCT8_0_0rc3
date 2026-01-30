@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEPLY_Provider.hxx>
+#include <DEPLY_Provider.hpp>
 
-#include <BRep_Builder.hxx>
-#include <DE_ValidationUtils.hxx>
-#include <DEPLY_ConfigurationNode.hxx>
-#include <DE_Wrapper.hxx>
-#include <Message.hxx>
-#include <RWMesh_FaceIterator.hxx>
-#include <RWPly_CafWriter.hxx>
-#include <RWPly_PlyWriterContext.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_DocumentExplorer.hxx>
+#include <BRep_Builder.hpp>
+#include <DE_ValidationUtils.hpp>
+#include <DEPLY_ConfigurationNode.hpp>
+#include <DE_Wrapper.hpp>
+#include <Message.hpp>
+#include <RWMesh_FaceIterator.hpp>
+#include <RWPly_CafWriter.hpp>
+#include <RWPly_PlyWriterContext.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_DocumentExplorer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEPLY_Provider, DE_Provider)
 

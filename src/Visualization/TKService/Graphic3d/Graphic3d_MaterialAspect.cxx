@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_MaterialAspect.hxx>
+#include <Graphic3d_MaterialAspect.hpp>
 
-#include <Graphic3d_MaterialDefinitionError.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Graphic3d_MaterialDefinitionError.hpp>
+#include <Standard_OutOfRange.hpp>
 
 namespace
 {

@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FEmTool_ElementsOfRefMatrix.hxx>
-#include <PLib_HermitJacobi.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array1.hxx>
+#include <FEmTool_ElementsOfRefMatrix.hpp>
+#include <PLib_HermitJacobi.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array1.hpp>
 
 FEmTool_ElementsOfRefMatrix::FEmTool_ElementsOfRefMatrix(const PLib_HermitJacobi& TheBase,
                                                          const int                DerOrder)

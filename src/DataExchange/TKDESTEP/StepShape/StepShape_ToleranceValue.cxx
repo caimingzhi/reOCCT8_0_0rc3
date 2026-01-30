@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepShape_ToleranceValue.hxx>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepShape_ToleranceValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ToleranceValue, Standard_Transient)
 

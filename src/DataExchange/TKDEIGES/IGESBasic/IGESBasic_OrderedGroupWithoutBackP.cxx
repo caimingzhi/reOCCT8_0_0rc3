@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESBasic_OrderedGroupWithoutBackP.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_OrderedGroupWithoutBackP.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_OrderedGroupWithoutBackP, IGESBasic_Group)
 

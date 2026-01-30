@@ -14,11 +14,11 @@
 
 // pmn -> modified 17/01/1996 : utilisation de Curve() et SetCurve()
 
-#include <Law_BSpline.hxx>
-#include <Law_S.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
+#include <Law_BSpline.hpp>
+#include <Law_S.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_S, Law_BSpFunc)
 

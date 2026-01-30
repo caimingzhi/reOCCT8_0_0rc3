@@ -23,11 +23,11 @@
 //-Declarations
 // for the class
 
-#include <Aspect_Background.hxx>
-#include <Aspect_Window.hxx>
-#include <Aspect_WindowDefinitionError.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Type.hxx>
+#include <Aspect_Background.hpp>
+#include <Aspect_Window.hpp>
+#include <Aspect_WindowDefinitionError.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_Window, Standard_Transient)
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Aspect_CircularGrid.hxx>
+#include <Aspect_CircularGrid.hpp>
 
-#include <Standard_NegativeValue.hxx>
-#include <Standard_NullValue.hxx>
-#include <Standard_NumericError.hxx>
+#include <Standard_NegativeValue.hpp>
+#include <Standard_NullValue.hpp>
+#include <Standard_NumericError.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_CircularGrid, Aspect_Grid)
 

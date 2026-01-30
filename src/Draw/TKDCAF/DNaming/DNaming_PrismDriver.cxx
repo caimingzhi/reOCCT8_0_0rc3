@@ -13,38 +13,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <BRepCheck_Shell.hxx>
-#include <BRepCheck_Wire.hxx>
-#include <BRepGProp.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <DNaming.hxx>
-#include <DNaming_PrismDriver.hxx>
-#include <Geom_Line.hxx>
-#include <gp_Vec.hxx>
-#include <GProp_GProps.hxx>
-#include <ModelDefinitions.hxx>
-#include <Precision.hxx>
-#include <Standard_Real.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_TagSource.hxx>
-#include <TFunction_Function.hxx>
-#include <TFunction_Logbook.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_DataMap.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <BRepCheck_Shell.hpp>
+#include <BRepCheck_Wire.hpp>
+#include <BRepGProp.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <BRepPrimAPI_MakePrism.hpp>
+#include <DNaming.hpp>
+#include <DNaming_PrismDriver.hpp>
+#include <Geom_Line.hpp>
+#include <gp_Vec.hpp>
+#include <GProp_GProps.hpp>
+#include <ModelDefinitions.hpp>
+#include <Precision.hpp>
+#include <Standard_Real.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_TagSource.hpp>
+#include <TFunction_Function.hpp>
+#include <TFunction_Logbook.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_DataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_PrismDriver, TFunction_Driver)
 
@@ -70,7 +70,7 @@ bool DNaming_PrismDriver::MustExecute(const occ::handle<TFunction_Logbook>&) con
 }
 
 #ifdef OCCT_DEBUG
-  #include <BRepTools.hxx>
+  #include <BRepTools.hpp>
 
 static void Write(const TopoDS_Shape& shape, const char* filename)
 {

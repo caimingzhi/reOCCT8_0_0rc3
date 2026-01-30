@@ -13,8 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_VertexTool.hxx>
-#include <Precision.hxx>
+#include <BRepMesh_VertexTool.hpp>
+#include <Precision.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_VertexTool, Standard_Transient)
 

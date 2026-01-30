@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Plugin_Macro.hxx>
-#include <Standard_GUID.hxx>
-#include <TDocStd_Application.hxx>
-#include <XmlDrivers.hxx>
-#include <XmlDrivers_DocumentRetrievalDriver.hxx>
-#include <XmlDrivers_DocumentStorageDriver.hxx>
-#include <XmlMDataStd.hxx>
-#include <XmlMDataXtd.hxx>
-#include <XmlMDF.hxx>
-#include <XmlMDF_ADriverTable.hxx>
-#include <XmlMDocStd.hxx>
-#include <XmlMFunction.hxx>
-#include <XmlMNaming.hxx>
+#include <Message_Messenger.hpp>
+#include <Plugin_Macro.hpp>
+#include <Standard_GUID.hpp>
+#include <TDocStd_Application.hpp>
+#include <XmlDrivers.hpp>
+#include <XmlDrivers_DocumentRetrievalDriver.hpp>
+#include <XmlDrivers_DocumentStorageDriver.hpp>
+#include <XmlMDataStd.hpp>
+#include <XmlMDataXtd.hpp>
+#include <XmlMDF.hpp>
+#include <XmlMDF_ADriverTable.hpp>
+#include <XmlMDocStd.hpp>
+#include <XmlMFunction.hpp>
+#include <XmlMNaming.hpp>
 
 static Standard_GUID XmlStorageDriver("03a56820-8269-11d5-aab2-0050044b1af1");
 static Standard_GUID XmlRetrievalDriver("03a56822-8269-11d5-aab2-0050044b1af1");

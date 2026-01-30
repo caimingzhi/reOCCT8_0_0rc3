@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepAP203_CcDesignSpecificationReference.hxx>
-#include <StepBasic_Document.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepAP203_CcDesignSpecificationReference.hpp>
+#include <StepBasic_Document.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignSpecificationReference, StepBasic_DocumentReference)
 

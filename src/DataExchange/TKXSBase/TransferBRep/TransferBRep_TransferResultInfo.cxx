@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <TransferBRep_TransferResultInfo.hxx>
+#include <Standard_Type.hpp>
+#include <TransferBRep_TransferResultInfo.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TransferBRep_TransferResultInfo, Standard_Transient)
 

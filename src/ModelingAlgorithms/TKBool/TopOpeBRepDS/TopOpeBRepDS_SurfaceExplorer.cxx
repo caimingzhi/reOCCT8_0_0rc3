@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
-#include <TopOpeBRepDS_SurfaceExplorer.hxx>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
+#include <TopOpeBRepDS_SurfaceExplorer.hpp>
 
 #define MYDS (*((TopOpeBRepDS_DataStructure*)myDS))
 

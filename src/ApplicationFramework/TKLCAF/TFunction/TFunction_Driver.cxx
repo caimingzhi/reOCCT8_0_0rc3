@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TFunction_Driver.hxx>
-#include <TFunction_Logbook.hxx>
+#include <TFunction_Driver.hpp>
+#include <TFunction_Logbook.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TFunction_Driver, Standard_Transient)
 

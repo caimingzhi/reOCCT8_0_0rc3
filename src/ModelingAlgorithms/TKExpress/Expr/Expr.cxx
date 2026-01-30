@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr.hxx>
-#include <Expr_GeneralExpression.hxx>
-#include <Expr_GeneralRelation.hxx>
-#include <Expr_UnknownIterator.hxx>
-#include <Expr_RUIterator.hxx>
+#include <Expr.hpp>
+#include <Expr_GeneralExpression.hpp>
+#include <Expr_GeneralRelation.hpp>
+#include <Expr_UnknownIterator.hpp>
+#include <Expr_RUIterator.hpp>
 
 occ::handle<Expr_GeneralExpression> Expr::CopyShare(const occ::handle<Expr_GeneralExpression>& exp)
 {

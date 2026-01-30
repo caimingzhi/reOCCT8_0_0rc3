@@ -16,12 +16,12 @@
 
 //  Modified by skv - Fri Jul 14 17:03:47 2006 OCC12627
 
-#include <Geom2dHatch_Elements.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <Precision.hxx>
+#include <Geom2dHatch_Elements.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <Precision.hpp>
 
 static const double Probing_Start = 0.123;
 static const double Probing_End   = 0.8;

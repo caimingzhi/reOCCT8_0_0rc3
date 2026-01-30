@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESGeom_RuledSurface.hxx>
-#include <Standard_Type.hxx>
+#include <IGESGeom_RuledSurface.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_RuledSurface, IGESData_IGESEntity)
 

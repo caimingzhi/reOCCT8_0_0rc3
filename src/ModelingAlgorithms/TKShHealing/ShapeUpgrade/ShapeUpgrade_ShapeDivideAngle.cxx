@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ShapeUpgrade_FaceDivide.hxx>
-#include <ShapeUpgrade_ShapeDivideAngle.hxx>
-#include <ShapeUpgrade_SplitSurfaceAngle.hxx>
-#include <ShapeUpgrade_WireDivide.hxx>
-#include <TopoDS_Shape.hxx>
+#include <ShapeUpgrade_FaceDivide.hpp>
+#include <ShapeUpgrade_ShapeDivideAngle.hpp>
+#include <ShapeUpgrade_SplitSurfaceAngle.hpp>
+#include <ShapeUpgrade_WireDivide.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

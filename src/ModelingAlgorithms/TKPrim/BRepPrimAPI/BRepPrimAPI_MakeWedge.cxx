@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrimAPI_MakeWedge.hxx>
-#include <gp_Ax2.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
+#include <BRepPrimAPI_MakeWedge.hpp>
+#include <gp_Ax2.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
 
 //=================================================================================================
 

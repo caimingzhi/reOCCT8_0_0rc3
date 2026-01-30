@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepClass3d.hxx>
+#include <BRepClass3d.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_State.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_State.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
 
 static bool IsInternal(const TopoDS_Shell& aSx);
 

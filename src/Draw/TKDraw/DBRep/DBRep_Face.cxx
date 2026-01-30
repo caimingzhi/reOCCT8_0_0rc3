@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep_Face.hxx>
-#include <Draw_Color.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Face.hxx>
+#include <DBRep_Face.hpp>
+#include <Draw_Color.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DBRep_Face, Standard_Transient)
 

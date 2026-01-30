@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRTopoBRep_VData.hxx>
-#include <TopoDS_Shape.hxx>
+#include <HLRTopoBRep_VData.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

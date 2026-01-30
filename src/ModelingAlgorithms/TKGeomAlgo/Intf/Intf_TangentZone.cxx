@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Intf_TangentZone.hxx>
+#include <Intf_TangentZone.hpp>
 
 #define DEBUG_TANGENTZONE 0
 

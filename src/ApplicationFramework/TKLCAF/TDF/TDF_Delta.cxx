@@ -18,19 +18,19 @@
 // Version	Date		Purpose
 //		0.0	Sep  8 1997	Creation
 
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <TDF_Delta.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Map.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <TDF_Delta.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Map.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_Delta, Standard_Transient)
 
 #ifdef OCCT_DEBUG
-  #include <Standard_ConstructionError.hxx>
+  #include <Standard_ConstructionError.hpp>
 #endif
 
 #undef DEB_DELTA

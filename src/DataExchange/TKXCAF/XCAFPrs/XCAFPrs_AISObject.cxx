@@ -13,26 +13,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFPrs_AISObject.hxx>
+#include <XCAFPrs_AISObject.hpp>
 
-#include <BRep_Builder.hxx>
-#include <BRepBndLib.hxx>
-#include <gp_Pnt.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_DimensionAspect.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <TDataStd_Name.hxx>
-#include <TPrsStd_AISPresentation.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs.hxx>
-#include <XCAFPrs_Style.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepBndLib.hpp>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_AspectFillArea3d.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_DimensionAspect.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <TDataStd_Name.hpp>
+#include <TPrsStd_AISPresentation.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs.hpp>
+#include <XCAFPrs_Style.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFPrs_AISObject, AIS_ColoredShape)
 

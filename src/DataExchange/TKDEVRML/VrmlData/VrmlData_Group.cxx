@@ -13,20 +13,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_Coordinate.hxx>
-#include <VrmlData_Geometry.hxx>
-#include <VrmlData_Group.hxx>
-#include <VrmlData_IndexedFaceSet.hxx>
-#include <VrmlData_IndexedLineSet.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_WorldInfo.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <NCollection_List.hxx>
-#include <VrmlData_Node.hxx>
-#include <VrmlData_ShapeNode.hxx>
-#include <VrmlData_UnknownNode.hxx>
-#include <Precision.hxx>
-#include <gp_Ax1.hxx>
+#include <VrmlData_Coordinate.hpp>
+#include <VrmlData_Geometry.hpp>
+#include <VrmlData_Group.hpp>
+#include <VrmlData_IndexedFaceSet.hpp>
+#include <VrmlData_IndexedLineSet.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_WorldInfo.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <NCollection_List.hpp>
+#include <VrmlData_Node.hpp>
+#include <VrmlData_ShapeNode.hpp>
+#include <VrmlData_UnknownNode.hpp>
+#include <Precision.hpp>
+#include <gp_Ax1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Group, VrmlData_Node)
 

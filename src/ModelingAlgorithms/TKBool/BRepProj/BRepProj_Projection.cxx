@@ -12,27 +12,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRepAlgoAPI_Section.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepFill_Generator.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepLib_MakeWire.hxx>
-#include <BRepProj_Projection.hxx>
-#include <BRepSweep_Prism.hxx>
-#include <BRepTools_Modifier.hxx>
-#include <BRepTools_TrsfModification.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <ShapeAnalysis_FreeBounds.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_NullObject.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Bnd_Box.hpp>
+#include <BRepAlgoAPI_Section.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepFill_Generator.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepLib_MakeWire.hpp>
+#include <BRepProj_Projection.hpp>
+#include <BRepSweep_Prism.hpp>
+#include <BRepTools_Modifier.hpp>
+#include <BRepTools_TrsfModification.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <ShapeAnalysis_FreeBounds.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_NullObject.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=======================================================================
 // function : DistanceOut

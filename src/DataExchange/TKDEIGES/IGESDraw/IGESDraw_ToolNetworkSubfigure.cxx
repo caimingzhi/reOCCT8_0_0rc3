@@ -16,25 +16,25 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_XYZ.hxx>
-#include <IGESData_DirChecker.hxx>
-#include <IGESData_Dump.hxx>
-#include <IGESData_IGESDumper.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESDraw_NetworkSubfigure.hxx>
-#include <IGESDraw_NetworkSubfigureDef.hxx>
-#include <IGESDraw_ToolNetworkSubfigure.hxx>
-#include <IGESGraph_TextDisplayTemplate.hxx>
-#include <Interface_Check.hxx>
-#include <Interface_CopyTool.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_DomainError.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <gp_XYZ.hpp>
+#include <IGESData_DirChecker.hpp>
+#include <IGESData_Dump.hpp>
+#include <IGESData_IGESDumper.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESDraw_NetworkSubfigure.hpp>
+#include <IGESDraw_NetworkSubfigureDef.hpp>
+#include <IGESDraw_ToolNetworkSubfigure.hpp>
+#include <IGESGraph_TextDisplayTemplate.hpp>
+#include <Interface_Check.hpp>
+#include <Interface_CopyTool.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_DomainError.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IGESDraw_ToolNetworkSubfigure::IGESDraw_ToolNetworkSubfigure() = default;
 

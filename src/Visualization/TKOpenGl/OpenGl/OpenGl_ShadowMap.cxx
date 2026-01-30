@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_ShadowMap.hxx>
+#include <OpenGl_ShadowMap.hpp>
 
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <Graphic3d_CView.hxx>
-#include <Message_Messenger.hxx>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <Graphic3d_CView.hpp>
+#include <Message_Messenger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_ShadowMap, OpenGl_NamedResource)
 

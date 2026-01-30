@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_ExternalSources.hxx>
-#include <IFGraph_SCRoots.hxx>
-#include <IFGraph_StrongComponants.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Transient.hxx>
+#include <IFGraph_ExternalSources.hpp>
+#include <IFGraph_SCRoots.hpp>
+#include <IFGraph_StrongComponants.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Transient.hpp>
 
-// #include <Interface_GraphContent.hxx>
+// #include <Interface_GraphContent.hpp>
 IFGraph_SCRoots::IFGraph_SCRoots(const Interface_Graph& agraph, const bool whole)
     : IFGraph_StrongComponants(agraph, whole)
 {

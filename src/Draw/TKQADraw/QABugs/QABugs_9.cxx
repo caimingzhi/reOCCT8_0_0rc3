@@ -13,21 +13,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <DrawTrSurf.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <ViewerTest.hxx>
-#include <AIS_Shape.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <DrawTrSurf.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <ViewerTest.hpp>
+#include <AIS_Shape.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <GC_MakeTrimmedCone.hxx>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <GC_MakeTrimmedCone.hpp>
 
 static int BUC60857(Draw_Interpretor& di, int /*argc*/, const char** argv)
 {
@@ -65,11 +65,11 @@ static int BUC60857(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-#include <Geom2dGcc_QualifiedCurve.hxx>
-#include <Geom2dGcc_Circ2d2TanRad.hxx>
-#include <gp_Elips2d.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Circle.hxx>
+#include <Geom2dGcc_QualifiedCurve.hpp>
+#include <Geom2dGcc_Circ2d2TanRad.hpp>
+#include <gp_Elips2d.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Circle.hpp>
 
 void QABugs::Commands_9(Draw_Interpretor& theCommands)
 {

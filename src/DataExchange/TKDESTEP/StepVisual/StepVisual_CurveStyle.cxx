@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_Colour.hxx>
-#include <StepVisual_CurveStyle.hxx>
-#include <StepVisual_CurveStyleFontSelect.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepVisual_Colour.hpp>
+#include <StepVisual_CurveStyle.hpp>
+#include <StepVisual_CurveStyleFontSelect.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CurveStyle, Standard_Transient)
 

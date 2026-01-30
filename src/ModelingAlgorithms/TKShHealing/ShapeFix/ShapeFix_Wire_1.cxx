@@ -12,64 +12,64 @@
 // commercial license or contractual agreement.
 
 // szv 19.08.99: new methods for fixing gaps between edges (3d curves and pcurves)
-#include <ShapeFix_Wire.hxx>
-#include <Standard_Failure.hxx>
+#include <ShapeFix_Wire.hpp>
+#include <Standard_Failure.hpp>
 
-#include <Precision.hxx>
-#include <Geom2d_Line.hxx>
+#include <Precision.hpp>
+#include <Geom2d_Line.hpp>
 
-#include <IntRes2d_IntersectionPoint.hxx>
+#include <IntRes2d_IntersectionPoint.hpp>
 
-#include <TopoDS.hxx>
+#include <TopoDS.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <ShapeExtend.hxx>
-#include <ShapeBuild_Edge.hxx>
-#include <ShapeAnalysis_Curve.hxx>
-#include <ShapeAnalysis_Edge.hxx>
-#include <ShapeAnalysis_Surface.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Pln.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <BRepTools.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <ShapeBuild_ReShape.hxx>
+#include <ShapeExtend.hpp>
+#include <ShapeBuild_Edge.hpp>
+#include <ShapeAnalysis_Curve.hpp>
+#include <ShapeAnalysis_Edge.hpp>
+#include <ShapeAnalysis_Surface.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Pln.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <BRepTools.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <ShapeBuild_ReShape.hpp>
 
 // szv
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <Geom2dAPI_ExtremaCurveCurve.hxx>
-#include <Geom2dAPI_ProjectPointOnCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Approx_Curve2d.hxx>
-#include <Geom2dConvert.hxx>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <Geom2dAPI_ExtremaCurveCurve.hpp>
+#include <Geom2dAPI_ProjectPointOnCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Approx_Curve2d.hpp>
+#include <Geom2dConvert.hpp>
 
-#include <Geom_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Parabola.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_OffsetCurve.hxx>
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Approx_Curve3d.hxx>
-#include <GeomConvert.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <ShapeFix_ShapeTolerance.hxx>
-#include <ShapeAnalysis_TransferParametersProj.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_BezierCurve.hxx>
+#include <Geom_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Parabola.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_OffsetCurve.hpp>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Approx_Curve3d.hpp>
+#include <GeomConvert.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <ShapeFix_ShapeTolerance.hpp>
+#include <ShapeAnalysis_TransferParametersProj.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_BezierCurve.hpp>
 
 //=================================================================================================
 

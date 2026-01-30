@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Curve.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPElC.hxx>
-#include <Extrema_ExtPRevS.hxx>
-#include <Extrema_GenExtPS.hxx>
-#include <Extrema_POnCurv.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_Type.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPElC.hpp>
+#include <Extrema_ExtPRevS.hpp>
+#include <Extrema_GenExtPS.hpp>
+#include <Extrema_POnCurv.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_Type.hpp>
+#include <StdFail_NotDone.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Extrema_ExtPRevS, Standard_Transient)
 

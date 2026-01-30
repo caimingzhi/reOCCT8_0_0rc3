@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom2dConvert_ApproxCurve.hxx>
-#include <Geom2dConvert_BSplineCurveToBezierCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Precision.hxx>
-#include <ShapeCustom_Curve2d.hxx>
-#include <ShapeExtend.hxx>
-#include <ShapeUpgrade_ConvertCurve2dToBezier.hxx>
-#include <Standard_Type.hxx>
-#include <Geom2d_Curve.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom2dConvert_ApproxCurve.hpp>
+#include <Geom2dConvert_BSplineCurveToBezierCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Precision.hpp>
+#include <ShapeCustom_Curve2d.hpp>
+#include <ShapeExtend.hpp>
+#include <ShapeUpgrade_ConvertCurve2dToBezier.hpp>
+#include <Standard_Type.hpp>
+#include <Geom2d_Curve.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt2d.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ConvertCurve2dToBezier, ShapeUpgrade_SplitCurve2d)
 

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWCameraUsage.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepVisual_CameraUsage.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWCameraUsage.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepVisual_CameraUsage.hpp>
 
 RWStepVisual_RWCameraUsage::RWStepVisual_RWCameraUsage() = default;
 

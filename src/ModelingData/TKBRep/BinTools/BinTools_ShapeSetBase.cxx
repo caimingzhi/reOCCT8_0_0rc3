@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools.hxx>
-#include <BinTools_ShapeSetBase.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BinTools.hpp>
+#include <BinTools_ShapeSetBase.hpp>
+#include <TopoDS_Shape.hpp>
 
 const char* BinTools_ShapeSetBase::THE_ASCII_VERSIONS[BinTools_FormatVersion_UPPER + 1] = {
   "",

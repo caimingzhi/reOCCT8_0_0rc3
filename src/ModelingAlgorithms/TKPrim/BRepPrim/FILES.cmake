@@ -3,25 +3,25 @@ set(OCCT_BRepPrim_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepPrim_FILES
   BRepPrim_Builder.cxx
-  BRepPrim_Builder.hxx
-  BRepPrim_Builder.lxx
+  BRepPrim_Builder.hpp
+  BRepPrim_Builder_1.hpp
   BRepPrim_Cone.cxx
-  BRepPrim_Cone.hxx
+  BRepPrim_Cone.hpp
   BRepPrim_Cylinder.cxx
-  BRepPrim_Cylinder.hxx
-  BRepPrim_Direction.hxx
+  BRepPrim_Cylinder.hpp
+  BRepPrim_Direction.hpp
   BRepPrim_FaceBuilder.cxx
-  BRepPrim_FaceBuilder.hxx
+  BRepPrim_FaceBuilder.hpp
   BRepPrim_GWedge.cxx
-  BRepPrim_GWedge.hxx
+  BRepPrim_GWedge.hpp
   BRepPrim_OneAxis.cxx
-  BRepPrim_OneAxis.hxx
+  BRepPrim_OneAxis.hpp
   BRepPrim_Revolution.cxx
-  BRepPrim_Revolution.hxx
+  BRepPrim_Revolution.hpp
   BRepPrim_Sphere.cxx
-  BRepPrim_Sphere.hxx
+  BRepPrim_Sphere.hpp
   BRepPrim_Torus.cxx
-  BRepPrim_Torus.hxx
+  BRepPrim_Torus.hpp
   BRepPrim_Wedge.cxx
-  BRepPrim_Wedge.hxx
+  BRepPrim_Wedge.hpp
 )

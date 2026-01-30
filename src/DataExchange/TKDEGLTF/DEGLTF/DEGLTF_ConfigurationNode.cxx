@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEGLTF_ConfigurationNode.hxx>
+#include <DEGLTF_ConfigurationNode.hpp>
 
-#include <DEGLTF_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
+#include <DEGLTF_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEGLTF_ConfigurationNode, DE_ConfigurationNode)
 

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DsgPrs_DatumPrs.hxx>
-#include <DsgPrs_XYZAxisPresentation.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Ax2.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_DatumAspect.hxx>
-#include <Prs3d_TextAspect.hxx>
-#include <Prs3d_ArrowAspect.hxx>
+#include <DsgPrs_DatumPrs.hpp>
+#include <DsgPrs_XYZAxisPresentation.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Ax2.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_DatumAspect.hpp>
+#include <Prs3d_TextAspect.hpp>
+#include <Prs3d_ArrowAspect.hpp>
 
 //=================================================================================================
 

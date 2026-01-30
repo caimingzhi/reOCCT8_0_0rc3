@@ -16,17 +16,17 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESDraw_DrawingWithRotation.hxx>
-#include <IGESDraw_PerspectiveView.hxx>
-#include <IGESDraw_View.hxx>
-#include <IGESGraph_DrawingSize.hxx>
-#include <IGESGraph_DrawingUnits.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESDraw_DrawingWithRotation.hpp>
+#include <IGESDraw_PerspectiveView.hpp>
+#include <IGESDraw_View.hpp>
+#include <IGESGraph_DrawingSize.hpp>
+#include <IGESGraph_DrawingUnits.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_DrawingWithRotation, IGESData_IGESEntity)
 

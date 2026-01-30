@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LocalAnalysis.hxx>
-#include <LocalAnalysis_SurfaceContinuity.hxx>
-#include <LocalAnalysis_CurveContinuity.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <DrawTrSurf.hxx>
-#include <GeometryTest.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Message.hxx>
+#include <LocalAnalysis.hpp>
+#include <LocalAnalysis_SurfaceContinuity.hpp>
+#include <LocalAnalysis_CurveContinuity.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <DrawTrSurf.hpp>
+#include <GeometryTest.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Message.hpp>
 
 /*********************************************************************************/
 void InitEpsSurf(double& epsnl,

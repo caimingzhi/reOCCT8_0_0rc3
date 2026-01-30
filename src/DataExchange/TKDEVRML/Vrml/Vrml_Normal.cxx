@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <Vrml_Normal.hxx>
+#include <Standard_Type.hpp>
+#include <Vrml_Normal.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Vrml_Normal, Standard_Transient)
 

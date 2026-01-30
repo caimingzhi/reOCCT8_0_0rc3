@@ -16,8 +16,8 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESDimen_DimensionTolerance.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDimen_DimensionTolerance.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDimen_DimensionTolerance, IGESData_IGESEntity)
 

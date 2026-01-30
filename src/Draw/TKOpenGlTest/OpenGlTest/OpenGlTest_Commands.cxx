@@ -13,24 +13,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGlTest.hxx>
+#include <OpenGlTest.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
 
-#include <OpenGl_GlCore20.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <OpenGl_GraphicDriverFactory.hxx>
-#include <OpenGl_Group.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_Workspace.hxx>
+#include <OpenGl_GlCore20.hpp>
+#include <OpenGl_GraphicDriver.hpp>
+#include <OpenGl_GraphicDriverFactory.hpp>
+#include <OpenGl_Group.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_Workspace.hpp>
 
-#include <OSD_OpenFile.hxx>
-#include <Select3D_SensitiveCurve.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <OSD_OpenFile.hpp>
+#include <Select3D_SensitiveCurve.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include <ViewerTest.hxx>
-#include <ViewerTest_AutoUpdater.hxx>
+#include <ViewerTest.hpp>
+#include <ViewerTest_AutoUpdater.hpp>
 
 static occ::handle<OpenGl_Caps> getDefaultCaps()
 {

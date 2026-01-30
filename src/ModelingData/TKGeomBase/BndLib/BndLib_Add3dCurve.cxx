@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BndLib.hxx>
-#include <BndLib_Add3dCurve.hxx>
-#include <ElCLib.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <math_Function.hxx>
-#include <math_PSO.hxx>
-#include <math_BrentMinimum.hxx>
+#include <Bnd_Box.hpp>
+#include <BndLib.hpp>
+#include <BndLib_Add3dCurve.hpp>
+#include <ElCLib.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <math_Function.hpp>
+#include <math_PSO.hpp>
+#include <math_BrentMinimum.hpp>
 //
 static int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax);
 

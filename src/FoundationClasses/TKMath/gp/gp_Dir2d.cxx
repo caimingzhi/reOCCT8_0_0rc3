@@ -14,14 +14,14 @@
 
 // JCV 08/01/90 Modifs suite a l'introduction des classes XY et Mat2d dans gp
 
-#include <gp_Dir2d.hxx>
+#include <gp_Dir2d.hpp>
 
-#include <gp_Ax2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <gp_Ax2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_OutOfRange.hpp>
 
 double gp_Dir2d::Angle(const gp_Dir2d& Other) const
 {

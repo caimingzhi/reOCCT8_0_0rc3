@@ -15,25 +15,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_Interf.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <BOPDS_Pair.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <NCollection_Vector.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <IntTools_Context.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_Interf.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <BOPDS_Pair.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <NCollection_Vector.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <IntTools_Context.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units_Lexicon.hxx>
-#include <Units_NoSuchType.hxx>
-#include <Units_Operators.hxx>
-#include <Units_Sentence.hxx>
-#include <Units_ShiftedToken.hxx>
-#include <Units_Token.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
+#include <Units_Lexicon.hpp>
+#include <Units_NoSuchType.hpp>
+#include <Units_Operators.hpp>
+#include <Units_Sentence.hpp>
+#include <Units_ShiftedToken.hpp>
+#include <Units_Token.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
 
 static occ::handle<Units_Token> CreateTokenForNumber(const char* str)
 {

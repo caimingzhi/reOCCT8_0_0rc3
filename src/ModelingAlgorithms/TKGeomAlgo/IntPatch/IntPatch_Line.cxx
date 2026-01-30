@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_Line.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
+#include <IntPatch_Line.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntPatch_Line, Standard_Transient)
 

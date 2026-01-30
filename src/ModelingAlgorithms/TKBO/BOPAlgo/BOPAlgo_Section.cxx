@@ -12,25 +12,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPAlgo_Section.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_PaveFiller.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_FaceInfo.hxx>
-#include <Standard_Handle.hxx>
-#include <BOPDS_PaveBlock.hxx>
-#include <NCollection_Vector.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BRep_Builder.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_Section.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_PaveFiller.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_FaceInfo.hpp>
+#include <Standard_Handle.hpp>
+#include <BOPDS_PaveBlock.hpp>
+#include <NCollection_Vector.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BRep_Builder.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 class BOPDS_PaveBlock;
 
 //=================================================================================================

@@ -11,30 +11,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi2d_AnaFilletAlgo.hxx>
+#include <ChFi2d_AnaFilletAlgo.hpp>
 
-#include <gp_Ax3.hxx>
+#include <gp_Ax3.hpp>
 
-#include <Standard_TypeMismatch.hxx>
+#include <Standard_TypeMismatch.hpp>
 
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
 
-#include <GeomAPI_ExtremaCurveCurve.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <ShapeAnalysis_Wire.hxx>
-#include <Geom_Circle.hxx>
+#include <GeomAPI_ExtremaCurveCurve.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <ShapeAnalysis_Wire.hpp>
+#include <Geom_Circle.hpp>
 
-#include <BRepAdaptor_Curve.hxx>
-#include <BRep_Tool.hxx>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRep_Tool.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
 
-#include <ProjLib.hxx>
-#include <TopExp.hxx>
-#include <ElSLib.hxx>
+#include <ProjLib.hpp>
+#include <TopExp.hpp>
+#include <ElSLib.hpp>
 
 // Compute the flag: CW || CCW
 static bool isCW(const BRepAdaptor_Curve& AC)

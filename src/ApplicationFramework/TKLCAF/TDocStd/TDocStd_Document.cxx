@@ -11,33 +11,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_Document.hxx>
+#include <TDocStd_Document.hpp>
 
-#include <CDM_Document.hxx>
-#include <CDM_MetaData.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDF_AttributeDelta.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Delta.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Reference.hxx>
-#include <TDocStd.hxx>
-#include <TDocStd_Application.hxx>
-#include <TDocStd_CompoundDelta.hxx>
-#include <TDocStd_Context.hxx>
-#include <Standard_GUID.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TDocStd_Modified.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDocStd_XLink.hxx>
-#include <TDocStd_XLinkIterator.hxx>
+#include <CDM_Document.hpp>
+#include <CDM_MetaData.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDF_AttributeDelta.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Delta.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Reference.hpp>
+#include <TDocStd.hpp>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_CompoundDelta.hpp>
+#include <TDocStd_Context.hpp>
+#include <Standard_GUID.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TDocStd_Modified.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDocStd_XLink.hpp>
+#include <TDocStd_XLinkIterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_Document, CDM_Document)
 

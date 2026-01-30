@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP214_AutoDesignDocumentReference.hxx>
-#include <StepAP214_AutoDesignReferencingItem.hxx>
-#include <StepBasic_Document.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepAP214_AutoDesignDocumentReference.hpp>
+#include <StepAP214_AutoDesignReferencingItem.hpp>
+#include <StepBasic_Document.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AutoDesignDocumentReference, StepBasic_DocumentReference)
 

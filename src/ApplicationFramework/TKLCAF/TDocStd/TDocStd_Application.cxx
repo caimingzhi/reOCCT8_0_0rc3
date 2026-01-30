@@ -14,25 +14,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDocStd_Application.hxx>
+#include <TDocStd_Application.hpp>
 
-#include <CDF_Directory.hxx>
-#include <CDF_DirectoryIterator.hxx>
-#include <CDF_Store.hxx>
-#include <PCDM_RetrievalDriver.hxx>
-#include <PCDM_StorageDriver.hxx>
-#include <PCDM_ReaderFilter.hxx>
-#include <Plugin_Failure.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Owner.hxx>
-#include <TDocStd_PathParser.hxx>
-#include <OSD_Thread.hxx>
+#include <CDF_Directory.hpp>
+#include <CDF_DirectoryIterator.hpp>
+#include <CDF_Store.hpp>
+#include <PCDM_RetrievalDriver.hpp>
+#include <PCDM_StorageDriver.hpp>
+#include <PCDM_ReaderFilter.hpp>
+#include <Plugin_Failure.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Owner.hpp>
+#include <TDocStd_PathParser.hpp>
+#include <OSD_Thread.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_Application, CDF_Application)
 

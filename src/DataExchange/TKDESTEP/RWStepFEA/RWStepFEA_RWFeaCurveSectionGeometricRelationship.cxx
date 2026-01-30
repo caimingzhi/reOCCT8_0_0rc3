@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepFEA_RWFeaCurveSectionGeometricRelationship.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepElement_AnalysisItemWithinRepresentation.hxx>
-#include <StepElement_CurveElementSectionDefinition.hxx>
-#include <StepFEA_FeaCurveSectionGeometricRelationship.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepFEA_RWFeaCurveSectionGeometricRelationship.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepElement_AnalysisItemWithinRepresentation.hpp>
+#include <StepElement_CurveElementSectionDefinition.hpp>
+#include <StepFEA_FeaCurveSectionGeometricRelationship.hpp>
 
 //=================================================================================================
 

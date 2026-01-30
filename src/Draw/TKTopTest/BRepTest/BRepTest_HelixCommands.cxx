@@ -11,38 +11,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Marker3D.hxx>
-#include <Draw_Segment3D.hxx>
-#include <Draw_Viewer.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Line.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_Surface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <HelixBRep_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelix.hxx>
-#include <HelixGeom_BuilderHelixCoil.hxx>
-#include <HelixGeom_HelixCurve.hxx>
-#include <HelixGeom_Tools.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Shape.hxx>
-#include <BRepTest.hxx>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Marker3D.hpp>
+#include <Draw_Segment3D.hpp>
+#include <Draw_Viewer.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Line.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_Surface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <HelixBRep_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelix.hpp>
+#include <HelixGeom_BuilderHelixCoil.hpp>
+#include <HelixGeom_HelixCurve.hpp>
+#include <HelixGeom_Tools.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Shape.hpp>
+#include <BRepTest.hpp>
 
 Standard_IMPORT Draw_Viewer dout;
 static gp_Ax3 theHelixAxis(gp_Pnt(0., 0., 0), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));

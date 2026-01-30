@@ -13,12 +13,12 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_OffsetCurve.hxx>
-#include <Geom_Circle.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
+#include <Geom_OffsetCurve.hpp>
+#include <Geom_Circle.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
 
 class Geom_OffsetCurve_Test : public ::testing::Test
 {

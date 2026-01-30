@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd_IntegerListDriver.hxx>
-#include <BinMDataStd.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array1.hxx>
-#include <TDataStd_IntegerList.hxx>
-#include <TDF_Attribute.hxx>
+#include <BinMDataStd_IntegerListDriver.hpp>
+#include <BinMDataStd.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array1.hpp>
+#include <TDataStd_IntegerList.hpp>
+#include <TDF_Attribute.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerListDriver, BinMDF_ADriver)
 

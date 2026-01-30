@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_OffsetSurface.hxx>
+#include <GeomGridEval_OffsetSurface.hpp>
 
-#include <GeomAdaptor_Surface.hxx>
-#include <Geom_OffsetSurfaceUtils.pxx>
-#include <GeomGridEval_Surface.hxx>
+#include <GeomAdaptor_Surface.hpp>
+#include <Geom_OffsetSurfaceUtils.hpp>
+#include <GeomGridEval_Surface.hpp>
 
 //==================================================================================================
 

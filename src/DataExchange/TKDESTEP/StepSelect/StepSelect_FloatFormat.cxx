@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextWrite.hxx>
-#include <Standard_Type.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepSelect_FloatFormat.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_ContextWrite.hpp>
+#include <Standard_Type.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepSelect_FloatFormat.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(StepSelect_FloatFormat, StepSelect_FileModifier)

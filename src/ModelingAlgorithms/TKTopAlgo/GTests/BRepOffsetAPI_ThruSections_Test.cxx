@@ -13,17 +13,17 @@
 
 #include <gtest/gtest.h>
 
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BSplCLib.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepAlgoAPI_Fuse.hpp>
+#include <BRepBuilderAPI_MakeEdge.hpp>
+#include <BRepBuilderAPI_MakePolygon.hpp>
+#include <BRepBuilderAPI_MakeWire.hpp>
+#include <BRepOffsetAPI_ThruSections.hpp>
+#include <BSplCLib.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <TopoDS_Shape.hpp>
 
 // Test OCC10006: BRepOffsetAPI_ThruSections loft operation with Boolean fusion
 TEST(BRepOffsetAPI_ThruSections_Test, OCC10006_LoftAndFusion)

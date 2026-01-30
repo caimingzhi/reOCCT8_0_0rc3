@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_EntityOwner.hxx>
+#include <SelectMgr_EntityOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_EntityOwner, Standard_Transient)
 

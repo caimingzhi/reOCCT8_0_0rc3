@@ -16,11 +16,11 @@
 
 // Modified: eap Mar 25 2002 (occ102,occ227), touch case
 
-#include <Precision.hxx>
-#include <TopAbs.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopAbs_State.hxx>
-#include <TopTrans_SurfaceTransition.hxx>
+#include <Precision.hpp>
+#include <TopAbs.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopAbs_State.hpp>
+#include <TopTrans_SurfaceTransition.hpp>
 
 static bool STATIC_DEFINED = false;
 

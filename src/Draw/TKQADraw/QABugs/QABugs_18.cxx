@@ -13,31 +13,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Draw.hxx>
-#include <Draw_Interpretor.hxx>
-#include <DBRep.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
+#include <Draw.hpp>
+#include <Draw_Interpretor.hpp>
+#include <DBRep.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
 
-#include <V3d_View.hxx>
+#include <V3d_View.hpp>
 
-#include <TDocStd_Application.hxx>
-#include <TDocStd_Document.hxx>
-#include <DDocStd.hxx>
+#include <TDocStd_Application.hpp>
+#include <TDocStd_Document.hpp>
+#include <DDocStd.hpp>
 
-#include <Resource_Manager.hxx>
-#include <TopoDS_Wire.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS.hxx>
-#include <BRep_Tool.hxx>
-#include <TopExp.hxx>
-#include <Geom_Curve.hxx>
-#include <GCPnts_UniformAbscissa.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <Standard_Assert.hxx>
+#include <Resource_Manager.hpp>
+#include <TopoDS_Wire.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS.hpp>
+#include <BRep_Tool.hpp>
+#include <TopExp.hpp>
+#include <Geom_Curve.hpp>
+#include <GCPnts_UniformAbscissa.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <Standard_Assert.hpp>
 
 #define DEFAULT_COLOR Quantity_NOC_GOLDENROD
 

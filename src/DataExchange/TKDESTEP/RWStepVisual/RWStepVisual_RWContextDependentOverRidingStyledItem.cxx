@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWContextDependentOverRidingStyledItem.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_ContextDependentOverRidingStyledItem.hxx>
-#include <StepVisual_PresentationStyleAssignment.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepVisual_StyleContextSelect.hxx>
-#include <StepVisual_StyledItem.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWContextDependentOverRidingStyledItem.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_ContextDependentOverRidingStyledItem.hpp>
+#include <StepVisual_PresentationStyleAssignment.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepVisual_StyleContextSelect.hpp>
+#include <StepVisual_StyledItem.hpp>
 
 RWStepVisual_RWContextDependentOverRidingStyledItem::
   RWStepVisual_RWContextDependentOverRidingStyledItem() = default;

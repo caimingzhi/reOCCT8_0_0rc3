@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_FaceOrSurface.hxx>
-#include <StepShape_Face.hxx>
-#include <StepGeom_Surface.hxx>
+#include <StepVisual_FaceOrSurface.hpp>
+#include <StepShape_Face.hpp>
+#include <StepGeom_Surface.hpp>
 
 //=================================================================================================
 

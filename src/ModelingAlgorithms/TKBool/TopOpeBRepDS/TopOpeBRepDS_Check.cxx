@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <TopOpeBRepDS_Check.hxx>
-#include <TopOpeBRepDS_CheckStatus.hxx>
-#include <TopOpeBRepDS_CurvePointInterference.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_Kind.hxx>
-#include <NCollection_List.hxx>
-#include <TopOpeBRepDS_PointExplorer.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
+#include <BRep_Tool.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <TopOpeBRepDS_Check.hpp>
+#include <TopOpeBRepDS_CheckStatus.hpp>
+#include <TopOpeBRepDS_CurvePointInterference.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_Kind.hpp>
+#include <NCollection_List.hpp>
+#include <TopOpeBRepDS_PointExplorer.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Check, Standard_Transient)
 

@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Vec.hxx>
-#include <gp_Pnt2d.hxx>
-#include <BRep_Tool.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
+#include <gp_Vec.hpp>
+#include <gp_Pnt2d.hpp>
+#include <BRep_Tool.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
 
 #define M_FORWARD(ori) (ori == TopAbs_FORWARD)
 #define M_REVERSED(ori) (ori == TopAbs_REVERSED)

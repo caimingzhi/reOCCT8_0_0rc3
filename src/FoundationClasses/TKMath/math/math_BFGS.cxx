@@ -19,13 +19,13 @@
 
 // #endif
 
-#include <math_BFGS.hxx>
-#include <math_BracketMinimum.hxx>
-#include <math_BrentMinimum.hxx>
-#include <math_FunctionWithDerivative.hxx>
-#include <math_Matrix.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
-#include <Precision.hxx>
+#include <math_BFGS.hpp>
+#include <math_BracketMinimum.hpp>
+#include <math_BrentMinimum.hpp>
+#include <math_FunctionWithDerivative.hpp>
+#include <math_Matrix.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
+#include <Precision.hpp>
 
 // l'utilisation de math_BrentMinumim pur trouver un minimum dans une direction
 // donnee n'est pas du tout optimale. voir peut etre interpolation cubique

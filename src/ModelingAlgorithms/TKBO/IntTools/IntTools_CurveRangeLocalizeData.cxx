@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntTools_CurveRangeLocalizeData.hxx>
-#include <IntTools_CurveRangeSample.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Map.hxx>
+#include <IntTools_CurveRangeLocalizeData.hpp>
+#include <IntTools_CurveRangeSample.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Map.hpp>
 
 IntTools_CurveRangeLocalizeData::IntTools_CurveRangeLocalizeData(const int    theNbSample,
                                                                  const double theMinRange)

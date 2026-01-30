@@ -11,21 +11,21 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DESTEP_Provider.hxx>
-#include <DESTEP_ConfigurationNode.hxx>
-#include <DE_Wrapper.hxx>
+#include <DESTEP_Provider.hpp>
+#include <DESTEP_ConfigurationNode.hpp>
+#include <DE_Wrapper.hpp>
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDocStd_Application.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XSControl_WorkSession.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <BRepPrimAPI_MakeCylinder.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDocStd_Application.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XSControl_WorkSession.hpp>
 
 #include <sstream>
 #include <gtest/gtest.h>

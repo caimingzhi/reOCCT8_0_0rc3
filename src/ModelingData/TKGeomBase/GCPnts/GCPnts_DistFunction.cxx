@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_DistFunction.hxx>
-#include <gp_Pnt.hxx>
+#include <GCPnts_DistFunction.hpp>
+#include <gp_Pnt.hpp>
 
 //=================================================================================================
 

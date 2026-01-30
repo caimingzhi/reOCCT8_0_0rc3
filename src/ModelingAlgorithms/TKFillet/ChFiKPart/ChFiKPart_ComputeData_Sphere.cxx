@@ -14,30 +14,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_Surface.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <ChFiKPart_ComputeData_Fcts.hxx>
-#include <ElSLib.hxx>
-#include <gce_MakeCirc.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_SphericalSurface.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <gp.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Precision.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <ChFiKPart_ComputeData_Fcts.hpp>
+#include <ElSLib.hpp>
+#include <gce_MakeCirc.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_SphericalSurface.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <gp.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Precision.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
 
 //=======================================================================
 // function : ChFiKPart_Sphere

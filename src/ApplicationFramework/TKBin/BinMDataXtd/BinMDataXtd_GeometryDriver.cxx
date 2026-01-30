@@ -15,12 +15,12 @@
 
 // modified     13.04.2009 Sergey Zaritchny
 
-#include <BinMDataXtd_GeometryDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDF_Attribute.hxx>
+#include <BinMDataXtd_GeometryDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDF_Attribute.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_GeometryDriver, BinMDF_ADriver)
 

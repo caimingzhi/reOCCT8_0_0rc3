@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWLocalTime.pxx"
-#include <StepBasic_CoordinatedUniversalTimeOffset.hxx>
-#include <StepBasic_LocalTime.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWLocalTime.hpp"
+#include <StepBasic_CoordinatedUniversalTimeOffset.hpp>
+#include <StepBasic_LocalTime.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWLocalTime::RWStepBasic_RWLocalTime() = default;
 

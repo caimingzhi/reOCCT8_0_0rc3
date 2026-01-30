@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_BaseIntersector.hxx>
+#include <SelectMgr_BaseIntersector.hpp>
 
-#include <Graphic3d_Camera.hxx>
-#include <gp_Ax3.hxx>
+#include <Graphic3d_Camera.hpp>
+#include <gp_Ax3.hpp>
 
 #include <algorithm>
 

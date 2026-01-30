@@ -16,28 +16,28 @@
 
 #define OPTIMISATION 1
 
-#include <IntCurvesFace_Intersector.hxx>
+#include <IntCurvesFace_Intersector.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Bnd_BoundSortBox.hxx>
-#include <Bnd_Box.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <Geom_Line.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntCurveSurface_HInter.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_TheHCurveTool.hxx>
-#include <IntCurveSurface_ThePolygonOfHInter.hxx>
-#include <IntCurveSurface_ThePolyhedronToolOfHInter.hxx>
-#include <Intf_Tool.hxx>
-#include <TopoDS_Face.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Bnd_BoundSortBox.hpp>
+#include <Bnd_Box.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <Geom_Line.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntCurveSurface_HInter.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_TheHCurveTool.hpp>
+#include <IntCurveSurface_ThePolygonOfHInter.hpp>
+#include <IntCurveSurface_ThePolyhedronToolOfHInter.hpp>
+#include <Intf_Tool.hpp>
+#include <TopoDS_Face.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntCurvesFace_Intersector, Standard_Transient)
 

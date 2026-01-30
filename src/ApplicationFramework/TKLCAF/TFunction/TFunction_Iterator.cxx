@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_Name.hxx>
-#include <TDF_Label.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TFunction_GraphNode.hxx>
-#include <TFunction_IFunction.hxx>
-#include <TFunction_Iterator.hxx>
-#include <TFunction_Scope.hxx>
+#include <TDataStd_Name.hpp>
+#include <TDF_Label.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TFunction_GraphNode.hpp>
+#include <TFunction_IFunction.hpp>
+#include <TFunction_Iterator.hpp>
+#include <TFunction_Scope.hpp>
 
 //=================================================================================================
 

@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepGeom_RWSuParameters.pxx"
+#include "RWStepGeom_RWSuParameters.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_SuParameters.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Standard_Real.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_SuParameters.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Standard_Real.hpp>
 
 //=================================================================================================
 

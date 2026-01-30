@@ -13,11 +13,11 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_BezierSurface.hxx>
-#include <GeomGridEval_BezierSurface.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_BezierSurface.hpp>
+#include <GeomGridEval_BezierSurface.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

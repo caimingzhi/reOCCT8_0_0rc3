@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccEnt_QualifiedCirc.hxx>
-#include <gp_Circ2d.hxx>
+#include <GccEnt_QualifiedCirc.hpp>
+#include <gp_Circ2d.hpp>
 
 gp_Circ2d GccEnt_QualifiedCirc::Qualified() const
 {

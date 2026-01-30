@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPatch_RLine.hxx>
-#include <IntSurf_LineOn2S.hxx>
-#include <IntSurf_PntOn2S.hxx>
-#include <Standard_Type.hxx>
+#include <IntPatch_RLine.hpp>
+#include <IntSurf_LineOn2S.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IntPatch_RLine, IntPatch_PointLine)
 

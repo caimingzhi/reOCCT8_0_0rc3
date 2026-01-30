@@ -14,16 +14,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurvesFace_ShapeIntersector.hxx>
+#include <IntCurvesFace_ShapeIntersector.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <Bnd_BoundSortBox.hxx>
-#include <gp_Lin.hxx>
-#include <IntCurvesFace_Intersector.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <Bnd_BoundSortBox.hpp>
+#include <gp_Lin.hpp>
+#include <IntCurvesFace_Intersector.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 IntCurvesFace_ShapeIntersector::IntCurvesFace_ShapeIntersector()
     : myIsDone(false),

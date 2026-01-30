@@ -11,7 +11,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_DefSwitch.hxx>
+#include <IGESData_DefSwitch.hpp>
 
 //  DefSwitch : represents a definition, either empty (-> value = 0),
 //  or as rank in a table (-> value > 0 this rank),

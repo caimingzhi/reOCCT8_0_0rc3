@@ -14,26 +14,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Failure.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_ProgressIndicator.hxx>
-#include <Draw_Window.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <Message_PrinterOStream.hxx>
-#include <OSD.hxx>
-#include <OSD_Environment.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Process.hxx>
-#include <OSD_SharedLibrary.hxx>
-#include <OSD_Timer.hxx>
-#include <OSD_Function.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_Macro.hxx>
+#include <Draw.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Failure.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_ProgressIndicator.hpp>
+#include <Draw_Window.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <Message_PrinterOStream.hpp>
+#include <OSD.hpp>
+#include <OSD_Environment.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Process.hpp>
+#include <OSD_SharedLibrary.hpp>
+#include <OSD_Timer.hpp>
+#include <OSD_Function.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_DataMap.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -41,7 +41,7 @@
 
 #include <tcl.h>
 
-#include <Standard_WarningDisableFunctionCast.hxx>
+#include <Standard_WarningDisableFunctionCast.hpp>
 
 extern bool Draw_ParseFailed;
 

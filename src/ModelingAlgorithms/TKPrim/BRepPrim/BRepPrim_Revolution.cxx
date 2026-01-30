@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepPrim_Revolution.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_SurfaceOfRevolution.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
+#include <BRepPrim_Revolution.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_SurfaceOfRevolution.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
 
 //=================================================================================================
 

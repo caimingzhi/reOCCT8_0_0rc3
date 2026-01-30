@@ -15,10 +15,10 @@
 
 // Purpose:   Implementation of the BaseSequence class
 
-#include <NCollection_BaseSequence.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_DomainError.hxx>
+#include <NCollection_BaseSequence.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_DomainError.hpp>
 
 //=======================================================================
 // function : ClearSeq

@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_SelectingVolumeManager.hxx>
+#include <SelectMgr_SelectingVolumeManager.hpp>
 
-#include <Graphic3d_SequenceOfHClipPlane.hxx>
-#include <SelectMgr_AxisIntersector.hxx>
-#include <SelectMgr_RectangularFrustum.hxx>
-#include <SelectMgr_TriangularFrustumSet.hxx>
+#include <Graphic3d_SequenceOfHClipPlane.hpp>
+#include <SelectMgr_AxisIntersector.hpp>
+#include <SelectMgr_RectangularFrustum.hpp>
+#include <SelectMgr_TriangularFrustumSet.hpp>
 
-#include <BVH_Tools.hxx>
-#include <Standard_Dump.hxx>
+#include <BVH_Tools.hpp>
+#include <Standard_Dump.hpp>
 
 //=======================================================================
 // function : SelectMgr_SelectingVolumeManager

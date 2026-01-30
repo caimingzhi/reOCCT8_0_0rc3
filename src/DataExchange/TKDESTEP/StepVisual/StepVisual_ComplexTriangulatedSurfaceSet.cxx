@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_ComplexTriangulatedSurfaceSet.hxx>
+#include <StepVisual_ComplexTriangulatedSurfaceSet.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_ComplexTriangulatedSurfaceSet,
                            StepVisual_TessellatedSurfaceSet)

@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWObj_TriangulationReader.hxx>
+#include <RWObj_TriangulationReader.hpp>
 
-#include <BRep_Builder.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Iterator.hxx>
+#include <BRep_Builder.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Iterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWObj_TriangulationReader, RWObj_Reader)
 

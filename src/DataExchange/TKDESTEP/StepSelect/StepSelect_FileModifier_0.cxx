@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepSelect_FileModifier.hxx>
+#include <StepSelect_FileModifier.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <StepData_StepWriter.hxx>
-#include <IFSelect_ContextWrite.hxx>
+#include <StepData_StepWriter.hpp>
+#include <IFSelect_ContextWrite.hpp>
 
 StepSelect_FileModifier::StepSelect_FileModifier()
     : IFSelect_GeneralModifier(false)

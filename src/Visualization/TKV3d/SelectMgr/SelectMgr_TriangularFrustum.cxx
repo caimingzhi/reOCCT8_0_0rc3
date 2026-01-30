@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <SelectMgr_TriangularFrustum.hxx>
+#include <SelectMgr_TriangularFrustum.hpp>
 
-#include <SelectMgr_FrustumBuilder.hxx>
-#include <SelectMgr_ViewClipRange.hxx>
+#include <SelectMgr_FrustumBuilder.hpp>
+#include <SelectMgr_ViewClipRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_TriangularFrustum, Standard_Transient)
 

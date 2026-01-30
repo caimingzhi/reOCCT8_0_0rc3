@@ -14,35 +14,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pnt.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_EdgeBuilder.hxx>
-#include <TopOpeBRepBuild_GTopo.hxx>
-#include <TopOpeBRepBuild_PaveSet.hxx>
-#include <TopOpeBRepDS_CurveIterator.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
+#include <gp_Pnt.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_EdgeBuilder.hpp>
+#include <TopOpeBRepBuild_GTopo.hpp>
+#include <TopOpeBRepBuild_PaveSet.hpp>
+#include <TopOpeBRepDS_CurveIterator.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
 
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopOpeBRepDS.hxx>
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <gp_Pnt2d.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <TopOpeBRepTool_2d.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopOpeBRepDS.hpp>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <gp_Pnt2d.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <TopOpeBRepTool_2d.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT bool TopOpeBRepBuild_GetcontextNOSG();

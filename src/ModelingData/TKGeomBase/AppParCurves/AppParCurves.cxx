@@ -15,10 +15,10 @@
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
-#include <AppParCurves.hxx>
-#include <BSplCLib.hxx>
-#include <math_Matrix.hxx>
-#include <NCollection_Array1.hxx>
+#include <AppParCurves.hpp>
+#include <BSplCLib.hpp>
+#include <math_Matrix.hpp>
+#include <NCollection_Array1.hpp>
 
 void AppParCurves::BernsteinMatrix(const int NbPoles, const math_Vector& U, math_Matrix& A)
 {

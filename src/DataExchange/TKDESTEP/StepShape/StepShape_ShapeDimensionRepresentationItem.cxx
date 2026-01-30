@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepShape_ShapeDimensionRepresentationItem.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepRepr_CompoundRepresentationItem.hxx>
-#include <StepRepr_DescriptiveRepresentationItem.hxx>
-#include <StepRepr_MeasureRepresentationItem.hxx>
-#include <StepGeom_Placement.hxx>
+#include <StepShape_ShapeDimensionRepresentationItem.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepRepr_CompoundRepresentationItem.hpp>
+#include <StepRepr_DescriptiveRepresentationItem.hpp>
+#include <StepRepr_MeasureRepresentationItem.hpp>
+#include <StepGeom_Placement.hpp>
 
 //=================================================================================================
 

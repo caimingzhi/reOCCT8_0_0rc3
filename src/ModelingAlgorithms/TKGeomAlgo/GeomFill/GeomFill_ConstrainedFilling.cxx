@@ -16,24 +16,24 @@
 
 //  Modified by skv - Fri Jun 18 12:52:54 2004 OCC6129
 
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <BSplCLib.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomFill_BoundWithSurf.hxx>
-#include <GeomFill_ConstrainedFilling.hxx>
-#include <GeomFill_CoonsAlgPatch.hxx>
-#include <GeomFill_DegeneratedBound.hxx>
-#include <GeomFill_TgtOnCoons.hxx>
-#include <gp_XYZ.hxx>
-#include <Law.hxx>
-#include <Law_BSpFunc.hxx>
-#include <Law_BSpline.hxx>
-#include <Law_Linear.hxx>
-#include <Standard_Failure.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <BSplCLib.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomFill_BoundWithSurf.hpp>
+#include <GeomFill_ConstrainedFilling.hpp>
+#include <GeomFill_CoonsAlgPatch.hpp>
+#include <GeomFill_DegeneratedBound.hpp>
+#include <GeomFill_TgtOnCoons.hpp>
+#include <gp_XYZ.hpp>
+#include <Law.hpp>
+#include <Law_BSpFunc.hpp>
+#include <Law_BSpline.hpp>
+#include <Law_Linear.hpp>
+#include <Standard_Failure.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_IMPORT void Law_draw1dcurve(const NCollection_Array1<double>& pol,
@@ -47,7 +47,7 @@ Standard_IMPORT void Law_draw1dcurve(const occ::handle<Law_BSpline>& bs,
                                      const double                    scal);
 
   // Pour les mesures.
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 static OSD_Chronometer totclock, parclock, appclock, cstclock;
 #endif
 

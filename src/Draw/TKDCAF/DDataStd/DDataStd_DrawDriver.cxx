@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <DDataStd_DrawDriver.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Axis3D.hxx>
-#include <Draw_Drawable3D.hxx>
-#include <DrawDim_Angle.hxx>
-#include <DrawDim_Distance.hxx>
-#include <DrawDim_PlanarAngle.hxx>
-#include <DrawDim_PlanarDiameter.hxx>
-#include <DrawDim_PlanarDistance.hxx>
-#include <DrawDim_PlanarRadius.hxx>
-#include <DrawDim_Radius.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_GeometryEnum.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_Tool.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRep_Builder.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <DDataStd_DrawDriver.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Axis3D.hpp>
+#include <Draw_Drawable3D.hpp>
+#include <DrawDim_Angle.hpp>
+#include <DrawDim_Distance.hpp>
+#include <DrawDim_PlanarAngle.hpp>
+#include <DrawDim_PlanarDiameter.hpp>
+#include <DrawDim_PlanarDistance.hpp>
+#include <DrawDim_PlanarRadius.hpp>
+#include <DrawDim_Radius.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_GeometryEnum.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_Tool.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DDataStd_DrawDriver, Standard_Transient)
 

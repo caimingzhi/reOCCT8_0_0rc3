@@ -13,31 +13,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <MeshVS_Buffer.hxx>
-#include <Quantity_Color.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <NCollection_DataMap.hxx>
-#include <MeshVS_TwoColors.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_Drawer.hxx>
-#include <MeshVS_DrawerAttribute.hxx>
-#include <MeshVS_ElementalColorPrsBuilder.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MeshVS_Mesh.hxx>
-#include <MeshVS_MeshPrsBuilder.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Standard_Type.hxx>
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <NCollection_List.hxx>
-#include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
-#include <TColStd_PackedMapOfInteger.hxx>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <MeshVS_Buffer.hpp>
+#include <Quantity_Color.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <NCollection_DataMap.hpp>
+#include <MeshVS_TwoColors.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_Drawer.hpp>
+#include <MeshVS_DrawerAttribute.hpp>
+#include <MeshVS_ElementalColorPrsBuilder.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MeshVS_Mesh.hpp>
+#include <MeshVS_MeshPrsBuilder.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Standard_Type.hpp>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <NCollection_List.hpp>
+#include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
+#include <TColStd_PackedMapOfInteger.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_ElementalColorPrsBuilder, MeshVS_PrsBuilder)
 

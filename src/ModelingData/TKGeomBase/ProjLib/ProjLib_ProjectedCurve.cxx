@@ -16,36 +16,36 @@
 
 //  Modified by skv - Wed Aug 11 15:45:58 2004 OCC6272
 
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <ProjLib_HCompProjectedCurve.hxx>
-#include <ProjLib_ComputeApproxOnPolarSurface.hxx>
-#include <ProjLib_ComputeApprox.hxx>
-#include <ProjLib_Projector.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <Approx_CurveOnSurface.hxx>
-#include <ProjLib_Plane.hxx>
-#include <ProjLib_Cylinder.hxx>
-#include <ProjLib_Cone.hxx>
-#include <ProjLib_Sphere.hxx>
-#include <ProjLib_Torus.hxx>
-#include <Precision.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <gp_Vec2d.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Geom2dConvert_CompCurveToBSplineCurve.hxx>
-#include <Geom2dConvert.hxx>
-#include <NCollection_Array1.hxx>
-#include <GeomAbs_IsoType.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <GeomLib.hxx>
-#include <Extrema_ExtPC.hxx>
-#include <NCollection_DataMap.hxx>
-#include <ElSLib.hxx>
-#include <ElCLib.hxx>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <ProjLib_HCompProjectedCurve.hpp>
+#include <ProjLib_ComputeApproxOnPolarSurface.hpp>
+#include <ProjLib_ComputeApprox.hpp>
+#include <ProjLib_Projector.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <Approx_CurveOnSurface.hpp>
+#include <ProjLib_Plane.hpp>
+#include <ProjLib_Cylinder.hpp>
+#include <ProjLib_Cone.hpp>
+#include <ProjLib_Sphere.hpp>
+#include <ProjLib_Torus.hpp>
+#include <Precision.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <gp_Vec2d.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Geom2dConvert_CompCurveToBSplineCurve.hpp>
+#include <Geom2dConvert.hpp>
+#include <NCollection_Array1.hpp>
+#include <GeomAbs_IsoType.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <GeomLib.hpp>
+#include <Extrema_ExtPC.hpp>
+#include <NCollection_DataMap.hpp>
+#include <ElSLib.hpp>
+#include <ElCLib.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ProjLib_ProjectedCurve, Adaptor2d_Curve2d)
 

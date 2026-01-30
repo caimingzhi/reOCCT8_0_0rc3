@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepBasic_RWApplicationContext.pxx"
-#include <StepBasic_ApplicationContext.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include "RWStepBasic_RWApplicationContext.hpp"
+#include <StepBasic_ApplicationContext.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWApplicationContext::RWStepBasic_RWApplicationContext() = default;
 

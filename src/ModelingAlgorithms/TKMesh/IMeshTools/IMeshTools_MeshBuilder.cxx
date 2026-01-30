@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshTools_MeshBuilder.hxx>
-#include <IMeshData_Face.hxx>
-#include <OSD_Parallel.hxx>
+#include <IMeshTools_MeshBuilder.hpp>
+#include <IMeshData_Face.hpp>
+#include <OSD_Parallel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_MeshBuilder, Message_Algorithm)
 

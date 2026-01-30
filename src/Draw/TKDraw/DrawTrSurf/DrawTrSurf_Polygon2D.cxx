@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_Polygon2D.hxx>
+#include <DrawTrSurf_Polygon2D.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <Draw_MarkerShape.hxx>
-#include <Poly.hxx>
-#include <Poly_Polygon2D.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <Draw_MarkerShape.hpp>
+#include <Poly.hpp>
+#include <Poly_Polygon2D.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Polygon2D, Draw_Drawable2D)
 

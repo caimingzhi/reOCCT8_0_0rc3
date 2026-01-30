@@ -13,16 +13,16 @@
 
 #include <gtest/gtest.h>
 
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomGridEval_OffsetSurface.hxx>
-#include <GeomGridEval_Surface.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <NCollection_Array1.hxx>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomGridEval_OffsetSurface.hpp>
+#include <GeomGridEval_Surface.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <NCollection_Array1.hpp>
 
 #include <cmath>
 

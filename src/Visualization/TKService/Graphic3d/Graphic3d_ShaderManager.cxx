@@ -11,30 +11,30 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ShaderManager.hxx>
+#include <Graphic3d_ShaderManager.hpp>
 
-#include <Graphic3d_LightSet.hxx>
-#include <Graphic3d_ShaderProgram.hxx>
-#include <Graphic3d_TextureSetBits.hxx>
-#include <Message.hxx>
+#include <Graphic3d_LightSet.hpp>
+#include <Graphic3d_ShaderProgram.hpp>
+#include <Graphic3d_TextureSetBits.hpp>
+#include <Message.hpp>
 
-#include "../Shaders/Shaders_LightShadow_glsl.pxx"
-#include "../Shaders/Shaders_PBRDistribution_glsl.pxx"
-#include "../Shaders/Shaders_PBRDirectionalLight_glsl.pxx"
-#include "../Shaders/Shaders_PBRGeometry_glsl.pxx"
-#include "../Shaders/Shaders_PBRFresnel_glsl.pxx"
-#include "../Shaders/Shaders_PBRCookTorrance_glsl.pxx"
-#include "../Shaders/Shaders_PBRIllumination_glsl.pxx"
-#include "../Shaders/Shaders_PBRPointLight_glsl.pxx"
-#include "../Shaders/Shaders_PBRSpotLight_glsl.pxx"
-#include "../Shaders/Shaders_PBREnvBaking_fs.pxx"
-#include "../Shaders/Shaders_PBREnvBaking_vs.pxx"
-#include "../Shaders/Shaders_PhongDirectionalLight_glsl.pxx"
-#include "../Shaders/Shaders_PhongPointLight_glsl.pxx"
-#include "../Shaders/Shaders_PhongSpotLight_glsl.pxx"
-#include "../Shaders/Shaders_PointLightAttenuation_glsl.pxx"
-#include "../Shaders/Shaders_SkydomBackground_fs.pxx"
-#include "../Shaders/Shaders_TangentSpaceNormal_glsl.pxx"
+#include "../Shaders/Shaders_LightShadow_glsl.hpp"
+#include "../Shaders/Shaders_PBRDistribution_glsl.hpp"
+#include "../Shaders/Shaders_PBRDirectionalLight_glsl.hpp"
+#include "../Shaders/Shaders_PBRGeometry_glsl.hpp"
+#include "../Shaders/Shaders_PBRFresnel_glsl.hpp"
+#include "../Shaders/Shaders_PBRCookTorrance_glsl.hpp"
+#include "../Shaders/Shaders_PBRIllumination_glsl.hpp"
+#include "../Shaders/Shaders_PBRPointLight_glsl.hpp"
+#include "../Shaders/Shaders_PBRSpotLight_glsl.hpp"
+#include "../Shaders/Shaders_PBREnvBaking_fs.hpp"
+#include "../Shaders/Shaders_PBREnvBaking_vs.hpp"
+#include "../Shaders/Shaders_PhongDirectionalLight_glsl.hpp"
+#include "../Shaders/Shaders_PhongPointLight_glsl.hpp"
+#include "../Shaders/Shaders_PhongSpotLight_glsl.hpp"
+#include "../Shaders/Shaders_PointLightAttenuation_glsl.hpp"
+#include "../Shaders/Shaders_SkydomBackground_fs.hpp"
+#include "../Shaders/Shaders_TangentSpaceNormal_glsl.hpp"
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ShaderManager, Standard_Transient)
 

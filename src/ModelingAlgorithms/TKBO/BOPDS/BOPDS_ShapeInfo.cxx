@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BOPDS_ShapeInfo.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BOPDS_ShapeInfo.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <cstdio>
 

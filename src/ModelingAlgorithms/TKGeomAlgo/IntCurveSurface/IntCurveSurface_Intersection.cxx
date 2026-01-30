@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_Intersection.hxx>
-#include <IntCurveSurface_IntersectionPoint.hxx>
-#include <IntCurveSurface_IntersectionSegment.hxx>
-#include <IntCurveSurface_TransitionOnCurve.hxx>
-#include <StdFail_NotDone.hxx>
+#include <IntCurveSurface_Intersection.hpp>
+#include <IntCurveSurface_IntersectionPoint.hpp>
+#include <IntCurveSurface_IntersectionSegment.hpp>
+#include <IntCurveSurface_TransitionOnCurve.hpp>
+#include <StdFail_NotDone.hpp>
 
 #define PARAMEQUAL(a, b) (std::abs((a) - (b)) < (1e-8))
 

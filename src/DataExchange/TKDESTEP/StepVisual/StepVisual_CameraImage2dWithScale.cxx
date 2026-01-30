@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepVisual_CameraImage2dWithScale.hxx>
+#include <Standard_Type.hpp>
+#include <StepVisual_CameraImage2dWithScale.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CameraImage2dWithScale, StepVisual_CameraImage)
 

@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_Animation.hxx>
+#include <AIS_Animation.hpp>
 
-#include <Standard_Assert.hxx>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Animation, Standard_Transient)
 

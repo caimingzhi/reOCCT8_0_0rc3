@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Appli.hxx>
-#include <DBRep.hxx>
-#include <Draw_Interpretor.hxx>
-#include <BRepProj_Projection.hxx>
-#include <BRepTest.hxx>
+#include <Draw_Appli.hpp>
+#include <DBRep.hpp>
+#include <Draw_Interpretor.hpp>
+#include <BRepProj_Projection.hpp>
+#include <BRepTest.hpp>
 
 //=======================================================================
 // function : prj

@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box2d.hxx>
-#include <BndLib_Add2dCurve.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepClass_Edge.hxx>
-#include <BRepClass_Intersector.hxx>
-#include <ElCLib.hxx>
-#include <Extrema_ExtPC2d.hxx>
-#include <GCE2d_MakeSegment.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <Geom2dLProp_CLProps2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_Transition.hxx>
-#include <Precision.hxx>
-#include <TopExp.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <Bnd_Box2d.hpp>
+#include <BndLib_Add2dCurve.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepClass_Edge.hpp>
+#include <BRepClass_Intersector.hpp>
+#include <ElCLib.hpp>
+#include <Extrema_ExtPC2d.hpp>
+#include <GCE2d_MakeSegment.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <Geom2dLProp_CLProps2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_Transition.hpp>
+#include <Precision.hpp>
+#include <TopExp.hpp>
+#include <TopoDS_Vertex.hpp>
 
 static void GetTangentAsChord(const occ::handle<Geom2d_Curve>& thePCurve,
                               gp_Dir2d&                        theTangent,

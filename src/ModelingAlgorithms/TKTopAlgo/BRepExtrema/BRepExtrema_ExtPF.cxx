@@ -17,14 +17,14 @@
 // modified by MPS (june 96) : on utilise BRepClass_FaceClassifier seulement
 //  si IsDone de Extrema est vrai
 
-#include <BRepExtrema_ExtPF.hxx>
+#include <BRepExtrema_ExtPF.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <BRepClass_FaceClassifier.hxx>
-#include <gp_Pnt2d.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <Precision.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <BRepClass_FaceClassifier.hpp>
+#include <gp_Pnt2d.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <Precision.hpp>
 
 //=================================================================================================
 

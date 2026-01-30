@@ -31,7 +31,7 @@
   #include <malloc.h>
 #endif
 
-#include <OSD_MemInfo.hxx>
+#include <OSD_MemInfo.hpp>
 
 #if defined(__EMSCRIPTEN__)
   #include <emscripten.h>

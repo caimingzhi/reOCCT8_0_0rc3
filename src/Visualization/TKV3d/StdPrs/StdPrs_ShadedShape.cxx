@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdPrs_ShadedShape.hxx>
+#include <StdPrs_ShadedShape.hpp>
 
-#include <BRepTools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_Group.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_IncAllocator.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Shared.hxx>
-#include <Precision.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
-#include <Prs3d_Presentation.hxx>
-#include <Prs3d_ShadingAspect.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <StdPrs_WFShape.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <BRepTools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_ArrayOfTriangles.hpp>
+#include <Graphic3d_Group.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_IncAllocator.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <Precision.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <Prs3d_LineAspect.hpp>
+#include <Prs3d_Presentation.hpp>
+#include <Prs3d_ShadingAspect.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <StdPrs_WFShape.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 namespace
 {

@@ -25,18 +25,18 @@
 // #endif
 // math_FunctionSetRoot.cxx
 
-#include <math_BrentMinimum.hxx>
-#include <math_Function.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_FunctionSetWithDerivatives.hxx>
-#include <math_Gauss.hxx>
-#include <math_GaussLeastSquare.hxx>
-#include <math_IntegerVector.hxx>
-#include <math_Matrix.hxx>
-#include <math_SVD.hxx>
-#include <Precision.hxx>
-#include <Standard_DimensionError.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math_BrentMinimum.hpp>
+#include <math_Function.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_FunctionSetWithDerivatives.hpp>
+#include <math_Gauss.hpp>
+#include <math_GaussLeastSquare.hpp>
+#include <math_IntegerVector.hpp>
+#include <math_Matrix.hpp>
+#include <math_SVD.hpp>
+#include <Precision.hpp>
+#include <Standard_DimensionError.hpp>
+#include <StdFail_NotDone.hpp>
 
 //===========================================================================
 // - A partir d une solution de depart, recherche d une direction.( Newton la

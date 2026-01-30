@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_GTrsf.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESDraw_View.hxx>
-#include <IGESGeom_Plane.hxx>
-#include <Standard_Type.hxx>
+#include <gp_GTrsf.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESDraw_View.hpp>
+#include <IGESGeom_Plane.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_View, IGESData_ViewKindEntity)
 

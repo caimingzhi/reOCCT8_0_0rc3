@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_SpatialMedianBuilder.hxx>
-#include <BVH_Triangulation.hxx>
+#include <BVH_SpatialMedianBuilder.hpp>
+#include <BVH_Triangulation.hpp>
 
 // Helper function to compute bounding box for a set
 template <class T, int N>

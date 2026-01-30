@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheQuadCurvExactInterCSurf.hxx>
+#include <HLRBRep_TheQuadCurvExactInterCSurf.hpp>
 
-#include <gp_Lin.hxx>
-#include <HLRBRep_LineTool.hxx>
-#include <HLRBRep_Surface.hxx>
-#include <HLRBRep_SurfaceTool.hxx>
-#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hxx>
+#include <gp_Lin.hpp>
+#include <HLRBRep_LineTool.hpp>
+#include <HLRBRep_Surface.hpp>
+#include <HLRBRep_SurfaceTool.hpp>
+#include <HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf.hpp>
 
-#include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_QuadricCurveExactInterUtils.pxx"
+#include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_QuadricCurveExactInterUtils.hpp"
 
 //==================================================================================================
 

@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_DomainError.hxx>
-#include <Standard_ImmutableObject.hxx>
-#include <Standard_NullObject.hxx>
-#include <TDF_AttributeIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_LabelNode.hxx>
-#include <TDF_LabelNodePtr.hxx>
-#include <TDF_Tool.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_ImmutableObject.hpp>
+#include <Standard_NullObject.hpp>
+#include <TDF_AttributeIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_LabelNode.hpp>
+#include <TDF_LabelNodePtr.hpp>
+#include <TDF_Tool.hpp>
 
 // Attribute methods ++++++++++++++++++++++++++++++++++++++++++++++++++++
 //=======================================================================

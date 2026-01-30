@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BSplineCurve.hxx>
-#include <GeomFill_SectionGenerator.hxx>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomFill_SectionGenerator.hpp>
 
 //=================================================================================================
 

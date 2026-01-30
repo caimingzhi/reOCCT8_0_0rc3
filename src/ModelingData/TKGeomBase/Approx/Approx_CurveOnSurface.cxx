@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Approx_CurveOnSurface.hxx>
+#include <Approx_CurveOnSurface.hpp>
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <Adaptor3d_Surface.hxx>
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_DichoCutting.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomConvert.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Lin2d.hxx>
-#include <gp_Vec.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <Adaptor3d_Surface.hpp>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_DichoCutting.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomConvert.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Lin2d.hpp>
+#include <gp_Vec.hpp>
 
 //=================================================================================================
 
@@ -639,7 +639,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
   return false;
 }
 
-#include <GeomLib.hxx>
+#include <GeomLib.hpp>
 
 //=================================================================================================
 

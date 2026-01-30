@@ -3,86 +3,86 @@ set(OCCT_TDF_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TDF_FILES
   TDF.cxx
-  TDF.hxx
+  TDF.hpp
   TDF_Attribute.cxx
-  TDF_Attribute.hxx
-  TDF_Attribute.lxx
+  TDF_Attribute.hpp
+  TDF_Attribute_1.hpp
 
   TDF_AttributeDelta.cxx
-  TDF_AttributeDelta.hxx
+  TDF_AttributeDelta.hpp
 
   TDF_AttributeIterator.cxx
-  TDF_AttributeIterator.hxx
+  TDF_AttributeIterator.hpp
 
   TDF_ChildIDIterator.cxx
-  TDF_ChildIDIterator.hxx
-  TDF_ChildIDIterator.lxx
+  TDF_ChildIDIterator.hpp
+  TDF_ChildIDIterator_1.hpp
   TDF_ChildIterator.cxx
-  TDF_ChildIterator.hxx
-  TDF_ChildIterator.lxx
+  TDF_ChildIterator.hpp
+  TDF_ChildIterator_1.hpp
   TDF_ClosureMode.cxx
-  TDF_ClosureMode.hxx
-  TDF_ClosureMode.lxx
+  TDF_ClosureMode.hpp
+  TDF_ClosureMode_1.hpp
   TDF_ClosureTool.cxx
-  TDF_ClosureTool.hxx
+  TDF_ClosureTool.hpp
   TDF_ComparisonTool.cxx
-  TDF_ComparisonTool.hxx
+  TDF_ComparisonTool.hpp
   TDF_CopyLabel.cxx
-  TDF_CopyLabel.hxx
-  TDF_CopyLabel.lxx
+  TDF_CopyLabel.hpp
+  TDF_CopyLabel_1.hpp
   TDF_CopyTool.cxx
-  TDF_CopyTool.hxx
+  TDF_CopyTool.hpp
   TDF_Data.cxx
-  TDF_Data.hxx
-  TDF_Data.lxx
+  TDF_Data.hpp
+  TDF_Data_1.hpp
 
   TDF_DataSet.cxx
-  TDF_DataSet.hxx
-  TDF_DataSet.lxx
+  TDF_DataSet.hpp
+  TDF_DataSet_1.hpp
   TDF_DefaultDeltaOnModification.cxx
-  TDF_DefaultDeltaOnModification.hxx
+  TDF_DefaultDeltaOnModification.hpp
   TDF_DefaultDeltaOnRemoval.cxx
-  TDF_DefaultDeltaOnRemoval.hxx
+  TDF_DefaultDeltaOnRemoval.hpp
   TDF_Delta.cxx
-  TDF_Delta.hxx
-  TDF_Delta.lxx
+  TDF_Delta.hpp
+  TDF_Delta_1.hpp
 
   TDF_DeltaOnAddition.cxx
-  TDF_DeltaOnAddition.hxx
+  TDF_DeltaOnAddition.hpp
   TDF_DeltaOnForget.cxx
-  TDF_DeltaOnForget.hxx
+  TDF_DeltaOnForget.hpp
   TDF_DeltaOnModification.cxx
-  TDF_DeltaOnModification.hxx
+  TDF_DeltaOnModification.hpp
   TDF_DeltaOnRemoval.cxx
-  TDF_DeltaOnRemoval.hxx
+  TDF_DeltaOnRemoval.hpp
   TDF_DeltaOnResume.cxx
-  TDF_DeltaOnResume.hxx
+  TDF_DeltaOnResume.hpp
   TDF_DerivedAttribute.cxx
-  TDF_DerivedAttribute.hxx
+  TDF_DerivedAttribute.hpp
 
-  TDF_HAllocator.hxx
+  TDF_HAllocator.hpp
 
   TDF_IDFilter.cxx
-  TDF_IDFilter.hxx
-  TDF_IDFilter.lxx
+  TDF_IDFilter.hpp
+  TDF_IDFilter_1.hpp
 
   TDF_Label.cxx
-  TDF_Label.hxx
-  TDF_Label.lxx
+  TDF_Label.hpp
+  TDF_Label_1.hpp
 
   TDF_LabelNode.cxx
-  TDF_LabelNode.hxx
-  TDF_LabelNodePtr.hxx
+  TDF_LabelNode.hpp
+  TDF_LabelNodePtr.hpp
 
   TDF_Reference.cxx
-  TDF_Reference.hxx
+  TDF_Reference.hpp
   TDF_RelocationTable.cxx
-  TDF_RelocationTable.hxx
+  TDF_RelocationTable.hpp
   TDF_TagSource.cxx
-  TDF_TagSource.hxx
+  TDF_TagSource.hpp
   TDF_Tool.cxx
-  TDF_Tool.hxx
+  TDF_Tool.hpp
   TDF_Transaction.cxx
-  TDF_Transaction.hxx
-  TDF_Transaction.lxx
+  TDF_Transaction.hpp
+  TDF_Transaction_1.hpp
 )

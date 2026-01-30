@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWGltf_TriangulationReader.hxx>
+#include <RWGltf_TriangulationReader.hpp>
 
-#include <Message.hxx>
-#include <OSD_FileSystem.hxx>
-#include <RWGltf_GltfLatePrimitiveArray.hxx>
-#include <RWGltf_GltfPrimArrayData.hxx>
-#include <Standard_ArrayStreamBuffer.hxx>
-#include <Standard_ReadBuffer.hxx>
+#include <Message.hpp>
+#include <OSD_FileSystem.hpp>
+#include <RWGltf_GltfLatePrimitiveArray.hpp>
+#include <RWGltf_GltfPrimArrayData.hpp>
+#include <Standard_ArrayStreamBuffer.hpp>
+#include <Standard_ReadBuffer.hpp>
 
 #ifdef HAVE_DRACO
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
   #include <draco/compression/decode.h>
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 namespace

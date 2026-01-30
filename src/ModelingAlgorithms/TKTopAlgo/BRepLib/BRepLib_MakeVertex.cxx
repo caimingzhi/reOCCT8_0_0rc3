@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRepLib.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <gp_Pnt.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
 
 //=================================================================================================
 

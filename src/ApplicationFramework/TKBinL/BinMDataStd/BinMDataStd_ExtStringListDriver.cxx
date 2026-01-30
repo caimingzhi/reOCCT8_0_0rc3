@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDataStd_ExtStringListDriver.hxx>
-#include <BinMDataStd.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <NCollection_Array1.hxx>
-#include <TDataStd_ExtStringList.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_Attribute.hxx>
+#include <BinMDataStd_ExtStringListDriver.hpp>
+#include <BinMDataStd.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <NCollection_Array1.hpp>
+#include <TDataStd_ExtStringList.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_Attribute.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExtStringListDriver, BinMDF_ADriver)
 

@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_Command.hxx>
-#include <StdFail_NotDone.hxx>
+#include <BRepBuilderAPI_Command.hpp>
+#include <StdFail_NotDone.hpp>
 
 //=================================================================================================
 

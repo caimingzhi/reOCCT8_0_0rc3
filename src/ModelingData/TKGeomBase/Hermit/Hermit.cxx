@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Hermit.hxx>
-#include <Precision.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_Real.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <BSplCLib.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Hermit.hpp>
+#include <Precision.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_Real.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
 #include <algorithm>
 

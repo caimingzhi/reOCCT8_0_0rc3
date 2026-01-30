@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinDrivers_DocumentStorageDriver.hxx>
+#include <BinDrivers_DocumentStorageDriver.hpp>
 
-#include <BinDrivers.hxx>
-#include <BinLDrivers_DocumentSection.hxx>
-#include <BinMDF_ADriverTable.hxx>
-#include <BinMNaming_NamedShapeDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Type.hxx>
-#include <TNaming_NamedShape.hxx>
+#include <BinDrivers.hpp>
+#include <BinLDrivers_DocumentSection.hpp>
+#include <BinMDF_ADriverTable.hpp>
+#include <BinMNaming_NamedShapeDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Type.hpp>
+#include <TNaming_NamedShape.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentStorageDriver, BinLDrivers_DocumentStorageDriver)
 

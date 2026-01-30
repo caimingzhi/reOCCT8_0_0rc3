@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DPrsStd.hxx>
-#include <Draw_Appli.hxx>
-#include <Draw_Interpretor.hxx>
-#include <TDocStd_Document.hxx>
-#include <TDF_Label.hxx>
-#include <DDF.hxx>
-#include <DDocStd.hxx>
+#include <DPrsStd.hpp>
+#include <Draw_Appli.hpp>
+#include <Draw_Interpretor.hpp>
+#include <TDocStd_Document.hpp>
+#include <TDF_Label.hpp>
+#include <DDF.hpp>
+#include <DDocStd.hpp>
 
 // for AIS
 
-#include <TPrsStd_AISPresentation.hxx>
-#include <TPrsStd_AISViewer.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <V3d_View.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <Quantity_NameOfColor.hxx>
-#include <Graphic3d_NameOfMaterial.hxx>
+#include <TPrsStd_AISPresentation.hpp>
+#include <TPrsStd_AISViewer.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <V3d_View.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <Quantity_NameOfColor.hpp>
+#include <Graphic3d_NameOfMaterial.hpp>
 
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <Standard_PCharacter.hxx>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TDataXtd_Plane.hpp>
+#include <TDataXtd_Point.hpp>
+#include <Standard_PCharacter.hpp>
 
 // #include <TSketchStd_Geometry.hxx>
 // #include <TSketchStd_Edge.hxx>

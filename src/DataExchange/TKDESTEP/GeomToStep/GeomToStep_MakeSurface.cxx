@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom_BoundedSurface.hxx>
-#include <Geom_ElementarySurface.hxx>
-#include <Geom_OffsetSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_SweptSurface.hxx>
-#include <GeomToStep_MakeBoundedSurface.hxx>
-#include <GeomToStep_MakeElementarySurface.hxx>
-#include <GeomToStep_MakeSurface.hxx>
-#include <GeomToStep_MakeSweptSurface.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Logical.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BoundedSurface.hxx>
-#include <StepGeom_ElementarySurface.hxx>
-#include <StepGeom_OffsetSurface.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepGeom_SweptSurface.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <Geom_BoundedSurface.hpp>
+#include <Geom_ElementarySurface.hpp>
+#include <Geom_OffsetSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_SweptSurface.hpp>
+#include <GeomToStep_MakeBoundedSurface.hpp>
+#include <GeomToStep_MakeElementarySurface.hpp>
+#include <GeomToStep_MakeSurface.hpp>
+#include <GeomToStep_MakeSweptSurface.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Logical.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BoundedSurface.hpp>
+#include <StepGeom_ElementarySurface.hpp>
+#include <StepGeom_OffsetSurface.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepGeom_SweptSurface.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 //=============================================================================
 // Creation d' une Surface de prostep a partir d' une Surface de Geom

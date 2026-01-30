@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_BSplineSurfaceWithKnots.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_BSplineSurfaceWithKnots.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_BSplineSurfaceWithKnots, StepGeom_BSplineSurface)
 

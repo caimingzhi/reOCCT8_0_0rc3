@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntSurf_PntOn2S.hxx>
+#include <IntSurf_PntOn2S.hpp>
 
 IntSurf_PntOn2S::IntSurf_PntOn2S()
     : pt(0, 0, 0),

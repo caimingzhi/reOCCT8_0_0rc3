@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V2.0
 
-#include <StepFEA_SymmetricTensor23dMember.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_SymmetricTensor23dMember.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_SymmetricTensor23dMember, StepData_SelectArrReal)
 

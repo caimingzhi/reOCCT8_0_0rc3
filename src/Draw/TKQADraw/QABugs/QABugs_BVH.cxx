@@ -13,38 +13,38 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <QABugs.hxx>
+#include <QABugs.hpp>
 
-#include <Bnd_Tools.hxx>
+#include <Bnd_Tools.hpp>
 
-#include <BRep_Builder.hxx>
+#include <BRep_Builder.hpp>
 
-#include <BRepBndLib.hxx>
+#include <BRepBndLib.hpp>
 
-#include <BVH_Box.hxx>
-#include <BVH_DistanceField.hxx>
-#include <BVH_Geometry.hxx>
-#include <BVH_IndexedBoxSet.hxx>
-#include <BVH_LinearBuilder.hxx>
-#include <BVH_PairDistance.hxx>
-#include <BVH_Traverse.hxx>
-#include <BVH_Triangulation.hxx>
+#include <BVH_Box.hpp>
+#include <BVH_DistanceField.hpp>
+#include <BVH_Geometry.hpp>
+#include <BVH_IndexedBoxSet.hpp>
+#include <BVH_LinearBuilder.hpp>
+#include <BVH_PairDistance.hpp>
+#include <BVH_Traverse.hpp>
+#include <BVH_Triangulation.hpp>
 
-#include <DBRep.hxx>
-#include <Draw.hxx>
+#include <DBRep.hpp>
+#include <Draw.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
 
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 //=======================================================================
 // function : ShapeSelector

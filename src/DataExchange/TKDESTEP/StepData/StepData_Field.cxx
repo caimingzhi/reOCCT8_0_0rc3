@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepData_Field.hxx>
-#include <StepData_SelectInt.hxx>
-#include <StepData_SelectMember.hxx>
-#include <StepData_SelectNamed.hxx>
-#include <StepData_SelectReal.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepData_Field.hpp>
+#include <StepData_SelectInt.hpp>
+#include <StepData_SelectMember.hpp>
+#include <StepData_SelectNamed.hpp>
+#include <StepData_SelectReal.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
 
 //  The kind encodes the data type, access mode (direct or via Select),
 //  and arity (simple, list, square array)

@@ -2,116 +2,116 @@
 set(OCCT_AIS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_AIS_FILES
-  AIS.hxx
+  AIS.hpp
   AIS_Animation.cxx
-  AIS_Animation.hxx
-  AIS_AnimationTimer.hxx
+  AIS_Animation.hpp
+  AIS_AnimationTimer.hpp
   AIS_AnimationAxisRotation.cxx
-  AIS_AnimationAxisRotation.hxx
+  AIS_AnimationAxisRotation.hpp
   AIS_AnimationCamera.cxx
-  AIS_AnimationCamera.hxx
+  AIS_AnimationCamera.hpp
   AIS_AnimationObject.cxx
-  AIS_AnimationObject.hxx
+  AIS_AnimationObject.hpp
   AIS_AttributeFilter.cxx
-  AIS_AttributeFilter.hxx
+  AIS_AttributeFilter.hpp
   AIS_Axis.cxx
-  AIS_Axis.hxx
+  AIS_Axis.hpp
   AIS_BadEdgeFilter.cxx
-  AIS_BadEdgeFilter.hxx
+  AIS_BadEdgeFilter.hpp
   AIS_BaseAnimationObject.cxx
-  AIS_BaseAnimationObject.hxx
+  AIS_BaseAnimationObject.hpp
   AIS_C0RegularityFilter.cxx
-  AIS_C0RegularityFilter.hxx
+  AIS_C0RegularityFilter.hpp
   AIS_CameraFrustum.cxx
-  AIS_CameraFrustum.hxx
+  AIS_CameraFrustum.hpp
   AIS_Circle.cxx
-  AIS_Circle.hxx
-  AIS_ColoredDrawer.hxx
+  AIS_Circle.hpp
+  AIS_ColoredDrawer.hpp
   AIS_ColoredShape.cxx
-  AIS_ColoredShape.hxx
+  AIS_ColoredShape.hpp
 
   AIS_ColorScale.cxx
-  AIS_ColorScale.hxx
+  AIS_ColorScale.hpp
   AIS_ConnectedInteractive.cxx
-  AIS_ConnectedInteractive.hxx
+  AIS_ConnectedInteractive.hpp
 
-  AIS_DisplayMode.hxx
-  AIS_DisplayStatus.hxx
-  AIS_DragAction.hxx
+  AIS_DisplayMode.hpp
+  AIS_DisplayStatus.hpp
+  AIS_DragAction.hpp
   AIS_ExclusionFilter.cxx
-  AIS_ExclusionFilter.hxx
+  AIS_ExclusionFilter.hpp
   AIS_GlobalStatus.cxx
-  AIS_GlobalStatus.hxx
+  AIS_GlobalStatus.hpp
   AIS_GraphicTool.cxx
-  AIS_GraphicTool.hxx
+  AIS_GraphicTool.hpp
   AIS_InteractiveContext.cxx
-  AIS_InteractiveContext.hxx
+  AIS_InteractiveContext.hpp
   AIS_InteractiveObject.cxx
-  AIS_InteractiveObject.hxx
-  AIS_KindOfInteractive.hxx
+  AIS_InteractiveObject.hpp
+  AIS_KindOfInteractive.hpp
   AIS_LightSource.cxx
-  AIS_LightSource.hxx
+  AIS_LightSource.hpp
   AIS_Line.cxx
-  AIS_Line.hxx
+  AIS_Line.hpp
 
-  AIS_Manipulator.hxx
+  AIS_Manipulator.hpp
   AIS_Manipulator.cxx
-  AIS_ManipulatorMode.hxx
-  AIS_ManipulatorOwner.hxx
+  AIS_ManipulatorMode.hpp
+  AIS_ManipulatorOwner.hpp
   AIS_ManipulatorOwner.cxx
   AIS_MediaPlayer.cxx
-  AIS_MediaPlayer.hxx
-  AIS_MouseGesture.hxx
+  AIS_MediaPlayer.hpp
+  AIS_MouseGesture.hpp
   AIS_MultipleConnectedInteractive.cxx
-  AIS_MultipleConnectedInteractive.hxx
-  AIS_NavigationMode.hxx
+  AIS_MultipleConnectedInteractive.hpp
+  AIS_NavigationMode.hpp
 
   AIS_Plane.cxx
-  AIS_Plane.hxx
+  AIS_Plane.hpp
   AIS_PlaneTrihedron.cxx
-  AIS_PlaneTrihedron.hxx
+  AIS_PlaneTrihedron.hpp
   AIS_Point.cxx
-  AIS_Point.hxx
+  AIS_Point.hpp
   AIS_PointCloud.cxx
-  AIS_PointCloud.hxx
-  AIS_RotationMode.hxx
-  AIS_RubberBand.hxx
+  AIS_PointCloud.hpp
+  AIS_RotationMode.hpp
+  AIS_RubberBand.hpp
   AIS_RubberBand.cxx
   AIS_Selection.cxx
-  AIS_Selection.hxx
-  AIS_SelectStatus.hxx
-  AIS_SelectionModesConcurrency.hxx
-  AIS_SelectionScheme.hxx
+  AIS_Selection.hpp
+  AIS_SelectStatus.hpp
+  AIS_SelectionModesConcurrency.hpp
+  AIS_SelectionScheme.hpp
   AIS_Shape.cxx
-  AIS_Shape.hxx
+  AIS_Shape.hpp
   AIS_SignatureFilter.cxx
-  AIS_SignatureFilter.hxx
-  AIS_StatusOfDetection.hxx
-  AIS_StatusOfPick.hxx
+  AIS_SignatureFilter.hpp
+  AIS_StatusOfDetection.hpp
+  AIS_StatusOfPick.hpp
   AIS_TextLabel.cxx
-  AIS_TextLabel.hxx
+  AIS_TextLabel.hpp
   AIS_TexturedShape.cxx
-  AIS_TexturedShape.hxx
+  AIS_TexturedShape.hpp
   AIS_Triangulation.cxx
-  AIS_Triangulation.hxx
+  AIS_Triangulation.hpp
   AIS_Trihedron.cxx
-  AIS_Trihedron.hxx
+  AIS_Trihedron.hpp
   AIS_TrihedronOwner.cxx
-  AIS_TrihedronOwner.hxx
-  AIS_TrihedronSelectionMode.hxx
+  AIS_TrihedronOwner.hpp
+  AIS_TrihedronSelectionMode.hpp
   AIS_TypeFilter.cxx
-  AIS_TypeFilter.hxx
-  AIS_TypeOfAttribute.hxx
-  AIS_TypeOfAxis.hxx
-  AIS_TypeOfIso.hxx
-  AIS_TypeOfPlane.hxx
+  AIS_TypeFilter.hpp
+  AIS_TypeOfAttribute.hpp
+  AIS_TypeOfAxis.hpp
+  AIS_TypeOfIso.hpp
+  AIS_TypeOfPlane.hpp
   AIS_ViewController.cxx
-  AIS_ViewController.hxx
-  AIS_ViewInputBuffer.hxx
+  AIS_ViewController.hpp
+  AIS_ViewInputBuffer.hpp
   AIS_ViewCube.cxx
-  AIS_ViewCube.hxx
-  AIS_WalkDelta.hxx
+  AIS_ViewCube.hpp
+  AIS_WalkDelta.hpp
 
   AIS_XRTrackedDevice.cxx
-  AIS_XRTrackedDevice.hxx
+  AIS_XRTrackedDevice.hpp
 )

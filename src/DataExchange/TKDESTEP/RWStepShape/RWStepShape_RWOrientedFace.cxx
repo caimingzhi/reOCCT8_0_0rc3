@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWOrientedFace.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_OrientedFace.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWOrientedFace.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_OrientedFace.hpp>
 
 RWStepShape_RWOrientedFace::RWStepShape_RWOrientedFace() = default;
 

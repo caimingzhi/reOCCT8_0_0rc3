@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GC_MakeEllipse.hxx>
-#include <gce_MakeElips.hxx>
-#include <Geom_Ellipse.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Elips.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GC_MakeEllipse.hpp>
+#include <gce_MakeElips.hpp>
+#include <Geom_Ellipse.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Elips.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 GC_MakeEllipse::GC_MakeEllipse(const gp_Elips& E)
 {

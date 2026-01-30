@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <VrmlData_Appearance.hxx>
-#include <VrmlData_Box.hxx>
-#include <VrmlData_Cone.hxx>
-#include <VrmlData_Cylinder.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TopoDS_TShape.hxx>
-#include <VrmlData_Group.hxx>
-#include <VrmlData_ImageTexture.hxx>
-#include <VrmlData_InBuffer.hxx>
-#include <VrmlData_IndexedFaceSet.hxx>
-#include <VrmlData_IndexedLineSet.hxx>
-#include <VrmlData_Material.hxx>
-#include <VrmlData_Normal.hxx>
-#include <VrmlData_Scene.hxx>
-#include <VrmlData_ShapeNode.hxx>
-#include <VrmlData_Sphere.hxx>
-#include <VrmlData_TextureCoordinate.hxx>
-#include <VrmlData_UnknownNode.hxx>
-// #include <VrmlData_WorldInfo.hxx>
-#include <NCollection_Vector.hxx>
-#include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
-#include <BRep_Builder.hxx>
-#include <Precision.hxx>
+#include <VrmlData_Appearance.hpp>
+#include <VrmlData_Box.hpp>
+#include <VrmlData_Cone.hpp>
+#include <VrmlData_Cylinder.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TopoDS_TShape.hpp>
+#include <VrmlData_Group.hpp>
+#include <VrmlData_ImageTexture.hpp>
+#include <VrmlData_InBuffer.hpp>
+#include <VrmlData_IndexedFaceSet.hpp>
+#include <VrmlData_IndexedLineSet.hpp>
+#include <VrmlData_Material.hpp>
+#include <VrmlData_Normal.hpp>
+#include <VrmlData_Scene.hpp>
+#include <VrmlData_ShapeNode.hpp>
+#include <VrmlData_Sphere.hpp>
+#include <VrmlData_TextureCoordinate.hpp>
+#include <VrmlData_UnknownNode.hpp>
+// #include <VrmlData_WorldInfo.hpp>
+#include <NCollection_Vector.hpp>
+#include <TopoDS.hpp>
+#include <TopExp_Explorer.hpp>
+#include <BRep_Builder.hpp>
+#include <Precision.hpp>
 #include <Standard_Version.hxx>
-#include <VrmlData_WorldInfo.hxx>
-#include <VrmlData_Geometry.hxx>
+#include <VrmlData_WorldInfo.hpp>
+#include <VrmlData_Geometry.hpp>
 
 #ifdef _MSC_VER
   #define _CRT_SECURE_NO_DEPRECATE

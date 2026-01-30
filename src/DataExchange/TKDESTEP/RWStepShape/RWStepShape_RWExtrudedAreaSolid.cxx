@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWExtrudedAreaSolid.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_CurveBoundedSurface.hxx>
-#include <StepGeom_Direction.hxx>
-#include <StepShape_ExtrudedAreaSolid.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWExtrudedAreaSolid.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_CurveBoundedSurface.hpp>
+#include <StepGeom_Direction.hpp>
+#include <StepShape_ExtrudedAreaSolid.hpp>
 
 RWStepShape_RWExtrudedAreaSolid::RWStepShape_RWExtrudedAreaSolid() = default;
 

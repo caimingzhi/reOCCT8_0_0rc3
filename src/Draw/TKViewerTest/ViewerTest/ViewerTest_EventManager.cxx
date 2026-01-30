@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ViewerTest_EventManager.hxx>
+#include <ViewerTest_EventManager.hpp>
 
-#include <AIS_AnimationCamera.hxx>
-#include <Aspect_DisplayConnection.hxx>
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_Shape.hxx>
-#include <Aspect_Grid.hxx>
-#include <Draw.hxx>
-#include <Message.hxx>
-#include <ViewerTest_ContinuousRedrawer.hxx>
-#include <ViewerTest_V3dView.hxx>
-#include <ViewerTest.hxx>
+#include <AIS_AnimationCamera.hpp>
+#include <Aspect_DisplayConnection.hpp>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_Shape.hpp>
+#include <Aspect_Grid.hpp>
+#include <Draw.hpp>
+#include <Message.hpp>
+#include <ViewerTest_ContinuousRedrawer.hpp>
+#include <ViewerTest_V3dView.hpp>
+#include <ViewerTest.hpp>
 
 #if defined(_WIN32)
 //
 #elif defined(HAVE_XLIB)
-  #include <Xw_Window.hxx>
+  #include <Xw_Window.hpp>
   #include <X11/Xlib.h>
   #include <X11/Xutil.h>
 #elif defined(__EMSCRIPTEN__)
-  #include <Wasm_Window.hxx>
+  #include <Wasm_Window.hpp>
   #include <emscripten.h>
   #include <emscripten/html5.h>
 

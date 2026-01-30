@@ -3,97 +3,97 @@ set(OCCT_IGESSelect_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_IGESSelect_FILES
   IGESSelect.cxx
-  IGESSelect.hxx
+  IGESSelect.hpp
   IGESSelect_Activator.cxx
-  IGESSelect_Activator.hxx
+  IGESSelect_Activator.hpp
   IGESSelect_AddFileComment.cxx
-  IGESSelect_AddFileComment.hxx
+  IGESSelect_AddFileComment.hpp
   IGESSelect_AddGroup.cxx
-  IGESSelect_AddGroup.hxx
+  IGESSelect_AddGroup.hpp
   IGESSelect_AutoCorrect.cxx
-  IGESSelect_AutoCorrect.hxx
+  IGESSelect_AutoCorrect.hpp
   IGESSelect_ChangeLevelList.cxx
-  IGESSelect_ChangeLevelList.hxx
+  IGESSelect_ChangeLevelList.hpp
   IGESSelect_ChangeLevelNumber.cxx
-  IGESSelect_ChangeLevelNumber.hxx
+  IGESSelect_ChangeLevelNumber.hpp
   IGESSelect_ComputeStatus.cxx
-  IGESSelect_ComputeStatus.hxx
+  IGESSelect_ComputeStatus.hpp
   IGESSelect_CounterOfLevelNumber.cxx
-  IGESSelect_CounterOfLevelNumber.hxx
+  IGESSelect_CounterOfLevelNumber.hpp
   IGESSelect_DispPerDrawing.cxx
-  IGESSelect_DispPerDrawing.hxx
+  IGESSelect_DispPerDrawing.hpp
   IGESSelect_DispPerSingleView.cxx
-  IGESSelect_DispPerSingleView.hxx
+  IGESSelect_DispPerSingleView.hpp
   IGESSelect_Dumper.cxx
-  IGESSelect_Dumper.hxx
+  IGESSelect_Dumper.hpp
   IGESSelect_EditDirPart.cxx
-  IGESSelect_EditDirPart.hxx
+  IGESSelect_EditDirPart.hpp
   IGESSelect_EditHeader.cxx
-  IGESSelect_EditHeader.hxx
-  IGESSelect_FileModifier.hxx
+  IGESSelect_EditHeader.hpp
+  IGESSelect_FileModifier.hpp
   IGESSelect_FileModifier_0.cxx
   IGESSelect_FloatFormat.cxx
-  IGESSelect_FloatFormat.hxx
+  IGESSelect_FloatFormat.hpp
   IGESSelect_IGESName.cxx
-  IGESSelect_IGESName.hxx
+  IGESSelect_IGESName.hpp
   IGESSelect_IGESTypeForm.cxx
-  IGESSelect_IGESTypeForm.hxx
-  IGESSelect_ModelModifier.hxx
+  IGESSelect_IGESTypeForm.hpp
+  IGESSelect_ModelModifier.hpp
   IGESSelect_ModelModifier_0.cxx
   IGESSelect_RebuildDrawings.cxx
-  IGESSelect_RebuildDrawings.hxx
+  IGESSelect_RebuildDrawings.hpp
   IGESSelect_RebuildGroups.cxx
-  IGESSelect_RebuildGroups.hxx
+  IGESSelect_RebuildGroups.hpp
   IGESSelect_RemoveCurves.cxx
-  IGESSelect_RemoveCurves.hxx
+  IGESSelect_RemoveCurves.hpp
   IGESSelect_SelectBasicGeom.cxx
-  IGESSelect_SelectBasicGeom.hxx
+  IGESSelect_SelectBasicGeom.hpp
   IGESSelect_SelectBypassGroup.cxx
-  IGESSelect_SelectBypassGroup.hxx
+  IGESSelect_SelectBypassGroup.hpp
   IGESSelect_SelectBypassSubfigure.cxx
-  IGESSelect_SelectBypassSubfigure.hxx
+  IGESSelect_SelectBypassSubfigure.hpp
   IGESSelect_SelectDrawingFrom.cxx
-  IGESSelect_SelectDrawingFrom.hxx
+  IGESSelect_SelectDrawingFrom.hpp
   IGESSelect_SelectFaces.cxx
-  IGESSelect_SelectFaces.hxx
+  IGESSelect_SelectFaces.hpp
   IGESSelect_SelectFromDrawing.cxx
-  IGESSelect_SelectFromDrawing.hxx
+  IGESSelect_SelectFromDrawing.hpp
   IGESSelect_SelectFromSingleView.cxx
-  IGESSelect_SelectFromSingleView.hxx
+  IGESSelect_SelectFromSingleView.hpp
   IGESSelect_SelectLevelNumber.cxx
-  IGESSelect_SelectLevelNumber.hxx
+  IGESSelect_SelectLevelNumber.hpp
   IGESSelect_SelectName.cxx
-  IGESSelect_SelectName.hxx
+  IGESSelect_SelectName.hpp
   IGESSelect_SelectPCurves.cxx
-  IGESSelect_SelectPCurves.hxx
+  IGESSelect_SelectPCurves.hpp
   IGESSelect_SelectSingleViewFrom.cxx
-  IGESSelect_SelectSingleViewFrom.hxx
+  IGESSelect_SelectSingleViewFrom.hpp
   IGESSelect_SelectSubordinate.cxx
-  IGESSelect_SelectSubordinate.hxx
+  IGESSelect_SelectSubordinate.hpp
   IGESSelect_SelectVisibleStatus.cxx
-  IGESSelect_SelectVisibleStatus.hxx
+  IGESSelect_SelectVisibleStatus.hpp
   IGESSelect_SetGlobalParameter.cxx
-  IGESSelect_SetGlobalParameter.hxx
+  IGESSelect_SetGlobalParameter.hpp
   IGESSelect_SetLabel.cxx
-  IGESSelect_SetLabel.hxx
+  IGESSelect_SetLabel.hpp
   IGESSelect_SetVersion5.cxx
-  IGESSelect_SetVersion5.hxx
+  IGESSelect_SetVersion5.hpp
   IGESSelect_SignColor.cxx
-  IGESSelect_SignColor.hxx
+  IGESSelect_SignColor.hpp
   IGESSelect_SignLevelNumber.cxx
-  IGESSelect_SignLevelNumber.hxx
+  IGESSelect_SignLevelNumber.hpp
   IGESSelect_SignStatus.cxx
-  IGESSelect_SignStatus.hxx
+  IGESSelect_SignStatus.hpp
   IGESSelect_SplineToBSpline.cxx
-  IGESSelect_SplineToBSpline.hxx
+  IGESSelect_SplineToBSpline.hpp
   IGESSelect_UpdateCreationDate.cxx
-  IGESSelect_UpdateCreationDate.hxx
+  IGESSelect_UpdateCreationDate.hpp
   IGESSelect_UpdateFileName.cxx
-  IGESSelect_UpdateFileName.hxx
+  IGESSelect_UpdateFileName.hpp
   IGESSelect_UpdateLastChange.cxx
-  IGESSelect_UpdateLastChange.hxx
+  IGESSelect_UpdateLastChange.hpp
   IGESSelect_ViewSorter.cxx
-  IGESSelect_ViewSorter.hxx
+  IGESSelect_ViewSorter.hpp
   IGESSelect_WorkLibrary.cxx
-  IGESSelect_WorkLibrary.hxx
+  IGESSelect_WorkLibrary.hpp
 )

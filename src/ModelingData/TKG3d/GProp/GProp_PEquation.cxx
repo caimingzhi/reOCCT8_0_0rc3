@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <GProp_PEquation.hxx>
-#include <GProp_PGProps.hxx>
-#include <GProp_PrincipalProps.hxx>
-#include <Standard_NoSuchObject.hxx>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <GProp_PEquation.hpp>
+#include <GProp_PGProps.hpp>
+#include <GProp_PrincipalProps.hpp>
+#include <Standard_NoSuchObject.hpp>
 
 GProp_PEquation::GProp_PEquation(const NCollection_Array1<gp_Pnt>& Pnts, const double Tol)
     : type(GProp_None)

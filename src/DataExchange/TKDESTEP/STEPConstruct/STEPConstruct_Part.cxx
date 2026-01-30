@@ -16,20 +16,20 @@
 //: j4 gka 16.03.99 S4134
 //    abv 20.11.99 renamed from StepPDR_SDRtool
 
-#include <StepBasic_ApplicationContext.hxx>
-#include <StepBasic_DesignContext.hxx>
-#include <StepBasic_MechanicalContext.hxx>
-#include <StepBasic_ProductContext.hxx>
-#include <StepBasic_ProductDefinition.hxx>
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepBasic_ProductDefinitionFormationWithSpecifiedSource.hxx>
-#include <StepBasic_ProductType.hxx>
-#include <STEPConstruct_Part.hxx>
-#include <StepData_StepModel.hxx>
-#include <StepRepr_ProductDefinitionShape.hxx>
-#include <StepShape_ShapeDefinitionRepresentation.hxx>
-#include <StepShape_ShapeRepresentation.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ApplicationContext.hpp>
+#include <StepBasic_DesignContext.hpp>
+#include <StepBasic_MechanicalContext.hpp>
+#include <StepBasic_ProductContext.hpp>
+#include <StepBasic_ProductDefinition.hpp>
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepBasic_ProductDefinitionFormationWithSpecifiedSource.hpp>
+#include <StepBasic_ProductType.hpp>
+#include <STEPConstruct_Part.hpp>
+#include <StepData_StepModel.hpp>
+#include <StepRepr_ProductDefinitionShape.hpp>
+#include <StepShape_ShapeDefinitionRepresentation.hpp>
+#include <StepShape_ShapeRepresentation.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 // ------------------------------
 // Modification a faire :

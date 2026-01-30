@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_NoteBook.hxx>
+#include <TDataStd_NoteBook.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_TagSource.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_TagSource.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_NoteBook, TDataStd_GenericEmpty)
 

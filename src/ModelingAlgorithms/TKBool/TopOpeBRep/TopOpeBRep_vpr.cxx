@@ -14,39 +14,39 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRep_FacesFiller.hxx>
-#include <TopOpeBRep_FacesIntersector.hxx>
-#include <TopOpeBRep_FFDumper.hxx>
-#include <TopOpeBRep_LineInter.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRep_VPointInterClassifier.hxx>
-#include <TopOpeBRep_VPointInterIterator.hxx>
-#include <TopOpeBRepDS_Interference.hxx>
-#include <TopOpeBRepDS_Transition.hxx>
+#include <TopOpeBRep_FacesFiller.hpp>
+#include <TopOpeBRep_FacesIntersector.hpp>
+#include <TopOpeBRep_FFDumper.hpp>
+#include <TopOpeBRep_LineInter.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRep_VPointInterClassifier.hpp>
+#include <TopOpeBRep_VPointInterIterator.hpp>
+#include <TopOpeBRepDS_Interference.hpp>
+#include <TopOpeBRepDS_Transition.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Geom_Surface.hxx>
-#include <Precision.hxx>
-#include <TopoDS.hxx>
-#include <TopExp.hxx>
-#include <gp_Vec.hxx>
+#include <Standard_DomainError.hpp>
+#include <Geom_Surface.hpp>
+#include <Precision.hpp>
+#include <TopoDS.hpp>
+#include <TopExp.hpp>
+#include <gp_Vec.hpp>
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
 
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepTool_SC.hxx>
-#include <TopOpeBRepTool_ShapeTool.hxx>
-#include <TopOpeBRepTool_makeTransition.hxx>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepTool_SC.hpp>
+#include <TopOpeBRepTool_ShapeTool.hpp>
+#include <TopOpeBRepTool_makeTransition.hpp>
 
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_PointIterator.hxx>
-#include <TopOpeBRepDS_Dumper.hxx>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_PointIterator.hpp>
+#include <TopOpeBRepDS_Dumper.hpp>
 
-#include <TopOpeBRep_FFTransitionTool.hxx>
-#include <TopOpeBRep_PointGeomTool.hxx>
-#include <TopOpeBRep.hxx>
+#include <TopOpeBRep_FFTransitionTool.hpp>
+#include <TopOpeBRep_PointGeomTool.hpp>
+#include <TopOpeBRep.hpp>
 
 #define M_ON(st) (st == TopAbs_ON)
 #define M_UNKNOWN(st) (st == TopAbs_UNKNOWN)

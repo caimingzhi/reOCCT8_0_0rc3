@@ -14,28 +14,28 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom_Circle.hxx>
-#include <Geom_Conic.hxx>
-#include <Geom_Ellipse.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_Parabola.hxx>
-#include <GeomToStep_MakeCircle.hxx>
-#include <GeomToStep_MakeConic.hxx>
-#include <GeomToStep_MakeEllipse.hxx>
-#include <GeomToStep_MakeHyperbola.hxx>
-#include <GeomToStep_MakeParabola.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_Circle.hxx>
-#include <StepGeom_Conic.hxx>
-#include <StepGeom_Ellipse.hxx>
-#include <StepGeom_Hyperbola.hxx>
-#include <StepGeom_Parabola.hxx>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom_Circle.hpp>
+#include <Geom_Conic.hpp>
+#include <Geom_Ellipse.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_Parabola.hpp>
+#include <GeomToStep_MakeCircle.hpp>
+#include <GeomToStep_MakeConic.hpp>
+#include <GeomToStep_MakeEllipse.hpp>
+#include <GeomToStep_MakeHyperbola.hpp>
+#include <GeomToStep_MakeParabola.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_Circle.hpp>
+#include <StepGeom_Conic.hpp>
+#include <StepGeom_Ellipse.hpp>
+#include <StepGeom_Hyperbola.hpp>
+#include <StepGeom_Parabola.hpp>
 
 //=============================================================================
 // Creation d' une Conic de prostep a partir d' une Conic de Geom

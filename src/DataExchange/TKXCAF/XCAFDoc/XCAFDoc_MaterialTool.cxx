@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_MaterialTool.hxx>
+#include <XCAFDoc_MaterialTool.hpp>
 
-#include <Standard_Type.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_Material.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <Standard_Type.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_Material.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_MaterialTool,
                                       TDataStd_GenericEmpty,

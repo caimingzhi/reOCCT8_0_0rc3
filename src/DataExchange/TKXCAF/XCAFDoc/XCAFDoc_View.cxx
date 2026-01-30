@@ -13,17 +13,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_View.hxx>
+#include <XCAFDoc_View.hpp>
 
-#include <TDataStd_AsciiString.hxx>
-#include <TDataStd_Integer.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFView_Object.hxx>
+#include <TDataStd_AsciiString.hpp>
+#include <TDataStd_Integer.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Axis.hpp>
+#include <TDataXtd_Geometry.hpp>
+#include <TDataXtd_Point.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFView_Object.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(XCAFDoc_View, TDataStd_GenericEmpty)
 

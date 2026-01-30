@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_Builder.hxx>
-#include <TopOpeBRepBuild_ShellFaceSet.hxx>
-#include <TopOpeBRepBuild_ShellToSolid.hxx>
-#include <TopOpeBRepBuild_SolidBuilder.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
+#include <TopOpeBRepBuild_Builder.hpp>
+#include <TopOpeBRepBuild_ShellFaceSet.hpp>
+#include <TopOpeBRepBuild_ShellToSolid.hpp>
+#include <TopOpeBRepBuild_SolidBuilder.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
 
 //=================================================================================================
 

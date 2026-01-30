@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dHatch_Element.hxx>
+#include <Geom2dHatch_Element.hpp>
 
-#include <Geom2dAdaptor_Curve.hxx>
+#include <Geom2dAdaptor_Curve.hpp>
 
 //=================================================================================================
 

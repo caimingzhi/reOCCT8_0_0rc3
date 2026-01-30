@@ -12,13 +12,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TCollection_ExtendedString.hxx>
+#include <TCollection_ExtendedString.hpp>
 
-#include <NCollection_UtfIterator.hxx>
-#include <Standard.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <NCollection_UtfIterator.hpp>
+#include <Standard.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <algorithm>
 

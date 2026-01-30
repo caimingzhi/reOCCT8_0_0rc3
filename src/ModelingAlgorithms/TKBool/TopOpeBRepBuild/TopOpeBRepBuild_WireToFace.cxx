@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepBuild_Builder.hxx>
-#include <TopOpeBRepBuild_FaceBuilder.hxx>
-#include <TopOpeBRepBuild_WireEdgeSet.hxx>
-#include <TopOpeBRepBuild_WireToFace.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
+#include <TopOpeBRepBuild_Builder.hpp>
+#include <TopOpeBRepBuild_FaceBuilder.hpp>
+#include <TopOpeBRepBuild_WireEdgeSet.hpp>
+#include <TopOpeBRepBuild_WireToFace.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
 
 //=================================================================================================
 

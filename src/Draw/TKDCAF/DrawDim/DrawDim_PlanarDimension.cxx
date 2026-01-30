@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Interpretor.hxx>
-#include <DrawDim_PlanarDimension.hxx>
-#include <Standard_Type.hxx>
-#include <TopoDS_Face.hxx>
+#include <Draw_Interpretor.hpp>
+#include <DrawDim_PlanarDimension.hpp>
+#include <Standard_Type.hpp>
+#include <TopoDS_Face.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarDimension, DrawDim_Dimension)
 

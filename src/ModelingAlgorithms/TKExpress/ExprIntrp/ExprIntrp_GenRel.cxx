@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Expr_GeneralRelation.hxx>
-#include <ExprIntrp.hxx>
-#include <ExprIntrp_GenRel.hxx>
-#include <ExprIntrp_yaccanal.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Expr_GeneralRelation.hpp>
+#include <ExprIntrp.hpp>
+#include <ExprIntrp_GenRel.hpp>
+#include <ExprIntrp_yaccanal.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(ExprIntrp_GenRel, ExprIntrp_Generator)
 

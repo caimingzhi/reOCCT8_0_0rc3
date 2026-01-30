@@ -40,7 +40,7 @@ SOFTWARE.
 #endif
 
 #include <algorithm>
-#include "delabella.pxx" // we just need LOG() macro
+#include "delabella.hpp" // we just need LOG() macro
 
 // assuming BITS is max(X_BITS,Y_BITS)
 

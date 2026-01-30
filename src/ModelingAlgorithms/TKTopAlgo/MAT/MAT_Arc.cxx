@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT_Arc.hxx>
-#include <MAT_Node.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
+#include <MAT_Arc.hpp>
+#include <MAT_Node.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Arc, Standard_Transient)
 

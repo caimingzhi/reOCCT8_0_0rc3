@@ -14,11 +14,11 @@
 
 #ifndef _WIN32
 
-  #include <OSD_Directory.hxx>
-  #include <OSD_File.hxx>
-  #include <OSD_FileNode.hxx>
-  #include <OSD_Protection.hxx>
-  #include <OSD_WhoAmI.hxx>
+  #include <OSD_Directory.hpp>
+  #include <OSD_File.hpp>
+  #include <OSD_FileNode.hpp>
+  #include <OSD_Protection.hpp>
+  #include <OSD_WhoAmI.hpp>
 
   #include <sys/stat.h>
 // Ci-joint le tableau de gestion des protection (Ajout et Retrait). Les
@@ -724,7 +724,7 @@ int OSD_Protection::Internal() const
 //-------------------  WNT Sources of OSD_Protection ---------------------
 //------------------------------------------------------------------------
 
-  #include <OSD_Protection.hxx>
+  #include <OSD_Protection.hpp>
 
   #define FLAG_READ 0x00000001
   #define FLAG_WRITE 0x00000002

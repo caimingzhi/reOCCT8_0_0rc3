@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_Buffer.hxx>
+#include <OpenGl_Buffer.hpp>
 
-#include <OpenGl_GlCore30.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <Standard_Assert.hxx>
+#include <OpenGl_GlCore30.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <Standard_Assert.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Buffer, OpenGl_Resource)
 

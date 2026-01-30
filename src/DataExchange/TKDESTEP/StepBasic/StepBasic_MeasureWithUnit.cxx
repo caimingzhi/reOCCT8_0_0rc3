@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_MeasureValueMember.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepBasic_Unit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_MeasureValueMember.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepBasic_Unit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_MeasureWithUnit, Standard_Transient)
 

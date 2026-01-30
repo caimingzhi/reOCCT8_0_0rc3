@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GCPnts_TangentialDeflection.hxx>
+#include <GCPnts_TangentialDeflection.hpp>
 
-#include <GCPnts_TCurveTypes.hxx>
+#include <GCPnts_TCurveTypes.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <gp_XYZ.hxx>
-#include <math_BrentMinimum.hxx>
-#include <math_PSO.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <NCollection_Array1.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <gp_XYZ.hpp>
+#include <math_BrentMinimum.hpp>
+#include <math_PSO.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <NCollection_Array1.hpp>
 
 namespace
 {

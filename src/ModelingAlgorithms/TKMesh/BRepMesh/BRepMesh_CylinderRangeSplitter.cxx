@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepMesh_CylinderRangeSplitter.hxx>
+#include <BRepMesh_CylinderRangeSplitter.hpp>
 
-#include <GCPnts_TangentialDeflection.hxx>
-#include <IMeshTools_Parameters.hxx>
+#include <GCPnts_TangentialDeflection.hpp>
+#include <IMeshTools_Parameters.hpp>
 
 //=================================================================================================
 

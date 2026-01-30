@@ -15,12 +15,12 @@
 // taking into account the unit chosen by the user
 // for writing the IGES file.
 
-#include <Geom_CartesianPoint.hxx>
-#include <Geom_Point.hxx>
-#include <GeomToIGES_GeomPoint.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESGeom_Point.hxx>
+#include <Geom_CartesianPoint.hpp>
+#include <Geom_Point.hpp>
+#include <GeomToIGES_GeomPoint.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESGeom_Point.hpp>
 
 //=============================================================================
 // GeomToIGES_GeomPoint

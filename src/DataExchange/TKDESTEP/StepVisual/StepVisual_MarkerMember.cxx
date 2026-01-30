@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepData_EnumTool.hxx>
-#include <StepVisual_MarkerMember.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <StepData_EnumTool.hpp>
+#include <StepVisual_MarkerMember.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_MarkerMember, StepData_SelectInt)
 

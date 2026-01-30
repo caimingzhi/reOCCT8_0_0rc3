@@ -16,15 +16,15 @@
 // AGV 060302: Input from std::istream
 //             AGV 130302: bug corr: was error if strlen(root_elem_name) < 7
 
-#include <LDOM_XmlReader.hxx>
-#include <Standard_Macro.hxx>
+#include <LDOM_XmlReader.hpp>
+#include <Standard_Macro.hpp>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <LDOM_MemManager.hxx>
-#include <LDOM_BasicAttribute.hxx>
-#include <LDOM_CharReference.hxx>
-#include <LDOM_OSStream.hxx>
+#include <LDOM_MemManager.hpp>
+#include <LDOM_BasicAttribute.hpp>
+#include <LDOM_CharReference.hpp>
+#include <LDOM_OSStream.hpp>
 
 #include <cstring>
 #include <cerrno>

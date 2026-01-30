@@ -14,18 +14,18 @@
 
 // Modified:     Portage NT 7-5-97 DPF (return)
 
-#include <FilletSurf_Builder.hxx>
-#include <FilletSurf_ErrorTypeStatus.hxx>
-#include <FilletSurf_InternalBuilder.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
+#include <FilletSurf_Builder.hpp>
+#include <FilletSurf_ErrorTypeStatus.hpp>
+#include <FilletSurf_InternalBuilder.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
 
 //=================================================================================================
 

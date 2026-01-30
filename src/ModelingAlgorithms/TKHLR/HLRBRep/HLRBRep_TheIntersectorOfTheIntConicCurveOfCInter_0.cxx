@@ -14,27 +14,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hxx>
+#include <HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hpp>
 
-#include <Standard_ConstructionError.hxx>
-#include <IntCurve_IConicTool.hxx>
-#include <HLRBRep_CurveTool.hxx>
-#include <HLRBRep_TheProjPCurOfCInter.hxx>
-#include <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <gp_Pnt2d.hxx>
+#include <Standard_ConstructionError.hpp>
+#include <IntCurve_IConicTool.hpp>
+#include <HLRBRep_CurveTool.hpp>
+#include <HLRBRep_TheProjPCurOfCInter.hpp>
+#include <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <gp_Pnt2d.hpp>
 
 #define ImpTool IntCurve_IConicTool
-#define ImpTool_hxx <IntCurve_IConicTool.hxx>
+#define ImpTool_hxx <IntCurve_IConicTool.hpp>
 #define ParCurve HLRBRep_CurvePtr
-#define ParCurve_hxx <HLRBRep_TypeDef.hxx>
+#define ParCurve_hxx <HLRBRep_TypeDef.hpp>
 #define ParTool HLRBRep_CurveTool
-#define ParTool_hxx <HLRBRep_CurveTool.hxx>
+#define ParTool_hxx <HLRBRep_CurveTool.hpp>
 #define ProjectOnPCurveTool HLRBRep_TheProjPCurOfCInter
-#define ProjectOnPCurveTool_hxx <HLRBRep_TheProjPCurOfCInter.hxx>
+#define ProjectOnPCurveTool_hxx <HLRBRep_TheProjPCurOfCInter.hpp>
 #define IntImpParGen_MyImpParTool HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter
 #define IntImpParGen_MyImpParTool_hxx                                                              \
-  <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hxx>
+  <HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hpp>
 #define IntImpParGen_Intersector HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter
-#define IntImpParGen_Intersector_hxx <HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hxx>
-#include <IntImpParGen_Intersector.gxx>
+#define IntImpParGen_Intersector_hxx <HLRBRep_TheIntersectorOfTheIntConicCurveOfCInter.hpp>
+#include <IntImpParGen_Intersector.hpp>

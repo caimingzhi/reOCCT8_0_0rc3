@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBuilderAPI_Copy.hxx>
-#include <BRepTools_CopyModification.hxx>
+#include <BRepBuilderAPI_Copy.hpp>
+#include <BRepTools_CopyModification.hpp>
 
 //=================================================================================================
 

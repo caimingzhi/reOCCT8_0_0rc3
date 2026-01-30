@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TransferBRep_ShapeMapper.hxx>
+#include <TransferBRep_ShapeMapper.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <TransferBRep_ShapeInfo.hxx>
-#include <Transfer_Finder.hxx>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <TransferBRep_ShapeInfo.hpp>
+#include <Transfer_Finder.hpp>
 
 //=================================================================================================
 

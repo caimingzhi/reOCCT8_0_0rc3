@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepElement_AnalysisItemWithinRepresentation.hxx>
-#include <StepElement_SurfaceSection.hxx>
-#include <StepFEA_FeaSurfaceSectionGeometricRelationship.hxx>
+#include <StepElement_AnalysisItemWithinRepresentation.hpp>
+#include <StepElement_SurfaceSection.hpp>
+#include <StepFEA_FeaSurfaceSectionGeometricRelationship.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaSurfaceSectionGeometricRelationship, Standard_Transient)
 

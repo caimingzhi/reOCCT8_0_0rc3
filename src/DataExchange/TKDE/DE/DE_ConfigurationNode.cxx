@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DE_ConfigurationNode.hxx>
+#include <DE_ConfigurationNode.hpp>
 
-#include <DE_ConfigurationContext.hxx>
-#include <DE_Provider.hxx>
-#include <DE_Wrapper.hxx>
-#include <Message.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Protection.hxx>
+#include <DE_ConfigurationContext.hpp>
+#include <DE_Provider.hpp>
+#include <DE_Wrapper.hpp>
+#include <Message.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Protection.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_ConfigurationNode, Standard_Transient)
 

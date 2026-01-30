@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepTools_CopyModification.hxx>
+#include <BRepTools_CopyModification.hpp>
 
-#include <BRep_Tool.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_CopyModification, BRepTools_Modification)
 

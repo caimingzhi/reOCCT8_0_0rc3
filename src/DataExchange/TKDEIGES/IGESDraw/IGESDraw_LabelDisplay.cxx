@@ -16,13 +16,13 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <gp_Pnt.hxx>
-#include <IGESDraw_LabelDisplay.hxx>
-#include <IGESDraw_PerspectiveView.hxx>
-#include <IGESDraw_View.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Pnt.hpp>
+#include <IGESDraw_LabelDisplay.hpp>
+#include <IGESDraw_PerspectiveView.hpp>
+#include <IGESDraw_View.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_LabelDisplay, IGESData_LabelDisplayEntity)
 

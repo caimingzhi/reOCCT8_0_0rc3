@@ -14,37 +14,37 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepApprox_MyGradientOfTheComputeLineBezierOfApprox.hxx>
+#include <BRepApprox_MyGradientOfTheComputeLineBezierOfApprox.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <StdFail_NotDone.hxx>
-#include <BRepApprox_TheMultiLineOfApprox.hxx>
-#include <BRepApprox_TheMultiLineToolOfApprox.hxx>
-#include <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <BRepApprox_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <StdFail_NotDone.hpp>
+#include <BRepApprox_TheMultiLineOfApprox.hpp>
+#include <BRepApprox_TheMultiLineToolOfApprox.hpp>
+#include <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <BRepApprox_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
 
 #define MultiLine BRepApprox_TheMultiLineOfApprox
-#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hxx>
+#define MultiLine_hxx <BRepApprox_TheMultiLineOfApprox.hpp>
 #define ToolLine BRepApprox_TheMultiLineToolOfApprox
-#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hxx>
+#define ToolLine_hxx <BRepApprox_TheMultiLineToolOfApprox.hpp>
 #define AppParCurves_ParLeastSquare                                                                \
   BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox
 #define AppParCurves_ParLeastSquare_hxx                                                            \
-  <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+  <BRepApprox_ParLeastSquareOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define AppParCurves_ResConstraint                                                                 \
   BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox
 #define AppParCurves_ResConstraint_hxx                                                             \
-  <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+  <BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define AppParCurves_ParFunction BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox
 #define AppParCurves_ParFunction_hxx                                                               \
-  <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+  <BRepApprox_ParFunctionOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define AppParCurves_Gradient_BFGS                                                                 \
   BRepApprox_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfApprox
 #define AppParCurves_Gradient_BFGS_hxx                                                             \
-  <BRepApprox_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfApprox.hxx>
+  <BRepApprox_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfApprox.hpp>
 #define AppParCurves_Gradient BRepApprox_MyGradientOfTheComputeLineBezierOfApprox
-#define AppParCurves_Gradient_hxx <BRepApprox_MyGradientOfTheComputeLineBezierOfApprox.hxx>
-#include <AppParCurves_Gradient.gxx>
+#define AppParCurves_Gradient_hxx <BRepApprox_MyGradientOfTheComputeLineBezierOfApprox.hpp>
+#include <AppParCurves_Gradient.hpp>

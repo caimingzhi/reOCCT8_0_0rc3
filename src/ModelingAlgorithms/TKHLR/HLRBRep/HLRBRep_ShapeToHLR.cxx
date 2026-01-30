@@ -18,22 +18,22 @@
 // #define No_Exception
 #endif
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <HLRBRep_Data.hxx>
-#include <HLRBRep_ShapeToHLR.hxx>
-#include <HLRTopoBRep_OutLiner.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <HLRBRep_Data.hpp>
+#include <HLRBRep_ShapeToHLR.hpp>
+#include <HLRTopoBRep_OutLiner.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

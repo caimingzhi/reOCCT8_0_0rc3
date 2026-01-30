@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRAlgo_Interference.hxx>
+#include <HLRAlgo_Interference.hpp>
 
-#include <HLRAlgo_Intersection.hxx>
-#include <HLRAlgo_Coincidence.hxx>
+#include <HLRAlgo_Intersection.hpp>
+#include <HLRAlgo_Coincidence.hpp>
 
 //=================================================================================================
 

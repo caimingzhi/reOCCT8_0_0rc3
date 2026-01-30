@@ -13,10 +13,10 @@
 
 // gka 05.03.99 S4134 upgrade from CD to DIS
 
-#include "RWStepRepr_RWFunctionallyDefinedTransformation.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepRepr_FunctionallyDefinedTransformation.hxx>
+#include "RWStepRepr_RWFunctionallyDefinedTransformation.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepRepr_FunctionallyDefinedTransformation.hpp>
 
 RWStepRepr_RWFunctionallyDefinedTransformation::RWStepRepr_RWFunctionallyDefinedTransformation() =
   default;

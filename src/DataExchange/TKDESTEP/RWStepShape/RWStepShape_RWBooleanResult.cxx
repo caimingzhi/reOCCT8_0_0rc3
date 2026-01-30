@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepShape_RWBooleanResult.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_BooleanResult.hxx>
-#include <StepShape_SolidModel.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepShape_RWBooleanResult.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_BooleanResult.hpp>
+#include <StepShape_SolidModel.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepShape_RWBooleanOperator.pxx"
+#include "RWStepShape_RWBooleanOperator.hpp"
 
 RWStepShape_RWBooleanResult::RWStepShape_RWBooleanResult() = default;
 

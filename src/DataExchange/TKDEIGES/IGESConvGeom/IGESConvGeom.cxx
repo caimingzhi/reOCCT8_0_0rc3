@@ -14,23 +14,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESConvGeom.hxx>
+#include <IGESConvGeom.hpp>
 
-#include <BSplCLib.hxx>
-#include <BSplSLib.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Trsf.hxx>
-#include <IGESData_ToolLocation.hxx>
-#include <IGESGeom_SplineCurve.hxx>
-#include <IGESGeom_SplineSurface.hxx>
-#include <PLib.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <Standard_Integer.hxx>
+#include <BSplCLib.hpp>
+#include <BSplSLib.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Trsf.hpp>
+#include <IGESData_ToolLocation.hpp>
+#include <IGESGeom_SplineCurve.hpp>
+#include <IGESGeom_SplineSurface.hpp>
+#include <PLib.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <Standard_Integer.hpp>
 
 //=================================================================================================
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdObjMgt_ReadData.hxx>
-#include <StdObjMgt_Persistent.hxx>
+#include <StdObjMgt_ReadData.hpp>
+#include <StdObjMgt_Persistent.hpp>
 
-#include <Standard_GUID.hxx>
+#include <Standard_GUID.hpp>
 
 StdObjMgt_ReadData::StdObjMgt_ReadData(const occ::handle<Storage_BaseDriver>& theDriver,
                                        const int                              theNumberOfObjects)

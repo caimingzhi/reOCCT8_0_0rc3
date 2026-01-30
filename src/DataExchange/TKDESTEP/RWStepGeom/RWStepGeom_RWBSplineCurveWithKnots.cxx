@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_ShareTool.hxx>
-#include "RWStepGeom_RWBSplineCurveWithKnots.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_BSplineCurveWithKnots.hxx>
-#include <StepGeom_CartesianPoint.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepGeom_KnotType.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_ShareTool.hpp>
+#include "RWStepGeom_RWBSplineCurveWithKnots.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_BSplineCurveWithKnots.hpp>
+#include <StepGeom_CartesianPoint.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepGeom_KnotType.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
 
-#include "RWStepGeom_RWBSplineCurveForm.pxx"
-#include "RWStepGeom_RWKnotType.pxx"
+#include "RWStepGeom_RWBSplineCurveForm.hpp"
+#include "RWStepGeom_RWKnotType.hpp"
 
 RWStepGeom_RWBSplineCurveWithKnots::RWStepGeom_RWBSplineCurveWithKnots() = default;
 

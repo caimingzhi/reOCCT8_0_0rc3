@@ -13,27 +13,27 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IVtkOCC_ShapeMesher.hxx>
+#include <IVtkOCC_ShapeMesher.hpp>
 
-#include <Bnd_Box.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Message.hxx>
-#include <NCollection_Array1.hxx>
-#include <Poly_Polygon3D.hxx>
-#include <Poly_PolygonOnTriangulation.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Prs3d.hxx>
-#include <Prs3d_Drawer.hxx>
-#include <Standard_ErrorHandler.hxx>
-#include <StdPrs_Isolines.hxx>
-#include <StdPrs_ToolTriangulatedShape.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <Bnd_Box.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Message.hpp>
+#include <NCollection_Array1.hpp>
+#include <Poly_Polygon3D.hpp>
+#include <Poly_PolygonOnTriangulation.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Prs3d.hpp>
+#include <Prs3d_Drawer.hpp>
+#include <Standard_ErrorHandler.hpp>
+#include <StdPrs_Isolines.hpp>
+#include <StdPrs_ToolTriangulatedShape.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_ShapeMesher, IVtk_IShapeMesher)
 

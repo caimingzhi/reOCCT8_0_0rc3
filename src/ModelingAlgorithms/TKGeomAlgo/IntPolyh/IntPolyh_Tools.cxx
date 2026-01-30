@@ -12,11 +12,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntPolyh_Tools.hxx>
+#include <IntPolyh_Tools.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Precision.hxx>
-#include <IntCurveSurface_ThePolyhedronOfHInter.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Precision.hpp>
+#include <IntCurveSurface_ThePolyhedronOfHInter.hpp>
 
 //=================================================================================================
 

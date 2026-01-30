@@ -13,29 +13,29 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <DBRep.hxx>
-#include <DDocStd.hxx>
-#include <Draw.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Message.hxx>
-#include <NCollection_DataMap.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Shape.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_Location.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XDEDRAW_Shapes.hxx>
-#include <XSAlgo.hxx>
-#include <XSAlgo_ShapeProcessor.hxx>
-#include <UnitsMethods.hxx>
+#include <BRep_Builder.hpp>
+#include <DBRep.hpp>
+#include <DDocStd.hpp>
+#include <Draw.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Message.hpp>
+#include <NCollection_DataMap.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_Location.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XDEDRAW_Shapes.hpp>
+#include <XSAlgo.hpp>
+#include <XSAlgo_ShapeProcessor.hpp>
+#include <UnitsMethods.hpp>
 
 #include <cstdio>
 

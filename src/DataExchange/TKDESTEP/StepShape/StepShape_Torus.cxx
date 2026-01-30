@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepGeom_Axis1Placement.hxx>
-#include <StepShape_Torus.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepGeom_Axis1Placement.hpp>
+#include <StepShape_Torus.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_Torus, StepGeom_GeometricRepresentationItem)
 

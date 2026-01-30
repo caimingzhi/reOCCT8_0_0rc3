@@ -16,14 +16,14 @@
 
 // Modified by cma, Mon Oct 23 16:11:46 1995
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <HLRTest_DrawablePolyEdgeTool.hxx>
-#include <OSD_Chronometer.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <HLRTest_DrawablePolyEdgeTool.hpp>
+#include <OSD_Chronometer.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_DrawablePolyEdgeTool, Draw_Drawable3D)
 

@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepVisual_RWSurfaceStyleUsage.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_SurfaceSideStyle.hxx>
-#include <StepVisual_SurfaceStyleUsage.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepVisual_RWSurfaceStyleUsage.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_SurfaceSideStyle.hpp>
+#include <StepVisual_SurfaceStyleUsage.hpp>
+#include <TCollection_AsciiString.hpp>
 
-#include "RWStepVisual_RWSurfaceSide.pxx"
+#include "RWStepVisual_RWSurfaceSide.hpp"
 
 RWStepVisual_RWSurfaceStyleUsage::RWStepVisual_RWSurfaceStyleUsage() = default;
 

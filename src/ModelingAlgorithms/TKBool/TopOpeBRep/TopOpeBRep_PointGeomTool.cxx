@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRep_FaceEdgeIntersector.hxx>
-#include <TopOpeBRep_Point2d.hxx>
-#include <TopOpeBRep_PointGeomTool.hxx>
-#include <TopOpeBRep_VPointInter.hxx>
-#include <TopOpeBRepDS_Point.hxx>
+#include <BRep_Tool.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRep_FaceEdgeIntersector.hpp>
+#include <TopOpeBRep_Point2d.hpp>
+#include <TopOpeBRep_PointGeomTool.hpp>
+#include <TopOpeBRep_VPointInter.hpp>
+#include <TopOpeBRepDS_Point.hpp>
 
 //=================================================================================================
 

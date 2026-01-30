@@ -13,23 +13,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_LightSource.hxx>
+#include <AIS_LightSource.hpp>
 
-#include <AIS_InteractiveContext.hxx>
-#include <gp_Quaternion.hxx>
-#include <Graphic3d_ArrayOfPoints.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_CView.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Prs3d_ArrowAspect.hxx>
-#include <Prs3d_PointAspect.hxx>
-#include <Prs3d_Text.hxx>
-#include <Prs3d_ToolCylinder.hxx>
-#include <Prs3d_ToolSphere.hxx>
-#include <Select3D_SensitivePoint.hxx>
-#include <Select3D_SensitiveSphere.hxx>
-#include <V3d_View.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <gp_Quaternion.hpp>
+#include <Graphic3d_ArrayOfPoints.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_CView.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Prs3d_ArrowAspect.hpp>
+#include <Prs3d_PointAspect.hpp>
+#include <Prs3d_Text.hpp>
+#include <Prs3d_ToolCylinder.hpp>
+#include <Prs3d_ToolSphere.hpp>
+#include <Select3D_SensitivePoint.hpp>
+#include <Select3D_SensitiveSphere.hpp>
+#include <V3d_View.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_LightSource, AIS_InteractiveObject)
 IMPLEMENT_STANDARD_RTTIEXT(AIS_LightSourceOwner, SelectMgr_EntityOwner)

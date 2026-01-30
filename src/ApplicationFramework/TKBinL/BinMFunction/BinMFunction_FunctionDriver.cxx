@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinMDF_ADriver.hxx>
-#include <BinMFunction_FunctionDriver.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <BinObjMgt_RRelocationTable.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Attribute.hxx>
-#include <TFunction_Function.hxx>
+#include <BinMDF_ADriver.hpp>
+#include <BinMFunction_FunctionDriver.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <BinObjMgt_RRelocationTable.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Attribute.hpp>
+#include <TFunction_Function.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMFunction_FunctionDriver, BinMDF_ADriver)
 

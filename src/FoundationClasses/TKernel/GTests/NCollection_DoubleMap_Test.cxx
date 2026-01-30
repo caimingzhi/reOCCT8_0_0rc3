@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_DoubleMap.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <NCollection_DoubleMap.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <gtest/gtest.h>
 

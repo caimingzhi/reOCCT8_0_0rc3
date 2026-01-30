@@ -3,16 +3,16 @@ set(OCCT_ShapeProcess_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_ShapeProcess_FILES
   ShapeProcess.cxx
-  ShapeProcess.hxx
+  ShapeProcess.hpp
   ShapeProcess_Context.cxx
-  ShapeProcess_Context.hxx
+  ShapeProcess_Context.hpp
   ShapeProcess_Operator.cxx
-  ShapeProcess_Operator.hxx
-  ShapeProcess_OperFunc.hxx
+  ShapeProcess_Operator.hpp
+  ShapeProcess_OperFunc.hpp
   ShapeProcess_OperLibrary.cxx
-  ShapeProcess_OperLibrary.hxx
+  ShapeProcess_OperLibrary.hpp
   ShapeProcess_ShapeContext.cxx
-  ShapeProcess_ShapeContext.hxx
+  ShapeProcess_ShapeContext.hpp
   ShapeProcess_UOperator.cxx
-  ShapeProcess_UOperator.hxx
+  ShapeProcess_UOperator.hpp
 )

@@ -14,50 +14,50 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <BRepTools.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_DataSet.hxx>
-#include <TDF_IDFilter.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_TagSource.hxx>
-#include <TNaming.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Identifier.hxx>
-#include <TNaming_Iterator.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_Localizer.hxx>
-#include <TNaming_Naming.hxx>
-#include <TNaming_NamingTool.hxx>
-#include <TNaming_NewShapeIterator.hxx>
-#include <TNaming_OldShapeIterator.hxx>
-#include <TNaming_Scope.hxx>
-#include <TNaming_Selector.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Wire.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepTools.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_DataSet.hpp>
+#include <TDF_IDFilter.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_TagSource.hpp>
+#include <TNaming.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Identifier.hpp>
+#include <TNaming_Iterator.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_Localizer.hpp>
+#include <TNaming_Naming.hpp>
+#include <TNaming_NamingTool.hpp>
+#include <TNaming_NewShapeIterator.hpp>
+#include <TNaming_OldShapeIterator.hpp>
+#include <TNaming_Scope.hpp>
+#include <TNaming_Selector.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Wire.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_Naming, TDF_Attribute)
 
-// #include <NCollection_Map.hxx>
-#include <NCollection_DataMap.hxx>
+// #include <NCollection_Map.hpp>
+#include <NCollection_DataMap.hpp>
 // The bug concerns access to a null object in the method Filter():
 
 #define ALLOW_CHILD_NBS
@@ -70,8 +70,8 @@ IMPLEMENT_STANDARD_RTTIEXT(TNaming_Naming, TDF_Attribute)
 // #define MDTV_DEB_71
 // #define MDTV_DEB_WIN
 #ifdef OCCT_DEBUG
-  #include <TCollection_AsciiString.hxx>
-  #include <TDF_Tool.hxx>
+  #include <TCollection_AsciiString.hpp>
+  #include <TDF_Tool.hpp>
 
 void Print_Entry(const TDF_Label& label)
 {

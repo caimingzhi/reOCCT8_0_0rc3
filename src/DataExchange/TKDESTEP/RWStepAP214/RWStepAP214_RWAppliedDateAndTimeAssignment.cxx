@@ -13,17 +13,17 @@
 
 // create  s4134 from CC2 to DIS
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWAppliedDateAndTimeAssignment.pxx"
-#include <StepAP214_AppliedDateAndTimeAssignment.hxx>
-#include <StepAP214_DateAndTimeItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepBasic_DateAndTime.hxx>
-#include <StepBasic_DateTimeRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWAppliedDateAndTimeAssignment.hpp"
+#include <StepAP214_AppliedDateAndTimeAssignment.hpp>
+#include <StepAP214_DateAndTimeItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepBasic_DateAndTime.hpp>
+#include <StepBasic_DateTimeRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepAP214_RWAppliedDateAndTimeAssignment::RWStepAP214_RWAppliedDateAndTimeAssignment() = default;
 

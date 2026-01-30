@@ -14,32 +14,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAlgo.hxx>
-#include <BRepAlgo_FaceRestrictor.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepLib.hxx>
-#include <BRepOffsetAPI_MakeOffset.hxx>
-#include <BRepTopAdaptor_FClass2d.hxx>
-#include <Extrema_ExtPS.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <StdFail_NotDone.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Wire.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Surface.hpp>
+#include <BRepAlgo.hpp>
+#include <BRepAlgo_FaceRestrictor.hpp>
+#include <BRepBuilderAPI_MakeFace.hpp>
+#include <BRepLib.hpp>
+#include <BRepOffsetAPI_MakeOffset.hpp>
+#include <BRepTopAdaptor_FClass2d.hpp>
+#include <Extrema_ExtPS.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <StdFail_NotDone.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Wire.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <BRepTools.hxx>
+  #include <BRepTools.hpp>
 static bool AffichSpine = false;
 #endif
 

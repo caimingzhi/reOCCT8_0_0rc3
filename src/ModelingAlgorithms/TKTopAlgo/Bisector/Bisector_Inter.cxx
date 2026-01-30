@@ -16,25 +16,25 @@
 
 //  Modified by skv - Mon May  5 15:06:39 2003 OCC616
 
-#include <Bisector_Bisec.hxx>
-#include <Bisector_BisecAna.hxx>
-#include <Bisector_BisecCC.hxx>
-#include <Bisector_BisecPC.hxx>
-#include <Bisector_Curve.hxx>
-#include <Bisector_FunctionInter.hxx>
-#include <Bisector_Inter.hxx>
-#include <ElCLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <IntRes2d_Domain.hxx>
-#include <IntRes2d_Intersection.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_Transition.hxx>
-#include <math_BissecNewton.hxx>
-#include <Precision.hxx>
+#include <Bisector_Bisec.hpp>
+#include <Bisector_BisecAna.hpp>
+#include <Bisector_BisecCC.hpp>
+#include <Bisector_BisecPC.hpp>
+#include <Bisector_Curve.hpp>
+#include <Bisector_FunctionInter.hpp>
+#include <Bisector_Inter.hpp>
+#include <ElCLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <IntRes2d_Domain.hpp>
+#include <IntRes2d_Intersection.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_Transition.hpp>
+#include <math_BissecNewton.hpp>
+#include <Precision.hpp>
 
 #ifdef OCCT_DEBUG
 #endif

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Units_UnitsLexicon.hxx>
+#include <Units_UnitsLexicon.hpp>
 
-#include <OSD_OpenFile.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Units.hxx>
-#include <Units_Token.hxx>
-#include <Units_UnitsDictionary.hxx>
+#include <OSD_OpenFile.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Units.hpp>
+#include <Units_Token.hpp>
+#include <Units_UnitsDictionary.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_UnitsLexicon, Units_Lexicon)
 

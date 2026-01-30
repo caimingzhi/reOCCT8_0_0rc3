@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ElCLib.hxx>
-#include <GC_MakeArcOfHyperbola.hxx>
-#include <Geom_Hyperbola.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <gp_Hypr.hxx>
-#include <gp_Pnt.hxx>
-#include <StdFail_NotDone.hxx>
+#include <ElCLib.hpp>
+#include <GC_MakeArcOfHyperbola.hpp>
+#include <Geom_Hyperbola.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <gp_Hypr.hpp>
+#include <gp_Pnt.hpp>
+#include <StdFail_NotDone.hpp>
 
 GC_MakeArcOfHyperbola::GC_MakeArcOfHyperbola(const gp_Hypr& Hypr,
                                              const gp_Pnt&  P1,

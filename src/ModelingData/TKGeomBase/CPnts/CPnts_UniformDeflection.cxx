@@ -38,14 +38,14 @@
 //   each iteration calculates at maximum 3 points
 //-------------------------------------------------------------------------
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <CPnts_UniformDeflection.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <CPnts_UniformDeflection.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <StdFail_NotDone.hpp>
 
 static inline void D03d(void* const C, const double U, gp_Pnt& P)
 {

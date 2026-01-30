@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_CartesianPoint.hxx>
-#include <Interface_Check.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_TransferFailure.hxx>
-#include <Transfer_VoidBinder.hxx>
+#include <Geom2d_CartesianPoint.hpp>
+#include <Interface_Check.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_TransferFailure.hpp>
+#include <Transfer_VoidBinder.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_Binder, Standard_Transient)
 

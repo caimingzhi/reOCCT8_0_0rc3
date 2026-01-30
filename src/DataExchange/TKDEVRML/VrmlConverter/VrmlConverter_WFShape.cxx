@@ -11,23 +11,23 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_Box.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <StdPrs_ShapeTool.hxx>
-#include <TopoDS_Shape.hxx>
-#include <Vrml_Coordinate3.hxx>
-#include <Vrml_Material.hxx>
-#include <Vrml_PointSet.hxx>
-#include <Vrml_Separator.hxx>
-#include <VrmlConverter_Curve.hxx>
-#include <VrmlConverter_Drawer.hxx>
-#include <VrmlConverter_IsoAspect.hxx>
-#include <VrmlConverter_LineAspect.hxx>
-#include <VrmlConverter_PointAspect.hxx>
-#include <VrmlConverter_WFRestrictedFace.hxx>
-#include <VrmlConverter_WFShape.hxx>
+#include <Bnd_Box.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <StdPrs_ShapeTool.hpp>
+#include <TopoDS_Shape.hpp>
+#include <Vrml_Coordinate3.hpp>
+#include <Vrml_Material.hpp>
+#include <Vrml_PointSet.hpp>
+#include <Vrml_Separator.hpp>
+#include <VrmlConverter_Curve.hpp>
+#include <VrmlConverter_Drawer.hpp>
+#include <VrmlConverter_IsoAspect.hpp>
+#include <VrmlConverter_LineAspect.hpp>
+#include <VrmlConverter_PointAspect.hpp>
+#include <VrmlConverter_WFRestrictedFace.hpp>
+#include <VrmlConverter_WFShape.hpp>
 
 //=================================================================================================
 

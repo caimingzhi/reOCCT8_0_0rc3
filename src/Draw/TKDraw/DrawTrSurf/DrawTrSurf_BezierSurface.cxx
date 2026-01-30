@@ -12,19 +12,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DrawTrSurf_BezierSurface.hxx>
+#include <DrawTrSurf_BezierSurface.hpp>
 
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <DrawTrSurf.hxx>
-#include <DrawTrSurf_BezierCurve.hxx>
-#include <DrawTrSurf_Params.hxx>
-#include <Geom_BezierSurface.hxx>
-#include <GeomTools_SurfaceSet.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Array1.hxx>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <DrawTrSurf.hpp>
+#include <DrawTrSurf_BezierCurve.hpp>
+#include <DrawTrSurf_Params.hpp>
+#include <Geom_BezierSurface.hpp>
+#include <GeomTools_SurfaceSet.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_BezierSurface, DrawTrSurf_Surface)
 

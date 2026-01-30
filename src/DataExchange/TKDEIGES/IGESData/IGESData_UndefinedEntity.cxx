@@ -11,22 +11,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESData_ColorEntity.hxx>
-#include <IGESData_IGESReaderData.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESData_LabelDisplayEntity.hxx>
-#include <IGESData_LevelListEntity.hxx>
-#include <IGESData_LineFontEntity.hxx>
-#include <IGESData_ParamReader.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <IGESData_UndefinedEntity.hxx>
-#include <IGESData_ViewKindEntity.hxx>
-#include <Interface_Check.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Interface_UndefinedContent.hxx>
-#include <Message_Msg.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESData_ColorEntity.hpp>
+#include <IGESData_IGESReaderData.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESData_LabelDisplayEntity.hpp>
+#include <IGESData_LevelListEntity.hpp>
+#include <IGESData_LineFontEntity.hpp>
+#include <IGESData_ParamReader.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <IGESData_UndefinedEntity.hpp>
+#include <IGESData_ViewKindEntity.hpp>
+#include <Interface_Check.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Interface_UndefinedContent.hpp>
+#include <Message_Msg.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_UndefinedEntity, IGESData_IGESEntity)
 

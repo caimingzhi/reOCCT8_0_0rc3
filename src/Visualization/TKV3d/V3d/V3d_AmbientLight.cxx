@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <V3d_AmbientLight.hxx>
+#include <V3d_AmbientLight.hpp>
 
-#include <V3d_Viewer.hxx>
+#include <V3d_Viewer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_AmbientLight, Graphic3d_CLight)
 

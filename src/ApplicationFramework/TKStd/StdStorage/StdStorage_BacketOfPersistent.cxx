@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdStorage_BacketOfPersistent.hxx>
-#include <StdObjMgt_Persistent.hxx>
+#include <StdStorage_BacketOfPersistent.hpp>
+#include <StdObjMgt_Persistent.hpp>
 
 StdStorage_Bucket::~StdStorage_Bucket()
 {

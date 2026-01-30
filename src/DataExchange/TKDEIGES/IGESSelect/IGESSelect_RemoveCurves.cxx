@@ -11,20 +11,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextModif.hxx>
-#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hxx>
-#include <IGESData_IGESEntity.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESGeom_BoundedSurface.hxx>
-#include <IGESGeom_TrimmedSurface.hxx>
-#include <IGESSelect_RemoveCurves.hxx>
-#include <Interface_CopyTool.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <Standard_Integer.hxx>
+#include <IFSelect_ContextModif.hpp>
+#include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
+#include <IGESData_IGESEntity.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESGeom_BoundedSurface.hpp>
+#include <IGESGeom_TrimmedSurface.hpp>
+#include <IGESSelect_RemoveCurves.hpp>
+#include <Interface_CopyTool.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <Standard_Integer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_RemoveCurves, IGESSelect_ModelModifier)
 

@@ -13,20 +13,20 @@
 
 #include <gtest/gtest.h>
 
-#include <CSLib.hxx>
-#include <CSLib_Class2d.hxx>
-#include <CSLib_DerivativeStatus.hxx>
-#include <CSLib_NormalPolyDef.hxx>
-#include <CSLib_NormalStatus.hxx>
+#include <CSLib.hpp>
+#include <CSLib_Class2d.hpp>
+#include <CSLib_DerivativeStatus.hpp>
+#include <CSLib_NormalPolyDef.hpp>
+#include <CSLib_NormalStatus.hpp>
 
-#include <gp.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Precision.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_Sequence.hxx>
+#include <gp.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Precision.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_Sequence.hpp>
 
 #include <cmath>
 

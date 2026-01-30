@@ -18,8 +18,8 @@
 // Version	Date		Purpose
 //		0.0	Oct 10 1997	Creation
 
-#include <TDF_DefaultDeltaOnRemoval.hxx>
-#include <TDF_Label.hxx>
+#include <TDF_DefaultDeltaOnRemoval.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DefaultDeltaOnRemoval, TDF_DeltaOnRemoval)
 

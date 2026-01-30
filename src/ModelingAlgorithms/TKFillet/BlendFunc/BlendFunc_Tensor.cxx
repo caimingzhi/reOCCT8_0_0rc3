@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BlendFunc_Tensor.hxx>
-#include <math_Matrix.hxx>
-#include <math_Vector.hxx>
+#include <BlendFunc_Tensor.hpp>
+#include <math_Matrix.hpp>
+#include <math_Vector.hpp>
 
 BlendFunc_Tensor::BlendFunc_Tensor(const int NbRow, const int NbCol, const int NbMat)
     : Tab(1, NbRow * NbMat * NbCol),

@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Category.hxx>
-#include <Interface_GeneralModule.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <Interface_ShareTool.hxx>
-#include <Standard_Transient.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_Vector.hxx>
+#include <Interface_Category.hpp>
+#include <Interface_GeneralModule.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <Interface_ShareTool.hpp>
+#include <Standard_Transient.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <NCollection_Vector.hpp>
 
 #include <mutex>
 

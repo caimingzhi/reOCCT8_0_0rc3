@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurve_IntConicConic_Tool.hxx>
-#include <gp.hxx>
+#include <IntCurve_IntConicConic_Tool.hpp>
+#include <gp.hpp>
 
 #define TOLERANCE_ANGULAIRE 0.00000001
 

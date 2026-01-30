@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_LengthMeasureWithUnit.hxx>
-#include <StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_LengthMeasureWithUnit.hpp>
+#include <StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ReprItemAndLengthMeasureWithUnitAndQRI,
                            StepRepr_ReprItemAndMeasureWithUnitAndQRI)

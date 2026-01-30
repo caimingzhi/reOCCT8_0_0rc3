@@ -12,10 +12,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Dir2d.hxx>
-#include <gp_Pnt.hxx>
-#include <IntSurf_PathPoint.hxx>
-#include <StdFail_UndefinedDerivative.hxx>
+#include <gp_Dir2d.hpp>
+#include <gp_Pnt.hpp>
+#include <IntSurf_PathPoint.hpp>
+#include <StdFail_UndefinedDerivative.hpp>
 
 IntSurf_PathPoint::IntSurf_PathPoint()
     : ispass(true),

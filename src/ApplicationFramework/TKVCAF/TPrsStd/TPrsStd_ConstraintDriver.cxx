@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <PrsDim_Relation.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_Real.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Position.hxx>
-#include <TDF_Label.hxx>
-#include <TPrsStd_ConstraintDriver.hxx>
-#include <TPrsStd_ConstraintTools.hxx>
+#include <AIS_InteractiveContext.hpp>
+#include <AIS_InteractiveObject.hpp>
+#include <PrsDim_Relation.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_Real.hpp>
+#include <TDataXtd_Constraint.hpp>
+#include <TDataXtd_Position.hpp>
+#include <TDF_Label.hpp>
+#include <TPrsStd_ConstraintDriver.hpp>
+#include <TPrsStd_ConstraintTools.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_ConstraintDriver, TPrsStd_Driver)
 

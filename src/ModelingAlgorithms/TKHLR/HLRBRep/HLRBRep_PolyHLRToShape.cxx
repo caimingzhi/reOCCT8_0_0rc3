@@ -16,17 +16,17 @@
 
 // Modified by cma, Fri Nov 10 17:36:13 1995
 
-#include <BRep_Builder.hxx>
-#include <BRepLib_MakeEdge2d.hxx>
-#include <HLRAlgo_EdgeIterator.hxx>
-#include <HLRAlgo_EdgeStatus.hxx>
-#include <HLRBRep_PolyAlgo.hxx>
-#include <HLRBRep_PolyHLRToShape.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Builder.hpp>
+#include <BRepLib_MakeEdge2d.hpp>
+#include <HLRAlgo_EdgeIterator.hpp>
+#include <HLRAlgo_EdgeStatus.hpp>
+#include <HLRBRep_PolyAlgo.hpp>
+#include <HLRBRep_PolyHLRToShape.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

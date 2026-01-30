@@ -13,40 +13,40 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <XCAFDoc_ShapeTool.hxx>
+#include <XCAFDoc_ShapeTool.hpp>
 
-#include <BRep_Builder.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TCollection_ExtendedString.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDataStd_TreeNode.hxx>
-#include <TDataStd_UAttribute.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_ChildIDIterator.hxx>
-#include <TDF_ChildIterator.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Map.hxx>
-#include <TDF_RelocationTable.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_Tool.hxx>
-#include <TopLoc_Location.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <NCollection_List.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_GraphNode.hxx>
-#include <XCAFDoc_Location.hxx>
-#include <XCAFDoc_ShapeMapTool.hxx>
-#include <TopLoc_Datum3D.hxx>
+#include <BRep_Builder.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TCollection_ExtendedString.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDataStd_Name.hpp>
+#include <TDataStd_TreeNode.hpp>
+#include <TDataStd_UAttribute.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_ChildIDIterator.hpp>
+#include <TDF_ChildIterator.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Map.hpp>
+#include <TDF_RelocationTable.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_Tool.hpp>
+#include <TopLoc_Location.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <NCollection_List.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_GraphNode.hpp>
+#include <XCAFDoc_Location.hpp>
+#include <XCAFDoc_ShapeMapTool.hpp>
+#include <TopLoc_Datum3D.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_ShapeTool, TDataStd_GenericEmpty, "xcaf", "ShapeTool")
 

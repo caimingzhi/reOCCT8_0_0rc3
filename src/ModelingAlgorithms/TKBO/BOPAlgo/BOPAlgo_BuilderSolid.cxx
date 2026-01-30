@@ -15,35 +15,35 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 //
-#include <BOPAlgo_BuilderSolid.hxx>
-#include <BOPAlgo_ShellSplitter.hxx>
-#include <BOPAlgo_Alerts.hxx>
-#include <BOPAlgo_Tools.hxx>
-#include <BOPTools_AlgoTools.hxx>
-#include <BOPTools_BoxTree.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <Bnd_Tools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBndLib.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <IntTools_Context.hxx>
-#include <NCollection_DataMap.hxx>
-#include <NCollection_List.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedDataMap.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
+#include <BOPAlgo_BuilderSolid.hpp>
+#include <BOPAlgo_ShellSplitter.hpp>
+#include <BOPAlgo_Alerts.hpp>
+#include <BOPAlgo_Tools.hpp>
+#include <BOPTools_AlgoTools.hpp>
+#include <BOPTools_BoxTree.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <Bnd_Tools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBndLib.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <IntTools_Context.hpp>
+#include <NCollection_DataMap.hpp>
+#include <NCollection_List.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedDataMap.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
 
 //
 static bool IsGrowthShell(const TopoDS_Shape&,

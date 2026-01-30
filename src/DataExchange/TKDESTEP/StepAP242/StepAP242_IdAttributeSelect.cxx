@@ -13,19 +13,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepAP242_IdAttributeSelect.hxx>
-#include <MoniTool_Macros.hxx>
-#include <StepBasic_Action.hxx>
-#include <StepBasic_Address.hxx>
-#include <StepBasic_ApplicationContext.hxx>
-#include <StepBasic_Group.hxx>
-#include <StepBasic_ProductCategory.hxx>
-#include <StepDimTol_GeometricTolerance.hxx>
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_Representation.hxx>
-#include <StepRepr_ShapeAspect.hxx>
-#include <StepRepr_ShapeAspectRelationship.hxx>
-#include <StepShape_DimensionalSize.hxx>
+#include <StepAP242_IdAttributeSelect.hpp>
+#include <MoniTool_Macros.hpp>
+#include <StepBasic_Action.hpp>
+#include <StepBasic_Address.hpp>
+#include <StepBasic_ApplicationContext.hpp>
+#include <StepBasic_Group.hpp>
+#include <StepBasic_ProductCategory.hpp>
+#include <StepDimTol_GeometricTolerance.hpp>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_Representation.hpp>
+#include <StepRepr_ShapeAspect.hpp>
+#include <StepRepr_ShapeAspectRelationship.hpp>
+#include <StepShape_DimensionalSize.hpp>
 
 //=================================================================================================
 

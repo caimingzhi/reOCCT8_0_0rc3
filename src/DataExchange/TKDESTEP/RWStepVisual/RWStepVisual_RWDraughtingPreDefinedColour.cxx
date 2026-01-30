@@ -13,11 +13,11 @@
 
 //: S4134: abv 03.03.99: implementation of DraughtingPreDefinedColour modified
 
-#include "RWStepVisual_RWDraughtingPreDefinedColour.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepVisual_DraughtingPreDefinedColour.hxx>
-#include <StepVisual_PreDefinedItem.hxx>
+#include "RWStepVisual_RWDraughtingPreDefinedColour.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepVisual_DraughtingPreDefinedColour.hpp>
+#include <StepVisual_PreDefinedItem.hpp>
 
 RWStepVisual_RWDraughtingPreDefinedColour::RWStepVisual_RWDraughtingPreDefinedColour() = default;
 

@@ -14,11 +14,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_KinematicTopologyRepresentationSelect.hxx>
+#include <StepKinematics_KinematicTopologyRepresentationSelect.hpp>
 
-#include <StepKinematics_KinematicTopologyDirectedStructure.hxx>
-#include <StepKinematics_KinematicTopologyNetworkStructure.hxx>
-#include <StepKinematics_KinematicTopologyStructure.hxx>
+#include <StepKinematics_KinematicTopologyDirectedStructure.hpp>
+#include <StepKinematics_KinematicTopologyNetworkStructure.hpp>
+#include <StepKinematics_KinematicTopologyStructure.hpp>
 
 //=================================================================================================
 

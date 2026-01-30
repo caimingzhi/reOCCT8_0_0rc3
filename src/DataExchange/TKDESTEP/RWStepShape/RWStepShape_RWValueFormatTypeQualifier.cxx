@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepShape_RWValueFormatTypeQualifier.pxx"
+#include "RWStepShape_RWValueFormatTypeQualifier.hpp"
 
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepShape_ValueFormatTypeQualifier.hxx>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepShape_ValueFormatTypeQualifier.hpp>
 
 //=================================================================================================
 

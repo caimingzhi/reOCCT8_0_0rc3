@@ -11,16 +11,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TNaming_Tool.hxx>
+#include <TNaming_Tool.hpp>
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_Label.hxx>
-#include <TNaming_Builder.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TNaming_UsedShapes.hxx>
-#include <TopoDS_Shape.hxx>
+#include <BRepPrimAPI_MakeBox.hpp>
+#include <BRepPrimAPI_MakeSphere.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_Label.hpp>
+#include <TNaming_Builder.hpp>
+#include <TNaming_NamedShape.hpp>
+#include <TNaming_UsedShapes.hpp>
+#include <TopoDS_Shape.hpp>
 
 #include <gtest/gtest.h>
 

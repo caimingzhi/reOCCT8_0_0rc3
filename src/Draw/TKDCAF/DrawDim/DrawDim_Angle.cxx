@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRep_Tool.hxx>
-#include <Draw_Display.hxx>
-#include <DrawDim.hxx>
-#include <DrawDim_Angle.hxx>
-#include <ElCLib.hxx>
-#include <ElSLib.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Lin.hxx>
-#include <gp_Pln.hxx>
-#include <gp_Pnt.hxx>
-#include <IntAna_QuadQuadGeo.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Vertex.hxx>
+#include <BRep_Tool.hpp>
+#include <Draw_Display.hpp>
+#include <DrawDim.hpp>
+#include <DrawDim_Angle.hpp>
+#include <ElCLib.hpp>
+#include <ElSLib.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Pln.hpp>
+#include <gp_Pnt.hpp>
+#include <IntAna_QuadQuadGeo.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Vertex.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Angle, DrawDim_Dimension)
 

@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <Adaptor3d_IsoCurve.hxx>
-#include <Draw_Display.hxx>
-#include <DrawTrSurf_Drawable.hxx>
-#include <GCPnts_UniformDeflection.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <Draw_Display.hpp>
+#include <DrawTrSurf_Drawable.hpp>
+#include <GCPnts_UniformDeflection.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_Array1.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Drawable, Draw_Drawable3D)
 

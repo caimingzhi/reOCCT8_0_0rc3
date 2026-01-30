@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <FEmTool_ElementaryCriterion.hxx>
-#include <math_Matrix.hxx>
-#include <Standard_Type.hxx>
+#include <FEmTool_ElementaryCriterion.hpp>
+#include <math_Matrix.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_ElementaryCriterion, Standard_Transient)
 

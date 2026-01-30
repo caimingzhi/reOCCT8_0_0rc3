@@ -13,15 +13,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_RealList.hxx>
+#include <TDataStd_RealList.hpp>
 
-#include <Standard_Dump.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_Type.hxx>
-#include <NCollection_List.hxx>
-#include <TDF_Attribute.hxx>
-#include <TDF_Label.hxx>
-#include <TDF_RelocationTable.hxx>
+#include <Standard_Dump.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_Type.hpp>
+#include <NCollection_List.hpp>
+#include <TDF_Attribute.hpp>
+#include <TDF_Label.hpp>
+#include <TDF_RelocationTable.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_RealList, TDF_Attribute)
 

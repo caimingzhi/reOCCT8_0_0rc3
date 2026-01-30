@@ -13,19 +13,19 @@
 
 #include <gtest/gtest.h>
 
-#include <HelixBRep_BuilderHelix.hxx>
+#include <HelixBRep_BuilderHelix.hpp>
 
-#include <BRep_Tool.hxx>
-#include <BRepGProp.hxx>
-#include <BRepCheck_Analyzer.hxx>
-#include <gp_Ax3.hxx>
-#include <GProp_GProps.hxx>
-#include <NCollection_Array1.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <Standard_ConstructionError.hxx>
+#include <BRep_Tool.hpp>
+#include <BRepGProp.hpp>
+#include <BRepCheck_Analyzer.hpp>
+#include <gp_Ax3.hpp>
+#include <GProp_GProps.hpp>
+#include <NCollection_Array1.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <Standard_ConstructionError.hpp>
 
 class HelixBRepTest : public ::testing::Test
 {

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_OffsetCurve.hxx>
+#include <GeomGridEval_OffsetCurve.hpp>
 
-#include <Geom_OffsetCurveUtils.pxx>
-#include <GeomGridEval_Curve.hxx>
+#include <Geom_OffsetCurveUtils.hpp>
+#include <GeomGridEval_Curve.hpp>
 
 //==================================================================================================
 

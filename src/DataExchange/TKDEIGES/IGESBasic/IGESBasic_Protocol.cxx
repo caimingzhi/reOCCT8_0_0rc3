@@ -11,26 +11,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESBasic_Protocol.hxx>
+#include <IGESBasic_Protocol.hpp>
 
-#include <IGESBasic_AssocGroupType.hxx>
-#include <IGESBasic_ExternalRefFile.hxx>
-#include <IGESBasic_ExternalRefFileIndex.hxx>
-#include <IGESBasic_ExternalRefFileName.hxx>
-#include <IGESBasic_ExternalRefLibName.hxx>
-#include <IGESBasic_ExternalRefName.hxx>
-#include <IGESBasic_ExternalReferenceFile.hxx>
-#include <IGESBasic_GroupWithoutBackP.hxx>
-#include <IGESBasic_Hierarchy.hxx>
-#include <IGESBasic_Name.hxx>
-#include <IGESBasic_OrderedGroup.hxx>
-#include <IGESBasic_OrderedGroupWithoutBackP.hxx>
-#include <IGESBasic_SingleParent.hxx>
-#include <IGESBasic_SingularSubfigure.hxx>
-#include <IGESBasic_SubfigureDef.hxx>
-#include <IGESData.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESBasic_AssocGroupType.hpp>
+#include <IGESBasic_ExternalRefFile.hpp>
+#include <IGESBasic_ExternalRefFileIndex.hpp>
+#include <IGESBasic_ExternalRefFileName.hpp>
+#include <IGESBasic_ExternalRefLibName.hpp>
+#include <IGESBasic_ExternalRefName.hpp>
+#include <IGESBasic_ExternalReferenceFile.hpp>
+#include <IGESBasic_GroupWithoutBackP.hpp>
+#include <IGESBasic_Hierarchy.hpp>
+#include <IGESBasic_Name.hpp>
+#include <IGESBasic_OrderedGroup.hpp>
+#include <IGESBasic_OrderedGroupWithoutBackP.hpp>
+#include <IGESBasic_SingleParent.hpp>
+#include <IGESBasic_SingularSubfigure.hpp>
+#include <IGESBasic_SubfigureDef.hpp>
+#include <IGESData.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESBasic_Protocol, IGESData_Protocol)
 

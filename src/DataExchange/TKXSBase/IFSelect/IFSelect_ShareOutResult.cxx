@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFGraph_AllShared.hxx>
-#include <IFSelect_PacketList.hxx>
-#include <IFSelect_ShareOut.hxx>
-#include <IFSelect_ShareOutResult.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Interface_GraphContent.hxx>
-#include <Interface_InterfaceModel.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFGraph_AllShared.hpp>
+#include <IFSelect_PacketList.hpp>
+#include <IFSelect_ShareOut.hpp>
+#include <IFSelect_ShareOutResult.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Interface_GraphContent.hpp>
+#include <Interface_InterfaceModel.hpp>
+#include <TCollection_AsciiString.hpp>
 
 IFSelect_ShareOutResult::IFSelect_ShareOutResult(
   const occ::handle<IFSelect_ShareOut>&        sho,

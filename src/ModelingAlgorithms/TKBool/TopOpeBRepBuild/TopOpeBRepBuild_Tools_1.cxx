@@ -13,33 +13,33 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <Adaptor3d_Curve.hxx>
-#include <BRep_GCurve.hxx>
-#include <BRep_TEdge.hxx>
-#include <BRepCheck_Wire.hxx>
-#include <Extrema_LocateExtPC.hxx>
-#include <Geom2dAdaptor.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Surface.hxx>
-#include <Geom_TrimmedCurve.hxx>
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomProjLib.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <ProjLib_ProjectedCurve.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopLoc_Location.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_Tools.hxx>
-#include <TopOpeBRepTool_ShapeClassifier.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <Adaptor3d_Curve.hpp>
+#include <BRep_GCurve.hpp>
+#include <BRep_TEdge.hpp>
+#include <BRepCheck_Wire.hpp>
+#include <Extrema_LocateExtPC.hpp>
+#include <Geom2dAdaptor.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Surface.hpp>
+#include <Geom_TrimmedCurve.hpp>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomProjLib.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <ProjLib_ProjectedCurve.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopLoc_Location.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_Tools.hpp>
+#include <TopOpeBRepTool_ShapeClassifier.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 static void CheckEdge(const TopoDS_Edge& E, const double aMaxTol);
 static void CorrectEdgeTolerance(const TopoDS_Edge& myShape,

@@ -3,17 +3,17 @@ set(OCCT_TopLoc_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_TopLoc_FILES
   TopLoc_Datum3D.cxx
-  TopLoc_Datum3D.hxx
+  TopLoc_Datum3D.hpp
 
   TopLoc_ItemLocation.cxx
-  TopLoc_ItemLocation.hxx
+  TopLoc_ItemLocation.hpp
   TopLoc_Location.cxx
-  TopLoc_Location.hxx
-  TopLoc_Location.lxx
+  TopLoc_Location.hpp
+  TopLoc_Location_1.hpp
 
   TopLoc_SListNodeOfItemLocation.cxx
-  TopLoc_SListNodeOfItemLocation.hxx
-  TopLoc_SListNodeOfItemLocation.lxx
+  TopLoc_SListNodeOfItemLocation.hpp
+  TopLoc_SListNodeOfItemLocation_1.hpp
   TopLoc_SListOfItemLocation.cxx
-  TopLoc_SListOfItemLocation.hxx
+  TopLoc_SListOfItemLocation.hpp
 )

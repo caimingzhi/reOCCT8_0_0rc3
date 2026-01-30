@@ -15,9 +15,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepRepr_PropertyDefinition.hxx>
-#include <StepRepr_PropertyDefinitionRelationship.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepRepr_PropertyDefinition.hpp>
+#include <StepRepr_PropertyDefinitionRelationship.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_PropertyDefinitionRelationship, Standard_Transient)
 

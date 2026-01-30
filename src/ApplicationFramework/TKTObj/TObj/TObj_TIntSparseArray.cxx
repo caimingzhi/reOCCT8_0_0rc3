@@ -15,11 +15,11 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <TObj_TIntSparseArray.hxx>
-#include <Standard_GUID.hxx>
-#include <Standard_ImmutableObject.hxx>
-#include <TDF_Data.hxx>
-#include <TDF_DeltaOnModification.hxx>
+#include <TObj_TIntSparseArray.hpp>
+#include <Standard_GUID.hpp>
+#include <Standard_ImmutableObject.hpp>
+#include <TDF_Data.hpp>
+#include <TDF_DeltaOnModification.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TIntSparseArray, TDF_Attribute)
 

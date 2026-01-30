@@ -11,13 +11,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_GeometricRepresentationItem.hxx>
-#include <StepGeom_Point.hxx>
-#include <StepGeom_Surface.hxx>
-#include <StepShape_GeometricSetSelect.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_GeometricRepresentationItem.hpp>
+#include <StepGeom_Point.hpp>
+#include <StepGeom_Surface.hpp>
+#include <StepShape_GeometricSetSelect.hpp>
 
 StepShape_GeometricSetSelect::StepShape_GeometricSetSelect() = default;
 

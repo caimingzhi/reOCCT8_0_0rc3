@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepGeom_RWOffsetCurve3d.pxx"
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepGeom_Direction.hxx>
-#include <StepGeom_OffsetCurve3d.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepGeom_RWOffsetCurve3d.hpp"
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepGeom_Direction.hpp>
+#include <StepGeom_OffsetCurve3d.hpp>
 
 RWStepGeom_RWOffsetCurve3d::RWStepGeom_RWOffsetCurve3d() = default;
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Image_DDSParser.hxx>
+#include <Image_DDSParser.hpp>
 
-#include <Image_PixMap.hxx>
-#include <Image_SupportedFormats.hxx>
-#include <Message.hxx>
-#include <OSD_FileSystem.hxx>
+#include <Image_PixMap.hpp>
+#include <Image_SupportedFormats.hpp>
+#include <Message.hpp>
+#include <OSD_FileSystem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_CompressedPixMap, Standard_Transient)
 

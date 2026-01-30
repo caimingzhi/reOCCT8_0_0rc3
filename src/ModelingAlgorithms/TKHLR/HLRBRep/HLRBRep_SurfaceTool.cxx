@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_SurfaceTool.hxx>
+#include <HLRBRep_SurfaceTool.hpp>
 
-#include <HLRBRep_Surface.hxx>
+#include <HLRBRep_Surface.hpp>
 
 //=================================================================================================
 

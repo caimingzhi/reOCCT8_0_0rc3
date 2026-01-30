@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_UnconstrainedPairValue.hxx>
+#include <StepKinematics_UnconstrainedPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_UnconstrainedPairValue, StepKinematics_PairValue)
 

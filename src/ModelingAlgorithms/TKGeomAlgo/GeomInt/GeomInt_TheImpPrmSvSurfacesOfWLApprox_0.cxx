@@ -14,31 +14,31 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_TheImpPrmSvSurfacesOfWLApprox.hxx>
+#include <GeomInt_TheImpPrmSvSurfacesOfWLApprox.hpp>
 
-#include <Adaptor3d_Surface.hxx>
-#include <Adaptor3d_HSurfaceTool.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <IntSurf_QuadricTool.hxx>
-#include <IntPatch_WLine.hxx>
-#include <GeomInt_TheZerImpFuncOfTheImpPrmSvSurfacesOfWLApprox.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
+#include <Adaptor3d_Surface.hpp>
+#include <Adaptor3d_HSurfaceTool.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <IntSurf_QuadricTool.hpp>
+#include <IntPatch_WLine.hpp>
+#include <GeomInt_TheZerImpFuncOfTheImpPrmSvSurfacesOfWLApprox.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
 
 #define ThePSurface occ::handle<Adaptor3d_Surface>
-#define ThePSurface_hxx <Adaptor3d_Surface.hxx>
+#define ThePSurface_hxx <Adaptor3d_Surface.hpp>
 #define ThePSurfaceTool Adaptor3d_HSurfaceTool
-#define ThePSurfaceTool_hxx <Adaptor3d_HSurfaceTool.hxx>
+#define ThePSurfaceTool_hxx <Adaptor3d_HSurfaceTool.hpp>
 #define TheISurface IntSurf_Quadric
-#define TheISurface_hxx <IntSurf_Quadric.hxx>
+#define TheISurface_hxx <IntSurf_Quadric.hpp>
 #define TheISurfaceTool IntSurf_QuadricTool
-#define TheISurfaceTool_hxx <IntSurf_QuadricTool.hxx>
+#define TheISurfaceTool_hxx <IntSurf_QuadricTool.hpp>
 #define Handle_TheLine occ::handle<IntPatch_WLine>
 #define TheLine IntPatch_WLine
-#define TheLine_hxx <IntPatch_WLine.hxx>
+#define TheLine_hxx <IntPatch_WLine.hpp>
 #define ApproxInt_TheZerImpFunc GeomInt_TheZerImpFuncOfTheImpPrmSvSurfacesOfWLApprox
-#define ApproxInt_TheZerImpFunc_hxx <GeomInt_TheZerImpFuncOfTheImpPrmSvSurfacesOfWLApprox.hxx>
+#define ApproxInt_TheZerImpFunc_hxx <GeomInt_TheZerImpFuncOfTheImpPrmSvSurfacesOfWLApprox.hpp>
 #define ApproxInt_ImpPrmSvSurfaces GeomInt_TheImpPrmSvSurfacesOfWLApprox
-#define ApproxInt_ImpPrmSvSurfaces_hxx <GeomInt_TheImpPrmSvSurfacesOfWLApprox.hxx>
-#include <ApproxInt_ImpPrmSvSurfaces.gxx>
+#define ApproxInt_ImpPrmSvSurfaces_hxx <GeomInt_TheImpPrmSvSurfacesOfWLApprox.hpp>
+#include <ApproxInt_ImpPrmSvSurfaces.hpp>

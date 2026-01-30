@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepBlend_Line.hxx>
-#include <Standard_Type.hxx>
+#include <BRepBlend_Line.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBlend_Line, Standard_Transient)
 

@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomGridEval_BezierCurve.hxx>
+#include <GeomGridEval_BezierCurve.hpp>
 
-#include <BSplCLib.hxx>
-#include <BSplCLib_Cache.hxx>
-#include <gp_Pnt.hxx>
+#include <BSplCLib.hpp>
+#include <BSplCLib_Cache.hpp>
+#include <gp_Pnt.hpp>
 
 namespace
 {

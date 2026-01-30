@@ -12,16 +12,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BSplCLib.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_NotImplemented.hxx>
+#include <BSplCLib.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_NotImplemented.hpp>
 
 // BSpline Curve in 2d space
 // **************************
 
 // Include the template implementation header
-#include <BSplCLib_CurveComputation.pxx>
+#include <BSplCLib_CurveComputation.hpp>
 
 // Explicit template instantiations for 2D types
 // This replaces the old macro-based approach with modern C++ templates

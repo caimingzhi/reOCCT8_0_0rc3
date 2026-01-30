@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Conic.hxx>
+#include <Geom2d_Conic.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_Conic, Geom2d_Curve)
 

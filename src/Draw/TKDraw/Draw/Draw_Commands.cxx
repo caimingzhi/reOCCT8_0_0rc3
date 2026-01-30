@@ -14,8 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw.hxx>
-#include <Draw_Drawable3D.hxx>
+#include <Draw.hpp>
+#include <Draw_Drawable3D.hpp>
 
 void Draw::Commands(Draw_Interpretor& theCommands)
 {

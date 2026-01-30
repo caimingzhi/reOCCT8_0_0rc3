@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter.hxx>
+#include <IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter.hpp>
 
-#include <Adaptor3d_Curve.hxx>
-#include <IntSurf_Quadric.hxx>
-#include <IntCurveSurface_TheHCurveTool.hxx>
-#include <gp_Vec.hxx>
+#include <Adaptor3d_Curve.hpp>
+#include <IntSurf_Quadric.hpp>
+#include <IntCurveSurface_TheHCurveTool.hpp>
+#include <gp_Vec.hpp>
 
 IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter::
   IntCurveSurface_TheQuadCurvFuncOfTheQuadCurvExactHInter(const IntSurf_Quadric&              Q,

@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hxx>
+#include <StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_AnnotationCurveOccurrenceAndGeomReprItem,
                            StepVisual_AnnotationCurveOccurrence)

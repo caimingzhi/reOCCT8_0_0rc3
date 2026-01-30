@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <CDM_Document.hxx>
-#include <CDM_Reference.hxx>
-#include <CDM_ReferenceIterator.hxx>
+#include <CDM_Document.hpp>
+#include <CDM_Reference.hpp>
+#include <CDM_ReferenceIterator.hpp>
 
 CDM_ReferenceIterator::CDM_ReferenceIterator(const occ::handle<CDM_Document>& aDocument)
     : myIterator(aDocument->myToReferences)

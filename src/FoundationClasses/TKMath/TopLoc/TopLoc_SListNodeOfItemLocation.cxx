@@ -12,7 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopLoc_SListNodeOfItemLocation.hxx>
-#include <TopLoc_SListOfItemLocation.hxx>
+#include <TopLoc_SListNodeOfItemLocation.hpp>
+#include <TopLoc_SListOfItemLocation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TopLoc_SListNodeOfItemLocation, Standard_Transient)

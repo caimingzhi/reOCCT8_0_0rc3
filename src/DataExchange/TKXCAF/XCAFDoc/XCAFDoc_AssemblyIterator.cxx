@@ -12,17 +12,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_NullObject.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <Standard_RangeError.hxx>
-#include <TDF_Label.hxx>
-#include <NCollection_Sequence.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <XCAFDoc.hxx>
-#include <XCAFDoc_AssemblyIterator.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <Standard_NullObject.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <Standard_RangeError.hpp>
+#include <TDF_Label.hpp>
+#include <NCollection_Sequence.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <XCAFDoc.hpp>
+#include <XCAFDoc_AssemblyIterator.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 // =======================================================================
 // function : XCAFDoc_AssemblyIterator constructor

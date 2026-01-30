@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_GenericEmpty.hxx>
-#include <Standard_Dump.hxx>
+#include <TDataStd_GenericEmpty.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_GenericEmpty, TDF_Attribute)
 

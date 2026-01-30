@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_Macros.hxx>
-#include <Standard_Transient.hxx>
-#include <StepVisual_AnnotationText.hxx>
-#include <StepVisual_CompositeText.hxx>
-#include <StepVisual_TextLiteral.hxx>
-#include <StepVisual_TextOrCharacter.hxx>
+#include <MoniTool_Macros.hpp>
+#include <Standard_Transient.hpp>
+#include <StepVisual_AnnotationText.hpp>
+#include <StepVisual_CompositeText.hpp>
+#include <StepVisual_TextLiteral.hpp>
+#include <StepVisual_TextOrCharacter.hpp>
 
 StepVisual_TextOrCharacter::StepVisual_TextOrCharacter() = default;
 

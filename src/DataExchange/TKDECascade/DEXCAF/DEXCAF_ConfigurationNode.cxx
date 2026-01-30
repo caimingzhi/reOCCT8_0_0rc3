@@ -11,11 +11,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEXCAF_ConfigurationNode.hxx>
+#include <DEXCAF_ConfigurationNode.hpp>
 
-#include <DEXCAF_Provider.hxx>
-#include <DE_ConfigurationContext.hxx>
-#include <NCollection_Buffer.hxx>
+#include <DEXCAF_Provider.hpp>
+#include <DE_ConfigurationContext.hpp>
+#include <NCollection_Buffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEXCAF_ConfigurationNode, DE_ConfigurationNode)
 

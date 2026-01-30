@@ -13,11 +13,11 @@
 
 // AdvApp2Var_MathBase.cxx
 #include <cmath>
-#include <AdvApp2Var_SysBase.hxx>
-#include <AdvApp2Var_Data_f2c.hxx>
-#include <AdvApp2Var_MathBase.hxx>
-#include <AdvApp2Var_Data.hxx>
-#include <NCollection_Array1.hxx>
+#include <AdvApp2Var_SysBase.hpp>
+#include <AdvApp2Var_Data_f2c.hpp>
+#include <AdvApp2Var_MathBase.hpp>
+#include <AdvApp2Var_Data.hpp>
+#include <NCollection_Array1.hpp>
 
 // statics
 static int mmchole_(integer*    mxcoef,

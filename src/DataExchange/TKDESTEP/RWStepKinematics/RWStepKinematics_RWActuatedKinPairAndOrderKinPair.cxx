@@ -13,32 +13,32 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWActuatedKinPairAndOrderKinPair.pxx"
+#include "RWStepKinematics_RWActuatedKinPairAndOrderKinPair.hpp"
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_ActuatedKinPairAndOrderKinPair.hxx>
-#include <StepKinematics_ActuatedKinematicPair.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepKinematics_KinematicJoint.hxx>
-#include <StepKinematics_CylindricalPairWithRange.hxx>
-#include <StepKinematics_GearPairWithRange.hxx>
-#include <StepKinematics_LowOrderKinematicPair.hxx>
-#include <StepKinematics_PlanarCurvePairRange.hxx>
-#include <StepKinematics_PlanarPairWithRange.hxx>
-#include <StepKinematics_PointOnPlanarCurvePairWithRange.hxx>
-#include <StepKinematics_PointOnSurfacePairWithRange.hxx>
-#include <StepKinematics_PrismaticPairWithRange.hxx>
-#include <StepKinematics_RackAndPinionPairWithRange.hxx>
-#include <StepKinematics_RevolutePairWithRange.hxx>
-#include <StepKinematics_ScrewPairWithRange.hxx>
-#include <StepKinematics_SphericalPairWithPinAndRange.hxx>
-#include <StepKinematics_SphericalPairWithRange.hxx>
-#include <StepKinematics_SurfacePairWithRange.hxx>
-#include <StepKinematics_UniversalPairWithRange.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_ActuatedKinPairAndOrderKinPair.hpp>
+#include <StepKinematics_ActuatedKinematicPair.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepKinematics_KinematicJoint.hpp>
+#include <StepKinematics_CylindricalPairWithRange.hpp>
+#include <StepKinematics_GearPairWithRange.hpp>
+#include <StepKinematics_LowOrderKinematicPair.hpp>
+#include <StepKinematics_PlanarCurvePairRange.hpp>
+#include <StepKinematics_PlanarPairWithRange.hpp>
+#include <StepKinematics_PointOnPlanarCurvePairWithRange.hpp>
+#include <StepKinematics_PointOnSurfacePairWithRange.hpp>
+#include <StepKinematics_PrismaticPairWithRange.hpp>
+#include <StepKinematics_RackAndPinionPairWithRange.hpp>
+#include <StepKinematics_RevolutePairWithRange.hpp>
+#include <StepKinematics_ScrewPairWithRange.hpp>
+#include <StepKinematics_SphericalPairWithPinAndRange.hpp>
+#include <StepKinematics_SphericalPairWithRange.hpp>
+#include <StepKinematics_SurfacePairWithRange.hpp>
+#include <StepKinematics_UniversalPairWithRange.hpp>
 
 //=================================================================================================
 

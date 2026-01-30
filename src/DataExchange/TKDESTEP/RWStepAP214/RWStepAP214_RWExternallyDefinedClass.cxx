@@ -15,13 +15,13 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.1
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWExternallyDefinedClass.pxx"
-#include <StepAP214_ExternallyDefinedClass.hxx>
-#include <StepBasic_ExternallyDefinedItem.hxx>
-#include <StepBasic_ExternalSource.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWExternallyDefinedClass.hpp"
+#include <StepAP214_ExternallyDefinedClass.hpp>
+#include <StepBasic_ExternallyDefinedItem.hpp>
+#include <StepBasic_ExternalSource.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 //=================================================================================================
 

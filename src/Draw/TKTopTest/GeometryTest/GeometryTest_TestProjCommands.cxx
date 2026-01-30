@@ -13,14 +13,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeometryTest.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
+#include <GeometryTest.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
 
-#include <DBRep_DrawableShape.hxx>
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_Marker3D.hxx>
+#include <DBRep_DrawableShape.hpp>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_Marker3D.hpp>
 
 #include <cstdio>
 #ifdef _WIN32

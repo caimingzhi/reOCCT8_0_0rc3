@@ -11,25 +11,25 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <DEXCAF_Provider.hxx>
+#include <DEXCAF_Provider.hpp>
 
-#include <BinDrivers.hxx>
-#include <BinLDrivers.hxx>
-#include <BinTObjDrivers.hxx>
-#include <BinXCAFDrivers.hxx>
-#include <StdDrivers.hxx>
-#include <StdLDrivers.hxx>
-#include <XmlDrivers.hxx>
-#include <XmlLDrivers.hxx>
-#include <XmlTObjDrivers.hxx>
-#include <XmlXCAFDrivers.hxx>
+#include <BinDrivers.hpp>
+#include <BinLDrivers.hpp>
+#include <BinTObjDrivers.hpp>
+#include <BinXCAFDrivers.hpp>
+#include <StdDrivers.hpp>
+#include <StdLDrivers.hpp>
+#include <XmlDrivers.hpp>
+#include <XmlLDrivers.hpp>
+#include <XmlTObjDrivers.hpp>
+#include <XmlXCAFDrivers.hpp>
 
-#include <BRep_Builder.hxx>
-#include <DEXCAF_ConfigurationNode.hxx>
-#include <Message.hxx>
-#include <TDocStd_Application.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <BRep_Builder.hpp>
+#include <DEXCAF_ConfigurationNode.hpp>
+#include <Message.hpp>
+#include <TDocStd_Application.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(DEXCAF_Provider, DE_Provider)
 

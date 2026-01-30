@@ -14,18 +14,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_IsoCurve.hxx>
-#include <GeomAbs_IsoType.hxx>
-#include <Graphic3d_ArrayOfPolylines.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Precision.hxx>
-#include <Prs3d_IsoAspect.hxx>
-#include <gp_Pnt.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <NCollection_List.hxx>
-#include <StdPrs_Curve.hxx>
-#include <StdPrs_WFSurface.hxx>
+#include <Adaptor3d_IsoCurve.hpp>
+#include <GeomAbs_IsoType.hpp>
+#include <Graphic3d_ArrayOfPolylines.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Precision.hpp>
+#include <Prs3d_IsoAspect.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <NCollection_List.hpp>
+#include <StdPrs_Curve.hpp>
+#include <StdPrs_WFSurface.hpp>
 
 static void FindLimits(const occ::handle<Adaptor3d_Surface>& surf,
                        const double                          aLimit,

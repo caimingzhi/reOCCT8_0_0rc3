@@ -12,46 +12,46 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2dConvert.hxx>
+#include <Geom2dConvert.hpp>
 
-#include <Convert_CircleToBSplineCurve.hxx>
-#include <Convert_ConicToBSplineCurve.hxx>
-#include <Convert_EllipseToBSplineCurve.hxx>
-#include <Convert_HyperbolaToBSplineCurve.hxx>
-#include <Convert_ParabolaToBSplineCurve.hxx>
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Conic.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_OffsetCurve.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dConvert_ApproxCurve.hxx>
-#include <Geom2dConvert_CompCurveToBSplineCurve.hxx>
-#include <GeomAbs_Shape.hxx>
-#include <gp.hxx>
-#include <gp_Circ2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Elips2d.hxx>
-#include <gp_Hypr2d.hxx>
-#include <gp_Parab2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Hermit.hxx>
-#include <PLib.hxx>
-#include <Precision.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <NCollection_Array1.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_HArray1.hxx>
+#include <Convert_CircleToBSplineCurve.hpp>
+#include <Convert_ConicToBSplineCurve.hpp>
+#include <Convert_EllipseToBSplineCurve.hpp>
+#include <Convert_HyperbolaToBSplineCurve.hpp>
+#include <Convert_ParabolaToBSplineCurve.hpp>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Conic.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_OffsetCurve.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dConvert_ApproxCurve.hpp>
+#include <Geom2dConvert_CompCurveToBSplineCurve.hpp>
+#include <GeomAbs_Shape.hpp>
+#include <gp.hpp>
+#include <gp_Circ2d.hpp>
+#include <gp_Dir2d.hpp>
+#include <gp_Elips2d.hpp>
+#include <gp_Hypr2d.hpp>
+#include <gp_Parab2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Hermit.hpp>
+#include <PLib.hpp>
+#include <Precision.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <NCollection_Array1.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_HArray1.hpp>
 
 typedef gp_Circ2d                    Circ2d;
 typedef gp_Elips2d                   Elips2d;

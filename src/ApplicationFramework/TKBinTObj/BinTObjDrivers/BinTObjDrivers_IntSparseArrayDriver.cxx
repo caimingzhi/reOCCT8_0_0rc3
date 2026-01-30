@@ -15,12 +15,12 @@
 
 // The original implementation Copyright: (C) RINA S.p.A
 
-#include <BinTObjDrivers_IntSparseArrayDriver.hxx>
-#include <Message_Messenger.hxx>
-#include <TDF_Attribute.hxx>
-#include <BinObjMgt_Persistent.hxx>
-#include <TObj_TIntSparseArray.hxx>
-#include <TDF_Tool.hxx>
+#include <BinTObjDrivers_IntSparseArrayDriver.hpp>
+#include <Message_Messenger.hpp>
+#include <TDF_Attribute.hpp>
+#include <BinObjMgt_Persistent.hpp>
+#include <TObj_TIntSparseArray.hpp>
+#include <TDF_Tool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_IntSparseArrayDriver, BinMDF_ADriver)
 

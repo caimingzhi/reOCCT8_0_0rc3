@@ -13,6 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IMeshData_PCurve.hxx>
+#include <IMeshData_PCurve.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshData_PCurve, IMeshData_ParametersList)

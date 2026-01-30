@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BinTools_IStream.hxx>
-#include <Storage_StreamTypeMismatchError.hxx>
+#include <BinTools_IStream.hpp>
+#include <Storage_StreamTypeMismatchError.hpp>
 
 //=================================================================================================
 

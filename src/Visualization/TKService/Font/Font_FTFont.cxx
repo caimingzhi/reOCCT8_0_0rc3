@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Font_FTFont.hxx>
+#include <Font_FTFont.hpp>
 
-#include <Font_FTLibrary.hxx>
-#include <Font_FontMgr.hxx>
-#include <Font_TextFormatter.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <Font_FTLibrary.hpp>
+#include <Font_FontMgr.hpp>
+#include <Font_TextFormatter.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
 #include <algorithm>
 

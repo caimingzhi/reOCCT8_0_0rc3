@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BVH_Properties.hxx>
+#include <BVH_Properties.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(BVH_Properties, Standard_Transient)
 

@@ -16,28 +16,28 @@
 
 // Modified: Mps(10-04-97) portage WNT
 
-#include <BRepExtrema_DistShapeShape.hxx>
+#include <BRepExtrema_DistShapeShape.hpp>
 
-#include <Standard_OStream.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <BRepBndLib.hxx>
-#include <Bnd_Box.hxx>
-#include <TopExp.hxx>
-#include <BRepExtrema_DistanceSS.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <Standard_MemoryUtils.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <Precision.hxx>
-#include <BRepExtrema_UnCompatibleShape.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <NCollection_Vector.hxx>
-#include <OSD_Parallel.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Standard_OStream.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <BRepBndLib.hpp>
+#include <Bnd_Box.hpp>
+#include <TopExp.hpp>
+#include <BRepExtrema_DistanceSS.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <Standard_MemoryUtils.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <Precision.hpp>
+#include <BRepExtrema_UnCompatibleShape.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <NCollection_Vector.hpp>
+#include <OSD_Parallel.hpp>
+#include <StdFail_NotDone.hpp>
 
 #include <algorithm>
 #include <atomic>

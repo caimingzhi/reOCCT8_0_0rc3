@@ -17,13 +17,13 @@
   #define No_Standard_ConstructionError
 #endif
 
-#include <gp_Mat2d.hxx>
+#include <gp_Mat2d.hpp>
 
-#include <gp_GTrsf2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_XY.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <gp_GTrsf2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_XY.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_OutOfRange.hpp>
 
 //=================================================================================================
 

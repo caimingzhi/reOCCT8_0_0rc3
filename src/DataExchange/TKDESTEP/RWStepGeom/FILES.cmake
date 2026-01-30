@@ -3,174 +3,174 @@ set(OCCT_RWStepGeom_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_RWStepGeom_FILES
   RWStepGeom_RWAxis1Placement.cxx
-  RWStepGeom_RWAxis1Placement.pxx
+  RWStepGeom_RWAxis1Placement.hpp
   RWStepGeom_RWAxis2Placement2d.cxx
-  RWStepGeom_RWAxis2Placement2d.pxx
+  RWStepGeom_RWAxis2Placement2d.hpp
   RWStepGeom_RWAxis2Placement3d.cxx
-  RWStepGeom_RWAxis2Placement3d.pxx
+  RWStepGeom_RWAxis2Placement3d.hpp
   RWStepGeom_RWBezierCurve.cxx
-  RWStepGeom_RWBezierCurve.pxx
+  RWStepGeom_RWBezierCurve.hpp
   RWStepGeom_RWBezierCurveAndRationalBSplineCurve.cxx
-  RWStepGeom_RWBezierCurveAndRationalBSplineCurve.pxx
+  RWStepGeom_RWBezierCurveAndRationalBSplineCurve.hpp
   RWStepGeom_RWBezierSurface.cxx
-  RWStepGeom_RWBezierSurface.pxx
+  RWStepGeom_RWBezierSurface.hpp
   RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface.cxx
-  RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface.pxx
+  RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface.hpp
   RWStepGeom_RWBoundaryCurve.cxx
-  RWStepGeom_RWBoundaryCurve.pxx
+  RWStepGeom_RWBoundaryCurve.hpp
   RWStepGeom_RWBoundedCurve.cxx
-  RWStepGeom_RWBoundedCurve.pxx
+  RWStepGeom_RWBoundedCurve.hpp
   RWStepGeom_RWBoundedSurface.cxx
-  RWStepGeom_RWBoundedSurface.pxx
+  RWStepGeom_RWBoundedSurface.hpp
   RWStepGeom_RWBSplineCurve.cxx
-  RWStepGeom_RWBSplineCurve.pxx
+  RWStepGeom_RWBSplineCurve.hpp
   RWStepGeom_RWBSplineCurveWithKnots.cxx
-  RWStepGeom_RWBSplineCurveForm.pxx
-  RWStepGeom_RWBSplineCurveWithKnots.pxx
+  RWStepGeom_RWBSplineCurveForm.hpp
+  RWStepGeom_RWBSplineCurveWithKnots.hpp
   RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve.cxx
-  RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve.pxx
+  RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve.hpp
   RWStepGeom_RWBSplineSurface.cxx
-  RWStepGeom_RWBSplineSurface.pxx
+  RWStepGeom_RWBSplineSurface.hpp
   RWStepGeom_RWBSplineSurfaceWithKnots.cxx
-  RWStepGeom_RWBSplineSurfaceForm.pxx
-  RWStepGeom_RWBSplineSurfaceWithKnots.pxx
+  RWStepGeom_RWBSplineSurfaceForm.hpp
+  RWStepGeom_RWBSplineSurfaceWithKnots.hpp
   RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface.cxx
-  RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface.pxx
+  RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp
   RWStepGeom_RWCartesianPoint.cxx
-  RWStepGeom_RWCartesianPoint.pxx
+  RWStepGeom_RWCartesianPoint.hpp
   RWStepGeom_RWCartesianTransformationOperator.cxx
-  RWStepGeom_RWCartesianTransformationOperator.pxx
+  RWStepGeom_RWCartesianTransformationOperator.hpp
   RWStepGeom_RWCartesianTransformationOperator3d.cxx
-  RWStepGeom_RWCartesianTransformationOperator3d.pxx
+  RWStepGeom_RWCartesianTransformationOperator3d.hpp
   RWStepGeom_RWCircle.cxx
-  RWStepGeom_RWCircle.pxx
+  RWStepGeom_RWCircle.hpp
   RWStepGeom_RWCompositeCurve.cxx
-  RWStepGeom_RWCompositeCurve.pxx
+  RWStepGeom_RWCompositeCurve.hpp
   RWStepGeom_RWCompositeCurveOnSurface.cxx
-  RWStepGeom_RWCompositeCurveOnSurface.pxx
+  RWStepGeom_RWCompositeCurveOnSurface.hpp
   RWStepGeom_RWCompositeCurveSegment.cxx
-  RWStepGeom_RWCompositeCurveSegment.pxx
+  RWStepGeom_RWCompositeCurveSegment.hpp
   RWStepGeom_RWConic.cxx
-  RWStepGeom_RWConic.pxx
+  RWStepGeom_RWConic.hpp
   RWStepGeom_RWConicalSurface.cxx
-  RWStepGeom_RWConicalSurface.pxx
+  RWStepGeom_RWConicalSurface.hpp
   RWStepGeom_RWCurve.cxx
-  RWStepGeom_RWCurve.pxx
+  RWStepGeom_RWCurve.hpp
   RWStepGeom_RWCurveBoundedSurface.cxx
-  RWStepGeom_RWCurveBoundedSurface.pxx
+  RWStepGeom_RWCurveBoundedSurface.hpp
   RWStepGeom_RWCurveReplica.cxx
-  RWStepGeom_RWCurveReplica.pxx
+  RWStepGeom_RWCurveReplica.hpp
   RWStepGeom_RWCylindricalSurface.cxx
-  RWStepGeom_RWCylindricalSurface.pxx
+  RWStepGeom_RWCylindricalSurface.hpp
   RWStepGeom_RWDegeneratePcurve.cxx
-  RWStepGeom_RWDegeneratePcurve.pxx
+  RWStepGeom_RWDegeneratePcurve.hpp
   RWStepGeom_RWDegenerateToroidalSurface.cxx
-  RWStepGeom_RWDegenerateToroidalSurface.pxx
+  RWStepGeom_RWDegenerateToroidalSurface.hpp
   RWStepGeom_RWDirection.cxx
-  RWStepGeom_RWDirection.pxx
+  RWStepGeom_RWDirection.hpp
   RWStepGeom_RWElementarySurface.cxx
-  RWStepGeom_RWElementarySurface.pxx
+  RWStepGeom_RWElementarySurface.hpp
   RWStepGeom_RWEllipse.cxx
-  RWStepGeom_RWEllipse.pxx
+  RWStepGeom_RWEllipse.hpp
   RWStepGeom_RWEvaluatedDegeneratePcurve.cxx
-  RWStepGeom_RWEvaluatedDegeneratePcurve.pxx
+  RWStepGeom_RWEvaluatedDegeneratePcurve.hpp
   RWStepGeom_RWGeometricRepresentationContext.cxx
-  RWStepGeom_RWGeometricRepresentationContext.pxx
+  RWStepGeom_RWGeometricRepresentationContext.hpp
   RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext.cxx
-  RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext.pxx
+  RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext.hpp
   RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext.cxx
-  RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext.pxx
+  RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext.hpp
   RWStepGeom_RWGeometricRepresentationItem.cxx
-  RWStepGeom_RWGeometricRepresentationItem.pxx
+  RWStepGeom_RWGeometricRepresentationItem.hpp
   RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.cxx
-  RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.pxx
+  RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp
   RWStepGeom_RWHyperbola.cxx
-  RWStepGeom_RWHyperbola.pxx
+  RWStepGeom_RWHyperbola.hpp
   RWStepGeom_RWIntersectionCurve.cxx
-  RWStepGeom_RWIntersectionCurve.pxx
-  RWStepGeom_RWKnotType.pxx
+  RWStepGeom_RWIntersectionCurve.hpp
+  RWStepGeom_RWKnotType.hpp
   RWStepGeom_RWLine.cxx
-  RWStepGeom_RWLine.pxx
+  RWStepGeom_RWLine.hpp
   RWStepGeom_RWOffsetCurve3d.cxx
-  RWStepGeom_RWOffsetCurve3d.pxx
+  RWStepGeom_RWOffsetCurve3d.hpp
   RWStepGeom_RWOffsetSurface.cxx
-  RWStepGeom_RWOffsetSurface.pxx
+  RWStepGeom_RWOffsetSurface.hpp
   RWStepGeom_RWOrientedSurface.cxx
-  RWStepGeom_RWOrientedSurface.pxx
+  RWStepGeom_RWOrientedSurface.hpp
   RWStepGeom_RWOuterBoundaryCurve.cxx
-  RWStepGeom_RWOuterBoundaryCurve.pxx
+  RWStepGeom_RWOuterBoundaryCurve.hpp
   RWStepGeom_RWParabola.cxx
-  RWStepGeom_RWParabola.pxx
+  RWStepGeom_RWParabola.hpp
   RWStepGeom_RWPcurve.cxx
-  RWStepGeom_RWPcurve.pxx
+  RWStepGeom_RWPcurve.hpp
   RWStepGeom_RWPlacement.cxx
-  RWStepGeom_RWPlacement.pxx
+  RWStepGeom_RWPlacement.hpp
   RWStepGeom_RWPlane.cxx
-  RWStepGeom_RWPlane.pxx
+  RWStepGeom_RWPlane.hpp
   RWStepGeom_RWPoint.cxx
-  RWStepGeom_RWPoint.pxx
+  RWStepGeom_RWPoint.hpp
   RWStepGeom_RWPointOnCurve.cxx
-  RWStepGeom_RWPointOnCurve.pxx
+  RWStepGeom_RWPointOnCurve.hpp
   RWStepGeom_RWPointOnSurface.cxx
-  RWStepGeom_RWPointOnSurface.pxx
+  RWStepGeom_RWPointOnSurface.hpp
   RWStepGeom_RWPointReplica.cxx
-  RWStepGeom_RWPointReplica.pxx
+  RWStepGeom_RWPointReplica.hpp
   RWStepGeom_RWPolyline.cxx
-  RWStepGeom_RWPolyline.pxx
-  RWStepGeom_RWPreferredSurfaceCurveRepresentation.pxx
+  RWStepGeom_RWPolyline.hpp
+  RWStepGeom_RWPreferredSurfaceCurveRepresentation.hpp
   RWStepGeom_RWQuasiUniformCurve.cxx
-  RWStepGeom_RWQuasiUniformCurve.pxx
+  RWStepGeom_RWQuasiUniformCurve.hpp
   RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve.cxx
-  RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve.pxx
+  RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve.hpp
   RWStepGeom_RWQuasiUniformSurface.cxx
-  RWStepGeom_RWQuasiUniformSurface.pxx
+  RWStepGeom_RWQuasiUniformSurface.hpp
   RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface.cxx
-  RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface.pxx
+  RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface.hpp
   RWStepGeom_RWRationalBSplineCurve.cxx
-  RWStepGeom_RWRationalBSplineCurve.pxx
+  RWStepGeom_RWRationalBSplineCurve.hpp
   RWStepGeom_RWRationalBSplineSurface.cxx
-  RWStepGeom_RWRationalBSplineSurface.pxx
+  RWStepGeom_RWRationalBSplineSurface.hpp
   RWStepGeom_RWRectangularCompositeSurface.cxx
-  RWStepGeom_RWRectangularCompositeSurface.pxx
+  RWStepGeom_RWRectangularCompositeSurface.hpp
   RWStepGeom_RWRectangularTrimmedSurface.cxx
-  RWStepGeom_RWRectangularTrimmedSurface.pxx
+  RWStepGeom_RWRectangularTrimmedSurface.hpp
   RWStepGeom_RWReparametrisedCompositeCurveSegment.cxx
-  RWStepGeom_RWReparametrisedCompositeCurveSegment.pxx
+  RWStepGeom_RWReparametrisedCompositeCurveSegment.hpp
   RWStepGeom_RWSeamCurve.cxx
-  RWStepGeom_RWSeamCurve.pxx
+  RWStepGeom_RWSeamCurve.hpp
   RWStepGeom_RWSphericalSurface.cxx
-  RWStepGeom_RWSphericalSurface.pxx
+  RWStepGeom_RWSphericalSurface.hpp
   RWStepGeom_RWSuParameters.cxx
-  RWStepGeom_RWSuParameters.pxx
+  RWStepGeom_RWSuParameters.hpp
   RWStepGeom_RWSurface.cxx
-  RWStepGeom_RWSurface.pxx
+  RWStepGeom_RWSurface.hpp
   RWStepGeom_RWSurfaceCurve.cxx
-  RWStepGeom_RWSurfaceCurve.pxx
+  RWStepGeom_RWSurfaceCurve.hpp
   RWStepGeom_RWSurfaceCurveAndBoundedCurve.cxx
-  RWStepGeom_RWSurfaceCurveAndBoundedCurve.pxx
+  RWStepGeom_RWSurfaceCurveAndBoundedCurve.hpp
   RWStepGeom_RWSurfaceOfLinearExtrusion.cxx
-  RWStepGeom_RWSurfaceOfLinearExtrusion.pxx
+  RWStepGeom_RWSurfaceOfLinearExtrusion.hpp
   RWStepGeom_RWSurfaceOfRevolution.cxx
-  RWStepGeom_RWSurfaceOfRevolution.pxx
+  RWStepGeom_RWSurfaceOfRevolution.hpp
   RWStepGeom_RWSurfacePatch.cxx
-  RWStepGeom_RWSurfacePatch.pxx
+  RWStepGeom_RWSurfacePatch.hpp
   RWStepGeom_RWSurfaceReplica.cxx
-  RWStepGeom_RWSurfaceReplica.pxx
+  RWStepGeom_RWSurfaceReplica.hpp
   RWStepGeom_RWSweptSurface.cxx
-  RWStepGeom_RWSweptSurface.pxx
+  RWStepGeom_RWSweptSurface.hpp
   RWStepGeom_RWToroidalSurface.cxx
-  RWStepGeom_RWToroidalSurface.pxx
-  RWStepGeom_RWTransitionCode.pxx
+  RWStepGeom_RWToroidalSurface.hpp
+  RWStepGeom_RWTransitionCode.hpp
   RWStepGeom_RWTrimmedCurve.cxx
-  RWStepGeom_RWTrimmedCurve.pxx
+  RWStepGeom_RWTrimmedCurve.hpp
   RWStepGeom_RWUniformCurve.cxx
-  RWStepGeom_RWUniformCurve.pxx
+  RWStepGeom_RWUniformCurve.hpp
   RWStepGeom_RWUniformCurveAndRationalBSplineCurve.cxx
-  RWStepGeom_RWUniformCurveAndRationalBSplineCurve.pxx
+  RWStepGeom_RWUniformCurveAndRationalBSplineCurve.hpp
   RWStepGeom_RWUniformSurface.cxx
-  RWStepGeom_RWUniformSurface.pxx
+  RWStepGeom_RWUniformSurface.hpp
   RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface.cxx
-  RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface.pxx
+  RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface.hpp
   RWStepGeom_RWVector.cxx
-  RWStepGeom_RWVector.pxx
+  RWStepGeom_RWVector.hpp
 )

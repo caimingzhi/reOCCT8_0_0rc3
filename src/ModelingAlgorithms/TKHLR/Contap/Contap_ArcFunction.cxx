@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Contap_ArcFunction.hxx>
-#include <Contap_HContTool.hxx>
-#include <Contap_HCurve2dTool.hxx>
-#include <Contap_SurfProps.hxx>
-#include <gp_Dir.hxx>
-#include <IntSurf_Quadric.hxx>
+#include <Contap_ArcFunction.hpp>
+#include <Contap_HContTool.hpp>
+#include <Contap_HCurve2dTool.hpp>
+#include <Contap_SurfProps.hpp>
+#include <gp_Dir.hpp>
+#include <IntSurf_Quadric.hpp>
 
 Contap_ArcFunction::Contap_ArcFunction()
     : myMean(1.),

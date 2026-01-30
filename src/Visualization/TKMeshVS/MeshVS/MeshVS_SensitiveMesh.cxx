@@ -13,12 +13,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MeshVS_SensitiveMesh.hxx>
+#include <MeshVS_SensitiveMesh.hpp>
 
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <Select3D_SensitiveEntity.hxx>
-#include <MeshVS_DataSource.hxx>
-#include <MeshVS_MeshOwner.hxx>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <Select3D_SensitiveEntity.hpp>
+#include <MeshVS_DataSource.hpp>
+#include <MeshVS_MeshOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveMesh, Select3D_SensitiveEntity)
 

@@ -15,8 +15,8 @@
 
 // AGV 15/10/01 : Add XmlOcaf support; add MessageDriver support
 
-#include <AppStdL_Application.hxx>
-#include <Standard_Dump.hxx>
+#include <AppStdL_Application.hpp>
+#include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(AppStdL_Application, TDocStd_Application)
 

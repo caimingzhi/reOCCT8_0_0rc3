@@ -14,59 +14,59 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor3d_CurveOnSurface.hxx>
-#include <BRepBlend_ConstRad.hxx>
-#include <BRepBlend_ConstRadInv.hxx>
-#include <BRepBlend_EvolRad.hxx>
-#include <BRepBlend_EvolRadInv.hxx>
-#include <BRepBlend_Line.hxx>
-#include <BRepTopAdaptor_TopolTool.hxx>
-#include <ChFi3d.hxx>
-#include <ChFi3d_Builder_0.hxx>
-#include <ChFi3d_FilBuilder.hxx>
-#include <ChFiDS_CommonPoint.hxx>
-#include <ChFiDS_FaceInterference.hxx>
-#include <ChFiDS_SurfData.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <ChFiDS_ElSpine.hxx>
-#include <ChFiDS_Regul.hxx>
-#include <ChFiDS_Spine.hxx>
-#include <ChFiDS_Stripe.hxx>
-#include <ChFiKPart_ComputeData.hxx>
-#include <ElSLib.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_BSplineSurface.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_ConstrainedFilling.hxx>
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <Law_S.hxx>
-#include <math_Vector.hxx>
-#include <Precision.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_List.hxx>
-#include <TopAbs_Orientation.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopOpeBRepDS_Curve.hxx>
-#include <TopOpeBRepDS_DataStructure.hxx>
-#include <TopOpeBRepDS_HDataStructure.hxx>
-#include <TopOpeBRepDS_Surface.hxx>
+#include <Adaptor3d_CurveOnSurface.hpp>
+#include <BRepBlend_ConstRad.hpp>
+#include <BRepBlend_ConstRadInv.hpp>
+#include <BRepBlend_EvolRad.hpp>
+#include <BRepBlend_EvolRadInv.hpp>
+#include <BRepBlend_Line.hpp>
+#include <BRepTopAdaptor_TopolTool.hpp>
+#include <ChFi3d.hpp>
+#include <ChFi3d_Builder_0.hpp>
+#include <ChFi3d_FilBuilder.hpp>
+#include <ChFiDS_CommonPoint.hpp>
+#include <ChFiDS_FaceInterference.hpp>
+#include <ChFiDS_SurfData.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <ChFiDS_ElSpine.hpp>
+#include <ChFiDS_Regul.hpp>
+#include <ChFiDS_Spine.hpp>
+#include <ChFiDS_Stripe.hpp>
+#include <ChFiKPart_ComputeData.hpp>
+#include <ElSLib.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_BSplineSurface.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_ConstrainedFilling.hpp>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <Law_S.hpp>
+#include <math_Vector.hpp>
+#include <Precision.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_List.hpp>
+#include <TopAbs_Orientation.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopOpeBRepDS_Curve.hpp>
+#include <TopOpeBRepDS_DataStructure.hpp>
+#include <TopOpeBRepDS_HDataStructure.hpp>
+#include <TopOpeBRepDS_Surface.hpp>
 
 #ifdef OCCT_DEBUG
-  #include <Geom_TrimmedCurve.hxx>
+  #include <Geom_TrimmedCurve.hpp>
 extern bool ChFi3d_GettraceDRAWSPINE();
 extern bool ChFi3d_GetcontextSPINEBEZIER();
 extern bool ChFi3d_GetcontextSPINECIRCLE();
 extern bool ChFi3d_GetcontextSPINECE();
 extern bool ChFi3d_GetcontextFORCEFILLING();
-  #include <OSD_Chronometer.hxx>
+  #include <OSD_Chronometer.hpp>
 
 extern double t_t3cornerinit, t_spherique, t_torique, t_notfilling, t_filling, t_t3cornerDS;
 extern void   ChFi3d_InitChron(OSD_Chronometer& ch);

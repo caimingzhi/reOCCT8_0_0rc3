@@ -17,18 +17,18 @@
 // Approximation of a MultiLine of points described by the tool MLineTool.
 // with variational criteria
 
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_Variational.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_Variational.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
 
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
 #define No_Standard_ConstructionError
 
-#include <Standard_Macro.hxx>
+#include <Standard_Macro.hpp>
 
 #include <iostream>
 
@@ -36,29 +36,29 @@
 
 #include <fstream>
 
-#include <AppParCurves.hxx>
-#include <AppParCurves_Constraint.hxx>
-#include <AppParCurves_ConstraintCouple.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <AppParCurves_MultiPoint.hxx>
-#include <AppDef_LinearCriteria.hxx>
-#include <Convert_CompPolynomialToPoles.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Array2.hxx>
-#include <NCollection_HArray2.hxx>
-#include <StdFail_NotDone.hxx>
-#include <Precision.hxx>
-#include <AppDef_MyLineTool.hxx>
+#include <AppParCurves.hpp>
+#include <AppParCurves_Constraint.hpp>
+#include <AppParCurves_ConstraintCouple.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <AppParCurves_MultiPoint.hpp>
+#include <AppDef_LinearCriteria.hpp>
+#include <Convert_CompPolynomialToPoles.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Array2.hpp>
+#include <NCollection_HArray2.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Precision.hpp>
+#include <AppDef_MyLineTool.hpp>
 
-#include <FEmTool_Assembly.hxx>
-#include <FEmTool_Curve.hxx>
-#include <math_Vector.hxx>
-#include <PLib_HermitJacobi.hxx>
+#include <FEmTool_Assembly.hpp>
+#include <FEmTool_Curve.hpp>
+#include <math_Vector.hpp>
+#include <PLib_HermitJacobi.hpp>
 
 // Add this line:
 #include <algorithm>

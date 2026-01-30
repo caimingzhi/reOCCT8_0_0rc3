@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Viewer.hxx>
-#include <Draw_View.hxx>
+#include <Draw_Viewer.hpp>
+#include <Draw_View.hpp>
 
-#include <gp_Pnt.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Draw_Window.hxx>
-#include <Draw_Display.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Draw_Window.hpp>
+#include <Draw_Display.hpp>
 
 #define precpers 0.95
 #define ButtonPress 4

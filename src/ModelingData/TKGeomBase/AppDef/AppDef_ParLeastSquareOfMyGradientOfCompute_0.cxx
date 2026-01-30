@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <AppDef_ParLeastSquareOfMyGradientOfCompute.hxx>
+#include <AppDef_ParLeastSquareOfMyGradientOfCompute.hpp>
 
-#include <StdFail_NotDone.hxx>
-#include <Standard_OutOfRange.hxx>
-#include <Standard_DimensionError.hxx>
-#include <Standard_NoSuchObject.hxx>
-#include <AppDef_MultiLine.hxx>
-#include <AppDef_MyLineTool.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <AppParCurves_MultiBSpCurve.hxx>
-#include <math_Matrix.hxx>
+#include <StdFail_NotDone.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <Standard_DimensionError.hpp>
+#include <Standard_NoSuchObject.hpp>
+#include <AppDef_MultiLine.hpp>
+#include <AppDef_MyLineTool.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <AppParCurves_MultiBSpCurve.hpp>
+#include <math_Matrix.hpp>
 
 #define MultiLine AppDef_MultiLine
-#define MultiLine_hxx <AppDef_MultiLine.hxx>
+#define MultiLine_hxx <AppDef_MultiLine.hpp>
 #define ToolLine AppDef_MyLineTool
-#define ToolLine_hxx <AppDef_MyLineTool.hxx>
+#define ToolLine_hxx <AppDef_MyLineTool.hpp>
 #define AppParCurves_LeastSquare AppDef_ParLeastSquareOfMyGradientOfCompute
-#define AppParCurves_LeastSquare_hxx <AppDef_ParLeastSquareOfMyGradientOfCompute.hxx>
-#include <AppParCurves_LeastSquare.gxx>
+#define AppParCurves_LeastSquare_hxx <AppDef_ParLeastSquareOfMyGradientOfCompute.hpp>
+#include <AppParCurves_LeastSquare.hpp>

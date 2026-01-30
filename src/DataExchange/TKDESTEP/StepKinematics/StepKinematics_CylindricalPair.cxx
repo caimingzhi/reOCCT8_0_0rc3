@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepKinematics_CylindricalPair.hxx>
+#include <StepKinematics_CylindricalPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_CylindricalPair, StepKinematics_LowOrderKinematicPair)
 

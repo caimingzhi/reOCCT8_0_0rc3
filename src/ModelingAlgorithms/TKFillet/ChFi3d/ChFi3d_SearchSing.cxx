@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <ChFi3d_SearchSing.hxx>
-#include <Geom_Curve.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <ChFi3d_SearchSing.hpp>
+#include <Geom_Curve.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
 
 ChFi3d_SearchSing::ChFi3d_SearchSing(const occ::handle<Geom_Curve>& C1,
                                      const occ::handle<Geom_Curve>& C2)

@@ -13,8 +13,8 @@
 
 #include <gtest/gtest.h>
 
-#include <BVH_SweepPlaneBuilder.hxx>
-#include <BVH_Triangulation.hxx>
+#include <BVH_SweepPlaneBuilder.hpp>
+#include <BVH_Triangulation.hpp>
 
 // Helper to compute bounding box for BVH_Set (avoids cached empty box issue)
 template <class T, int N>

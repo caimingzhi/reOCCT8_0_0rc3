@@ -16,9 +16,9 @@
 
 // pmn -> 17/01/1996 added : Continuity, (Nb)Interals, D2, Trim
 
-#include <Law_Function.hxx>
-#include <Law_Linear.hxx>
-#include <Standard_Type.hxx>
+#include <Law_Function.hpp>
+#include <Law_Linear.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_Linear, Law_Function)
 

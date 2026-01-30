@@ -14,20 +14,20 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepTool_PROJECT.hxx>
+#include <TopOpeBRepTool_PROJECT.hpp>
 
-#include <Geom_Surface.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepExtrema_ExtPF.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAdaptor_Curve2d.hxx>
-#include <gp_Pnt.hxx>
-#include <BRep_Tool.hxx>
-#include <Precision.hxx>
+#include <Geom_Surface.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <GeomAPI_ProjectPointOnSurf.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepExtrema_ExtPF.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAdaptor_Curve2d.hpp>
+#include <gp_Pnt.hpp>
+#include <BRep_Tool.hpp>
+#include <Precision.hpp>
 
-#include <TopOpeBRepTool_GEOMETRY.hxx>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
 
 // ----------------------------------------------------------------------
 Standard_EXPORT void FUN_tool_bounds(const TopoDS_Edge& E, double& f, double& l)

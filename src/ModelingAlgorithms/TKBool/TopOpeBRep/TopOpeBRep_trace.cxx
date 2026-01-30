@@ -16,8 +16,8 @@
 
 #ifdef OCCT_DEBUG
 
-  #include <Standard_Type.hxx>
-// #include <Standard_OStream.hxx>
+  #include <Standard_Type.hpp>
+// #include <Standard_OStream.hpp>
 // #include <stdio.h>
 
 static bool TopOpeBRep_traceFITOL = false;

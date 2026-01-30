@@ -14,13 +14,13 @@
 // #76 rln 11.03.99 S4135: compute average without weights according to tolerances
 // szv#4 S4163
 
-#include <BRep_Tool.hxx>
-#include <ShapeAnalysis_ShapeTolerance.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_Map.hxx>
+#include <BRep_Tool.hpp>
+#include <ShapeAnalysis_ShapeTolerance.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_Map.hpp>
 
 //=================================================================================================
 

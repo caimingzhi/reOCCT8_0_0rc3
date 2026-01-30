@@ -19,12 +19,12 @@
 
 // #endif
 
-#include <math.hxx>
-#include <math_FunctionSet.hxx>
-#include <math_GaussSetIntegration.hxx>
-#include <math_Vector.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
+#include <math.hpp>
+#include <math_FunctionSet.hpp>
+#include <math_GaussSetIntegration.hpp>
+#include <math_Vector.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
 
 math_GaussSetIntegration::math_GaussSetIntegration(math_FunctionSet&         F,
                                                    const math_Vector&        Lower,

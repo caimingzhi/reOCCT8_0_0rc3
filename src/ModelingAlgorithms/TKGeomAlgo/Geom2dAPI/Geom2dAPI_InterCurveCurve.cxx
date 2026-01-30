@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <Geom2dAPI_InterCurveCurve.hxx>
-#include <Geom2dInt_GInter.hxx>
-#include <gp_Pnt2d.hxx>
-#include <IntRes2d_IntersectionPoint.hxx>
-#include <IntRes2d_IntersectionSegment.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <Standard_NullObject.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <Geom2dAPI_InterCurveCurve.hpp>
+#include <Geom2dInt_GInter.hpp>
+#include <gp_Pnt2d.hpp>
+#include <IntRes2d_IntersectionPoint.hpp>
+#include <IntRes2d_IntersectionSegment.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <Standard_NullObject.hpp>
+#include <Standard_OutOfRange.hpp>
 
 //=================================================================================================
 

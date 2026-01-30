@@ -3,135 +3,135 @@ set(OCCT_StepFEA_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepFEA_FILES
   StepFEA_AlignedCurve3dElementCoordinateSystem.cxx
-  StepFEA_AlignedCurve3dElementCoordinateSystem.hxx
+  StepFEA_AlignedCurve3dElementCoordinateSystem.hpp
   StepFEA_AlignedSurface3dElementCoordinateSystem.cxx
-  StepFEA_AlignedSurface3dElementCoordinateSystem.hxx
+  StepFEA_AlignedSurface3dElementCoordinateSystem.hpp
   StepFEA_ArbitraryVolume3dElementCoordinateSystem.cxx
-  StepFEA_ArbitraryVolume3dElementCoordinateSystem.hxx
+  StepFEA_ArbitraryVolume3dElementCoordinateSystem.hpp
 
   StepFEA_ConstantSurface3dElementCoordinateSystem.cxx
-  StepFEA_ConstantSurface3dElementCoordinateSystem.hxx
-  StepFEA_CoordinateSystemType.hxx
+  StepFEA_ConstantSurface3dElementCoordinateSystem.hpp
+  StepFEA_CoordinateSystemType.hpp
   StepFEA_Curve3dElementProperty.cxx
-  StepFEA_Curve3dElementProperty.hxx
+  StepFEA_Curve3dElementProperty.hpp
   StepFEA_Curve3dElementRepresentation.cxx
-  StepFEA_Curve3dElementRepresentation.hxx
-  StepFEA_CurveEdge.hxx
+  StepFEA_Curve3dElementRepresentation.hpp
+  StepFEA_CurveEdge.hpp
   StepFEA_CurveElementEndCoordinateSystem.cxx
-  StepFEA_CurveElementEndCoordinateSystem.hxx
+  StepFEA_CurveElementEndCoordinateSystem.hpp
   StepFEA_CurveElementEndOffset.cxx
-  StepFEA_CurveElementEndOffset.hxx
+  StepFEA_CurveElementEndOffset.hpp
   StepFEA_CurveElementEndRelease.cxx
-  StepFEA_CurveElementEndRelease.hxx
+  StepFEA_CurveElementEndRelease.hpp
   StepFEA_CurveElementInterval.cxx
-  StepFEA_CurveElementInterval.hxx
+  StepFEA_CurveElementInterval.hpp
   StepFEA_CurveElementIntervalConstant.cxx
-  StepFEA_CurveElementIntervalConstant.hxx
+  StepFEA_CurveElementIntervalConstant.hpp
   StepFEA_CurveElementIntervalLinearlyVarying.cxx
-  StepFEA_CurveElementIntervalLinearlyVarying.hxx
+  StepFEA_CurveElementIntervalLinearlyVarying.hpp
   StepFEA_CurveElementLocation.cxx
-  StepFEA_CurveElementLocation.hxx
+  StepFEA_CurveElementLocation.hpp
   StepFEA_DegreeOfFreedom.cxx
-  StepFEA_DegreeOfFreedom.hxx
+  StepFEA_DegreeOfFreedom.hpp
   StepFEA_DegreeOfFreedomMember.cxx
-  StepFEA_DegreeOfFreedomMember.hxx
+  StepFEA_DegreeOfFreedomMember.hpp
   StepFEA_DummyNode.cxx
-  StepFEA_DummyNode.hxx
+  StepFEA_DummyNode.hpp
   StepFEA_ElementGeometricRelationship.cxx
-  StepFEA_ElementGeometricRelationship.hxx
+  StepFEA_ElementGeometricRelationship.hpp
   StepFEA_ElementGroup.cxx
-  StepFEA_ElementGroup.hxx
+  StepFEA_ElementGroup.hpp
   StepFEA_ElementOrElementGroup.cxx
-  StepFEA_ElementOrElementGroup.hxx
+  StepFEA_ElementOrElementGroup.hpp
   StepFEA_ElementRepresentation.cxx
-  StepFEA_ElementRepresentation.hxx
-  StepFEA_ElementVolume.hxx
-  StepFEA_EnumeratedDegreeOfFreedom.hxx
+  StepFEA_ElementRepresentation.hpp
+  StepFEA_ElementVolume.hpp
+  StepFEA_EnumeratedDegreeOfFreedom.hpp
   StepFEA_FeaAreaDensity.cxx
-  StepFEA_FeaAreaDensity.hxx
+  StepFEA_FeaAreaDensity.hpp
   StepFEA_FeaAxis2Placement3d.cxx
-  StepFEA_FeaAxis2Placement3d.hxx
+  StepFEA_FeaAxis2Placement3d.hpp
   StepFEA_FeaCurveSectionGeometricRelationship.cxx
-  StepFEA_FeaCurveSectionGeometricRelationship.hxx
+  StepFEA_FeaCurveSectionGeometricRelationship.hpp
   StepFEA_FeaGroup.cxx
-  StepFEA_FeaGroup.hxx
+  StepFEA_FeaGroup.hpp
   StepFEA_FeaLinearElasticity.cxx
-  StepFEA_FeaLinearElasticity.hxx
+  StepFEA_FeaLinearElasticity.hpp
   StepFEA_FeaMassDensity.cxx
-  StepFEA_FeaMassDensity.hxx
+  StepFEA_FeaMassDensity.hpp
   StepFEA_FeaMaterialPropertyRepresentation.cxx
-  StepFEA_FeaMaterialPropertyRepresentation.hxx
+  StepFEA_FeaMaterialPropertyRepresentation.hpp
   StepFEA_FeaMaterialPropertyRepresentationItem.cxx
-  StepFEA_FeaMaterialPropertyRepresentationItem.hxx
+  StepFEA_FeaMaterialPropertyRepresentationItem.hpp
   StepFEA_FeaModel.cxx
-  StepFEA_FeaModel.hxx
+  StepFEA_FeaModel.hpp
   StepFEA_FeaModel3d.cxx
-  StepFEA_FeaModel3d.hxx
+  StepFEA_FeaModel3d.hpp
   StepFEA_FeaModelDefinition.cxx
-  StepFEA_FeaModelDefinition.hxx
+  StepFEA_FeaModelDefinition.hpp
   StepFEA_FeaMoistureAbsorption.cxx
-  StepFEA_FeaMoistureAbsorption.hxx
+  StepFEA_FeaMoistureAbsorption.hpp
   StepFEA_FeaParametricPoint.cxx
-  StepFEA_FeaParametricPoint.hxx
+  StepFEA_FeaParametricPoint.hpp
   StepFEA_FeaRepresentationItem.cxx
-  StepFEA_FeaRepresentationItem.hxx
+  StepFEA_FeaRepresentationItem.hpp
   StepFEA_FeaSecantCoefficientOfLinearThermalExpansion.cxx
-  StepFEA_FeaSecantCoefficientOfLinearThermalExpansion.hxx
+  StepFEA_FeaSecantCoefficientOfLinearThermalExpansion.hpp
   StepFEA_FeaShellBendingStiffness.cxx
-  StepFEA_FeaShellBendingStiffness.hxx
+  StepFEA_FeaShellBendingStiffness.hpp
   StepFEA_FeaShellMembraneBendingCouplingStiffness.cxx
-  StepFEA_FeaShellMembraneBendingCouplingStiffness.hxx
+  StepFEA_FeaShellMembraneBendingCouplingStiffness.hpp
   StepFEA_FeaShellMembraneStiffness.cxx
-  StepFEA_FeaShellMembraneStiffness.hxx
+  StepFEA_FeaShellMembraneStiffness.hpp
   StepFEA_FeaShellShearStiffness.cxx
-  StepFEA_FeaShellShearStiffness.hxx
+  StepFEA_FeaShellShearStiffness.hpp
   StepFEA_FeaSurfaceSectionGeometricRelationship.cxx
-  StepFEA_FeaSurfaceSectionGeometricRelationship.hxx
+  StepFEA_FeaSurfaceSectionGeometricRelationship.hpp
   StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion.cxx
-  StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion.hxx
+  StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion.hpp
   StepFEA_FreedomAndCoefficient.cxx
-  StepFEA_FreedomAndCoefficient.hxx
+  StepFEA_FreedomAndCoefficient.hpp
   StepFEA_FreedomsList.cxx
-  StepFEA_FreedomsList.hxx
+  StepFEA_FreedomsList.hpp
   StepFEA_GeometricNode.cxx
-  StepFEA_GeometricNode.hxx
+  StepFEA_GeometricNode.hpp
 
   StepFEA_Node.cxx
-  StepFEA_Node.hxx
+  StepFEA_Node.hpp
   StepFEA_NodeDefinition.cxx
-  StepFEA_NodeDefinition.hxx
+  StepFEA_NodeDefinition.hpp
   StepFEA_NodeGroup.cxx
-  StepFEA_NodeGroup.hxx
+  StepFEA_NodeGroup.hpp
   StepFEA_NodeRepresentation.cxx
-  StepFEA_NodeRepresentation.hxx
+  StepFEA_NodeRepresentation.hpp
   StepFEA_NodeSet.cxx
-  StepFEA_NodeSet.hxx
+  StepFEA_NodeSet.hpp
   StepFEA_NodeWithSolutionCoordinateSystem.cxx
-  StepFEA_NodeWithSolutionCoordinateSystem.hxx
+  StepFEA_NodeWithSolutionCoordinateSystem.hpp
   StepFEA_NodeWithVector.cxx
-  StepFEA_NodeWithVector.hxx
+  StepFEA_NodeWithVector.hpp
   StepFEA_ParametricCurve3dElementCoordinateDirection.cxx
-  StepFEA_ParametricCurve3dElementCoordinateDirection.hxx
+  StepFEA_ParametricCurve3dElementCoordinateDirection.hpp
   StepFEA_ParametricCurve3dElementCoordinateSystem.cxx
-  StepFEA_ParametricCurve3dElementCoordinateSystem.hxx
+  StepFEA_ParametricCurve3dElementCoordinateSystem.hpp
   StepFEA_ParametricSurface3dElementCoordinateSystem.cxx
-  StepFEA_ParametricSurface3dElementCoordinateSystem.hxx
+  StepFEA_ParametricSurface3dElementCoordinateSystem.hpp
 
   StepFEA_Surface3dElementRepresentation.cxx
-  StepFEA_Surface3dElementRepresentation.hxx
+  StepFEA_Surface3dElementRepresentation.hpp
   StepFEA_SymmetricTensor22d.cxx
-  StepFEA_SymmetricTensor22d.hxx
+  StepFEA_SymmetricTensor22d.hpp
   StepFEA_SymmetricTensor23d.cxx
-  StepFEA_SymmetricTensor23d.hxx
+  StepFEA_SymmetricTensor23d.hpp
   StepFEA_SymmetricTensor23dMember.cxx
-  StepFEA_SymmetricTensor23dMember.hxx
+  StepFEA_SymmetricTensor23dMember.hpp
   StepFEA_SymmetricTensor42d.cxx
-  StepFEA_SymmetricTensor42d.hxx
+  StepFEA_SymmetricTensor42d.hpp
   StepFEA_SymmetricTensor43d.cxx
-  StepFEA_SymmetricTensor43d.hxx
+  StepFEA_SymmetricTensor43d.hpp
   StepFEA_SymmetricTensor43dMember.cxx
-  StepFEA_SymmetricTensor43dMember.hxx
-  StepFEA_UnspecifiedValue.hxx
+  StepFEA_SymmetricTensor43dMember.hpp
+  StepFEA_UnspecifiedValue.hpp
   StepFEA_Volume3dElementRepresentation.cxx
-  StepFEA_Volume3dElementRepresentation.hxx
+  StepFEA_Volume3dElementRepresentation.hpp
 )

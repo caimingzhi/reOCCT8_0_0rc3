@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Extrema_GenLocateExtPS.hxx>
+#include <Extrema_GenLocateExtPS.hpp>
 
-#include <Extrema_FuncPSNorm.hxx>
-#include <Extrema_FuncPSDist.hxx>
-#include <Extrema_POnSurf.hxx>
-#include <gp_Pnt.hxx>
-#include <math_FunctionSetRoot.hxx>
-#include <math_NewtonFunctionSetRoot.hxx>
-#include <math_BFGS.hxx>
-#include <math_FRPR.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Extrema_FuncPSNorm.hpp>
+#include <Extrema_FuncPSDist.hpp>
+#include <Extrema_POnSurf.hpp>
+#include <gp_Pnt.hpp>
+#include <math_FunctionSetRoot.hpp>
+#include <math_NewtonFunctionSetRoot.hpp>
+#include <math_BFGS.hpp>
+#include <math_FRPR.hpp>
+#include <StdFail_NotDone.hpp>
 
 static void CorrectTol(const double theU0, const double theV0, math_Vector& theTol)
 {

@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomAdaptor_Curve.hxx>
-#include <GeomAdaptor_Surface.hxx>
-#include <GeomFill_FunctionDraft.hxx>
-#include <GeomFill_Tensor.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
-#include <math_Matrix.hxx>
+#include <GeomAdaptor_Curve.hpp>
+#include <GeomAdaptor_Surface.hpp>
+#include <GeomFill_FunctionDraft.hpp>
+#include <GeomFill_Tensor.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Vec.hpp>
+#include <math_Matrix.hpp>
 
-// #include <Precision.hxx>
+// #include <Precision.hpp>
 //*******************************************************
 //    Calcul de la valeur de la fonction :
 //                       G(w(t)) - S(u(t),v(t)) = 0

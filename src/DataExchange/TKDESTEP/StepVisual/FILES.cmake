@@ -3,287 +3,287 @@ set(OCCT_StepVisual_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_StepVisual_FILES
   StepVisual_AnnotationCurveOccurrence.cxx
-  StepVisual_AnnotationCurveOccurrence.hxx
+  StepVisual_AnnotationCurveOccurrence.hpp
   StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.cxx
-  StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hxx
+  StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hpp
   StepVisual_AnnotationFillArea.cxx
-  StepVisual_AnnotationFillArea.hxx
+  StepVisual_AnnotationFillArea.hpp
   StepVisual_AnnotationFillAreaOccurrence.cxx
-  StepVisual_AnnotationFillAreaOccurrence.hxx
+  StepVisual_AnnotationFillAreaOccurrence.hpp
   StepVisual_AnnotationOccurrence.cxx
-  StepVisual_AnnotationOccurrence.hxx
+  StepVisual_AnnotationOccurrence.hpp
   StepVisual_AnnotationPlane.cxx
-  StepVisual_AnnotationPlane.hxx
+  StepVisual_AnnotationPlane.hpp
   StepVisual_AnnotationPlaneElement.cxx
-  StepVisual_AnnotationPlaneElement.hxx
+  StepVisual_AnnotationPlaneElement.hpp
   StepVisual_AnnotationText.cxx
-  StepVisual_AnnotationText.hxx
+  StepVisual_AnnotationText.hpp
   StepVisual_AnnotationTextOccurrence.cxx
-  StepVisual_AnnotationTextOccurrence.hxx
+  StepVisual_AnnotationTextOccurrence.hpp
   StepVisual_AreaInSet.cxx
-  StepVisual_AreaInSet.hxx
+  StepVisual_AreaInSet.hpp
   StepVisual_AreaOrView.cxx
-  StepVisual_AreaOrView.hxx
+  StepVisual_AreaOrView.hpp
 
   StepVisual_BackgroundColour.cxx
-  StepVisual_BackgroundColour.hxx
+  StepVisual_BackgroundColour.hpp
   StepVisual_BoxCharacteristicSelect.cxx
-  StepVisual_BoxCharacteristicSelect.hxx
+  StepVisual_BoxCharacteristicSelect.hpp
   StepVisual_CameraImage.cxx
-  StepVisual_CameraImage.hxx
+  StepVisual_CameraImage.hpp
   StepVisual_CameraImage2dWithScale.cxx
-  StepVisual_CameraImage2dWithScale.hxx
+  StepVisual_CameraImage2dWithScale.hpp
   StepVisual_CameraImage3dWithScale.cxx
-  StepVisual_CameraImage3dWithScale.hxx
+  StepVisual_CameraImage3dWithScale.hpp
   StepVisual_CameraModel.cxx
-  StepVisual_CameraModel.hxx
+  StepVisual_CameraModel.hpp
   StepVisual_CameraModelD2.cxx
-  StepVisual_CameraModelD2.hxx
+  StepVisual_CameraModelD2.hpp
   StepVisual_CameraModelD3.cxx
-  StepVisual_CameraModelD3.hxx
+  StepVisual_CameraModelD3.hpp
   StepVisual_CameraModelD3MultiClipping.cxx
-  StepVisual_CameraModelD3MultiClipping.hxx
+  StepVisual_CameraModelD3MultiClipping.hpp
   StepVisual_CameraModelD3MultiClippingInterectionSelect.cxx
-  StepVisual_CameraModelD3MultiClippingInterectionSelect.hxx
+  StepVisual_CameraModelD3MultiClippingInterectionSelect.hpp
   StepVisual_CameraModelD3MultiClippingIntersection.cxx
-  StepVisual_CameraModelD3MultiClippingIntersection.hxx
+  StepVisual_CameraModelD3MultiClippingIntersection.hpp
   StepVisual_CameraModelD3MultiClippingUnion.cxx
-  StepVisual_CameraModelD3MultiClippingUnion.hxx
+  StepVisual_CameraModelD3MultiClippingUnion.hpp
   StepVisual_CameraModelD3MultiClippingUnionSelect.cxx
-  StepVisual_CameraModelD3MultiClippingUnionSelect.hxx
+  StepVisual_CameraModelD3MultiClippingUnionSelect.hpp
   StepVisual_CameraUsage.cxx
-  StepVisual_CameraUsage.hxx
-  StepVisual_CentralOrParallel.hxx
+  StepVisual_CameraUsage.hpp
+  StepVisual_CentralOrParallel.hpp
   StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.cxx
-  StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.hxx
+  StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.hpp
   StepVisual_Colour.cxx
-  StepVisual_Colour.hxx
+  StepVisual_Colour.hpp
   StepVisual_ColourRgb.cxx
-  StepVisual_ColourRgb.hxx
+  StepVisual_ColourRgb.hpp
   StepVisual_ColourSpecification.cxx
-  StepVisual_ColourSpecification.hxx
+  StepVisual_ColourSpecification.hpp
   StepVisual_CompositeText.cxx
-  StepVisual_CompositeText.hxx
+  StepVisual_CompositeText.hpp
   StepVisual_CompositeTextWithExtent.cxx
-  StepVisual_CompositeTextWithExtent.hxx
+  StepVisual_CompositeTextWithExtent.hpp
   StepVisual_ContextDependentInvisibility.cxx
-  StepVisual_ContextDependentInvisibility.hxx
+  StepVisual_ContextDependentInvisibility.hpp
   StepVisual_ContextDependentOverRidingStyledItem.cxx
-  StepVisual_ContextDependentOverRidingStyledItem.hxx
+  StepVisual_ContextDependentOverRidingStyledItem.hpp
   StepVisual_CurveStyle.cxx
-  StepVisual_CurveStyle.hxx
+  StepVisual_CurveStyle.hpp
   StepVisual_CurveStyleFont.cxx
-  StepVisual_CurveStyleFont.hxx
+  StepVisual_CurveStyleFont.hpp
   StepVisual_CurveStyleFontPattern.cxx
-  StepVisual_CurveStyleFontPattern.hxx
+  StepVisual_CurveStyleFontPattern.hpp
   StepVisual_CurveStyleFontSelect.cxx
-  StepVisual_CurveStyleFontSelect.hxx
+  StepVisual_CurveStyleFontSelect.hpp
   StepVisual_DirectionCountSelect.cxx
-  StepVisual_DirectionCountSelect.hxx
+  StepVisual_DirectionCountSelect.hpp
   StepVisual_DraughtingAnnotationOccurrence.cxx
-  StepVisual_DraughtingAnnotationOccurrence.hxx
+  StepVisual_DraughtingAnnotationOccurrence.hpp
   StepVisual_DraughtingCallout.cxx
-  StepVisual_DraughtingCallout.hxx
+  StepVisual_DraughtingCallout.hpp
   StepVisual_DraughtingCalloutElement.cxx
-  StepVisual_DraughtingCalloutElement.hxx
+  StepVisual_DraughtingCalloutElement.hpp
   StepVisual_DraughtingModel.cxx
-  StepVisual_DraughtingModel.hxx
+  StepVisual_DraughtingModel.hpp
   StepVisual_DraughtingPreDefinedColour.cxx
-  StepVisual_DraughtingPreDefinedColour.hxx
+  StepVisual_DraughtingPreDefinedColour.hpp
   StepVisual_DraughtingPreDefinedCurveFont.cxx
-  StepVisual_DraughtingPreDefinedCurveFont.hxx
+  StepVisual_DraughtingPreDefinedCurveFont.hpp
   StepVisual_ExternallyDefinedCurveFont.cxx
-  StepVisual_ExternallyDefinedCurveFont.hxx
+  StepVisual_ExternallyDefinedCurveFont.hpp
   StepVisual_ExternallyDefinedTextFont.cxx
-  StepVisual_ExternallyDefinedTextFont.hxx
+  StepVisual_ExternallyDefinedTextFont.hpp
   StepVisual_FillAreaStyle.cxx
-  StepVisual_FillAreaStyle.hxx
+  StepVisual_FillAreaStyle.hpp
   StepVisual_FillAreaStyleColour.cxx
-  StepVisual_FillAreaStyleColour.hxx
+  StepVisual_FillAreaStyleColour.hpp
   StepVisual_FillStyleSelect.cxx
-  StepVisual_FillStyleSelect.hxx
+  StepVisual_FillStyleSelect.hpp
   StepVisual_FontSelect.cxx
-  StepVisual_FontSelect.hxx
+  StepVisual_FontSelect.hpp
 
   StepVisual_Invisibility.cxx
-  StepVisual_Invisibility.hxx
+  StepVisual_Invisibility.hpp
   StepVisual_InvisibilityContext.cxx
-  StepVisual_InvisibilityContext.hxx
+  StepVisual_InvisibilityContext.hpp
   StepVisual_InvisibleItem.cxx
-  StepVisual_InvisibleItem.hxx
+  StepVisual_InvisibleItem.hpp
   StepVisual_LayeredItem.cxx
-  StepVisual_LayeredItem.hxx
+  StepVisual_LayeredItem.hpp
   StepVisual_MarkerMember.cxx
-  StepVisual_MarkerMember.hxx
+  StepVisual_MarkerMember.hpp
   StepVisual_MarkerSelect.cxx
-  StepVisual_MarkerSelect.hxx
-  StepVisual_MarkerType.hxx
+  StepVisual_MarkerSelect.hpp
+  StepVisual_MarkerType.hpp
   StepVisual_MechanicalDesignGeometricPresentationArea.cxx
-  StepVisual_MechanicalDesignGeometricPresentationArea.hxx
+  StepVisual_MechanicalDesignGeometricPresentationArea.hpp
   StepVisual_MechanicalDesignGeometricPresentationRepresentation.cxx
-  StepVisual_MechanicalDesignGeometricPresentationRepresentation.hxx
-  StepVisual_NullStyle.hxx
+  StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp
+  StepVisual_NullStyle.hpp
   StepVisual_NullStyleMember.cxx
-  StepVisual_NullStyleMember.hxx
+  StepVisual_NullStyleMember.hpp
   StepVisual_OverRidingStyledItem.cxx
-  StepVisual_OverRidingStyledItem.hxx
+  StepVisual_OverRidingStyledItem.hpp
   StepVisual_PlanarBox.cxx
-  StepVisual_PlanarBox.hxx
+  StepVisual_PlanarBox.hpp
   StepVisual_PlanarExtent.cxx
-  StepVisual_PlanarExtent.hxx
+  StepVisual_PlanarExtent.hpp
   StepVisual_PointStyle.cxx
-  StepVisual_PointStyle.hxx
+  StepVisual_PointStyle.hpp
   StepVisual_PreDefinedColour.cxx
-  StepVisual_PreDefinedColour.hxx
+  StepVisual_PreDefinedColour.hpp
   StepVisual_PreDefinedCurveFont.cxx
-  StepVisual_PreDefinedCurveFont.hxx
+  StepVisual_PreDefinedCurveFont.hpp
   StepVisual_PreDefinedItem.cxx
-  StepVisual_PreDefinedItem.hxx
+  StepVisual_PreDefinedItem.hpp
   StepVisual_PreDefinedTextFont.cxx
-  StepVisual_PreDefinedTextFont.hxx
+  StepVisual_PreDefinedTextFont.hpp
   StepVisual_PresentationArea.cxx
-  StepVisual_PresentationArea.hxx
+  StepVisual_PresentationArea.hpp
   StepVisual_PresentationLayerAssignment.cxx
-  StepVisual_PresentationLayerAssignment.hxx
+  StepVisual_PresentationLayerAssignment.hpp
   StepVisual_PresentationLayerUsage.cxx
-  StepVisual_PresentationLayerUsage.hxx
+  StepVisual_PresentationLayerUsage.hpp
   StepVisual_PresentationRepresentation.cxx
-  StepVisual_PresentationRepresentation.hxx
+  StepVisual_PresentationRepresentation.hpp
   StepVisual_PresentationRepresentationSelect.cxx
-  StepVisual_PresentationRepresentationSelect.hxx
+  StepVisual_PresentationRepresentationSelect.hpp
   StepVisual_PresentationSet.cxx
-  StepVisual_PresentationSet.hxx
+  StepVisual_PresentationSet.hpp
   StepVisual_PresentationSize.cxx
-  StepVisual_PresentationSize.hxx
+  StepVisual_PresentationSize.hpp
   StepVisual_PresentationSizeAssignmentSelect.cxx
-  StepVisual_PresentationSizeAssignmentSelect.hxx
+  StepVisual_PresentationSizeAssignmentSelect.hpp
   StepVisual_PresentationStyleAssignment.cxx
-  StepVisual_PresentationStyleAssignment.hxx
+  StepVisual_PresentationStyleAssignment.hpp
   StepVisual_PresentationStyleByContext.cxx
-  StepVisual_PresentationStyleByContext.hxx
+  StepVisual_PresentationStyleByContext.hpp
   StepVisual_PresentationStyleSelect.cxx
-  StepVisual_PresentationStyleSelect.hxx
+  StepVisual_PresentationStyleSelect.hpp
   StepVisual_PresentationView.cxx
-  StepVisual_PresentationView.hxx
+  StepVisual_PresentationView.hpp
   StepVisual_PresentedItem.cxx
-  StepVisual_PresentedItem.hxx
+  StepVisual_PresentedItem.hpp
   StepVisual_PresentedItemRepresentation.cxx
-  StepVisual_PresentedItemRepresentation.hxx
+  StepVisual_PresentedItemRepresentation.hpp
   StepVisual_RenderingPropertiesSelect.cxx
-  StepVisual_RenderingPropertiesSelect.hxx
-  StepVisual_RepositionedTessellatedGeometricSet.hxx
+  StepVisual_RenderingPropertiesSelect.hpp
+  StepVisual_RepositionedTessellatedGeometricSet.hpp
   StepVisual_RepositionedTessellatedGeometricSet.cxx
-  StepVisual_RepositionedTessellatedItem.hxx
+  StepVisual_RepositionedTessellatedItem.hpp
   StepVisual_RepositionedTessellatedItem.cxx
-  StepVisual_ShadingSurfaceMethod.hxx
+  StepVisual_ShadingSurfaceMethod.hpp
   StepVisual_StyleContextSelect.cxx
-  StepVisual_StyleContextSelect.hxx
+  StepVisual_StyleContextSelect.hpp
   StepVisual_StyledItem.cxx
-  StepVisual_StyledItem.hxx
+  StepVisual_StyledItem.hpp
   StepVisual_StyledItemTarget.cxx
-  StepVisual_StyledItemTarget.hxx
-  StepVisual_SurfaceSide.hxx
+  StepVisual_StyledItemTarget.hpp
+  StepVisual_SurfaceSide.hpp
   StepVisual_SurfaceSideStyle.cxx
-  StepVisual_SurfaceSideStyle.hxx
+  StepVisual_SurfaceSideStyle.hpp
   StepVisual_SurfaceStyleBoundary.cxx
-  StepVisual_SurfaceStyleBoundary.hxx
+  StepVisual_SurfaceStyleBoundary.hpp
   StepVisual_SurfaceStyleControlGrid.cxx
-  StepVisual_SurfaceStyleControlGrid.hxx
+  StepVisual_SurfaceStyleControlGrid.hpp
   StepVisual_SurfaceStyleElementSelect.cxx
-  StepVisual_SurfaceStyleElementSelect.hxx
+  StepVisual_SurfaceStyleElementSelect.hpp
   StepVisual_SurfaceStyleFillArea.cxx
-  StepVisual_SurfaceStyleFillArea.hxx
+  StepVisual_SurfaceStyleFillArea.hpp
   StepVisual_SurfaceStyleParameterLine.cxx
-  StepVisual_SurfaceStyleParameterLine.hxx
+  StepVisual_SurfaceStyleParameterLine.hpp
   StepVisual_SurfaceStyleReflectanceAmbient.cxx
-  StepVisual_SurfaceStyleReflectanceAmbient.hxx
+  StepVisual_SurfaceStyleReflectanceAmbient.hpp
   StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.cxx
-  StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hxx
+  StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular.hpp
   StepVisual_SurfaceStyleReflectanceAmbientDiffuse.cxx
-  StepVisual_SurfaceStyleReflectanceAmbientDiffuse.hxx
+  StepVisual_SurfaceStyleReflectanceAmbientDiffuse.hpp
   StepVisual_SurfaceStyleRendering.cxx
-  StepVisual_SurfaceStyleRendering.hxx
+  StepVisual_SurfaceStyleRendering.hpp
   StepVisual_SurfaceStyleRenderingWithProperties.cxx
-  StepVisual_SurfaceStyleRenderingWithProperties.hxx
+  StepVisual_SurfaceStyleRenderingWithProperties.hpp
   StepVisual_SurfaceStyleSegmentationCurve.cxx
-  StepVisual_SurfaceStyleSegmentationCurve.hxx
+  StepVisual_SurfaceStyleSegmentationCurve.hpp
   StepVisual_SurfaceStyleSilhouette.cxx
-  StepVisual_SurfaceStyleSilhouette.hxx
+  StepVisual_SurfaceStyleSilhouette.hpp
   StepVisual_SurfaceStyleTransparent.cxx
-  StepVisual_SurfaceStyleTransparent.hxx
+  StepVisual_SurfaceStyleTransparent.hpp
   StepVisual_SurfaceStyleUsage.cxx
-  StepVisual_SurfaceStyleUsage.hxx
+  StepVisual_SurfaceStyleUsage.hpp
   StepVisual_Template.cxx
-  StepVisual_Template.hxx
+  StepVisual_Template.hpp
   StepVisual_TemplateInstance.cxx
-  StepVisual_TemplateInstance.hxx
+  StepVisual_TemplateInstance.hpp
   StepVisual_TextLiteral.cxx
-  StepVisual_TextLiteral.hxx
+  StepVisual_TextLiteral.hpp
   StepVisual_TextOrCharacter.cxx
-  StepVisual_TextOrCharacter.hxx
-  StepVisual_TextPath.hxx
+  StepVisual_TextOrCharacter.hpp
+  StepVisual_TextPath.hpp
   StepVisual_TextStyle.cxx
-  StepVisual_TextStyle.hxx
+  StepVisual_TextStyle.hpp
   StepVisual_TextStyleForDefinedFont.cxx
-  StepVisual_TextStyleForDefinedFont.hxx
+  StepVisual_TextStyleForDefinedFont.hpp
   StepVisual_TextStyleWithBoxCharacteristics.cxx
-  StepVisual_TextStyleWithBoxCharacteristics.hxx
+  StepVisual_TextStyleWithBoxCharacteristics.hpp
   StepVisual_ViewVolume.cxx
-  StepVisual_ViewVolume.hxx
-  StepVisual_TessellatedAnnotationOccurrence.hxx
+  StepVisual_ViewVolume.hpp
+  StepVisual_TessellatedAnnotationOccurrence.hpp
   StepVisual_TessellatedAnnotationOccurrence.cxx
-  StepVisual_TessellatedItem.hxx
+  StepVisual_TessellatedItem.hpp
   StepVisual_TessellatedItem.cxx
-  StepVisual_TessellatedGeometricSet.hxx
+  StepVisual_TessellatedGeometricSet.hpp
   StepVisual_TessellatedGeometricSet.cxx
-  StepVisual_TessellatedCurveSet.hxx
+  StepVisual_TessellatedCurveSet.hpp
   StepVisual_TessellatedCurveSet.cxx
-  StepVisual_CoordinatesList.hxx
+  StepVisual_CoordinatesList.hpp
   StepVisual_CoordinatesList.cxx
 
   StepVisual_ComplexTriangulatedFace.cxx
-  StepVisual_ComplexTriangulatedFace.hxx
+  StepVisual_ComplexTriangulatedFace.hpp
   StepVisual_ComplexTriangulatedSurfaceSet.cxx
-  StepVisual_ComplexTriangulatedSurfaceSet.hxx
+  StepVisual_ComplexTriangulatedSurfaceSet.hpp
   StepVisual_CubicBezierTessellatedEdge.cxx
-  StepVisual_CubicBezierTessellatedEdge.hxx
+  StepVisual_CubicBezierTessellatedEdge.hpp
   StepVisual_CubicBezierTriangulatedFace.cxx
-  StepVisual_CubicBezierTriangulatedFace.hxx
+  StepVisual_CubicBezierTriangulatedFace.hpp
   StepVisual_EdgeOrCurve.cxx
-  StepVisual_EdgeOrCurve.hxx
+  StepVisual_EdgeOrCurve.hpp
   StepVisual_FaceOrSurface.cxx
-  StepVisual_FaceOrSurface.hxx
+  StepVisual_FaceOrSurface.hpp
 
   StepVisual_PathOrCompositeCurve.cxx
-  StepVisual_PathOrCompositeCurve.hxx
+  StepVisual_PathOrCompositeCurve.hpp
   StepVisual_TessellatedConnectingEdge.cxx
-  StepVisual_TessellatedConnectingEdge.hxx
+  StepVisual_TessellatedConnectingEdge.hpp
   StepVisual_TessellatedEdge.cxx
-  StepVisual_TessellatedEdge.hxx
+  StepVisual_TessellatedEdge.hpp
   StepVisual_TessellatedEdgeOrVertex.cxx
-  StepVisual_TessellatedEdgeOrVertex.hxx
+  StepVisual_TessellatedEdgeOrVertex.hpp
   StepVisual_TessellatedFace.cxx
-  StepVisual_TessellatedFace.hxx
+  StepVisual_TessellatedFace.hpp
   StepVisual_TessellatedPointSet.cxx
-  StepVisual_TessellatedPointSet.hxx
+  StepVisual_TessellatedPointSet.hpp
   StepVisual_TessellatedShapeRepresentation.cxx
-  StepVisual_TessellatedShapeRepresentation.hxx
+  StepVisual_TessellatedShapeRepresentation.hpp
   StepVisual_TessellatedShapeRepresentationWithAccuracyParameters.cxx
-  StepVisual_TessellatedShapeRepresentationWithAccuracyParameters.hxx
+  StepVisual_TessellatedShapeRepresentationWithAccuracyParameters.hpp
   StepVisual_TessellatedShell.cxx
-  StepVisual_TessellatedShell.hxx
+  StepVisual_TessellatedShell.hpp
   StepVisual_TessellatedSolid.cxx
-  StepVisual_TessellatedSolid.hxx
+  StepVisual_TessellatedSolid.hpp
   StepVisual_TessellatedStructuredItem.cxx
-  StepVisual_TessellatedStructuredItem.hxx
+  StepVisual_TessellatedStructuredItem.hpp
   StepVisual_TessellatedSurfaceSet.cxx
-  StepVisual_TessellatedSurfaceSet.hxx
+  StepVisual_TessellatedSurfaceSet.hpp
   StepVisual_TessellatedVertex.cxx
-  StepVisual_TessellatedVertex.hxx
+  StepVisual_TessellatedVertex.hpp
   StepVisual_TessellatedWire.cxx
-  StepVisual_TessellatedWire.hxx
+  StepVisual_TessellatedWire.hpp
   StepVisual_TriangulatedFace.cxx
-  StepVisual_TriangulatedFace.hxx
+  StepVisual_TriangulatedFace.hpp
   StepVisual_TriangulatedSurfaceSet.cxx
-  StepVisual_TriangulatedSurfaceSet.hxx
+  StepVisual_TriangulatedSurfaceSet.hpp
 )

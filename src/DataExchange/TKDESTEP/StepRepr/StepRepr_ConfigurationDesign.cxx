@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepRepr_ConfigurationDesign.hxx>
-#include <StepRepr_ConfigurationDesignItem.hxx>
-#include <StepRepr_ConfigurationItem.hxx>
+#include <StepRepr_ConfigurationDesign.hpp>
+#include <StepRepr_ConfigurationDesignItem.hpp>
+#include <StepRepr_ConfigurationItem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ConfigurationDesign, Standard_Transient)
 

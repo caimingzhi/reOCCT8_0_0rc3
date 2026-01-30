@@ -13,22 +13,22 @@
 
 // szv#9:PRO19565:04Oct99 loss of rotation matrix corrected
 
-#include <gp_Ax3.hxx>
-#include <gp_Dir.hxx>
-#include <gp_GTrsf.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <IGESData_GeneralModule.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESData_Protocol.hxx>
-#include <IGESData_SingleParentEntity.hxx>
-#include <IGESData_ToolLocation.hxx>
-#include <IGESData_TransfEntity.hxx>
-#include <Interface_EntityIterator.hxx>
-#include <MoniTool_Macros.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Type.hxx>
+#include <gp_Ax3.hpp>
+#include <gp_Dir.hpp>
+#include <gp_GTrsf.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <IGESData_GeneralModule.hpp>
+#include <IGESData_IGESModel.hpp>
+#include <IGESData_Protocol.hpp>
+#include <IGESData_SingleParentEntity.hpp>
+#include <IGESData_ToolLocation.hpp>
+#include <IGESData_TransfEntity.hpp>
+#include <Interface_EntityIterator.hpp>
+#include <MoniTool_Macros.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_ToolLocation, Standard_Transient)
 

@@ -11,19 +11,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IGESDefs_Protocol.hxx>
+#include <IGESDefs_Protocol.hpp>
 
-#include <IGESDefs_AssociativityDef.hxx>
-#include <IGESDefs_AttributeDef.hxx>
-#include <IGESDefs_AttributeTable.hxx>
-#include <IGESDefs_GenericData.hxx>
-#include <IGESDefs_MacroDef.hxx>
-#include <IGESDefs_TabularData.hxx>
-#include <IGESDefs_UnitsData.hxx>
-#include <IGESGraph.hxx>
-#include <IGESGraph_Protocol.hxx>
-#include <Interface_Protocol.hxx>
-#include <Standard_Type.hxx>
+#include <IGESDefs_AssociativityDef.hpp>
+#include <IGESDefs_AttributeDef.hpp>
+#include <IGESDefs_AttributeTable.hpp>
+#include <IGESDefs_GenericData.hpp>
+#include <IGESDefs_MacroDef.hpp>
+#include <IGESDefs_TabularData.hpp>
+#include <IGESDefs_UnitsData.hpp>
+#include <IGESGraph.hpp>
+#include <IGESGraph_Protocol.hpp>
+#include <Interface_Protocol.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_Protocol, IGESData_Protocol)
 

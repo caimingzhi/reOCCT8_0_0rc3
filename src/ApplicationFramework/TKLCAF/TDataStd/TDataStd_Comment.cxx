@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TDataStd_Comment.hxx>
+#include <TDataStd_Comment.hpp>
 
-#include <Standard_Dump.hxx>
-#include <TDF_Label.hxx>
+#include <Standard_Dump.hpp>
+#include <TDF_Label.hpp>
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_Comment, TDataStd_GenericExtString)
 

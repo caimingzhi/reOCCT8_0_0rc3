@@ -15,18 +15,18 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Bnd_OBB.hxx>
-#include <Bnd_Tools.hxx>
-#include <BOPDS_DS.hxx>
-#include <BOPDS_IndexRange.hxx>
-#include <BOPDS_Iterator.hxx>
-#include <BOPDS_Pair.hxx>
-#include <NCollection_Map.hxx>
-#include <BOPDS_Tools.hxx>
-#include <BOPTools_BoxTree.hxx>
-#include <BOPTools_Parallel.hxx>
-#include <IntTools_Context.hxx>
-#include <NCollection_Vector.hxx>
+#include <Bnd_OBB.hpp>
+#include <Bnd_Tools.hpp>
+#include <BOPDS_DS.hpp>
+#include <BOPDS_IndexRange.hpp>
+#include <BOPDS_Iterator.hpp>
+#include <BOPDS_Pair.hpp>
+#include <NCollection_Map.hpp>
+#include <BOPDS_Tools.hpp>
+#include <BOPTools_BoxTree.hpp>
+#include <BOPTools_Parallel.hpp>
+#include <IntTools_Context.hpp>
+#include <NCollection_Vector.hpp>
 #include <algorithm>
 
 /////////////////////////////////////////////////////////////////////////

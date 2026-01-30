@@ -12,8 +12,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IntSurf_Transition.hxx>
-#include <Standard_DomainError.hxx>
+#include <IntSurf_Transition.hpp>
+#include <Standard_DomainError.hpp>
 
 IntSurf_Transition::IntSurf_Transition(const bool Tangent, const IntSurf_TypeTrans Type)
     : tangent(Tangent),

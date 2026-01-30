@@ -15,8 +15,8 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_ParametricSurface3dElementCoordinateSystem.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepFEA_ParametricSurface3dElementCoordinateSystem.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ParametricSurface3dElementCoordinateSystem,
                            StepFEA_FeaRepresentationItem)

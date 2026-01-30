@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <Vrml_MatrixTransform.hxx>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <Vrml_MatrixTransform.hpp>
 
 Vrml_MatrixTransform::Vrml_MatrixTransform()
 {

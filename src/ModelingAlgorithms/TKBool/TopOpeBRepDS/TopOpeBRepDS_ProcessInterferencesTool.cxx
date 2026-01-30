@@ -14,24 +14,24 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TopOpeBRepDS_InterferenceTool.hxx>
-#include <TopOpeBRepDS_ProcessInterferencesTool.hxx>
-#include <TopOpeBRepDS_EdgeVertexInterference.hxx>
-#include <TopOpeBRepDS_TKI.hxx>
-#include <TopoDS.hxx>
-#include <BRepAdaptor_Surface.hxx>
-// #include <BRepAdaptor_Curve2d.hxx>
-#include <BRep_Tool.hxx>
-#include <Precision.hxx>
-#include <Standard_Integer.hxx>
-#include <NCollection_Map.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TopOpeBRepDS_define.hxx>
-#include <TopOpeBRepTool_TOOL.hxx>
-#include <TopOpeBRepTool_GEOMETRY.hxx>
-#include <TopOpeBRepTool_PROJECT.hxx>
-#include <TopOpeBRepTool_TOPOLOGY.hxx>
-#include <TopOpeBRepDS_EXPORT.hxx>
+#include <TopOpeBRepDS_InterferenceTool.hpp>
+#include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
+#include <TopOpeBRepDS_EdgeVertexInterference.hpp>
+#include <TopOpeBRepDS_TKI.hpp>
+#include <TopoDS.hpp>
+#include <BRepAdaptor_Surface.hpp>
+// #include <BRepAdaptor_Curve2d.hpp>
+#include <BRep_Tool.hpp>
+#include <Precision.hpp>
+#include <Standard_Integer.hpp>
+#include <NCollection_Map.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TopOpeBRepDS_define.hpp>
+#include <TopOpeBRepTool_TOOL.hpp>
+#include <TopOpeBRepTool_GEOMETRY.hpp>
+#include <TopOpeBRepTool_PROJECT.hpp>
+#include <TopOpeBRepTool_TOPOLOGY.hpp>
+#include <TopOpeBRepDS_EXPORT.hpp>
 
 //-----------------------------------------------------------------------
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeCPVInterference(

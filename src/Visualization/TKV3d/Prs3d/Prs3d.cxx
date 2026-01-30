@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Prs3d.hxx>
+#include <Prs3d.hpp>
 
-#include <gp_Pnt.hxx>
-#include <Graphic3d_ArrayOfSegments.hxx>
-#include <Graphic3d_Group.hxx>
-#include <Poly_Connect.hxx>
-#include <Poly_Triangulation.hxx>
-#include <Prs3d_LineAspect.hxx>
+#include <gp_Pnt.hpp>
+#include <Graphic3d_ArrayOfSegments.hpp>
+#include <Graphic3d_Group.hpp>
+#include <Poly_Connect.hpp>
+#include <Poly_Triangulation.hpp>
+#include <Prs3d_LineAspect.hpp>
 
 //=================================================================================================
 

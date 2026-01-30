@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWApproval.pxx"
-#include <StepBasic_Approval.hxx>
-#include <StepBasic_ApprovalStatus.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWApproval.hpp"
+#include <StepBasic_Approval.hpp>
+#include <StepBasic_ApprovalStatus.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWApproval::RWStepBasic_RWApproval() = default;
 

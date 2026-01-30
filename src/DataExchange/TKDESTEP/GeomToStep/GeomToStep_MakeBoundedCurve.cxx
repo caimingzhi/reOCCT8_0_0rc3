@@ -14,22 +14,22 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Geom2d_BezierCurve.hxx>
-#include <Geom2d_BoundedCurve.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Geom2dConvert.hxx>
-#include <Geom_BezierCurve.hxx>
-#include <Geom_BoundedCurve.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomConvert.hxx>
-#include <GeomToStep_MakeBoundedCurve.hxx>
-#include <GeomToStep_MakeBSplineCurveWithKnots.hxx>
-#include <GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
-#include <StdFail_NotDone.hxx>
-#include <StepData_Factors.hxx>
-#include <StepGeom_BoundedCurve.hxx>
-#include <StepGeom_BSplineCurveWithKnots.hxx>
-#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hxx>
+#include <Geom2d_BezierCurve.hpp>
+#include <Geom2d_BoundedCurve.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Geom2dConvert.hpp>
+#include <Geom_BezierCurve.hpp>
+#include <Geom_BoundedCurve.hpp>
+#include <Geom_BSplineCurve.hpp>
+#include <GeomConvert.hpp>
+#include <GeomToStep_MakeBoundedCurve.hpp>
+#include <GeomToStep_MakeBSplineCurveWithKnots.hpp>
+#include <GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
+#include <StdFail_NotDone.hpp>
+#include <StepData_Factors.hpp>
+#include <StepGeom_BoundedCurve.hpp>
+#include <StepGeom_BSplineCurveWithKnots.hpp>
+#include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
 
 //=============================================================================
 // Creation d' une BoundedCurve de prostep a partir d' une BoundedCurve de Geom

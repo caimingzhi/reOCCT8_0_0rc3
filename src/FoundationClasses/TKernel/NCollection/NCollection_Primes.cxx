@@ -11,9 +11,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <NCollection_Primes.hxx>
+#include <NCollection_Primes.hpp>
 
-#include <Standard_OutOfRange.hxx>
+#include <Standard_OutOfRange.hpp>
 
 #include <algorithm>
 #include <array>

@@ -11,8 +11,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MoniTool_RealVal.hxx>
-#include <Standard_Type.hxx>
+#include <MoniTool_RealVal.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_RealVal, Standard_Transient)
 

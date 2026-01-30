@@ -13,13 +13,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDF_Tool.hxx>
-#include <TFunction_Function.hxx>
-#include <XmlMFunction_FunctionDriver.hxx>
-#include <XmlObjMgt.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDF_Tool.hpp>
+#include <TFunction_Function.hpp>
+#include <XmlMFunction_FunctionDriver.hpp>
+#include <XmlObjMgt.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMFunction_FunctionDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(GuidString, "guid")

@@ -4,28 +4,28 @@ set(OCCT_XCAFDimTolObjects_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_XCAFDimTolObjects_FILES
   FILES
   XCAFDimTolObjects_DatumObject.cxx
-  XCAFDimTolObjects_DatumObject.hxx
+  XCAFDimTolObjects_DatumObject.hpp
   XCAFDimTolObjects_DimensionObject.cxx
-  XCAFDimTolObjects_DimensionObject.hxx
+  XCAFDimTolObjects_DimensionObject.hpp
   XCAFDimTolObjects_GeomToleranceObject.cxx
-  XCAFDimTolObjects_GeomToleranceObject.hxx
+  XCAFDimTolObjects_GeomToleranceObject.hpp
   XCAFDimTolObjects_Tool.cxx
-  XCAFDimTolObjects_Tool.hxx
-  XCAFDimTolObjects_DatumModifWithValue.hxx
-  XCAFDimTolObjects_DatumSingleModif.hxx
-  XCAFDimTolObjects_DatumTargetType.hxx
-  XCAFDimTolObjects_DimensionModif.hxx
-  XCAFDimTolObjects_DimensionFormVariance.hxx
-  XCAFDimTolObjects_DimensionGrade.hxx
-  XCAFDimTolObjects_DimensionQualifier.hxx
-  XCAFDimTolObjects_DimensionType.hxx
-  XCAFDimTolObjects_GeomToleranceModif.hxx
-  XCAFDimTolObjects_GeomToleranceType.hxx
-  XCAFDimTolObjects_GeomToleranceTypeValue.hxx
-  XCAFDimTolObjects_GeomToleranceMatReqModif.hxx
-  XCAFDimTolObjects_GeomToleranceZoneModif.hxx
+  XCAFDimTolObjects_Tool.hpp
+  XCAFDimTolObjects_DatumModifWithValue.hpp
+  XCAFDimTolObjects_DatumSingleModif.hpp
+  XCAFDimTolObjects_DatumTargetType.hpp
+  XCAFDimTolObjects_DimensionModif.hpp
+  XCAFDimTolObjects_DimensionFormVariance.hpp
+  XCAFDimTolObjects_DimensionGrade.hpp
+  XCAFDimTolObjects_DimensionQualifier.hpp
+  XCAFDimTolObjects_DimensionType.hpp
+  XCAFDimTolObjects_GeomToleranceModif.hpp
+  XCAFDimTolObjects_GeomToleranceType.hpp
+  XCAFDimTolObjects_GeomToleranceTypeValue.hpp
+  XCAFDimTolObjects_GeomToleranceMatReqModif.hpp
+  XCAFDimTolObjects_GeomToleranceZoneModif.hpp
 
 
-  XCAFDimTolObjects_ToleranceZoneAffectedPlane.hxx
-  XCAFDimTolObjects_AngularQualifier.hxx
+  XCAFDimTolObjects_ToleranceZoneAffectedPlane.hpp
+  XCAFDimTolObjects_AngularQualifier.hpp
 )

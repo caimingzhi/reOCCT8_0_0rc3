@@ -18,10 +18,10 @@
 // Version	Date		Purpose
 //		0.0	May 26 1997	Creation
 
-#include <TDF_IDFilter.hxx>
-#include <Standard_GUID.hxx>
-#include <NCollection_List.hxx>
-#include <NCollection_Map.hxx>
+#include <TDF_IDFilter.hpp>
+#include <Standard_GUID.hpp>
+#include <NCollection_List.hpp>
+#include <NCollection_Map.hpp>
 
 // To avoid too much resizing actions, et 23 est un nombre premier.
 #define TDF_IDFilterMapSize 23

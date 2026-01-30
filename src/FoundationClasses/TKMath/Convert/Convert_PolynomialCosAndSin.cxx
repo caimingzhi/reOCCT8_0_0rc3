@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Convert_PolynomialCosAndSin.hxx>
+#include <Convert_PolynomialCosAndSin.hpp>
 
-#include <gp_Trsf2d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_XY.hxx>
+#include <gp_Trsf2d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_XY.hpp>
 
-#include <gp.hxx>
-#include <Precision.hxx>
-#include <BSplCLib.hxx>
+#include <gp.hpp>
+#include <Precision.hpp>
+#include <BSplCLib.hpp>
 
 static double Locate(const double                        Angfin,
                      const NCollection_Array1<gp_Pnt2d>& TPoles,

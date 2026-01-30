@@ -13,11 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_Type.hxx>
-#include <StepBasic_MeasureWithUnit.hxx>
-#include <StepRepr_MeasureRepresentationItem.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepRepr_ReprItemAndMeasureWithUnit.hxx>
+#include <Standard_Type.hpp>
+#include <StepBasic_MeasureWithUnit.hpp>
+#include <StepRepr_MeasureRepresentationItem.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepRepr_ReprItemAndMeasureWithUnit.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ReprItemAndMeasureWithUnit, StepRepr_RepresentationItem)
 

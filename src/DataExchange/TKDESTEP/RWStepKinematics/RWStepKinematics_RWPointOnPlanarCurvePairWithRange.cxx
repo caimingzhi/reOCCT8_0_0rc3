@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include "RWStepKinematics_RWPointOnPlanarCurvePairWithRange.pxx"
+#include "RWStepKinematics_RWPointOnPlanarCurvePairWithRange.hpp"
 
-#include <Interface_EntityIterator.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
-#include <StepKinematics_PointOnPlanarCurvePairWithRange.hxx>
-#include <TCollection_HAsciiString.hxx>
-#include <StepRepr_ItemDefinedTransformation.hxx>
-#include <StepRepr_RepresentationItem.hxx>
-#include <StepKinematics_KinematicJoint.hxx>
-#include <StepGeom_Curve.hxx>
-#include <StepGeom_TrimmedCurve.hxx>
-#include <Standard_Real.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
+#include <StepKinematics_PointOnPlanarCurvePairWithRange.hpp>
+#include <TCollection_HAsciiString.hpp>
+#include <StepRepr_ItemDefinedTransformation.hpp>
+#include <StepRepr_RepresentationItem.hpp>
+#include <StepKinematics_KinematicJoint.hpp>
+#include <StepGeom_Curve.hpp>
+#include <StepGeom_TrimmedCurve.hpp>
+#include <Standard_Real.hpp>
 
 //=================================================================================================
 

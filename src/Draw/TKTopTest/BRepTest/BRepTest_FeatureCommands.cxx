@@ -14,47 +14,47 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Interpretor.hxx>
-#include <Draw_Appli.hxx>
-#include <DrawTrSurf.hxx>
-#include <Draw_ProgressIndicator.hxx>
+#include <Draw_Interpretor.hpp>
+#include <Draw_Appli.hpp>
+#include <DrawTrSurf.hpp>
+#include <Draw_ProgressIndicator.hpp>
 
-#include <TopExp_Explorer.hxx>
+#include <TopExp_Explorer.hpp>
 
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <Geom_Plane.hxx>
-#include <Geom_CylindricalSurface.hxx>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <Geom_Plane.hpp>
+#include <Geom_CylindricalSurface.hpp>
 
 // #include <BRepFeat_LocalOperation.hxx>
-#include <BRepFeat_MakeCylindricalHole.hxx>
-#include <BRepFeat_SplitShape.hxx>
-#include <BRepFeat_Gluer.hxx>
+#include <BRepFeat_MakeCylindricalHole.hpp>
+#include <BRepFeat_SplitShape.hpp>
+#include <BRepFeat_Gluer.hpp>
 
-#include <BRepFeat.hxx>
-#include <BRepFeat_MakePrism.hxx>
-#include <BRepFeat_MakeRevol.hxx>
-#include <BRepFeat_MakePipe.hxx>
-#include <BRepFeat_MakeDPrism.hxx>
-#include <BRepFeat_MakeLinearForm.hxx>
-#include <BRepFeat_MakeRevolutionForm.hxx>
+#include <BRepFeat.hpp>
+#include <BRepFeat_MakePrism.hpp>
+#include <BRepFeat_MakeRevol.hpp>
+#include <BRepFeat_MakePipe.hpp>
+#include <BRepFeat_MakeDPrism.hpp>
+#include <BRepFeat_MakeLinearForm.hpp>
+#include <BRepFeat_MakeRevolutionForm.hpp>
 
-#include <LocOpe_FindEdges.hxx>
-#include <LocOpe_FindEdgesInFace.hxx>
+#include <LocOpe_FindEdges.hpp>
+#include <LocOpe_FindEdgesInFace.hpp>
 
-#include <BRepOffset_MakeOffset.hxx>
-#include <BRepOffsetAPI_MakeOffsetShape.hxx>
-#include <BRepOffset_MakeSimpleOffset.hxx>
-#include <BRep_Builder.hxx>
-#include <DBRep.hxx>
-#include <DBRep_DrawableShape.hxx>
-#include <BRepTest.hxx>
-#include <BRepTest_Objects.hxx>
+#include <BRepOffset_MakeOffset.hpp>
+#include <BRepOffsetAPI_MakeOffsetShape.hpp>
+#include <BRepOffset_MakeSimpleOffset.hpp>
+#include <BRep_Builder.hpp>
+#include <DBRep.hpp>
+#include <DBRep_DrawableShape.hpp>
+#include <BRepTest.hpp>
+#include <BRepTest_Objects.hpp>
 
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <ChFi3d_FilletShape.hxx>
-#include <Message.hxx>
+#include <BRepFilletAPI_MakeFillet.hpp>
+#include <ChFi3d_FilletShape.hpp>
+#include <Message.hpp>
 
-#include <Precision.hxx>
+#include <Precision.hpp>
 
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;

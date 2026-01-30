@@ -2,10 +2,10 @@
 set(OCCT_SelectBasics_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_SelectBasics_FILES
-  SelectBasics.hxx
+  SelectBasics.hpp
 
-  SelectBasics_PickResult.hxx
+  SelectBasics_PickResult.hpp
   SelectBasics_SelectingVolumeManager.cxx
-  SelectBasics_SelectingVolumeManager.hxx
+  SelectBasics_SelectingVolumeManager.hpp
 
 )

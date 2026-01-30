@@ -14,10 +14,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <gp_Pln.hxx>
-#include <gp_XY.hxx>
-#include <Plate_PinpointConstraint.hxx>
-#include <Plate_PlaneConstraint.hxx>
+#include <gp_Pln.hpp>
+#include <gp_XY.hpp>
+#include <Plate_PinpointConstraint.hpp>
+#include <Plate_PlaneConstraint.hpp>
 
 Plate_PlaneConstraint::Plate_PlaneConstraint(const gp_XY&  point2d,
                                              const gp_Pln& pln,

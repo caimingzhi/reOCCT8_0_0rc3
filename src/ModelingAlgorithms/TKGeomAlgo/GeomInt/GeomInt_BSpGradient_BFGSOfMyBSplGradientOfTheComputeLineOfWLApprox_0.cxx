@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfWLApprox.hxx>
+#include <GeomInt_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfWLApprox.hpp>
 
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_TheMultiLineToolOfWLApprox.hxx>
-#include <GeomInt_MyBSplGradientOfTheComputeLineOfWLApprox.hxx>
-#include <GeomInt_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfWLApprox.hxx>
-#include <GeomInt_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfWLApprox.hxx>
-#include <math_MultipleVarFunctionWithGradient.hxx>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_TheMultiLineToolOfWLApprox.hpp>
+#include <GeomInt_MyBSplGradientOfTheComputeLineOfWLApprox.hpp>
+#include <GeomInt_BSpParLeastSquareOfMyBSplGradientOfTheComputeLineOfWLApprox.hpp>
+#include <GeomInt_BSpParFunctionOfMyBSplGradientOfTheComputeLineOfWLApprox.hpp>
+#include <math_MultipleVarFunctionWithGradient.hpp>
 
 GeomInt_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfWLApprox::
   GeomInt_BSpGradient_BFGSOfMyBSplGradientOfTheComputeLineOfWLApprox(

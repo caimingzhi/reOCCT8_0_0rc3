@@ -14,9 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GccInt_BLine.hxx>
-#include <gp_Lin2d.hxx>
-#include <Standard_Type.hxx>
+#include <GccInt_BLine.hpp>
+#include <gp_Lin2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(GccInt_BLine, GccInt_Bisec)
 

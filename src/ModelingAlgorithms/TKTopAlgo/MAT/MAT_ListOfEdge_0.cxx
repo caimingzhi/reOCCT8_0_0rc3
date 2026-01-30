@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <MAT_ListOfEdge.hxx>
+#include <MAT_ListOfEdge.hpp>
 
-#include <Standard_Type.hxx>
+#include <Standard_Type.hpp>
 
-#include <MAT_TListNodeOfListOfEdge.hxx>
-#include <MAT_Edge.hxx>
+#include <MAT_TListNodeOfListOfEdge.hpp>
+#include <MAT_Edge.hpp>
 
 #define Item occ::handle<MAT_Edge>
-#define Item_hxx <MAT_Edge.hxx>
+#define Item_hxx <MAT_Edge.hpp>
 #define MAT_TListNode MAT_TListNodeOfListOfEdge
-#define MAT_TListNode_hxx <MAT_TListNodeOfListOfEdge.hxx>
+#define MAT_TListNode_hxx <MAT_TListNodeOfListOfEdge.hpp>
 #define Handle_MAT_TListNode occ::handle<MAT_TListNodeOfListOfEdge>
 #define MAT_TList MAT_ListOfEdge
-#define MAT_TList_hxx <MAT_ListOfEdge.hxx>
+#define MAT_TList_hxx <MAT_ListOfEdge.hpp>
 #define Handle_MAT_TList occ::handle<MAT_ListOfEdge>
-#include <MAT_TList.gxx>
+#include <MAT_TList.hpp>

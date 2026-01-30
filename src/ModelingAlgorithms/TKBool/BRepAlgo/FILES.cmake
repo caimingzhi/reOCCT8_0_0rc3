@@ -3,16 +3,16 @@ set(OCCT_BRepAlgo_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_BRepAlgo_FILES
   BRepAlgo.cxx
-  BRepAlgo.hxx
+  BRepAlgo.hpp
   BRepAlgo_1.cxx
   BRepAlgo_AsDes.cxx
-  BRepAlgo_AsDes.hxx
+  BRepAlgo_AsDes.hpp
   BRepAlgo_FaceRestrictor.cxx
-  BRepAlgo_FaceRestrictor.hxx
+  BRepAlgo_FaceRestrictor.hpp
   BRepAlgo_Image.cxx
-  BRepAlgo_Image.hxx
+  BRepAlgo_Image.hpp
   BRepAlgo_Loop.cxx
-  BRepAlgo_Loop.hxx
+  BRepAlgo_Loop.hpp
   BRepAlgo_NormalProjection.cxx
-  BRepAlgo_NormalProjection.hxx
+  BRepAlgo_NormalProjection.hpp
 )

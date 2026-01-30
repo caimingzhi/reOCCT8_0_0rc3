@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GeomInt_ResConstraintOfMyGradientbisOfTheComputeLineOfWLApprox.hxx>
+#include <GeomInt_ResConstraintOfMyGradientbisOfTheComputeLineOfWLApprox.hpp>
 
-#include <Standard_OutOfRange.hxx>
-#include <GeomInt_TheMultiLineOfWLApprox.hxx>
-#include <GeomInt_TheMultiLineToolOfWLApprox.hxx>
-#include <AppParCurves_MultiCurve.hxx>
-#include <math_Matrix.hxx>
+#include <Standard_OutOfRange.hpp>
+#include <GeomInt_TheMultiLineOfWLApprox.hpp>
+#include <GeomInt_TheMultiLineToolOfWLApprox.hpp>
+#include <AppParCurves_MultiCurve.hpp>
+#include <math_Matrix.hpp>
 
 #define MultiLine GeomInt_TheMultiLineOfWLApprox
-#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hxx>
+#define MultiLine_hxx <GeomInt_TheMultiLineOfWLApprox.hpp>
 #define ToolLine GeomInt_TheMultiLineToolOfWLApprox
-#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hxx>
+#define ToolLine_hxx <GeomInt_TheMultiLineToolOfWLApprox.hpp>
 #define AppParCurves_ResolConstraint GeomInt_ResConstraintOfMyGradientbisOfTheComputeLineOfWLApprox
 #define AppParCurves_ResolConstraint_hxx                                                           \
-  <GeomInt_ResConstraintOfMyGradientbisOfTheComputeLineOfWLApprox.hxx>
-#include <AppParCurves_ResolConstraint.gxx>
+  <GeomInt_ResConstraintOfMyGradientbisOfTheComputeLineOfWLApprox.hpp>
+#include <AppParCurves_ResolConstraint.hpp>

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <Standard_Type.hxx>
-#include <TDataStd_GenericEmpty.hxx>
-#include <TDF_Attribute.hxx>
-#include <XmlMDataStd_GenericEmptyDriver.hxx>
-#include <XmlObjMgt_Persistent.hxx>
+#include <Message_Messenger.hpp>
+#include <Standard_Type.hpp>
+#include <TDataStd_GenericEmpty.hpp>
+#include <TDF_Attribute.hpp>
+#include <XmlMDataStd_GenericEmptyDriver.hpp>
+#include <XmlObjMgt_Persistent.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_GenericEmptyDriver, XmlMDF_ADriver)
 

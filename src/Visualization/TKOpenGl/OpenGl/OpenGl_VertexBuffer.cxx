@@ -12,9 +12,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_VertexBuffer.hxx>
+#include <OpenGl_VertexBuffer.hpp>
 
-#include <OpenGl_ShaderManager.hxx>
+#include <OpenGl_ShaderManager.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_VertexBuffer, OpenGl_Buffer)
 

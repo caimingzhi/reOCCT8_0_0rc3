@@ -11,17 +11,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepAP214_RWAutoDesignDateAndPersonAssignment.pxx"
-#include <StepAP214_AutoDesignDateAndPersonAssignment.hxx>
-#include <StepAP214_AutoDesignDateAndPersonItem.hxx>
-#include <NCollection_Array1.hxx>
-#include <NCollection_HArray1.hxx>
-#include <StepBasic_PersonAndOrganization.hxx>
-#include <StepBasic_PersonAndOrganizationRole.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepAP214_RWAutoDesignDateAndPersonAssignment.hpp"
+#include <StepAP214_AutoDesignDateAndPersonAssignment.hpp>
+#include <StepAP214_AutoDesignDateAndPersonItem.hpp>
+#include <NCollection_Array1.hpp>
+#include <NCollection_HArray1.hpp>
+#include <StepBasic_PersonAndOrganization.hpp>
+#include <StepBasic_PersonAndOrganizationRole.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepAP214_RWAutoDesignDateAndPersonAssignment::RWStepAP214_RWAutoDesignDateAndPersonAssignment() =
   default;

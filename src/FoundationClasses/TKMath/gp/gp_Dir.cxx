@@ -14,15 +14,15 @@
 
 // JCV 07/12/90 Modifs suite a l'introduction des classes XYZ et Mat dans gp
 
-#include <gp_Dir.hxx>
+#include <gp_Dir.hpp>
 
-#include <gp_Ax2.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_XYZ.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_DomainError.hxx>
-#include <Standard_Dump.hxx>
-#include <Standard_OutOfRange.hxx>
+#include <gp_Ax2.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_XYZ.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_Dump.hpp>
+#include <Standard_OutOfRange.hpp>
 
 double gp_Dir::Angle(const gp_Dir& Other) const
 {

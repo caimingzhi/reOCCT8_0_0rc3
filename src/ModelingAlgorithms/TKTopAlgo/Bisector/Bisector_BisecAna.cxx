@@ -17,32 +17,32 @@
 //  Modified by skv - Fri Jul  1 16:23:17 2005 IDEM(Airbus)
 //  Modified by skv - Wed Jul  7 17:21:09 2004 IDEM(Airbus)
 
-#include <Bisector_BisecAna.hxx>
-#include <ElCLib.hxx>
-#include <GccAna_Circ2dBisec.hxx>
-#include <GccAna_CircLin2dBisec.hxx>
-#include <GccAna_CircPnt2dBisec.hxx>
-#include <GccAna_LinPnt2dBisec.hxx>
-#include <GccAna_Pnt2dBisec.hxx>
-#include <GccInt_BLine.hxx>
-#include <GccInt_IType.hxx>
-#include <Geom2d_Circle.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom2d_Ellipse.hxx>
-#include <Geom2d_Geometry.hxx>
-#include <Geom2d_Hyperbola.hxx>
-#include <Geom2d_Line.hxx>
-#include <Geom2d_Parabola.hxx>
-#include <Geom2d_Point.hxx>
-#include <Geom2d_TrimmedCurve.hxx>
-#include <Geom2dAdaptor_Curve.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Trsf2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <IntAna2d_AnaIntersection.hxx>
-#include <Precision.hxx>
-#include <Standard_Type.hxx>
-#include <StdFail_NotDone.hxx>
+#include <Bisector_BisecAna.hpp>
+#include <ElCLib.hpp>
+#include <GccAna_Circ2dBisec.hpp>
+#include <GccAna_CircLin2dBisec.hpp>
+#include <GccAna_CircPnt2dBisec.hpp>
+#include <GccAna_LinPnt2dBisec.hpp>
+#include <GccAna_Pnt2dBisec.hpp>
+#include <GccInt_BLine.hpp>
+#include <GccInt_IType.hpp>
+#include <Geom2d_Circle.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom2d_Ellipse.hpp>
+#include <Geom2d_Geometry.hpp>
+#include <Geom2d_Hyperbola.hpp>
+#include <Geom2d_Line.hpp>
+#include <Geom2d_Parabola.hpp>
+#include <Geom2d_Point.hpp>
+#include <Geom2d_TrimmedCurve.hpp>
+#include <Geom2dAdaptor_Curve.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Trsf2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <IntAna2d_AnaIntersection.hpp>
+#include <Precision.hpp>
+#include <Standard_Type.hpp>
+#include <StdFail_NotDone.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Bisector_BisecAna, Bisector_Curve)
 

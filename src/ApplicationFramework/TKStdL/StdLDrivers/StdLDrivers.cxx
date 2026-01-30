@@ -13,16 +13,16 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLDrivers.hxx>
-#include <StdLDrivers_DocumentRetrievalDriver.hxx>
-#include <StdLPersistent.hxx>
+#include <StdLDrivers.hpp>
+#include <StdLDrivers_DocumentRetrievalDriver.hpp>
+#include <StdLPersistent.hpp>
 
-#include <Standard_Failure.hxx>
-#include <Standard_GUID.hxx>
-#include <Plugin_Macro.hxx>
+#include <Standard_Failure.hpp>
+#include <Standard_GUID.hpp>
+#include <Plugin_Macro.hpp>
 
-#include <PCDM_StorageDriver.hxx>
-#include <TDocStd_Application.hxx>
+#include <PCDM_StorageDriver.hpp>
+#include <TDocStd_Application.hpp>
 
 static Standard_GUID StdLRetrievalDriver("bd696001-5b34-11d1-b5ba-00a0c9064368");
 

@@ -11,44 +11,44 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <RWGltf_CafWriter.hxx>
+#include <RWGltf_CafWriter.hpp>
 
-#include <BRep_Builder.hxx>
-#include <gp_Quaternion.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_FileSystem.hxx>
-#include <OSD_File.hxx>
-#include <OSD_Parallel.hxx>
-#include <OSD_Path.hxx>
-#include <OSD_Timer.hxx>
-#include <RWGltf_GltfAccessorLayout.hxx>
-#include <RWGltf_GltfMaterialMap.hxx>
-#include <RWGltf_GltfPrimitiveMode.hxx>
-#include <RWGltf_GltfRootElement.hxx>
-#include <RWGltf_GltfSceneNodeMap.hxx>
-#include <RWMesh.hxx>
-#include <RWMesh_EdgeIterator.hxx>
-#include <RWMesh_ShapeIterator.hxx>
-#include <RWMesh_FaceIterator.hxx>
-#include <RWMesh_VertexIterator.hxx>
+#include <BRep_Builder.hpp>
+#include <gp_Quaternion.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_FileSystem.hpp>
+#include <OSD_File.hpp>
+#include <OSD_Parallel.hpp>
+#include <OSD_Path.hpp>
+#include <OSD_Timer.hpp>
+#include <RWGltf_GltfAccessorLayout.hpp>
+#include <RWGltf_GltfMaterialMap.hpp>
+#include <RWGltf_GltfPrimitiveMode.hpp>
+#include <RWGltf_GltfRootElement.hpp>
+#include <RWGltf_GltfSceneNodeMap.hpp>
+#include <RWMesh.hpp>
+#include <RWMesh_EdgeIterator.hpp>
+#include <RWMesh_ShapeIterator.hpp>
+#include <RWMesh_FaceIterator.hpp>
+#include <RWMesh_VertexIterator.hpp>
 #include <Standard_Version.hxx>
-#include <TDataStd_Name.hxx>
-#include <TDF_Tool.hxx>
-#include <TDocStd_Document.hxx>
-#include <TopoDS_Compound.hxx>
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
-#include <XCAFPrs_DocumentExplorer.hxx>
+#include <TDataStd_Name.hpp>
+#include <TDF_Tool.hpp>
+#include <TDocStd_Document.hpp>
+#include <TopoDS_Compound.hpp>
+#include <XCAFDoc_DocumentTool.hpp>
+#include <XCAFDoc_ShapeTool.hpp>
+#include <XCAFPrs_DocumentExplorer.hpp>
 
 #ifdef HAVE_RAPIDJSON
-  #include <RWGltf_GltfOStreamWriter.hxx>
+  #include <RWGltf_GltfOStreamWriter.hpp>
 #endif
 
 #ifdef HAVE_DRACO
-  #include <Standard_WarningsDisable.hxx>
+  #include <Standard_WarningsDisable.hpp>
   #include <draco/compression/encode.h>
-  #include <Standard_WarningsRestore.hxx>
+  #include <Standard_WarningsRestore.hpp>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_CafWriter, Standard_Transient)

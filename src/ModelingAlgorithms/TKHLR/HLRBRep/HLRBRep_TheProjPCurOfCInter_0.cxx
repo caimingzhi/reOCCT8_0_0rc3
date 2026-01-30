@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <HLRBRep_TheProjPCurOfCInter.hxx>
+#include <HLRBRep_TheProjPCurOfCInter.hpp>
 
-#include <HLRBRep_CurveTool.hxx>
-#include <HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hxx>
-#include <HLRBRep_TheLocateExtPCOfTheProjPCurOfCInter.hxx>
-#include <HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter.hxx>
-#include <gp_Pnt2d.hxx>
-#include <Extrema_POnCurv2d.hxx>
+#include <HLRBRep_CurveTool.hpp>
+#include <HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hpp>
+#include <HLRBRep_TheLocateExtPCOfTheProjPCurOfCInter.hpp>
+#include <HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter.hpp>
+#include <gp_Pnt2d.hpp>
+#include <Extrema_POnCurv2d.hpp>
 
 double HLRBRep_TheProjPCurOfCInter::FindParameter(const HLRBRep_CurvePtr& C,
                                                   const gp_Pnt2d&         P,

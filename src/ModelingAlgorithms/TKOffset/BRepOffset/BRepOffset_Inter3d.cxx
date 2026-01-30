@@ -16,36 +16,36 @@
 
 //  Modified by skv - Fri Dec 26 12:20:14 2003 OCC4455
 
-#include <Bnd_Tools.hxx>
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <BRepAlgo_AsDes.hxx>
-#include <BRepAlgo_Image.hxx>
-#include <BRepLib_MakeVertex.hxx>
-#include <BRepOffset_Analyse.hxx>
-#include <BRepOffset_Inter3d.hxx>
-#include <BRepOffset_Interval.hxx>
-#include <NCollection_List.hxx>
-#include <BRepOffset_Offset.hxx>
-#include <BRepOffset_Tool.hxx>
-#include <GeomAPI_ProjectPointOnCurve.hxx>
-#include <TopExp.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Compound.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Vertex.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
-#include <NCollection_Map.hxx>
+#include <Bnd_Tools.hpp>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepAdaptor_Curve.hpp>
+#include <BRepAlgo_AsDes.hpp>
+#include <BRepAlgo_Image.hpp>
+#include <BRepLib_MakeVertex.hpp>
+#include <BRepOffset_Analyse.hpp>
+#include <BRepOffset_Inter3d.hpp>
+#include <BRepOffset_Interval.hpp>
+#include <NCollection_List.hpp>
+#include <BRepOffset_Offset.hpp>
+#include <BRepOffset_Tool.hpp>
+#include <GeomAPI_ProjectPointOnCurve.hpp>
+#include <TopExp.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Compound.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
+#include <NCollection_Map.hpp>
 //
-#include <BRepBndLib.hxx>
-#include <BOPTools_BoxTree.hxx>
+#include <BRepBndLib.hpp>
+#include <BOPTools_BoxTree.hpp>
 //
-#include <BOPTools_AlgoTools.hxx>
+#include <BOPTools_AlgoTools.hpp>
 
 //=================================================================================================
 

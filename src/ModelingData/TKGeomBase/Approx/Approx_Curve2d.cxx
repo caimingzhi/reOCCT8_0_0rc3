@@ -14,14 +14,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Adaptor2d_Curve2d.hxx>
-#include <AdvApprox_ApproxAFunction.hxx>
-#include <AdvApprox_PrefAndRec.hxx>
-#include <Approx_Curve2d.hxx>
-#include <Geom2d_BSplineCurve.hxx>
-#include <Precision.hxx>
-#include <gp_Pnt2d.hxx>
-#include <NCollection_Array1.hxx>
+#include <Adaptor2d_Curve2d.hpp>
+#include <AdvApprox_ApproxAFunction.hpp>
+#include <AdvApprox_PrefAndRec.hpp>
+#include <Approx_Curve2d.hpp>
+#include <Geom2d_BSplineCurve.hpp>
+#include <Precision.hpp>
+#include <gp_Pnt2d.hpp>
+#include <NCollection_Array1.hpp>
 
 //=================================================================================================
 

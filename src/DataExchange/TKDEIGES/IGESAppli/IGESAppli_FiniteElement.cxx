@@ -16,12 +16,12 @@
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#include <IGESAppli.hxx>
-#include <IGESAppli_FiniteElement.hxx>
-#include <IGESAppli_Node.hxx>
-#include <Standard_DimensionMismatch.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <IGESAppli.hpp>
+#include <IGESAppli_FiniteElement.hpp>
+#include <IGESAppli_Node.hpp>
+#include <Standard_DimensionMismatch.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_FiniteElement, IGESData_IGESEntity)
 

@@ -11,10 +11,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StdLPersistent_Collection.hxx>
+#include <StdLPersistent_Collection.hpp>
 
-#include <TColStd_HPackedMapOfInteger.hxx>
-#include <TCollection_HExtendedString.hxx>
+#include <TColStd_HPackedMapOfInteger.hpp>
+#include <TCollection_HExtendedString.hpp>
 
 struct StdLPersistent_Collection::noConversion
 {

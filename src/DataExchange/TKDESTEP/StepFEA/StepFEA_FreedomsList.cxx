@@ -15,7 +15,7 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.2
 
-#include <StepFEA_FreedomsList.hxx>
+#include <StepFEA_FreedomsList.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FreedomsList, Standard_Transient)
 

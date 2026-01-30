@@ -14,15 +14,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <GC_MakeCylindricalSurface.hxx>
-#include <GC_MakeTrimmedCylinder.hxx>
-#include <Geom_CylindricalSurface.hxx>
-#include <Geom_RectangularTrimmedSurface.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Circ.hxx>
-#include <gp_Pnt.hxx>
-#include <Standard_NotImplemented.hxx>
-#include <StdFail_NotDone.hxx>
+#include <GC_MakeCylindricalSurface.hpp>
+#include <GC_MakeTrimmedCylinder.hpp>
+#include <Geom_CylindricalSurface.hpp>
+#include <Geom_RectangularTrimmedSurface.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Circ.hpp>
+#include <gp_Pnt.hpp>
+#include <Standard_NotImplemented.hpp>
+#include <StdFail_NotDone.hpp>
 
 //===========================================================================
 //   Creation of a cylinder limited by three points <P1>, <P2> and <P3>.    +

@@ -17,15 +17,15 @@
   #define __STDC_CONSTANT_MACROS
 #endif
 
-#include <Media_CodecContext.hxx>
-#include "../Media/Media_FFmpegCompatibility.pxx"
+#include <Media_CodecContext.hpp>
+#include "../Media/Media_FFmpegCompatibility.hpp"
 
-#include <Media_Frame.hxx>
-#include <Media_FormatContext.hxx>
+#include <Media_Frame.hpp>
+#include <Media_FormatContext.hpp>
 
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
-#include <OSD_Parallel.hxx>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
+#include <OSD_Parallel.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_CodecContext, Standard_Transient)
 

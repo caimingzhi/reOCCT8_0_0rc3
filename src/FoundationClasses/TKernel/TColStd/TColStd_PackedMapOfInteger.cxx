@@ -13,10 +13,10 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <TColStd_PackedMapOfInteger.hxx>
+#include <TColStd_PackedMapOfInteger.hpp>
 
-#include <NCollection_Array1.hxx>
-#include <NCollection_Primes.hxx>
+#include <NCollection_Array1.hpp>
+#include <NCollection_Primes.hpp>
 
 namespace
 {

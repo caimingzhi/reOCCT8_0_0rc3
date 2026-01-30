@@ -13,7 +13,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Graphic3d_ShaderAttribute.hxx>
+#include <Graphic3d_ShaderAttribute.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ShaderAttribute, Standard_Transient)
 

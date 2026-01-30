@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <StepVisual_CubicBezierTriangulatedFace.hxx>
+#include <StepVisual_CubicBezierTriangulatedFace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CubicBezierTriangulatedFace, StepVisual_TessellatedFace)
 

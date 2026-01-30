@@ -11,15 +11,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_EntityIterator.hxx>
-#include <Interface_Graph.hxx>
-#include <Standard_Type.hxx>
-#include <STEPSelections_SelectForTransfer.hxx>
-#include <Standard_Transient.hxx>
-#include <NCollection_Sequence.hxx>
-#include <NCollection_HSequence.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSControl_TransferReader.hxx>
+#include <Interface_EntityIterator.hpp>
+#include <Interface_Graph.hpp>
+#include <Standard_Type.hpp>
+#include <STEPSelections_SelectForTransfer.hpp>
+#include <Standard_Transient.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <Transfer_TransientProcess.hpp>
+#include <XSControl_TransferReader.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_SelectForTransfer, XSControl_SelectForTransfer)
 

@@ -11,12 +11,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <IFSelect_ContextWrite.hxx>
-#include <IGESData_IGESWriter.hxx>
-#include <IGESSelect_FloatFormat.hxx>
-#include <Interface_FloatWriter.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_AsciiString.hxx>
+#include <IFSelect_ContextWrite.hpp>
+#include <IGESData_IGESWriter.hpp>
+#include <IGESSelect_FloatFormat.hpp>
+#include <Interface_FloatWriter.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_FloatFormat, IGESSelect_FileModifier)

@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Draw_Axis2D.hxx>
-#include <Draw_Color.hxx>
-#include <Draw_Display.hxx>
-#include <gp_Ax22d.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Vec2d.hxx>
-#include <Standard_Type.hxx>
+#include <Draw_Axis2D.hpp>
+#include <Draw_Color.hpp>
+#include <Draw_Display.hpp>
+#include <gp_Ax22d.hpp>
+#include <gp_Pnt2d.hpp>
+#include <gp_Vec2d.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Axis2D, Draw_Drawable2D)
 

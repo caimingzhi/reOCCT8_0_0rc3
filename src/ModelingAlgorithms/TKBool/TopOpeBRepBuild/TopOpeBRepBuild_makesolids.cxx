@@ -14,17 +14,17 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Standard_ProgramError.hxx>
-#include <TopExp.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_ShellFaceSet.hxx>
-#include <TopOpeBRepBuild_SolidBuilder.hxx>
-#include <TopOpeBRepDS_BuildTool.hxx>
-#include <TopOpeBRepTool.hxx>
-#include <TopOpeBRepTool_ShapeExplorer.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <Standard_ProgramError.hpp>
+#include <TopExp.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_ShellFaceSet.hpp>
+#include <TopOpeBRepBuild_SolidBuilder.hpp>
+#include <TopOpeBRepDS_BuildTool.hpp>
+#include <TopOpeBRepTool.hpp>
+#include <TopOpeBRepTool_ShapeExplorer.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT void debgsobu(const int /*iSO*/) {}

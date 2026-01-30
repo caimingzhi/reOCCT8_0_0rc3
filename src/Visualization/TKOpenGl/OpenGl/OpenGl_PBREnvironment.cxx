@@ -12,15 +12,15 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <OpenGl_PBREnvironment.hxx>
+#include <OpenGl_PBREnvironment.hpp>
 
-#include <OpenGl_ArbFBO.hxx>
-#include <OpenGl_FrameBuffer.hxx>
-#include <OpenGl_ShaderManager.hxx>
-#include <OpenGl_ShaderProgram.hxx>
-#include <OSD_Timer.hxx>
-#include <Message.hxx>
-#include <Message_Messenger.hxx>
+#include <OpenGl_ArbFBO.hpp>
+#include <OpenGl_FrameBuffer.hpp>
+#include <OpenGl_ShaderManager.hpp>
+#include <OpenGl_ShaderProgram.hpp>
+#include <OSD_Timer.hpp>
+#include <Message.hpp>
+#include <Message_Messenger.hpp>
 
 #include <algorithm>
 

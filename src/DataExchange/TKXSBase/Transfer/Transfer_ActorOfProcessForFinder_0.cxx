@@ -14,19 +14,19 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Transfer_ActorOfProcessForFinder.hxx>
+#include <Transfer_ActorOfProcessForFinder.hpp>
 
-#include <Standard_DomainError.hxx>
-#include <Standard_Handle.hxx>
-#include <Standard_Transient.hxx>
-#include <Standard_Type.hxx>
-#include <Transfer_Binder.hxx>
-#include <Transfer_Finder.hxx>
-#include <Transfer_FindHasher.hxx>
-#include <Transfer_IteratorOfProcessForFinder.hxx>
-#include <Transfer_ProcessForFinder.hxx>
-#include <Transfer_SimpleBinderOfTransient.hxx>
-#include <NCollection_IndexedDataMap.hxx>
+#include <Standard_DomainError.hpp>
+#include <Standard_Handle.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <Transfer_Binder.hpp>
+#include <Transfer_Finder.hpp>
+#include <Transfer_FindHasher.hpp>
+#include <Transfer_IteratorOfProcessForFinder.hpp>
+#include <Transfer_ProcessForFinder.hpp>
+#include <Transfer_SimpleBinderOfTransient.hpp>
+#include <NCollection_IndexedDataMap.hpp>
 
 //=================================================================================================
 

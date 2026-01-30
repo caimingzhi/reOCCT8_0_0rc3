@@ -14,13 +14,13 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Message_Messenger.hxx>
-#include <CDM_MetaData.hxx>
-#include <PCDM_ReadWriter.hxx>
-#include <PCDM_RetrievalDriver.hxx>
-#include <Resource_Manager.hxx>
-#include <Standard_Type.hxx>
-#include <TCollection_ExtendedString.hxx>
+#include <Message_Messenger.hpp>
+#include <CDM_MetaData.hpp>
+#include <PCDM_ReadWriter.hpp>
+#include <PCDM_RetrievalDriver.hpp>
+#include <Resource_Manager.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_ExtendedString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(PCDM_RetrievalDriver, PCDM_Reader)
 

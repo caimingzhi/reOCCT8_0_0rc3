@@ -16,14 +16,14 @@
 
 // JCV 09/07/92 portage sur C1
 
-#include <Geom_Geometry.hxx>
-#include <gp_Ax1.hxx>
-#include <gp_Ax2.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Vec.hxx>
-#include <Standard_ConstructionError.hxx>
-#include <Standard_Type.hxx>
+#include <Geom_Geometry.hpp>
+#include <gp_Ax1.hpp>
+#include <gp_Ax2.hpp>
+#include <gp_Pnt.hpp>
+#include <gp_Trsf.hpp>
+#include <gp_Vec.hpp>
+#include <Standard_ConstructionError.hpp>
+#include <Standard_Type.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_Geometry, Standard_Transient)
 

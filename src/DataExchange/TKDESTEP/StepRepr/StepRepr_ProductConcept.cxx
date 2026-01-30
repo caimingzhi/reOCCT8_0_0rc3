@@ -16,9 +16,9 @@
 
 // Generator:	ExpToCas (EXPRESS -> CASCADE/XSTEP Translator) V1.0
 
-#include <StepBasic_ProductConceptContext.hxx>
-#include <StepRepr_ProductConcept.hxx>
-#include <TCollection_HAsciiString.hxx>
+#include <StepBasic_ProductConceptContext.hpp>
+#include <StepRepr_ProductConcept.hpp>
+#include <TCollection_HAsciiString.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ProductConcept, Standard_Transient)
 

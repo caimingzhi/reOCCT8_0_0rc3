@@ -14,12 +14,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <BRepCheck_Analyzer.hxx>
-#include <Standard_ProgramError.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopOpeBRepBuild_define.hxx>
-#include <TopOpeBRepBuild_ShapeSet.hxx>
+#include <BRepCheck_Analyzer.hpp>
+#include <Standard_ProgramError.hpp>
+#include <TCollection_AsciiString.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopOpeBRepBuild_define.hpp>
+#include <TopOpeBRepBuild_ShapeSet.hpp>
 
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceCHK();

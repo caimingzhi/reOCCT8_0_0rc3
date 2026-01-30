@@ -13,9 +13,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <LDOM_XmlWriter.hxx>
-#include <LDOM_Document.hxx>
-#include <LDOM_CharReference.hxx>
+#include <LDOM_XmlWriter.hpp>
+#include <LDOM_Document.hpp>
+#include <LDOM_CharReference.hpp>
 
 #define chOpenAngle '<'
 #define chCloseAngle '>'

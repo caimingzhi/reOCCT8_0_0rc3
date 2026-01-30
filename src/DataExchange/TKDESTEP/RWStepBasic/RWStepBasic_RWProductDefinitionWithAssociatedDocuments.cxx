@@ -11,14 +11,14 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#include <Interface_Check.hxx>
-#include <Interface_EntityIterator.hxx>
-#include "RWStepBasic_RWProductDefinitionWithAssociatedDocuments.pxx"
-#include <StepBasic_ProductDefinitionContext.hxx>
-#include <StepBasic_ProductDefinitionFormation.hxx>
-#include <StepBasic_ProductDefinitionWithAssociatedDocuments.hxx>
-#include <StepData_StepReaderData.hxx>
-#include <StepData_StepWriter.hxx>
+#include <Interface_Check.hpp>
+#include <Interface_EntityIterator.hpp>
+#include "RWStepBasic_RWProductDefinitionWithAssociatedDocuments.hpp"
+#include <StepBasic_ProductDefinitionContext.hpp>
+#include <StepBasic_ProductDefinitionFormation.hpp>
+#include <StepBasic_ProductDefinitionWithAssociatedDocuments.hpp>
+#include <StepData_StepReaderData.hpp>
+#include <StepData_StepWriter.hpp>
 
 RWStepBasic_RWProductDefinitionWithAssociatedDocuments::
   RWStepBasic_RWProductDefinitionWithAssociatedDocuments() = default;

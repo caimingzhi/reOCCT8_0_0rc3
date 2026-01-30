@@ -17,33 +17,33 @@
 // 02.03.99 cky/rln: command edgeregul only accepts tolerance
 // 15.06.99 abv/pdn: command comptol added (from S4030)
 
-#include <BRep_Builder.hxx>
-#include <BRep_Tool.hxx>
-#include <BRepBuilderAPI.hxx>
-#include <BRepClass3d_SolidClassifier.hxx>
-#include <BRepLib.hxx>
-#include <BRepTools_WireExplorer.hxx>
-#include <DBRep.hxx>
-#include <Draw.hxx>
-#include <DrawTrSurf.hxx>
-#include <Geom2d_Curve.hxx>
-#include <Geom_Curve.hxx>
-#include <GeomLib.hxx>
-#include <gp_Pnt.hxx>
-#include <Precision.hxx>
-#include <SWDRAW_ShapeTool.hxx>
-#include <TopAbs_ShapeEnum.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Iterator.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Shell.hxx>
-#include <TopoDS_Solid.hxx>
-#include <TopoDS_Wire.hxx>
-#include <TopTools_ShapeMapHasher.hxx>
-#include <NCollection_IndexedMap.hxx>
+#include <BRep_Builder.hpp>
+#include <BRep_Tool.hpp>
+#include <BRepBuilderAPI.hpp>
+#include <BRepClass3d_SolidClassifier.hpp>
+#include <BRepLib.hpp>
+#include <BRepTools_WireExplorer.hpp>
+#include <DBRep.hpp>
+#include <Draw.hpp>
+#include <DrawTrSurf.hpp>
+#include <Geom2d_Curve.hpp>
+#include <Geom_Curve.hpp>
+#include <GeomLib.hpp>
+#include <gp_Pnt.hpp>
+#include <Precision.hpp>
+#include <SWDRAW_ShapeTool.hpp>
+#include <TopAbs_ShapeEnum.hpp>
+#include <TopExp_Explorer.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Face.hpp>
+#include <TopoDS_Iterator.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Shell.hpp>
+#include <TopoDS_Solid.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopTools_ShapeMapHasher.hpp>
+#include <NCollection_IndexedMap.hpp>
 
 #include <cstdio>
 
