@@ -6,7 +6,7 @@ set(OCCT_StdPrs_FILES
   StdPrs_BRepFont.hpp
   StdPrs_BRepTextBuilder.cxx
   StdPrs_BRepTextBuilder.hpp
-  StdPrs_BndBox.hpp
+  
   StdPrs_Curve.cxx
   StdPrs_Curve.hpp
   StdPrs_DeflectionCurve.cxx
@@ -40,7 +40,7 @@ set(OCCT_StdPrs_FILES
   StdPrs_ToolTriangulatedShape.hpp
   StdPrs_ToolVertex.cxx
   StdPrs_ToolVertex.hpp
-  StdPrs_Vertex.hpp
+  
   StdPrs_Volume.hpp
   StdPrs_WFDeflectionRestrictedFace.cxx
   StdPrs_WFDeflectionRestrictedFace.hpp

@@ -47,7 +47,7 @@ set(OCCT_Transfer_FILES
   Transfer_SimpleBinderOfTransient.hpp
   Transfer_StatusExec.hpp
   Transfer_StatusResult.hpp
-  Transfer_TransferDeadLoop.hpp
+  
   Transfer_TransferDispatch.cxx
   Transfer_TransferDispatch.hpp
   Transfer_TransferFailure.hpp
@@ -64,7 +64,7 @@ set(OCCT_Transfer_FILES
   Transfer_TransientMapper_0.cxx
   Transfer_TransientProcess.cxx
   Transfer_TransientProcess.hpp
-  Transfer_UndefMode.hpp
+  
   Transfer_VoidBinder.cxx
   Transfer_VoidBinder.hpp
 )

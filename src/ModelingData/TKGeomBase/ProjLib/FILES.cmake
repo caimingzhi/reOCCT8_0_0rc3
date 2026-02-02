@@ -15,7 +15,7 @@ set(OCCT_ProjLib_FILES
   ProjLib_Cylinder.cxx
   ProjLib_Cylinder.hpp
   ProjLib_HCompProjectedCurve.hpp
-  ProjLib_HProjectedCurve.hpp
+  
 
   ProjLib_Plane.cxx
   ProjLib_Plane.hpp

@@ -28,7 +28,7 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_AttribBuffer.cxx
   Graphic3d_AttribBuffer.hpp
   Graphic3d_BndBox3d.hpp
-  Graphic3d_BndBox4d.hpp
+  
   Graphic3d_BndBox4f.hpp
   Graphic3d_BoundBuffer.hpp
   Graphic3d_BSDF.cxx

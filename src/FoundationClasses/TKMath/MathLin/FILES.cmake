@@ -8,6 +8,6 @@ set(OCCT_MathLin_FILES
   MathLin_Householder.hpp
   MathLin_Jacobi.hpp
   MathLin_LeastSquares.hpp
-  MathLin_EigenSearch.hpp
+  
   README.md
 )

@@ -41,7 +41,7 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_Operation.hpp
   BOPAlgo_Options.cxx
   BOPAlgo_Options.hpp
-  BOPAlgo_PArgumentAnalyzer.hpp
+  
   BOPAlgo_PaveFiller.cxx
   BOPAlgo_PaveFiller.hpp
   BOPAlgo_PaveFiller_1.cxx
@@ -55,10 +55,10 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_PaveFiller_9.cxx
   BOPAlgo_PaveFiller_10.cxx
   BOPAlgo_PaveFiller_11.cxx
-  BOPAlgo_PBOP.hpp
+  
   BOPAlgo_PBuilder.hpp
   BOPAlgo_PPaveFiller.hpp
-  BOPAlgo_PSection.hpp
+  
   BOPAlgo_PWireEdgeSet.hpp
   BOPAlgo_RemoveFeatures.cxx
   BOPAlgo_RemoveFeatures.hpp

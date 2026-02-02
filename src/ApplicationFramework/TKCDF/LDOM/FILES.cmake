@@ -21,7 +21,7 @@ set(OCCT_LDOM_FILES
   LDOM_DeclareSequence.hpp
   LDOM_Document.cxx
   LDOM_Document.hpp
-  LDOM_DocumentType.hpp
+  
   LDOM_Element.cxx
   LDOM_Element.hpp
   LDOM_LDOMImplementation.cxx

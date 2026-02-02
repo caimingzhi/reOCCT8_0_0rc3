@@ -48,7 +48,7 @@ set(OCCT_BRepBuilderAPI_FILES
   BRepBuilderAPI_Sewing.cxx
   BRepBuilderAPI_Sewing.hpp
   BRepBuilderAPI_Sewing_1.hpp
-  BRepBuilderAPI_ShapeModification.hpp
+  
   BRepBuilderAPI_ShellError.hpp
   BRepBuilderAPI_Transform.cxx
   BRepBuilderAPI_Transform.hpp

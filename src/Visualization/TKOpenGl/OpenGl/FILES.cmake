@@ -85,7 +85,7 @@ set(OCCT_OpenGl_FILES
   OpenGl_DepthPeeling.cxx
   OpenGl_DepthPeeling.hpp
   OpenGl_ExtGS.hpp
-  OpenGl_GLESExtensions.hpp
+  
   OpenGl_GlFunctions.cxx
   OpenGl_GlFunctions.hpp
   OpenGl_GlNative.hpp

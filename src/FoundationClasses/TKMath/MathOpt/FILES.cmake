@@ -9,6 +9,6 @@ set(OCCT_MathOpt_FILES
   MathOpt_Newton.hpp
   MathOpt_PSO.hpp
   MathOpt_GlobOpt.hpp
-  MathOpt_Uzawa.hpp
+  
   README.md
 )

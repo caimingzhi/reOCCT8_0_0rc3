@@ -49,7 +49,7 @@ set(OCCT_Message_FILES
   Message_ProgressIndicator.hpp
   Message_ProgressRange.hpp
   Message_ProgressScope.hpp
-  Message_ProgressSentry.hpp
+  
 
   Message_Status.hpp
   Message_StatusType.hpp

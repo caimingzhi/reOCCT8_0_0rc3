@@ -62,6 +62,6 @@ set(OCCT_Prs3d_FILES
   Prs3d_ToolTorus.cxx
   Prs3d_TypeOfHighlight.hpp
   Prs3d_TypeOfHLR.hpp
-  Prs3d_TypeOfLinePicking.hpp
+  
   Prs3d_VertexDrawMode.hpp
 )

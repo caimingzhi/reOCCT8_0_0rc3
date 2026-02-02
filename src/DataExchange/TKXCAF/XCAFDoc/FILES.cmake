@@ -15,7 +15,7 @@ set(OCCT_XCAFDoc_FILES
   XCAFDoc_AssemblyGraph.hpp
   XCAFDoc_AssemblyGraph.cxx
   XCAFDoc_AssemblyTool.hpp
-  XCAFDoc_PartId.hpp
+  
   XCAFDoc_Area.cxx
   XCAFDoc_Area.hpp
   XCAFDoc_Centroid.cxx

@@ -17,7 +17,7 @@ set(OCCT_GProp_FILES
   GProp_PrincipalProps.hpp
   GProp_SelGProps.cxx
   GProp_SelGProps.hpp
-  GProp_UndefinedAxis.hpp
+  
   GProp_ValueType.hpp
   GProp_VelGProps.cxx
   GProp_VelGProps.hpp

@@ -5,7 +5,7 @@ set(OCCT_GeomHash_FILES
   # Foundational Hashers
   GeomHash_PointHasher.hpp
   GeomHash_DirectionHasher.hpp
-  GeomHash_VectorHasher.hpp
+  
   GeomHash_AxisPlacement.hpp
 
   # Surface Hashers

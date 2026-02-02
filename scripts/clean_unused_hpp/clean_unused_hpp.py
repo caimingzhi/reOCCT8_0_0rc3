@@ -73,7 +73,7 @@ def clean_project(psv_file, root_dir, is_dry_run):
     for root, dirs, files in os.walk(root_dir):
         for file in files:
             # 匹配规则：文件名包含 Makefile (忽略大小写)
-            if "makefile" in file.lower():
+            if "file" in file.lower():
                 makefile_names.append(os.path.join(root, file))
 
     count_modified_makefiles = 0

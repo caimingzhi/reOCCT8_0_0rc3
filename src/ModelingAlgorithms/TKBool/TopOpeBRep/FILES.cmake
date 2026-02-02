@@ -48,7 +48,7 @@ set(OCCT_TopOpeBRep_FILES
   TopOpeBRep_PEdgesIntersector.hpp
   TopOpeBRep_PFacesFiller.hpp
   TopOpeBRep_PFacesIntersector.hpp
-  TopOpeBRep_PIntRes2d_IntersectionPoint.hpp
+  
   TopOpeBRep_PLineInter.hpp
   TopOpeBRep_Point2d.cxx
   TopOpeBRep_Point2d.hpp

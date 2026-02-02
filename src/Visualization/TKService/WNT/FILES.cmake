@@ -6,10 +6,10 @@ set(OCCT_WNT_FILES
   WNT_Dword.hpp
   WNT_HIDSpaceMouse.cxx
   WNT_HIDSpaceMouse.hpp
-  WNT_OrientationType.hpp
+  
   WNT_WClass.cxx
   WNT_WClass.hpp
   WNT_Window.cxx
   WNT_Window.hpp
-  WNT_WindowPtr.hpp
+  
 )

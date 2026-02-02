@@ -51,7 +51,7 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_FaceDiscret.cxx
   BRepMesh_FaceDiscret.hpp
   BRepMesh_FactoryError.hpp
-  BRepMesh_FastDiscret.hpp
+  
   BRepMesh_GeomTool.cxx
   BRepMesh_GeomTool.hpp
   BRepMesh_IncrementalMesh.cxx

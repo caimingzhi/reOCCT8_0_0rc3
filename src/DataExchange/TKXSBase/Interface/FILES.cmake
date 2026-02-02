@@ -103,13 +103,13 @@ set(OCCT_Interface_FILES
   Interface_Statics.hpp
   Interface_StaticSatisfies.hpp
   Interface_StaticStandards.cxx
-  Interface_Translates.hpp
+  
   Interface_TypedValue.cxx
   Interface_TypedValue.hpp
   Interface_UndefinedContent.cxx
   Interface_UndefinedContent.hpp
-  Interface_ValueInterpret.hpp
-  Interface_ValueSatisfies.hpp
+  
+  
 
   Interface_Version.hpp
 )

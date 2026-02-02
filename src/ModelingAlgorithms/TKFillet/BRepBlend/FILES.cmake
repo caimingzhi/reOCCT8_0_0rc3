@@ -28,8 +28,8 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_ChAsymInv.hpp
   BRepBlend_ConstRad.hpp
   BRepBlend_ConstRadInv.hpp
-  BRepBlend_CSCircular.hpp
-  BRepBlend_CSConstRad.hpp
+  
+  
   BRepBlend_CSWalking.hpp
   BRepBlend_CSWalking.cxx
   BRepBlend_CurvPointRadInv.cxx
@@ -58,8 +58,8 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_RstRstLineBuilder.cxx
   BRepBlend_RstRstLineBuilder.hpp
   BRepBlend_RstRstLineBuilder_1.hpp
-  BRepBlend_Ruled.hpp
-  BRepBlend_RuledInv.hpp
+  
+  
 
   BRepBlend_SurfCurvConstRadInv.cxx
   BRepBlend_SurfCurvConstRadInv.hpp

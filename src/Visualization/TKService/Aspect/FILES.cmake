@@ -2,9 +2,9 @@
 set(OCCT_Aspect_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Aspect_FILES
-  Aspect_AspectFillAreaDefinitionError.hpp
-  Aspect_AspectLineDefinitionError.hpp
-  Aspect_AspectMarkerDefinitionError.hpp
+  
+  
+  
   Aspect_Background.cxx
   Aspect_Background.hpp
   Aspect_CircularGrid.cxx
@@ -50,7 +50,7 @@ set(OCCT_Aspect_FILES
 
   Aspect_TrackedDevicePose.hpp
   Aspect_TypeOfColorScaleData.hpp
-  Aspect_TypeOfColorScaleOrientation.hpp
+  
   Aspect_TypeOfColorScalePosition.hpp
   Aspect_TypeOfDeflection.hpp
   Aspect_TypeOfDisplayText.hpp
@@ -61,16 +61,16 @@ set(OCCT_Aspect_FILES
   Aspect_TypeOfResize.hpp
   Aspect_TypeOfStyleText.hpp
   Aspect_TypeOfTriedronPosition.hpp
-  Aspect_Units.hpp
+  
   Aspect_VKey.hpp
   Aspect_VKeyFlags.hpp
   Aspect_VKeySet.cxx
   Aspect_VKeySet.hpp
-  Aspect_WidthOfLine.hpp
+  
   Aspect_Window.cxx
   Aspect_Window.hpp
   Aspect_WindowDefinitionError.hpp
-  Aspect_WindowError.hpp
+  
   Aspect_WindowInputListener.cxx
   Aspect_WindowInputListener.hpp
   Aspect_XAtom.hpp
