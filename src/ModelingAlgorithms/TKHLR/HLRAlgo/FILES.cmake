@@ -10,7 +10,6 @@ set(OCCT_HLRAlgo_FILES
   HLRAlgo_Coincidence.hpp
   HLRAlgo_EdgeIterator.cxx
   HLRAlgo_EdgeIterator.hpp
-  HLRAlgo_EdgeIterator_1.hpp
   HLRAlgo_EdgesBlock.cxx
   HLRAlgo_EdgesBlock.hpp
   HLRAlgo_EdgeStatus.cxx
@@ -21,17 +20,14 @@ set(OCCT_HLRAlgo_FILES
 
   HLRAlgo_Intersection.cxx
   HLRAlgo_Intersection.hpp
-  HLRAlgo_Intersection_1.hpp
 
   HLRAlgo_PolyAlgo.cxx
   HLRAlgo_PolyAlgo.hpp
   HLRAlgo_PolyData.cxx
   HLRAlgo_PolyData.hpp
-  HLRAlgo_PolyData_1.hpp
   HLRAlgo_PolyHidingData.hpp
   HLRAlgo_PolyInternalData.cxx
   HLRAlgo_PolyInternalData.hpp
-  HLRAlgo_PolyInternalData_1.hpp
   HLRAlgo_PolyInternalNode.cxx
   HLRAlgo_PolyInternalNode.hpp
   HLRAlgo_PolyInternalSegment.hpp
@@ -40,7 +36,6 @@ set(OCCT_HLRAlgo_FILES
   HLRAlgo_PolyShellData.hpp
   HLRAlgo_Projector.cxx
   HLRAlgo_Projector.hpp
-  HLRAlgo_Projector_1.hpp
   HLRAlgo_TriangleData.hpp
   HLRAlgo_WiresBlock.cxx
   HLRAlgo_WiresBlock.hpp

@@ -6,7 +6,6 @@ set(OCCT_ShapeCustom_FILES
   ShapeCustom.hpp
   ShapeCustom_BSplineRestriction.cxx
   ShapeCustom_BSplineRestriction.hpp
-  ShapeCustom_BSplineRestriction_1.hpp
   ShapeCustom_ConvertToBSpline.cxx
   ShapeCustom_ConvertToBSpline.hpp
   ShapeCustom_ConvertToRevolution.cxx
@@ -21,10 +20,8 @@ set(OCCT_ShapeCustom_FILES
   ShapeCustom_Modification.hpp
   ShapeCustom_RestrictionParameters.cxx
   ShapeCustom_RestrictionParameters.hpp
-  ShapeCustom_RestrictionParameters_1.hpp
   ShapeCustom_Surface.cxx
   ShapeCustom_Surface.hpp
-  ShapeCustom_Surface_1.hpp
   ShapeCustom_SweptToElementary.cxx
   ShapeCustom_SweptToElementary.hpp
   ShapeCustom_TrsfModification.cxx

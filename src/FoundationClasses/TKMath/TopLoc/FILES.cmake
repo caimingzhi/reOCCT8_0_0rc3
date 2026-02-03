@@ -9,11 +9,9 @@ set(OCCT_TopLoc_FILES
   TopLoc_ItemLocation.hpp
   TopLoc_Location.cxx
   TopLoc_Location.hpp
-  TopLoc_Location_1.hpp
 
   TopLoc_SListNodeOfItemLocation.cxx
   TopLoc_SListNodeOfItemLocation.hpp
-  TopLoc_SListNodeOfItemLocation_1.hpp
   TopLoc_SListOfItemLocation.cxx
   TopLoc_SListOfItemLocation.hpp
 )

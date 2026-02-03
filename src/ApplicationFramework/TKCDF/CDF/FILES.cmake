@@ -21,5 +21,4 @@ set(OCCT_CDF_FILES
   CDF_StoreSetNameStatus.hpp
   
   
-  CDF_TypeOfActivation.hpp
 )

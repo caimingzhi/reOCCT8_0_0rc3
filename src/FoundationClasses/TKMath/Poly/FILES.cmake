@@ -24,7 +24,6 @@ set(OCCT_Poly_FILES
 
   Poly_MakeLoops.cxx
   Poly_MakeLoops.hpp
-  Poly_MeshPurpose.hpp
   Poly_MergeNodesTool.cxx
   Poly_MergeNodesTool.hpp
   Poly_Polygon2D.cxx

@@ -4,11 +4,8 @@ set(OCCT_Select3D_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Select3D_FILES
   Select3D_BndBox3d.hpp
   Select3D_BVHBuilder3d.hpp
-  Select3D_BVHIndexBuffer.hpp
   Select3D_InteriorSensitivePointSet.cxx
   Select3D_InteriorSensitivePointSet.hpp
-  Select3D_Pnt.hpp
-  Select3D_PointData.hpp
   Select3D_SensitiveBox.cxx
   Select3D_SensitiveBox.hpp
   Select3D_SensitiveCircle.cxx

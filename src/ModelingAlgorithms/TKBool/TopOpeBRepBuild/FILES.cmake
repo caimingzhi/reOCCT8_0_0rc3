@@ -14,7 +14,6 @@ set(OCCT_TopOpeBRepBuild_FILES
   TopOpeBRepBuild_BlockBuilder.hpp
   TopOpeBRepBuild_BlockIterator.cxx
   TopOpeBRepBuild_BlockIterator.hpp
-  TopOpeBRepBuild_BlockIterator_1.hpp
   TopOpeBRepBuild_BuildEdges.cxx
   TopOpeBRepBuild_Builder.cxx
   TopOpeBRepBuild_Builder.hpp
@@ -46,7 +45,6 @@ set(OCCT_TopOpeBRepBuild_FILES
   TopOpeBRepBuild_FREGU.cxx
   TopOpeBRepBuild_FuseFace.cxx
   TopOpeBRepBuild_FuseFace.hpp
-  TopOpeBRepBuild_FuseFace_1.hpp
   TopOpeBRepBuild_GIter.cxx
   TopOpeBRepBuild_GIter.hpp
   TopOpeBRepBuild_Grid.cxx
@@ -85,7 +83,6 @@ set(OCCT_TopOpeBRepBuild_FILES
   TopOpeBRepBuild_PaveSet.cxx
   TopOpeBRepBuild_PaveSet.hpp
   TopOpeBRepBuild_PBuilder.hpp
-  TopOpeBRepBuild_PGTopo.hpp
   TopOpeBRepBuild_PWireEdgeSet.hpp
   TopOpeBRepBuild_Section.cxx
   TopOpeBRepBuild_ShapeListOfShape.cxx

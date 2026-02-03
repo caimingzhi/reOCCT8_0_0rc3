@@ -12,7 +12,6 @@ set(OCCT_PCDM_FILES
   PCDM_DriverError.hpp
   PCDM_Reader.cxx
   PCDM_Reader.hpp
-  PCDM_Reader_1.hpp
   PCDM_ReaderFilter.cxx
   PCDM_ReaderFilter.hpp
   PCDM_ReaderStatus.hpp

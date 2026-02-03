@@ -35,7 +35,6 @@ set(OCCT_BRepFill_FILES
   BRepFill_Filling.hpp
   BRepFill_Generator.cxx
   BRepFill_Generator.hpp
-  BRepFill_Generator_1.hpp
 
   BRepFill_LocationLaw.cxx
   BRepFill_LocationLaw.hpp
@@ -53,7 +52,6 @@ set(OCCT_BRepFill_FILES
   BRepFill_PipeShell.hpp
   BRepFill_Section.cxx
   BRepFill_Section.hpp
-  BRepFill_Section_1.hpp
   BRepFill_SectionLaw.cxx
   BRepFill_SectionLaw.hpp
   BRepFill_SectionPlacement.cxx
@@ -61,7 +59,6 @@ set(OCCT_BRepFill_FILES
 
   BRepFill_ShapeLaw.cxx
   BRepFill_ShapeLaw.hpp
-  BRepFill_ShapeLaw_1.hpp
   BRepFill_Sweep.cxx
   BRepFill_Sweep.hpp
   BRepFill_ThruSectionErrorStatus.hpp

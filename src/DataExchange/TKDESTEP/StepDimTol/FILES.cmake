@@ -4,7 +4,6 @@ set(OCCT_StepDimTol_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_StepDimTol_FILES
   StepDimTol_AngularityTolerance.cxx
   StepDimTol_AngularityTolerance.hpp
-  StepDimTol_AreaUnitType.hpp
 
   StepDimTol_CircularRunoutTolerance.cxx
   StepDimTol_CircularRunoutTolerance.hpp
@@ -32,7 +31,6 @@ set(OCCT_StepDimTol_FILES
   StepDimTol_DatumReferenceModifier.hpp
   StepDimTol_DatumReferenceModifierWithValue.cxx
   StepDimTol_DatumReferenceModifierWithValue.hpp
-  StepDimTol_DatumReferenceModifierType.hpp
   StepDimTol_DatumSystem.cxx
   StepDimTol_DatumSystem.hpp
   StepDimTol_DatumSystemOrReference.cxx
@@ -76,7 +74,6 @@ set(OCCT_StepDimTol_FILES
   StepDimTol_GeoTolAndGeoTolWthMod.cxx
   StepDimTol_GeoTolAndGeoTolWthMod.hpp
 
-  StepDimTol_LimitCondition.hpp
   StepDimTol_LineProfileTolerance.cxx
   StepDimTol_LineProfileTolerance.hpp
   StepDimTol_ModifiedGeometricTolerance.cxx
@@ -101,7 +98,6 @@ set(OCCT_StepDimTol_FILES
   StepDimTol_RunoutZoneOrientation.hpp
   StepDimTol_ShapeToleranceSelect.cxx
   StepDimTol_ShapeToleranceSelect.hpp
-  StepDimTol_SimpleDatumReferenceModifier.hpp
   StepDimTol_SimpleDatumReferenceModifierMember.cxx
   StepDimTol_SimpleDatumReferenceModifierMember.hpp
   StepDimTol_StraightnessTolerance.cxx

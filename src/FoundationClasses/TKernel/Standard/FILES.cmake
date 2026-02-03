@@ -38,7 +38,6 @@ set(OCCT_Standard_FILES
   Standard_GUID.hpp
   Standard_Handle.hpp
   Standard_HashUtils.hpp
-  Standard_HashUtils_1.hpp
   Standard_ImmutableObject.hpp
   Standard_Integer.hpp
   Standard_IStream.hpp
@@ -92,7 +91,6 @@ set(OCCT_Standard_FILES
   Standard_TypeDef.hpp
   Standard_TypeMismatch.hpp
   Standard_Underflow.hpp
-  Standard_UUID.hpp
   Standard_VersionInfo.cxx
   Standard_VersionInfo.hpp
   Standard_WarningsDisable.hpp

@@ -57,7 +57,52 @@ private:
   bool   empt;
   gp_Pnt pnt;
 };
+// Copyright (c) 1995-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
-#include <IntAna_Int3Pln_1.hpp>
+#include <StdFail_NotDone.hpp>
+#include <Standard_DomainError.hpp>
+
+inline bool IntAna_Int3Pln::IsDone() const
+{
+
+  return done;
+}
+
+inline bool IntAna_Int3Pln::IsEmpty() const
+{
+
+  if (!done)
+  {
+    throw StdFail_NotDone();
+  }
+  return empt;
+}
+
+inline const gp_Pnt& IntAna_Int3Pln::Value() const
+{
+
+  if (!done)
+  {
+    throw StdFail_NotDone();
+  }
+  if (empt)
+  {
+    throw Standard_DomainError();
+  }
+  return pnt;
+}
+
 
 #endif // _IntAna_Int3Pln_HeaderFile

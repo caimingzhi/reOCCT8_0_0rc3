@@ -27,8 +27,58 @@
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
-#include <MoniTool_ValueInterpret.hpp>
-#include <MoniTool_ValueSatisfies.hpp>
+// Created on: 2000-02-28
+// Created by: data exchange team
+// Copyright (c) 2000-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef MoniTool_ValueInterpret_HeaderFile
+#define MoniTool_ValueInterpret_HeaderFile
+
+#include <TCollection_HAsciiString.hpp>
+
+class MoniTool_TypedValue;
+typedef occ::handle<TCollection_HAsciiString> (*MoniTool_ValueInterpret)(
+  const occ::handle<MoniTool_TypedValue>&      typval,
+  const occ::handle<TCollection_HAsciiString>& val,
+  const bool                                   native);
+
+#endif
+
+// Created on: 2000-02-28
+// Created by: data exchange team
+// Copyright (c) 2000-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef MoniTool_ValueSatisfies_HeaderFile
+#define MoniTool_ValueSatisfies_HeaderFile
+
+#include <TCollection_HAsciiString.hpp>
+
+typedef bool (*MoniTool_ValueSatisfies)(const occ::handle<TCollection_HAsciiString>& val);
+
+#endif
+
 #include <Standard_Transient.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>

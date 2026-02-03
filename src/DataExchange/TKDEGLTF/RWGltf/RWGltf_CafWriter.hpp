@@ -22,10 +22,98 @@
 #include <TDF_Label.hpp>
 #include <NCollection_Sequence.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
-#include <RWGltf_DracoParameters.hpp>
+// Copyright (c) 2022 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _RWGltf_DracoParameters_HeaderFile
+#define _RWGltf_DracoParameters_HeaderFile
+
+//! Draco compression parameters
+struct RWGltf_DracoParameters
+{
+  RWGltf_DracoParameters()
+      : DracoCompression(false),
+        CompressionLevel(7),
+        QuantizePositionBits(14),
+        QuantizeNormalBits(10),
+        QuantizeTexcoordBits(12),
+        QuantizeColorBits(8),
+        QuantizeGenericBits(12),
+        UnifiedQuantization(false)
+  {
+  }
+
+  // clang-format off
+  bool DracoCompression;    //!< flag to use Draco compression (FALSE by default). If it is TRUE, compression is used
+  int CompressionLevel;     //!< Draco compression level [0-10] (7 by default)
+  int QuantizePositionBits; //!< quantization bits for position attribute (14 by default)
+  int QuantizeNormalBits;   //!< quantization bits for normal attribute (10 by default)
+  int QuantizeTexcoordBits; //!< quantization bits for texture coordinate attribute (12 by default)
+  int QuantizeColorBits;    //!< quantization bits for color attributes (8 by default)
+  int QuantizeGenericBits;  //!< quantization bits for skinning and custom attributes (12 by default)
+  bool UnifiedQuantization; //!< quantize positions of all primitives using the same quantization grid (FALSE by default)
+  // clang-format on
+};
+
+#endif
+
 #include <RWGltf_GltfArrayType.hpp>
 #include <RWGltf_GltfBufferView.hpp>
-#include <RWGltf_GltfFace.hpp>
+// Author: Kirill Gavrilov
+// Copyright (c) 2016-2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _RWGltf_GltfFace_HeaderFile
+#define _RWGltf_GltfFace_HeaderFile
+
+#include <NCollection_List.hpp>
+#include <NCollection_Shared.hpp>
+#include <RWGltf_GltfAccessor.hpp>
+#include <TopoDS_Shape.hpp>
+#include <XCAFPrs_Style.hpp>
+
+//! Low-level glTF data structure holding single Face (one primitive array) definition.
+class RWGltf_GltfFace : public Standard_Transient
+{
+public:
+  RWGltf_GltfAccessor NodePos;  //!< accessor for nodal positions
+  RWGltf_GltfAccessor NodeNorm; //!< accessor for nodal normals
+  RWGltf_GltfAccessor NodeUV;   //!< accessor for nodal UV texture coordinates
+  RWGltf_GltfAccessor Indices;  //!< accessor for indexes
+  TopoDS_Shape        Shape;    //!< original Face or face list
+  XCAFPrs_Style       Style;    //!< face style
+                                // clang-format off
+  int    NbIndexedNodes; //!< transient variable for merging several faces into one while writing Indices
+                                // clang-format on
+
+  RWGltf_GltfFace()
+      : NbIndexedNodes(0)
+  {
+  }
+};
+
+#endif // _RWGltf_GltfFace_HeaderFile
+
 #include <RWGltf_WriterTrsfFormat.hpp>
 #include <RWMesh_CoordinateSystemConverter.hpp>
 #include <RWMesh_NameFormat.hpp>

@@ -41,18 +41,14 @@ set(OCCT_OSD_FILES
   OSD_FileSystem.hpp
   OSD_FileSystemSelector.cxx
   OSD_FileSystemSelector.hpp
-  OSD_FromWhere.hpp
   OSD_Function.hpp
   OSD_Host.cxx
   OSD_Host.hpp
-  OSD_KindFile.hpp
   OSD_LoadMode.hpp
   OSD_LocalFileSystem.cxx
   OSD_LocalFileSystem.hpp
-  OSD_LockType.hpp
   OSD_MemInfo.cxx
   OSD_MemInfo.hpp
-  OSD_OEMType.hpp
   OSD_OpenFile.cxx
   OSD_OpenFile.hpp
   OSD_OpenMode.hpp
@@ -69,7 +65,6 @@ set(OCCT_OSD_FILES
   OSD_Process.hpp
   OSD_Protection.cxx
   OSD_Protection.hpp
-  OSD_PThread.hpp
   OSD_SharedLibrary.cxx
   OSD_SharedLibrary.hpp
   OSD_SIGBUS.hpp
@@ -89,11 +84,9 @@ set(OCCT_OSD_FILES
   OSD_Thread.hpp
   OSD_ThreadPool.cxx
   OSD_ThreadPool.hpp
-  OSD_ThreadFunction.hpp
   OSD_Timer.cxx
   OSD_Timer.hpp
   OSD_WhoAmI.hpp
   OSD_WNT.cxx
   OSD_WNT.hpp
-  OSD_SignalMode.hpp
 )

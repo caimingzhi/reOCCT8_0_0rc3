@@ -4,15 +4,12 @@ set(OCCT_Geom2dAPI_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Geom2dAPI_FILES
   Geom2dAPI_ExtremaCurveCurve.cxx
   Geom2dAPI_ExtremaCurveCurve.hpp
-  Geom2dAPI_ExtremaCurveCurve_1.hpp
   Geom2dAPI_InterCurveCurve.cxx
   Geom2dAPI_InterCurveCurve.hpp
-  Geom2dAPI_InterCurveCurve_1.hpp
   Geom2dAPI_Interpolate.cxx
   Geom2dAPI_Interpolate.hpp
   Geom2dAPI_PointsToBSpline.cxx
   Geom2dAPI_PointsToBSpline.hpp
   Geom2dAPI_ProjectPointOnCurve.cxx
   Geom2dAPI_ProjectPointOnCurve.hpp
-  Geom2dAPI_ProjectPointOnCurve_1.hpp
 )

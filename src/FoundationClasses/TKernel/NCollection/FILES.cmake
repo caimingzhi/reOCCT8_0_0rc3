@@ -25,10 +25,7 @@ set(OCCT_NCollection_FILES
   NCollection_DataMap.hpp
   NCollection_DefaultHasher.hpp
   NCollection_DefineAlloc.hpp
-  NCollection_DefineHasher.hpp
   NCollection_DoubleMap.hpp
-  NCollection_DynamicArray.hpp
-  NCollection_EBTree.hpp
   NCollection_Haft.h
   NCollection_Handle.hpp
   NCollection_HArray1.hpp
@@ -48,7 +45,6 @@ set(OCCT_NCollection_FILES
   NCollection_LocalArray.hpp
   NCollection_Map.hpp
   NCollection_MapAlgo.hpp
-  NCollection_Mat3.hpp
   NCollection_Mat4.hpp
   NCollection_OccAllocator.hpp
   NCollection_Primes.cxx
@@ -60,14 +56,11 @@ set(OCCT_NCollection_FILES
   NCollection_SparseArrayBase.hpp
   NCollection_StlIterator.hpp
   NCollection_String.hpp
-  NCollection_TListIterator.hpp
   NCollection_TListNode.hpp
   NCollection_UBTree.hpp
   NCollection_UBTreeFiller.hpp
   NCollection_UtfIterator.hpp
-  NCollection_UtfIterator_1.hpp
   NCollection_UtfString.hpp
-  NCollection_UtfString_1.hpp
   NCollection_UtfString.cxx
   NCollection_Vec2.hpp
   NCollection_Vec3.hpp

@@ -6,7 +6,6 @@ set(OCCT_XmlObjMgt_FILES
   XmlObjMgt.hpp
   XmlObjMgt_Array1.cxx
   XmlObjMgt_Array1.hpp
-  XmlObjMgt_Array1_1.hpp
   XmlObjMgt_Document.hpp
   XmlObjMgt_DOMString.hpp
   XmlObjMgt_Element.hpp
@@ -14,7 +13,6 @@ set(OCCT_XmlObjMgt_FILES
   XmlObjMgt_GP.hpp
   XmlObjMgt_Persistent.cxx
   XmlObjMgt_Persistent.hpp
-  XmlObjMgt_Persistent_1.hpp
   XmlObjMgt_RRelocationTable.cxx
   XmlObjMgt_RRelocationTable.hpp
   XmlObjMgt_SRelocationTable.cxx

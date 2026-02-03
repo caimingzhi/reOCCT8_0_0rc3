@@ -30,7 +30,6 @@ set(OCCT_Approx_FILES
   Approx_Status.hpp
   Approx_SweepApproximation.cxx
   Approx_SweepApproximation.hpp
-  Approx_SweepApproximation_1.hpp
   Approx_SweepFunction.cxx
   Approx_SweepFunction.hpp
 )

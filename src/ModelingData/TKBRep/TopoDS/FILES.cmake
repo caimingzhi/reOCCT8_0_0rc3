@@ -7,7 +7,6 @@ set(OCCT_TopoDS_FILES
   TopoDS_AlertAttribute.cxx
   TopoDS_Builder.cxx
   TopoDS_Builder.hpp
-  TopoDS_Builder_1.hpp
   TopoDS_Compound.hpp
   TopoDS_CompSolid.hpp
   TopoDS_Edge.hpp
@@ -15,7 +14,6 @@ set(OCCT_TopoDS_FILES
   TopoDS_FrozenShape.hpp
   TopoDS_HShape.cxx
   TopoDS_HShape.hpp
-  TopoDS_HShape_1.hpp
   TopoDS_Iterator.cxx
   TopoDS_Iterator.hpp
 

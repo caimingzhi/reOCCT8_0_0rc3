@@ -8,7 +8,6 @@ set(OCCT_ChFi2d_FILES
   ChFi2d_AnaFilletAlgo.hpp
   ChFi2d_Builder.cxx
   ChFi2d_Builder.hpp
-  ChFi2d_Builder_1.hpp
   ChFi2d_Builder_0.cxx
   ChFi2d_ChamferAPI.cxx
   ChFi2d_ChamferAPI.hpp

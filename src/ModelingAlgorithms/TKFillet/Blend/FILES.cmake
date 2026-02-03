@@ -16,7 +16,6 @@ set(OCCT_Blend_FILES
   Blend_Function.hpp
   Blend_Point.cxx
   Blend_Point.hpp
-  Blend_Point_1.hpp
   Blend_RstRstFunction.cxx
   Blend_RstRstFunction.hpp
 

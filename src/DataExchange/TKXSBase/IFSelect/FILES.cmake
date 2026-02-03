@@ -6,7 +6,6 @@ set(OCCT_IFSelect_FILES
   IFSelect.hpp
   IFSelect_Act.cxx
   IFSelect_Act.hpp
-  IFSelect_ActFunc.hpp
   IFSelect_Activator.cxx
   IFSelect_Activator.hpp
   IFSelect_AppliedModifiers.cxx
@@ -35,7 +34,6 @@ set(OCCT_IFSelect_FILES
   IFSelect_EditForm.hpp
   IFSelect_Editor.cxx
   IFSelect_Editor.hpp
-  IFSelect_EditValue.hpp
   IFSelect_Functions.cxx
   IFSelect_Functions.hpp
   IFSelect_GeneralModifier.cxx
@@ -60,8 +58,6 @@ set(OCCT_IFSelect_FILES
   IFSelect_ParamEditor.cxx
   IFSelect_ParamEditor.hpp
   IFSelect_PrintCount.hpp
-  IFSelect_PrintFail.hpp
-  IFSelect_RemainMode.hpp
   IFSelect_ReturnStatus.hpp
   IFSelect_SelectAnyList.cxx
   IFSelect_SelectAnyList.hpp

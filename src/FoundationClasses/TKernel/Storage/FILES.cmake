@@ -8,7 +8,6 @@ set(OCCT_Storage_FILES
   
   Storage_BaseDriver.cxx
   Storage_BaseDriver.hpp
-  Storage_BucketOfPersistent.hpp
   Storage_CallBack.cxx
   Storage_CallBack.hpp
   Storage_Data.cxx

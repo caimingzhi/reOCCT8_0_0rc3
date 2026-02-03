@@ -4,7 +4,6 @@ set(OCCT_Image_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Image_FILES
   Image_AlienPixMap.cxx
   Image_AlienPixMap.hpp
-  Image_Color.hpp
   Image_CompressedFormat.hpp
   Image_CompressedPixMap.hpp
   Image_DDSParser.cxx
@@ -15,7 +14,6 @@ set(OCCT_Image_FILES
   Image_PixMap.cxx
   Image_PixMap.hpp
   Image_PixMapData.hpp
-  Image_PixMapTypedData.hpp
   Image_SupportedFormats.cxx
   Image_SupportedFormats.hpp
   Image_Texture.cxx

@@ -16,7 +16,6 @@ set(OCCT_BOPTools_FILES
   BOPTools_ConnexityBlock.hpp
   BOPTools_CoupleOfShape.hpp
 
-  BOPTools_PairSelector.hpp
   BOPTools_Parallel.hpp
   BOPTools_Set.cxx
   BOPTools_Set.hpp

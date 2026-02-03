@@ -10,8 +10,6 @@ set(OCCT_MathUtils_FILES
   MathUtils_Core.hpp
   MathUtils_Convergence.hpp
   MathUtils_Poly.hpp
-  MathUtils_Bracket.hpp
-  MathUtils_Gauss.hpp
   MathUtils_Deriv.hpp
   MathUtils_LineSearch.hpp
   MathUtils_GaussKronrodWeights.hpp

@@ -39,5 +39,4 @@ set(OCCT_GC_FILES
   GC_MakeTrimmedCylinder.cxx
   GC_MakeTrimmedCylinder.hpp
   GC_Root.hpp
-  GC_Root_1.hpp
 )

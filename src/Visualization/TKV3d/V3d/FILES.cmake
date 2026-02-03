@@ -11,7 +11,6 @@ set(OCCT_V3d_FILES
   V3d_CircularGrid.hpp
   V3d_DirectionalLight.cxx
   V3d_DirectionalLight.hpp
-  V3d_ImageDumpOptions.hpp
   V3d_Light.hpp
 
   V3d_Plane.cxx

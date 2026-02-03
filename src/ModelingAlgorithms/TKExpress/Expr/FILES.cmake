@@ -22,7 +22,6 @@ set(OCCT_Expr_FILES
 
   Expr_BinaryExpression.cxx
   Expr_BinaryExpression.hpp
-  Expr_BinaryExpression_1.hpp
   Expr_BinaryFunction.cxx
   Expr_BinaryFunction.hpp
   Expr_Cosh.cxx
@@ -68,14 +67,12 @@ set(OCCT_Expr_FILES
 
   Expr_NamedConstant.cxx
   Expr_NamedConstant.hpp
-  Expr_NamedConstant_1.hpp
   Expr_NamedExpression.cxx
   Expr_NamedExpression.hpp
   Expr_NamedFunction.cxx
   Expr_NamedFunction.hpp
   Expr_NamedUnknown.cxx
   Expr_NamedUnknown.hpp
-  Expr_NamedUnknown_1.hpp
   Expr_NotAssigned.hpp
   Expr_NotEvaluable.hpp
   Expr_NumericValue.cxx
@@ -84,7 +81,6 @@ set(OCCT_Expr_FILES
   Expr_Operators.hpp
   Expr_PolyExpression.cxx
   Expr_PolyExpression.hpp
-  Expr_PolyExpression_1.hpp
   Expr_PolyFunction.cxx
   Expr_PolyFunction.hpp
   Expr_Product.cxx
@@ -116,7 +112,6 @@ set(OCCT_Expr_FILES
   Expr_Tanh.hpp
   Expr_UnaryExpression.cxx
   Expr_UnaryExpression.hpp
-  Expr_UnaryExpression_1.hpp
   Expr_UnaryFunction.cxx
   Expr_UnaryFunction.hpp
   Expr_UnaryMinus.cxx

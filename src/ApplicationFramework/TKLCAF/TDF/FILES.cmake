@@ -6,7 +6,6 @@ set(OCCT_TDF_FILES
   TDF.hpp
   TDF_Attribute.cxx
   TDF_Attribute.hpp
-  TDF_Attribute_1.hpp
 
   TDF_AttributeDelta.cxx
   TDF_AttributeDelta.hpp
@@ -16,36 +15,29 @@ set(OCCT_TDF_FILES
 
   TDF_ChildIDIterator.cxx
   TDF_ChildIDIterator.hpp
-  TDF_ChildIDIterator_1.hpp
   TDF_ChildIterator.cxx
   TDF_ChildIterator.hpp
-  TDF_ChildIterator_1.hpp
   TDF_ClosureMode.cxx
   TDF_ClosureMode.hpp
-  TDF_ClosureMode_1.hpp
   TDF_ClosureTool.cxx
   TDF_ClosureTool.hpp
   TDF_ComparisonTool.cxx
   TDF_ComparisonTool.hpp
   TDF_CopyLabel.cxx
   TDF_CopyLabel.hpp
-  TDF_CopyLabel_1.hpp
   TDF_CopyTool.cxx
   TDF_CopyTool.hpp
   TDF_Data.cxx
   TDF_Data.hpp
-  TDF_Data_1.hpp
 
   TDF_DataSet.cxx
   TDF_DataSet.hpp
-  TDF_DataSet_1.hpp
   TDF_DefaultDeltaOnModification.cxx
   TDF_DefaultDeltaOnModification.hpp
   TDF_DefaultDeltaOnRemoval.cxx
   TDF_DefaultDeltaOnRemoval.hpp
   TDF_Delta.cxx
   TDF_Delta.hpp
-  TDF_Delta_1.hpp
 
   TDF_DeltaOnAddition.cxx
   TDF_DeltaOnAddition.hpp
@@ -64,11 +56,9 @@ set(OCCT_TDF_FILES
 
   TDF_IDFilter.cxx
   TDF_IDFilter.hpp
-  TDF_IDFilter_1.hpp
 
   TDF_Label.cxx
   TDF_Label.hpp
-  TDF_Label_1.hpp
 
   TDF_LabelNode.cxx
   TDF_LabelNode.hpp
@@ -84,5 +74,4 @@ set(OCCT_TDF_FILES
   TDF_Tool.hpp
   TDF_Transaction.cxx
   TDF_Transaction.hpp
-  TDF_Transaction_1.hpp
 )

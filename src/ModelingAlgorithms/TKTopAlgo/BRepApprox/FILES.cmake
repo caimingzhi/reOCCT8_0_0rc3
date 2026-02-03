@@ -36,7 +36,6 @@ set(OCCT_BRepApprox_FILES
   BRepApprox_ResConstraintOfMyGradientOfTheComputeLineBezierOfApprox_0.cxx
   BRepApprox_SurfaceTool.cxx
   BRepApprox_SurfaceTool.hpp
-  BRepApprox_SurfaceTool_1.hpp
   BRepApprox_TheComputeLineBezierOfApprox.hpp
   BRepApprox_TheComputeLineBezierOfApprox_0.cxx
   BRepApprox_TheComputeLineOfApprox.hpp

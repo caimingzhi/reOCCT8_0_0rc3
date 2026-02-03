@@ -20,5 +20,4 @@ set(OCCT_TransferBRep_FILES
   TransferBRep_ShapeMapper_0.cxx
   TransferBRep_TransferResultInfo.cxx
   TransferBRep_TransferResultInfo.hpp
-  TransferBRep_TransferResultInfo_1.hpp
 )

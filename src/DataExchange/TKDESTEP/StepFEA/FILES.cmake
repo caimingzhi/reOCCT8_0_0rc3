@@ -11,7 +11,6 @@ set(OCCT_StepFEA_FILES
 
   StepFEA_ConstantSurface3dElementCoordinateSystem.cxx
   StepFEA_ConstantSurface3dElementCoordinateSystem.hpp
-  StepFEA_CoordinateSystemType.hpp
   StepFEA_Curve3dElementProperty.cxx
   StepFEA_Curve3dElementProperty.hpp
   StepFEA_Curve3dElementRepresentation.cxx
@@ -46,7 +45,6 @@ set(OCCT_StepFEA_FILES
   StepFEA_ElementRepresentation.cxx
   StepFEA_ElementRepresentation.hpp
   
-  StepFEA_EnumeratedDegreeOfFreedom.hpp
   StepFEA_FeaAreaDensity.cxx
   StepFEA_FeaAreaDensity.hpp
   StepFEA_FeaAxis2Placement3d.cxx

@@ -14,7 +14,6 @@ set(OCCT_BRepOffset_FILES
   BRepOffset_Inter3d.hpp
   BRepOffset_Interval.cxx
   BRepOffset_Interval.hpp
-  BRepOffset_Interval_1.hpp
 
   BRepOffset_MakeLoops.cxx
   BRepOffset_MakeLoops.hpp
@@ -28,7 +27,6 @@ set(OCCT_BRepOffset_FILES
   BRepOffset_Offset.hpp
   BRepOffset_SimpleOffset.cxx
   BRepOffset_SimpleOffset.hpp
-  BRepOffset_Offset_1.hpp
   BRepOffset_Status.hpp
   BRepOffset_Tool.cxx
   BRepOffset_Tool.hpp

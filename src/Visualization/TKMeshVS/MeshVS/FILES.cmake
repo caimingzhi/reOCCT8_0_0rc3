@@ -32,7 +32,6 @@ set(OCCT_MeshVS_FILES
   MeshVS_MeshOwner.hpp
   MeshVS_MeshPrsBuilder.cxx
   MeshVS_MeshPrsBuilder.hpp
-  MeshVS_MeshPtr.hpp
   MeshVS_MeshSelectionMethod.hpp
   MeshVS_NodalColorPrsBuilder.cxx
   MeshVS_NodalColorPrsBuilder.hpp

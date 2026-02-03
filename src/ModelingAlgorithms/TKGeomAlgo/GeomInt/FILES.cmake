@@ -16,11 +16,9 @@ set(OCCT_GeomInt_FILES
   GeomInt_Gradient_BFGSOfMyGradientOfTheComputeLineBezierOfWLApprox_0.cxx
   GeomInt_IntSS.cxx
   GeomInt_IntSS.hpp
-  GeomInt_IntSS_1.hpp
   GeomInt_IntSS_1.cxx
   GeomInt_LineConstructor.cxx
   GeomInt_LineConstructor.hpp
-  GeomInt_LineConstructor_1.hpp
   GeomInt_LineTool.cxx
   GeomInt_LineTool.hpp
   GeomInt_MyBSplGradientOfTheComputeLineOfWLApprox.hpp

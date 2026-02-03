@@ -20,7 +20,6 @@ set(OCCT_OpenGl_FILES
   OpenGl_AspectsTextureSet.hpp
   OpenGl_Buffer.cxx
   OpenGl_Buffer.hpp
-  OpenGl_BufferCompatT.hpp
   OpenGl_FrameStats.cxx
   OpenGl_FrameStats.hpp
   OpenGl_FrameStatsPrs.cxx
@@ -47,8 +46,6 @@ set(OCCT_OpenGl_FILES
   OpenGl_GraduatedTrihedron.hpp
   OpenGl_GraduatedTrihedron.cxx
   OpenGl_Material.hpp
-  OpenGl_MaterialState.hpp
-  OpenGl_MatrixState.hpp
   OpenGl_LineAttributes.hpp
   OpenGl_LineAttributes.cxx
   OpenGl_Window.hpp
@@ -89,38 +86,26 @@ set(OCCT_OpenGl_FILES
   OpenGl_GlFunctions.cxx
   OpenGl_GlFunctions.hpp
   OpenGl_GlNative.hpp
-  OpenGl_GlTypes.hpp
   OpenGl_Flipper.cxx
   OpenGl_Flipper.hpp
   OpenGl_GlCore11.hpp
-  OpenGl_GlCore11Fwd.hpp
   OpenGl_GlCore12.hpp
   OpenGl_GlCore13.hpp
-  OpenGl_GlCore14.hpp
   OpenGl_GlCore15.hpp
   OpenGl_GlCore20.hpp
-  OpenGl_GlCore21.hpp
   OpenGl_GlCore30.hpp
-  OpenGl_GlCore31.hpp
   OpenGl_GlCore32.hpp
-  OpenGl_GlCore33.hpp
-  OpenGl_GlCore40.hpp
-  OpenGl_GlCore41.hpp
-  OpenGl_GlCore42.hpp
-  OpenGl_GlCore43.hpp
   OpenGl_GlCore44.hpp
   OpenGl_GlCore45.hpp
   OpenGl_GlCore46.hpp
   OpenGl_LayerList.cxx
   OpenGl_LayerList.hpp
-  OpenGl_LayerFilter.hpp
   OpenGl_GraphicDriver.cxx
   OpenGl_GraphicDriver.hpp
   OpenGl_GraphicDriverFactory.cxx
   OpenGl_GraphicDriverFactory.hpp
   OpenGl_IndexBuffer.cxx
   OpenGl_IndexBuffer.hpp
-  OpenGl_Layer.hpp
   OpenGl_PBREnvironment.cxx
   OpenGl_PBREnvironment.hpp
   OpenGl_RenderFilter.hpp
@@ -128,7 +113,6 @@ set(OCCT_OpenGl_FILES
   OpenGl_Sampler.hpp
   OpenGl_SceneGeometry.cxx
   OpenGl_SceneGeometry.hpp
-  OpenGl_SetOfShaderPrograms.hpp
   OpenGl_ShaderManager.cxx
   OpenGl_ShaderManager.hpp
   OpenGl_ShaderObject.cxx
@@ -152,9 +136,6 @@ set(OCCT_OpenGl_FILES
   OpenGl_VertexBuffer.cxx
   OpenGl_VertexBuffer.hpp
   OpenGl_VertexBufferCompat.hpp
-  OpenGl_VertexBufferEditor.hpp
   OpenGl_TextBuilder.hpp
   OpenGl_TextBuilder.cxx
-  OpenGl_HaltonSampler.hpp
-  OpenGl_ShaderProgramDumpLevel.hpp
 )

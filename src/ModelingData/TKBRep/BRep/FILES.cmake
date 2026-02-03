@@ -4,23 +4,18 @@ set(OCCT_BRep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_BRep_FILES
   BRep_Builder.cxx
   BRep_Builder.hpp
-  BRep_Builder_1.hpp
   BRep_Curve3D.cxx
   BRep_Curve3D.hpp
   BRep_CurveOn2Surfaces.cxx
   BRep_CurveOn2Surfaces.hpp
   BRep_CurveOnClosedSurface.cxx
   BRep_CurveOnClosedSurface.hpp
-  BRep_CurveOnClosedSurface_1.hpp
   BRep_CurveOnSurface.cxx
   BRep_CurveOnSurface.hpp
-  BRep_CurveOnSurface_1.hpp
   BRep_CurveRepresentation.cxx
   BRep_CurveRepresentation.hpp
-  BRep_CurveRepresentation_1.hpp
   BRep_GCurve.cxx
   BRep_GCurve.hpp
-  BRep_GCurve_1.hpp
 
   BRep_PointOnCurve.cxx
   BRep_PointOnCurve.hpp
@@ -30,7 +25,6 @@ set(OCCT_BRep_FILES
   BRep_PointOnSurface.hpp
   BRep_PointRepresentation.cxx
   BRep_PointRepresentation.hpp
-  BRep_PointRepresentation_1.hpp
   BRep_PointsOnSurface.cxx
   BRep_PointsOnSurface.hpp
   BRep_Polygon3D.cxx
@@ -45,12 +39,10 @@ set(OCCT_BRep_FILES
   BRep_PolygonOnTriangulation.hpp
   BRep_TEdge.cxx
   BRep_TEdge.hpp
-  BRep_TEdge_1.hpp
   BRep_TFace.cxx
   BRep_TFace.hpp
   BRep_Tool.cxx
   BRep_Tool.hpp
   BRep_TVertex.cxx
   BRep_TVertex.hpp
-  BRep_TVertex_1.hpp
 )

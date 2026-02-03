@@ -3,7 +3,6 @@ set(OCCT_WNT_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_WNT_FILES
   WNT_ClassDefinitionError.hpp
-  WNT_Dword.hpp
   WNT_HIDSpaceMouse.cxx
   WNT_HIDSpaceMouse.hpp
   

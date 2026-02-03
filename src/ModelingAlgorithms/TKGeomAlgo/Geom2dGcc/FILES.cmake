@@ -53,7 +53,4 @@ set(OCCT_Geom2dGcc_FILES
   Geom2dGcc_QCurve.hpp
   Geom2dGcc_QualifiedCurve.cxx
   Geom2dGcc_QualifiedCurve.hpp
-  Geom2dGcc_Type1.hpp
-  Geom2dGcc_Type2.hpp
-  Geom2dGcc_Type3.hpp
 )

@@ -19,8 +19,6 @@ set(OCCT_RWObj_FILES
 
   RWObj_Reader.cxx
   RWObj_Reader.hpp
-  RWObj_SubMesh.hpp
-  RWObj_SubMeshReason.hpp
   RWObj_Tools.hpp
   RWObj_TriangulationReader.cxx
   RWObj_TriangulationReader.hpp

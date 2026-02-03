@@ -13,12 +13,10 @@ set(OCCT_Geom2dHatch_FILES
   Geom2dHatch_FClass2dOfClassifier_0.cxx
   Geom2dHatch_Hatcher.cxx
   Geom2dHatch_Hatcher.hpp
-  Geom2dHatch_Hatcher_1.hpp
   Geom2dHatch_Hatching.cxx
   Geom2dHatch_Hatching.hpp
 
   Geom2dHatch_Intersector.cxx
   Geom2dHatch_Intersector.hpp
-  Geom2dHatch_Intersector_1.hpp
 
 )

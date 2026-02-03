@@ -6,7 +6,6 @@ set(OCCT_XmlMNaming_FILES
   XmlMNaming.hpp
   XmlMNaming_NamedShapeDriver.cxx
   XmlMNaming_NamedShapeDriver.hpp
-  XmlMNaming_NamedShapeDriver_1.hpp
   XmlMNaming_NamingDriver.cxx
   XmlMNaming_NamingDriver.hpp
   XmlMNaming_Shape1.cxx

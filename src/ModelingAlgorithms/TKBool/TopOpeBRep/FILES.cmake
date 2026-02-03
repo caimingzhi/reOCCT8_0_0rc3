@@ -41,26 +41,19 @@ set(OCCT_TopOpeBRep_FILES
   TopOpeBRep_kpart.cxx
   TopOpeBRep_LineInter.cxx
   TopOpeBRep_LineInter.hpp
-  TopOpeBRep_LineInter_1.hpp
 
   TopOpeBRep_mergePDS.cxx
   TopOpeBRep_P2Dstatus.hpp
-  TopOpeBRep_PEdgesIntersector.hpp
-  TopOpeBRep_PFacesFiller.hpp
-  TopOpeBRep_PFacesIntersector.hpp
   
   TopOpeBRep_PLineInter.hpp
   TopOpeBRep_Point2d.cxx
   TopOpeBRep_Point2d.hpp
-  TopOpeBRep_Point2d_1.hpp
   TopOpeBRep_PointClassifier.cxx
   TopOpeBRep_PointClassifier.hpp
   TopOpeBRep_PointGeomTool.cxx
   TopOpeBRep_PointGeomTool.hpp
-  TopOpeBRep_PPntOn2S.hpp
   TopOpeBRep_ProcessGR.cxx
   TopOpeBRep_ProcessSectionEdges.cxx
-  TopOpeBRep_PThePointOfIntersection.hpp
 
   TopOpeBRep_ShapeIntersector.cxx
   TopOpeBRep_ShapeIntersector.hpp
@@ -77,7 +70,6 @@ set(OCCT_TopOpeBRep_FILES
   TopOpeBRep_TypeLineCurve.hpp
   TopOpeBRep_VPointInter.cxx
   TopOpeBRep_VPointInter.hpp
-  TopOpeBRep_VPointInter_1.hpp
   TopOpeBRep_VPointInterClassifier.cxx
   TopOpeBRep_VPointInterClassifier.hpp
   TopOpeBRep_VPointInterIterator.cxx

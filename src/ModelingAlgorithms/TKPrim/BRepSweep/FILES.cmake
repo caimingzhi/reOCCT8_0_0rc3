@@ -4,10 +4,8 @@ set(OCCT_BRepSweep_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_BRepSweep_FILES
   BRepSweep_Builder.cxx
   BRepSweep_Builder.hpp
-  BRepSweep_Builder_1.hpp
   BRepSweep_Iterator.cxx
   BRepSweep_Iterator.hpp
-  BRepSweep_Iterator_1.hpp
   BRepSweep_NumLinearRegularSweep.cxx
   BRepSweep_NumLinearRegularSweep.hpp
   BRepSweep_Prism.cxx

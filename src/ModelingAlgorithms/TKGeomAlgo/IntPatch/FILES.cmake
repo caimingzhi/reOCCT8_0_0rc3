@@ -4,45 +4,35 @@ set(OCCT_IntPatch_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_IntPatch_FILES
   IntPatch_ALine.cxx
   IntPatch_ALine.hpp
-  IntPatch_ALine_1.hpp
   IntPatch_ALineToWLine.cxx
   IntPatch_ALineToWLine.hpp
   IntPatch_ArcFunction.cxx
   IntPatch_ArcFunction.hpp
-  IntPatch_ArcFunction_1.hpp
   IntPatch_CSFunction.cxx
   IntPatch_CSFunction.hpp
   IntPatch_CurvIntSurf.hpp
   IntPatch_CurvIntSurf_0.cxx
   IntPatch_GLine.cxx
   IntPatch_GLine.hpp
-  IntPatch_GLine_1.hpp
   IntPatch_HCurve2dTool.cxx
   IntPatch_HCurve2dTool.hpp
-  IntPatch_HCurve2dTool_1.hpp
   IntPatch_HInterTool.cxx
   IntPatch_HInterTool.hpp
-  IntPatch_HInterTool_1.hpp
   IntPatch_IType.hpp
   IntPatch_ImpImpIntersection.cxx
   IntPatch_ImpImpIntersection.hpp
-  IntPatch_ImpImpIntersection_1.hpp
   IntPatch_ImpPrmIntersection.cxx
   IntPatch_ImpPrmIntersection.hpp
-  IntPatch_ImpPrmIntersection_1.hpp
   IntPatch_InterferencePolyhedron.cxx
   IntPatch_InterferencePolyhedron.hpp
   IntPatch_Intersection.cxx
   IntPatch_Intersection.hpp
-  IntPatch_Intersection_1.hpp
   IntPatch_Line.cxx
   IntPatch_Line.hpp
-  IntPatch_Line_1.hpp
   IntPatch_LineConstructor.cxx
   IntPatch_LineConstructor.hpp
   IntPatch_Point.cxx
   IntPatch_Point.hpp
-  IntPatch_Point_1.hpp
   IntPatch_PointLine.cxx
   IntPatch_PointLine.hpp
   IntPatch_PolyArc.cxx
@@ -51,24 +41,19 @@ set(OCCT_IntPatch_FILES
   IntPatch_PolyLine.hpp
   IntPatch_Polygo.cxx
   IntPatch_Polygo.hpp
-  IntPatch_Polygo_1.hpp
   IntPatch_Polyhedron.cxx
   IntPatch_Polyhedron.hpp
   IntPatch_PolyhedronTool.hpp
-  IntPatch_PolyhedronTool_1.hpp
   IntPatch_PrmPrmIntersection.cxx
   IntPatch_PrmPrmIntersection.hpp
-  IntPatch_PrmPrmIntersection_1.hpp
   IntPatch_PrmPrmIntersection_T3Bits.cxx
   IntPatch_PrmPrmIntersection_T3Bits.hpp
   IntPatch_RLine.cxx
   IntPatch_RLine.hpp
-  IntPatch_RLine_1.hpp
   IntPatch_RstInt.cxx
   IntPatch_RstInt.hpp
   IntPatch_SearchPnt.hpp
 
-  IntPatch_SpecPntType.hpp
   IntPatch_SpecialPoints.cxx
   IntPatch_SpecialPoints.hpp
   IntPatch_TheIWLineOfTheIWalking.hpp
@@ -87,7 +72,6 @@ set(OCCT_IntPatch_FILES
   IntPatch_TheSurfFunction_0.cxx
   IntPatch_WLine.cxx
   IntPatch_WLine.hpp
-  IntPatch_WLine_1.hpp
   IntPatch_WLineTool.cxx
   IntPatch_WLineTool.hpp
 )

@@ -4,5 +4,4 @@ set(OCCT_ElSLib_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_ElSLib_FILES
   ElSLib.cxx
   ElSLib.hpp
-  ElSLib_1.hpp
 )

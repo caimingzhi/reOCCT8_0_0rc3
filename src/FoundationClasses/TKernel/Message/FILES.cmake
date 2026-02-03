@@ -10,8 +10,6 @@ set(OCCT_Message_FILES
   Message_AlertExtended.hpp
   Message_Algorithm.cxx
   Message_Algorithm.hpp
-  Message_Algorithm_1.hpp
-  Message_ConsoleColor.hpp
   Message_Attribute.cxx
   Message_Attribute.hpp
   Message_AttributeMeter.cxx
@@ -22,7 +20,6 @@ set(OCCT_Message_FILES
   Message_AttributeStream.hpp
   Message_CompositeAlerts.cxx
   Message_CompositeAlerts.hpp
-  Message_ExecStatus.hpp
   Message_Gravity.hpp
 
   Message_LazyProgressScope.hpp
@@ -34,7 +31,6 @@ set(OCCT_Message_FILES
   Message_MetricType.hpp
   Message_Msg.cxx
   Message_Msg.hpp
-  Message_Msg_1.hpp
   Message_MsgFile.cxx
   Message_MsgFile.hpp
   Message_Printer.cxx
@@ -52,7 +48,6 @@ set(OCCT_Message_FILES
   
 
   Message_Status.hpp
-  Message_StatusType.hpp
 
   Message_Report.cxx
   Message_Report.hpp

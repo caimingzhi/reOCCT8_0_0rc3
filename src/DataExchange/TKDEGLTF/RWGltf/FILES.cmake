@@ -7,15 +7,10 @@ set(OCCT_RWGltf_FILES
   RWGltf_CafWriter.cxx
   RWGltf_CafWriter.hpp
 
-  RWGltf_DracoParameters.hpp
   RWGltf_GltfAccessor.hpp
-  RWGltf_GltfAccessorCompType.hpp
   RWGltf_GltfAccessorLayout.hpp
-  RWGltf_GltfAlphaMode.hpp
   RWGltf_GltfArrayType.hpp
   RWGltf_GltfBufferView.hpp
-  RWGltf_GltfBufferViewTarget.hpp
-  RWGltf_GltfFace.hpp
   RWGltf_GltfJsonParser.cxx
   RWGltf_GltfJsonParser.hpp
   RWGltf_GltfLatePrimitiveArray.cxx

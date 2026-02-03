@@ -12,14 +12,12 @@ set(OCCT_GeomFill_FILES
 
   GeomFill_BezierCurves.cxx
   GeomFill_BezierCurves.hpp
-  GeomFill_BezierCurves_1.hpp
   GeomFill_Boundary.cxx
   GeomFill_Boundary.hpp
   GeomFill_BoundWithSurf.cxx
   GeomFill_BoundWithSurf.hpp
   GeomFill_BSplineCurves.cxx
   GeomFill_BSplineCurves.hpp
-  GeomFill_BSplineCurves_1.hpp
   GeomFill_CircularBlendFunc.cxx
   GeomFill_CircularBlendFunc.hpp
   GeomFill_ConstantBiNormal.cxx
@@ -61,7 +59,6 @@ set(OCCT_GeomFill_FILES
   GeomFill_FunctionGuide.hpp
   GeomFill_Generator.cxx
   GeomFill_Generator.hpp
-  GeomFill_Generator_1.hpp
   GeomFill_GuideTrihedronAC.cxx
   GeomFill_GuideTrihedronAC.hpp
   GeomFill_GuideTrihedronPlan.cxx
@@ -69,7 +66,6 @@ set(OCCT_GeomFill_FILES
 
   GeomFill_Line.cxx
   GeomFill_Line.hpp
-  GeomFill_Line_1.hpp
   GeomFill_LocationDraft.cxx
   GeomFill_LocationDraft.hpp
   GeomFill_LocationGuide.cxx
@@ -82,7 +78,6 @@ set(OCCT_GeomFill_FILES
   GeomFill_NSections.hpp
   GeomFill_Pipe.cxx
   GeomFill_Pipe.hpp
-  GeomFill_Pipe_1.hpp
   GeomFill_PipeError.hpp
   GeomFill_PlanFunc.cxx
   GeomFill_PlanFunc.hpp
@@ -90,7 +85,6 @@ set(OCCT_GeomFill_FILES
   GeomFill_PolynomialConvertor.hpp
   GeomFill_Profiler.cxx
   GeomFill_Profiler.hpp
-  GeomFill_Profiler_1.hpp
   GeomFill_QuasiAngularConvertor.cxx
   GeomFill_QuasiAngularConvertor.hpp
   GeomFill_SectionGenerator.cxx
@@ -112,10 +106,8 @@ set(OCCT_GeomFill_FILES
   GeomFill_SweepFunction.hpp
   GeomFill_SweepSectionGenerator.cxx
   GeomFill_SweepSectionGenerator.hpp
-  GeomFill_SweepSectionGenerator_1.hpp
   GeomFill_Tensor.cxx
   GeomFill_Tensor.hpp
-  GeomFill_Tensor_1.hpp
   GeomFill_TgtField.cxx
   GeomFill_TgtField.hpp
   GeomFill_TgtOnCoons.cxx

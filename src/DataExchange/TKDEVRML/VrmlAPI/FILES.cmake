@@ -6,7 +6,6 @@ set(OCCT_VrmlAPI_FILES
   VrmlAPI.hpp
   VrmlAPI_CafReader.cxx
   VrmlAPI_CafReader.hpp
-  VrmlAPI_RepresentationOfShape.hpp
   VrmlAPI_Writer.cxx
   VrmlAPI_Writer.hpp
 )

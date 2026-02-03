@@ -50,7 +50,6 @@ set(OCCT_TopOpeBRepTool_FILES
   TopOpeBRepTool_PROJECT.cxx
   TopOpeBRepTool_PROJECT.hpp
   TopOpeBRepTool_PShapeClassifier.hpp
-  TopOpeBRepTool_PSoClassif.hpp
   TopOpeBRepTool_PURGE.cxx
   TopOpeBRepTool_PURGE.hpp
   TopOpeBRepTool_PurgeInternalEdges.cxx

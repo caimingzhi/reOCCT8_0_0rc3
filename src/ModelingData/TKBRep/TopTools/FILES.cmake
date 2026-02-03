@@ -9,7 +9,6 @@ set(OCCT_TopTools_FILES
 
   TopTools_LocationSet.cxx
   TopTools_LocationSet.hpp
-  TopTools_LocationSetPtr.hpp
 
   TopTools_ShapeMapHasher.hpp
   TopTools_ShapeSet.cxx

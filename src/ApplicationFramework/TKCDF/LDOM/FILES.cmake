@@ -12,12 +12,10 @@ set(OCCT_LDOM_FILES
   LDOM_BasicNode.hpp
   LDOM_BasicText.cxx
   LDOM_BasicText.hpp
-  LDOM_CDATASection.hpp
   LDOM_CharacterData.cxx
   LDOM_CharacterData.hpp
   LDOM_CharReference.cxx
   LDOM_CharReference.hpp
-  LDOM_Comment.hpp
   LDOM_DeclareSequence.hpp
   LDOM_Document.cxx
   LDOM_Document.hpp

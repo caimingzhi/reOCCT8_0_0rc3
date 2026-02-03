@@ -8,38 +8,27 @@ set(OCCT_BRepFeat_FILES
   BRepFeat_Builder.hpp
   BRepFeat_Form.cxx
   BRepFeat_Form.hpp
-  BRepFeat_Form_1.hpp
   BRepFeat_Gluer.cxx
   BRepFeat_Gluer.hpp
-  BRepFeat_Gluer_1.hpp
   BRepFeat_MakeCylindricalHole.cxx
   BRepFeat_MakeCylindricalHole.hpp
-  BRepFeat_MakeCylindricalHole_1.hpp
   BRepFeat_MakeDPrism.cxx
   BRepFeat_MakeDPrism.hpp
   BRepFeat_MakeLinearForm.cxx
   BRepFeat_MakeLinearForm.hpp
-  BRepFeat_MakeLinearForm_1.hpp
   BRepFeat_MakePipe.cxx
   BRepFeat_MakePipe.hpp
-  BRepFeat_MakePipe_1.hpp
   BRepFeat_MakePrism.cxx
   BRepFeat_MakePrism.hpp
-  BRepFeat_MakePrism_1.hpp
   BRepFeat_MakeRevol.cxx
   BRepFeat_MakeRevol.hpp
-  BRepFeat_MakeRevol_1.hpp
   BRepFeat_MakeRevolutionForm.cxx
   BRepFeat_MakeRevolutionForm.hpp
-  BRepFeat_MakeRevolutionForm_1.hpp
   BRepFeat_PerfSelection.hpp
   BRepFeat_RibSlot.cxx
   BRepFeat_RibSlot.hpp
-  BRepFeat_RibSlot_1.hpp
   BRepFeat_SplitShape.cxx
   BRepFeat_SplitShape.hpp
-  BRepFeat_SplitShape_1.hpp
-  BRepFeat_Status.hpp
   BRepFeat_StatusError.hpp
   BRepFeat_trace.cxx
 )

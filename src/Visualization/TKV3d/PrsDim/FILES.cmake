@@ -50,12 +50,7 @@ set(OCCT_PrsDim_FILES
   PrsDim_SymmetricRelation.hpp
   PrsDim_TangentRelation.cxx
   PrsDim_TangentRelation.hpp
-  PrsDim_DimensionSelectionMode.hpp
-  PrsDim_DisplaySpecialSymbol.hpp
   PrsDim_KindOfDimension.hpp
   PrsDim_KindOfRelation.hpp
   PrsDim_KindOfSurface.hpp
-  PrsDim_TypeOfAngle.hpp
-  PrsDim_TypeOfAngleArrowVisibility.hpp
-  PrsDim_TypeOfDist.hpp
 )

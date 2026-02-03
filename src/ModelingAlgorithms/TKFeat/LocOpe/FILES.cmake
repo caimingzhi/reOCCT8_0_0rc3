@@ -6,41 +6,32 @@ set(OCCT_LocOpe_FILES
   LocOpe.hpp
   LocOpe_BuildShape.cxx
   LocOpe_BuildShape.hpp
-  LocOpe_BuildShape_1.hpp
   LocOpe_BuildWires.cxx
   LocOpe_BuildWires.hpp
   LocOpe_CSIntersector.cxx
   LocOpe_CSIntersector.hpp
-  LocOpe_CSIntersector_1.hpp
   LocOpe_CurveShapeIntersector.cxx
   LocOpe_CurveShapeIntersector.hpp
-  LocOpe_CurveShapeIntersector_1.hpp
 
   LocOpe_DPrism.cxx
   LocOpe_DPrism.hpp
   LocOpe_FindEdges.cxx
   LocOpe_FindEdges.hpp
-  LocOpe_FindEdges_1.hpp
   LocOpe_FindEdgesInFace.cxx
   LocOpe_FindEdgesInFace.hpp
-  LocOpe_FindEdgesInFace_1.hpp
   LocOpe_GeneratedShape.cxx
   LocOpe_GeneratedShape.hpp
   LocOpe_Generator.cxx
   LocOpe_Generator.hpp
-  LocOpe_Generator_1.hpp
   LocOpe_GluedShape.cxx
   LocOpe_GluedShape.hpp
   LocOpe_Gluer.cxx
   LocOpe_Gluer.hpp
-  LocOpe_Gluer_1.hpp
   LocOpe_LinearForm.cxx
   LocOpe_LinearForm.hpp
-  LocOpe_LinearForm_1.hpp
   LocOpe_Operation.hpp
   LocOpe_Pipe.cxx
   LocOpe_Pipe.hpp
-  LocOpe_Pipe_1.hpp
   LocOpe_PntFace.hpp
   LocOpe_Prism.cxx
   LocOpe_Prism.hpp
@@ -53,11 +44,8 @@ set(OCCT_LocOpe_FILES
   LocOpe_SplitDrafts.hpp
   LocOpe_Spliter.cxx
   LocOpe_Spliter.hpp
-  LocOpe_Spliter_1.hpp
   LocOpe_SplitShape.cxx
   LocOpe_SplitShape.hpp
-  LocOpe_SplitShape_1.hpp
   LocOpe_WiresOnShape.cxx
   LocOpe_WiresOnShape.hpp
-  LocOpe_WiresOnShape_1.hpp
 )

@@ -6,7 +6,6 @@ set(OCCT_Geom2dInt_FILES
   Geom2dInt_ExactIntersectionPointOfTheIntPCurvePCurveOfGInter_0.cxx
   Geom2dInt_Geom2dCurveTool.cxx
   Geom2dInt_Geom2dCurveTool.hpp
-  Geom2dInt_Geom2dCurveTool_1.hpp
   Geom2dInt_GInter.hpp
   Geom2dInt_GInter_0.cxx
   Geom2dInt_IntConicCurveOfGInter.hpp

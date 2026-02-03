@@ -41,7 +41,6 @@ set(OCCT_StdPrs_FILES
   StdPrs_ToolVertex.cxx
   StdPrs_ToolVertex.hpp
   
-  StdPrs_Volume.hpp
   StdPrs_WFDeflectionRestrictedFace.cxx
   StdPrs_WFDeflectionRestrictedFace.hpp
   StdPrs_WFDeflectionSurface.cxx

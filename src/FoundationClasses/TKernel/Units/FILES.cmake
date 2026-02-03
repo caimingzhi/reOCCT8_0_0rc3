@@ -6,12 +6,10 @@ set(OCCT_Units_FILES
   Units.hpp
   Units_Dimensions.cxx
   Units_Dimensions.hpp
-  Units_Dimensions_1.hpp
   Units_Explorer.cxx
   Units_Explorer.hpp
   Units_Lexicon.cxx
   Units_Lexicon.hpp
-  Units_Lexicon_1.hpp
   Units_MathSentence.cxx
   Units_MathSentence.hpp
   Units_Measurement.cxx
@@ -22,10 +20,8 @@ set(OCCT_Units_FILES
 
   Units_Quantity.cxx
   Units_Quantity.hpp
-  Units_Quantity_1.hpp
   Units_Sentence.cxx
   Units_Sentence.hpp
-  Units_Sentence_1.hpp
   Units_ShiftedToken.cxx
   Units_ShiftedToken.hpp
   Units_ShiftedUnit.cxx
@@ -33,19 +29,15 @@ set(OCCT_Units_FILES
 
   Units_Token.cxx
   Units_Token.hpp
-  Units_Token_1.hpp
 
   Units_Unit.cxx
   Units_Unit.hpp
-  Units_Unit_1.hpp
   Units_UnitsDictionary.cxx
   Units_UnitsDictionary.hpp
-  Units_UnitsDictionary_1.hpp
   Units_UnitSentence.cxx
   Units_UnitSentence.hpp
   Units_UnitsLexicon.cxx
   Units_UnitsLexicon.hpp
-  Units_UnitsLexicon_1.hpp
 
   Units_UnitsSystem.cxx
   Units_UnitsSystem.hpp

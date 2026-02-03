@@ -75,7 +75,6 @@ set(OCCT_XCAFDoc_FILES
   XCAFDoc_VisMaterial.cxx
   XCAFDoc_VisMaterial.hpp
   XCAFDoc_VisMaterialCommon.hpp
-  XCAFDoc_VisMaterialPBR.hpp
   XCAFDoc_VisMaterialTool.cxx
   XCAFDoc_VisMaterialTool.hpp
   XCAFDoc_Volume.cxx

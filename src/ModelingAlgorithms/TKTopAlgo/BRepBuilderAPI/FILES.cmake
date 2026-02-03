@@ -13,7 +13,6 @@ set(OCCT_BRepBuilderAPI_FILES
   BRepBuilderAPI_Copy.cxx
   BRepBuilderAPI_Copy.hpp
   BRepBuilderAPI_EdgeError.hpp
-  BRepBuilderAPI_FaceError.hpp
   BRepBuilderAPI_FastSewing.cxx
   BRepBuilderAPI_FastSewing.hpp
   BRepBuilderAPI_FindPlane.cxx
@@ -44,15 +43,11 @@ set(OCCT_BRepBuilderAPI_FILES
   BRepBuilderAPI_ModifyShape.hpp
   BRepBuilderAPI_NurbsConvert.cxx
   BRepBuilderAPI_NurbsConvert.hpp
-  BRepBuilderAPI_PipeError.hpp
   BRepBuilderAPI_Sewing.cxx
   BRepBuilderAPI_Sewing.hpp
-  BRepBuilderAPI_Sewing_1.hpp
   
-  BRepBuilderAPI_ShellError.hpp
   BRepBuilderAPI_Transform.cxx
   BRepBuilderAPI_Transform.hpp
   BRepBuilderAPI_TransitionMode.hpp
   BRepBuilderAPI_VertexInspector.hpp
-  BRepBuilderAPI_WireError.hpp
 )

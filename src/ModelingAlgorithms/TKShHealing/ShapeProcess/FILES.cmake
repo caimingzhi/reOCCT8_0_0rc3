@@ -8,7 +8,6 @@ set(OCCT_ShapeProcess_FILES
   ShapeProcess_Context.hpp
   ShapeProcess_Operator.cxx
   ShapeProcess_Operator.hpp
-  ShapeProcess_OperFunc.hpp
   ShapeProcess_OperLibrary.cxx
   ShapeProcess_OperLibrary.hpp
   ShapeProcess_ShapeContext.cxx

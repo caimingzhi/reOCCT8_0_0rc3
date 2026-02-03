@@ -7,7 +7,6 @@ set(OCCT_TopoDSToStep_FILES
   TopoDSToStep_Builder.cxx
   TopoDSToStep_Builder.hpp
   TopoDSToStep_BuilderError.hpp
-  TopoDSToStep_FacetedError.hpp
   TopoDSToStep_FacetedTool.cxx
   TopoDSToStep_FacetedTool.hpp
   TopoDSToStep_MakeBrepWithVoids.cxx

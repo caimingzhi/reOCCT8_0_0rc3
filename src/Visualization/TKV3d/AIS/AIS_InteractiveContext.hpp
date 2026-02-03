@@ -21,26 +21,225 @@
 #include <AIS_GlobalStatus.hpp>
 #include <NCollection_DataMap.hpp>
 #include <AIS_DisplayMode.hpp>
-#include <AIS_DisplayStatus.hpp>
+// Created on: 1996-12-11
+// Created by: Robert COUBLANC
+// Copyright (c) 1996-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_DisplayStatus_HeaderFile
+#define _AIS_DisplayStatus_HeaderFile
+
+#include <PrsMgr_DisplayStatus.hpp>
+
+//! To give the display status of an Interactive Object.
+typedef PrsMgr_DisplayStatus AIS_DisplayStatus;
+
+#endif // _AIS_DisplayStatus_HeaderFile
+
 #include <AIS_KindOfInteractive.hpp>
 #include <NCollection_List.hpp>
 #include <AIS_Selection.hpp>
-#include <AIS_SelectionModesConcurrency.hpp>
+// Copyright (c) 2017 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_SelectionModesConcurrency_HeaderFile
+#define _AIS_SelectionModesConcurrency_HeaderFile
+
+//! The mode specifying how multiple active Selection Modes should be treated during activation of
+//! new one.
+enum AIS_SelectionModesConcurrency
+{
+  AIS_SelectionModesConcurrency_Single, //!< only one selection mode can be activated at the same
+                                        //!< moment - previously activated should be deactivated
+  AIS_SelectionModesConcurrency_GlobalOrLocal, //!< either Global
+                                               //!< (AIS_InteractiveObject::GlobalSelectionMode() or
+                                               //!< Local (multiple) selection modes can be active
+                                               //!< at the same moment
+  AIS_SelectionModesConcurrency_Multiple, //!< any combination of selection modes can be activated
+};
+
+#endif // _AIS_SelectionModesConcurrency_HeaderFile
+
 #include <AIS_SelectionScheme.hpp>
-#include <AIS_StatusOfDetection.hpp>
-#include <AIS_StatusOfPick.hpp>
-#include <AIS_TypeOfIso.hpp>
+// Created on: 1996-12-11
+// Created by: Robert COUBLANC
+// Copyright (c) 1996-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_StatusOfDetection_HeaderFile
+#define _AIS_StatusOfDetection_HeaderFile
+
+enum AIS_StatusOfDetection
+{
+  AIS_SOD_Error,
+  AIS_SOD_Nothing,
+  AIS_SOD_AllBad,
+  AIS_SOD_Selected,
+  AIS_SOD_OnlyOneDetected,
+  AIS_SOD_OnlyOneGood,
+  AIS_SOD_SeveralGood
+};
+
+#endif // _AIS_StatusOfDetection_HeaderFile
+
+// Created on: 1996-12-11
+// Created by: Robert COUBLANC
+// Copyright (c) 1996-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_StatusOfPick_HeaderFile
+#define _AIS_StatusOfPick_HeaderFile
+
+enum AIS_StatusOfPick
+{
+  AIS_SOP_Error,
+  AIS_SOP_NothingSelected,
+  AIS_SOP_Removed,
+  AIS_SOP_OneSelected,
+  AIS_SOP_SeveralSelected
+};
+
+#endif // _AIS_StatusOfPick_HeaderFile
+
+// Created on: 1996-12-11
+// Created by: Robert COUBLANC
+// Copyright (c) 1996-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_TypeOfIso_HeaderFile
+#define _AIS_TypeOfIso_HeaderFile
+
+//! Declares the type of isoparameter displayed.
+enum AIS_TypeOfIso
+{
+  AIS_TOI_IsoU,
+  AIS_TOI_IsoV,
+  AIS_TOI_Both
+};
+
+#endif // _AIS_TypeOfIso_HeaderFile
+
 #include <Aspect_TypeOfFacingModel.hpp>
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Prs3d_Drawer.hpp>
-#include <Prs3d_TypeOfHighlight.hpp>
+// Copyright (c) 2016 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Prs3d_TypeOfHighlight_HeaderFile
+#define _Prs3d_TypeOfHighlight_HeaderFile
+
+//! Type of highlighting to apply specific style.
+enum Prs3d_TypeOfHighlight
+{
+  Prs3d_TypeOfHighlight_None = 0,      //!< no highlighting
+  Prs3d_TypeOfHighlight_Selected,      //!< entire object is selected
+  Prs3d_TypeOfHighlight_Dynamic,       //!< entire object is dynamically highlighted
+  Prs3d_TypeOfHighlight_LocalSelected, //!< part of the object is selected
+  Prs3d_TypeOfHighlight_LocalDynamic,  //!< part of the object is dynamically highlighted
+  Prs3d_TypeOfHighlight_SubIntensity,  //!< sub-intensity style
+  Prs3d_TypeOfHighlight_NB
+};
+
+#endif // _Prs3d_TypeOfHighlight_HeaderFile
+
 #include <PrsMgr_PresentationManager.hpp>
 #include <SelectMgr_AndOrFilter.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_Shared.hpp>
 #include <SelectMgr_Filter.hpp>
-#include <SelectMgr_PickingStrategy.hpp>
+// Copyright (c) 2017 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _SelectMgr_PickingStrategy_HeaderFile
+#define _SelectMgr_PickingStrategy_HeaderFile
+
+//! Enumeration defines picking strategy - which entities detected by picking line will be accepted,
+//! considering selection filters.
+enum SelectMgr_PickingStrategy
+{
+  SelectMgr_PickingStrategy_FirstAcceptable, //!< the first detected entity passing selection filter
+                                             //!< is accepted (e.g. any)
+  SelectMgr_PickingStrategy_OnlyTopmost //!< only topmost detected entity passing selection filter
+                                        //!< is accepted
+};
+
+#endif // _SelectMgr_PickingStrategy_HeaderFile
+
 #include <SelectMgr_SelectionManager.hpp>
 #include <StdSelect_ViewerSelector3d.hpp>
 #include <TCollection_AsciiString.hpp>
