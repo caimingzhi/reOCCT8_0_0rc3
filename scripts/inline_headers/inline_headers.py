@@ -6,9 +6,6 @@ import re
 def get_cmake_files(dir_path):
     """
     获取指定目录下所有可能的构建文件列表。
-    策略：
-    1. 扫描所有 .cmake 结尾的文件
-    2. 扫描名为 FILES 的文件 (旧版兼容)
     """
     candidates = []
     if not os.path.exists(dir_path):
@@ -18,7 +15,6 @@ def get_cmake_files(dir_path):
         for f in os.listdir(dir_path):
             full_path = os.path.join(dir_path, f)
             if os.path.isfile(full_path):
-                # 策略：只要是 .cmake 或者是 FILES 就列入检查范围
                 if f.lower().endswith(".cmake") or f == "FILES":
                     candidates.append(full_path)
     except Exception as e:
@@ -39,16 +35,10 @@ def update_cmake_file_content(file_path, filename_to_remove, is_dry_run):
         target = filename_to_remove.strip()
         
         for line in lines:
-            # 清理行首尾空白
-            clean_line = line.strip()
-            # 清理 CMake 可能存在的引号 (双引号和单引号)
-            clean_line = clean_line.replace('"', '').replace("'", "")
-            
-            # 只有当整行内容（去掉空白和引号后）与目标文件名完全一致时才删除
+            clean_line = line.strip().replace('"', '').replace("'", "")
             if clean_line == target:
                 removed = True
-                continue # 跳过这一行，即删除
-            
+                continue
             new_lines.append(line)
             
         if removed:
@@ -58,8 +48,6 @@ def update_cmake_file_content(file_path, filename_to_remove, is_dry_run):
             print(f"    [Build] 已从 {os.path.basename(file_path)} 中移除: {target}")
             return True
         else:
-            # 大多数文件里可能都没有这个文件名，不需要报错，静默即可
-            # print(f"    [Debug] {os.path.basename(file_path)} 中未找到目标")
             return False
             
     except Exception as e:
@@ -72,7 +60,6 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
     
     if is_dry_run:
         print("--- 模式: DRY RUN (仅模拟，不修改文件) ---")
-        print("--- 提示: 加上 --run 参数才会真正执行删除 ---")
     else:
         print("--- 模式: EXECUTE (注意：将直接修改和删除文件！) ---")
 
@@ -94,7 +81,6 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
                 if not refs_str: continue
                 
                 refs = refs_str.split(',')
-                
                 if len(refs) == 1:
                     parent_rel = refs[0].strip()
                     if parent_rel.endswith('.hpp'):
@@ -126,10 +112,17 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
 
         merged = False
         try:
-            # 读取并合并内容
-            with open(child_abs, 'r', encoding='utf-8', errors='ignore') as f:
+            # === 关键修改点 1: 读取子文件使用 utf-8-sig 自动去除 BOM ===
+            # errors='ignore' 保持不变以兼容非 UTF-8 字符
+            with open(child_abs, 'r', encoding='utf-8-sig', errors='ignore') as f:
                 child_content = f.read()
-            with open(parent_abs, 'r', encoding='utf-8', errors='ignore') as f:
+
+            # === 关键修改点 2: 再次显式清理 BOM (双重保险) ===
+            # 防止有些文件中间混入了 BOM 或者编码识别偏移
+            child_content = child_content.replace('\ufeff', '')
+
+            # 读取父文件 (父文件通常已经存在，BOM 应该只在开头，这里用 utf-8-sig 也没坏处)
+            with open(parent_abs, 'r', encoding='utf-8-sig', errors='ignore') as f:
                 parent_content = f.read()
 
             if not child_content.endswith('\n'):
@@ -141,6 +134,7 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
             if match:
                 if not is_dry_run:
                     new_parent_content = re.sub(pattern, lambda x: child_content, parent_content, count=1, flags=re.MULTILINE)
+                    # 写回时使用 standard utf-8 (不带BOM)，这是 Linux/现代编译器最喜欢的格式
                     with open(parent_abs, 'w', encoding='utf-8') as f:
                         f.write(new_parent_content)
                     print(f"    [Merge] 已写入父文件")
@@ -156,17 +150,14 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
             continue
 
         if merged:
-            # === 修改点：遍历所有 .cmake 文件进行清理 ===
             cmake_candidates = get_cmake_files(child_dir)
             found_in_cmake = False
             for cmake_file in cmake_candidates:
-                # 尝试从每个cmake文件中删除
                 if update_cmake_file_content(cmake_file, child_filename, is_dry_run):
                     found_in_cmake = True
             
             if not found_in_cmake:
-                 # 如果扫描了所有文件都没找到，打印个警告（可能是手动管理的或者文件名不匹配）
-                 print(f"    [Warn] 在该目录的构建文件 ({len(cmake_candidates)}个) 中均未找到文件名记录")
+                 print(f"    [Warn] 在构建文件中未找到文件名记录")
 
             if not is_dry_run:
                 try:
@@ -179,7 +170,6 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
 
             success_count += 1
 
-            # 重定向逻辑
             redirect_count = 0
             for child_key, parent_val in list(pending_tasks.items()):
                 if parent_val == current_child:
@@ -192,10 +182,10 @@ def process_inline_recursive(psv_file, root_dir, is_dry_run):
     print(f"\n全部完成。共成功处理 {success_count} 个文件。")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="递归合并单引用HPP文件并清理所有.cmake引用")
+    parser = argparse.ArgumentParser(description="递归合并HPP文件(自动去除BOM)")
     parser.add_argument("psv_file", help="输入PSV文件")
     parser.add_argument("root_dir", help="OCCT源码根目录 (src)")
-    parser.add_argument("--run", action="store_true", help="执行修改 (不加此参数则默认为模拟运行)")
+    parser.add_argument("--run", action="store_true", help="执行修改")
     
     args = parser.parse_args()
     
