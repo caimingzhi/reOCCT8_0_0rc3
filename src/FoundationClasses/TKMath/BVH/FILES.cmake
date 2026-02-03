@@ -7,19 +7,15 @@ set(OCCT_BVH_FILES
   BVH_Box.hpp
   BVH_BoxSet.hpp
   BVH_Builder.hpp
-  BVH_Builder3d.hpp
   BVH_BuildQueue.hpp
   BVH_BuildThread.hpp
   BVH_BuildThread.cxx
-  BVH_Constants.hpp
   BVH_Distance.hpp
   BVH_DistanceField.hpp
-  BVH_DistanceField_1.hpp
   BVH_Geometry.hpp
   BVH_IndexedBoxSet.hpp
   BVH_LinearBuilder.hpp
   BVH_Object.hpp
-  BVH_ObjectSet.hpp
   BVH_PairDistance.hpp
   BVH_PrimitiveSet.hpp
   BVH_PrimitiveSet3d.hpp
@@ -35,10 +31,8 @@ set(OCCT_BVH_FILES
   BVH_SweepPlaneBuilder.hpp
   BVH_Tools.hpp
   BVH_Traverse.hpp
-  BVH_Traverse_1.hpp
   BVH_Tree.hpp
   BVH_BinaryTree.hpp
-  BVH_QuadTree.hpp
   BVH_Triangulation.hpp
   BVH_Types.hpp
 )

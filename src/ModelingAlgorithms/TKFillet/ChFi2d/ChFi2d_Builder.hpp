@@ -279,7 +279,93 @@ private:
   NCollection_Sequence<TopoDS_Shape>                                       chamfers;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> history;
 };
+// Created on: 1995-06-12
+// Created by: Philippe DERVIEUX
+// Copyright (c) 1995-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
-#include <ChFi2d_Builder_1.hpp>
+#include <TopoDS.hpp>
+#include <TopoDS_Shape.hpp>
+#include <TopoDS_Vertex.hpp>
+#include <TopoDS_Edge.hpp>
+#include <TopoDS_Wire.hpp>
+#include <TopoDS_Face.hpp>
+
+//=================================================================================================
+
+inline TopoDS_Face ChFi2d_Builder::Result() const
+{
+  TopoDS_Face aFace = newFace;
+  aFace.Orientation(refFace.Orientation());
+  return aFace;
+}
+
+//=================================================================================================
+
+inline bool ChFi2d_Builder::IsModified(const TopoDS_Edge& E) const
+{
+  return history.IsBound(E);
+}
+
+//=================================================================================================
+
+inline const NCollection_Sequence<TopoDS_Shape>& ChFi2d_Builder::FilletEdges() const
+{
+  return fillets;
+}
+
+//=================================================================================================
+
+inline const NCollection_Sequence<TopoDS_Shape>& ChFi2d_Builder::ChamferEdges() const
+{
+  return chamfers;
+}
+
+//=================================================================================================
+
+inline int ChFi2d_Builder::NbFillet() const
+{
+  return fillets.Length();
+}
+
+//=================================================================================================
+
+inline int ChFi2d_Builder::NbChamfer() const
+{
+  return chamfers.Length();
+}
+
+//=================================================================================================
+
+inline bool ChFi2d_Builder::HasDescendant(const TopoDS_Edge& E) const
+{
+  return history.IsBound(E);
+}
+
+//=================================================================================================
+
+inline const TopoDS_Edge& ChFi2d_Builder::DescendantEdge(const TopoDS_Edge& E) const
+{
+  return TopoDS::Edge(history.Find(E));
+} // DescendantEdge
+
+//=================================================================================================
+
+inline ChFi2d_ConstructionError ChFi2d_Builder::Status() const
+{
+  return status;
+}
+
 
 #endif // _ChFi2d_Builder_HeaderFile

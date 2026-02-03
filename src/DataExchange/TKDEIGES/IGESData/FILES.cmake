@@ -65,7 +65,6 @@ set(OCCT_IGESData_FILES
   IGESData_NodeOfWriterLib_0.cxx
   IGESData_ParamCursor.cxx
   IGESData_ParamCursor.hpp
-  IGESData_ParamCursor_1.hpp
   IGESData_ParamReader.cxx
   IGESData_ParamReader.hpp
   IGESData_Protocol.cxx

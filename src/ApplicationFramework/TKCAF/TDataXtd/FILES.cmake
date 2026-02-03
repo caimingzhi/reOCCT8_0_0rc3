@@ -18,7 +18,6 @@ set(OCCT_TDataXtd_FILES
   TDataXtd_Pattern.hpp
   TDataXtd_PatternStd.cxx
   TDataXtd_PatternStd.hpp
-  TDataXtd_PatternStd_1.hpp
   TDataXtd_Placement.cxx
   TDataXtd_Placement.hpp
   TDataXtd_Plane.cxx

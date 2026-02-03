@@ -8,7 +8,6 @@ set(OCCT_IntCurve_FILES
   IntCurve_IConicTool.hpp
   IntCurve_IntConicConic.cxx
   IntCurve_IntConicConic.hpp
-  IntCurve_IntConicConic_1.hpp
   IntCurve_IntConicConic_1.cxx
   IntCurve_IntConicConic_Tool.cxx
   IntCurve_IntConicConic_Tool.hpp
@@ -23,7 +22,6 @@ set(OCCT_IntCurve_FILES
   IntCurve_MyImpParToolOfIntImpConicParConic_0.cxx
   IntCurve_PConic.cxx
   IntCurve_PConic.hpp
-  IntCurve_PConic_1.hpp
   IntCurve_PConicTool.cxx
   IntCurve_PConicTool.hpp
   IntCurve_Polygon2dGen.hpp

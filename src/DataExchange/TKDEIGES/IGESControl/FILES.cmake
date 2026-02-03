@@ -12,7 +12,6 @@ set(OCCT_IGESControl_FILES
   IGESControl_IGESBoundary.hpp
   IGESControl_Reader.cxx
   IGESControl_Reader.hpp
-  IGESControl_Reader_1.hpp
   IGESControl_ToolContainer.cxx
   IGESControl_ToolContainer.hpp
   IGESControl_Writer.cxx

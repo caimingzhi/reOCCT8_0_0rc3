@@ -117,12 +117,10 @@ set(OCCT_StepVisual_FILES
   StepVisual_MarkerMember.hpp
   StepVisual_MarkerSelect.cxx
   StepVisual_MarkerSelect.hpp
-  StepVisual_MarkerType.hpp
   StepVisual_MechanicalDesignGeometricPresentationArea.cxx
   StepVisual_MechanicalDesignGeometricPresentationArea.hpp
   StepVisual_MechanicalDesignGeometricPresentationRepresentation.cxx
   StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp
-  StepVisual_NullStyle.hpp
   StepVisual_NullStyleMember.cxx
   StepVisual_NullStyleMember.hpp
   StepVisual_OverRidingStyledItem.cxx

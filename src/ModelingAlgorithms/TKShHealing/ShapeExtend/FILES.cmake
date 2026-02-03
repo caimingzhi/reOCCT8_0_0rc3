@@ -8,7 +8,6 @@ set(OCCT_ShapeExtend_FILES
   ShapeExtend_BasicMsgRegistrator.hpp
   ShapeExtend_ComplexCurve.cxx
   ShapeExtend_ComplexCurve.hpp
-  ShapeExtend_ComplexCurve_1.hpp
   ShapeExtend_CompositeSurface.cxx
   ShapeExtend_CompositeSurface.hpp
 
@@ -16,8 +15,6 @@ set(OCCT_ShapeExtend_FILES
   ShapeExtend_Explorer.hpp
   ShapeExtend_MsgRegistrator.cxx
   ShapeExtend_MsgRegistrator.hpp
-  ShapeExtend_MsgRegistrator_1.hpp
-  ShapeExtend_Parametrisation.hpp
   ShapeExtend_Status.hpp
   ShapeExtend_WireData.cxx
   ShapeExtend_WireData.hpp

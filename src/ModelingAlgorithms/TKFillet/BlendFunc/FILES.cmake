@@ -37,7 +37,6 @@ set(OCCT_BlendFunc_FILES
   BlendFunc_SectionShape.hpp
   BlendFunc_Tensor.cxx
   BlendFunc_Tensor.hpp
-  BlendFunc_Tensor_1.hpp
   BlendFunc_ConstThroat.cxx
   BlendFunc_ConstThroat.hpp
   BlendFunc_ConstThroatInv.cxx

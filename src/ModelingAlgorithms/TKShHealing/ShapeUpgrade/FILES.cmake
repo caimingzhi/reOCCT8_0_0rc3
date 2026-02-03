@@ -12,38 +12,30 @@ set(OCCT_ShapeUpgrade_FILES
   ShapeUpgrade_ConvertCurve2dToBezier.hpp
   ShapeUpgrade_ConvertCurve3dToBezier.cxx
   ShapeUpgrade_ConvertCurve3dToBezier.hpp
-  ShapeUpgrade_ConvertCurve3dToBezier_1.hpp
   ShapeUpgrade_ConvertSurfaceToBezierBasis.cxx
   ShapeUpgrade_ConvertSurfaceToBezierBasis.hpp
-  ShapeUpgrade_ConvertSurfaceToBezierBasis_1.hpp
   ShapeUpgrade_EdgeDivide.cxx
   ShapeUpgrade_EdgeDivide.hpp
-  ShapeUpgrade_EdgeDivide_1.hpp
   ShapeUpgrade_FaceDivide.cxx
   ShapeUpgrade_FaceDivide.hpp
   ShapeUpgrade_FaceDivideArea.cxx
   ShapeUpgrade_FaceDivideArea.hpp
-  ShapeUpgrade_FaceDivideArea_1.hpp
   ShapeUpgrade_FixSmallBezierCurves.cxx
   ShapeUpgrade_FixSmallBezierCurves.hpp
   ShapeUpgrade_FixSmallCurves.cxx
   ShapeUpgrade_FixSmallCurves.hpp
   ShapeUpgrade_RemoveInternalWires.cxx
   ShapeUpgrade_RemoveInternalWires.hpp
-  ShapeUpgrade_RemoveInternalWires_1.hpp
   ShapeUpgrade_RemoveLocations.cxx
   ShapeUpgrade_RemoveLocations.hpp
-  ShapeUpgrade_RemoveLocations_1.hpp
   ShapeUpgrade_ShapeConvertToBezier.cxx
   ShapeUpgrade_ShapeConvertToBezier.hpp
-  ShapeUpgrade_ShapeConvertToBezier_1.hpp
   ShapeUpgrade_ShapeDivide.cxx
   ShapeUpgrade_ShapeDivide.hpp
   ShapeUpgrade_ShapeDivideAngle.cxx
   ShapeUpgrade_ShapeDivideAngle.hpp
   ShapeUpgrade_ShapeDivideArea.cxx
   ShapeUpgrade_ShapeDivideArea.hpp
-  ShapeUpgrade_ShapeDivideArea_1.hpp
   ShapeUpgrade_ShapeDivideClosed.cxx
   ShapeUpgrade_ShapeDivideClosed.hpp
   ShapeUpgrade_ShapeDivideClosedEdges.cxx
@@ -68,12 +60,10 @@ set(OCCT_ShapeUpgrade_FILES
   ShapeUpgrade_SplitSurfaceAngle.hpp
   ShapeUpgrade_SplitSurfaceArea.cxx
   ShapeUpgrade_SplitSurfaceArea.hpp
-  ShapeUpgrade_SplitSurfaceArea_1.hpp
   ShapeUpgrade_SplitSurfaceContinuity.cxx
   ShapeUpgrade_SplitSurfaceContinuity.hpp
   ShapeUpgrade_Tool.cxx
   ShapeUpgrade_Tool.hpp
-  ShapeUpgrade_Tool_1.hpp
   ShapeUpgrade_UnifySameDomain.cxx
   ShapeUpgrade_UnifySameDomain.hpp
   ShapeUpgrade_WireDivide.cxx

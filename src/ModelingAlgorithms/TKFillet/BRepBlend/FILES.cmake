@@ -14,10 +14,8 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_AppSurf_0.cxx
   BRepBlend_AppSurface.cxx
   BRepBlend_AppSurface.hpp
-  BRepBlend_AppSurface_1.hpp
   BRepBlend_BlendTool.cxx
   BRepBlend_BlendTool.hpp
-  BRepBlend_BlendTool_1.hpp
   BRepBlend_Chamfer.hpp
   BRepBlend_ChamfInv.hpp
   BRepBlend_ConstThroat.hpp
@@ -28,8 +26,8 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_ChAsymInv.hpp
   BRepBlend_ConstRad.hpp
   BRepBlend_ConstRadInv.hpp
-  BRepBlend_CSCircular.hpp
-  BRepBlend_CSConstRad.hpp
+  
+  
   BRepBlend_CSWalking.hpp
   BRepBlend_CSWalking.cxx
   BRepBlend_CurvPointRadInv.cxx
@@ -38,28 +36,22 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_EvolRadInv.hpp
   BRepBlend_Extremity.cxx
   BRepBlend_Extremity.hpp
-  BRepBlend_Extremity_1.hpp
   BRepBlend_HCurve2dTool.cxx
   BRepBlend_HCurve2dTool.hpp
-  BRepBlend_HCurve2dTool_1.hpp
   BRepBlend_HCurveTool.cxx
   BRepBlend_HCurveTool.hpp
-  BRepBlend_HCurveTool_1.hpp
   BRepBlend_Line.cxx
   BRepBlend_Line.hpp
-  BRepBlend_Line_1.hpp
   BRepBlend_PointOnRst.cxx
   BRepBlend_PointOnRst.hpp
-  BRepBlend_PointOnRst_1.hpp
   BRepBlend_RstRstConstRad.cxx
   BRepBlend_RstRstConstRad.hpp
   BRepBlend_RstRstEvolRad.cxx
   BRepBlend_RstRstEvolRad.hpp
   BRepBlend_RstRstLineBuilder.cxx
   BRepBlend_RstRstLineBuilder.hpp
-  BRepBlend_RstRstLineBuilder_1.hpp
-  BRepBlend_Ruled.hpp
-  BRepBlend_RuledInv.hpp
+  
+  
 
   BRepBlend_SurfCurvConstRadInv.cxx
   BRepBlend_SurfCurvConstRadInv.hpp
@@ -75,7 +67,6 @@ set(OCCT_BRepBlend_FILES
   BRepBlend_SurfRstEvolRad.hpp
   BRepBlend_SurfRstLineBuilder.cxx
   BRepBlend_SurfRstLineBuilder.hpp
-  BRepBlend_SurfRstLineBuilder_1.hpp
   BRepBlend_Walking.hpp
   BRepBlend_Walking.cxx
 )

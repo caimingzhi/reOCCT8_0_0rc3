@@ -22,16 +22,13 @@ set(OCCT_SelectMgr_FILES
   SelectMgr_EntityOwner.hpp
   SelectMgr_Filter.cxx
   SelectMgr_Filter.hpp
-  SelectMgr_FilterType.hpp
   SelectMgr_Frustum.hpp
-  SelectMgr_Frustum_1.hpp
   SelectMgr_FrustumBuilder.cxx
   SelectMgr_FrustumBuilder.hpp
 
 
   SelectMgr_OrFilter.cxx
   SelectMgr_OrFilter.hpp
-  SelectMgr_PickingStrategy.hpp
   SelectMgr_RectangularFrustum.cxx
   SelectMgr_RectangularFrustum.hpp
   SelectMgr_SelectableObject.cxx
@@ -60,8 +57,6 @@ set(OCCT_SelectMgr_FILES
   SelectMgr_TriangularFrustum.hpp
   SelectMgr_TriangularFrustumSet.cxx
   SelectMgr_TriangularFrustumSet.hpp
-  SelectMgr_TypeOfBVHUpdate.hpp
-  SelectMgr_TypeOfDepthTolerance.hpp
   SelectMgr_TypeOfUpdate.hpp
 
   SelectMgr_ViewClipRange.cxx

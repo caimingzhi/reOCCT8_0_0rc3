@@ -7,7 +7,6 @@ set(OCCT_StepElement_FILES
 
   StepElement_Curve3dElementDescriptor.cxx
   StepElement_Curve3dElementDescriptor.hpp
-  StepElement_CurveEdge.hpp
   StepElement_CurveElementEndReleasePacket.cxx
   StepElement_CurveElementEndReleasePacket.hpp
   StepElement_CurveElementFreedom.cxx
@@ -22,7 +21,6 @@ set(OCCT_StepElement_FILES
   StepElement_CurveElementSectionDefinition.hpp
   StepElement_CurveElementSectionDerivedDefinitions.cxx
   StepElement_CurveElementSectionDerivedDefinitions.hpp
-  StepElement_Element2dShape.hpp
   StepElement_ElementAspect.cxx
   StepElement_ElementAspect.hpp
   StepElement_ElementAspectMember.cxx
@@ -32,11 +30,6 @@ set(OCCT_StepElement_FILES
   StepElement_ElementMaterial.cxx
   StepElement_ElementMaterial.hpp
   StepElement_ElementOrder.hpp
-  StepElement_ElementVolume.hpp
-  StepElement_EnumeratedCurveElementFreedom.hpp
-  StepElement_EnumeratedCurveElementPurpose.hpp
-  StepElement_EnumeratedSurfaceElementPurpose.hpp
-  StepElement_EnumeratedVolumeElementPurpose.hpp
 
   StepElement_MeasureOrUnspecifiedValue.cxx
   StepElement_MeasureOrUnspecifiedValue.hpp
@@ -61,10 +54,8 @@ set(OCCT_StepElement_FILES
   StepElement_SurfaceSectionFieldVarying.hpp
   StepElement_UniformSurfaceSection.cxx
   StepElement_UniformSurfaceSection.hpp
-  StepElement_UnspecifiedValue.hpp
   StepElement_Volume3dElementDescriptor.cxx
   StepElement_Volume3dElementDescriptor.hpp
-  StepElement_Volume3dElementShape.hpp
   StepElement_VolumeElementPurpose.cxx
   StepElement_VolumeElementPurpose.hpp
   StepElement_VolumeElementPurposeMember.cxx

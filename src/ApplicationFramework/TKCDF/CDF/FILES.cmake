@@ -19,7 +19,6 @@ set(OCCT_CDF_FILES
   CDF_StoreList.cxx
   CDF_StoreList.hpp
   CDF_StoreSetNameStatus.hpp
-  CDF_SubComponentStatus.hpp
-  CDF_TryStoreStatus.hpp
-  CDF_TypeOfActivation.hpp
+  
+  
 )

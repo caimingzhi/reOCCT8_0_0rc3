@@ -69,7 +69,6 @@ set(OCCT_TDataStd_FILES
   TDataStd_NamedData.hpp
   TDataStd_NoteBook.cxx
   TDataStd_NoteBook.hpp
-  TDataStd_PtrTreeNode.hpp
   TDataStd_Real.cxx
   TDataStd_Real.hpp
   TDataStd_RealArray.cxx
@@ -87,7 +86,6 @@ set(OCCT_TDataStd_FILES
   TDataStd_Tick.hpp
   TDataStd_TreeNode.cxx
   TDataStd_TreeNode.hpp
-  TDataStd_TreeNode_1.hpp
   TDataStd_UAttribute.cxx
   TDataStd_UAttribute.hpp
   TDataStd_Variable.cxx

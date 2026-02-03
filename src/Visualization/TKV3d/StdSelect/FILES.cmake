@@ -16,8 +16,6 @@ set(OCCT_StdSelect_FILES
   StdSelect_Shape.hpp
   StdSelect_ShapeTypeFilter.cxx
   StdSelect_ShapeTypeFilter.hpp
-  StdSelect_TypeOfEdge.hpp
-  StdSelect_TypeOfFace.hpp
   StdSelect_TypeOfSelectionImage.hpp
   StdSelect_ViewerSelector3d.hpp
 )

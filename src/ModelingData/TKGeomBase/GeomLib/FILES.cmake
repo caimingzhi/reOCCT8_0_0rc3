@@ -7,26 +7,21 @@ set(OCCT_GeomLib_FILES
 
   GeomLib_Check2dBSplineCurve.cxx
   GeomLib_Check2dBSplineCurve.hpp
-  GeomLib_Check2dBSplineCurve_1.hpp
   GeomLib_CheckCurveOnSurface.cxx
   GeomLib_CheckCurveOnSurface.hpp
   GeomLib_CheckBSplineCurve.cxx
   GeomLib_CheckBSplineCurve.hpp
-  GeomLib_CheckBSplineCurve_1.hpp
   GeomLib_DenominatorMultiplier.cxx
   GeomLib_DenominatorMultiplier.hpp
   GeomLib_DenominatorMultiplierPtr.hpp
   GeomLib_Interpolate.cxx
   GeomLib_Interpolate.hpp
-  GeomLib_Interpolate_1.hpp
-  GeomLib_InterpolationErrors.hpp
   GeomLib_IsPlanarSurface.cxx
   GeomLib_IsPlanarSurface.hpp
   GeomLib_LogSample.cxx
   GeomLib_LogSample.hpp
   GeomLib_MakeCurvefromApprox.cxx
   GeomLib_MakeCurvefromApprox.hpp
-  GeomLib_MakeCurvefromApprox_1.hpp
   GeomLib_PolyFunc.cxx
   GeomLib_PolyFunc.hpp
   GeomLib_Tool.cxx

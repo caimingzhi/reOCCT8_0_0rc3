@@ -15,7 +15,6 @@ set(OCCT_ChFiDS_FILES
   ChFiDS_ErrorStatus.hpp
   ChFiDS_FaceInterference.cxx
   ChFiDS_FaceInterference.hpp
-  ChFiDS_FaceInterference_1.hpp
   ChFiDS_FilSpine.cxx
   ChFiDS_FilSpine.hpp
 
@@ -26,17 +25,13 @@ set(OCCT_ChFiDS_FILES
 
   ChFiDS_Spine.cxx
   ChFiDS_Spine.hpp
-  ChFiDS_Spine_1.hpp
   ChFiDS_State.hpp
   ChFiDS_Stripe.cxx
   ChFiDS_Stripe.hpp
-  ChFiDS_Stripe_1.hpp
 
   ChFiDS_StripeMap.cxx
   ChFiDS_StripeMap.hpp
-  ChFiDS_StripeMap_1.hpp
   ChFiDS_SurfData.cxx
   ChFiDS_SurfData.hpp
-  ChFiDS_SurfData_1.hpp
   ChFiDS_TypeOfConcavity.hpp
 )

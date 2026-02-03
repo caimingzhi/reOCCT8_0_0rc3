@@ -15,7 +15,6 @@ set(OCCT_ShapeFix_FILES
   ShapeFix_EdgeProjAux.hpp
   ShapeFix_Face.cxx
   ShapeFix_Face.hpp
-  ShapeFix_Face_1.hpp
   ShapeFix_FaceConnect.cxx
   ShapeFix_FaceConnect.hpp
   ShapeFix_FixSmallFace.cxx
@@ -24,22 +23,17 @@ set(OCCT_ShapeFix_FILES
   ShapeFix_FixSmallSolid.hpp
   ShapeFix_FreeBounds.cxx
   ShapeFix_FreeBounds.hpp
-  ShapeFix_FreeBounds_1.hpp
   ShapeFix_IntersectionTool.cxx
   ShapeFix_IntersectionTool.hpp
-  ShapeFix_IntersectionTool_1.hpp
   ShapeFix_Root.cxx
   ShapeFix_Root.hpp
-  ShapeFix_Root_1.hpp
 
   ShapeFix_Shape.cxx
   ShapeFix_Shape.hpp
-  ShapeFix_Shape_1.hpp
   ShapeFix_ShapeTolerance.cxx
   ShapeFix_ShapeTolerance.hpp
   ShapeFix_Shell.cxx
   ShapeFix_Shell.hpp
-  ShapeFix_Shell_1.hpp
   ShapeFix_Solid.cxx
   ShapeFix_Solid.hpp
   ShapeFix_SplitCommonVertex.cxx
@@ -48,11 +42,9 @@ set(OCCT_ShapeFix_FILES
   ShapeFix_SplitTool.hpp
   ShapeFix_Wire.cxx
   ShapeFix_Wire.hpp
-  ShapeFix_Wire_1.hpp
   ShapeFix_Wire_1.cxx
   ShapeFix_Wireframe.cxx
   ShapeFix_Wireframe.hpp
-  ShapeFix_Wireframe_1.hpp
   ShapeFix_WireSegment.cxx
   ShapeFix_WireSegment.hpp
   ShapeFix_WireVertex.cxx

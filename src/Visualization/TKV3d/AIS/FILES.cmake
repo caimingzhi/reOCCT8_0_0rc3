@@ -2,10 +2,8 @@
 set(OCCT_AIS_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_AIS_FILES
-  AIS.hpp
   AIS_Animation.cxx
   AIS_Animation.hpp
-  AIS_AnimationTimer.hpp
   AIS_AnimationAxisRotation.cxx
   AIS_AnimationAxisRotation.hpp
   AIS_AnimationCamera.cxx
@@ -26,7 +24,6 @@ set(OCCT_AIS_FILES
   AIS_CameraFrustum.hpp
   AIS_Circle.cxx
   AIS_Circle.hpp
-  AIS_ColoredDrawer.hpp
   AIS_ColoredShape.cxx
   AIS_ColoredShape.hpp
 
@@ -36,7 +33,6 @@ set(OCCT_AIS_FILES
   AIS_ConnectedInteractive.hpp
 
   AIS_DisplayMode.hpp
-  AIS_DisplayStatus.hpp
   AIS_DragAction.hpp
   AIS_ExclusionFilter.cxx
   AIS_ExclusionFilter.hpp
@@ -56,15 +52,12 @@ set(OCCT_AIS_FILES
 
   AIS_Manipulator.hpp
   AIS_Manipulator.cxx
-  AIS_ManipulatorMode.hpp
   AIS_ManipulatorOwner.hpp
   AIS_ManipulatorOwner.cxx
   AIS_MediaPlayer.cxx
   AIS_MediaPlayer.hpp
-  AIS_MouseGesture.hpp
   AIS_MultipleConnectedInteractive.cxx
   AIS_MultipleConnectedInteractive.hpp
-  AIS_NavigationMode.hpp
 
   AIS_Plane.cxx
   AIS_Plane.hpp
@@ -74,20 +67,15 @@ set(OCCT_AIS_FILES
   AIS_Point.hpp
   AIS_PointCloud.cxx
   AIS_PointCloud.hpp
-  AIS_RotationMode.hpp
   AIS_RubberBand.hpp
   AIS_RubberBand.cxx
   AIS_Selection.cxx
   AIS_Selection.hpp
-  AIS_SelectStatus.hpp
-  AIS_SelectionModesConcurrency.hpp
   AIS_SelectionScheme.hpp
   AIS_Shape.cxx
   AIS_Shape.hpp
   AIS_SignatureFilter.cxx
   AIS_SignatureFilter.hpp
-  AIS_StatusOfDetection.hpp
-  AIS_StatusOfPick.hpp
   AIS_TextLabel.cxx
   AIS_TextLabel.hpp
   AIS_TexturedShape.cxx
@@ -101,16 +89,10 @@ set(OCCT_AIS_FILES
   AIS_TrihedronSelectionMode.hpp
   AIS_TypeFilter.cxx
   AIS_TypeFilter.hpp
-  AIS_TypeOfAttribute.hpp
-  AIS_TypeOfAxis.hpp
-  AIS_TypeOfIso.hpp
-  AIS_TypeOfPlane.hpp
   AIS_ViewController.cxx
   AIS_ViewController.hpp
-  AIS_ViewInputBuffer.hpp
   AIS_ViewCube.cxx
   AIS_ViewCube.hpp
-  AIS_WalkDelta.hpp
 
   AIS_XRTrackedDevice.cxx
   AIS_XRTrackedDevice.hpp

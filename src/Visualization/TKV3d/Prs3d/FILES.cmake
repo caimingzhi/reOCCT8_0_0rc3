@@ -15,15 +15,9 @@ set(OCCT_Prs3d_FILES
   Prs3d_DatumAspect.cxx
   Prs3d_DatumAspect.hpp
   Prs3d_DatumAttribute.hpp
-  Prs3d_DatumAxes.hpp
-  Prs3d_DatumMode.hpp
   Prs3d_DatumParts.hpp
-  Prs3d_DimensionArrowOrientation.hpp
   Prs3d_DimensionAspect.cxx
   Prs3d_DimensionAspect.hpp
-  Prs3d_DimensionTextHorizontalPosition.hpp
-  Prs3d_DimensionTextVerticalPosition.hpp
-  Prs3d_DimensionUnits.hpp
   Prs3d_Drawer.cxx
   Prs3d_Drawer.hpp
   Prs3d_InvalidAngle.hpp
@@ -60,8 +54,7 @@ set(OCCT_Prs3d_FILES
   Prs3d_ToolSphere.cxx
   Prs3d_ToolTorus.hpp
   Prs3d_ToolTorus.cxx
-  Prs3d_TypeOfHighlight.hpp
   Prs3d_TypeOfHLR.hpp
-  Prs3d_TypeOfLinePicking.hpp
+  
   Prs3d_VertexDrawMode.hpp
 )

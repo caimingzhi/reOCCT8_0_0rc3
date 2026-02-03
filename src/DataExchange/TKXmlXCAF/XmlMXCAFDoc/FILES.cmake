@@ -20,7 +20,6 @@ set(OCCT_XmlMXCAFDoc_FILES
   XmlMXCAFDoc_LengthUnitDriver.hpp
   XmlMXCAFDoc_LocationDriver.cxx
   XmlMXCAFDoc_LocationDriver.hpp
-  XmlMXCAFDoc_LocationDriver_1.hpp
   XmlMXCAFDoc_MaterialDriver.cxx
   XmlMXCAFDoc_MaterialDriver.hpp
   XmlMXCAFDoc_NoteDriver.cxx

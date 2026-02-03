@@ -22,10 +22,6 @@ set(OCCT_XCAFDimTolObjects_FILES
   XCAFDimTolObjects_GeomToleranceModif.hpp
   XCAFDimTolObjects_GeomToleranceType.hpp
   XCAFDimTolObjects_GeomToleranceTypeValue.hpp
-  XCAFDimTolObjects_GeomToleranceMatReqModif.hpp
-  XCAFDimTolObjects_GeomToleranceZoneModif.hpp
 
 
-  XCAFDimTolObjects_ToleranceZoneAffectedPlane.hpp
-  XCAFDimTolObjects_AngularQualifier.hpp
 )

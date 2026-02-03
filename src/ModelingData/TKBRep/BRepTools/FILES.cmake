@@ -17,7 +17,6 @@ set(OCCT_BRepTools_FILES
   BRepTools_Modification.hpp
   BRepTools_Modifier.cxx
   BRepTools_Modifier.hpp
-  BRepTools_Modifier_1.hpp
   BRepTools_NurbsConvertModification.cxx
   BRepTools_NurbsConvertModification.hpp
   BRepTools_Quilt.cxx

@@ -6,10 +6,8 @@ set(OCCT_Vrml_FILES
   Vrml.hpp
   Vrml_AsciiText.cxx
   Vrml_AsciiText.hpp
-  Vrml_AsciiTextJustification.hpp
   Vrml_Cone.cxx
   Vrml_Cone.hpp
-  Vrml_ConeParts.hpp
 
   Vrml_Coordinate3.cxx
   Vrml_Coordinate3.hpp
@@ -17,14 +15,10 @@ set(OCCT_Vrml_FILES
   Vrml_Cube.hpp
   Vrml_Cylinder.cxx
   Vrml_Cylinder.hpp
-  Vrml_CylinderParts.hpp
   Vrml_DirectionalLight.cxx
   Vrml_DirectionalLight.hpp
-  Vrml_FaceType.hpp
   Vrml_FontStyle.cxx
   Vrml_FontStyle.hpp
-  Vrml_FontStyleFamily.hpp
-  Vrml_FontStyleStyle.hpp
   Vrml_Group.cxx
   Vrml_Group.hpp
   Vrml_IndexedFaceSet.cxx
@@ -63,15 +57,12 @@ set(OCCT_Vrml_FILES
   Vrml_Scale.hpp
   Vrml_Separator.cxx
   Vrml_Separator.hpp
-  Vrml_SeparatorRenderCulling.hpp
   Vrml_SFImage.cxx
   Vrml_SFImage.hpp
-  Vrml_SFImageNumber.hpp
   Vrml_SFRotation.cxx
   Vrml_SFRotation.hpp
   Vrml_ShapeHints.cxx
   Vrml_ShapeHints.hpp
-  Vrml_ShapeType.hpp
   Vrml_Sphere.cxx
   Vrml_Sphere.hpp
   Vrml_SpotLight.cxx
@@ -82,7 +73,6 @@ set(OCCT_Vrml_FILES
   Vrml_Texture2.hpp
   Vrml_Texture2Transform.cxx
   Vrml_Texture2Transform.hpp
-  Vrml_Texture2Wrap.hpp
   Vrml_TextureCoordinate2.cxx
   Vrml_TextureCoordinate2.hpp
   Vrml_Transform.cxx
@@ -91,10 +81,8 @@ set(OCCT_Vrml_FILES
   Vrml_TransformSeparator.hpp
   Vrml_Translation.cxx
   Vrml_Translation.hpp
-  Vrml_VertexOrdering.hpp
   Vrml_WWWAnchor.cxx
   Vrml_WWWAnchor.hpp
-  Vrml_WWWAnchorMap.hpp
   Vrml_WWWInline.cxx
   Vrml_WWWInline.hpp
 )

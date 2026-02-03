@@ -24,5 +24,4 @@ set(OCCT_ShapePersistent_FILES
   ShapePersistent_Poly.hpp
   ShapePersistent_TopoDS.cxx
   ShapePersistent_TopoDS.hpp
-  ShapePersistent_TriangleMode.hpp
 )

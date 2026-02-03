@@ -17,5 +17,4 @@ set(OCCT_StdPersistent_FILES
   StdPersistent_PPrsStd.hpp
   StdPersistent_TopLoc.cxx
   StdPersistent_TopLoc.hpp
-  StdPersistent_TopoDS.hpp
 )

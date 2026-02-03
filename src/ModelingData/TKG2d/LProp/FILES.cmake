@@ -5,7 +5,6 @@ set(OCCT_LProp_FILES
   LProp_AnalyticCurInf.cxx
   LProp_AnalyticCurInf.hpp
   LProp_BadContinuity.hpp
-  LProp_CIType.hpp
   LProp_CLProps.hpp
   LProp_CurAndInf.cxx
   LProp_CurAndInf.hpp

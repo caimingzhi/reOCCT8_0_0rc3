@@ -33,7 +33,6 @@ set(OCCT_Draw_FILES
   Draw_GraphicCommands.cxx
   Draw_Grid.cxx
   Draw_Grid.hpp
-  Draw_Grid_1.hpp
   Draw_Interpretor.cxx
   Draw_Interpretor.hpp
   Draw_Main.cxx
@@ -47,7 +46,6 @@ set(OCCT_Draw_FILES
   Draw_MessageCommands.cxx
   Draw_Number.cxx
   Draw_Number.hpp
-  Draw_PInterp.hpp
   Draw_PloadCommands.cxx
   Draw_PluginMacro.hpp
   Draw_Printer.cxx

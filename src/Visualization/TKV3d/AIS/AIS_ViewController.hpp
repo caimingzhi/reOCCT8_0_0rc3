@@ -18,11 +18,450 @@
 #include <Aspect_XRHapticActionData.hpp>
 #include <Aspect_XRTrackedDeviceRole.hpp>
 #include <AIS_DragAction.hpp>
-#include <AIS_MouseGesture.hpp>
-#include <AIS_NavigationMode.hpp>
-#include <AIS_ViewInputBuffer.hpp>
-#include <AIS_RotationMode.hpp>
-#include <AIS_WalkDelta.hpp>
+// Copyright (c) 2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_MouseGesture_HeaderFile
+#define _AIS_MouseGesture_HeaderFile
+
+#include <AIS_SelectionScheme.hpp>
+#include <NCollection_DataMap.hpp>
+
+//! Mouse gesture - only one can be active at one moment.
+enum AIS_MouseGesture
+{
+  AIS_MouseGesture_NONE, //!< no active gesture
+  //
+  AIS_MouseGesture_SelectRectangle, //!< rectangular selection;
+                                    //!  press button to start, move mouse to define rectangle,
+                                    //!  release to finish
+  AIS_MouseGesture_SelectLasso,     //!< polygonal selection;
+                                    //!  press button to start, move mouse to define polygonal path,
+                                    //!  release to finish
+  //
+  AIS_MouseGesture_Zoom,         //!< view zoom gesture;
+                                 //!  move mouse left to zoom-out, and to the right to zoom-in
+  AIS_MouseGesture_ZoomVertical, //!< view zoom gesture;
+                                 //!  move mouse up to zoom-out, and to the down to zoom-in
+  AIS_MouseGesture_ZoomWindow,   //!< view zoom by window gesture;
+                                 //!  press button to start, move mouse to define rectangle, release
+                                 //!  to finish
+  AIS_MouseGesture_Pan,          //!< view panning gesture
+  AIS_MouseGesture_RotateOrbit,  //!< orbit rotation gesture
+  AIS_MouseGesture_RotateView,   //!< view  rotation gesture
+  AIS_MouseGesture_Drag,         //!< object dragging;
+                         //!  press button to start, move mouse to define rectangle, release to
+                         //!  finish
+};
+
+//! Map defining mouse gestures.
+
+#endif // _AIS_MouseGesture_HeaderFile
+
+// Copyright (c) 2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_NavigationMode_HeaderFile
+#define _AIS_NavigationMode_HeaderFile
+
+//! Camera navigation mode.
+enum AIS_NavigationMode
+{
+  AIS_NavigationMode_Orbit,             //!< orbit rotation
+  AIS_NavigationMode_FirstPersonFlight, //!< flight rotation (first person)
+  AIS_NavigationMode_FirstPersonWalk,   //!< walking mode (first person)
+};
+
+enum
+{
+  AIS_NavigationMode_LOWER = 0,
+  AIS_NavigationMode_UPPER = AIS_NavigationMode_FirstPersonWalk
+};
+
+#endif // _V3d_NavigationMode_HeaderFile
+
+// Copyright (c) 2016-2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_ViewInputBuffer_HeaderFile
+#define _AIS_ViewInputBuffer_HeaderFile
+
+#include <Aspect_ScrollDelta.hpp>
+
+#include <AIS_SelectionScheme.hpp>
+#include <NCollection_Vec2.hpp>
+#include <Standard_TypeDef.hpp>
+#include <NCollection_Sequence.hpp>
+#include <V3d_TypeOfOrientation.hpp>
+
+//! Selection mode
+enum AIS_ViewSelectionTool
+{
+  AIS_ViewSelectionTool_Picking,    //!< pick to select
+  AIS_ViewSelectionTool_RubberBand, //!< rubber-band to select
+  AIS_ViewSelectionTool_Polygon,    //!< polyline to select
+  AIS_ViewSelectionTool_ZoomWindow, //!< zoom-in window (no selection)
+};
+
+//! Input buffer type.
+enum AIS_ViewInputBufferType
+{
+  AIS_ViewInputBufferType_UI, //!< input buffer for filling from UI thread
+  AIS_ViewInputBufferType_GL, //!< input buffer accessible  from GL thread
+};
+
+//! Auxiliary structure defining viewer events
+class AIS_ViewInputBuffer
+{
+public:
+  bool IsNewGesture; //!< transition from one action to another
+
+  NCollection_Sequence<Aspect_ScrollDelta> ZoomActions; //!< the queue with zoom actions
+
+  struct _orientation
+  {
+    bool                  ToFitAll;        //!< perform FitAll operation
+    bool                  ToSetViewOrient; //!< set new view orientation
+    V3d_TypeOfOrientation ViewOrient;      //!< new view orientation
+
+    _orientation()
+        : ToFitAll(false),
+          ToSetViewOrient(false),
+          ViewOrient(V3d_Xpos)
+    {
+    }
+  } Orientation;
+
+  struct _highlighting
+  {
+    bool                  ToHilight; //!< perform dynamic highlighting at specified point
+    NCollection_Vec2<int> Point;     //!< the new point for dynamic highlighting
+
+    _highlighting()
+        : ToHilight(false)
+    {
+    }
+  } MoveTo;
+
+  struct _selection
+  {
+    AIS_ViewSelectionTool                       Tool;        //!< perform selection
+    AIS_SelectionScheme                         Scheme;      //!< selection scheme
+    NCollection_Sequence<NCollection_Vec2<int>> Points;      //!< the points for selection
+    bool                                        ToApplyTool; //!< apply rubber-band selection tool
+
+    _selection()
+        : Tool(AIS_ViewSelectionTool_Picking),
+          Scheme(AIS_SelectionScheme_UNKNOWN),
+          ToApplyTool(false)
+    {
+    }
+  } Selection;
+
+  struct _panningParams
+  {
+    bool                  ToStart;    //!< start panning
+    NCollection_Vec2<int> PointStart; //!< panning start point
+    bool                  ToPan;      //!< perform panning
+    NCollection_Vec2<int> Delta;      //!< panning delta
+
+    _panningParams()
+        : ToStart(false),
+          ToPan(false)
+    {
+    }
+  } Panning;
+
+  struct _draggingParams
+  {
+    bool                  ToStart;    //!< start dragging
+    bool                  ToConfirm;  //!< confirm dragging
+    bool                  ToMove;     //!< perform dragging
+    bool                  ToStop;     //!< stop  dragging
+    bool                  ToAbort;    //!< abort dragging (restore previous position)
+    NCollection_Vec2<int> PointStart; //!< drag start point
+    NCollection_Vec2<int> PointTo;    //!< drag end point
+
+    _draggingParams()
+        : ToStart(false),
+          ToConfirm(false),
+          ToMove(false),
+          ToStop(false),
+          ToAbort(false)
+    {
+    }
+  } Dragging;
+
+  struct _orbitRotation
+  {
+    bool                     ToStart;    //!< start orbit rotation
+    NCollection_Vec2<double> PointStart; //!< orbit rotation start point
+    bool                     ToRotate;   //!< perform orbit rotation
+    NCollection_Vec2<double> PointTo;    //!< orbit rotation end point
+
+    _orbitRotation()
+        : ToStart(false),
+          ToRotate(false)
+    {
+    }
+  } OrbitRotation;
+
+  struct _viewRotation
+  {
+    bool                     ToStart;    //!< start view rotation
+    NCollection_Vec2<double> PointStart; //!< view rotation start point
+    bool                     ToRotate;   //!< perform view rotation
+    NCollection_Vec2<double> PointTo;    //!< view rotation end point
+
+    _viewRotation()
+        : ToStart(false),
+          ToRotate(false)
+    {
+    }
+  } ViewRotation;
+
+  struct _zrotateParams
+  {
+    NCollection_Vec2<int> Point;    //!< Z rotation start point
+    double                Angle;    //!< Z rotation angle
+    bool                  ToRotate; //!< start Z rotation
+
+    _zrotateParams()
+        : Angle(0.0),
+          ToRotate(false)
+    {
+    }
+  } ZRotate;
+
+public:
+  AIS_ViewInputBuffer()
+      : IsNewGesture(false)
+  {
+  }
+
+  //! Reset events buffer.
+  void Reset()
+  {
+    Orientation.ToFitAll        = false;
+    Orientation.ToSetViewOrient = false;
+    MoveTo.ToHilight            = false;
+    Selection.ToApplyTool       = false;
+    IsNewGesture                = false;
+    ZoomActions.Clear();
+    Panning.ToStart        = false;
+    Panning.ToPan          = false;
+    Dragging.ToStart       = false;
+    Dragging.ToConfirm     = false;
+    Dragging.ToMove        = false;
+    Dragging.ToStop        = false;
+    Dragging.ToAbort       = false;
+    OrbitRotation.ToStart  = false;
+    OrbitRotation.ToRotate = false;
+    ViewRotation.ToStart   = false;
+    ViewRotation.ToRotate  = false;
+    ZRotate.ToRotate       = false;
+  }
+};
+
+#endif // _AIS_ViewInputBuffer_HeaderFile
+// Copyright (c) 2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_RotationMode_HeaderFile
+#define _AIS_RotationMode_HeaderFile
+
+//! Camera rotation mode.
+enum AIS_RotationMode
+{
+  AIS_RotationMode_BndBoxActive, //!< default OCCT rotation
+  AIS_RotationMode_PickLast,     //!< rotate around last picked point
+  AIS_RotationMode_PickCenter,   //!< rotate around point at the center of window
+  AIS_RotationMode_CameraAt,     //!< rotate around camera center
+  AIS_RotationMode_BndBoxScene,  //!< rotate around scene center
+};
+
+enum
+{
+  AIS_RotationMode_LOWER = 0,
+  AIS_RotationMode_UPPER = AIS_RotationMode_BndBoxScene,
+};
+
+#endif // _AIS_RotationMode_HeaderFile
+
+// Copyright (c) 2019 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _AIS_WalkDelta_HeaderFile
+#define _AIS_WalkDelta_HeaderFile
+
+#include <Standard_Real.hpp>
+
+//! Walking translation components.
+enum AIS_WalkTranslation
+{
+  AIS_WalkTranslation_Forward = 0, //!< translation delta, Forward walk
+  AIS_WalkTranslation_Side,        //!< translation delta, Side walk
+  AIS_WalkTranslation_Up,          //!< translation delta, Up walk
+};
+
+//! Walking rotation components.
+enum AIS_WalkRotation
+{
+  AIS_WalkRotation_Yaw = 0, //!< yaw   rotation angle
+  AIS_WalkRotation_Pitch,   //!< pitch rotation angle
+  AIS_WalkRotation_Roll,    //!< roll  rotation angle
+};
+
+//! Walking value.
+struct AIS_WalkPart
+{
+  double Value;    //!< value
+  double Pressure; //!< key pressure
+  double Duration; //!< duration
+
+  //! Return TRUE if delta is empty.
+  bool IsEmpty() const { return std::abs(Value) <= RealSmall(); }
+
+  //! Empty constructor.
+  AIS_WalkPart()
+      : Value(0.0),
+        Pressure(1.0),
+        Duration(0.0)
+  {
+  }
+};
+
+//! Walking values.
+struct AIS_WalkDelta
+{
+  //! Empty constructor.
+  AIS_WalkDelta()
+      : myIsDefined(false),
+        myIsJumping(false),
+        myIsCrouching(false),
+        myIsRunning(false)
+  {
+  }
+
+  //! Return translation component.
+  const AIS_WalkPart& operator[](AIS_WalkTranslation thePart) const
+  {
+    return myTranslation[thePart];
+  }
+
+  //! Return translation component.
+  AIS_WalkPart& operator[](AIS_WalkTranslation thePart) { return myTranslation[thePart]; }
+
+  //! Return rotation component.
+  const AIS_WalkPart& operator[](AIS_WalkRotation thePart) const { return myRotation[thePart]; }
+
+  //! Return rotation component.
+  AIS_WalkPart& operator[](AIS_WalkRotation thePart) { return myRotation[thePart]; }
+
+  //! Return jumping state.
+  bool IsJumping() const { return myIsJumping; }
+
+  //! Set jumping state.
+  void SetJumping(bool theIsJumping) { myIsJumping = theIsJumping; }
+
+  //! Return crouching state.
+  bool IsCrouching() const { return myIsCrouching; }
+
+  //! Set crouching state.
+  void SetCrouching(bool theIsCrouching) { myIsCrouching = theIsCrouching; }
+
+  //! Return running state.
+  bool IsRunning() const { return myIsRunning; }
+
+  //! Set running state.
+  void SetRunning(bool theIsRunning) { myIsRunning = theIsRunning; }
+
+  //! Return TRUE if navigation keys are pressed even if delta from the previous frame is empty.
+  bool IsDefined() const { return myIsDefined || !IsEmpty(); }
+
+  //! Set if any navigation key is pressed.
+  void SetDefined(bool theIsDefined) { myIsDefined = theIsDefined; }
+
+  //! Return TRUE when both Rotation and Translation deltas are empty.
+  bool IsEmpty() const { return !ToMove() && !ToRotate(); }
+
+  //! Return TRUE if translation delta is defined.
+  bool ToMove() const
+  {
+    return !myTranslation[AIS_WalkTranslation_Forward].IsEmpty()
+           || !myTranslation[AIS_WalkTranslation_Side].IsEmpty()
+           || !myTranslation[AIS_WalkTranslation_Up].IsEmpty();
+  }
+
+  //! Return TRUE if rotation delta is defined.
+  bool ToRotate() const
+  {
+    return !myRotation[AIS_WalkRotation_Yaw].IsEmpty()
+           || !myRotation[AIS_WalkRotation_Pitch].IsEmpty()
+           || !myRotation[AIS_WalkRotation_Roll].IsEmpty();
+  }
+
+private:
+  AIS_WalkPart myTranslation[3];
+  AIS_WalkPart myRotation[3];
+  bool         myIsDefined;
+  bool         myIsJumping;
+  bool         myIsCrouching;
+  bool         myIsRunning;
+};
+
+#endif // _AIS_WalkDelta_HeaderFile
+
 
 #include <gp_Pnt.hpp>
 #include <gp_Quaternion.hpp>

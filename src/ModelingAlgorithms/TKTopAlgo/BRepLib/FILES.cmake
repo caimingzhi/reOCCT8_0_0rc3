@@ -10,7 +10,6 @@ set(OCCT_BRepLib_FILES
   BRepLib_Command.cxx
   BRepLib_Command.hpp
   BRepLib_EdgeError.hpp
-  BRepLib_FaceError.hpp
   BRepLib_FindSurface.cxx
   BRepLib_FindSurface.hpp
   BRepLib_FuseEdges.cxx
@@ -37,10 +36,8 @@ set(OCCT_BRepLib_FILES
   BRepLib_PointCloudShape.hpp
   BRepLib_PointCloudShape.cxx
   BRepLib_ShapeModification.hpp
-  BRepLib_ShellError.hpp
   BRepLib_ToolTriangulatedShape.hpp
   BRepLib_ToolTriangulatedShape.cxx
   BRepLib_ValidateEdge.cxx
   BRepLib_ValidateEdge.hpp
-  BRepLib_WireError.hpp
 )

@@ -5,10 +5,9 @@ set(OCCT_Storage_FILES
   Storage.cxx
   Storage.hpp
 
-  Storage_ArrayOfSchema.hpp
+  
   Storage_BaseDriver.cxx
   Storage_BaseDriver.hpp
-  Storage_BucketOfPersistent.hpp
   Storage_CallBack.cxx
   Storage_CallBack.hpp
   Storage_Data.cxx
@@ -23,7 +22,7 @@ set(OCCT_Storage_FILES
 
   Storage_InternalData.cxx
   Storage_InternalData.hpp
-  Storage_Macros.hpp
+  
 
   Storage_OpenMode.hpp
 
@@ -39,10 +38,10 @@ set(OCCT_Storage_FILES
   Storage_SolveMode.hpp
   Storage_StreamExtCharParityError.hpp
   Storage_StreamFormatError.hpp
-  Storage_StreamModeError.hpp
+  
   Storage_StreamReadError.hpp
   Storage_StreamTypeMismatchError.hpp
-  Storage_StreamUnknownTypeError.hpp
+  
   Storage_StreamWriteError.hpp
   Storage_TypeData.cxx
   Storage_TypeData.hpp

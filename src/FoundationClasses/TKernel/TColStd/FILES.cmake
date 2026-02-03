@@ -5,7 +5,6 @@ set(OCCT_TColStd_FILES
 
   TColStd_HPackedMapOfInteger.cxx
   TColStd_HPackedMapOfInteger.hpp
-  TColStd_HPackedMapOfInteger_1.hpp
 
   TColStd_MapIteratorOfPackedMapOfInteger.hpp
 

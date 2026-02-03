@@ -7,24 +7,19 @@ set(OCCT_Intf_FILES
 
   Intf_Interference.cxx
   Intf_Interference.hpp
-  Intf_Interference_1.hpp
   Intf_InterferencePolygon2d.cxx
   Intf_InterferencePolygon2d.hpp
   Intf_InterferencePolygonPolyhedron.hpp
   Intf_PIType.hpp
   Intf_Polygon2d.cxx
   Intf_Polygon2d.hpp
-  Intf_Polygon2d_1.hpp
   Intf_SectionLine.cxx
   Intf_SectionLine.hpp
-  Intf_SectionLine_1.hpp
   Intf_SectionPoint.cxx
   Intf_SectionPoint.hpp
-  Intf_SectionPoint_1.hpp
 
   Intf_TangentZone.cxx
   Intf_TangentZone.hpp
-  Intf_TangentZone_1.hpp
   Intf_Tool.cxx
   Intf_Tool.hpp
 )

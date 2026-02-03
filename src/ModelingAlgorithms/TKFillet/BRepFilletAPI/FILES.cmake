@@ -9,5 +9,4 @@ set(OCCT_BRepFilletAPI_FILES
   BRepFilletAPI_MakeFillet.hpp
   BRepFilletAPI_MakeFillet2d.cxx
   BRepFilletAPI_MakeFillet2d.hpp
-  BRepFilletAPI_MakeFillet2d_1.hpp
 )

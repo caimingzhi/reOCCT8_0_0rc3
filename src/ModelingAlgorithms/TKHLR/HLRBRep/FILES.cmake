@@ -11,52 +11,40 @@ set(OCCT_HLRBRep_FILES
 
   HLRBRep_BCurveTool.cxx
   HLRBRep_BCurveTool.hpp
-  HLRBRep_BCurveTool_1.hpp
-  HLRBRep_BiPnt2D.hpp
   HLRBRep_BiPoint.hpp
   HLRBRep_BSurfaceTool.cxx
   HLRBRep_BSurfaceTool.hpp
-  HLRBRep_BSurfaceTool_1.hpp
   HLRBRep_CInter.hpp
   HLRBRep_CInter_0.cxx
   HLRBRep_CLProps.hpp
   HLRBRep_CLProps_0.cxx
   HLRBRep_CLPropsATool.hpp
-  HLRBRep_CLPropsATool_1.hpp
   HLRBRep_Curve.cxx
   HLRBRep_Curve.hpp
-  HLRBRep_Curve_1.hpp
   HLRBRep_CurveTool.cxx
   HLRBRep_CurveTool.hpp
-  HLRBRep_CurveTool_1.hpp
   HLRBRep_Data.cxx
   HLRBRep_Data.hpp
-  HLRBRep_Data_1.hpp
   HLRBRep_EdgeBuilder.cxx
   HLRBRep_EdgeBuilder.hpp
   HLRBRep_EdgeData.cxx
   HLRBRep_EdgeData.hpp
-  HLRBRep_EdgeData_1.hpp
   HLRBRep_EdgeFaceTool.cxx
   HLRBRep_EdgeFaceTool.hpp
   HLRBRep_EdgeIList.cxx
   HLRBRep_EdgeIList.hpp
   HLRBRep_EdgeInterferenceTool.cxx
   HLRBRep_EdgeInterferenceTool.hpp
-  HLRBRep_EdgeInterferenceTool_1.hpp
   HLRBRep_ExactIntersectionPointOfTheIntPCurvePCurveOfCInter.hpp
   HLRBRep_ExactIntersectionPointOfTheIntPCurvePCurveOfCInter_0.cxx
   HLRBRep_FaceData.cxx
   HLRBRep_FaceData.hpp
-  HLRBRep_FaceData_1.hpp
   HLRBRep_FaceIterator.cxx
   HLRBRep_FaceIterator.hpp
-  HLRBRep_FaceIterator_1.hpp
   HLRBRep_Hider.cxx
   HLRBRep_Hider.hpp
   HLRBRep_HLRToShape.cxx
   HLRBRep_HLRToShape.hpp
-  HLRBRep_HLRToShape_1.hpp
   HLRBRep_IntConicCurveOfCInter.hpp
   HLRBRep_IntConicCurveOfCInter_0.cxx
   HLRBRep_InterCSurf.hpp
@@ -66,7 +54,6 @@ set(OCCT_HLRBRep_FILES
   HLRBRep_Intersector.cxx
   HLRBRep_Intersector.hpp
   HLRBRep_LineTool.hpp
-  HLRBRep_LineTool_1.hpp
 
   HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter.hpp
   HLRBRep_MyImpParToolOfTheIntersectorOfTheIntConicCurveOfCInter_0.cxx
@@ -75,23 +62,18 @@ set(OCCT_HLRBRep_FILES
   HLRBRep_PolyAlgo.hpp
   HLRBRep_PolyHLRToShape.cxx
   HLRBRep_PolyHLRToShape.hpp
-  HLRBRep_PolyHLRToShape_1.hpp
 
   HLRBRep_ShapeBounds.cxx
   HLRBRep_ShapeBounds.hpp
-  HLRBRep_ShapeBounds_1.hpp
   HLRBRep_ShapeToHLR.cxx
   HLRBRep_ShapeToHLR.hpp
   HLRBRep_SLProps.hpp
   HLRBRep_SLProps_0.cxx
   HLRBRep_SLPropsATool.hpp
-  HLRBRep_SLPropsATool_1.hpp
   HLRBRep_Surface.cxx
   HLRBRep_Surface.hpp
-  HLRBRep_Surface_1.hpp
   HLRBRep_SurfaceTool.cxx
   HLRBRep_SurfaceTool.hpp
-  HLRBRep_SurfaceTool_1.hpp
   HLRBRep_TheCSFunctionOfInterCSurf.hpp
   HLRBRep_TheCSFunctionOfInterCSurf_0.cxx
   HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hpp

@@ -64,7 +64,7 @@ foreach (OCCT_PACKAGE ${USED_PACKAGES})
   set (HEADER_FILES_FILTERING ${ALL_FILES})
   set (SOURCE_FILES_FILTERING ${ALL_FILES})
 
-  list (FILTER HEADER_FILES_FILTERING INCLUDE REGEX ".+[.](h|p|g|lxx|hxx|pxx|hpp|gxx)$")
+  list (FILTER HEADER_FILES_FILTERING INCLUDE REGEX ".+[.](h|hpp)$")
     
   if(APPLE)
     list (FILTER SOURCE_FILES_FILTERING INCLUDE REGEX ".+[.](c|cxx|cpp|mm)$")

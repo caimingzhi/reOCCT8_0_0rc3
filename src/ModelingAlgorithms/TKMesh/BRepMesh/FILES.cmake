@@ -33,7 +33,6 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_DelaunayBaseMeshAlgo.cxx
   BRepMesh_DelaunayBaseMeshAlgo.hpp
   BRepMesh_DelaunayDeflectionControlMeshAlgo.hpp
-  BRepMesh_DelaunayNodeInsertionMeshAlgo.hpp
   BRepMesh_DiscretFactory.cxx
   BRepMesh_DiscretFactory.hpp
   BRepMesh_DiscretRoot.cxx
@@ -41,7 +40,6 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_Edge.hpp
   BRepMesh_EdgeDiscret.cxx
   BRepMesh_EdgeDiscret.hpp
-  BRepMesh_EdgeParameterProvider.hpp
   BRepMesh_EdgeTessellationExtractor.cxx
   BRepMesh_EdgeTessellationExtractor.hpp
   BRepMesh_ExtrusionRangeSplitter.cxx
@@ -51,7 +49,7 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_FaceDiscret.cxx
   BRepMesh_FaceDiscret.hpp
   BRepMesh_FactoryError.hpp
-  BRepMesh_FastDiscret.hpp
+  
   BRepMesh_GeomTool.cxx
   BRepMesh_GeomTool.hpp
   BRepMesh_IncrementalMesh.cxx
@@ -70,10 +68,7 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_ModelPreProcessor.hpp
   BRepMesh_NURBSRangeSplitter.cxx
   BRepMesh_NURBSRangeSplitter.hpp
-  BRepMesh_NodeInsertionMeshAlgo.hpp
-  BRepMesh_OrientedEdge.hpp
   BRepMesh_PairOfIndex.hpp
-  BRepMesh_PluginEntryType.hpp
   BRepMesh_PluginMacro.hpp
   BRepMesh_SelectorOfDataStructureOfDelaun.cxx
   BRepMesh_SelectorOfDataStructureOfDelaun.hpp
@@ -90,7 +85,6 @@ set(OCCT_BRepMesh_FILES
   BRepMesh_UndefinedRangeSplitter.hpp
   BRepMesh_UVParamRangeSplitter.hpp
   BRepMesh_Vertex.hpp
-  BRepMesh_VertexInspector.hpp
   BRepMesh_VertexTool.cxx
   BRepMesh_VertexTool.hpp
   BRepMesh_CustomBaseMeshAlgo.hpp

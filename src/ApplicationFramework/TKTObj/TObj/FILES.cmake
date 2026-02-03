@@ -9,7 +9,6 @@ set(OCCT_TObj_FILES
   TObj_CheckModel.cxx
   TObj_CheckModel.hpp
 
-  TObj_DeletingMode.hpp
   TObj_HiddenPartition.cxx
   TObj_HiddenPartition.hpp
   TObj_LabelIterator.cxx

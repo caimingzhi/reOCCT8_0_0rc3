@@ -3,20 +3,11 @@ set(OCCT_Extrema_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Extrema_FILES
 
-  Extrema_CCLocFOfLocECC.hpp
-  Extrema_CCLocFOfLocECC2d.hpp
   Extrema_Curve2dTool.cxx
   Extrema_Curve2dTool.hpp
   Extrema_CurveTool.cxx
   Extrema_CurveTool.hpp
-  Extrema_ECC.hpp
   Extrema_ECC2d.hpp
-  Extrema_ElementType.hpp
-  Extrema_ELPCOfLocateExtPC.hpp
-  Extrema_ELPCOfLocateExtPC2d.hpp
-  Extrema_EPCOfELPCOfLocateExtPC.hpp
-  Extrema_EPCOfELPCOfLocateExtPC2d.hpp
-  Extrema_EPCOfExtPC.hpp
   Extrema_EPCOfExtPC2d.hpp
   Extrema_ExtAlgo.hpp
   Extrema_ExtCC.cxx
@@ -96,14 +87,6 @@ set(OCCT_Extrema_FILES
   Extrema_LocateExtPC2d.hpp
   Extrema_LocECC.hpp
   Extrema_LocECC2d.hpp
-  Extrema_LocEPCOfLocateExtPC.hpp
-  Extrema_LocEPCOfLocateExtPC2d.hpp
-  Extrema_PCFOfEPCOfELPCOfLocateExtPC.hpp
-  Extrema_PCFOfEPCOfELPCOfLocateExtPC2d.hpp
-  Extrema_PCFOfEPCOfExtPC.hpp
-  Extrema_PCFOfEPCOfExtPC2d.hpp
-  Extrema_PCLocFOfLocEPCOfLocateExtPC.hpp
-  Extrema_PCLocFOfLocEPCOfLocateExtPC2d.hpp
   Extrema_POnCurv.hpp
   Extrema_POnCurv2d.hpp
   Extrema_POnSurf.hpp

@@ -4,13 +4,13 @@ set(OCCT_Standard_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_Standard_FILES
   Standard.cxx
   Standard.hpp
-  Standard_AbortiveTransaction.hpp
+  
   Standard_ArrayStreamBuffer.hpp
   Standard_ArrayStreamBuffer.cxx
   Standard_Assert.hpp
-  Standard_Atomic.hpp
+  
   Standard_Boolean.hpp
-  Standard_Byte.hpp
+  
   Standard_Character.hpp
   Standard_CLocaleSentry.cxx
   Standard_CLocaleSentry.hpp
@@ -38,12 +38,11 @@ set(OCCT_Standard_FILES
   Standard_GUID.hpp
   Standard_Handle.hpp
   Standard_HashUtils.hpp
-  Standard_HashUtils_1.hpp
   Standard_ImmutableObject.hpp
   Standard_Integer.hpp
   Standard_IStream.hpp
   Standard_LicenseError.hpp
-  Standard_LicenseNotFound.hpp
+  
   Standard_Macro.hpp
   Standard_MemoryUtils.hpp
   Standard_MMgrOpt.cxx
@@ -65,7 +64,7 @@ set(OCCT_Standard_FILES
   Standard_OutOfMemory.hpp
   Standard_OutOfRange.hpp
   Standard_Overflow.hpp
-  Standard_PByte.hpp
+  
   Standard_PCharacter.hpp
   Standard_Persistent.cxx
   Standard_Persistent.hpp
@@ -92,7 +91,6 @@ set(OCCT_Standard_FILES
   Standard_TypeDef.hpp
   Standard_TypeMismatch.hpp
   Standard_Underflow.hpp
-  Standard_UUID.hpp
   Standard_VersionInfo.cxx
   Standard_VersionInfo.hpp
   Standard_WarningsDisable.hpp

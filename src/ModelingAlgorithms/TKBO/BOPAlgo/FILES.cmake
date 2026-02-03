@@ -6,7 +6,6 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_Algo.hpp
   BOPAlgo_ArgumentAnalyzer.cxx
   BOPAlgo_ArgumentAnalyzer.hpp
-  BOPAlgo_ArgumentAnalyzer_1.hpp
   BOPAlgo_ToolsProvider.cxx
   BOPAlgo_ToolsProvider.hpp
   BOPAlgo_BOP.cxx
@@ -29,7 +28,6 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_CheckerSI_1.cxx
   BOPAlgo_CheckResult.cxx
   BOPAlgo_CheckResult.hpp
-  BOPAlgo_CheckStatus.hpp
 
   BOPAlgo_MakeConnected.cxx
   BOPAlgo_MakeConnected.hpp
@@ -37,11 +35,10 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_MakePeriodic.hpp
   BOPAlgo_MakerVolume.cxx
   BOPAlgo_MakerVolume.hpp
-  BOPAlgo_MakerVolume_1.hpp
   BOPAlgo_Operation.hpp
   BOPAlgo_Options.cxx
   BOPAlgo_Options.hpp
-  BOPAlgo_PArgumentAnalyzer.hpp
+  
   BOPAlgo_PaveFiller.cxx
   BOPAlgo_PaveFiller.hpp
   BOPAlgo_PaveFiller_1.cxx
@@ -55,11 +52,10 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_PaveFiller_9.cxx
   BOPAlgo_PaveFiller_10.cxx
   BOPAlgo_PaveFiller_11.cxx
-  BOPAlgo_PBOP.hpp
+  
   BOPAlgo_PBuilder.hpp
   BOPAlgo_PPaveFiller.hpp
-  BOPAlgo_PSection.hpp
-  BOPAlgo_PWireEdgeSet.hpp
+  
   BOPAlgo_RemoveFeatures.cxx
   BOPAlgo_RemoveFeatures.hpp
   BOPAlgo_Section.cxx
@@ -70,10 +66,8 @@ set(OCCT_BOPAlgo_FILES
   BOPAlgo_Tools.cxx
   BOPAlgo_Tools.hpp
   BOPAlgo_WireEdgeSet.hpp
-  BOPAlgo_WireEdgeSet_1.hpp
   BOPAlgo_WireSplitter.cxx
   BOPAlgo_WireSplitter.hpp
-  BOPAlgo_WireSplitter_1.hpp
   BOPAlgo_WireSplitter_1.cxx
   BOPAlgo_CellsBuilder.cxx
   BOPAlgo_CellsBuilder.hpp

@@ -7,6 +7,5 @@ set(OCCT_FilletSurf_FILES
   FilletSurf_ErrorTypeStatus.hpp
   FilletSurf_InternalBuilder.cxx
   FilletSurf_InternalBuilder.hpp
-  FilletSurf_StatusDone.hpp
   FilletSurf_StatusType.hpp
 )

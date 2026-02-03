@@ -23,7 +23,6 @@ set(OCCT_IntTools_FILES
 
   IntTools_EdgeEdge.cxx
   IntTools_EdgeEdge.hpp
-  IntTools_EdgeEdge_1.hpp
   IntTools_EdgeFace.cxx
   IntTools_EdgeFace.hpp
   IntTools_FaceFace.cxx
@@ -46,10 +45,8 @@ set(OCCT_IntTools_FILES
   IntTools_ShrunkRange.hpp
   IntTools_SurfaceRangeLocalizeData.cxx
   IntTools_SurfaceRangeLocalizeData.hpp
-  IntTools_SurfaceRangeLocalizeData_1.hpp
   IntTools_SurfaceRangeSample.cxx
   IntTools_SurfaceRangeSample.hpp
-  IntTools_SurfaceRangeSample_1.hpp
   IntTools_Tools.cxx
   IntTools_Tools.hpp
   IntTools_TopolTool.cxx

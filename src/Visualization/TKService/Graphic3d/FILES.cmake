@@ -3,7 +3,6 @@ set(OCCT_Graphic3d_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 
 set(OCCT_Graphic3d_FILES
   Graphic3d_AlphaMode.hpp
-  Graphic3d_ArrayFlags.hpp
   Graphic3d_ArrayOfPoints.hpp
   Graphic3d_ArrayOfPolygons.hpp
   Graphic3d_ArrayOfPolylines.hpp
@@ -28,14 +27,12 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_AttribBuffer.cxx
   Graphic3d_AttribBuffer.hpp
   Graphic3d_BndBox3d.hpp
-  Graphic3d_BndBox4d.hpp
-  Graphic3d_BndBox4f.hpp
+  
   Graphic3d_BoundBuffer.hpp
   Graphic3d_BSDF.cxx
   Graphic3d_BSDF.hpp
   Graphic3d_Buffer.cxx
   Graphic3d_Buffer.hpp
-  Graphic3d_BufferRange.hpp
   Graphic3d_BufferType.hpp
   Graphic3d_BvhCStructureSet.cxx
   Graphic3d_BvhCStructureSet.hpp
@@ -45,7 +42,6 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_Camera.hpp
   Graphic3d_CameraTile.cxx
   Graphic3d_CameraTile.hpp
-  Graphic3d_CappingFlags.hpp
   Graphic3d_CLight.cxx
   Graphic3d_CLight.hpp
   Graphic3d_ClipPlane.cxx
@@ -60,7 +56,6 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_CubeMapPacked.hpp
   Graphic3d_CubeMapSeparate.cxx
   Graphic3d_CubeMapSeparate.hpp
-  Graphic3d_CubeMapSide.hpp
   Graphic3d_CullingTool.cxx
   Graphic3d_CullingTool.hpp
   Graphic3d_CView.cxx
@@ -71,10 +66,8 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_DisplayPriority.hpp
   Graphic3d_FrameStats.cxx
   Graphic3d_FrameStats.hpp
-  Graphic3d_FrameStatsCounter.hpp
   Graphic3d_FrameStatsData.cxx
   Graphic3d_FrameStatsData.hpp
-  Graphic3d_FrameStatsTimer.hpp
   Graphic3d_GraduatedTrihedron.hpp
   Graphic3d_GraphicDriver.cxx
   Graphic3d_GraphicDriver.hpp
@@ -82,7 +75,6 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_GraphicDriverFactory.hpp
   Graphic3d_Group.cxx
   Graphic3d_Group.hpp
-  Graphic3d_GroupAspect.hpp
   Graphic3d_GroupDefinitionError.hpp
   Graphic3d_HatchStyle.hpp
   Graphic3d_HatchStyle.cxx
@@ -110,14 +102,12 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_NameOfTexture1D.hpp
   Graphic3d_NameOfTexture2D.hpp
   Graphic3d_NameOfTextureEnv.hpp
-  Graphic3d_NameOfTexturePlane.hpp
 
   Graphic3d_PBRMaterial.cxx
   Graphic3d_PBRMaterial.hpp
   Graphic3d_PolygonOffset.cxx
   Graphic3d_PolygonOffset.hpp
   Graphic3d_PriorityDefinitionError.hpp
-  Graphic3d_RenderingMode.hpp
   Graphic3d_RenderingParams.cxx
   Graphic3d_RenderingParams.hpp
   Graphic3d_RenderTransparentMethod.hpp
@@ -136,7 +126,6 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_ShaderProgram.hpp
   Graphic3d_ShaderVariable.cxx
   Graphic3d_ShaderVariable.hpp
-  Graphic3d_ShaderVariable_1.hpp
   Graphic3d_StereoMode.hpp
   Graphic3d_Structure.cxx
   Graphic3d_Structure.hpp
@@ -171,29 +160,20 @@ set(OCCT_Graphic3d_FILES
   Graphic3d_TextureSet.cxx
   Graphic3d_TextureSet.hpp
   Graphic3d_TextureSetBits.hpp
-  Graphic3d_ToneMappingMethod.hpp
   Graphic3d_TransformPers.hpp
   Graphic3d_TransformPers.cxx
   Graphic3d_TransformPersScaledAbove.hpp
   Graphic3d_TransformPersScaledAbove.cxx
   Graphic3d_TransformUtils.hpp
   Graphic3d_TransModeFlags.hpp
-  Graphic3d_TypeOfAnswer.hpp
   Graphic3d_TypeOfBackfacingModel.hpp
   Graphic3d_TypeOfBackground.hpp
-  Graphic3d_TypeOfConnection.hpp
-  Graphic3d_TypeOfLightSource.hpp
-  Graphic3d_TypeOfLimit.hpp
-  Graphic3d_TypeOfMaterial.hpp
   Graphic3d_TypeOfPrimitiveArray.hpp
   Graphic3d_TypeOfReflection.hpp
-  Graphic3d_TypeOfShaderObject.hpp
   Graphic3d_TypeOfShadingModel.hpp
-  Graphic3d_TypeOfStructure.hpp
   Graphic3d_TypeOfTexture.hpp
   Graphic3d_TypeOfTextureFilter.hpp
   Graphic3d_TypeOfTextureMode.hpp
-  Graphic3d_TypeOfVisualization.hpp
 
   Graphic3d_Vertex.cxx
   Graphic3d_Vertex.hpp

@@ -6,7 +6,6 @@ set(OCCT_ShapeAlgo_FILES
   ShapeAlgo.hpp
   ShapeAlgo_AlgoContainer.cxx
   ShapeAlgo_AlgoContainer.hpp
-  ShapeAlgo_AlgoContainer_1.hpp
   ShapeAlgo_ToolContainer.cxx
   ShapeAlgo_ToolContainer.hpp
 )

@@ -6,7 +6,6 @@ set(OCCT_IntWalk_FILES
   IntWalk_IWalking_1.hpp
   IntWalk_PWalking.cxx
   IntWalk_PWalking.hpp
-  IntWalk_PWalking_1.hpp
   IntWalk_StatusDeflection.hpp
   IntWalk_TheFunctionOfTheInt2S.hpp
   IntWalk_TheFunctionOfTheInt2S_0.cxx

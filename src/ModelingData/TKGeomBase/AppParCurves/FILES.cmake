@@ -20,7 +20,6 @@ set(OCCT_AppParCurves_FILES
   AppParCurves_MultiCurve.hpp
   AppParCurves_MultiPoint.cxx
   AppParCurves_MultiPoint.hpp
-  AppParCurves_MultiPoint_1.hpp
   AppParCurves_ResolConstraint.hpp
 
 )

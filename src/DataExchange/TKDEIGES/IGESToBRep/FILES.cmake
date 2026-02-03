@@ -8,7 +8,6 @@ set(OCCT_IGESToBRep_FILES
   IGESToBRep_Actor.hpp
   IGESToBRep_AlgoContainer.cxx
   IGESToBRep_AlgoContainer.hpp
-  IGESToBRep_AlgoContainer_1.hpp
   IGESToBRep_BasicCurve.cxx
   IGESToBRep_BasicCurve.hpp
   IGESToBRep_BasicSurface.cxx
@@ -17,10 +16,8 @@ set(OCCT_IGESToBRep_FILES
   IGESToBRep_BRepEntity.hpp
   IGESToBRep_CurveAndSurface.cxx
   IGESToBRep_CurveAndSurface.hpp
-  IGESToBRep_CurveAndSurface_1.hpp
   IGESToBRep_IGESBoundary.cxx
   IGESToBRep_IGESBoundary.hpp
-  IGESToBRep_IGESBoundary_1.hpp
   IGESToBRep_Reader.cxx
   IGESToBRep_Reader.hpp
   IGESToBRep_ToolContainer.cxx

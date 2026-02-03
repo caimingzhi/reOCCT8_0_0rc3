@@ -26,14 +26,10 @@ set(OCCT_MoniTool_FILES
   MoniTool_Stat.hpp
   MoniTool_Timer.cxx
   MoniTool_Timer.hpp
-  MoniTool_Timer_1.hpp
   MoniTool_TimerSentry.hpp
-  MoniTool_TimerSentry_1.hpp
   MoniTool_TransientElem.cxx
   MoniTool_TransientElem.hpp
   MoniTool_TypedValue.cxx
   MoniTool_TypedValue.hpp
-  MoniTool_ValueInterpret.hpp
-  MoniTool_ValueSatisfies.hpp
   MoniTool_ValueType.hpp
 )

@@ -30,7 +30,6 @@ set(OCCT_gp_FILES
   gp_Elips.hpp
   gp_Elips2d.cxx
   gp_Elips2d.hpp
-  gp_EulerSequence.hpp
   gp_GTrsf.cxx
   gp_GTrsf.hpp
   gp_GTrsf2d.cxx

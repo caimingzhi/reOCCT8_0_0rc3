@@ -10,7 +10,6 @@ set(OCCT_IMeshTools_FILES
   IMeshTools_MeshAlgo.cxx
   IMeshTools_MeshAlgoFactory.hpp
   IMeshTools_MeshAlgoFactory.cxx
-  IMeshTools_MeshAlgoType.hpp
   IMeshTools_MeshBuilder.hpp
   IMeshTools_MeshBuilder.cxx
   IMeshTools_ModelAlgo.hpp

@@ -13,17 +13,387 @@
 
 #ifndef _Aspect_XRSession_HeaderFile
 #define _Aspect_XRSession_HeaderFile
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
-#include <Aspect_ColorSpace.hpp>
+#ifndef _Aspect_ColorSpace_HeaderFile
+#define _Aspect_ColorSpace_HeaderFile
+
+//! Texture color spaces accepted by XR composer.
+enum Aspect_ColorSpace
+{
+  Aspect_ColorSpace_sRGB   = 0, //!< non-linear sRGB color space
+  Aspect_ColorSpace_Linear = 1, //!< linear RGB color space
+};
+
+#endif // _Aspect_ColorSpace_HeaderFile
+
 #include <Aspect_Eye.hpp>
 #include <Aspect_FrustumLRBT.hpp>
 #include <Aspect_GraphicsLibrary.hpp>
-#include <Aspect_XRActionSet.hpp>
-#include <Aspect_XRAnalogActionData.hpp>
-#include <Aspect_XRDigitalActionData.hpp>
-#include <Aspect_XRGenericAction.hpp>
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRActionSet_HeaderFile
+#define _Aspect_XRActionSet_HeaderFile
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRAction_HeaderFile
+#define _Aspect_XRAction_HeaderFile
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRActionType_HeaderFile
+#define _Aspect_XRActionType_HeaderFile
+
+//! XR action type.
+enum Aspect_XRActionType
+{
+  Aspect_XRActionType_InputDigital,  //!< boolean input (like button)
+  Aspect_XRActionType_InputAnalog,   //!< analog input (1/2/3 axes)
+  Aspect_XRActionType_InputPose,     //!< positional input
+  Aspect_XRActionType_InputSkeletal, //!< skeletal input
+  Aspect_XRActionType_OutputHaptic   //!< haptic output (vibration)
+};
+
+#endif // _Aspect_XRActionType_HeaderFile
+
+#include <NCollection_IndexedDataMap.hpp>
+#include <Standard_Transient.hpp>
+#include <Standard_Type.hpp>
+#include <TCollection_AsciiString.hpp>
+
+//! XR action definition.
+class Aspect_XRAction : public Standard_Transient
+{
+  DEFINE_STANDARD_RTTIEXT(Aspect_XRAction, Standard_Transient)
+public:
+  //! Return action id.
+  const TCollection_AsciiString& Id() const { return myId; }
+
+  //! Return action type.
+  Aspect_XRActionType Type() const { return myType; }
+
+  //! Return TRUE if action is defined.
+  bool IsValid() const { return myRawHandle != 0; }
+
+  //! Return action handle.
+  uint64_t RawHandle() const { return myRawHandle; }
+
+  //! Set action handle.
+  void SetRawHandle(uint64_t theHande) { myRawHandle = theHande; }
+
+  //! Main constructor.
+  Aspect_XRAction(const TCollection_AsciiString& theId, const Aspect_XRActionType theType)
+      : myId(theId),
+        myRawHandle(0),
+        myType(theType)
+  {
+  }
+
+protected:
+  TCollection_AsciiString myId;        //!< action id
+  uint64_t                myRawHandle; //!< action handle
+  Aspect_XRActionType     myType;      //!< action type
+};
+
+//! Map of actions with action Id as a key.
+
+#endif // _Aspect_XRAction_HeaderFile
+
+
+//! XR action set.
+class Aspect_XRActionSet : public Standard_Transient
+{
+  DEFINE_STANDARD_RTTIEXT(Aspect_XRActionSet, Standard_Transient)
+public:
+  //! Return action id.
+  const TCollection_AsciiString& Id() const { return myId; }
+
+  //! Return action handle.
+  uint64_t RawHandle() const { return myRawHandle; }
+
+  //! Set action handle.
+  void SetRawHandle(uint64_t theHande) { myRawHandle = theHande; }
+
+  //! Add action.
+  void AddAction(const occ::handle<Aspect_XRAction>& theAction)
+  {
+    myActions.Add(theAction->Id(), theAction);
+  }
+
+  //! Return map of actions.
+  const NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<Aspect_XRAction>>& Actions()
+    const
+  {
+    return myActions;
+  }
+
+  //! Main constructor.
+  Aspect_XRActionSet(const TCollection_AsciiString& theId)
+      : myId(theId),
+        myRawHandle(0)
+  {
+  }
+
+protected:
+  TCollection_AsciiString myId;        //!< action set id
+  uint64_t                myRawHandle; //!< action set handle
+  NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<Aspect_XRAction>>
+    myActions; //!< map of actions
+};
+
+#endif // _Aspect_XRActionSet_HeaderFile
+
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRAnalogActionData_HeaderFile
+#define _Aspect_XRAnalogActionData_HeaderFile
+
+#include <NCollection_Vec3.hpp>
+
+//! Analog input XR action data.
+struct Aspect_XRAnalogActionData
+{
+  uint64_t ActiveOrigin; //!< The origin that caused this action's current state
+                         // clang-format off
+  float                   UpdateTime;   //!< Time relative to now when this event happened. Will be negative to indicate a past time
+  NCollection_Vec3<float> VecXYZ;       //!< the current state of this action
+  NCollection_Vec3<float> DeltaXYZ;     //!< deltas since the previous update
+  bool                    IsActive;     //!< whether or not this action is currently available to be bound in the active action set
+                         // clang-format on
+
+  //! Return TRUE if delta is non-zero.
+  bool IsChanged() { return !DeltaXYZ.IsEqual(NCollection_Vec3<float>(0.0f, 0.0f, 0.0f)); }
+
+  //! Empty constructor.
+  Aspect_XRAnalogActionData()
+      : ActiveOrigin(0),
+        UpdateTime(0.0f),
+        IsActive(false)
+  {
+  }
+};
+
+#endif // _Aspect_XRAnalogActionData_HeaderFile
+
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRDigitalActionData_HeaderFile
+#define _Aspect_XRDigitalActionData_HeaderFile
+
+#include <Standard_TypeDef.hpp>
+
+//! Digital input XR action data.
+struct Aspect_XRDigitalActionData
+{
+  uint64_t ActiveOrigin; //!< The origin that caused this action's current state
+                         // clang-format off
+  float    UpdateTime;   //!< Time relative to now when this event happened. Will be negative to indicate a past time
+  bool     IsActive;     //!< whether or not this action is currently available to be bound in the active action set
+  bool     IsPressed;    //!< Aspect_InputActionType_Digital state - The current state of this action; will be true if currently pressed
+  bool     IsChanged;    //!< Aspect_InputActionType_Digital state - this is true if the state has changed since the last frame
+                         // clang-format on
+
+  //! Empty constructor.
+  Aspect_XRDigitalActionData()
+      : ActiveOrigin(0),
+        UpdateTime(0.0f),
+        IsActive(false),
+        IsPressed(false),
+        IsChanged(false)
+  {
+  }
+};
+
+#endif // _Aspect_XRDigitalActionData_HeaderFile
+
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRGenericAction_HeaderFile
+#define _Aspect_XRGenericAction_HeaderFile
+
+//! Generic XR action.
+enum Aspect_XRGenericAction
+{
+  Aspect_XRGenericAction_IsHeadsetOn,           //!< headset is on/off head
+  Aspect_XRGenericAction_InputAppMenu,          //!< application menu button pressed/released
+  Aspect_XRGenericAction_InputSysMenu,          //!< system menu button pressed/released
+  Aspect_XRGenericAction_InputTriggerPull,      //!< trigger squeezing [0..1], 1 to click
+  Aspect_XRGenericAction_InputTriggerClick,     //!< trigger clicked/released
+  Aspect_XRGenericAction_InputGripClick,        //!< grip state on/off
+  Aspect_XRGenericAction_InputTrackPadPosition, //!< trackpad 2D position [-1,+1] with X and Y axes
+  Aspect_XRGenericAction_InputTrackPadTouch,    //!< trackpad touched/untouched
+  Aspect_XRGenericAction_InputTrackPadClick,    //!< trackpad clicked/released
+  Aspect_XRGenericAction_InputThumbstickPosition, //!< thumbstick 2D position [-1,+1] with X and Y
+                                                  //!< axes
+  Aspect_XRGenericAction_InputThumbstickTouch,    //!< thumbstick touched/untouched
+  Aspect_XRGenericAction_InputThumbstickClick,    //!< thumbstick clicked/released
+  Aspect_XRGenericAction_InputPoseBase,           //!< base position of hand
+  Aspect_XRGenericAction_InputPoseFront,          //!< front position of hand
+  Aspect_XRGenericAction_InputPoseHandGrip,       //!< position of main handgrip
+  Aspect_XRGenericAction_InputPoseFingerTip,      //!< position of main fingertip
+  Aspect_XRGenericAction_OutputHaptic             //!< haptic output (vibration)
+};
+
+enum
+{
+  Aspect_XRGenericAction_NB = Aspect_XRGenericAction_OutputHaptic + 1
+};
+
+#endif // _Aspect_XRGenericAction_HeaderFile
+
 #include <Aspect_XRHapticActionData.hpp>
-#include <Aspect_XRPoseActionData.hpp>
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_XRPoseActionData_HeaderFile
+#define _Aspect_XRPoseActionData_HeaderFile
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
+
+#ifndef _Aspect_TrackedDevicePose_HeaderFile
+#define _Aspect_TrackedDevicePose_HeaderFile
+
+#include <gp_Trsf.hpp>
+#include <NCollection_Array1.hpp>
+
+//! Describes a single pose for a tracked object (for XR).
+struct Aspect_TrackedDevicePose
+{
+  gp_Trsf Orientation;       //!< device to absolute transformation
+  gp_Vec  Velocity;          //!< velocity in tracker space in m/s
+  gp_Vec  AngularVelocity;   //!< angular velocity in radians/s
+  bool    IsValidPose;       //!< indicates valid pose
+  bool    IsConnectedDevice; //!< indicates connected state
+
+  //! Empty constructor.
+  Aspect_TrackedDevicePose()
+      : IsValidPose(false),
+        IsConnectedDevice(false)
+  {
+  }
+};
+
+//! Array of tracked poses.
+
+#endif // _Aspect_TrackedDevicePose_HeaderFile
+
+#include <Standard_TypeDef.hpp>
+
+//! Pose input XR action data.
+struct Aspect_XRPoseActionData
+{
+  Aspect_TrackedDevicePose Pose;         //!< pose state
+  uint64_t                 ActiveOrigin; //!< The origin that caused this action's current state
+                                         // clang-format off
+  bool                     IsActive;     //!< whether or not this action is currently available to be bound in the active action set
+                                         // clang-format on
+
+  //! Empty constructor.
+  Aspect_XRPoseActionData()
+      : ActiveOrigin(0),
+        IsActive(false)
+  {
+  }
+};
+
+#endif // _Aspect_XRPoseActionData_HeaderFile
+
 #include <Aspect_XRTrackedDeviceRole.hpp>
 #include <gp_Trsf.hpp>
 #include <NCollection_Array1.hpp>

@@ -6,7 +6,6 @@ set(OCCT_GProp_FILES
   GProp.hpp
   GProp_CelGProps.cxx
   GProp_CelGProps.hpp
-  GProp_EquaType.hpp
   GProp_GProps.cxx
   GProp_GProps.hpp
   GProp_PEquation.cxx
@@ -17,7 +16,7 @@ set(OCCT_GProp_FILES
   GProp_PrincipalProps.hpp
   GProp_SelGProps.cxx
   GProp_SelGProps.hpp
-  GProp_UndefinedAxis.hpp
+  
   GProp_ValueType.hpp
   GProp_VelGProps.cxx
   GProp_VelGProps.hpp

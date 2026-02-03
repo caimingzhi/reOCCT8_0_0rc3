@@ -4,7 +4,6 @@ set(OCCT_AdvApp2Var_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_AdvApp2Var_FILES
   AdvApp2Var_ApproxAFunc2Var.cxx
   AdvApp2Var_ApproxAFunc2Var.hpp
-  AdvApp2Var_ApproxAFunc2Var_1.hpp
   AdvApp2Var_ApproxF2var.cxx
   AdvApp2Var_ApproxF2var.hpp
   AdvApp2Var_Context.cxx

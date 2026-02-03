@@ -4,7 +4,6 @@ set(OCCT_AdvApprox_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_AdvApprox_FILES
   AdvApprox_ApproxAFunction.cxx
   AdvApprox_ApproxAFunction.hpp
-  AdvApprox_ApproxAFunction_1.hpp
   AdvApprox_Cutting.cxx
   AdvApprox_Cutting.hpp
   AdvApprox_DichoCutting.cxx

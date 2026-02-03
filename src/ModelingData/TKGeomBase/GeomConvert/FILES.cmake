@@ -19,7 +19,6 @@ set(OCCT_GeomConvert_FILES
   GeomConvert_BSplineSurfaceToBezierSurface.hpp
   GeomConvert_CompBezierSurfacesToBSplineSurface.cxx
   GeomConvert_CompBezierSurfacesToBSplineSurface.hpp
-  GeomConvert_CompBezierSurfacesToBSplineSurface_1.hpp
   GeomConvert_CompCurveToBSplineCurve.cxx
   GeomConvert_CompCurveToBSplineCurve.hpp
   GeomConvert_Units.cxx

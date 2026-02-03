@@ -21,7 +21,6 @@ set(OCCT_STEPConstruct_FILES
   STEPConstruct_Styles.hpp
   STEPConstruct_Tool.cxx
   STEPConstruct_Tool.hpp
-  STEPConstruct_Tool_1.hpp
   STEPConstruct_UnitContext.cxx
   STEPConstruct_UnitContext.hpp
   STEPConstruct_ValidationProps.cxx

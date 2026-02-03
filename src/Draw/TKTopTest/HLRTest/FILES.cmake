@@ -8,13 +8,10 @@ set(OCCT_HLRTest_FILES
   HLRTest_DrawableEdgeTool.hpp
   HLRTest_DrawablePolyEdgeTool.cxx
   HLRTest_DrawablePolyEdgeTool.hpp
-  HLRTest_DrawablePolyEdgeTool_1.hpp
   HLRTest_OutLiner.cxx
   HLRTest_OutLiner.hpp
-  HLRTest_OutLiner_1.hpp
   HLRTest_Projector.cxx
   HLRTest_Projector.hpp
   HLRTest_ShapeData.cxx
   HLRTest_ShapeData.hpp
-  HLRTest_ShapeData_1.hpp
 )

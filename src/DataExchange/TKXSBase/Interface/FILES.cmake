@@ -22,7 +22,6 @@ set(OCCT_Interface_FILES
   Interface_CopyTool.cxx
   Interface_CopyTool.hpp
 
-  Interface_DataState.hpp
   Interface_EntityCluster.cxx
   Interface_EntityCluster.hpp
   Interface_EntityIterator.cxx
@@ -74,7 +73,6 @@ set(OCCT_Interface_FILES
   Interface_NodeOfReaderLib_0.cxx
   Interface_ParamList.cxx
   Interface_ParamList.hpp
-  Interface_ParamList_1.hpp
   Interface_ParamSet.cxx
   Interface_ParamSet.hpp
   Interface_ParamType.hpp
@@ -101,15 +99,14 @@ set(OCCT_Interface_FILES
   Interface_Static.cxx
   Interface_Static.hpp
   Interface_Statics.hpp
-  Interface_StaticSatisfies.hpp
   Interface_StaticStandards.cxx
-  Interface_Translates.hpp
+  
   Interface_TypedValue.cxx
   Interface_TypedValue.hpp
   Interface_UndefinedContent.cxx
   Interface_UndefinedContent.hpp
-  Interface_ValueInterpret.hpp
-  Interface_ValueSatisfies.hpp
+  
+  
 
   Interface_Version.hpp
 )

@@ -11,7 +11,6 @@ set(OCCT_VrmlData_FILES
   VrmlData_Cylinder.hpp
 
   VrmlData_ErrorStatus.hpp
-  VrmlData_Faceted.hpp
   VrmlData_Geometry.cxx
   VrmlData_Geometry.hpp
   VrmlData_Group.cxx

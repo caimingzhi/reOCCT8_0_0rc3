@@ -10,7 +10,6 @@ set(OCCT_StepToTopoDS_FILES
 
   StepToTopoDS_GeometricTool.cxx
   StepToTopoDS_GeometricTool.hpp
-  StepToTopoDS_GeometricToolError.hpp
   StepToTopoDS_MakeTransformed.cxx
   StepToTopoDS_MakeTransformed.hpp
   StepToTopoDS_NMTool.cxx
@@ -21,12 +20,10 @@ set(OCCT_StepToTopoDS_FILES
 
   StepToTopoDS_Root.cxx
   StepToTopoDS_Root.hpp
-  StepToTopoDS_Root_1.hpp
   StepToTopoDS_Tool.cxx
   StepToTopoDS_Tool.hpp
   StepToTopoDS_TranslateCompositeCurve.cxx
   StepToTopoDS_TranslateCompositeCurve.hpp
-  StepToTopoDS_TranslateCompositeCurve_1.hpp
   StepToTopoDS_TranslateCurveBoundedSurface.cxx
   StepToTopoDS_TranslateCurveBoundedSurface.hpp
   StepToTopoDS_TranslateEdge.cxx
@@ -34,7 +31,6 @@ set(OCCT_StepToTopoDS_FILES
   StepToTopoDS_TranslateEdgeError.hpp
   StepToTopoDS_TranslateEdgeLoop.cxx
   StepToTopoDS_TranslateEdgeLoop.hpp
-  StepToTopoDS_TranslateEdgeLoopError.hpp
   StepToTopoDS_TranslateFace.cxx
   StepToTopoDS_TranslateFace.hpp
   StepToTopoDS_TranslateFaceError.hpp
@@ -46,7 +42,6 @@ set(OCCT_StepToTopoDS_FILES
   StepToTopoDS_TranslateShellError.hpp
   StepToTopoDS_TranslateSolid.cxx
   StepToTopoDS_TranslateSolid.hpp
-  StepToTopoDS_TranslateSolidError.hpp
   StepToTopoDS_TranslateVertex.cxx
   StepToTopoDS_TranslateVertex.hpp
   StepToTopoDS_TranslateVertexError.hpp

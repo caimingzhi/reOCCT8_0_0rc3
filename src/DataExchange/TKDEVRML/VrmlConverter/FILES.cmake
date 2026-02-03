@@ -22,8 +22,6 @@ set(OCCT_VrmlConverter_FILES
   VrmlConverter_ShadedShape.hpp
   VrmlConverter_ShadingAspect.cxx
   VrmlConverter_ShadingAspect.hpp
-  VrmlConverter_TypeOfCamera.hpp
-  VrmlConverter_TypeOfLight.hpp
   VrmlConverter_WFDeflectionRestrictedFace.cxx
   VrmlConverter_WFDeflectionRestrictedFace.hpp
   VrmlConverter_WFDeflectionShape.cxx

@@ -9,7 +9,6 @@ set(OCCT_BRepClass3d_FILES
 
   BRepClass3d_Intersector3d.cxx
   BRepClass3d_Intersector3d.hpp
-  BRepClass3d_Intersector3d_1.hpp
 
   BRepClass3d_SClassifier.cxx
   BRepClass3d_SClassifier.hpp

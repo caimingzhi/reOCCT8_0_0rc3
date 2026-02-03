@@ -15,7 +15,7 @@ set(OCCT_XCAFDoc_FILES
   XCAFDoc_AssemblyGraph.hpp
   XCAFDoc_AssemblyGraph.cxx
   XCAFDoc_AssemblyTool.hpp
-  XCAFDoc_PartId.hpp
+  
   XCAFDoc_Area.cxx
   XCAFDoc_Area.hpp
   XCAFDoc_Centroid.cxx
@@ -75,7 +75,6 @@ set(OCCT_XCAFDoc_FILES
   XCAFDoc_VisMaterial.cxx
   XCAFDoc_VisMaterial.hpp
   XCAFDoc_VisMaterialCommon.hpp
-  XCAFDoc_VisMaterialPBR.hpp
   XCAFDoc_VisMaterialTool.cxx
   XCAFDoc_VisMaterialTool.hpp
   XCAFDoc_Volume.cxx

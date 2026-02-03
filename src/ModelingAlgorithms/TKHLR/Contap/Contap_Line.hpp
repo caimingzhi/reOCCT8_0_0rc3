@@ -16,8 +16,35 @@
 
 #ifndef _Contap_Line_HeaderFile
 #define _Contap_Line_HeaderFile
+// Created on: 1993-02-05
+// Created by: Jacques GOUSSARD
+// Copyright (c) 1993-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
-#include <Contap_IType.hpp>
+#ifndef _Contap_IType_HeaderFile
+#define _Contap_IType_HeaderFile
+
+enum Contap_IType
+{
+  Contap_Lin,
+  Contap_Circle,
+  Contap_Walking,
+  Contap_Restriction
+};
+
+#endif // _Contap_IType_HeaderFile
+
 #include <Contap_Point.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
@@ -97,7 +124,93 @@ private:
   gp_Dir                                           dir2;
   double                                           rad;
 };
+// Created on: 1993-02-05
+// Created by: Jacques GOUSSARD
+// Copyright (c) 1993-1999 Matra Datavision
+// Copyright (c) 1999-2014 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
-#include <Contap_Line_1.hpp>
+#include <Standard_DomainError.hpp>
+#include <gp_Pnt.hpp>
+#include <NCollection_Sequence.hpp>
+#include <NCollection_HSequence.hpp>
+#include <gp_Lin.hpp>
+#include <gp_Circ.hpp>
+#include <IntSurf_PntOn2S.hpp>
+#include <IntSurf_LineOn2S.hpp>
+
+#include <Contap_Point.hpp>
+
+inline const occ::handle<IntSurf_LineOn2S>& Contap_Line::LineOn2S() const
+{
+  return curv;
+}
+
+inline void Contap_Line::Add(const IntSurf_PntOn2S& POn2S)
+{
+  curv->Add(POn2S);
+}
+
+inline int Contap_Line::NbVertex() const
+{
+  return svtx->Length();
+}
+
+inline Contap_Point& Contap_Line::Vertex(const int Index) const
+{
+  return svtx->ChangeSequence()(Index);
+}
+
+inline Contap_IType Contap_Line::TypeContour() const
+{
+  return typL;
+}
+
+inline int Contap_Line::NbPnts() const
+{
+  if (typL != Contap_Walking)
+  {
+    throw Standard_DomainError();
+  }
+  return (curv->NbPoints());
+}
+
+inline const IntSurf_PntOn2S& Contap_Line::Point(const int Index) const
+{
+  if (typL != Contap_Walking)
+  {
+    throw Standard_DomainError();
+  }
+  return (curv->Value(Index));
+}
+
+inline gp_Lin Contap_Line::Line() const
+{
+  if (typL != Contap_Lin)
+  {
+    throw Standard_DomainError();
+  }
+  return gp_Lin(pt, dir1);
+}
+
+inline gp_Circ Contap_Line::Circle() const
+{
+  if (typL != Contap_Circle)
+  {
+    throw Standard_DomainError();
+  }
+  return gp_Circ(gp_Ax2(pt, dir1, dir2), rad);
+}
+
 
 #endif // _Contap_Line_HeaderFile

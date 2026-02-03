@@ -6,7 +6,6 @@ set(OCCT_BinMNaming_FILES
   BinMNaming.hpp
   BinMNaming_NamedShapeDriver.cxx
   BinMNaming_NamedShapeDriver.hpp
-  BinMNaming_NamedShapeDriver_1.hpp
   BinMNaming_NamingDriver.cxx
   BinMNaming_NamingDriver.hpp
 )

@@ -4,12 +4,10 @@ set(OCCT_BRepPrim_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}")
 set(OCCT_BRepPrim_FILES
   BRepPrim_Builder.cxx
   BRepPrim_Builder.hpp
-  BRepPrim_Builder_1.hpp
   BRepPrim_Cone.cxx
   BRepPrim_Cone.hpp
   BRepPrim_Cylinder.cxx
   BRepPrim_Cylinder.hpp
-  BRepPrim_Direction.hpp
   BRepPrim_FaceBuilder.cxx
   BRepPrim_FaceBuilder.hpp
   BRepPrim_GWedge.cxx

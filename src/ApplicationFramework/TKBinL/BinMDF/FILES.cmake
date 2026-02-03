@@ -6,10 +6,8 @@ set(OCCT_BinMDF_FILES
   BinMDF.hpp
   BinMDF_ADriver.cxx
   BinMDF_ADriver.hpp
-  BinMDF_ADriver_1.hpp
   BinMDF_ADriverTable.cxx
   BinMDF_ADriverTable.hpp
-  BinMDF_ADriverTable_1.hpp
 
   BinMDF_ReferenceDriver.cxx
   BinMDF_ReferenceDriver.hpp

@@ -11,12 +11,11 @@ set(OCCT_StepFEA_FILES
 
   StepFEA_ConstantSurface3dElementCoordinateSystem.cxx
   StepFEA_ConstantSurface3dElementCoordinateSystem.hpp
-  StepFEA_CoordinateSystemType.hpp
   StepFEA_Curve3dElementProperty.cxx
   StepFEA_Curve3dElementProperty.hpp
   StepFEA_Curve3dElementRepresentation.cxx
   StepFEA_Curve3dElementRepresentation.hpp
-  StepFEA_CurveEdge.hpp
+  
   StepFEA_CurveElementEndCoordinateSystem.cxx
   StepFEA_CurveElementEndCoordinateSystem.hpp
   StepFEA_CurveElementEndOffset.cxx
@@ -45,8 +44,7 @@ set(OCCT_StepFEA_FILES
   StepFEA_ElementOrElementGroup.hpp
   StepFEA_ElementRepresentation.cxx
   StepFEA_ElementRepresentation.hpp
-  StepFEA_ElementVolume.hpp
-  StepFEA_EnumeratedDegreeOfFreedom.hpp
+  
   StepFEA_FeaAreaDensity.cxx
   StepFEA_FeaAreaDensity.hpp
   StepFEA_FeaAxis2Placement3d.cxx
@@ -131,7 +129,7 @@ set(OCCT_StepFEA_FILES
   StepFEA_SymmetricTensor43d.hpp
   StepFEA_SymmetricTensor43dMember.cxx
   StepFEA_SymmetricTensor43dMember.hpp
-  StepFEA_UnspecifiedValue.hpp
+  
   StepFEA_Volume3dElementRepresentation.cxx
   StepFEA_Volume3dElementRepresentation.hpp
 )

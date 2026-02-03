@@ -10,7 +10,6 @@ set(OCCT_STEPCAFControl_FILES
 
   STEPCAFControl_ExternFile.cxx
   STEPCAFControl_ExternFile.hpp
-  STEPCAFControl_ExternFile_1.hpp
   STEPCAFControl_GDTProperty.hpp
   STEPCAFControl_GDTProperty.cxx
 

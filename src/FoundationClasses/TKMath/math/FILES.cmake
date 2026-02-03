@@ -7,19 +7,14 @@ set(OCCT_math_FILES
 
   math_BFGS.cxx
   math_BFGS.hpp
-  math_BFGS_1.hpp
   math_BissecNewton.cxx
   math_BissecNewton.hpp
-  math_BissecNewton_1.hpp
   math_BracketedRoot.cxx
   math_BracketedRoot.hpp
-  math_BracketedRoot_1.hpp
   math_BracketMinimum.cxx
   math_BracketMinimum.hpp
-  math_BracketMinimum_1.hpp
   math_BrentMinimum.cxx
   math_BrentMinimum.hpp
-  math_BrentMinimum_1.hpp
   math_BullardGenerator.hpp
   math_ComputeGaussPointsAndWeights.cxx
   math_ComputeGaussPointsAndWeights.hpp
@@ -27,7 +22,6 @@ set(OCCT_math_FILES
   math_ComputeKronrodPointsAndWeights.hpp
   math_Crout.cxx
   math_Crout.hpp
-  math_Crout_1.hpp
   math_DirectPolynomialRoots.cxx
   math_DirectPolynomialRoots.hpp
   math_DoubleTab.hpp
@@ -35,18 +29,14 @@ set(OCCT_math_FILES
   math_EigenValuesSearcher.hpp
   math_FRPR.cxx
   math_FRPR.hpp
-  math_FRPR_1.hpp
   math_Function.cxx
   math_Function.hpp
   math_FunctionAllRoots.cxx
   math_FunctionAllRoots.hpp
-  math_FunctionAllRoots_1.hpp
   math_FunctionRoot.cxx
   math_FunctionRoot.hpp
-  math_FunctionRoot_1.hpp
   math_FunctionRoots.cxx
   math_FunctionRoots.hpp
-  math_FunctionRoots_1.hpp
   math_FunctionSample.cxx
   math_FunctionSample.hpp
   math_FunctionSet.cxx
@@ -60,49 +50,37 @@ set(OCCT_math_FILES
   math_Gauss.hpp
   math_GaussLeastSquare.cxx
   math_GaussLeastSquare.hpp
-  math_GaussLeastSquare_1.hpp
   math_GaussMultipleIntegration.cxx
   math_GaussMultipleIntegration.hpp
-  math_GaussMultipleIntegration_1.hpp
   math_GaussSetIntegration.cxx
   math_GaussSetIntegration.hpp
-  math_GaussSetIntegration_1.hpp
   math_GaussSingleIntegration.cxx
   math_GaussSingleIntegration.hpp
-  math_GaussSingleIntegration_1.hpp
   math_GlobOptMin.cxx
   math_GlobOptMin.hpp
   math_Householder.cxx
   math_Householder.hpp
-  math_Householder_1.hpp
   math_IntegerVector.hpp
   math_Jacobi.cxx
   math_Jacobi.hpp
-  math_Jacobi_1.hpp
   math_Kronrod.cxx
   math_KronrodSingleIntegration.cxx
   math_KronrodSingleIntegration.hpp
-  math_KronrodSingleIntegration_1.hpp
   math_Matrix.cxx
   math_Matrix.hpp
-  math_Matrix_1.hpp
   math_MultipleVarFunction.cxx
   math_MultipleVarFunction.hpp
   math_MultipleVarFunctionWithGradient.hpp
   math_MultipleVarFunctionWithHessian.hpp
   math_NewtonFunctionRoot.cxx
   math_NewtonFunctionRoot.hpp
-  math_NewtonFunctionRoot_1.hpp
   math_NewtonFunctionSetRoot.cxx
   math_NewtonFunctionSetRoot.hpp
-  math_NewtonFunctionSetRoot_1.hpp
   math_NewtonMinimum.cxx
   math_NewtonMinimum.hpp
-  math_NewtonMinimum_1.hpp
   math_NotSquare.hpp
   math_Powell.cxx
   math_Powell.hpp
-  math_Powell_1.hpp
   math_PSO.cxx
   math_PSO.hpp
   math_PSOParticlesPool.cxx
@@ -113,16 +91,12 @@ set(OCCT_math_FILES
   math_Status.hpp
   math_SVD.cxx
   math_SVD.hpp
-  math_SVD_1.hpp
   math_TrigonometricFunctionRoots.cxx
   math_TrigonometricFunctionRoots.hpp
-  math_TrigonometricFunctionRoots_1.hpp
   math_TrigonometricEquationFunction.hpp
   math_Uzawa.cxx
   math_Uzawa.hpp
-  math_Uzawa_1.hpp
   math_ValueAndWeight.hpp
   math_VectorBase.hpp
-  math_VectorBase_1.hpp
   math_Vector.hpp
 )
