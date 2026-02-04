@@ -24,31 +24,6 @@
 !/test_results/
 !/.github/
 
-# data/ level: Ignore everything except tracked subdirectories
-/data/*
-!/data/brep/
-!/data/geom/
-!/data/iges/
-!/data/images/
-!/data/msv/
-!/data/occ/
-!/data/others/
-!/data/step/
-!/data/stl/
-!/data/vrml/
-!/data/xbf/
-
-# src/ level: Ignore everything except tracked items
-/src/*
-!/src/MODULES.cmake
-!/src/ApplicationFramework/
-!/src/DataExchange/
-!/src/Draw/
-!/src/FoundationClasses/
-!/src/ModelingAlgorithms/
-!/src/ModelingData/
-!/src/Visualization/
-
 # ============================================================================
 # DEEPER LEVEL RULES (applied recursively within allowed directories above)
 # ============================================================================

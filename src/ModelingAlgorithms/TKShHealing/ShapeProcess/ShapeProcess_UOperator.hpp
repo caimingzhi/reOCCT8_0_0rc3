@@ -1,20 +1,5 @@
-// Created on: 2000-08-22
-// Created by: Andrey BETENEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _ShapeProcess_UOperator_HeaderFile
-#define _ShapeProcess_UOperator_HeaderFile
 
 #include <Standard.hpp>
 // Created on: 2000-02-29
@@ -32,8 +17,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef ShapeProcess_OperFunc_HeaderFile
-#define ShapeProcess_OperFunc_HeaderFile
 
 #include <ShapeProcess_Context.hpp>
 
@@ -42,7 +25,6 @@ class Message_ProgressRange;
 typedef bool (*ShapeProcess_OperFunc)(const occ::handle<ShapeProcess_Context>& context,
                                       const Message_ProgressRange&             theProgress);
 
-#endif
 
 #include <ShapeProcess_Operator.hpp>
 class ShapeProcess_Context;
@@ -69,4 +51,3 @@ private:
   ShapeProcess_OperFunc myFunc;
 };
 
-#endif // _ShapeProcess_UOperator_HeaderFile

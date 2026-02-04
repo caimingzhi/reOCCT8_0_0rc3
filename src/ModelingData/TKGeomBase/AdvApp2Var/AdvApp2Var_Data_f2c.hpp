@@ -1,19 +1,5 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-// AdvApp2Var_Data_f2c.hpp
-#ifndef AdvApp2Var_Data_f2c_HeaderFile
-#define AdvApp2Var_Data_f2c_HeaderFile
 
 #ifndef F2CTYPE_DEFINED
 typedef int    integer;
@@ -45,9 +31,6 @@ typedef char      integer1;
 #define FALSE_ (0)
 
 /* Extern is for use with -E */
-#ifndef Extern
-  #define Extern extern
-#endif
 
 /* I/O stuff */
 
@@ -244,4 +227,3 @@ typedef doublereal E_f; /* real function with -R not specified */
   #undef vax
 #endif
 // #endif
-#endif

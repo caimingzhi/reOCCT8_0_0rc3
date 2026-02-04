@@ -1,21 +1,5 @@
-// Created on: 1998-01-24
-// Created by: Julia GERASIMOVA
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _PrsDim_EqualDistanceRelation_HeaderFile
-#define _PrsDim_EqualDistanceRelation_HeaderFile
 
 #include <PrsDim_Relation.hpp>
 // Created on: 1996-12-11
@@ -34,8 +18,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _PrsDim_TypeOfDist_HeaderFile
-#define _PrsDim_TypeOfDist_HeaderFile
 
 //! To declare the type of distance.
 enum PrsDim_TypeOfDist
@@ -45,7 +27,6 @@ enum PrsDim_TypeOfDist
   PrsDim_TypeOfDist_Vertical
 };
 
-#endif // _PrsDim_TypeOfDist_HeaderFile
 
 #include <DsgPrs_ArrowSide.hpp>
 
@@ -168,4 +149,3 @@ private:
   gp_Pnt       myPoint4;
 };
 
-#endif // _PrsDim_EqualDistanceRelation_HeaderFile

@@ -1,21 +1,5 @@
-// Created on: 1996-09-06
-// Created by: Christian CAILLET
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _IGESControl_Reader_HeaderFile
-#define _IGESControl_Reader_HeaderFile
 
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -38,8 +22,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _IFSelect_PrintFail_HeaderFile
-#define _IFSelect_PrintFail_HeaderFile
 
 //! Indicates whether there will
 //! be information on warnings as well as on failures. The
@@ -53,7 +35,6 @@ enum IFSelect_PrintFail
   IFSelect_FailAndWarn
 };
 
-#endif // _IFSelect_PrintFail_HeaderFile
 
 #include <IFSelect_PrintCount.hpp>
 
@@ -165,4 +146,3 @@ inline bool IGESControl_Reader::GetReadVisible() const
 }
 
 
-#endif // _IGESControl_Reader_HeaderFile

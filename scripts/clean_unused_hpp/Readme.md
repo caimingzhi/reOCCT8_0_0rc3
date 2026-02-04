@@ -1,4 +1,4 @@
-# Rename To hpp Script
+# Clean Unused hpp Script
 
 ## 1. 背景
 

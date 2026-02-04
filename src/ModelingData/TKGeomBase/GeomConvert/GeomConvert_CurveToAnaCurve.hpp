@@ -1,21 +1,5 @@
-// Created: 2001-05-21
-//
-// Copyright (c) 2001-2013 OPEN CASCADE SAS
-//
-// This file is part of commercial software by OPEN CASCADE SAS,
-// furnished in accordance with the terms and conditions of the contract
-// and with the inclusion of this copyright notice.
-// This file or any part thereof may not be provided or otherwise
-// made available to any third party.
-//
-// No ownership title to the software is transferred hereby.
-//
-// OPEN CASCADE SAS makes no representation or warranties with respect to the
-// performance of this software, and specifically disclaims any responsibility
-// for any damages, special or consequential, connected with its use.
+#pragma once
 
-#ifndef _GeomConvert_CurveToAnaCurve_HeaderFile
-#define _GeomConvert_CurveToAnaCurve_HeaderFile
 
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -138,4 +122,3 @@ private:
   GeomAbs_CurveType       myTarget;
 };
 
-#endif // _GeomConvert_CurveToAnaCurve_HeaderFile

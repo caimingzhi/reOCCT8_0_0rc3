@@ -1,20 +1,5 @@
-// Created on: 2016-06-16
-// Created by: Denis BOGOLEPOV & Danila ULYANOV
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _OpenGl_TileSampler_H
-#define _OpenGl_TileSampler_H
 
 #include <OpenGl_Texture.hpp>
 // Copyright (c) 2012 Leonhard Gruenschloss (leonhard@gruenschloss.org)
@@ -37,8 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef _OpenGl_HaltonSampler_H
-#define _OpenGl_HaltonSampler_H
 
 #include <vector>
 
@@ -173,7 +156,6 @@ inline void OpenGl_HaltonSampler::initFaure()
   initTables(aPerms);
 }
 
-#endif // _OpenGl_HaltonSampler_H
 
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
@@ -398,4 +380,3 @@ protected:
   NCollection_Vec2<int> myViewSize; //!< ray-tracing viewport
 };
 
-#endif // _OpenGl_TileSampler_H

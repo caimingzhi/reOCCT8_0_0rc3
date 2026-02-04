@@ -1,21 +1,5 @@
-// Created: 2009-01-20
-//
-// Copyright (c) 2009-2013 OPEN CASCADE SAS
-//
-// This file is part of commercial software by OPEN CASCADE SAS,
-// furnished in accordance with the terms and conditions of the contract
-// and with the inclusion of this copyright notice.
-// This file or any part thereof may not be provided or otherwise
-// made available to any third party.
-//
-// No ownership title to the software is transferred hereby.
-//
-// OPEN CASCADE SAS makes no representation or warranties with respect to the
-// performance of this software, and specifically disclaims any responsibility
-// for any damages, special or consequential, connected with its use.
+#pragma once
 
-#ifndef _Geom2dConvert_ApproxArcsSegments_HeaderFile
-#define _Geom2dConvert_ApproxArcsSegments_HeaderFile
 
 #include <Geom2d_Curve.hpp>
 #include <NCollection_Sequence.hpp>
@@ -104,4 +88,3 @@ private:
   void operator=(const Geom2dConvert_ApproxArcsSegments&) = delete;
 };
 
-#endif

@@ -1,18 +1,5 @@
-// Copyright (c) 2016-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _AIS_ViewController_HeaderFile
-#define _AIS_ViewController_HeaderFile
 
 #include <Aspect_WindowInputListener.hpp>
 #include <Aspect_XRHapticActionData.hpp>
@@ -31,8 +18,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _AIS_MouseGesture_HeaderFile
-#define _AIS_MouseGesture_HeaderFile
 
 #include <AIS_SelectionScheme.hpp>
 #include <NCollection_DataMap.hpp>
@@ -66,7 +51,6 @@ enum AIS_MouseGesture
 
 //! Map defining mouse gestures.
 
-#endif // _AIS_MouseGesture_HeaderFile
 
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
@@ -81,8 +65,6 @@ enum AIS_MouseGesture
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _AIS_NavigationMode_HeaderFile
-#define _AIS_NavigationMode_HeaderFile
 
 //! Camera navigation mode.
 enum AIS_NavigationMode
@@ -98,7 +80,6 @@ enum
   AIS_NavigationMode_UPPER = AIS_NavigationMode_FirstPersonWalk
 };
 
-#endif // _V3d_NavigationMode_HeaderFile
 
 // Copyright (c) 2016-2019 OPEN CASCADE SAS
 //
@@ -113,8 +94,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _AIS_ViewInputBuffer_HeaderFile
-#define _AIS_ViewInputBuffer_HeaderFile
 
 #include <Aspect_ScrollDelta.hpp>
 
@@ -293,7 +272,6 @@ public:
   }
 };
 
-#endif // _AIS_ViewInputBuffer_HeaderFile
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -307,8 +285,6 @@ public:
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _AIS_RotationMode_HeaderFile
-#define _AIS_RotationMode_HeaderFile
 
 //! Camera rotation mode.
 enum AIS_RotationMode
@@ -326,7 +302,6 @@ enum
   AIS_RotationMode_UPPER = AIS_RotationMode_BndBoxScene,
 };
 
-#endif // _AIS_RotationMode_HeaderFile
 
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
@@ -341,8 +316,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _AIS_WalkDelta_HeaderFile
-#define _AIS_WalkDelta_HeaderFile
 
 #include <Standard_Real.hpp>
 
@@ -460,7 +433,6 @@ private:
   bool         myIsRunning;
 };
 
-#endif // _AIS_WalkDelta_HeaderFile
 
 
 #include <gp_Pnt.hpp>
@@ -1280,4 +1252,3 @@ protected: //! @name rotation/panning transient state variables
   // clang-format on
 };
 
-#endif // _AIS_ViewController_HeaderFile

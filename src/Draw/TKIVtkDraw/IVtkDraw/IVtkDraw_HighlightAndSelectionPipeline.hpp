@@ -1,20 +1,5 @@
-// Created on: 2012-04-02
+#pragma once
 
-// Copyright (c) 2012-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-#ifndef _IVtkDraw_HighlightAndSelectionPipeline_HeaderFile
-#define _IVtkDraw_HighlightAndSelectionPipeline_HeaderFile
 
 #include <NCollection_DataMap.hpp>
 #include <NCollection_Shared.hpp>
@@ -112,4 +97,3 @@ typedef NCollection_Shared<
   NCollection_DataMap<IVtk_IdType, occ::handle<IVtkDraw_HighlightAndSelectionPipeline>>>
   ShapePipelineMap;
 
-#endif

@@ -1,20 +1,5 @@
-// Created on: 2013-07-12
-// Created by: Anton POLETAEV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Graphic3d_ClipPlane_HeaderFile
-#define _Graphic3d_ClipPlane_HeaderFile
 
 #include <gp_Pln.hpp>
 #include <Graphic3d_AspectFillArea3d.hpp>
@@ -33,8 +18,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Graphic3d_CappingFlags_HeaderFile
-#define _Graphic3d_CappingFlags_HeaderFile
 
 //! Enumeration of capping flags.
 enum Graphic3d_CappingFlags
@@ -48,7 +31,6 @@ enum Graphic3d_CappingFlags
     | Graphic3d_CappingFlags_ObjectShader //!< use entire fill area aspect from object
 };
 
-#endif // _Graphic3d_CappingFlags_HeaderFile
 
 #include <Graphic3d_TextureMap.hpp>
 #include <NCollection_Vec4.hpp>
@@ -476,4 +458,3 @@ private:
   bool         myIsCapping;                         //!< state of graphic driver capping
 };
 
-#endif

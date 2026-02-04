@@ -1,3 +1,5 @@
+#pragma once
+
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -11,23 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRSession_HeaderFile
-#define _Aspect_XRSession_HeaderFile
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-#ifndef _Aspect_ColorSpace_HeaderFile
-#define _Aspect_ColorSpace_HeaderFile
 
 //! Texture color spaces accepted by XR composer.
 enum Aspect_ColorSpace
@@ -36,7 +21,6 @@ enum Aspect_ColorSpace
   Aspect_ColorSpace_Linear = 1, //!< linear RGB color space
 };
 
-#endif // _Aspect_ColorSpace_HeaderFile
 
 #include <Aspect_Eye.hpp>
 #include <Aspect_FrustumLRBT.hpp>
@@ -54,8 +38,6 @@ enum Aspect_ColorSpace
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRActionSet_HeaderFile
-#define _Aspect_XRActionSet_HeaderFile
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -69,8 +51,6 @@ enum Aspect_ColorSpace
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRAction_HeaderFile
-#define _Aspect_XRAction_HeaderFile
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -84,8 +64,6 @@ enum Aspect_ColorSpace
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRActionType_HeaderFile
-#define _Aspect_XRActionType_HeaderFile
 
 //! XR action type.
 enum Aspect_XRActionType
@@ -97,7 +75,6 @@ enum Aspect_XRActionType
   Aspect_XRActionType_OutputHaptic   //!< haptic output (vibration)
 };
 
-#endif // _Aspect_XRActionType_HeaderFile
 
 #include <NCollection_IndexedDataMap.hpp>
 #include <Standard_Transient.hpp>
@@ -140,7 +117,6 @@ protected:
 
 //! Map of actions with action Id as a key.
 
-#endif // _Aspect_XRAction_HeaderFile
 
 
 //! XR action set.
@@ -184,7 +160,6 @@ protected:
     myActions; //!< map of actions
 };
 
-#endif // _Aspect_XRActionSet_HeaderFile
 
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -199,8 +174,6 @@ protected:
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRAnalogActionData_HeaderFile
-#define _Aspect_XRAnalogActionData_HeaderFile
 
 #include <NCollection_Vec3.hpp>
 
@@ -227,7 +200,6 @@ struct Aspect_XRAnalogActionData
   }
 };
 
-#endif // _Aspect_XRAnalogActionData_HeaderFile
 
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -242,8 +214,6 @@ struct Aspect_XRAnalogActionData
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRDigitalActionData_HeaderFile
-#define _Aspect_XRDigitalActionData_HeaderFile
 
 #include <Standard_TypeDef.hpp>
 
@@ -269,7 +239,6 @@ struct Aspect_XRDigitalActionData
   }
 };
 
-#endif // _Aspect_XRDigitalActionData_HeaderFile
 
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -284,8 +253,6 @@ struct Aspect_XRDigitalActionData
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRGenericAction_HeaderFile
-#define _Aspect_XRGenericAction_HeaderFile
 
 //! Generic XR action.
 enum Aspect_XRGenericAction
@@ -315,7 +282,6 @@ enum
   Aspect_XRGenericAction_NB = Aspect_XRGenericAction_OutputHaptic + 1
 };
 
-#endif // _Aspect_XRGenericAction_HeaderFile
 
 #include <Aspect_XRHapticActionData.hpp>
 // Copyright (c) 2020 OPEN CASCADE SAS
@@ -331,8 +297,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_XRPoseActionData_HeaderFile
-#define _Aspect_XRPoseActionData_HeaderFile
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -346,8 +310,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Aspect_TrackedDevicePose_HeaderFile
-#define _Aspect_TrackedDevicePose_HeaderFile
 
 #include <gp_Trsf.hpp>
 #include <NCollection_Array1.hpp>
@@ -371,7 +333,6 @@ struct Aspect_TrackedDevicePose
 
 //! Array of tracked poses.
 
-#endif // _Aspect_TrackedDevicePose_HeaderFile
 
 #include <Standard_TypeDef.hpp>
 
@@ -392,7 +353,6 @@ struct Aspect_XRPoseActionData
   }
 };
 
-#endif // _Aspect_XRPoseActionData_HeaderFile
 
 #include <Aspect_XRTrackedDeviceRole.hpp>
 #include <gp_Trsf.hpp>
@@ -635,4 +595,3 @@ protected:
   float  myDispFreq;    //!< display frequency
 };
 
-#endif // _Aspect_XRSession_HeaderFile

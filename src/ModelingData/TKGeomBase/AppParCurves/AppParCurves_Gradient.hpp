@@ -1,29 +1,3 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// lpa, le 11/09/91
-
-// Application de la methode du gradient corrige pour minimiser
-// F  = somme(||C(ui, Poles(ui)) - ptli||2.
-// La methode de gradient conjugue est programmee dans la bibliotheque
-// mathematique: math_BFGS.
-// cet algorithme doit etre appele uniquement lorsque on a affaire a un set
-// de points contraints (ailleurs qu aux extremites). En effet, l appel de la
-// fonction F a minimiser implique un appel a ParLeastSquare et ResConstraint.
-// Si ce n est pas le cas, l appel a ResConstraint est equivalent a une
-// seconde resolution par les moindres carres donc beaucoup de temps perdu.
-
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 

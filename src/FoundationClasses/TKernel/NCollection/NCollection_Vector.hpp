@@ -1,20 +1,5 @@
-// Created on: 2002-04-23
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2002-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef NCollection_Vector_HeaderFile
-#define NCollection_Vector_HeaderFile
 // Copyright (c) 2002-2023 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -28,8 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef NCollection_DynamicArray_HeaderFile
-#define NCollection_DynamicArray_HeaderFile
 
 #include <NCollection_Allocator.hpp>
 #include <NCollection_BasePointerVector.hpp>
@@ -435,7 +418,6 @@ protected:
   size_t         myUsedSize;
 };
 
-#endif // NCollection_DynamicArray_HeaderFile
 
 
 //! Class NCollection_Vector (dynamic array of objects)
@@ -462,4 +444,3 @@ protected:
 template <class TheItemType>
 using NCollection_Vector = NCollection_DynamicArray<TheItemType>;
 
-#endif // NCollection_Vector_HeaderFile

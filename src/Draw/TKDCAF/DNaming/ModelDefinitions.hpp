@@ -1,20 +1,5 @@
-// Created on: 2009-04-30
-// Created by: Sergey ZARITCHNY <sergey.zaritchny@opencascade.com>
-// Copyright (c) 2009-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef ModelDefinitions_HeaderFile
-#define ModelDefinitions_HeaderFile
 
 #define GEOMOBJECT_GUID Standard_GUID("6c6915ab-775f-4475-859e-befd74d26a23")
 #define ATTCH_GUID Standard_GUID("12e94554-6dbc-11d4-b9c8-0060b0ee281b")
@@ -99,4 +84,3 @@
 #define WRONG_CONTEXT 14
 #define NAMING_FAILED 15
 
-#endif

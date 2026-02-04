@@ -1,21 +1,5 @@
-// Created on: 1997-02-12
-// Created by: Alexander BRIVIN
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Vrml_WWWAnchor_HeaderFile
-#define _Vrml_WWWAnchor_HeaderFile
 
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -38,8 +22,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Vrml_WWWAnchorMap_HeaderFile
-#define _Vrml_WWWAnchorMap_HeaderFile
 
 enum Vrml_WWWAnchorMap
 {
@@ -47,7 +29,6 @@ enum Vrml_WWWAnchorMap
   Vrml_POINT
 };
 
-#endif // _Vrml_WWWAnchorMap_HeaderFile
 
 #include <Standard_OStream.hpp>
 
@@ -88,4 +69,3 @@ private:
   Vrml_WWWAnchorMap       myMap;
 };
 
-#endif // _Vrml_WWWAnchor_HeaderFile

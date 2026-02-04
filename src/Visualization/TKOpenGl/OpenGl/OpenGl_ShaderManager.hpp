@@ -1,20 +1,5 @@
-// Created on: 2013-09-26
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _OpenGl_ShaderManager_HeaderFile
-#define _OpenGl_ShaderManager_HeaderFile
 
 #include <Graphic3d_ShaderManager.hpp>
 #include <OpenGl_Aspects.hpp>
@@ -34,8 +19,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _OpenGl_MaterialState_HeaderFile
-#define _OpenGl_MaterialState_HeaderFile
 
 #include <OpenGl_ShaderStates.hpp>
 #include <OpenGl_Material.hpp>
@@ -86,7 +69,6 @@ private:
   bool            myToMapTexture;  //!< flag for mapping a texture
 };
 
-#endif // _OpenGl_MaterialState_HeaderFile
 
 #include <OpenGl_PBREnvironment.hpp>
 // Created on: 2014-10-08
@@ -104,8 +86,6 @@ private:
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _OpenGl_SetOfShaderPrograms_HeaderFile
-#define _OpenGl_SetOfShaderPrograms_HeaderFile
 
 #include <Graphic3d_ShaderFlags.hpp>
 #include <Graphic3d_TypeOfShadingModel.hpp>
@@ -166,7 +146,6 @@ protected:
   // clang-format on
 };
 
-#endif // _OpenGl_SetOfShaderPrograms_HeaderFile
 
 #include <OpenGl_ShaderProgram.hpp>
 #include <OpenGl_ShaderStates.hpp>
@@ -980,4 +959,3 @@ protected:
   mutable NCollection_Array1<int>                          myClipChainArray;
 };
 
-#endif // _OpenGl_ShaderManager_HeaderFile

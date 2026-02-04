@@ -1,21 +1,5 @@
-// Created on: 1996-12-05
-// Created by: Odile Olivier
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _PrsDim_DimensionOwner_HeaderFile
-#define _PrsDim_DimensionOwner_HeaderFile
 
 #include <Standard.hpp>
 // Created on: 1996-12-11
@@ -34,8 +18,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _PrsDim_DimensionSelectionMode_HeaderFile
-#define _PrsDim_DimensionSelectionMode_HeaderFile
 
 //! Specifies dimension selection modes.
 enum PrsDim_DimensionSelectionMode
@@ -45,7 +27,6 @@ enum PrsDim_DimensionSelectionMode
   PrsDim_DimensionSelectionMode_Text
 };
 
-#endif // _PrsDim_DimensionSelectionMode_HeaderFile
 
 #include <SelectMgr_EntityOwner.hpp>
 #include <Standard_Integer.hpp>
@@ -94,4 +75,3 @@ private:
   PrsDim_DimensionSelectionMode mySelectionMode;
 };
 
-#endif // _AIS_DimensionOwner_HeaderFile

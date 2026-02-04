@@ -1,20 +1,5 @@
-// Created on: 2002-12-10
-// Created by: data exchange team
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _StepElement_CurveElementFreedom_HeaderFile
-#define _StepElement_CurveElementFreedom_HeaderFile
 
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -35,8 +20,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _StepElement_EnumeratedCurveElementFreedom_HeaderFile
-#define _StepElement_EnumeratedCurveElementFreedom_HeaderFile
 
 enum StepElement_EnumeratedCurveElementFreedom
 {
@@ -50,7 +33,6 @@ enum StepElement_EnumeratedCurveElementFreedom
   StepElement_None
 };
 
-#endif // _StepElement_EnumeratedCurveElementFreedom_HeaderFile
 
 class Standard_Transient;
 class StepData_SelectMember;
@@ -93,4 +75,3 @@ public:
   Standard_EXPORT occ::handle<TCollection_HAsciiString> ApplicationDefinedDegreeOfFreedom() const;
 };
 
-#endif // _StepElement_CurveElementFreedom_HeaderFile

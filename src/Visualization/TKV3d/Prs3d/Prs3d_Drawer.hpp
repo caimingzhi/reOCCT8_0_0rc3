@@ -1,19 +1,5 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Prs3d_Drawer_HeaderFile
-#define _Prs3d_Drawer_HeaderFile
 
 #include <Standard.hpp>
 
@@ -35,8 +21,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Graphic3d_GroupAspect_HeaderFile
-#define _Graphic3d_GroupAspect_HeaderFile
 
 //! Identifies primitives aspects defined per group.
 //! - ASPECT_LINE: aspect for line primitives;
@@ -51,7 +35,6 @@ enum Graphic3d_GroupAspect
   Graphic3d_ASPECT_FILL_AREA
 };
 
-#endif // _Graphic3d_GroupAspect_HeaderFile
 
 #include <Graphic3d_PresentationAttributes.hpp>
 #include <Graphic3d_ShaderProgram.hpp>
@@ -72,8 +55,6 @@ enum Graphic3d_GroupAspect
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef Prs3d_DimensionUnits_HeaderFile
-#define Prs3d_DimensionUnits_HeaderFile
 
 #include <TCollection_AsciiString.hpp>
 
@@ -114,7 +95,6 @@ private:
   TCollection_AsciiString myAngleUnits;
 };
 
-#endif
 
 #include <Prs3d_TypeOfHLR.hpp>
 #include <Standard_Transient.hpp>
@@ -1058,4 +1038,3 @@ protected:
   bool                               myHasOwnDimAngleDisplayUnits;
 };
 
-#endif // _Prs3d_Drawer_HeaderFile

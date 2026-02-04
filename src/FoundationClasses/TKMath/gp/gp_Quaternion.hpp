@@ -1,20 +1,5 @@
-// Created on: 2010-05-11
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _gp_Quaternion_HeaderFile
-#define _gp_Quaternion_HeaderFile
 // Created on: 1993-04-13
 // Created by: JCV
 // Copyright (c) 1993-1999 Matra Datavision
@@ -31,8 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _gp_EulerSequence_HeaderFile
-#define _gp_EulerSequence_HeaderFile
 
 //! Enumerates all 24 possible variants of generalized
 //! Euler angles, defining general 3d rotation by three
@@ -90,7 +73,6 @@ enum gp_EulerSequence
   gp_Intrinsic_ZYZ
 };
 
-#endif // _gp_EulerSequence_HeaderFile
 
 #include <gp_Mat.hpp>
 #include <gp_Vec.hpp>
@@ -446,4 +428,3 @@ inline constexpr void gp_Quaternion::Subtract(const gp_Quaternion& theQ) noexcep
   w -= theQ.w;
 }
 
-#endif // _gp_Quaternion_HeaderFile

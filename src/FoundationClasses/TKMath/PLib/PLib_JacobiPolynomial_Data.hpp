@@ -1,17 +1,3 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//   Table de la matrice de passage de canonique a Legendre.
 static constexpr double TransMatrix_C0[2][496] = {
   {0.10000000000000000000000000000000e+01,  0.96824583655185422129481634994560e+00,
    -0.83852549156242113615344012577423e+00, 0.81639690485082070771553545928344e+00,

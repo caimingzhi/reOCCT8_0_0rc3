@@ -1,20 +1,5 @@
-// Created on: 2021-10-14
-// Created by: Artem CHESNOKOV
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Aspect_SkydomeBackground_Header
-#define _Aspect_SkydomeBackground_Header
 
 #include <gp_Dir.hpp>
 #include <NCollection_Vec3.hpp>
@@ -101,4 +86,3 @@ private:
   int    mySize;         //!< Size of cubemap in pixels
 };
 
-#endif // _Aspect_SkydomeBackground_Header

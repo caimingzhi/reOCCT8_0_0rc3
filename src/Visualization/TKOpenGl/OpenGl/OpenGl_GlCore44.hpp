@@ -1,3 +1,5 @@
+#pragma once
+
 // Created on: 2014-03-17
 // Created by: Kirill GAVRILOV
 // Copyright (c) 2014 OPEN CASCADE SAS
@@ -13,8 +15,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlCore44_HeaderFile
-#define OpenGl_GlCore44_HeaderFile
 // Created on: 2014-03-17
 // Created by: Kirill GAVRILOV
 // Copyright (c) 2014 OPEN CASCADE SAS
@@ -30,8 +30,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlCore43_HeaderFile
-#define OpenGl_GlCore43_HeaderFile
 // Created on: 2014-03-17
 // Created by: Kirill GAVRILOV
 // Copyright (c) 2014 OPEN CASCADE SAS
@@ -47,8 +45,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlCore42_HeaderFile
-#define OpenGl_GlCore42_HeaderFile
 // Created on: 2014-03-17
 // Created by: Kirill GAVRILOV
 // Copyright (c) 2014 OPEN CASCADE SAS
@@ -64,8 +60,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlCore41_HeaderFile
-#define OpenGl_GlCore41_HeaderFile
 // Created on: 2014-03-17
 // Created by: Kirill GAVRILOV
 // Copyright (c) 2014 OPEN CASCADE SAS
@@ -81,25 +75,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlCore40_HeaderFile
-#define OpenGl_GlCore40_HeaderFile
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-#ifndef OpenGl_GlCore33_HeaderFile
-#define OpenGl_GlCore33_HeaderFile
 
 #include <OpenGl_GlCore32.hpp>
 
@@ -148,7 +123,6 @@ public: //! @name OpenGL 3.3 additives to 3.2
   using theBaseClass_t::glVertexAttribDivisor;
 };
 
-#endif // _OpenGl_GlCore33_Header
 
 
 //! OpenGL 4.0 definition.
@@ -218,7 +192,6 @@ public: //! @name OpenGL 4.0 additives to 3.3
   using theBaseClass_t::glMinSampleShading;
 };
 
-#endif // _OpenGl_GlCore40_Header
 
 
 //! OpenGL 4.1 definition.
@@ -326,7 +299,6 @@ public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
   using theBaseClass_t::glViewportIndexedfv;
 };
 
-#endif // _OpenGl_GlCore41_Header
 
 
 //! OpenGL 4.2 definition.
@@ -360,7 +332,6 @@ public: //! @name GL_ARB_texture_storage (added to OpenGL 4.2 core)
   using theBaseClass_t::glTexStorage3D;
 };
 
-#endif // _OpenGl_GlCore42_Header
 
 
 //! OpenGL 4.3 definition.
@@ -415,7 +386,6 @@ public: //! @name OpenGL 4.3 additives to 4.2
   using theBaseClass_t::glVertexBindingDivisor;
 };
 
-#endif // _OpenGl_GlCore43_Header
 
 
 //! OpenGL 4.4 definition.
@@ -436,4 +406,3 @@ public: //! @name OpenGL 4.4 additives to 4.3
   using theBaseClass_t::glClearTexSubImage;
 };
 
-#endif // _OpenGl_GlCore44_Header

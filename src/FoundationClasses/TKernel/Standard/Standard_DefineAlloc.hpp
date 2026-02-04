@@ -1,20 +1,5 @@
-// Created on: 2012-01-19
-// Created by: Dmitry BOBYLEV
-// Copyright (c) 2012-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Standard_DefineAlloc_HeaderFile
-#define _Standard_DefineAlloc_HeaderFile
 
 // Macro to override new and delete operators for arrays.
 // Defined to empty for old SUN compiler
@@ -64,15 +49,12 @@
   DEFINE_STANDARD_ALLOC_PLACEMENT
 
 // Declare operator new in global scope for old sun compiler
-#ifndef WORKAROUND_SUNPRO_NEW_PLACEMENT
-  #define WORKAROUND_SUNPRO_NEW_PLACEMENT
   #if defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x420)
 inline void* operator new(size_t, void* anAddress) noexcept
 {
   return anAddress;
 }
   #endif
-#endif
 
 //! @def STANDARD_ALIGNED(theAlignment, theType, theVar)
 //! Declare variable with memory alignment.
@@ -90,4 +72,3 @@ inline void* operator new(size_t, void* anAddress) noexcept
   #define STANDARD_ALIGNED(theAlignment, theType, theVar) theType theVar
 #endif
 
-#endif // _Standard_DefineAlloc_HeaderFile

@@ -1,20 +1,5 @@
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef OpenGl_GlFunctions_HeaderFile
-#define OpenGl_GlFunctions_HeaderFile
 
 #include <Standard_Macro.hpp>
 #include <Standard_TypeDef.hpp>
@@ -31,8 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OpenGl_GlTypes_HeaderFile
-#define OpenGl_GlTypes_HeaderFile
 
 // required for correct APIENTRY definition
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
@@ -397,7 +380,6 @@ typedef double GLclampd;
 // OpenGL ES 3.0+ or OES_texture_half_float
 #define GL_HALF_FLOAT_OES 0x8D61
 
-#endif // OpenGl_GlTypes_HeaderFile
 
 
 #if !defined(HAVE_EGL)
@@ -1667,18 +1649,12 @@ public: //! @name wgl extensions
   #endif // WGL_NUMBER_PIXEL_FORMATS_ARB
 
     // WGL_ARB_multisample
-  #ifndef WGL_SAMPLE_BUFFERS_ARB
-    #define WGL_SAMPLE_BUFFERS_ARB 0x2041
     #define WGL_SAMPLES_ARB 0x2042
-  #endif
 
     // WGL_ARB_create_context_robustness
-  #ifndef WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB
-    #define WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB 0x00000004
     #define WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB 0x8256
     #define WGL_NO_RESET_NOTIFICATION_ARB 0x8261
     #define WGL_LOSE_CONTEXT_ON_RESET_ARB 0x8252
-  #endif
 
   typedef BOOL(WINAPI* wglChoosePixelFormatARB_t)(HDC           theDevCtx,
                                                   const int*    theIntAttribs,
@@ -1747,8 +1723,6 @@ public: //! @name wgl extensions
 
     // WGL_AMD_gpu_association
 
-  #ifndef WGL_GPU_VENDOR_AMD
-    #define WGL_GPU_VENDOR_AMD 0x1F00
     #define WGL_GPU_RENDERER_STRING_AMD 0x1F01
     #define WGL_GPU_OPENGL_VERSION_STRING_AMD 0x1F02
     #define WGL_GPU_FASTEST_TARGET_GPUS_AMD 0x21A2
@@ -1758,7 +1732,6 @@ public: //! @name wgl extensions
     #define WGL_GPU_NUM_SIMD_AMD 0x21A6
     #define WGL_GPU_NUM_RB_AMD 0x21A7
     #define WGL_GPU_NUM_SPI_AMD 0x21A8
-  #endif
 
   typedef UINT(WINAPI* wglGetGPUIDsAMD_t)(UINT theMaxCount, UINT* theIds);
   typedef INT(WINAPI* wglGetGPUInfoAMD_t)(UINT   theId,
@@ -1822,4 +1795,3 @@ public: //! @name glX extensions
 #endif
 };
 
-#endif // _OpenGl_GlFunctions_Header

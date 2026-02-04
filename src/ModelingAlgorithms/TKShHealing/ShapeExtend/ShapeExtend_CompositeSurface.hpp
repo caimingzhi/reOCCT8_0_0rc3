@@ -1,21 +1,5 @@
-// Created on: 1999-04-27
-// Created by: Andrey BETENEV
-// Copyright (c) 1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _ShapeExtend_CompositeSurface_HeaderFile
-#define _ShapeExtend_CompositeSurface_HeaderFile
 
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
@@ -41,8 +25,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _ShapeExtend_Parametrisation_HeaderFile
-#define _ShapeExtend_Parametrisation_HeaderFile
 
 //! Defines kind of global parametrisation on the composite surface
 //! each patch of the 1st row and column adds its range, Ui+1 = Ui + URange(i,1), etc.
@@ -55,7 +37,6 @@ enum ShapeExtend_Parametrisation
   ShapeExtend_Unitary
 };
 
-#endif // _ShapeExtend_Parametrisation_HeaderFile
 
 #include <Standard_Integer.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -362,4 +343,3 @@ private:
   bool                                                        myVClosed;
 };
 
-#endif // _ShapeExtend_CompositeSurface_HeaderFile

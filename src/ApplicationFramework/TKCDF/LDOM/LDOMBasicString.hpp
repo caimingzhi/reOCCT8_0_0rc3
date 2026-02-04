@@ -1,20 +1,5 @@
-// Created on: 2001-06-26
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2001-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef LDOMBasicString_HeaderFile
-#define LDOMBasicString_HeaderFile
 
 #include <Standard_Macro.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -136,4 +121,3 @@ protected:
   friend char* db_pretty_print(const LDOMBasicString*, int, char*);
 };
 
-#endif

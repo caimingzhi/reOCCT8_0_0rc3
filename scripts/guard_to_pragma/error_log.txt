@@ -1,0 +1,7 @@
+Step 2 Log: Replace Main Guards with #pragma once
+=============================
+[SKIP] 主宏 '_Standard_Integer_HeaderFile' (位于 Standard_Integer.hpp) 出现了 3 次 (非2次)。不符合标准Guard特征，已跳过。
+[SKIP] 主宏 '_Standard_Macro_HeaderFile' (位于 Standard_Macro.hpp) 出现了 3 次 (非2次)。不符合标准Guard特征，已跳过。
+[SKIP] 主宏 '_Standard_Real_HeaderFile' (位于 Standard_Real.hpp) 出现了 3 次 (非2次)。不符合标准Guard特征，已跳过。
+[SKIP] 主宏 '_TCollection_HAsciiString_HeaderFile' (位于 TCollection_HAsciiString.hpp) 出现了 3 次 (非2次)。不符合标准Guard特征，已跳过。
+[SKIP] 主宏 '_TCollection_HExtendedString_HeaderFile' (位于 TCollection_HExtendedString.hpp) 出现了 3 次 (非2次)。不符合标准Guard特征，已跳过。

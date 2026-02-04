@@ -1,21 +1,5 @@
-// Created on: 1997-02-14
-// Created by: Jean Yves LEBEY
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _TopOpeBRepDS_ProcessInterferencesTool_HeaderFile
-#define _TopOpeBRepDS_ProcessInterferencesTool_HeaderFile
 
 #include <TopOpeBRepDS_EXPORT.hpp>
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeCPVInterference(
@@ -114,4 +98,3 @@ Standard_EXPORT void FUN_select3dinterference(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& l3dFE,
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& l3dFEresi,
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& l2dFE);
-#endif

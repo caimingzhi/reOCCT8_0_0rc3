@@ -1,18 +1,5 @@
-// Copyright (c) 2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+#pragma once
 
-#ifndef _Graphic3d_FrameStatsData_HeaderFile
-#define _Graphic3d_FrameStatsData_HeaderFile
 
 #include <NCollection_Array1.hpp>
 // Copyright (c) 2018 OPEN CASCADE SAS
@@ -28,8 +15,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Graphic3d_FrameStatsCounter_HeaderFile
-#define _Graphic3d_FrameStatsCounter_HeaderFile
 
 //! Stats counter.
 enum Graphic3d_FrameStatsCounter
@@ -89,7 +74,6 @@ enum
   Graphic3d_FrameStatsCounter_IMMEDIATE_UPPER = Graphic3d_FrameStatsCounter_NbPointsImmediate,
 };
 
-#endif // _Graphic3d_FrameStatsCounter_HeaderFile
 
 // Copyright (c) 2018 OPEN CASCADE SAS
 //
@@ -104,8 +88,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef _Graphic3d_FrameStatsTimer_HeaderFile
-#define _Graphic3d_FrameStatsTimer_HeaderFile
 
 //! Timers for collecting frame performance statistics.
 enum Graphic3d_FrameStatsTimer
@@ -122,7 +104,6 @@ enum
   Graphic3d_FrameStatsTimer_NB = Graphic3d_FrameStatsTimer_CpuDynamics + 1
 };
 
-#endif // _Graphic3d_FrameStatsTimer_HeaderFile
 
 #include <OSD_Timer.hpp>
 
@@ -249,4 +230,3 @@ protected:
   std::vector<double>    myTimersPrev; //!< previous timers values
 };
 
-#endif // _Graphic3d_FrameStatsData_HeaderFile

@@ -1,4 +1,4 @@
-# Rename To hpp Script
+# Inline Headers Script
 
 ## 1. 背景
 
