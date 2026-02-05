@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <Standard_DefineHandle.hpp>
 
@@ -39,5 +38,5 @@ public:
 //! Define handle class for TObj_ObjectIterator
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

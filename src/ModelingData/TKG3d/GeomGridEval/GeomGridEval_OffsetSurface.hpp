@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_OffsetSurface.hpp>
 #include <Geom_Surface.hpp>
 #include <GeomGridEval.hpp>
@@ -143,4 +142,3 @@ private:
   occ::handle<Geom_Surface>       myBasis;
   double                          myOffset;
 };
-

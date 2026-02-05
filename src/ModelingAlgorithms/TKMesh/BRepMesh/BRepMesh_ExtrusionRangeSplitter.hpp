@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_NURBSRangeSplitter.hpp>
 
 //! Auxiliary class analysing extrusion surface in order to generate internal nodes.
@@ -19,4 +18,3 @@ protected:
                                              const bool                            isU,
                                              const GeomAbs_Shape theContinuity) const override;
 };
-

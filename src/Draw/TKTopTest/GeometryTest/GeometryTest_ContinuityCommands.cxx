@@ -1,19 +1,3 @@
-// Created on: 1996-07-31
-// Created by: Herve LOUESSARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <LocalAnalysis.hpp>
 #include <LocalAnalysis_SurfaceContinuity.hpp>
 #include <LocalAnalysis_CurveContinuity.hpp>
@@ -106,7 +90,8 @@ static int surfaceCcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   switch (ord)
   {
-    case 0: {
+    case 0:
+    {
       TypeCont = GeomAbs_C0;
       switch (n)
       {
@@ -126,7 +111,8 @@ static int surfaceCcontinuity(Draw_Interpretor& di, int n, const char** a)
     }
     break;
 
-    case 1: {
+    case 1:
+    {
       TypeCont = GeomAbs_C1;
       switch (n)
       {
@@ -149,7 +135,8 @@ static int surfaceCcontinuity(Draw_Interpretor& di, int n, const char** a)
     }
     break;
 
-    case 2: {
+    case 2:
+    {
       TypeCont = GeomAbs_C2;
       switch (n)
       {
@@ -231,7 +218,8 @@ static int surfaceGcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   switch (ord)
   {
-    case 1: {
+    case 1:
+    {
       TypeCont = GeomAbs_G1;
       switch (n)
       {
@@ -254,7 +242,8 @@ static int surfaceGcontinuity(Draw_Interpretor& di, int n, const char** a)
     }
     break;
 
-    case 2: {
+    case 2:
+    {
       TypeCont = GeomAbs_G2;
       switch (n)
       {
@@ -335,7 +324,8 @@ static int curveGcontinuity(Draw_Interpretor& di, int n, const char** a)
   InitEpsCurv(epsnl, epsC0, epsC1, epsC2, epsG1, epsG2, percent, maxlen);
   switch (ord)
   {
-    case 1: {
+    case 1:
+    {
       TypeCont = GeomAbs_G1;
       switch (n)
       {
@@ -357,7 +347,8 @@ static int curveGcontinuity(Draw_Interpretor& di, int n, const char** a)
       }
     }
     break;
-    case 2: {
+    case 2:
+    {
       TypeCont = GeomAbs_G2;
       switch (n)
       {
@@ -442,7 +433,8 @@ static int curveCcontinuity(Draw_Interpretor& di, int n, const char** a)
   InitEpsCurv(epsnl, epsC0, epsC1, epsC2, epsG1, epsG2, percent, maxlen);
   switch (ord)
   {
-    case 0: {
+    case 0:
+    {
       TypeCont = GeomAbs_C0;
       switch (n)
       {
@@ -461,7 +453,8 @@ static int curveCcontinuity(Draw_Interpretor& di, int n, const char** a)
       }
     }
     break;
-    case 1: {
+    case 1:
+    {
       TypeCont = GeomAbs_C1;
       switch (n)
       {
@@ -484,7 +477,8 @@ static int curveCcontinuity(Draw_Interpretor& di, int n, const char** a)
     }
     break;
 
-    case 2: {
+    case 2:
+    {
       TypeCont = GeomAbs_C2;
       switch (n)
       {

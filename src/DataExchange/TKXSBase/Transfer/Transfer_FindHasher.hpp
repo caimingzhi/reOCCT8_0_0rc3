@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Transfer_Finder.hpp>
@@ -31,4 +30,3 @@ public:
     return theK1->Equates(theK2);
   }
 };
-

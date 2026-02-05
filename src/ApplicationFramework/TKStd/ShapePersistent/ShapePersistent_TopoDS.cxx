@@ -137,14 +137,16 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
     pTShape* aPTShape = nullptr;
     switch (theShape.ShapeType())
     {
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         Handle(ShapePersistent_BRep::TVertex) aPVertex = new ShapePersistent_BRep::TVertex;
         pHShape->myTShape                              = aPVertex;
         aPVertex->myPersistent = ShapePersistent_BRep::Translate(TopoDS::Vertex(theShape), theMap);
         aPTShape               = aPVertex->myPersistent.get();
       }
       break;
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         Handle(ShapePersistent_BRep::TEdge) aPEdge = new ShapePersistent_BRep::TEdge;
         pHShape->myTShape                          = aPEdge;
         aPEdge->myPersistent =
@@ -152,7 +154,8 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
         aPTShape = aPEdge->myPersistent.get();
       }
       break;
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         Handle(ShapePersistent_BRep::TFace) aPFace = new ShapePersistent_BRep::TFace;
         pHShape->myTShape                          = aPFace;
         aPFace->myPersistent =
@@ -160,35 +163,40 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
         aPTShape = aPFace->myPersistent.get();
       }
       break;
-      case TopAbs_WIRE: {
+      case TopAbs_WIRE:
+      {
         occ::handle<TWire> aPWire = new TWire;
         pHShape->myTShape         = aPWire;
         aPWire->myPersistent      = new TWire::pTObjectT;
         aPTShape                  = aPWire->myPersistent.get();
       }
       break;
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         occ::handle<TShell> aPShell = new TShell;
         pHShape->myTShape           = aPShell;
         aPShell->myPersistent       = new TShell::pTObjectT;
         aPTShape                    = aPShell->myPersistent.get();
       }
       break;
-      case TopAbs_SOLID: {
+      case TopAbs_SOLID:
+      {
         occ::handle<TSolid> aPSolid = new TSolid;
         pHShape->myTShape           = aPSolid;
         aPSolid->myPersistent       = new TSolid::pTObjectT;
         aPTShape                    = aPSolid->myPersistent.get();
       }
       break;
-      case TopAbs_COMPSOLID: {
+      case TopAbs_COMPSOLID:
+      {
         occ::handle<TCompSolid> aPCompSolid = new TCompSolid;
         pHShape->myTShape                   = aPCompSolid;
         aPCompSolid->myPersistent           = new TCompSolid::pTObjectT;
         aPTShape                            = aPCompSolid->myPersistent.get();
       }
       break;
-      case TopAbs_COMPOUND: {
+      case TopAbs_COMPOUND:
+      {
         occ::handle<TCompound> aPComp = new TCompound;
         pHShape->myTShape             = aPComp;
         aPComp->myPersistent          = new TCompound::pTObjectT;

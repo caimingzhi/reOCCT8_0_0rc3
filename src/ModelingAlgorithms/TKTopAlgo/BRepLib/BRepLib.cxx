@@ -1,22 +1,3 @@
-// Created on: 1993-12-15
-// Created by: Remi LEQUETTE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// pmn 26/09/97 Add parameters of approximation in BuildCurve3d
-//   Modified by skv - Thu Jun  3 12:39:19 2004 OCC5898
-
 #include <BRepLib.hpp>
 
 #include <AdvApprox_ApproxAFunction.hpp>
@@ -840,15 +821,18 @@ static void UpdShTol(
     //
     switch (aSh.ShapeType())
     {
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         aB.UpdateFace(TopoDS::Face(aNsh), aTol);
         break;
       }
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         aB.UpdateEdge(TopoDS::Edge(aNsh), aTol);
         break;
       }
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         const occ::handle<BRep_TVertex>& aTV = *((occ::handle<BRep_TVertex>*)&aNsh.TShape());
         if (theVForceUpdate)
           aTV->Tolerance(aTol);
@@ -1675,12 +1659,14 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
         {
           case GeomAbs_Plane:
           case GeomAbs_Cylinder:
-          case GeomAbs_Cone: {
+          case GeomAbs_Cone:
+          {
             tol = Precision::Confusion();
             break;
           }
           case GeomAbs_Sphere:
-          case GeomAbs_Torus: {
+          case GeomAbs_Torus:
+          {
             tol = Precision::Confusion() * 2;
             break;
           }
@@ -2536,66 +2522,66 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
 
 namespace
 {
-//! Tool to estimate deflection of the given UV point
-//! with regard to its representation in 3D space.
-struct EvalDeflection
-{
-  BRepAdaptor_Surface Surface;
-
-  //! Initializes tool with the given face.
-  EvalDeflection(const TopoDS_Face& theFace)
-      : Surface(theFace)
+  //! Tool to estimate deflection of the given UV point
+  //! with regard to its representation in 3D space.
+  struct EvalDeflection
   {
-  }
+    BRepAdaptor_Surface Surface;
 
-  //! Evaluates deflection of the given 2d point from its 3d representation.
-  double Eval(const gp_Pnt2d& thePoint2d, const gp_Pnt& thePoint3d)
+    //! Initializes tool with the given face.
+    EvalDeflection(const TopoDS_Face& theFace)
+        : Surface(theFace)
+    {
+    }
+
+    //! Evaluates deflection of the given 2d point from its 3d representation.
+    double Eval(const gp_Pnt2d& thePoint2d, const gp_Pnt& thePoint3d)
+    {
+      gp_Pnt aPnt;
+      Surface.D0(thePoint2d.X(), thePoint2d.Y(), aPnt);
+      return (thePoint3d.XYZ() - aPnt.XYZ()).SquareModulus();
+    }
+  };
+
+  //! Represents link of triangulation.
+  struct Link
   {
-    gp_Pnt aPnt;
-    Surface.D0(thePoint2d.X(), thePoint2d.Y(), aPnt);
-    return (thePoint3d.XYZ() - aPnt.XYZ()).SquareModulus();
-  }
-};
+    int Node[2];
 
-//! Represents link of triangulation.
-struct Link
-{
-  int Node[2];
+    //! Constructor
+    Link(const int theNode1, const int theNode2)
+    {
+      Node[0] = theNode1;
+      Node[1] = theNode2;
+    }
 
-  //! Constructor
-  Link(const int theNode1, const int theNode2)
-  {
-    Node[0] = theNode1;
-    Node[1] = theNode2;
-  }
+    //! Returns true if this link has the same nodes as the other.
+    bool IsEqual(const Link& theOther) const
+    {
+      return ((Node[0] == theOther.Node[0] && Node[1] == theOther.Node[1])
+              || (Node[0] == theOther.Node[1] && Node[1] == theOther.Node[0]));
+    }
 
-  //! Returns true if this link has the same nodes as the other.
-  bool IsEqual(const Link& theOther) const
-  {
-    return ((Node[0] == theOther.Node[0] && Node[1] == theOther.Node[1])
-            || (Node[0] == theOther.Node[1] && Node[1] == theOther.Node[0]));
-  }
-
-  //! Alias for IsEqual.
-  bool operator==(const Link& theOther) const { return IsEqual(theOther); }
-};
+    //! Alias for IsEqual.
+    bool operator==(const Link& theOther) const { return IsEqual(theOther); }
+  };
 } // namespace
 
 namespace std
 {
-template <>
-struct hash<Link>
-{
-  size_t operator()(const Link& theLink) const noexcept
+  template <>
+  struct hash<Link>
   {
-    int aCombination[2]{theLink.Node[0], theLink.Node[1]};
-    if (aCombination[0] > aCombination[1])
+    size_t operator()(const Link& theLink) const noexcept
     {
-      std::swap(aCombination[0], aCombination[1]);
+      int aCombination[2]{theLink.Node[0], theLink.Node[1]};
+      if (aCombination[0] > aCombination[1])
+      {
+        std::swap(aCombination[0], aCombination[1]);
+      }
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+  };
 } // namespace std
 
 void BRepLib::UpdateDeflection(const TopoDS_Shape& theShape)
@@ -2720,23 +2706,28 @@ void BRepLib::SortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_Shape>& 
       GeomAdaptor_Surface AS(S);
       switch (AS.GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           LPlan.Append(F);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           LCyl.Append(F);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           LCon.Append(F);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           LSphere.Append(F);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           LTor.Append(F);
           break;
         }
@@ -2776,23 +2767,28 @@ void BRepLib::ReverseSortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_S
       GeomAdaptor_Surface AS(S);
       switch (AS.GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           LPlan.Append(F);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           LCyl.Append(F);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           LCon.Append(F);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           LSphere.Append(F);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           LTor.Append(F);
           break;
         }

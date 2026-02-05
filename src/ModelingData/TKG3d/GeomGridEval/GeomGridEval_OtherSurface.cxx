@@ -29,8 +29,8 @@ void GeomGridEval_OtherSurface::evaluateD1(double  theU,
                                            gp_Vec& theD1U,
                                            gp_Vec& theD1V) const
 {
-  std::visit([theU, theV, &thePoint, &theD1U, &theD1V](
-               const auto& theSurf) { theSurf->D1(theU, theV, thePoint, theD1U, theD1V); },
+  std::visit([theU, theV, &thePoint, &theD1U, &theD1V](const auto& theSurf)
+             { theSurf->D1(theU, theV, thePoint, theD1U, theD1V); },
              mySurface);
 }
 
@@ -46,9 +46,8 @@ void GeomGridEval_OtherSurface::evaluateD2(double  theU,
                                            gp_Vec& theD2UV) const
 {
   std::visit(
-    [theU, theV, &thePoint, &theD1U, &theD1V, &theD2U, &theD2V, &theD2UV](const auto& theSurf) {
-      theSurf->D2(theU, theV, thePoint, theD1U, theD1V, theD2U, theD2V, theD2UV);
-    },
+    [theU, theV, &thePoint, &theD1U, &theD1V, &theD2U, &theD2V, &theD2UV](const auto& theSurf)
+    { theSurf->D2(theU, theV, thePoint, theD1U, theD1V, theD2U, theD2V, theD2UV); },
     mySurface);
 }
 
@@ -79,7 +78,8 @@ void GeomGridEval_OtherSurface::evaluateD3(double  theU,
      &theD3U,
      &theD3V,
      &theD3UUV,
-     &theD3UVV](const auto& theSurf) {
+     &theD3UVV](const auto& theSurf)
+    {
       theSurf->D3(theU,
                   theV,
                   thePoint,
@@ -100,11 +100,9 @@ void GeomGridEval_OtherSurface::evaluateD3(double  theU,
 
 gp_Vec GeomGridEval_OtherSurface::evaluateDN(double theU, double theV, int theNU, int theNV) const
 {
-  return std::visit(
-    [theU, theV, theNU, theNV](const auto& theSurf) -> gp_Vec {
-      return theSurf->DN(theU, theV, theNU, theNV);
-    },
-    mySurface);
+  return std::visit([theU, theV, theNU, theNV](const auto& theSurf) -> gp_Vec
+                    { return theSurf->DN(theU, theV, theNU, theNV); },
+                    mySurface);
 }
 
 //==================================================================================================

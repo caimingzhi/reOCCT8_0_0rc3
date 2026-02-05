@@ -1,8 +1,8 @@
 #pragma once
 
-
 #include <Prs3d_ArrowAspect.hpp>
 #include <Prs3d_DatumAttribute.hpp>
+
 // Copyright (c) 2016 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -15,7 +15,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Enumeration defining axes used in datum aspect, see Prs3d_Datum.
 enum Prs3d_DatumAxes
@@ -38,7 +37,6 @@ enum Prs3d_DatumAxes
   Prs3d_DA_XZAxis  = Prs3d_DatumAxes_XZAxes,
   Prs3d_DA_XYZAxis = Prs3d_DatumAxes_XYZAxes
 };
-
 
 #include <Prs3d_DatumParts.hpp>
 #include <Prs3d_LineAspect.hpp>
@@ -156,6 +154,7 @@ public:
   //! Returns the text attributes for rendering labels.
   Standard_DEPRECATED(
     "This method is deprecated - TextAspect() with axis parameter should be called instead")
+
   const occ::handle<Prs3d_TextAspect>& TextAspect() const
   {
     return myTextAspects[Prs3d_DatumParts_XAxis];
@@ -172,4 +171,3 @@ protected:
   bool                             myToDrawLabels;
   bool                             myToDrawArrows;
 };
-

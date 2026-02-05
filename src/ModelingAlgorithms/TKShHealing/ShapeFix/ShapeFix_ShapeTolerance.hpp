@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -43,4 +42,3 @@ public:
                                     const double           preci,
                                     const TopAbs_ShapeEnum styp = TopAbs_SHAPE) const;
 };
-

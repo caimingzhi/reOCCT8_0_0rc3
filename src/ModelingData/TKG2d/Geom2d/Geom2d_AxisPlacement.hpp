@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax2d.hpp>
@@ -77,4 +76,3 @@ public:
 private:
   gp_Ax2d axis;
 };
-

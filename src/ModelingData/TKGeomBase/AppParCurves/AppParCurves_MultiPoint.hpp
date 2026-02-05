@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -117,6 +116,7 @@ protected:
   int                             nbP;
   int                             nbP2d;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -166,5 +166,3 @@ inline int AppParCurves_MultiPoint::Dimension(const int Index) const
     return 2;
   }
 }
-
-

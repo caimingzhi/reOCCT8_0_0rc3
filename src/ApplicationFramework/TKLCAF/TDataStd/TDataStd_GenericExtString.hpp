@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_DerivedAttribute.hpp>
 #include <TCollection_ExtendedString.hpp>
 #include <Standard_GUID.hpp>
@@ -43,4 +42,3 @@ protected:
   //! A private GUID of the attribute.
   Standard_GUID myID;
 };
-

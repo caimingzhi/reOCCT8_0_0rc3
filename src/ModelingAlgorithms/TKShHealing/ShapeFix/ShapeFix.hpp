@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -63,4 +62,3 @@ public:
   //! Calculate size of least edge;
   Standard_EXPORT static double LeastEdgeSize(TopoDS_Shape& theshape);
 };
-

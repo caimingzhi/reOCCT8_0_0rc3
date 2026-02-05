@@ -92,14 +92,16 @@ bool ShapeCustom_DirectModification::NewSurface(const TopoDS_Face&         F,
 
   switch (IsIndirectSurface(S, L))
   {
-    case 1: { // Indirect surface
+    case 1:
+    { // Indirect surface
       // UReverse a copy of S
       S        = S->UReversed();
       RevWires = true;
       RevFace  = true;
       break;
     }
-    case 2: { // Negative cone
+    case 2:
+    { // Negative cone
       // U- and VReverse a copy of S
       S = S->VReversed();
       S->UReverse();
@@ -107,7 +109,8 @@ bool ShapeCustom_DirectModification::NewSurface(const TopoDS_Face&         F,
       RevFace  = false;
       break;
     }
-    case 3: { // Indirect negative cone
+    case 3:
+    { // Indirect negative cone
       // VReverse a copy of S
       S        = S->VReversed();
       RevWires = true;
@@ -193,13 +196,15 @@ bool ShapeCustom_DirectModification::NewCurve2d(const TopoDS_Edge&         E,
 
     switch (result)
     {
-      case 1: { // Indirect surface
+      case 1:
+      { // Indirect surface
         // mirror the PCurve about the V axis
         T.SetMirror(gp::OY2d());
         C = occ::down_cast<Geom2d_Curve>(C->Transformed(T));
         break;
       }
-      case 2: { // Negative cone
+      case 2:
+      { // Negative cone
         // mirror the PCurve about the U and V axis
         T.SetMirror(gp::OX2d());
         C = occ::down_cast<Geom2d_Curve>(C->Transformed(T));
@@ -207,7 +212,8 @@ bool ShapeCustom_DirectModification::NewCurve2d(const TopoDS_Edge&         E,
         C->Transform(T);
         break;
       }
-      case 3: { // Indirect negative cone
+      case 3:
+      { // Indirect negative cone
         // mirror the PCurve about the U axis
         T.SetMirror(gp::OX2d());
         C = occ::down_cast<Geom2d_Curve>(C->Transformed(T));

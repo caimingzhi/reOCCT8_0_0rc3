@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XCAFDoc_Note.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -107,4 +106,3 @@ protected:
   TCollection_AsciiString                   myMIMEtype; ///< MIME type of data.
   occ::handle<NCollection_HArray1<uint8_t>> myData;     ///< Byte data array.
 };
-

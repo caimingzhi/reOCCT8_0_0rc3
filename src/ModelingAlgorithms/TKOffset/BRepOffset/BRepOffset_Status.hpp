@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! status of an offset face
 //! Good :
 //! Reversed : e.g. Offset > Radius of a cylinder
@@ -13,4 +12,3 @@ enum BRepOffset_Status
   BRepOffset_Degenerated,
   BRepOffset_Unknown
 };
-

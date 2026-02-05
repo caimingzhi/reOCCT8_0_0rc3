@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 #include <StepTidy_CartesianPointHasher.hpp>
 
@@ -145,4 +144,3 @@ private:
     const occ::handle<StepGeom_CartesianPoint>& theNewEntity,
     const occ::handle<Standard_Transient>&      theSharing);
 };
-

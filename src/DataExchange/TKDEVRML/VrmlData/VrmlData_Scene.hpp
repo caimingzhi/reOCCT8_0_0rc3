@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <VrmlData_Node.hpp>
 #include <NCollection_Map.hpp>
@@ -362,4 +361,3 @@ private:
   friend class VrmlData_Group;
   friend class VrmlData_Node;
 };
-

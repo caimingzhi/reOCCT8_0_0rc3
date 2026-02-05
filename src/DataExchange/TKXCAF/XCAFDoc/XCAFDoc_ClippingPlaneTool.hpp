@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pln.hpp>
 #include <TCollection_HAsciiString.hpp>
 #include <TDF_Label.hpp>

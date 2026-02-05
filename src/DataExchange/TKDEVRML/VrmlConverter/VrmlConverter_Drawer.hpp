@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -208,4 +207,3 @@ private:
   occ::handle<VrmlConverter_LineAspect>    myHiddenLineAspect;
   occ::handle<VrmlConverter_LineAspect>    mySeenLineAspect;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Line2d.hpp>
 #include <Adaptor3d_HVertex.hpp>
 #include <Adaptor3d_Surface.hpp>
@@ -159,4 +158,3 @@ private:
   int                            idVtx;
   occ::handle<Adaptor3d_HVertex> myVtx[2];
 };
-

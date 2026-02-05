@@ -1,19 +1,3 @@
-// Created on: 1995-12-08
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepCheck_Analyzer.hpp>
 
 #include <BRepCheck_Edge.hpp>
@@ -65,7 +49,8 @@ public:
       const occ::handle<BRepCheck_Result>& aResult = myMap.FindFromKey(aShape);
       switch (aType)
       {
-        case TopAbs_VERTEX: {
+        case TopAbs_VERTEX:
+        {
           // modified by NIZHNY-MKK  Wed May 19 16:56:16 2004.BEGIN
           // There is no need to check anything.
           //       if (aShape.IsSame(S)) {
@@ -74,7 +59,8 @@ public:
           // modified by NIZHNY-MKK  Wed May 19 16:56:23 2004.END
           break;
         }
-        case TopAbs_EDGE: {
+        case TopAbs_EDGE:
+        {
           try
           {
             occ::handle<BRepCheck_Edge> aResEdge = occ::down_cast<BRepCheck_Edge>(aResult);
@@ -124,10 +110,12 @@ public:
           }
           break;
         }
-        case TopAbs_WIRE: {
+        case TopAbs_WIRE:
+        {
           break;
         }
-        case TopAbs_FACE: {
+        case TopAbs_FACE:
+        {
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MapS;
           for (exp.Init(aShape, TopAbs_VERTEX); exp.More(); exp.Next())
           {
@@ -299,10 +287,12 @@ public:
           }
           break;
         }
-        case TopAbs_SHELL: {
+        case TopAbs_SHELL:
+        {
           break;
         }
-        case TopAbs_SOLID: {
+        case TopAbs_SOLID:
+        {
           exp.Init(aShape, TopAbs_SHELL);
           for (; exp.More(); exp.Next())
           {
@@ -329,7 +319,8 @@ public:
           }
           break;
         }
-        default: {
+        default:
+        {
           break;
         }
       }
@@ -474,11 +465,13 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
 
   switch (S.ShapeType())
   {
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       return ValidSub(S, TopAbs_VERTEX);
     }
       //    break;
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       bool valid = ValidSub(S, TopAbs_WIRE);
       valid      = valid && ValidSub(S, TopAbs_EDGE);
       valid      = valid && ValidSub(S, TopAbs_VERTEX);

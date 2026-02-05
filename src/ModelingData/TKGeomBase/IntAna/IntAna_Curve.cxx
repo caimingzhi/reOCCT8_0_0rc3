@@ -1,19 +1,3 @@
-// Created on: 1992-06-30
-// Created by: Laurent BUCHARD
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifndef OCCT_DEBUG
   #define No_Standard_RangeError
   #define No_Standard_OutOfRange
@@ -445,13 +429,15 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
   //
   switch (typequadric)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       double aZ;
       ElSLib::CylinderParameters(Ax3, RCyl, theP, aTheta, aZ);
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       double aZ;
       ElSLib::ConeParameters(Ax3, RCyl, Angle, theP, aTheta, aZ);
     }
@@ -533,7 +519,8 @@ gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
 
   switch (typequadric)
   {
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       //------------------------------------------------
       //-- Parametrage : X = V * std::cos(U)              ---
       //--               Y = V * std::sin(U)              ---

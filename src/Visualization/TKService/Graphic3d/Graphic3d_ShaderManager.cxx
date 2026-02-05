@@ -40,150 +40,154 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ShaderManager, Standard_Transient)
 
 namespace
 {
-//! Number specifying maximum number of light sources to prepare a GLSL program with unrolled loop.
-const int THE_NB_UNROLLED_LIGHTS_MAX = 32;
+  //! Number specifying maximum number of light sources to prepare a GLSL program with unrolled
+  //! loop.
+  const int THE_NB_UNROLLED_LIGHTS_MAX = 32;
 
-//! Compute the size of array storing holding light sources definition.
-static int roundUpMaxLightSources(int theNbLights)
-{
-  int aMaxLimit = THE_NB_UNROLLED_LIGHTS_MAX;
-  for (; aMaxLimit < theNbLights; aMaxLimit *= 2)
+  //! Compute the size of array storing holding light sources definition.
+  static int roundUpMaxLightSources(int theNbLights)
   {
+    int aMaxLimit = THE_NB_UNROLLED_LIGHTS_MAX;
+    for (; aMaxLimit < theNbLights; aMaxLimit *= 2)
+    {
+    }
+    return aMaxLimit;
   }
-  return aMaxLimit;
-}
 
 #define EOL "\n"
 
-//! Compute TexCoord value in Vertex Shader
-const char THE_VARY_TexCoord_Trsf[] =
-  EOL "  float aRotSin = occTextureTrsf_RotationSin();" EOL
-      "  float aRotCos = occTextureTrsf_RotationCos();" EOL
-      "  vec2  aTex2   = vec2 (occTexCoord.x * aRotCos - occTexCoord.y * aRotSin," EOL
-      "                        occTexCoord.x * aRotSin + occTexCoord.y * aRotCos);" EOL
-      "  aTex2 = (aTex2 + occTextureTrsf_Translation()) * occTextureTrsf_Scale();" EOL
-      "  TexCoord = vec4(aTex2, occTexCoord.zw);";
+  //! Compute TexCoord value in Vertex Shader
+  const char THE_VARY_TexCoord_Trsf[] =
+    EOL "  float aRotSin = occTextureTrsf_RotationSin();" EOL
+        "  float aRotCos = occTextureTrsf_RotationCos();" EOL
+        "  vec2  aTex2   = vec2 (occTexCoord.x * aRotCos - occTexCoord.y * aRotSin," EOL
+        "                        occTexCoord.x * aRotSin + occTexCoord.y * aRotCos);" EOL
+        "  aTex2 = (aTex2 + occTextureTrsf_Translation()) * occTextureTrsf_Scale();" EOL
+        "  TexCoord = vec4(aTex2, occTexCoord.zw);";
 
 //! Auxiliary function to flip gl_PointCoord vertically
 #define THE_VEC2_glPointCoord "vec2 (gl_PointCoord.x, 1.0 - gl_PointCoord.y)"
 
-//! Auxiliary function to transform normal from model to view coordinate system.
-const char THE_FUNC_transformNormal_view[] =
-  EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
-      "  vec4 aResult = occWorldViewMatrixInverseTranspose" EOL
-      "               * occModelWorldMatrixInverseTranspose" EOL
-      "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
+  //! Auxiliary function to transform normal from model to view coordinate system.
+  const char THE_FUNC_transformNormal_view[] =
+    EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
+        "  vec4 aResult = occWorldViewMatrixInverseTranspose" EOL
+        "               * occModelWorldMatrixInverseTranspose" EOL
+        "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
 
-//! The same function as THE_FUNC_transformNormal but is used in PBR pipeline.
-//! The normals are expected to be in world coordinate system in PBR pipeline.
-const char THE_FUNC_transformNormal_world[] =
-  EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
-      "  vec4 aResult = occModelWorldMatrixInverseTranspose" EOL
-      "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
+  //! The same function as THE_FUNC_transformNormal but is used in PBR pipeline.
+  //! The normals are expected to be in world coordinate system in PBR pipeline.
+  const char THE_FUNC_transformNormal_world[] =
+    EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
+        "  vec4 aResult = occModelWorldMatrixInverseTranspose" EOL
+        "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
 
-//! Global shader variable for color definition with lighting enabled.
-const char THE_FUNC_lightDef[] = EOL "vec3 Ambient;" //!< Ambient  contribution of light sources
-  EOL "vec3 Diffuse;"                                //!< Diffuse  contribution of light sources
-  EOL "vec3 Specular;";                              //!< Specular contribution of light sources
+  //! Global shader variable for color definition with lighting enabled.
+  const char THE_FUNC_lightDef[] = EOL "vec3 Ambient;" //!< Ambient  contribution of light sources
+    EOL "vec3 Diffuse;"                                //!< Diffuse  contribution of light sources
+    EOL "vec3 Specular;";                              //!< Specular contribution of light sources
 
-//! Global shader variable for color definition with lighting enabled.
-const char THE_FUNC_PBR_lightDef[] =
-  EOL "vec3  DirectLighting;"      //!< Accumulator of direct lighting from light sources
-  EOL "vec4  BaseColor;"           //!< Base color (albedo) of material for PBR
-  EOL "float Metallic;"            //!< Metallic coefficient of material
-  EOL "float NormalizedRoughness;" //!< Normalized roughness coefficient of material
-  EOL "float Roughness;"           //!< Roughness coefficient of material
-  EOL "vec3  Emission;"            //!< Light intensity emitted by material
-  EOL "float IOR;";                //!< Material's index of refraction
+  //! Global shader variable for color definition with lighting enabled.
+  const char THE_FUNC_PBR_lightDef[] =
+    EOL "vec3  DirectLighting;"      //!< Accumulator of direct lighting from light sources
+    EOL "vec4  BaseColor;"           //!< Base color (albedo) of material for PBR
+    EOL "float Metallic;"            //!< Metallic coefficient of material
+    EOL "float NormalizedRoughness;" //!< Normalized roughness coefficient of material
+    EOL "float Roughness;"           //!< Roughness coefficient of material
+    EOL "vec3  Emission;"            //!< Light intensity emitted by material
+    EOL "float IOR;";                //!< Material's index of refraction
 
-//! The same as Shaders_PhongDirectionalLight_glsl but for the light with zero index
-//! (avoids limitations on some mobile devices).
-const char THE_FUNC_directionalLightFirst[] =
-  EOL "void directionalLightFirst (in vec3 theNormal," EOL
-      "                            in vec3 theView," EOL
-      "                            in bool theIsFront," EOL
-      "                            in float theShadow)" EOL "{" EOL
-      "  vec3 aLight = occLight_Position (0);" EOL EOL
-      "  vec3 aHalf = normalize (aLight + theView);" EOL EOL
-      "  vec3  aFaceSideNormal = theIsFront ? theNormal : -theNormal;" EOL
-      "  float aNdotL = max (0.0, dot (aFaceSideNormal, aLight));" EOL
-      "  float aNdotH = max (0.0, dot (aFaceSideNormal, aHalf ));" EOL EOL
-      "  float aSpecl = 0.0;" EOL "  if (aNdotL > 0.0)" EOL "  {" EOL
-      "    aSpecl = pow (aNdotH, occMaterial_Shininess(theIsFront));" EOL "  }" EOL EOL
-      "  Diffuse  += occLight_Diffuse(0)  * aNdotL * theShadow;" EOL
-      "  Specular += occLight_Specular(0) * aSpecl * theShadow;" EOL "}";
+  //! The same as Shaders_PhongDirectionalLight_glsl but for the light with zero index
+  //! (avoids limitations on some mobile devices).
+  const char THE_FUNC_directionalLightFirst[] =
+    EOL "void directionalLightFirst (in vec3 theNormal," EOL
+        "                            in vec3 theView," EOL
+        "                            in bool theIsFront," EOL
+        "                            in float theShadow)" EOL "{" EOL
+        "  vec3 aLight = occLight_Position (0);" EOL EOL
+        "  vec3 aHalf = normalize (aLight + theView);" EOL EOL
+        "  vec3  aFaceSideNormal = theIsFront ? theNormal : -theNormal;" EOL
+        "  float aNdotL = max (0.0, dot (aFaceSideNormal, aLight));" EOL
+        "  float aNdotH = max (0.0, dot (aFaceSideNormal, aHalf ));" EOL EOL
+        "  float aSpecl = 0.0;" EOL "  if (aNdotL > 0.0)" EOL "  {" EOL
+        "    aSpecl = pow (aNdotH, occMaterial_Shininess(theIsFront));" EOL "  }" EOL EOL
+        "  Diffuse  += occLight_Diffuse(0)  * aNdotL * theShadow;" EOL
+        "  Specular += occLight_Specular(0) * aSpecl * theShadow;" EOL "}";
 
-//! Returns the real cubemap fetching direction considering sides orientation, memory layout and
-//! vertical flip.
-const char THE_FUNC_cubemap_vector_transform[] =
-  EOL "vec3 cubemapVectorTransform (in vec3 theVector," EOL
-      "                             in int  theYCoeff," EOL
-      "                             in int  theZCoeff)" EOL "{" EOL
-      "  theVector = theVector.yzx;" EOL "  theVector.y *= float(theYCoeff);" EOL
-      "  theVector.z *= float(theZCoeff);" EOL "  return theVector;" EOL "}";
+  //! Returns the real cubemap fetching direction considering sides orientation, memory layout and
+  //! vertical flip.
+  const char THE_FUNC_cubemap_vector_transform[] =
+    EOL "vec3 cubemapVectorTransform (in vec3 theVector," EOL
+        "                             in int  theYCoeff," EOL
+        "                             in int  theZCoeff)" EOL "{" EOL
+        "  theVector = theVector.yzx;" EOL "  theVector.y *= float(theYCoeff);" EOL
+        "  theVector.z *= float(theZCoeff);" EOL "  return theVector;" EOL "}";
 
-//! Process clipping planes in Fragment Shader.
-//! Should be added at the beginning of the main() function.
-const char THE_FRAG_CLIP_PLANES_N[] =
-  EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount; ++aPlaneIter)" EOL "  {" EOL
-      "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
-      "    if (dot (aClipEquation.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation.w < "
-      "0.0)" EOL "    {" EOL "      discard;" EOL "    }" EOL "  }";
+  //! Process clipping planes in Fragment Shader.
+  //! Should be added at the beginning of the main() function.
+  const char THE_FRAG_CLIP_PLANES_N[] =
+    EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount; ++aPlaneIter)" EOL "  {" EOL
+        "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
+        "    if (dot (aClipEquation.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation.w < "
+        "0.0)" EOL "    {" EOL "      discard;" EOL "    }" EOL "  }";
 
-//! Process chains of clipping planes in Fragment Shader.
-const char THE_FRAG_CLIP_CHAINS_N[] =
-  EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount;)" EOL "  {" EOL
-      "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
-      "    if (dot (aClipEquation.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation.w < "
-      "0.0)" EOL "    {" EOL "      if (occClipPlaneChains[aPlaneIter] == 1)" EOL "      {" EOL
-      "        discard;" EOL "      }" EOL "      aPlaneIter += 1;" EOL "    }" EOL "    else" EOL
-      "    {" EOL "      aPlaneIter += occClipPlaneChains[aPlaneIter];" EOL "    }" EOL "  }";
+  //! Process chains of clipping planes in Fragment Shader.
+  const char THE_FRAG_CLIP_CHAINS_N[] =
+    EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount;)" EOL "  {" EOL
+        "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
+        "    if (dot (aClipEquation.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation.w < "
+        "0.0)" EOL "    {" EOL "      if (occClipPlaneChains[aPlaneIter] == 1)" EOL "      {" EOL
+        "        discard;" EOL "      }" EOL "      aPlaneIter += 1;" EOL "    }" EOL "    else" EOL
+        "    {" EOL "      aPlaneIter += occClipPlaneChains[aPlaneIter];" EOL "    }" EOL "  }";
 
-//! Process 1 clipping plane in Fragment Shader.
-const char THE_FRAG_CLIP_PLANES_1[] =
-  EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
-      "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < "
-      "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
+  //! Process 1 clipping plane in Fragment Shader.
+  const char THE_FRAG_CLIP_PLANES_1[] =
+    EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
+        "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < "
+        "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-//! Process 2 clipping planes in Fragment Shader.
-const char THE_FRAG_CLIP_PLANES_2[] = EOL
-  "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
-  "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
-  "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < 0.0" EOL
-  "   || dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
-  "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
+  //! Process 2 clipping planes in Fragment Shader.
+  const char THE_FRAG_CLIP_PLANES_2[] =
+    EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
+        "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
+        "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < "
+        "0.0" EOL
+        "   || dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
+        "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-//! Process a chain of 2 clipping planes in Fragment Shader (3/4 section).
-const char THE_FRAG_CLIP_CHAINS_2[] = EOL
-  "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
-  "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
-  "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < 0.0" EOL
-  "   && dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
-  "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
+  //! Process a chain of 2 clipping planes in Fragment Shader (3/4 section).
+  const char THE_FRAG_CLIP_CHAINS_2[] =
+    EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
+        "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
+        "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < "
+        "0.0" EOL
+        "   && dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
+        "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-//! Modify color for Wireframe presentation.
-const char THE_FRAG_WIREFRAME_COLOR[] =
-  EOL "vec4 getFinalColor(void)" EOL "{" EOL
-      "  float aDistance = min (min (EdgeDistance[0], EdgeDistance[1]), EdgeDistance[2]);" EOL
-      "  bool isHollow = occWireframeColor.a < 0.0;" EOL
-      "  float aMixVal = smoothstep (occLineWidth - occLineFeather * 0.5, occLineWidth + "
-      "occLineFeather * 0.5, aDistance);" EOL "  vec4 aMixColor = isHollow" EOL
-      "                 ? vec4 (getColor().rgb, 1.0 - aMixVal)" // edges only (of interior color)
-  EOL "                 : mix (occWireframeColor, getColor(), aMixVal);" // interior + edges
-  EOL "  return aMixColor;" EOL "}";
+  //! Modify color for Wireframe presentation.
+  const char THE_FRAG_WIREFRAME_COLOR[] =
+    EOL "vec4 getFinalColor(void)" EOL "{" EOL
+        "  float aDistance = min (min (EdgeDistance[0], EdgeDistance[1]), EdgeDistance[2]);" EOL
+        "  bool isHollow = occWireframeColor.a < 0.0;" EOL
+        "  float aMixVal = smoothstep (occLineWidth - occLineFeather * 0.5, occLineWidth + "
+        "occLineFeather * 0.5, aDistance);" EOL "  vec4 aMixColor = isHollow" EOL
+        "                 ? vec4 (getColor().rgb, 1.0 - aMixVal)" // edges only (of interior color)
+    EOL "                 : mix (occWireframeColor, getColor(), aMixVal);" // interior + edges
+    EOL "  return aMixColor;" EOL "}";
 
-//! Compute gl_Position vertex shader output.
-const char THE_VERT_gl_Position[] =
-  EOL "  gl_Position = occProjectionMatrix * occWorldViewMatrix * occModelWorldMatrix * occVertex;";
+  //! Compute gl_Position vertex shader output.
+  const char THE_VERT_gl_Position[] = EOL
+    "  gl_Position = occProjectionMatrix * occWorldViewMatrix * occModelWorldMatrix * occVertex;";
 
-//! Displace gl_Position alongside vertex normal for outline rendering.
-//! This code adds silhouette only for smooth surfaces of closed primitive, and produces visual
-//! artifacts on sharp edges.
-const char THE_VERT_gl_Position_OUTLINE[] = EOL
-  "  float anOutlineDisp = occOrthoScale > 0.0 ? occOrthoScale : gl_Position.w;" EOL
-  "  vec4  anOutlinePos  = occVertex + vec4 (occNormal * (occSilhouetteThickness * anOutlineDisp), "
-  "0.0);" EOL
-  "  gl_Position = occProjectionMatrix * occWorldViewMatrix * occModelWorldMatrix * anOutlinePos;";
+  //! Displace gl_Position alongside vertex normal for outline rendering.
+  //! This code adds silhouette only for smooth surfaces of closed primitive, and produces visual
+  //! artifacts on sharp edges.
+  const char THE_VERT_gl_Position_OUTLINE[] =
+    EOL "  float anOutlineDisp = occOrthoScale > 0.0 ? occOrthoScale : gl_Position.w;" EOL
+        "  vec4  anOutlinePos  = occVertex + vec4 (occNormal * (occSilhouetteThickness * "
+        "anOutlineDisp), "
+        "0.0);" EOL "  gl_Position = occProjectionMatrix * occWorldViewMatrix * "
+                    "occModelWorldMatrix * anOutlinePos;";
 
 } // namespace
 
@@ -228,11 +232,13 @@ bool Graphic3d_ShaderManager::hasGlslBitwiseOps() const
 {
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary_OpenGL:
+    {
       return IsGapiGreaterEqual(3, 0)
              || myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_gpu_shader4];
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary_OpenGLES:
+    {
       return IsGapiGreaterEqual(3, 0);
     }
   }
@@ -253,7 +259,8 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
     || (theBits & Graphic3d_ShaderFlags_HasTextures) == Graphic3d_ShaderFlags_TextureNormal;
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary_OpenGL:
+    {
       if (IsGapiGreaterEqual(3, 2))
       {
         theProgram->SetHeader("#version 150");
@@ -290,7 +297,8 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
       (void)toUseDerivates;
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary_OpenGLES:
+    {
 #if defined(__EMSCRIPTEN__)
       if (IsGapiGreaterEqual(3, 0))
       {
@@ -382,7 +390,8 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
 {
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary_OpenGL:
+    {
       if (theMsaa)
       {
         if (IsGapiGreaterEqual(4, 0))
@@ -399,7 +408,8 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
       }
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary_OpenGLES:
+    {
       if (theMsaa)
       {
         if (IsGapiGreaterEqual(3, 2))
@@ -530,14 +540,16 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
   occ::handle<Graphic3d_ShaderProgram> aProgramSrc = new Graphic3d_ShaderProgram();
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary_OpenGL:
+    {
       if (IsGapiGreaterEqual(3, 2))
       {
         aProgramSrc->SetHeader("#version 150");
       }
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary_OpenGLES:
+    {
       if (IsGapiGreaterEqual(3, 1))
       {
         // required for MSAA sampler
@@ -1141,10 +1153,12 @@ TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
       {
         switch (aLightIter.Value()->Type())
         {
-          case Graphic3d_TypeOfLightSource_Ambient: {
+          case Graphic3d_TypeOfLightSource_Ambient:
+          {
             break; // skip ambient
           }
-          case Graphic3d_TypeOfLightSource_Directional: {
+          case Graphic3d_TypeOfLightSource_Directional:
+          {
             if (theNbShadowMaps > 0 && aLightIter.Value()->ToCastShadows())
             {
               aLightsLoop = aLightsLoop + EOL "    occDirectionalLight (" + anIndex
@@ -1160,13 +1174,15 @@ TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
             ++anIndex;
             break;
           }
-          case Graphic3d_TypeOfLightSource_Positional: {
+          case Graphic3d_TypeOfLightSource_Positional:
+          {
             aLightsLoop = aLightsLoop + EOL "    occPointLight (" + anIndex
                           + ", theNormal, theView, aPoint, theIsFront);";
             ++anIndex;
             break;
           }
-          case Graphic3d_TypeOfLightSource_Spot: {
+          case Graphic3d_TypeOfLightSource_Spot:
+          {
             if (theNbShadowMaps > 0 && aLightIter.Value()->ToCastShadows())
             {
               aLightsLoop = aLightsLoop + EOL "    occSpotLight (" + anIndex
@@ -1785,7 +1801,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
   const char* aName = "stereo";
   switch (theStereoMode)
   {
-    case Graphic3d_StereoMode_Anaglyph: {
+    case Graphic3d_StereoMode_Anaglyph:
+    {
       aName = "anaglyph";
       aUniforms.Append(
         Graphic3d_ShaderObject::ShaderVariable("mat4 uMultL", Graphic3d_TOS_FRAGMENT));
@@ -1807,7 +1824,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
                        "  occSetFragColor (linear2sRgb (aColor));" EOL "}";
       break;
     }
-    case Graphic3d_StereoMode_RowInterlaced: {
+    case Graphic3d_StereoMode_RowInterlaced:
+    {
       aName = "row-interlaced";
       aUniforms.Append(
         Graphic3d_ShaderObject::ShaderVariable("vec2 uTexOffset", Graphic3d_TOS_FRAGMENT));
@@ -1820,7 +1838,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
                      "    occSetFragColor (aColorR);" EOL "  }" EOL "}";
       break;
     }
-    case Graphic3d_StereoMode_ColumnInterlaced: {
+    case Graphic3d_StereoMode_ColumnInterlaced:
+    {
       aName = "column-interlaced";
       aUniforms.Append(
         Graphic3d_ShaderObject::ShaderVariable("vec2 uTexOffset", Graphic3d_TOS_FRAGMENT));
@@ -1833,7 +1852,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
                      "    occSetFragColor (aColorR);" EOL "  }" EOL "}";
       break;
     }
-    case Graphic3d_StereoMode_ChessBoard: {
+    case Graphic3d_StereoMode_ChessBoard:
+    {
       aName = "chessboard";
       aUniforms.Append(
         Graphic3d_ShaderObject::ShaderVariable("vec2 uTexOffset", Graphic3d_TOS_FRAGMENT));
@@ -1848,7 +1868,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
                      "    occSetFragColor (aColorR);" EOL "  }" EOL "}";
       break;
     }
-    case Graphic3d_StereoMode_SideBySide: {
+    case Graphic3d_StereoMode_SideBySide:
+    {
       aName = "sidebyside";
       aSrcFrag =
         EOL "void main()" EOL "{" EOL "  vec2 aTexCoord = vec2 (TexCoord.x * 2.0, TexCoord.y);" EOL
@@ -1859,7 +1880,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
             "  else" EOL "  {" EOL "    occSetFragColor (aColorR);" EOL "  }" EOL "}";
       break;
     }
-    case Graphic3d_StereoMode_OverUnder: {
+    case Graphic3d_StereoMode_OverUnder:
+    {
       aName = "overunder";
       aSrcFrag =
         EOL "void main()" EOL "{" EOL "  vec2 aTexCoord = vec2 (TexCoord.x, TexCoord.y * 2.0);" EOL
@@ -1873,7 +1895,8 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
     case Graphic3d_StereoMode_QuadBuffer:
     case Graphic3d_StereoMode_SoftPageFlip:
     case Graphic3d_StereoMode_OpenVR:
-    default: {
+    default:
+    {
       aSrcFrag =
         EOL "void main()" EOL "{" EOL "  vec4 aColorL = occTexture2D (uLeftSampler,  TexCoord);" EOL
             "  vec4 aColorR = occTexture2D (uRightSampler, TexCoord);" EOL "  aColorL.b = 0.0;" EOL
@@ -1960,11 +1983,13 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
   // constant array definition requires OpenGL 2.1+ or OpenGL ES 3.0+
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary_OpenGL:
+    {
       aProgramSrc->SetHeader("#version 120");
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary_OpenGLES:
+    {
       if (IsGapiGreaterEqual(3, 0))
       {
         aProgramSrc->SetHeader("#version 300 es");

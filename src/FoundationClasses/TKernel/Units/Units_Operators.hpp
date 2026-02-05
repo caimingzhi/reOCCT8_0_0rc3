@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Units_Token.hpp>
 #include <Units_Quantity.hpp>
 
@@ -34,4 +33,3 @@ Standard_EXPORT bool operator<=(const occ::handle<Units_Token>&, const char*);
 Standard_EXPORT bool operator>(const occ::handle<Units_Token>&, const char*);
 Standard_EXPORT bool operator>(const occ::handle<Units_Token>&, const occ::handle<Units_Token>&);
 Standard_EXPORT bool operator>=(const occ::handle<Units_Token>&, const occ::handle<Units_Token>&);
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -43,4 +42,3 @@ public:
                             const NCollection_Array1<double>& W3,
                             const NCollection_Array1<double>& W4);
 };
-

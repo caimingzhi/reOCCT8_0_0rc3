@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 #include <Standard_Transient.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
@@ -422,4 +421,3 @@ private:
                                                myGDTPrsCurveStyle;
   occ::handle<StepRepr_ProductDefinitionShape> myGDTCommonPDS;
 };
-

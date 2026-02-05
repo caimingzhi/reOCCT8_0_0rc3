@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -69,4 +68,3 @@ private:
   occ::handle<NCollection_HArray2<double>> myNodeCoords;
   occ::handle<NCollection_HArray2<double>> myElemNormals;
 };
-

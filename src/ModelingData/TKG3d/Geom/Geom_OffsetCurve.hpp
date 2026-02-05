@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -269,4 +268,3 @@ private:
   double                  offsetValue;
   GeomAbs_Shape           myBasisCurveContinuity;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 1995-02-07
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <DsgPrs_AnglePresentation.hpp>
 
 #include <DsgPrs.hpp>
@@ -878,7 +863,8 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Pnt ptarr;
   switch (ArrowSide)
   {
-    case DsgPrs_AS_FIRSTAR: {
+    case DsgPrs_AS_FIRSTAR:
+    {
       ElCLib::D1(uc1, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,
@@ -887,7 +873,8 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         length);
       break;
     }
-    case DsgPrs_AS_LASTAR: {
+    case DsgPrs_AS_LASTAR:
+    {
       ElCLib::D1(uc2, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,
@@ -896,7 +883,8 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         length);
       break;
     }
-    case DsgPrs_AS_BOTHAR: {
+    case DsgPrs_AS_BOTHAR:
+    {
       ElCLib::D1(uc1, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,

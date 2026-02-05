@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericExtString.hpp>
 
 //! Comment attribute. may be associated to any label
@@ -40,4 +39,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataStd_Comment, TDataStd_GenericExtString)
 };
-

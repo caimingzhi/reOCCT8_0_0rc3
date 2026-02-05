@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdLPersistent_HArray1.hpp>
 #include <StdObject_gp_Vectors.hpp>
 #include <StdObject_gp_Curves.hpp>
@@ -55,4 +54,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData,
   theWriteData << N1 << N2 << N3;
   return theWriteData;
 }
-

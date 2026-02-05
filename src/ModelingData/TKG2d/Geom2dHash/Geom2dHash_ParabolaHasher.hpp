@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_Parabola.hpp>
 #include <Geom2dHash_AxisPlacement.hpp>
@@ -34,4 +33,3 @@ struct Geom2dHash_ParabolaHasher
            && std::abs(theParabola1->Focal() - theParabola2->Focal()) <= aTolerance;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_BezierSurface.hpp>
 #include <GeomHash_PointHasher.hpp>
@@ -76,4 +75,3 @@ struct GeomHash_BezierSurfaceHasher
     return true;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -39,4 +38,3 @@ private:
   Geom2dAdaptor_Curve myCurve2;
   IntRes2d_Domain     myDomain2;
 };
-

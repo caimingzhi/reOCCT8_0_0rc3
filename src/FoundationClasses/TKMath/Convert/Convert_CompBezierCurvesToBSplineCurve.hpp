@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -161,4 +160,3 @@ private:
   double                                                         myAngular;
   bool                                                           myDone;
 };
-

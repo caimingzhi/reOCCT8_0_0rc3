@@ -29,35 +29,35 @@
 
 namespace
 {
-// Helper function for comparing points with tolerance
-void checkPointsEqual(const gp_Pnt& theP1,
-                      const gp_Pnt& theP2,
-                      const double  theTolerance = Precision::Confusion())
-{
-  EXPECT_NEAR(theP1.X(), theP2.X(), theTolerance);
-  EXPECT_NEAR(theP1.Y(), theP2.Y(), theTolerance);
-  EXPECT_NEAR(theP1.Z(), theP2.Z(), theTolerance);
-}
+  // Helper function for comparing points with tolerance
+  void checkPointsEqual(const gp_Pnt& theP1,
+                        const gp_Pnt& theP2,
+                        const double  theTolerance = Precision::Confusion())
+  {
+    EXPECT_NEAR(theP1.X(), theP2.X(), theTolerance);
+    EXPECT_NEAR(theP1.Y(), theP2.Y(), theTolerance);
+    EXPECT_NEAR(theP1.Z(), theP2.Z(), theTolerance);
+  }
 
-// Helper function for comparing vectors with tolerance
-void checkVectorsEqual(const gp_Vec& theV1,
-                       const gp_Vec& theV2,
-                       const double  theTolerance = Precision::Confusion())
-{
-  EXPECT_NEAR(theV1.X(), theV2.X(), theTolerance);
-  EXPECT_NEAR(theV1.Y(), theV2.Y(), theTolerance);
-  EXPECT_NEAR(theV1.Z(), theV2.Z(), theTolerance);
-}
-
-// Helper function for comparing directions with tolerance
-void checkDirectorsEqual(const gp_Dir& theD1,
-                         const gp_Dir& theD2,
+  // Helper function for comparing vectors with tolerance
+  void checkVectorsEqual(const gp_Vec& theV1,
+                         const gp_Vec& theV2,
                          const double  theTolerance = Precision::Confusion())
-{
-  EXPECT_NEAR(theD1.X(), theD2.X(), theTolerance);
-  EXPECT_NEAR(theD1.Y(), theD2.Y(), theTolerance);
-  EXPECT_NEAR(theD1.Z(), theD2.Z(), theTolerance);
-}
+  {
+    EXPECT_NEAR(theV1.X(), theV2.X(), theTolerance);
+    EXPECT_NEAR(theV1.Y(), theV2.Y(), theTolerance);
+    EXPECT_NEAR(theV1.Z(), theV2.Z(), theTolerance);
+  }
+
+  // Helper function for comparing directions with tolerance
+  void checkDirectorsEqual(const gp_Dir& theD1,
+                           const gp_Dir& theD2,
+                           const double  theTolerance = Precision::Confusion())
+  {
+    EXPECT_NEAR(theD1.X(), theD2.X(), theTolerance);
+    EXPECT_NEAR(theD1.Y(), theD2.Y(), theTolerance);
+    EXPECT_NEAR(theD1.Z(), theD2.Z(), theTolerance);
+  }
 } // namespace
 
 TEST(ElClibTests, InPeriod)

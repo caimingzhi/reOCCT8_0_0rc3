@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -85,4 +84,3 @@ private:
   occ::handle<NCollection_HArray1<int>>                              theDimensionLocationFlags;
   occ::handle<NCollection_HArray1<gp_XYZ>>                           thePoints;
 };
-

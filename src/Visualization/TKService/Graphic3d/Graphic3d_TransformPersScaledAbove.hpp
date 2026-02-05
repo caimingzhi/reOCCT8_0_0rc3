@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TransformPers.hpp>
 
 //! Transformation Zoom persistence with the above boundary of scale.
@@ -30,4 +29,3 @@ public:
 private:
   double myScale; //!< scale bound value
 };
-

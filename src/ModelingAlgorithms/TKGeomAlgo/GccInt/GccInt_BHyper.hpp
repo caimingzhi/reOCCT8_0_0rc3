@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Hypr2d.hpp>
@@ -27,4 +26,3 @@ public:
 private:
   gp_Hypr2d hyp;
 };
-

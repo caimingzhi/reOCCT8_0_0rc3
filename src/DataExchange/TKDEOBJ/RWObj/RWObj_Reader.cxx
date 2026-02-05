@@ -44,24 +44,25 @@ IMPLEMENT_STANDARD_RTTIEXT(RWObj_Reader, Standard_Transient)
 
 namespace
 {
-// The length of buffer to read (in bytes)
-static const size_t THE_BUFFER_SIZE = 4 * 1024;
+  // The length of buffer to read (in bytes)
+  static const size_t THE_BUFFER_SIZE = 4 * 1024;
 
-//! Return TRUE if given polygon has clockwise node order.
-static bool isClockwisePolygon(const occ::handle<BRepMesh_DataStructureOfDelaun>& theMesh,
-                               const IMeshData::VectorOfInteger&                  theIndexes)
-{
-  double    aPtSum       = 0;
-  const int aNbElemNodes = theIndexes.Size();
-  for (int aNodeIter = theIndexes.Lower(); aNodeIter <= theIndexes.Upper(); ++aNodeIter)
+  //! Return TRUE if given polygon has clockwise node order.
+  static bool isClockwisePolygon(const occ::handle<BRepMesh_DataStructureOfDelaun>& theMesh,
+                                 const IMeshData::VectorOfInteger&                  theIndexes)
   {
-    int                    aNodeNext = theIndexes.Lower() + ((aNodeIter + 1) % aNbElemNodes);
-    const BRepMesh_Vertex& aVert1    = theMesh->GetNode(theIndexes.Value(aNodeIter));
-    const BRepMesh_Vertex& aVert2    = theMesh->GetNode(theIndexes.Value(aNodeNext));
-    aPtSum += (aVert2.Coord().X() - aVert1.Coord().X()) * (aVert2.Coord().Y() + aVert1.Coord().Y());
+    double    aPtSum       = 0;
+    const int aNbElemNodes = theIndexes.Size();
+    for (int aNodeIter = theIndexes.Lower(); aNodeIter <= theIndexes.Upper(); ++aNodeIter)
+    {
+      int                    aNodeNext = theIndexes.Lower() + ((aNodeIter + 1) % aNbElemNodes);
+      const BRepMesh_Vertex& aVert1    = theMesh->GetNode(theIndexes.Value(aNodeIter));
+      const BRepMesh_Vertex& aVert2    = theMesh->GetNode(theIndexes.Value(aNodeNext));
+      aPtSum +=
+        (aVert2.Coord().X() - aVert1.Coord().X()) * (aVert2.Coord().Y() + aVert1.Coord().Y());
+    }
+    return aPtSum < 0.0;
   }
-  return aPtSum < 0.0;
-}
 } // namespace
 
 //=================================================================================================

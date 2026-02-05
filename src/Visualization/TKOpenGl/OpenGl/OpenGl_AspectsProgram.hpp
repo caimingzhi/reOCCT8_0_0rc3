@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ShaderProgram.hpp>
 
 class Graphic3d_Aspects;
@@ -48,4 +47,3 @@ private:
   TCollection_AsciiString           myShaderProgramId;
   bool                              myIsShaderReady;
 };
-

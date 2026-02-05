@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitivePoly.hpp>
 #include <Select3D_SensitiveSet.hpp>
 
@@ -74,4 +73,3 @@ protected:
   gp_Pnt                                myCOG;            //!< Center of the point set
   Select3D_BndBox3d                     myBndBox;         //!< Bounding box of the point set
 };
-

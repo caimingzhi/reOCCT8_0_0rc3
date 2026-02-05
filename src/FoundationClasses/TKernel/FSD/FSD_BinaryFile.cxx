@@ -455,7 +455,8 @@ void FSD_BinaryFile::Destroy()
 
 Storage_Error FSD_BinaryFile::BeginWriteInfoSection()
 {
-  union {
+  union
+  {
     char ti2[4];
     int  aResult;
   } aWrapUnion{};
@@ -1671,7 +1672,8 @@ double FSD_BinaryFile::InverseReal(const double theValue)
 {
   Standard_STATIC_ASSERT(sizeof(double) == 2 * sizeof(int));
 
-  union {
+  union
+  {
     int    i[2];
     double aValue;
   } aWrapUnion{};
@@ -1694,7 +1696,8 @@ float FSD_BinaryFile::InverseShortReal(const float theValue)
 {
   Standard_STATIC_ASSERT(sizeof(float) == sizeof(int));
 
-  union {
+  union
+  {
     float aValue;
     int   aResult;
   } aWrapUnion{};
@@ -1722,7 +1725,8 @@ inline uint64_t OCCT_InverseSizeSpecialized<4>(const uint64_t theValue, int)
 template <>
 inline uint64_t OCCT_InverseSizeSpecialized<8>(const uint64_t theValue, int)
 {
-  union {
+  union
+  {
     int      i[2];
     uint64_t aValue;
   } aWrapUnion{};

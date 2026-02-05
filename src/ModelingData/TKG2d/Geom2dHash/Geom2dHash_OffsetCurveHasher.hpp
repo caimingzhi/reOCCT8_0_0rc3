@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_OffsetCurve.hpp>
 #include <Geom2dHash_CurveHasher.hpp>
@@ -35,4 +34,3 @@ struct Geom2dHash_OffsetCurveHasher
            && std::abs(theCurve1->Offset() - theCurve2->Offset()) <= aTolerance;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -88,4 +87,3 @@ private:
   occ::handle<Standard_Transient> theconcerned;
   occ::handle<Standard_Transient> thecontent;
 };
-

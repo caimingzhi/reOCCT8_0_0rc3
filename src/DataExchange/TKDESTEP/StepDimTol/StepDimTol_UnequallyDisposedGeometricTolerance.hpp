@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_LengthMeasureWithUnit.hpp>

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_MaterialAspect.hpp>
 #include <OpenGl_Vec.hpp>
 
@@ -138,4 +137,3 @@ enum OpenGl_MaterialFlag
   OpenGl_MaterialFlag_Front, //!< material for front faces
   OpenGl_MaterialFlag_Back   //!< material for back  faces
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_CurveElementEndCoordinateSystem.hpp>
@@ -40,4 +39,3 @@ private:
   StepFEA_CurveElementEndCoordinateSystem  theCoordinateSystem;
   occ::handle<NCollection_HArray1<double>> theOffsetVector;
 };
-

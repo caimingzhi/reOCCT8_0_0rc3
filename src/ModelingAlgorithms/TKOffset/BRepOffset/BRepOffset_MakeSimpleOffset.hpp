@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_Modifier.hpp>
 #include <ShapeBuild_ReShape.hpp>
 #include <NCollection_DataMap.hpp>
@@ -153,4 +152,3 @@ private:
   //! Result shape.
   TopoDS_Shape myResShape;
 };
-

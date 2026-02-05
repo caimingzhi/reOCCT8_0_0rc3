@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -72,4 +71,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(AppDef_SmoothCriterion, Standard_Transient)
 };
-

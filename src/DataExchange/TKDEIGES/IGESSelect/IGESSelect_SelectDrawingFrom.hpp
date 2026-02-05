@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -33,4 +32,3 @@ protected:
   //! gives a unique result
   Standard_EXPORT bool HasUniqueResult() const override;
 };
-

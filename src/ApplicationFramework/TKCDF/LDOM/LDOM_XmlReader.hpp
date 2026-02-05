@@ -1,6 +1,5 @@
 #pragma once
 
-
 // #define XML_BUFFER_SIZE 1000
 #define XML_BUFFER_SIZE 20480
 
@@ -75,4 +74,3 @@ private:
   bool                         myTagPerStep;
   LDOM_OSStream::BOMType       myBOM;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Curve.hpp>
 #include <Select3D_SensitivePoly.hpp>
 #include <gp_Pnt.hpp>
@@ -53,4 +52,3 @@ private:
     }
   }
 };
-

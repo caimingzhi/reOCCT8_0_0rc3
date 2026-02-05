@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -51,4 +50,3 @@ private:
   NodeIndices myIndices;
   NodeData    myData;
 };
-

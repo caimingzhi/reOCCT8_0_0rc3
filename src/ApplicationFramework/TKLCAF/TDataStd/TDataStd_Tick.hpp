@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericEmpty.hpp>
 #include <Standard_OStream.hpp>
 class Standard_GUID;
@@ -30,4 +29,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataStd_Tick, TDataStd_GenericEmpty)
 };
-

@@ -19,11 +19,11 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_GraphicDriverFactory, Standard_Transient)
 
 namespace
 {
-static NCollection_List<occ::handle<Graphic3d_GraphicDriverFactory>>& getDriverFactories()
-{
-  static NCollection_List<occ::handle<Graphic3d_GraphicDriverFactory>> TheFactories;
-  return TheFactories;
-}
+  static NCollection_List<occ::handle<Graphic3d_GraphicDriverFactory>>& getDriverFactories()
+  {
+    static NCollection_List<occ::handle<Graphic3d_GraphicDriverFactory>> TheFactories;
+    return TheFactories;
+  }
 } // namespace
 
 //=================================================================================================

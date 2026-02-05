@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -47,4 +46,3 @@ private:
   TopoDS_Shape                                       theKey;
   NCollection_Array1<NCollection_List<TopoDS_Shape>> theItems;
 };
-

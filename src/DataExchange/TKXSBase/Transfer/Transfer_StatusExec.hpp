@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! execution status of an individual transfer (see Transcriptor)
 enum Transfer_StatusExec
 {
@@ -10,4 +9,3 @@ enum Transfer_StatusExec
   Transfer_StatusError,
   Transfer_StatusLoop
 };
-

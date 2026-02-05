@@ -49,7 +49,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -57,7 +58,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -65,7 +67,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         return;
@@ -73,7 +76,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         return;
@@ -81,7 +85,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -89,7 +94,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         return;
@@ -97,7 +103,8 @@ void IGESDefs_GeneralModule::OwnSharedCase(const int                            
       tool.OwnShared(anent, iter);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         return;
@@ -116,49 +123,56 @@ IGESData_DirChecker IGESDefs_GeneralModule::DirChecker(
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolAssociativityDef tool;
       return tool.DirChecker(anent);
     }
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolAttributeDef tool;
       return tool.DirChecker(anent);
     }
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolAttributeTable tool;
       return tool.DirChecker(anent);
     }
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolGenericData tool;
       return tool.DirChecker(anent);
     }
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolMacroDef tool;
       return tool.DirChecker(anent);
     }
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         break;
       IGESDefs_ToolTabularData tool;
       return tool.DirChecker(anent);
     }
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         break;
@@ -178,7 +192,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -186,7 +201,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -194,7 +210,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         return;
@@ -202,7 +219,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         return;
@@ -210,7 +228,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -218,7 +237,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         return;
@@ -226,7 +246,8 @@ void IGESDefs_GeneralModule::OwnCheckCase(const int                             
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         return;
@@ -277,49 +298,56 @@ void IGESDefs_GeneralModule::OwnCopyCase(const int                              
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, enfr, entfrom);
       DeclareAndCast(IGESDefs_AssociativityDef, ento, entto);
       IGESDefs_ToolAssociativityDef tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, enfr, entfrom);
       DeclareAndCast(IGESDefs_AttributeDef, ento, entto);
       IGESDefs_ToolAttributeDef tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, enfr, entfrom);
       DeclareAndCast(IGESDefs_AttributeTable, ento, entto);
       IGESDefs_ToolAttributeTable tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, enfr, entfrom);
       DeclareAndCast(IGESDefs_GenericData, ento, entto);
       IGESDefs_ToolGenericData tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, enfr, entfrom);
       DeclareAndCast(IGESDefs_MacroDef, ento, entto);
       IGESDefs_ToolMacroDef tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, enfr, entfrom);
       DeclareAndCast(IGESDefs_TabularData, ento, entto);
       IGESDefs_ToolTabularData tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, enfr, entfrom);
       DeclareAndCast(IGESDefs_UnitsData, ento, entto);
       IGESDefs_ToolUnitsData tool;

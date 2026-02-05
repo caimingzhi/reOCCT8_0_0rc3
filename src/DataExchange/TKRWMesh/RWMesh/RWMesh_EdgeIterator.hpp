@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <Poly_Polygon3D.hpp>
 #include <RWMesh_ShapeIterator.hpp>
@@ -95,4 +94,3 @@ private:
   TopoDS_Edge                 myEdge;      //!< current edge
   occ::handle<Poly_Polygon3D> myPolygon3D; //!< geometry of current edge
 };
-

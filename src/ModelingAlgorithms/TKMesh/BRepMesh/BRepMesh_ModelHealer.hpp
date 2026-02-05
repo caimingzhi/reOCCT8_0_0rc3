@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_ModelAlgo.hpp>
 #include <IMeshTools_Parameters.hpp>
 #include <IMeshData_Model.hpp>
@@ -150,4 +149,3 @@ private:
   IMeshTools_Parameters                            myParameters;
   Handle(IMeshData::DMapOfIFacePtrsMapOfIEdgePtrs) myFaceIntersectingEdges;
 };
-

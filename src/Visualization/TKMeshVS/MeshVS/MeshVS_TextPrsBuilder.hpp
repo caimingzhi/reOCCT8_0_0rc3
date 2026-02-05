@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DataMap.hpp>
@@ -62,4 +61,3 @@ private:
   NCollection_DataMap<int, TCollection_AsciiString> myNodeTextMap;
   NCollection_DataMap<int, TCollection_AsciiString> myElemTextMap;
 };
-

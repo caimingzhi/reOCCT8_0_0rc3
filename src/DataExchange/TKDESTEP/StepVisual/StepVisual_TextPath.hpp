@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepVisual_TextPath
 {
   StepVisual_tpUp,
@@ -8,4 +7,3 @@ enum StepVisual_TextPath
   StepVisual_tpDown,
   StepVisual_tpLeft
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMDF_ADriver.hpp>
 
 //! A universal driver for the attribute that inherits another attribute with
@@ -48,4 +47,3 @@ protected:
   occ::handle<TDF_Attribute>  myDerivative; //!< the derivative attribute that inherits the base
   occ::handle<BinMDF_ADriver> myBaseDirver; //!< the base attribute driver to be reused here
 };
-

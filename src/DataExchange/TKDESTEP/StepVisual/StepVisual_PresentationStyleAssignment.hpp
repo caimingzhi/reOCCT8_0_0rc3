@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_PresentationStyleSelect.hpp>
@@ -35,4 +34,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepVisual_PresentationStyleSelect>> styles;
 };
-

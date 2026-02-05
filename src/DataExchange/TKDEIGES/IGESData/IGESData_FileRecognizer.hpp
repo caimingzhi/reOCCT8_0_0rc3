@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -56,4 +55,3 @@ private:
   bool                                 hasnext;
   occ::handle<IGESData_FileRecognizer> thenext;
 };
-

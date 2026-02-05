@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -92,4 +91,3 @@ private:
   occ::handle<Standard_Transient>      theents[4];
   occ::handle<Interface_EntityCluster> thenext;
 };
-

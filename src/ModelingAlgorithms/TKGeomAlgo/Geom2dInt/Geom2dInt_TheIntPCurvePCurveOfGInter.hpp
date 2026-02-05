@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -83,4 +82,3 @@ private:
   //! Minimal number of sample points
   int myMinPntNb;
 };
-

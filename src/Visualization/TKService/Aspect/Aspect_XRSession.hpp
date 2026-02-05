@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Texture color spaces accepted by XR composer.
 enum Aspect_ColorSpace
 {
@@ -21,22 +20,9 @@ enum Aspect_ColorSpace
   Aspect_ColorSpace_Linear = 1, //!< linear RGB color space
 };
 
-
 #include <Aspect_Eye.hpp>
 #include <Aspect_FrustumLRBT.hpp>
 #include <Aspect_GraphicsLibrary.hpp>
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -64,6 +50,18 @@ enum Aspect_ColorSpace
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+// Copyright (c) 2020 OPEN CASCADE SAS
+//
+// This file is part of Open CASCADE Technology software library.
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License version 2.1 as published
+// by the Free Software Foundation, with special exception defined in the file
+// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
+// distribution for complete text of the license and disclaimer of any warranty.
+//
+// Alternatively, this file may be used under the terms of Open CASCADE
+// commercial license or contractual agreement.
 
 //! XR action type.
 enum Aspect_XRActionType
@@ -74,7 +72,6 @@ enum Aspect_XRActionType
   Aspect_XRActionType_InputSkeletal, //!< skeletal input
   Aspect_XRActionType_OutputHaptic   //!< haptic output (vibration)
 };
-
 
 #include <NCollection_IndexedDataMap.hpp>
 #include <Standard_Transient.hpp>
@@ -117,8 +114,6 @@ protected:
 
 //! Map of actions with action Id as a key.
 
-
-
 //! XR action set.
 class Aspect_XRActionSet : public Standard_Transient
 {
@@ -160,7 +155,6 @@ protected:
     myActions; //!< map of actions
 };
 
-
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -173,7 +167,6 @@ protected:
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <NCollection_Vec3.hpp>
 
@@ -200,7 +193,6 @@ struct Aspect_XRAnalogActionData
   }
 };
 
-
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -213,7 +205,6 @@ struct Aspect_XRAnalogActionData
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Standard_TypeDef.hpp>
 
@@ -239,7 +230,6 @@ struct Aspect_XRDigitalActionData
   }
 };
 
-
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -252,7 +242,6 @@ struct Aspect_XRDigitalActionData
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Generic XR action.
 enum Aspect_XRGenericAction
@@ -282,7 +271,6 @@ enum
   Aspect_XRGenericAction_NB = Aspect_XRGenericAction_OutputHaptic + 1
 };
 
-
 #include <Aspect_XRHapticActionData.hpp>
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -310,7 +298,6 @@ enum
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <gp_Trsf.hpp>
 #include <NCollection_Array1.hpp>
 
@@ -333,7 +320,6 @@ struct Aspect_TrackedDevicePose
 
 //! Array of tracked poses.
 
-
 #include <Standard_TypeDef.hpp>
 
 //! Pose input XR action data.
@@ -352,7 +338,6 @@ struct Aspect_XRPoseActionData
   {
   }
 };
-
 
 #include <Aspect_XRTrackedDeviceRole.hpp>
 #include <gp_Trsf.hpp>
@@ -594,4 +579,3 @@ protected:
   double myIod;         //!< intra-ocular distance in meters
   float  myDispFreq;    //!< display frequency
 };
-

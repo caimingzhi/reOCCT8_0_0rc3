@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_Interface.hpp>
 #include <gp_XY.hpp>
 #include <gp_XYZ.hpp>
@@ -80,4 +79,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IVtk_IView, IVtk_Interface)
 };
-

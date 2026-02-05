@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -53,4 +52,3 @@ public:
                                   const DsgPrs_ArrowSide                 ArrowSide,
                                   const bool                             IsDiamSymbol);
 };
-

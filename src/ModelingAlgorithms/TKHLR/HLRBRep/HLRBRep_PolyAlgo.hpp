@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <BRepAdaptor_Curve.hpp>
 #include <BRepAdaptor_Curve2d.hpp>
@@ -616,4 +615,3 @@ private:
   BRepAdaptor_Curve                                             myBCurv;
   BRepAdaptor_Curve2d                                           myPC;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -34,4 +33,3 @@ private:
   NCollection_DataMap<int, occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>>
     myPyramidTopos;
 };
-

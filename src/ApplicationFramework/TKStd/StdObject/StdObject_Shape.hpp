@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObject_Location.hpp>
 // Copyright (c) 2015 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <StdObjMgt_SharedObject.hpp>
 #include <StdObjMgt_ReadData.hpp>
@@ -59,8 +57,6 @@ protected:
 public:
   typedef IgnoreData<StdObjMgt_Persistent, pTShape, TopoDS_TShape> TShape;
 };
-
-
 
 #include <TopoDS_Shape.hpp>
 
@@ -118,4 +114,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData&   theWriteData,
   theShape.write(theWriteData);
   return theWriteData;
 }
-

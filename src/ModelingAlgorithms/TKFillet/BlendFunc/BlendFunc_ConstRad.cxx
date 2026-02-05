@@ -1,23 +1,3 @@
-// Created on: 1993-12-02
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified 09/09/1996 PMN Adde Nb(Intervalls), IsRationnal
-//                         Optimisation, use of GetCircle
-// Modified 20/02/1998 PMN Singular surfaces management
-
 #include <Adaptor3d_Curve.hpp>
 #include <Blend_Point.hpp>
 #include <BlendFunc.hpp>
@@ -89,25 +69,29 @@ void BlendFunc_ConstRad::Set(const double Radius, const int Choix)
   switch (choix)
   {
     case 1:
-    case 2: {
+    case 2:
+    {
       ray1 = -Radius;
       ray2 = -Radius;
     }
     break;
     case 3:
-    case 4: {
+    case 4:
+    {
       ray1 = Radius;
       ray2 = -Radius;
     }
     break;
     case 5:
-    case 6: {
+    case 6:
+    {
       ray1 = Radius;
       ray2 = Radius;
     }
     break;
     case 7:
-    case 8: {
+    case 8:
+    {
       ray1 = -Radius;
       ray2 = Radius;
     }
@@ -181,20 +165,23 @@ bool BlendFunc_ConstRad::ComputeValues(const math_Vector& X,
     //----- Positioning on the curve ----------------
     switch (myTOrder)
     {
-      case 0: {
+      case 0:
+      {
         tcurv->D1(T, ptgui, d1gui);
         nplan = d1gui.Normalized();
       }
       break;
 
-      case 1: {
+      case 1:
+      {
         tcurv->D2(T, ptgui, d1gui, d2gui);
         nplan     = d1gui.Normalized();
         invnormtg = ((double)1) / d1gui.Magnitude();
         dnplan.SetLinearForm(invnormtg, d2gui, -invnormtg * (nplan.Dot(d2gui)), nplan);
         break;
       }
-      case 2: {
+      case 2:
+      {
         tcurv->D3(T, ptgui, d1gui, d2gui, d3gui);
         nplan     = d1gui.Normalized();
         invnormtg = ((double)1) / d1gui.Magnitude();
@@ -218,14 +205,16 @@ bool BlendFunc_ConstRad::ComputeValues(const math_Vector& X,
     //-------------- Positioning on surfaces -----------------
     switch (myXOrder)
     {
-      case 0: {
+      case 0:
+      {
         surf1->D1(X(1), X(2), pts1, d1u1, d1v1);
         nsurf1 = d1u1.Crossed(d1v1);
         surf2->D1(X(3), X(4), pts2, d1u2, d1v2);
         nsurf2 = d1u2.Crossed(d1v2);
         break;
       }
-      case 1: {
+      case 1:
+      {
         surf1->D2(X(1), X(2), pts1, d1u1, d1v1, d2u1, d2v1, d2uv1);
         nsurf1 = d1u1.Crossed(d1v1);
         dns1u1 = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
@@ -236,7 +225,8 @@ bool BlendFunc_ConstRad::ComputeValues(const math_Vector& X,
         dns1v2 = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
         break;
       }
-      case 2: {
+      case 2:
+      {
         surf1->D3(X(1), X(2), pts1, d1u1, d1v1, d2u1, d2v1, d2uv1, d3u1, d3v1, d3uuv1, d3uvv1);
         nsurf1 = d1u1.Crossed(d1v1);
         dns1u1 = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));

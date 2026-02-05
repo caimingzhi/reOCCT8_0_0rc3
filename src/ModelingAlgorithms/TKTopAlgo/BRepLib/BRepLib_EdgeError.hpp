@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Errors that can occur at edge construction.
 //! no error
 enum BRepLib_EdgeError
@@ -13,4 +12,3 @@ enum BRepLib_EdgeError
   BRepLib_DifferentsPointAndParameter,
   BRepLib_LineThroughIdenticPoints
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Extrema_ExtCC.hpp>
 #include <BRepAdaptor_Curve.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -59,4 +58,3 @@ private:
   Extrema_ExtCC                  myExtCC;
   occ::handle<BRepAdaptor_Curve> myHC;
 };
-

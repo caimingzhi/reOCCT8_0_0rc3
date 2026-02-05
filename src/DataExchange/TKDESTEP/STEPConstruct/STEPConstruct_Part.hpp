@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -125,4 +124,3 @@ private:
   occ::handle<StepShape_ShapeDefinitionRepresentation> mySDR;
   occ::handle<StepBasic_ProductRelatedProductCategory> myPRPC;
 };
-

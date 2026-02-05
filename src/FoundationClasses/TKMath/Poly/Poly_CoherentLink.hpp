@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 class Poly_CoherentTriangle;
@@ -104,4 +103,3 @@ private:
 
   friend class Poly_CoherentTriangulation;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_GUID.hpp>
 
 class BinMDF_ADriverTable;
@@ -25,7 +24,6 @@ public:
                                          const occ::handle<Message_Messenger>&   aMsgDrv);
 };
 
-
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

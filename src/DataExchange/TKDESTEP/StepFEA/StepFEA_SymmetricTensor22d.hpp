@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -28,4 +27,3 @@ public:
   //! Returns Value as AnisotropicSymmetricTensor22d (or Null if another type)
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> AnisotropicSymmetricTensor22d() const;
 };
-

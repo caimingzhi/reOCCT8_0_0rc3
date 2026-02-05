@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -67,4 +66,3 @@ public:
   //! Defines and loads all basic functions (as ActFunc)
   Standard_EXPORT static void Init();
 };
-

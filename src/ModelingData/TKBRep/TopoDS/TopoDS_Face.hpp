@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Describes a face which
@@ -21,13 +20,12 @@ public:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Face>
-{
-  size_t operator()(const TopoDS_Face& theShape) const
+  template <>
+  struct hash<TopoDS_Face>
   {
-    return std::hash<TopoDS_Shape>{}(theShape);
-  }
-};
+    size_t operator()(const TopoDS_Face& theShape) const
+    {
+      return std::hash<TopoDS_Shape>{}(theShape);
+    }
+  };
 } // namespace std
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -49,4 +48,3 @@ protected:
   gp_Dir                  direction;
   GeomAbs_Shape           smooth;
 };
-

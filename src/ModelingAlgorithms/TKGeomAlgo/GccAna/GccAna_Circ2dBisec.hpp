@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -50,4 +49,3 @@ private:
   gp_Circ2d circle1;
   gp_Circ2d circle2;
 };
-

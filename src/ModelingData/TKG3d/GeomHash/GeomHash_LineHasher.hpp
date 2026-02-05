@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_Line.hpp>
 #include <GeomHash_PointHasher.hpp>
@@ -32,4 +31,3 @@ struct GeomHash_LineHasher
            && aDirHasher(theLine1->Position().Direction(), theLine2->Position().Direction());
   }
 };
-

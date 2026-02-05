@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -66,4 +65,3 @@ protected:
   NCollection_IndexedMap<TopoDS_Shape> myShapesToAvoid;
   bool                                 myAvoidInternalShapes;
 };
-

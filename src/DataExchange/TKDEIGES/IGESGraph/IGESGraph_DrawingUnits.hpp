@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -48,4 +47,3 @@ private:
   int                                   theFlag;
   occ::handle<TCollection_HAsciiString> theUnit;
 };
-

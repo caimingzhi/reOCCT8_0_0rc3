@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -45,4 +44,3 @@ private:
                                     const occ::handle<TNaming_NamedShape>& theSourceNS,
                                     const gp_Trsf&                         theTrsf) const;
 };
-

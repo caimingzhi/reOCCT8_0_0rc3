@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <IntCurveSurface_Intersection.hpp>
@@ -190,4 +189,3 @@ private:
                                    const NCollection_Array1<double>&     Z,
                                    NCollection_Array1<double>&           Bounds);
 };
-

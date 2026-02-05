@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -74,6 +73,7 @@ protected:
 private:
   bool Done;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -123,5 +123,3 @@ inline double math_BissecNewton::Value() const
   StdFail_NotDone_Raise_if(!Done, " ");
   return f;
 }
-
-

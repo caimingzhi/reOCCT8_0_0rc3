@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -25,4 +24,3 @@ public:
                                   const TCollection_ExtendedString&      aText,
                                   const gp_Pnt&                          OffsetPoint);
 };
-

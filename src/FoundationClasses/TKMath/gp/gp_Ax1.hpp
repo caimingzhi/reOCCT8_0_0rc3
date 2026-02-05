@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <gp_Dir.hpp>
 
@@ -241,4 +240,3 @@ private:
   gp_Pnt loc;
   gp_Dir vdir;
 };
-

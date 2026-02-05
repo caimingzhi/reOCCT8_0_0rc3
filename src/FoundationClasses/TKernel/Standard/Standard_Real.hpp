@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <algorithm>
 #include <cmath>
 #include <climits>
@@ -18,6 +17,7 @@
 //! Returns the value of the arc cosine of a @p theValue.
 Standard_DEPRECATED("This function duplicates std::acos and will be removed in future releases. "
                     "Use std::acos instead.")
+
 inline double ACos(const double theValue)
 {
   return std::acos(theValue);
@@ -32,6 +32,7 @@ Standard_EXPORT double ACosApprox(const double theValue);
 //! Returns the value of the arc sine of a @p theValue.
 Standard_DEPRECATED("This function duplicates std::asin and will be removed in future releases. "
                     "Use std::asin instead.")
+
 inline double ASin(const double theValue)
 {
   return std::asin(theValue);
@@ -41,6 +42,7 @@ inline double ASin(const double theValue)
 //! arguments to determine the quadrant of the return value.
 Standard_DEPRECATED("This function duplicates std::atan2 and will be removed in future releases. "
                     "Use std::atan2 instead.")
+
 inline double ATan2(const double theX, const double theY)
 {
   return std::atan2(theX, theY);
@@ -49,6 +51,7 @@ inline double ATan2(const double theX, const double theY)
 //! Returns the value of the hyperbolic arc tangent of @p theValue.
 Standard_DEPRECATED("This function duplicates std::atanh and will be removed in future releases. "
                     "Use std::atanh instead.")
+
 inline double ATanh(const double theValue)
 {
   return std::atanh(theValue);
@@ -57,6 +60,7 @@ inline double ATanh(const double theValue)
 //! Returns the value of the hyperbolic arc cosine of @p theValue.
 Standard_DEPRECATED("This function duplicates std::acosh and will be removed in future releases. "
                     "Use std::acosh instead.")
+
 inline double ACosh(const double theValue)
 {
   return std::acosh(theValue);
@@ -65,6 +69,7 @@ inline double ACosh(const double theValue)
 //! Returns the hyperbolic cosine of a double @p theValue.
 Standard_DEPRECATED("This function duplicates std::cosh and will be removed in future releases. "
                     "Use std::cosh instead.")
+
 inline double Cosh(const double theValue)
 {
   return std::cosh(theValue);
@@ -73,6 +78,7 @@ inline double Cosh(const double theValue)
 //! Returns the hyperbolic sine of a double @p theValue.
 Standard_DEPRECATED("This function duplicates std::sinh and will be removed in future releases. "
                     "Use std::sinh instead.")
+
 inline double Sinh(const double theValue)
 {
   return std::sinh(theValue);
@@ -81,6 +87,7 @@ inline double Sinh(const double theValue)
 //! Computes the natural (base-e) logarithm of number @p theValue.
 Standard_DEPRECATED("This function duplicates std::log and will be removed in future releases. "
                     "Use std::log instead.")
+
 inline double Log(const double theValue)
 {
   return std::log(theValue);
@@ -89,6 +96,7 @@ inline double Log(const double theValue)
 //! Returns the square root of a double @p theValue.
 Standard_DEPRECATED("This function duplicates std::sqrt and will be removed in future releases. "
                     "Use std::sqrt instead.")
+
 inline double Sqrt(const double theValue)
 {
   return std::sqrt(theValue);
@@ -99,6 +107,7 @@ inline double Sqrt(const double theValue)
 Standard_DEPRECATED(
   "This function duplicates std::nextafter and will be removed in future releases. "
   "Use std::nextafter instead.")
+
 inline double NextAfter(const double theValue, const double theDirection)
 {
   return std::nextafter(theValue, theDirection);
@@ -109,6 +118,7 @@ inline double NextAfter(const double theValue, const double theDirection)
 Standard_DEPRECATED(
   "This function duplicates std::copysign and will be removed in future releases. "
   "Use std::copysign instead.")
+
 inline double Sign(const double theMagnitude, const double theSign)
 {
   return std::copysign(theMagnitude, theSign);
@@ -124,6 +134,7 @@ inline double Sign(const double theMagnitude, const double theSign)
 //! Equivalent to std::abs.
 Standard_DEPRECATED("This function duplicates std::abs and will be removed in future releases. "
                     "Use std::abs instead.")
+
 inline double Abs(const double theValue)
 {
   return std::abs(theValue);
@@ -200,6 +211,7 @@ inline double Abs(const double theValue)
 //! Returns the value of the arc tangent of a double @p theValue.
 Standard_DEPRECATED("This function duplicates std::atan and will be removed in future releases. "
                     "Use std::atan instead.")
+
 inline double ATan(const double theValue)
 {
   return std::atan(theValue);
@@ -208,6 +220,7 @@ inline double ATan(const double theValue)
 //! Returns the next integer greater than or equal to a double @p theValue.
 Standard_DEPRECATED("This function duplicates std::ceil and will be removed in future releases. "
                     "Use std::ceil instead.")
+
 inline double Ceiling(const double theValue)
 {
   return std::ceil(theValue);
@@ -217,6 +230,7 @@ inline double Ceiling(const double theValue)
 //! Equivalent to std::cos.
 Standard_DEPRECATED("This function duplicates std::cos and will be removed in future releases. "
                     "Use std::cos instead.")
+
 inline double Cos(const double theValue)
 {
   return std::cos(theValue);
@@ -235,6 +249,7 @@ inline double Cos(const double theValue)
 //! Equivalent to std::exp.
 Standard_DEPRECATED("This function duplicates std::exp and will be removed in future releases. "
                     "Use std::exp instead.")
+
 inline double Exp(const double theValue)
 {
   return std::exp(theValue);
@@ -244,6 +259,7 @@ inline double Exp(const double theValue)
 //! Equivalent to std::floor.
 Standard_DEPRECATED("This function duplicates std::floor and will be removed in future releases. "
                     "Use std::floor instead.")
+
 inline double Floor(const double theValue)
 {
   return std::floor(theValue);
@@ -253,6 +269,7 @@ inline double Floor(const double theValue)
 //! Equivalent to std::trunc.
 Standard_DEPRECATED("This function duplicates std::trunc and will be removed in future releases. "
                     "Use std::trunc instead.")
+
 inline double IntegerPart(const double theValue)
 {
   return std::trunc(theValue);
@@ -262,6 +279,7 @@ inline double IntegerPart(const double theValue)
 //! Equivalent to std::log10.
 Standard_DEPRECATED("This function duplicates std::log10 and will be removed in future releases. "
                     "Use std::log10 instead.")
+
 inline double Log10(const double theValue)
 {
   return std::log10(theValue);
@@ -271,6 +289,7 @@ inline double Log10(const double theValue)
 //! Equivalent to std::max.
 Standard_DEPRECATED("This function duplicates std::max and will be removed in future releases. "
                     "Use std::max instead.")
+
 constexpr double Max(const double theValue1, const double theValue2)
 {
   return (std::max)(theValue1, theValue2);
@@ -280,6 +299,7 @@ constexpr double Max(const double theValue1, const double theValue2)
 //! Equivalent to std::min.
 Standard_DEPRECATED("This function duplicates std::min and will be removed in future releases. "
                     "Use std::min instead.")
+
 constexpr double Min(const double theValue1, const double theValue2)
 {
   return (std::min)(theValue1, theValue2);
@@ -288,6 +308,7 @@ constexpr double Min(const double theValue1, const double theValue2)
 //! Returns a double @p theValue raised to the power of @p thePower.
 Standard_DEPRECATED("This function duplicates std::pow and will be removed in future releases. "
                     "Use std::pow instead.")
+
 inline double Pow(const double theValue, const double thePower)
 {
   return std::pow(theValue, thePower);
@@ -327,6 +348,7 @@ inline double Pow(const double theValue, const double thePower)
 //! Equivalent to std::round.
 Standard_DEPRECATED("This function duplicates std::round and will be removed in future releases. "
                     "Use std::round instead.")
+
 inline double Round(const double theValue)
 {
   return std::round(theValue);
@@ -336,6 +358,7 @@ inline double Round(const double theValue)
 //! Equivalent to std::sin.
 Standard_DEPRECATED("This function duplicates std::sin and will be removed in future releases. "
                     "Use std::sin instead.")
+
 inline double Sin(const double theValue)
 {
   return std::sin(theValue);
@@ -345,6 +368,7 @@ inline double Sin(const double theValue)
 //! Equivalent to std::asinh.
 Standard_DEPRECATED("This function duplicates std::asinh and will be removed in future releases. "
                     "Use std::asinh instead.")
+
 inline double ASinh(const double theValue)
 {
   return std::asinh(theValue);
@@ -360,6 +384,7 @@ inline double ASinh(const double theValue)
 //! Equivalent to std::tan.
 Standard_DEPRECATED("This function duplicates std::tan and will be removed in future releases. "
                     "Use std::tan instead.")
+
 inline double Tan(const double theValue)
 {
   return std::tan(theValue);
@@ -369,6 +394,7 @@ inline double Tan(const double theValue)
 //! Equivalent to std::tanh.
 Standard_DEPRECATED("This function duplicates std::tanh and will be removed in future releases. "
                     "Use std::tanh instead.")
+
 inline double Tanh(const double theValue)
 {
   return std::tanh(theValue);

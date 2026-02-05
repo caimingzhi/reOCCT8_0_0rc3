@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -410,16 +409,15 @@ private:
 
 namespace std
 {
-template <>
-struct hash<Quantity_Color>
-{
-  std::size_t operator()(const Quantity_Color& theColor) const noexcept
+  template <>
+  struct hash<Quantity_Color>
   {
-    unsigned char aByteArr[3] = {static_cast<unsigned char>(255 * theColor.Red()),
-                                 static_cast<unsigned char>(255 * theColor.Green()),
-                                 static_cast<unsigned char>(255 * theColor.Blue())};
-    return opencascade::hashBytes(aByteArr, sizeof(aByteArr));
-  }
-};
+    std::size_t operator()(const Quantity_Color& theColor) const noexcept
+    {
+      unsigned char aByteArr[3] = {static_cast<unsigned char>(255 * theColor.Red()),
+                                   static_cast<unsigned char>(255 * theColor.Green()),
+                                   static_cast<unsigned char>(255 * theColor.Blue())};
+      return opencascade::hashBytes(aByteArr, sizeof(aByteArr));
+    }
+  };
 } // namespace std
-

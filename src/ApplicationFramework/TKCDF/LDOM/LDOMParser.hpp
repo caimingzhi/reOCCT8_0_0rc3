@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Document.hpp>
 #include <LDOM_OSStream.hpp>
 
@@ -86,4 +85,3 @@ private:
   LDOM_OSStream                myCurrentData;
   TCollection_AsciiString      myError;
 };
-

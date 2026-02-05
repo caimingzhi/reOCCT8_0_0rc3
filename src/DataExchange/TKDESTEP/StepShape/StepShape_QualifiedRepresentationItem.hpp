@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_ValueQualifier.hpp>
@@ -39,4 +38,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepShape_ValueQualifier>> theQualifiers;
 };
-

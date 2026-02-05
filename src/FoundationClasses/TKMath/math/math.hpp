@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -52,4 +51,3 @@ public:
                                                       math_Vector& Points,
                                                       math_Vector& Weights);
 };
-

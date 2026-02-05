@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -54,4 +53,3 @@ private:
   occ::handle<TDF_Attribute> myAttribute;
   TDF_Label                  myLabel;
 };
-

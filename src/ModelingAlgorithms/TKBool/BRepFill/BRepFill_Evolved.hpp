@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -181,4 +180,3 @@ private:
   TopoDS_Shape myTop;
   TopoDS_Shape myBottom;
 };
-

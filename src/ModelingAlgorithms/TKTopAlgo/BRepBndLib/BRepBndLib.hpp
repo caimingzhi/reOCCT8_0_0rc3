@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -82,4 +81,3 @@ public:
                                      const bool          theIsOptimal            = false,
                                      const bool          theIsShapeToleranceUsed = true);
 };
-

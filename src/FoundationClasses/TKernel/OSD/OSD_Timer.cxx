@@ -1,19 +1,3 @@
-// Created on: 1992-12-04
-// Created by: Didier PIFFAULT , Mireille MERCIEN
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OSD_Timer.hpp>
 
 #ifdef _WIN32
@@ -24,31 +8,31 @@
 
 namespace
 {
-//! Auxiliary function splits elapsed time in seconds into Hours, Minutes and Seconds.
-//! @param theTimeSec [in]  elapsed time in seconds
-//! @param theHours   [out] clamped elapsed hours
-//! @param theMinutes [out] clamped elapsed minutes within range [0, 59]
-//! @param theSeconds [out] clamped elapsed seconds within range [0, 60)
-static void timeToHoursMinutesSeconds(double  theTimeSec,
-                                      int&    theHours,
-                                      int&    theMinutes,
-                                      double& theSeconds)
-{
-  int aSec   = (int)theTimeSec;
-  theHours   = aSec / 3600;
-  theMinutes = (aSec - theHours * 3600) / 60;
-  theSeconds = theTimeSec - theHours * 3600 - theMinutes * 60;
-}
+  //! Auxiliary function splits elapsed time in seconds into Hours, Minutes and Seconds.
+  //! @param theTimeSec [in]  elapsed time in seconds
+  //! @param theHours   [out] clamped elapsed hours
+  //! @param theMinutes [out] clamped elapsed minutes within range [0, 59]
+  //! @param theSeconds [out] clamped elapsed seconds within range [0, 60)
+  static void timeToHoursMinutesSeconds(double  theTimeSec,
+                                        int&    theHours,
+                                        int&    theMinutes,
+                                        double& theSeconds)
+  {
+    int aSec   = (int)theTimeSec;
+    theHours   = aSec / 3600;
+    theMinutes = (aSec - theHours * 3600) / 60;
+    theSeconds = theTimeSec - theHours * 3600 - theMinutes * 60;
+  }
 
 #ifdef _WIN32
-//! Define a structure for initializing global constant of pair values.
-struct PerfCounterFreq
-{
-  LARGE_INTEGER Freq;
-  bool          IsOk;
+  //! Define a structure for initializing global constant of pair values.
+  struct PerfCounterFreq
+  {
+    LARGE_INTEGER Freq;
+    bool          IsOk;
 
-  PerfCounterFreq() { IsOk = QueryPerformanceFrequency(&Freq) != FALSE; }
-};
+    PerfCounterFreq() { IsOk = QueryPerformanceFrequency(&Freq) != FALSE; }
+  };
 #endif
 } // namespace
 

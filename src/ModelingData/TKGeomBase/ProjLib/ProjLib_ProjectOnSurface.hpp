@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class Geom_BSplineCurve;
@@ -38,4 +37,3 @@ private:
   bool                           myIsDone;
   occ::handle<Geom_BSplineCurve> myResult;
 };
-

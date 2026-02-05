@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <AppParCurves_Constraint.hpp>
@@ -125,4 +124,3 @@ private:
   AppParCurves_Constraint          myBndPnt;
   double                           myDist;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Interface General purpose Macros
 // Their use is not required, but it gets some program parts easier :
 // DownCasting, with or without Declaration
@@ -17,4 +16,3 @@
 #define FastCast(atype, result, start)                                                             \
   Handle(atype) result;                                                                            \
   result = (*(Handle(atype)*)) & start
-

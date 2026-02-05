@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -84,4 +83,3 @@ private:
   occ::handle<NCollection_HArray1<int>>                                  theLabelLevels;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     theDisplayedEntities;
 };
-

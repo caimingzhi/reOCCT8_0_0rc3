@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -41,6 +40,7 @@ private:
   bool   empt;
   gp_Pnt pnt;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -87,5 +87,3 @@ inline const gp_Pnt& IntAna_Int3Pln::Value() const
   }
   return pnt;
 }
-
-

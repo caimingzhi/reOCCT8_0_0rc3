@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_Frustum.hpp>
 
 //! This class contains representation of triangular selecting frustum, created in case
@@ -171,4 +170,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(SelectMgr_TriangularFrustum, SelectMgr_Frustum<3>)
   friend class SelectMgr_TriangularFrustumSet;
 };
-

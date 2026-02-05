@@ -1,18 +1,3 @@
-// Created on: 2015-03-15
-// Created by: Danila ULYANOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ViewerTest_CmdParser.hpp>
 
 #include <Draw.hpp>
@@ -26,29 +11,29 @@
 namespace
 {
 
-//! Converts the given string to lowercase
-//! @param theString the string to be converted
-//! @return a converted string (a string in lowercase)
-static std::string toLowerCase(std::string theString)
-{
-  std::transform(theString.begin(), theString.end(), theString.begin(), ::LowerCase);
-  return theString;
-}
-
-//! Converts the vector of std::strings to a vector of pointers to its data
-//! @param theStringList the vector of strings to be converted
-//! @return a vector of pointers to the data of given strings
-static std::vector<const char*> convertToRawStringList(
-  const std::vector<std::string>& theStringList)
-{
-  const std::size_t        aListSize = theStringList.size();
-  std::vector<const char*> aRawStringList(aListSize);
-  for (std::size_t anIndex = 0; anIndex < aListSize; ++anIndex)
+  //! Converts the given string to lowercase
+  //! @param theString the string to be converted
+  //! @return a converted string (a string in lowercase)
+  static std::string toLowerCase(std::string theString)
   {
-    aRawStringList[anIndex] = theStringList[anIndex].c_str();
+    std::transform(theString.begin(), theString.end(), theString.begin(), ::LowerCase);
+    return theString;
   }
-  return aRawStringList;
-}
+
+  //! Converts the vector of std::strings to a vector of pointers to its data
+  //! @param theStringList the vector of strings to be converted
+  //! @return a vector of pointers to the data of given strings
+  static std::vector<const char*> convertToRawStringList(
+    const std::vector<std::string>& theStringList)
+  {
+    const std::size_t        aListSize = theStringList.size();
+    std::vector<const char*> aRawStringList(aListSize);
+    for (std::size_t anIndex = 0; anIndex < aListSize; ++anIndex)
+    {
+      aRawStringList[anIndex] = theStringList[anIndex].c_str();
+    }
+    return aRawStringList;
+  }
 
 } // namespace
 

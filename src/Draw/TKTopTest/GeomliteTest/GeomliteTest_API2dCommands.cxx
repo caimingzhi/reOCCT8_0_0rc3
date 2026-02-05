@@ -1,21 +1,3 @@
-// Created on: 1995-01-11
-// Created by: Remi LEQUETTE
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// modified : pmn 11/04/97 : mis dans GeomliteTest
-
 #include <GeomliteTest.hpp>
 #include <Geom2d_BSplineCurve.hpp>
 #include <Draw_Interpretor.hpp>
@@ -504,27 +486,33 @@ static int intconcon(Draw_Interpretor& di, int n, const char** a)
   Handle(NCollection_Shared<IntAna2d_Conic>) pCon;
   switch (T2)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Line()));
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Circle()));
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Ellipse()));
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Hyperbola()));
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Parabola()));
       break;
     }
-    default: {
+    default:
+    {
       di << "Syntax error: '" << a[2] << "' is not conic";
       return 1;
     }

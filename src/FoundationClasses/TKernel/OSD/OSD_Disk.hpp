@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <OSD_Error.hpp>
 #include <OSD_Path.hpp>
@@ -56,4 +55,3 @@ private:
   TCollection_AsciiString myDiskName;
   OSD_Error               myError;
 };
-

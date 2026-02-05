@@ -26,11 +26,11 @@
 
 namespace
 {
-static const char* GccEnt_Table_PrintPosition[5] = {"UNQUALIFIED",
-                                                    "ENCLOSING",
-                                                    "ENCLOSED",
-                                                    "OUTSIDE",
-                                                    "NOQUALIFIER"};
+  static const char* GccEnt_Table_PrintPosition[5] = {"UNQUALIFIED",
+                                                      "ENCLOSING",
+                                                      "ENCLOSED",
+                                                      "OUTSIDE",
+                                                      "NOQUALIFIER"};
 }
 
 //=================================================================================================

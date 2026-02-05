@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -144,4 +143,3 @@ private:
   occ::handle<NCollection_HArray1<gp_Pnt>> myGDTPoints; // Point for each GDT to describe position of GDT frame in View.
   // clang-format on
 };
-

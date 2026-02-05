@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
 //! Contains triangles array definition
@@ -64,4 +63,3 @@ public:
   {
   }
 };
-

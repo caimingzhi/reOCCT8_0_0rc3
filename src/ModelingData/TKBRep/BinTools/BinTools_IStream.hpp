@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinTools.hpp>
 #include <BinTools_ObjectType.hpp>
 #include <TopAbs_ShapeEnum.hpp>
@@ -122,4 +121,3 @@ private:
   uint64_t            myPosition; ///< equivalent to tellg returned value for fast access
   BinTools_ObjectType myLastType; ///< last type that was read
 };
-

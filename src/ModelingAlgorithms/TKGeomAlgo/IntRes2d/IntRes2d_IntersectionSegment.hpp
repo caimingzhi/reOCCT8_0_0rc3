@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -70,6 +69,7 @@ private:
   IntRes2d_IntersectionPoint ptfirst;
   IntRes2d_IntersectionPoint ptlast;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -193,5 +193,3 @@ inline const IntRes2d_IntersectionPoint& IntRes2d_IntersectionSegment::LastPoint
   }
   return ptlast;
 }
-
-

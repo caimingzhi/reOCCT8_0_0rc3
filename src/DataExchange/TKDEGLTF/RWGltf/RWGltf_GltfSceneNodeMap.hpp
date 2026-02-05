@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_IndexedMap.hpp>
 #include <XCAFPrs_DocumentExplorer.hpp>
 
@@ -23,4 +22,3 @@ public:
     return NCollection_IndexedMap<XCAFPrs_DocumentNode>::FindIndex(aDocNode);
   }
 };
-

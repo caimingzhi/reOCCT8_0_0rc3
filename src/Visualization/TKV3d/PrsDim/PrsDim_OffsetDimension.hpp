@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 #include <PrsDim_KindOfDimension.hpp>
 
@@ -55,4 +54,3 @@ private:
   gp_Dir  myDirAttach2;
   gp_Trsf myRelativePos;
 };
-

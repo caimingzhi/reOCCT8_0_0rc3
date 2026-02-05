@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <NCollection_Vector.hpp>
 #include <GeomInt_TheComputeLineOfWLApprox.hpp>
@@ -149,4 +148,3 @@ private:
   Approx_Data                            myData;
   NCollection_Vector<int>                myKnots;
 };
-

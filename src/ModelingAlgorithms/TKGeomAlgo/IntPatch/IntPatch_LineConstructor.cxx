@@ -1,19 +1,3 @@
-// Created on: 1996-11-07
-// Created by: Laurent BUCHARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_TopolTool.hpp>
 #include <IntPatch_ALine.hpp>
@@ -57,16 +41,19 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Le cas de biparametrees periodiques est gere en amont
       myHS1IsUPeriodic = myHS1IsVPeriodic = false;
       break;
@@ -78,16 +65,19 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Le cas de biparametrees periodiques est gere en amont
       myHS2IsUPeriodic = myHS2IsVPeriodic = false;
       break;
@@ -217,7 +207,8 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
   IntPatch_IType typl   = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(L));
       if (alin->HasFirstPoint())
       {
@@ -235,7 +226,8 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       return firstp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> rlin(occ::down_cast<IntPatch_RLine>(L));
       if (rlin->HasFirstPoint())
       {
@@ -247,7 +239,8 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       }
       return firstp;
     }
-    case IntPatch_Walking: {
+    case IntPatch_Walking:
+    {
 
       occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
       if (wlin->HasFirstPoint())
@@ -261,7 +254,8 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       return firstp;
     }
 
-    default: {
+    default:
+    {
       occ::handle<IntPatch_GLine> glin(occ::down_cast<IntPatch_GLine>(L));
       if (glin->HasFirstPoint())
       {
@@ -281,7 +275,8 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
           case IntPatch_Ellipse:
             firstp = 0.;
             break;
-          default: {
+          default:
+          {
           }
         }
       }
@@ -299,7 +294,8 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
   IntPatch_IType typl  = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(L));
 
       if (alin->HasLastPoint())
@@ -318,7 +314,8 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       return lastp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> rlin(occ::down_cast<IntPatch_RLine>(L));
 
       if (rlin->HasLastPoint())
@@ -331,7 +328,8 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       }
       return lastp;
     }
-    case IntPatch_Walking: {
+    case IntPatch_Walking:
+    {
       occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
 
       if (wlin->HasLastPoint())
@@ -345,7 +343,8 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       return lastp;
     }
 
-    default: {
+    default:
+    {
       occ::handle<IntPatch_GLine> glin(occ::down_cast<IntPatch_GLine>(L));
 
       if (glin->HasLastPoint())
@@ -366,7 +365,8 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
           case IntPatch_Ellipse:
             lastp = M_PI + M_PI;
             break;
-          default: {
+          default:
+          {
           }
         }
       }
@@ -592,7 +592,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
   IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> ALine(occ::down_cast<IntPatch_ALine>(L));
       occ::handle<IntPatch_ALine> alig;
       if (L->TransitionOnS1() == IntSurf_Undecided)
@@ -617,7 +618,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       slin.Append(alig);
       break;
     }
-    case IntPatch_Walking: { //-- ****************************************
+    case IntPatch_Walking:
+    { //-- ****************************************
       occ::handle<IntPatch_WLine>          WLine(occ::down_cast<IntPatch_WLine>(L));
       const occ::handle<IntSurf_LineOn2S>& Lori           = WLine->Curve();
       occ::handle<IntSurf_LineOn2S>        LineOn2S       = new IntSurf_LineOn2S();
@@ -663,7 +665,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
 
       break;
     }
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> RLine(occ::down_cast<IntPatch_RLine>(L));
       IndexLastVertex  = 2;
       IndexFirstVertex = 1;
@@ -709,7 +712,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
     case IntPatch_Parabola:
     case IntPatch_Hyperbola:
     case IntPatch_Circle:
-    case IntPatch_Ellipse: {
+    case IntPatch_Ellipse:
+    {
       occ::handle<IntPatch_GLine> GLine(occ::down_cast<IntPatch_GLine>(L));
       occ::handle<IntPatch_GLine> glig;
       switch (typl)
@@ -806,7 +810,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       slin.Append(glig);
       break;
     }
-    default: {
+    default:
+    {
       throw Standard_ConstructionError("IntPatch_LineConstructor::AddLine");
     }
     break;

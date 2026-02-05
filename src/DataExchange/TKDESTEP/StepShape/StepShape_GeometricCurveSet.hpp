@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_GeometricSet.hpp>
@@ -14,4 +13,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepShape_GeometricCurveSet, StepShape_GeometricSet)
 };
-

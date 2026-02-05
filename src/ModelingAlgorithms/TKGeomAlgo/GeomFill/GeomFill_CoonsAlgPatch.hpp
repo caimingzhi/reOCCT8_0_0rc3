@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -64,4 +63,3 @@ private:
   gp_Pnt                         c[4];
   occ::handle<Law_Function>      a[2];
 };
-

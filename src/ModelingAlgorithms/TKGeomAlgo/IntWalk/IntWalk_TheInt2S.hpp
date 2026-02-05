@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <IntSurf_PntOn2S.hpp>
 #include <gp_Dir.hpp>
@@ -130,4 +129,3 @@ private:
 #undef IntImp_TheFunction_hxx
 #undef IntImp_Int2S
 #undef IntImp_Int2S_hxx
-

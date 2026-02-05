@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Printer.hpp>
 #include <NCollection_Sequence.hpp>
 
@@ -216,4 +215,3 @@ public:
 private:
   NCollection_Sequence<occ::handle<Message_Printer>> myPrinters;
 };
-

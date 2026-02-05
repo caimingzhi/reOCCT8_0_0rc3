@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Macro.hpp>
 #include <Standard_Transient.hpp>
@@ -106,4 +105,3 @@ private:
   occ::handle<ShapePipelineMap> myPipelines;
   occ::handle<Aspect_Window>    myWindow;
 };
-

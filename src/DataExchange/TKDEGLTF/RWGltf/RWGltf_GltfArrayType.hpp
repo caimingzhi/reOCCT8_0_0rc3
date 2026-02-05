@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_CString.hpp>
 
 //! Low-level glTF enumeration defining Array type.
@@ -50,4 +49,3 @@ inline RWGltf_GltfArrayType RWGltf_GltfParseAttribType(const char* theType)
   }
   return RWGltf_GltfArrayType_UNKNOWN;
 }
-

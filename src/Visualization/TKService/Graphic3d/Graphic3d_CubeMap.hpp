@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CubeMapOrder.hpp>
 #include <Graphic3d_TextureMap.hpp>
 
@@ -80,4 +79,3 @@ protected:
   bool      myZIsInverted;  //!< Indicates whether Z axis is inverted that allows to synchronize vertical flip of cubemap
   // clang-format on
 };
-

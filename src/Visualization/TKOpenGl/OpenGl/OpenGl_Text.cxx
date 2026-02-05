@@ -1,18 +1,3 @@
-// Created on: 2011-07-13
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_GlCore11.hpp>
 #include <OpenGl_GraphicDriver.hpp>
 #include <OpenGl_ShaderManager.hpp>
@@ -29,42 +14,42 @@
 
 namespace
 {
-static const NCollection_Mat4<double> THE_IDENTITY_MATRIX;
+  static const NCollection_Mat4<double> THE_IDENTITY_MATRIX;
 
-static const TCollection_AsciiString THE_DEFAULT_FONT(Font_NOF_ASCII_MONO);
+  static const TCollection_AsciiString THE_DEFAULT_FONT(Font_NOF_ASCII_MONO);
 
-//! Auxiliary tool for setting polygon offset temporarily.
-struct BackPolygonOffsetSentry
-{
-  BackPolygonOffsetSentry(OpenGl_Context* theCtx)
-      : myCtx(theCtx)
+  //! Auxiliary tool for setting polygon offset temporarily.
+  struct BackPolygonOffsetSentry
   {
-    if (theCtx != nullptr)
+    BackPolygonOffsetSentry(OpenGl_Context* theCtx)
+        : myCtx(theCtx)
     {
-      myOffsetBack                        = theCtx->PolygonOffset();
-      Graphic3d_PolygonOffset aPolyOffset = myOffsetBack;
-      aPolyOffset.Mode                    = Aspect_POM_Fill;
-      aPolyOffset.Units += 1.0f;
-      theCtx->SetPolygonOffset(aPolyOffset);
+      if (theCtx != nullptr)
+      {
+        myOffsetBack                        = theCtx->PolygonOffset();
+        Graphic3d_PolygonOffset aPolyOffset = myOffsetBack;
+        aPolyOffset.Mode                    = Aspect_POM_Fill;
+        aPolyOffset.Units += 1.0f;
+        theCtx->SetPolygonOffset(aPolyOffset);
+      }
     }
-  }
 
-  ~BackPolygonOffsetSentry()
-  {
-    if (myCtx != nullptr)
+    ~BackPolygonOffsetSentry()
     {
-      myCtx->SetPolygonOffset(myOffsetBack);
+      if (myCtx != nullptr)
+      {
+        myCtx->SetPolygonOffset(myOffsetBack);
+      }
     }
-  }
 
-private:
-  BackPolygonOffsetSentry(const BackPolygonOffsetSentry&)            = delete;
-  BackPolygonOffsetSentry& operator=(const BackPolygonOffsetSentry&) = delete;
+  private:
+    BackPolygonOffsetSentry(const BackPolygonOffsetSentry&)            = delete;
+    BackPolygonOffsetSentry& operator=(const BackPolygonOffsetSentry&) = delete;
 
-private:
-  OpenGl_Context*         myCtx;
-  Graphic3d_PolygonOffset myOffsetBack;
-};
+  private:
+    OpenGl_Context*         myCtx;
+    Graphic3d_PolygonOffset myOffsetBack;
+  };
 
 } // anonymous namespace
 
@@ -802,7 +787,8 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
   // extra drawings
   switch (theTextAspect.Aspect()->TextDisplayType())
   {
-    case Aspect_TODT_BLEND: {
+    case Aspect_TODT_BLEND:
+    {
       if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
       {
         theCtx->core11fwd->glEnable(GL_COLOR_LOGIC_OP);
@@ -810,12 +796,14 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
       }
       break;
     }
-    case Aspect_TODT_SUBTITLE: {
+    case Aspect_TODT_SUBTITLE:
+    {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       drawRect(theCtx, theTextAspect, theColorSubs);
       break;
     }
-    case Aspect_TODT_DEKALE: {
+    case Aspect_TODT_DEKALE:
+    {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       theCtx->SetColor4fv(theColorSubs);
       setupMatrix(theCtx, theTextAspect, NCollection_Vec3<float>(+1.0f, +1.0f, 0.0f));
@@ -828,7 +816,8 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
       drawText(theCtx, theTextAspect);
       break;
     }
-    case Aspect_TODT_SHADOW: {
+    case Aspect_TODT_SHADOW:
+    {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       theCtx->SetColor4fv(theColorSubs);
       setupMatrix(theCtx, theTextAspect, NCollection_Vec3<float>(+1.0f, -1.0f, 0.0f));
@@ -836,7 +825,8 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
       break;
     }
     case Aspect_TODT_DIMENSION:
-    case Aspect_TODT_NORMAL: {
+    case Aspect_TODT_NORMAL:
+    {
       break;
     }
   }

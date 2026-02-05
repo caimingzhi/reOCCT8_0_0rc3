@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Blend_DecrochStatus
 {
   Blend_NoDecroch,
@@ -8,4 +7,3 @@ enum Blend_DecrochStatus
   Blend_DecrochRst2,
   Blend_DecrochBoth
 };
-

@@ -1,22 +1,3 @@
-// Created on: 2010-05-11
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Note: implementation is based on free samples from
-// http://www.gamedev.ru/code/articles/?id=4215&page=3
-// and maths found in Wikipedia and elsewhere
-
 #include <gp_Quaternion.hpp>
 
 #include <gp_Vec.hpp>
@@ -184,110 +165,110 @@ gp_Mat gp_Quaternion::GetMatrix() const
 namespace
 { // anonymous namespace
 
-//=======================================================================
-// function : translateEulerSequence
-// purpose  :
-// Code supporting conversion between quaternion and generalized
-// Euler angles (sequence of three rotations) is based on
-// algorithm by Ken Shoemake, published in Graphics Gems IV, p. 222-22
-// http://tog.acm.org/resources/GraphicsGems/gemsiv/euler_angle/EulerAngles.c
-//=======================================================================
+  //=======================================================================
+  // function : translateEulerSequence
+  // purpose  :
+  // Code supporting conversion between quaternion and generalized
+  // Euler angles (sequence of three rotations) is based on
+  // algorithm by Ken Shoemake, published in Graphics Gems IV, p. 222-22
+  // http://tog.acm.org/resources/GraphicsGems/gemsiv/euler_angle/EulerAngles.c
+  //=======================================================================
 
-struct gp_EulerSequence_Parameters
-{
-  int i;            // first rotation axis
-  int j;            // next axis of rotation
-  int k;            // third axis
-                    // clang-format off
+  struct gp_EulerSequence_Parameters
+  {
+    int i;            // first rotation axis
+    int j;            // next axis of rotation
+    int k;            // third axis
+                      // clang-format off
   bool isOdd;       // true if order of two first rotation axes is odd permutation, e.g. XZ
-                    // clang-format on
-  bool isTwoAxes;   // true if third rotation is about the same axis as first
-  bool isExtrinsic; // true if rotations are made around fixed axes
+                      // clang-format on
+    bool isTwoAxes;   // true if third rotation is about the same axis as first
+    bool isExtrinsic; // true if rotations are made around fixed axes
 
-  gp_EulerSequence_Parameters(int theAx1, bool theisOdd, bool theisTwoAxes, bool theisExtrinsic)
-      : i(theAx1),
-        j(1 + (theAx1 + (theisOdd ? 1 : 0)) % 3),
-        k(1 + (theAx1 + (theisOdd ? 0 : 1)) % 3),
-        isOdd(theisOdd),
-        isTwoAxes(theisTwoAxes),
-        isExtrinsic(theisExtrinsic)
-  {
-  }
-};
-
-gp_EulerSequence_Parameters translateEulerSequence(const gp_EulerSequence theSeq)
-{
-  typedef gp_EulerSequence_Parameters Params;
-  const bool                          F = false;
-  const bool                          T = true;
-
-  switch (theSeq)
-  {
-    case gp_Extrinsic_XYZ:
-      return Params(1, F, F, T);
-    case gp_Extrinsic_XZY:
-      return Params(1, T, F, T);
-    case gp_Extrinsic_YZX:
-      return Params(2, F, F, T);
-    case gp_Extrinsic_YXZ:
-      return Params(2, T, F, T);
-    case gp_Extrinsic_ZXY:
-      return Params(3, F, F, T);
-    case gp_Extrinsic_ZYX:
-      return Params(3, T, F, T);
-
-    // Conversion of intrinsic angles is made by the same code as for extrinsic,
-    // using equivalence rule: intrinsic rotation is equivalent to extrinsic
-    // rotation by the same angles but with inverted order of elemental rotations.
-    // Swapping of angles (Alpha <-> Gamma) is done inside conversion procedure;
-    // sequence of axes is inverted by setting appropriate parameters here.
-    // Note that proper Euler angles (last block below) are symmetric for sequence of axes.
-    case gp_Intrinsic_XYZ:
-      return Params(3, T, F, F);
-    case gp_Intrinsic_XZY:
-      return Params(2, F, F, F);
-    case gp_Intrinsic_YZX:
-      return Params(1, T, F, F);
-    case gp_Intrinsic_YXZ:
-      return Params(3, F, F, F);
-    case gp_Intrinsic_ZXY:
-      return Params(2, T, F, F);
-    case gp_Intrinsic_ZYX:
-      return Params(1, F, F, F);
-
-    case gp_Extrinsic_XYX:
-      return Params(1, F, T, T);
-    case gp_Extrinsic_XZX:
-      return Params(1, T, T, T);
-    case gp_Extrinsic_YZY:
-      return Params(2, F, T, T);
-    case gp_Extrinsic_YXY:
-      return Params(2, T, T, T);
-    case gp_Extrinsic_ZXZ:
-      return Params(3, F, T, T);
-    case gp_Extrinsic_ZYZ:
-      return Params(3, T, T, T);
-
-    case gp_Intrinsic_XYX:
-      return Params(1, F, T, F);
-    case gp_Intrinsic_XZX:
-      return Params(1, T, T, F);
-    case gp_Intrinsic_YZY:
-      return Params(2, F, T, F);
-    case gp_Intrinsic_YXY:
-      return Params(2, T, T, F);
-    case gp_Intrinsic_ZXZ:
-      return Params(3, F, T, F);
-    case gp_Intrinsic_ZYZ:
-      return Params(3, T, T, F);
-
-    default:
-    case gp_EulerAngles:
-      return Params(3, F, T, F); // = Intrinsic_ZXZ
-    case gp_YawPitchRoll:
-      return Params(1, F, F, F); // = Intrinsic_ZYX
+    gp_EulerSequence_Parameters(int theAx1, bool theisOdd, bool theisTwoAxes, bool theisExtrinsic)
+        : i(theAx1),
+          j(1 + (theAx1 + (theisOdd ? 1 : 0)) % 3),
+          k(1 + (theAx1 + (theisOdd ? 0 : 1)) % 3),
+          isOdd(theisOdd),
+          isTwoAxes(theisTwoAxes),
+          isExtrinsic(theisExtrinsic)
+    {
+    }
   };
-}
+
+  gp_EulerSequence_Parameters translateEulerSequence(const gp_EulerSequence theSeq)
+  {
+    typedef gp_EulerSequence_Parameters Params;
+    const bool                          F = false;
+    const bool                          T = true;
+
+    switch (theSeq)
+    {
+      case gp_Extrinsic_XYZ:
+        return Params(1, F, F, T);
+      case gp_Extrinsic_XZY:
+        return Params(1, T, F, T);
+      case gp_Extrinsic_YZX:
+        return Params(2, F, F, T);
+      case gp_Extrinsic_YXZ:
+        return Params(2, T, F, T);
+      case gp_Extrinsic_ZXY:
+        return Params(3, F, F, T);
+      case gp_Extrinsic_ZYX:
+        return Params(3, T, F, T);
+
+      // Conversion of intrinsic angles is made by the same code as for extrinsic,
+      // using equivalence rule: intrinsic rotation is equivalent to extrinsic
+      // rotation by the same angles but with inverted order of elemental rotations.
+      // Swapping of angles (Alpha <-> Gamma) is done inside conversion procedure;
+      // sequence of axes is inverted by setting appropriate parameters here.
+      // Note that proper Euler angles (last block below) are symmetric for sequence of axes.
+      case gp_Intrinsic_XYZ:
+        return Params(3, T, F, F);
+      case gp_Intrinsic_XZY:
+        return Params(2, F, F, F);
+      case gp_Intrinsic_YZX:
+        return Params(1, T, F, F);
+      case gp_Intrinsic_YXZ:
+        return Params(3, F, F, F);
+      case gp_Intrinsic_ZXY:
+        return Params(2, T, F, F);
+      case gp_Intrinsic_ZYX:
+        return Params(1, F, F, F);
+
+      case gp_Extrinsic_XYX:
+        return Params(1, F, T, T);
+      case gp_Extrinsic_XZX:
+        return Params(1, T, T, T);
+      case gp_Extrinsic_YZY:
+        return Params(2, F, T, T);
+      case gp_Extrinsic_YXY:
+        return Params(2, T, T, T);
+      case gp_Extrinsic_ZXZ:
+        return Params(3, F, T, T);
+      case gp_Extrinsic_ZYZ:
+        return Params(3, T, T, T);
+
+      case gp_Intrinsic_XYX:
+        return Params(1, F, T, F);
+      case gp_Intrinsic_XZX:
+        return Params(1, T, T, F);
+      case gp_Intrinsic_YZY:
+        return Params(2, F, T, F);
+      case gp_Intrinsic_YXY:
+        return Params(2, T, T, F);
+      case gp_Intrinsic_ZXZ:
+        return Params(3, F, T, F);
+      case gp_Intrinsic_ZYZ:
+        return Params(3, T, T, F);
+
+      default:
+      case gp_EulerAngles:
+        return Params(3, F, T, F); // = Intrinsic_ZXZ
+      case gp_YawPitchRoll:
+        return Params(1, F, F, F); // = Intrinsic_ZYX
+    };
+  }
 
 } // anonymous namespace
 

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -102,4 +101,3 @@ private:
   gp_Pnt2d pointA;
   gp_Pnt2d pointB;
 };
-

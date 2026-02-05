@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
@@ -232,4 +231,3 @@ private:
   // ---------- FRIEND CLASSES ------------
   friend class Iterator;
 };
-

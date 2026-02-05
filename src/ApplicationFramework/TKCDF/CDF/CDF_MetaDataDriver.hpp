@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 class CDM_MetaData;
@@ -108,4 +107,3 @@ public:
 protected:
   Standard_EXPORT CDF_MetaDataDriver();
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_Shape.hpp>
 
@@ -61,4 +60,3 @@ public:
                                          occ::handle<Geom_BSplineCurve>&     theBSpl,
                                          double&                             theMaxError);
 };
-

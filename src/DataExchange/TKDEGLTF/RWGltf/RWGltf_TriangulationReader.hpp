@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_TriangulationReader.hpp>
 #include <RWGltf_GltfAccessor.hpp>
 #include <RWGltf_GltfArrayType.hpp>
@@ -113,4 +112,3 @@ protected:
 protected:
   occ::handle<RWMesh_TriangulationSource> myTriangulation;
 };
-

@@ -30,17 +30,17 @@ IMPLEMENT_STANDARD_RTTIEXT(DE_Wrapper, Standard_Transient)
 
 namespace
 {
-static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
-{
-  static const TCollection_AsciiString aScope("global");
-  return aScope;
-}
+  static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
+  {
+    static const TCollection_AsciiString aScope("global");
+    return aScope;
+  }
 
-static occ::handle<DE_Wrapper>& THE_GLOBAL_CONFIGURATION()
-{
-  static occ::handle<DE_Wrapper> aConf = new DE_Wrapper();
-  return aConf;
-}
+  static occ::handle<DE_Wrapper>& THE_GLOBAL_CONFIGURATION()
+  {
+    static occ::handle<DE_Wrapper> aConf = new DE_Wrapper();
+    return aConf;
+  }
 } // namespace
 
 //=================================================================================================

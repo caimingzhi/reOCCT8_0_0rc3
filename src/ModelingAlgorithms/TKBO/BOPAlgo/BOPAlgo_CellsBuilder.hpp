@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -248,4 +247,3 @@ protected:
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myMapModified;        //!< Local modification map to track unification of the splits
   // clang-format on
 };
-

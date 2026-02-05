@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 
 //! Creates and updates a group of attributes for text primitives.
@@ -98,4 +97,3 @@ public:
   //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 };
-

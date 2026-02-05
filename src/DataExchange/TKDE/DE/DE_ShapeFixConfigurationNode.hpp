@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <DE_ShapeFixParameters.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -33,4 +32,3 @@ public:
 public:
   DE_ShapeFixParameters ShapeFixParameters; //!< Shape healing parameters
 };
-

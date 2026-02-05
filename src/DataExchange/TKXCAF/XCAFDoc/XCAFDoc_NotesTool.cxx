@@ -29,12 +29,12 @@
 namespace
 {
 
-XCAFDoc_AssemblyItemId labeledItem(const TDF_Label& theLabel)
-{
-  TCollection_AsciiString anEntry;
-  TDF_Tool::Entry(theLabel, anEntry);
-  return XCAFDoc_AssemblyItemId(anEntry);
-}
+  XCAFDoc_AssemblyItemId labeledItem(const TDF_Label& theLabel)
+  {
+    TCollection_AsciiString anEntry;
+    TDF_Tool::Entry(theLabel, anEntry);
+    return XCAFDoc_AssemblyItemId(anEntry);
+  }
 
 } // namespace
 

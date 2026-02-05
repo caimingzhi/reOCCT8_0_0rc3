@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -87,4 +86,3 @@ private:
   gp_XYZ theXAxis;
   gp_XYZ theZAxis;
 };
-

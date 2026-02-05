@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Resource.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -277,4 +276,3 @@ protected:
   unsigned int     myDataType;     //!< Data type (GL_FLOAT, GL_UNSIGNED_INT, GL_UNSIGNED_BYTE etc.)
   // clang-format on
 };
-

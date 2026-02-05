@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 #include <Graphic3d_TextureMap.hpp>
 
@@ -59,4 +58,3 @@ private:
   occ::handle<OpenGl_TextureSet> myTextures[2];
   bool                           myIsTextureReady;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_GTrsf.hpp>
 #include <NCollection_Mat4.hpp>
 #include <Standard_TypeDef.hpp>
@@ -280,4 +279,3 @@ protected:
   // clang-format on
   SelectMgr_SelectionType mySelectionType; //!< type of selection
 };
-

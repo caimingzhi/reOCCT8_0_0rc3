@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining a part of datum aspect, see Prs3d_Datum.
 enum Prs3d_DatumParts
 {
@@ -34,4 +33,3 @@ enum
 {
   Prs3d_DatumParts_NB = Prs3d_DatumParts_None + 1
 };
-

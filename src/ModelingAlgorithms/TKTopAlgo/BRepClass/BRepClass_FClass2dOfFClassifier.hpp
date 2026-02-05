@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -82,4 +81,3 @@ private:
 #undef TheIntersector_hxx
 #undef TopClass_Classifier2d
 #undef TopClass_Classifier2d_hxx
-

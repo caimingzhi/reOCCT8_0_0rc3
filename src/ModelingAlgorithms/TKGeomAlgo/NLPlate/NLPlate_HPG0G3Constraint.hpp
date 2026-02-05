@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Plate_D3.hpp>
@@ -32,4 +31,3 @@ public:
 private:
   Plate_D3 myG3Target;
 };
-

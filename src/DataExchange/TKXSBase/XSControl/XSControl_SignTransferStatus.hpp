@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -63,4 +62,3 @@ private:
   occ::handle<XSControl_TransferReader>  theTR;
   occ::handle<Transfer_TransientProcess> theTP;
 };
-

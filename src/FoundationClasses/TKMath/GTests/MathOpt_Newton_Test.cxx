@@ -24,236 +24,242 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-6;
+  constexpr double THE_TOLERANCE = 1.0e-6;
 
-// ============================================================================
-// Test function classes for new API (with Hessian)
-// ============================================================================
+  // ============================================================================
+  // Test function classes for new API (with Hessian)
+  // ============================================================================
 
-//! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
-//! Minimum at (1, 2) with f = 0
-struct QuadraticFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
+  //! Minimum at (1, 2) with f = 0
+  struct QuadraticFunc
   {
-    const double aDx = theX(1) - 1.0;
-    const double aDy = theX(2) - 2.0;
-    theF             = aDx * aDx + aDy * aDy;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    theGrad(1) = 2.0 * (theX(1) - 1.0);
-    theGrad(2) = 2.0 * (theX(2) - 2.0);
-    return true;
-  }
-
-  bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
-  {
-    theHess(1, 1) = 2.0;
-    theHess(1, 2) = 0.0;
-    theHess(2, 1) = 0.0;
-    theHess(2, 2) = 2.0;
-    return true;
-  }
-};
-
-//! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-//! Minimum at (1, 1) with f = 0
-struct RosenbrockFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aY - aX * aX;
-    const double aT2 = 1.0 - aX;
-    theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    const double aX = theX(1);
-    const double aY = theX(2);
-    theGrad(1)      = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
-    theGrad(2)      = 200.0 * (aY - aX * aX);
-    return true;
-  }
-
-  bool Hessian(const math_Vector& theX, math_Matrix& theHess)
-  {
-    const double aX = theX(1);
-    const double aY = theX(2);
-    theHess(1, 1)   = 1200.0 * aX * aX - 400.0 * aY + 2.0;
-    theHess(1, 2)   = -400.0 * aX;
-    theHess(2, 1)   = -400.0 * aX;
-    theHess(2, 2)   = 200.0;
-    return true;
-  }
-};
-
-//! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-//! Minimum at (1, 3) with f = 0
-struct BoothFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theGrad(1)       = 2.0 * aT1 + 4.0 * aT2;
-    theGrad(2)       = 4.0 * aT1 + 2.0 * aT2;
-    return true;
-  }
-
-  bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
-  {
-    theHess(1, 1) = 10.0; // 2 + 8
-    theHess(1, 2) = 8.0;  // 4 + 4
-    theHess(2, 1) = 8.0;
-    theHess(2, 2) = 10.0; // 8 + 2
-    return true;
-  }
-};
-
-//! Sphere function in N dimensions: f(x) = sum(x_i^2)
-//! Minimum at origin with f = 0
-struct SphereFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      const double aDx = theX(1) - 1.0;
+      const double aDy = theX(2) - 2.0;
+      theF             = aDx * aDx + aDy * aDy;
+      return true;
     }
-    return true;
-  }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
     {
-      theGrad(i) = 2.0 * theX(i);
+      theGrad(1) = 2.0 * (theX(1) - 1.0);
+      theGrad(2) = 2.0 * (theX(2) - 2.0);
+      return true;
     }
-    return true;
-  }
 
-  bool Hessian(const math_Vector& theX, math_Matrix& theHess)
-  {
-    const int aLower = theX.Lower();
-    const int aUpper = theX.Upper();
-    for (int i = aLower; i <= aUpper; ++i)
+    bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
     {
-      for (int j = aLower; j <= aUpper; ++j)
+      theHess(1, 1) = 2.0;
+      theHess(1, 2) = 0.0;
+      theHess(2, 1) = 0.0;
+      theHess(2, 2) = 2.0;
+      return true;
+    }
+  };
+
+  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
+  //! Minimum at (1, 1) with f = 0
+  struct RosenbrockFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aY - aX * aX;
+      const double aT2 = 1.0 - aX;
+      theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      const double aX = theX(1);
+      const double aY = theX(2);
+      theGrad(1)      = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
+      theGrad(2)      = 200.0 * (aY - aX * aX);
+      return true;
+    }
+
+    bool Hessian(const math_Vector& theX, math_Matrix& theHess)
+    {
+      const double aX = theX(1);
+      const double aY = theX(2);
+      theHess(1, 1)   = 1200.0 * aX * aX - 400.0 * aY + 2.0;
+      theHess(1, 2)   = -400.0 * aX;
+      theHess(2, 1)   = -400.0 * aX;
+      theHess(2, 2)   = 200.0;
+      return true;
+    }
+  };
+
+  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
+  //! Minimum at (1, 3) with f = 0
+  struct BoothFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theGrad(1)       = 2.0 * aT1 + 4.0 * aT2;
+      theGrad(2)       = 4.0 * aT1 + 2.0 * aT2;
+      return true;
+    }
+
+    bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
+    {
+      theHess(1, 1) = 10.0; // 2 + 8
+      theHess(1, 2) = 8.0;  // 4 + 4
+      theHess(2, 1) = 8.0;
+      theHess(2, 2) = 10.0; // 8 + 2
+      return true;
+    }
+  };
+
+  //! Sphere function in N dimensions: f(x) = sum(x_i^2)
+  //! Minimum at origin with f = 0
+  struct SphereFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
       {
-        theHess(i, j) = (i == j) ? 2.0 : 0.0;
+        theF += theX(i) * theX(i);
       }
+      return true;
     }
-    return true;
-  }
-};
 
-// ============================================================================
-// Old API adapter class
-// ============================================================================
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theGrad(i) = 2.0 * theX(i);
+      }
+      return true;
+    }
 
-class QuadraticFuncOld : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Hessian(const math_Vector& theX, math_Matrix& theHess)
+    {
+      const int aLower = theX.Lower();
+      const int aUpper = theX.Upper();
+      for (int i = aLower; i <= aUpper; ++i)
+      {
+        for (int j = aLower; j <= aUpper; ++j)
+        {
+          theHess(i, j) = (i == j) ? 2.0 : 0.0;
+        }
+      }
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // ============================================================================
+  // Old API adapter class
+  // ============================================================================
+
+  class QuadraticFuncOld : public math_MultipleVarFunctionWithHessian
   {
-    const double aDx = theX(1) - 1.0;
-    const double aDy = theX(2) - 2.0;
-    theF             = aDx * aDx + aDy * aDy;
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      const double aDx = theX(1) - 1.0;
+      const double aDy = theX(2) - 2.0;
+      theF             = aDx * aDx + aDy * aDy;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      theG(1) = 2.0 * (theX(1) - 1.0);
+      theG(2) = 2.0 * (theX(2) - 2.0);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      return Value(theX, theF) && Gradient(theX, theG);
+    }
+
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      if (!Value(theX, theF))
+        return false;
+      if (!Gradient(theX, theG))
+        return false;
+      theH(1, 1) = 2.0;
+      theH(1, 2) = 0.0;
+      theH(2, 1) = 0.0;
+      theH(2, 2) = 2.0;
+      return true;
+    }
+  };
+
+  class BoothFuncOld : public math_MultipleVarFunctionWithHessian
   {
-    theG(1) = 2.0 * (theX(1) - 1.0);
-    theG(2) = 2.0 * (theX(2) - 2.0);
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    return Value(theX, theF) && Gradient(theX, theG);
-  }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
-  {
-    if (!Value(theX, theF))
-      return false;
-    if (!Gradient(theX, theG))
-      return false;
-    theH(1, 1) = 2.0;
-    theH(1, 2) = 0.0;
-    theH(2, 1) = 0.0;
-    theH(2, 2) = 2.0;
-    return true;
-  }
-};
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theG(1)          = 2.0 * aT1 + 4.0 * aT2;
+      theG(2)          = 4.0 * aT1 + 2.0 * aT2;
+      return true;
+    }
 
-class BoothFuncOld : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      return Value(theX, theF) && Gradient(theX, theG);
+    }
 
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theG(1)          = 2.0 * aT1 + 4.0 * aT2;
-    theG(2)          = 4.0 * aT1 + 2.0 * aT2;
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    return Value(theX, theF) && Gradient(theX, theG);
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
-  {
-    if (!Value(theX, theF))
-      return false;
-    if (!Gradient(theX, theG))
-      return false;
-    theH(1, 1) = 10.0;
-    theH(1, 2) = 8.0;
-    theH(2, 1) = 8.0;
-    theH(2, 2) = 10.0;
-    return true;
-  }
-};
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      if (!Value(theX, theF))
+        return false;
+      if (!Gradient(theX, theG))
+        return false;
+      theH(1, 1) = 10.0;
+      theH(1, 2) = 8.0;
+      theH(2, 1) = 8.0;
+      theH(2, 2) = 10.0;
+      return true;
+    }
+  };
 
 } // namespace
 

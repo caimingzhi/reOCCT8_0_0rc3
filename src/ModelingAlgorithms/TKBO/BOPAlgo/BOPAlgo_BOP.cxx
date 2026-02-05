@@ -1,17 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BOPAlgo_BOP.hpp>
 #include <BOPAlgo_BuilderSolid.hpp>
 #include <BOPAlgo_PaveFiller.hpp>
@@ -262,7 +248,8 @@ bool BOPAlgo_BOP::TreatEmptyShape()
   //
   switch (myOperation)
   {
-    case BOPAlgo_FUSE: {
+    case BOPAlgo_FUSE:
+    {
       if (aLValidObjs.Extent() + aLValidTools.Extent() > 1)
         // The arguments must be split before adding into result
         return false;
@@ -271,7 +258,8 @@ bool BOPAlgo_BOP::TreatEmptyShape()
       pLResult = bHasValidObj ? &aLValidObjs : &aLValidTools;
       break;
     }
-    case BOPAlgo_CUT: {
+    case BOPAlgo_CUT:
+    {
       if (aLValidObjs.Extent() > 1)
         // The objects must be split before adding into result
         return false;
@@ -280,7 +268,8 @@ bool BOPAlgo_BOP::TreatEmptyShape()
       pLResult = &aLValidObjs;
       break;
     }
-    case BOPAlgo_CUT21: {
+    case BOPAlgo_CUT21:
+    {
       if (aLValidTools.Extent() > 1)
         // The tools must be split before adding into result
         return false;
@@ -968,17 +957,20 @@ void BOPAlgo_BOP::BuildShape(const Message_ProgressRange& theRange)
     aType = aSC.ShapeType();
     switch (aType)
     {
-      case TopAbs_WIRE: {
+      case TopAbs_WIRE:
+      {
         aT1 = TopAbs_VERTEX;
         aT2 = TopAbs_EDGE;
         break;
       }
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         aT1 = TopAbs_EDGE;
         aT2 = TopAbs_FACE;
         break;
       }
-      default: {
+      default:
+      {
         aT1 = TopAbs_FACE;
         aT2 = TopAbs_SOLID;
       }

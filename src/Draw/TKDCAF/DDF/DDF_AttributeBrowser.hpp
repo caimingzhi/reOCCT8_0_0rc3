@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <TDF_Attribute.hpp>
 
@@ -30,4 +29,3 @@ private:
 
   DDF_AttributeBrowser* myNext;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <TDF_Attribute.hpp>
 #include <XCAFDoc_AssemblyItemId.hpp>
@@ -131,4 +130,3 @@ private:
   int                     myExtraRef; ///< Type of extra reference: subshape or attribute
   TCollection_AsciiString myExtraId;  ///< Extra reference data
 };
-

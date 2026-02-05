@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -241,6 +240,7 @@ private:
   bool                                           myRational;
   occ::handle<ShapeCustom_RestrictionParameters> myParameters;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -368,5 +368,3 @@ inline void ShapeCustom_BSplineRestriction::SetRestrictionParameters(
 {
   myParameters = aModes;
 }
-
-

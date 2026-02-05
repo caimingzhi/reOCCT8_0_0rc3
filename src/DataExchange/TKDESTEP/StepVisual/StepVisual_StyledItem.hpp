@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_PresentationStyleAssignment.hpp>
@@ -59,4 +58,3 @@ private:
   //! This is downcasted from myItem
   occ::handle<StepRepr_RepresentationItem> myReprItem;
 };
-

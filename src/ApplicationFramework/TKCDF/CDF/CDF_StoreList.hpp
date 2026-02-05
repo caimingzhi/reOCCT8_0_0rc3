@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -47,4 +46,3 @@ private:
   NCollection_Map<occ::handle<CDM_Document>>::Iterator myIterator;
   occ::handle<CDM_Document>                            myMainDocument;
 };
-

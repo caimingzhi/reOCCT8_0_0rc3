@@ -1,21 +1,3 @@
-// Created by: CKY / Contract Toubro-Larsen
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//--------------------------------------------------------------------
-//--------------------------------------------------------------------
-
 #include <IGESData_DirChecker.hpp>
 #include <IGESData_Dump.hpp>
 #include <IGESData_IGESDumper.hpp>
@@ -145,12 +127,14 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
           {
             switch (attrValueDataType)
             {
-              case 0: {
+              case 0:
+              {
                 PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
                 ////			attrValue->SetValue(j, NULL);    by default
                 break;
               }
-              case 1: {
+              case 1:
+              {
                 int temp;
                 // st = PR.ReadInteger(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
                 // moved in if
@@ -158,7 +142,8 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
                   attrInt->SetValue(j, temp);
               }
               break;
-              case 2: {
+              case 2:
+              {
                 double temp;
                 // st = PR.ReadReal(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
                 // moved in if
@@ -166,7 +151,8 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
                   attrReal->SetValue(j, temp);
               }
               break;
-              case 3: {
+              case 3:
+              {
                 occ::handle<TCollection_HAsciiString> temp;
                 // st = PR.ReadText(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
                 // moved in if
@@ -174,7 +160,8 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
                   attrStr->SetValue(j, temp);
               }
               break;
-              case 4: {
+              case 4:
+              {
                 occ::handle<IGESData_IGESEntity> temp;
                 // st = PR.ReadEntity(IR, PR.Current(), "Attribute Value", temp);
                 // //szv#4:S4163:12Mar99 moved in if
@@ -185,7 +172,8 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
               case 5:
                 PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
                 break;
-              case 6: {
+              case 6:
+              {
                 bool temp;
                 // st = PR.ReadBoolean(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
                 // moved in if
@@ -383,7 +371,8 @@ void IGESDefs_ToolAttributeDef::OwnCopy(const occ::handle<IGESDefs_AttributeDef>
           case 3:
             attrStr->SetValue(j, new TCollection_HAsciiString(another->AttributeAsString(i, j)));
             break;
-          case 4: {
+          case 4:
+          {
             DeclareAndCast(IGESData_IGESEntity,
                            Ent,
                            TC.Transferred(another->AttributeAsEntity(i, j)));

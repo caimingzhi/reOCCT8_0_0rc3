@@ -107,7 +107,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESGraph_Color, anent, ent);
       if (anent.IsNull())
         return;
@@ -115,7 +116,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESGraph_DefinitionLevel, anent, ent);
       if (anent.IsNull())
         return;
@@ -123,7 +125,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESGraph_DrawingSize, anent, ent);
       if (anent.IsNull())
         return;
@@ -131,7 +134,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESGraph_DrawingUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -139,7 +143,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESGraph_HighLight, anent, ent);
       if (anent.IsNull())
         return;
@@ -147,7 +152,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESGraph_IntercharacterSpacing, anent, ent);
       if (anent.IsNull())
         return;
@@ -155,7 +161,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESGraph_LineFontDefPattern, anent, ent);
       if (anent.IsNull())
         return;
@@ -163,7 +170,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESGraph_LineFontPredefined, anent, ent);
       if (anent.IsNull())
         return;
@@ -171,7 +179,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESGraph_LineFontDefTemplate, anent, ent);
       if (anent.IsNull())
         return;
@@ -179,7 +188,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESGraph_NominalSize, anent, ent);
       if (anent.IsNull())
         return;
@@ -187,7 +197,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESGraph_Pick, anent, ent);
       if (anent.IsNull())
         return;
@@ -195,7 +206,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESGraph_TextDisplayTemplate, anent, ent);
       if (anent.IsNull())
         return;
@@ -203,7 +215,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESGraph_TextFontDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -211,7 +224,8 @@ void IGESGraph_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESGraph_UniformRectGrid, anent, ent);
       if (anent.IsNull())
         return;
@@ -230,7 +244,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESGraph_Color, anent, ent);
       if (anent.IsNull())
         return;
@@ -238,7 +253,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESGraph_DefinitionLevel, anent, ent);
       if (anent.IsNull())
         return;
@@ -246,7 +262,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESGraph_DrawingSize, anent, ent);
       if (anent.IsNull())
         return;
@@ -254,7 +271,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESGraph_DrawingUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -262,7 +280,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESGraph_HighLight, anent, ent);
       if (anent.IsNull())
         return;
@@ -270,7 +289,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESGraph_IntercharacterSpacing, anent, ent);
       if (anent.IsNull())
         return;
@@ -278,7 +298,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESGraph_LineFontDefPattern, anent, ent);
       if (anent.IsNull())
         return;
@@ -286,7 +307,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESGraph_LineFontPredefined, anent, ent);
       if (anent.IsNull())
         return;
@@ -294,7 +316,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESGraph_LineFontDefTemplate, anent, ent);
       if (anent.IsNull())
         return;
@@ -302,7 +325,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESGraph_NominalSize, anent, ent);
       if (anent.IsNull())
         return;
@@ -310,7 +334,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESGraph_Pick, anent, ent);
       if (anent.IsNull())
         return;
@@ -318,7 +343,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESGraph_TextDisplayTemplate, anent, ent);
       if (anent.IsNull())
         return;
@@ -326,7 +352,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESGraph_TextFontDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -334,7 +361,8 @@ void IGESGraph_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESGraph_UniformRectGrid, anent, ent);
       if (anent.IsNull())
         return;

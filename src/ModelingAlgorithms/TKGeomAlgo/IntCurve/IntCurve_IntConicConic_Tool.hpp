@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IntCurve_IntImpConicParConic.hpp>
 // #include <IntCurve_IConicPConicTool.hxx>
 #include <IntRes2d_Domain.hpp>
@@ -131,4 +130,3 @@ public:
   PeriodicInterval FirstIntersection(PeriodicInterval& I1);
   PeriodicInterval SecondIntersection(PeriodicInterval& I2);
 };
-

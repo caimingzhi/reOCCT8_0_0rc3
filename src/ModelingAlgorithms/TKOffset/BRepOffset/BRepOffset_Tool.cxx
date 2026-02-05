@@ -1,19 +1,3 @@
-// Created on: 1995-10-23
-// Created by: Yves FRICAUD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepOffset_Tool.hpp>
 
 #include <Bnd_Box2d.hpp>
@@ -619,7 +603,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
 
   switch (AS.GetType())
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Ax3 Ax = AS.Plane().Position();
       for (int i = 0; i < n; i++)
       {
@@ -631,7 +616,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Ax3 Ax  = AS.Cylinder().Position();
       double Rad = AS.Cylinder().Radius();
       for (int i = 0; i < n; i++)
@@ -644,7 +630,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       gp_Ax3 Ax  = AS.Cone().Position();
       double Rad = AS.Cone().RefRadius();
       double Alp = AS.Cone().SemiAngle();
@@ -658,7 +645,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       gp_Ax3 Ax  = AS.Sphere().Position();
       double Rad = AS.Sphere().Radius();
       for (int i = 0; i < n; i++)
@@ -671,7 +659,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Ax3 Ax = AS.Torus().Position();
       double R1 = AS.Torus().MajorRadius();
       double R2 = AS.Torus().MinorRadius();
@@ -686,7 +675,8 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       break;
     }
 
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -3969,7 +3959,8 @@ TopoDS_Shape BRepOffset_Tool::Deboucle3D(
   TopoDS_Shape SS;
   switch (S.ShapeType())
   {
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       // if the shell contains free borders that do not belong to the
       // free borders of caps (Boundary) it is removed.
       NCollection_IndexedDataMap<TopoDS_Shape,
@@ -4003,7 +3994,8 @@ TopoDS_Shape BRepOffset_Tool::Deboucle3D(
     break;
 
     case TopAbs_COMPOUND:
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       // iterate on sub-shapes and add non-empty.
       TopoDS_Iterator it(S);
       TopoDS_Shape    SubShape;

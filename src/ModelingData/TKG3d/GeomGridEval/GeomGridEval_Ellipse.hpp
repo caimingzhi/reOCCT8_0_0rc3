@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Ellipse.hpp>
 #include <GeomGridEval.hpp>
 #include <NCollection_Array1.hpp>
@@ -79,4 +78,3 @@ public:
 private:
   occ::handle<Geom_Ellipse> myGeom;
 };
-

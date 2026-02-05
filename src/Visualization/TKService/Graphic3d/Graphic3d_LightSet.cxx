@@ -19,13 +19,13 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_LightSet, Standard_Transient)
 
 namespace
 {
-//! Suffixes identifying light source type.
-static const char THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_NB] = {
-  'a', // Graphic3d_TypeOfLightSource_Ambient
-  'd', // Graphic3d_TypeOfLightSource_Directional
-  'p', // Graphic3d_TypeOfLightSource_Positional
-  's'  // Graphic3d_TypeOfLightSource_Spot
-};
+  //! Suffixes identifying light source type.
+  static const char THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_NB] = {
+    'a', // Graphic3d_TypeOfLightSource_Ambient
+    'd', // Graphic3d_TypeOfLightSource_Directional
+    'p', // Graphic3d_TypeOfLightSource_Positional
+    's'  // Graphic3d_TypeOfLightSource_Spot
+  };
 } // namespace
 
 //=================================================================================================

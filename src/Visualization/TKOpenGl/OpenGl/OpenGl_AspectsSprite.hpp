@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 #include <Graphic3d_TextureMap.hpp>
 
@@ -71,4 +70,3 @@ private:
   float                           myMarkerSize;
   bool                            myIsSpriteReady;
 };
-

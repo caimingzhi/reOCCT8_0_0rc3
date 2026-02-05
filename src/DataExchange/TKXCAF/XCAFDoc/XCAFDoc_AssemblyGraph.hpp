@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <Standard.hpp>
@@ -158,4 +157,3 @@ private:
   NCollection_DataMap<int,
                       int>           myUsages; //!< Occurrences usage.
 };
-

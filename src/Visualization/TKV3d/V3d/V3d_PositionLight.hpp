@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_Light.hpp>
 
 //! Base class for Positional, Spot and Directional Light classes.
@@ -16,4 +15,3 @@ protected:
   using Graphic3d_CLight::Position;
   using Graphic3d_CLight::SetPosition;
 };
-

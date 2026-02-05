@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XCAFPrs_Style.hpp>
 
 //! Auxiliary tool for iterating through Path identification string.
@@ -66,4 +65,3 @@ inline void XCAFPrs_DocumentIdIterator::Next()
     myPosition = myPath.Length();
   }
 }
-

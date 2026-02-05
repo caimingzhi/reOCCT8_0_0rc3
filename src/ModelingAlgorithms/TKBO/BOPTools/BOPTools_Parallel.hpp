@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_Parallel.hpp>
 #include <OSD_ThreadPool.hpp>
 #include <NCollection_DataMap.hpp>
@@ -169,4 +168,3 @@ public:
     }
   }
 };
-

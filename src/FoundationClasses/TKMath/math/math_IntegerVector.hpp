@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_VectorBase.hpp>
 
 //! This class implements the real IntegerVector abstract data type.
@@ -33,4 +32,3 @@
 //!    V1.Add(V3)  // --> will raise DimensionError;
 //! @endcode
 using math_IntegerVector = math_VectorBase<int>;
-

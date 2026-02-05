@@ -1,6 +1,5 @@
 #pragma once
 
-
 /**
  * Status of read/write or other operation.
  */
@@ -25,4 +24,3 @@ enum VrmlData_ErrorStatus
   VrmlData_OutputStreamUndefined,
   VrmlData_NotImplemented
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_SparseArrayBase.hpp>
 
 /**
@@ -202,4 +201,3 @@ private:
     (*(TheItemType*)theAddress) = *(const TheItemType*)theOther;
   }
 };
-

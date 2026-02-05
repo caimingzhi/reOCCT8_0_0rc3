@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Dragging action.
 enum AIS_DragAction
 {
@@ -10,4 +9,3 @@ enum AIS_DragAction
   AIS_DragAction_Stop,      //!< stop dragging (save position)
   AIS_DragAction_Abort,     //!< abort dragging (restore initial position)
 };
-

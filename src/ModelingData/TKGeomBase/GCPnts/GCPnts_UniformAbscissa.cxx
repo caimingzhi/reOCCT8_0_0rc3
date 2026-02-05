@@ -26,21 +26,25 @@ static double GetParameterLengthRatio(const TheCurve& theC)
 {
   switch (theC.GetType())
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       return theC.Circle().Radius();
     }
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       return 1.0;
     }
     case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       if (!theC.IsRational())
       {
         return theC.DN(0.0, 1).Magnitude();
       }
       return RealLast();
     }
-    default: {
+    default:
+    {
       return RealLast();
     }
   }
@@ -59,10 +63,12 @@ static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
   switch (theC.GetType())
   {
     case GeomAbs_Line:
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       return GCPnts_LengthParametrized;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBZ = theC.Bezier();
       if (aBZ->NbPoles() == 2 && !aBZ->IsRational())
       {
@@ -70,7 +76,8 @@ static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
       }
       return GCPnts_Parametrized;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBS = theC.BSpline();
       if (aBS->NbPoles() == 2 && !aBS->IsRational())
       {
@@ -78,7 +85,8 @@ static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
       }
       return GCPnts_Parametrized;
     }
-    default: {
+    default:
+    {
       return GCPnts_Parametrized;
     }
   }
@@ -417,7 +425,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   const GCPnts_AbscissaType aType = GetAbsType(theC);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_LengthParametrized:
+    {
       myDone = PerformLengthParametrized(myParams->ChangeArray1(),
                                          theC,
                                          theAbscissa,
@@ -429,7 +438,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
       break;
     }
     case GCPnts_Parametrized:
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbsComposite:
+    {
       myDone = Perform(myParams->ChangeArray1(),
                        theC,
                        theAbscissa,
@@ -530,7 +540,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   const GCPnts_AbscissaType aType = GetAbsType(theC);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_LengthParametrized:
+    {
       myDone = PerformLengthParametrized(myParams->ChangeArray1(),
                                          theC,
                                          anAbscissa,
@@ -542,7 +553,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
       break;
     }
     case GCPnts_Parametrized:
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbsComposite:
+    {
       myDone = Perform(myParams->ChangeArray1(),
                        theC,
                        anAbscissa,

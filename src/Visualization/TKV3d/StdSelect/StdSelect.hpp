@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_Selection.hpp>
 #include <Prs3d_Drawer.hpp>
 
@@ -35,4 +34,3 @@ public:
     const occ::handle<SelectMgr_Selection>& aSelection,
     const occ::handle<Prs3d_Drawer>&        aDrawer);
 };
-

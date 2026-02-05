@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_CompressedPixMap.hpp>
 #include <NCollection_Buffer.hpp>
 
@@ -43,4 +42,3 @@ private:
   //! Parse DDS header.
   static occ::handle<Image_CompressedPixMap> parseHeader(const DDSFileHeader& theHeader);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum LocalAnalysis_StatusErrorType
 {
   LocalAnalysis_NullFirstDerivative,
@@ -9,4 +8,3 @@ enum LocalAnalysis_StatusErrorType
   LocalAnalysis_NormalNotDefined,
   LocalAnalysis_CurvatureNotDefined
 };
-

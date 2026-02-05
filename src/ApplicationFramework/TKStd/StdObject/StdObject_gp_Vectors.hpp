@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_ReadData.hpp>
 #include <StdObjMgt_WriteData.hpp>
 
@@ -156,4 +155,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData, const 
   theWriteData << theDir.XYZ();
   return theWriteData;
 }
-

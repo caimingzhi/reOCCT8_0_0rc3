@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 #include <gp_Pnt.hpp>
 #include <PrsMgr_PresentationManager.hpp>
@@ -138,4 +137,3 @@ private:
   gp_Pnt                                            mySAttach;
   gp_Pnt                                            myCenter;
 };
-

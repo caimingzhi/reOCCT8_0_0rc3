@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -89,4 +88,3 @@ private:
   int                                       myUpper;
   Standard_GUID                             myID;
 };
-

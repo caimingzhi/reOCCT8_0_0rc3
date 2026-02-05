@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IGESData_GlobalSection.hpp>
 #include <Interface_InterfaceModel.hpp>
 
@@ -142,4 +141,3 @@ private:
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> thestart;
   IGESData_GlobalSection                                                    theheader;
 };
-

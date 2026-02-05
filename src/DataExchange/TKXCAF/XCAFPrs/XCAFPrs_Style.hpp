@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -126,31 +125,30 @@ protected:
 
 namespace std
 {
-template <>
-struct hash<XCAFPrs_Style>
-{
-  size_t operator()(const XCAFPrs_Style& theStyle) const
+  template <>
+  struct hash<XCAFPrs_Style>
   {
-    if (!theStyle.myIsVisible)
+    size_t operator()(const XCAFPrs_Style& theStyle) const
     {
-      return 1;
+      if (!theStyle.myIsVisible)
+      {
+        return 1;
+      }
+      size_t aCombination[3];
+      int    aCount = 0;
+      if (theStyle.myHasColorSurf)
+      {
+        aCombination[aCount++] = std::hash<Quantity_ColorRGBA>{}(theStyle.myColorSurf);
+      }
+      if (theStyle.myHasColorCurv)
+      {
+        aCombination[aCount++] = std::hash<Quantity_Color>{}(theStyle.myColorCurv);
+      }
+      if (!theStyle.myMaterial.IsNull())
+      {
+        aCombination[aCount++] = std::hash<occ::handle<XCAFDoc_VisMaterial>>{}(theStyle.myMaterial);
+      }
+      return aCount > 0 ? opencascade::hashBytes(aCombination, sizeof(size_t) * aCount) : 0;
     }
-    size_t aCombination[3];
-    int    aCount = 0;
-    if (theStyle.myHasColorSurf)
-    {
-      aCombination[aCount++] = std::hash<Quantity_ColorRGBA>{}(theStyle.myColorSurf);
-    }
-    if (theStyle.myHasColorCurv)
-    {
-      aCombination[aCount++] = std::hash<Quantity_Color>{}(theStyle.myColorCurv);
-    }
-    if (!theStyle.myMaterial.IsNull())
-    {
-      aCombination[aCount++] = std::hash<occ::handle<XCAFDoc_VisMaterial>>{}(theStyle.myMaterial);
-    }
-    return aCount > 0 ? opencascade::hashBytes(aCombination, sizeof(size_t) * aCount) : 0;
-  }
-};
+  };
 } // namespace std
-

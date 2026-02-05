@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -55,4 +54,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> theLangStatements;
   occ::handle<TCollection_HAsciiString>                                   theENDMACRO;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 //      Declaration of Sequence (numbered list) class.
@@ -285,4 +284,3 @@
     }                                                                                              \
     myLast = aPrevious;                                                                            \
   }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Traverse.hpp>
 #include <BVH_Tools.hpp>
 
@@ -73,4 +72,3 @@ protected:            //! @name Fields
   NumType myDistance; //!< Square distance
   bool    myIsDone;   //!< State of the algorithm
 };
-

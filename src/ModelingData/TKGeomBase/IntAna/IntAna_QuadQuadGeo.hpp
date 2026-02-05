@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -263,6 +262,7 @@ protected:
   bool              myCommonGen;
   gp_Pnt            myPChar;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -301,5 +301,3 @@ inline int IntAna_QuadQuadGeo::NbSolutions() const
   }
   return (nbint);
 }
-
-

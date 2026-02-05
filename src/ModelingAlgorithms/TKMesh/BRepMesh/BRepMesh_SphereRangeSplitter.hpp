@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_DefaultRangeSplitter.hpp>
 #include <IMeshTools_Parameters.hpp>
 
@@ -30,4 +29,3 @@ private:
     theStepAndOffset.second = theRange.second - Precision::PConfusion();
   }
 };
-

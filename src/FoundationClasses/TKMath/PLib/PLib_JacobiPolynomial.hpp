@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -150,4 +149,3 @@ private:
   const int myNivConstr;
   const int myDegree;
 };
-

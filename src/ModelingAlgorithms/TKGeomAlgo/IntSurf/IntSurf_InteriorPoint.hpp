@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -63,6 +62,7 @@ private:
   gp_Vec   direc;
   gp_Vec2d direc2d;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -112,5 +112,3 @@ inline const gp_Vec2d& IntSurf_InteriorPoint::Direction2d() const
 
   return direc2d;
 }
-
-

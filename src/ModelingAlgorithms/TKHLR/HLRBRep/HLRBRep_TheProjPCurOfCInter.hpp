@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -51,4 +50,3 @@ public:
                                               const double            HighParameter,
                                               const double            Tol);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <RWMesh_MaterialMap.hpp>
 
@@ -27,4 +26,3 @@ private:
   FILE*                                                                    myFile;
   NCollection_DataMap<occ::handle<Image_Texture>, TCollection_AsciiString> myImageMap;
 };
-

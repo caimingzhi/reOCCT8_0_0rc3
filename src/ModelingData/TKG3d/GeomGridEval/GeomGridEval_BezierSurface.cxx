@@ -23,46 +23,46 @@
 
 namespace
 {
-//! Minimum number of points along varying dimension to use isoline optimization.
-//! For small grids (e.g., 1x4), cache-based surface evaluation is faster than
-//! extracting an isoline curve and setting up a curve evaluator.
-constexpr int THE_ISOLINE_THRESHOLD = 8;
+  //! Minimum number of points along varying dimension to use isoline optimization.
+  //! For small grids (e.g., 1x4), cache-based surface evaluation is faster than
+  //! extracting an isoline curve and setting up a curve evaluator.
+  constexpr int THE_ISOLINE_THRESHOLD = 8;
 
-//! Create and build cache for Bezier surface evaluation.
-//! Bezier surfaces are single-span, so cache is built once at parameter (0.5, 0.5).
-//! @param theGeom the Bezier surface geometry
-//! @return the built cache
-occ::handle<BSplSLib_Cache> buildBezierCache(const occ::handle<Geom_BezierSurface>& theGeom)
-{
-  const int aUDegree = theGeom->UDegree();
-  const int aVDegree = theGeom->VDegree();
+  //! Create and build cache for Bezier surface evaluation.
+  //! Bezier surfaces are single-span, so cache is built once at parameter (0.5, 0.5).
+  //! @param theGeom the Bezier surface geometry
+  //! @return the built cache
+  occ::handle<BSplSLib_Cache> buildBezierCache(const occ::handle<Geom_BezierSurface>& theGeom)
+  {
+    const int aUDegree = theGeom->UDegree();
+    const int aVDegree = theGeom->VDegree();
 
-  // Use pre-defined flat knots from BSplCLib
-  NCollection_Array1<double> aUFlatKnots(BSplCLib::FlatBezierKnots(aUDegree),
-                                         1,
-                                         2 * (aUDegree + 1));
-  NCollection_Array1<double> aVFlatKnots(BSplCLib::FlatBezierKnots(aVDegree),
-                                         1,
-                                         2 * (aVDegree + 1));
+    // Use pre-defined flat knots from BSplCLib
+    NCollection_Array1<double> aUFlatKnots(BSplCLib::FlatBezierKnots(aUDegree),
+                                           1,
+                                           2 * (aUDegree + 1));
+    NCollection_Array1<double> aVFlatKnots(BSplCLib::FlatBezierKnots(aVDegree),
+                                           1,
+                                           2 * (aVDegree + 1));
 
-  // Get poles and weights directly (const references, no copy)
-  const NCollection_Array2<gp_Pnt>& aPoles   = theGeom->Poles();
-  const NCollection_Array2<double>* aWeights = theGeom->Weights();
+    // Get poles and weights directly (const references, no copy)
+    const NCollection_Array2<gp_Pnt>& aPoles   = theGeom->Poles();
+    const NCollection_Array2<double>* aWeights = theGeom->Weights();
 
-  // Create cache (Bezier is non-periodic)
-  occ::handle<BSplSLib_Cache> aCache = new BSplSLib_Cache(aUDegree,
-                                                          false, // not periodic
-                                                          aUFlatKnots,
-                                                          aVDegree,
-                                                          false, // not periodic
-                                                          aVFlatKnots,
-                                                          aWeights);
+    // Create cache (Bezier is non-periodic)
+    occ::handle<BSplSLib_Cache> aCache = new BSplSLib_Cache(aUDegree,
+                                                            false, // not periodic
+                                                            aUFlatKnots,
+                                                            aVDegree,
+                                                            false, // not periodic
+                                                            aVFlatKnots,
+                                                            aWeights);
 
-  // Build cache at parameter 0.5 (middle of single span)
-  aCache->BuildCache(0.5, 0.5, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
+    // Build cache at parameter 0.5 (middle of single span)
+    aCache->BuildCache(0.5, 0.5, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
 
-  return aCache;
-}
+    return aCache;
+  }
 } // namespace
 
 //==================================================================================================

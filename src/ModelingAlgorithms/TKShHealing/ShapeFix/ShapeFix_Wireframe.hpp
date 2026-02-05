@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -100,6 +99,7 @@ private:
   int    myStatusWireGaps;
   int    myStatusSmallEdges;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -156,5 +156,3 @@ inline double ShapeFix_Wireframe::LimitAngle() const
 {
   return myLimitAngle;
 }
-
-

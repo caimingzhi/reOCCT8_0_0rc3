@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Plane.hpp>
 #include <GeomGridEval.hpp>
 #include <gp_Pln.hpp>
@@ -536,4 +535,3 @@ public:
 private:
   occ::handle<Geom_Plane> myGeom;
 };
-

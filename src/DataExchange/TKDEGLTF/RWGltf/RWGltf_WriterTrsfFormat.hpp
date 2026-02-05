@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Transformation format.
 enum RWGltf_WriterTrsfFormat
 {
@@ -15,4 +14,3 @@ enum RWGltf_WriterTrsfFormat
 enum { RWGltf_WriterTrsfFormat_LOWER = 0, RWGltf_WriterTrsfFormat_UPPER = RWGltf_WriterTrsfFormat_TRS }; // aliases
 
 // clang-format on
-

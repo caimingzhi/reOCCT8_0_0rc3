@@ -334,12 +334,12 @@ static int WriteObj(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
 namespace
 {
-// Singleton to ensure DEOBJ plugin is registered only once
-void DEOBJSingleton()
-{
-  static DE_PluginHolder<DEOBJ_ConfigurationNode> aHolder;
-  (void)aHolder;
-}
+  // Singleton to ensure DEOBJ plugin is registered only once
+  void DEOBJSingleton()
+  {
+    static DE_PluginHolder<DEOBJ_ConfigurationNode> aHolder;
+    (void)aHolder;
+  }
 } // namespace
 
 //=================================================================================================

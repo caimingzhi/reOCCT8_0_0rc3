@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepPrimAPI_MakeBox.hpp>
 
 //! Builds a valid box, if points fulfill the conditions of a valid box.
@@ -38,4 +37,3 @@ private:
                      const gp_Pnt& thePnt3,
                      const gp_Pnt& thePnt4);
 };
-

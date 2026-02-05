@@ -1,19 +1,3 @@
-// Created on: 1996-11-08
-// Created by: Jean Claude VAUTHIER
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GCPnts_TangentialDeflection.hpp>
 
 #include <GCPnts_TCurveTypes.hpp>
@@ -31,72 +15,72 @@
 
 namespace
 {
-static const double Us3 = 0.3333333333333333333333333333;
+  static const double Us3 = 0.3333333333333333333333333333;
 
-inline static void D0(const Adaptor3d_Curve& C, const double U, gp_Pnt& P)
-{
-  C.D0(U, P);
-}
-
-inline static void D2(const Adaptor3d_Curve& C, const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
-{
-  C.D2(U, P, V1, V2);
-}
-
-static void D0(const Adaptor2d_Curve2d& C, const double U, gp_Pnt& PP)
-{
-  double   X, Y;
-  gp_Pnt2d P;
-  C.D0(U, P);
-  P.Coord(X, Y);
-  PP.SetCoord(X, Y, 0.0);
-}
-
-static void D2(const Adaptor2d_Curve2d& C, const double U, gp_Pnt& PP, gp_Vec& VV1, gp_Vec& VV2)
-{
-  double   X, Y;
-  gp_Pnt2d P;
-  gp_Vec2d V1, V2;
-  C.D2(U, P, V1, V2);
-  P.Coord(X, Y);
-  PP.SetCoord(X, Y, 0.0);
-  V1.Coord(X, Y);
-  VV1.SetCoord(X, Y, 0.0);
-  V2.Coord(X, Y);
-  VV2.SetCoord(X, Y, 0.0);
-}
-
-static double EstimAngl(const gp_Pnt& P1, const gp_Pnt& Pm, const gp_Pnt& P2)
-{
-  gp_Vec V1(P1, Pm), V2(Pm, P2);
-  double L = V1.Magnitude() * V2.Magnitude();
-  if (L > gp::Resolution())
+  inline static void D0(const Adaptor3d_Curve& C, const double U, gp_Pnt& P)
   {
-    return V1.CrossMagnitude(V2) / L;
+    C.D0(U, P);
   }
-  else
-  {
-    return 0.;
-  }
-}
 
-// Return number of interval of continuity on which theParam is located.
-// Last parameter is used to increase search speed.
-static int getIntervalIdx(const double                theParam,
-                          NCollection_Array1<double>& theIntervs,
-                          const int                   thePreviousIdx)
-{
-  int anIdx;
-  for (anIdx = thePreviousIdx; anIdx < theIntervs.Upper(); anIdx++)
+  inline static void D2(const Adaptor3d_Curve& C, const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
   {
-    if (theParam >= theIntervs(anIdx)
-        && theParam <= theIntervs(anIdx + 1)) // Inside of anIdx interval.
+    C.D2(U, P, V1, V2);
+  }
+
+  static void D0(const Adaptor2d_Curve2d& C, const double U, gp_Pnt& PP)
+  {
+    double   X, Y;
+    gp_Pnt2d P;
+    C.D0(U, P);
+    P.Coord(X, Y);
+    PP.SetCoord(X, Y, 0.0);
+  }
+
+  static void D2(const Adaptor2d_Curve2d& C, const double U, gp_Pnt& PP, gp_Vec& VV1, gp_Vec& VV2)
+  {
+    double   X, Y;
+    gp_Pnt2d P;
+    gp_Vec2d V1, V2;
+    C.D2(U, P, V1, V2);
+    P.Coord(X, Y);
+    PP.SetCoord(X, Y, 0.0);
+    V1.Coord(X, Y);
+    VV1.SetCoord(X, Y, 0.0);
+    V2.Coord(X, Y);
+    VV2.SetCoord(X, Y, 0.0);
+  }
+
+  static double EstimAngl(const gp_Pnt& P1, const gp_Pnt& Pm, const gp_Pnt& P2)
+  {
+    gp_Vec V1(P1, Pm), V2(Pm, P2);
+    double L = V1.Magnitude() * V2.Magnitude();
+    if (L > gp::Resolution())
     {
-      break;
+      return V1.CrossMagnitude(V2) / L;
+    }
+    else
+    {
+      return 0.;
     }
   }
-  return anIdx;
-}
+
+  // Return number of interval of continuity on which theParam is located.
+  // Last parameter is used to increase search speed.
+  static int getIntervalIdx(const double                theParam,
+                            NCollection_Array1<double>& theIntervs,
+                            const int                   thePreviousIdx)
+  {
+    int anIdx;
+    for (anIdx = thePreviousIdx; anIdx < theIntervs.Upper(); anIdx++)
+    {
+      if (theParam >= theIntervs(anIdx)
+          && theParam <= theIntervs(anIdx + 1)) // Inside of anIdx interval.
+      {
+        break;
+      }
+    }
+    return anIdx;
+  }
 } // namespace
 
 //=================================================================================================
@@ -414,15 +398,18 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       PerformLinear(theC);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       PerformCircular(theC);
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBS = theC.BSpline();
       if (aBS->NbPoles() == 2)
         PerformLinear(theC);
@@ -430,7 +417,8 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
         PerformCurve(theC);
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBZ = theC.Bezier();
       if (aBZ->NbPoles() == 2)
         PerformLinear(theC);
@@ -438,7 +426,8 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
         PerformCurve(theC);
       break;
     }
-    default: {
+    default:
+    {
       PerformCurve(theC);
       break;
     }
@@ -557,17 +546,20 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       int  NbPoints = (myMinNbPnts > 3) ? myMinNbPnts : 3;
       switch (theC.GetType())
       {
-        case GeomAbs_BSplineCurve: {
+        case GeomAbs_BSplineCurve:
+        {
           Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) BS = theC.BSpline();
           NbPoints = std::max(BS->Degree() + 1, NbPoints);
           break;
         }
-        case GeomAbs_BezierCurve: {
+        case GeomAbs_BezierCurve:
+        {
           Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) BZ = theC.Bezier();
           NbPoints = std::max(BZ->Degree() + 1, NbPoints);
           break;
         }
-        default: {
+        default:
+        {
           break;
         }
       }

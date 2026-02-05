@@ -1,21 +1,3 @@
-// Created on: 1996-04-22
-// Created by: Herve LOUESSARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified: Sergey ZERCHANINOV
-
 #include <BRepExtrema_DistanceSS.hpp>
 
 #include <TopExp.hpp>
@@ -591,21 +573,25 @@ void BRepExtrema_DistanceSS::Perform(const TopoDS_Shape& theS1,
 
   switch (theS1.ShapeType())
   {
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       TopoDS_Vertex aV1 = TopoDS::Vertex(theS1);
       switch (theS2.ShapeType())
       {
-        case TopAbs_VERTEX: {
+        case TopAbs_VERTEX:
+        {
           TopoDS_Vertex aV2 = TopoDS::Vertex(theS2);
           Perform(aV1, aV2, mySeqSolShape1, mySeqSolShape2);
           break;
         }
-        case TopAbs_EDGE: {
+        case TopAbs_EDGE:
+        {
           TopoDS_Edge aE2 = TopoDS::Edge(theS2);
           Perform(aV1, aE2, mySeqSolShape1, mySeqSolShape2);
           break;
         }
-        case TopAbs_FACE: {
+        case TopAbs_FACE:
+        {
           TopoDS_Face aF2 = TopoDS::Face(theS2);
           Perform(aV1, aF2, mySeqSolShape1, mySeqSolShape2);
           break;
@@ -615,16 +601,19 @@ void BRepExtrema_DistanceSS::Perform(const TopoDS_Shape& theS1,
       }
       break;
     }
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       TopoDS_Edge aE1 = TopoDS::Edge(theS1);
       switch (theS2.ShapeType())
       {
-        case TopAbs_VERTEX: {
+        case TopAbs_VERTEX:
+        {
           TopoDS_Vertex aV2 = TopoDS::Vertex(theS2);
           Perform(aV2, aE1, mySeqSolShape2, mySeqSolShape1);
           break;
         }
-        case TopAbs_EDGE: {
+        case TopAbs_EDGE:
+        {
           TopoDS_Edge aE2 = TopoDS::Edge(theS2);
           TopoDS_Edge aTrimEdge;
           bool        bIsTrim1 = false;
@@ -637,7 +626,8 @@ void BRepExtrema_DistanceSS::Perform(const TopoDS_Shape& theS1,
           Perform(aE1, aE2, mySeqSolShape1, mySeqSolShape2);
           break;
         }
-        case TopAbs_FACE: {
+        case TopAbs_FACE:
+        {
           TopoDS_Face aF2 = TopoDS::Face(theS2);
           TopoDS_Face aTrimFace;
           bool        bIsInfinit;
@@ -652,16 +642,19 @@ void BRepExtrema_DistanceSS::Perform(const TopoDS_Shape& theS1,
       }
       break;
     }
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       TopoDS_Face aF1 = TopoDS::Face(theS1);
       switch (theS2.ShapeType())
       {
-        case TopAbs_VERTEX: {
+        case TopAbs_VERTEX:
+        {
           TopoDS_Vertex aV2 = TopoDS::Vertex(theS2);
           Perform(aV2, aF1, mySeqSolShape2, mySeqSolShape1);
           break;
         }
-        case TopAbs_EDGE: {
+        case TopAbs_EDGE:
+        {
           TopoDS_Edge aE2 = TopoDS::Edge(theS2);
           TopoDS_Face aTrimFace;
           bool        bIsInfinit;
@@ -671,7 +664,8 @@ void BRepExtrema_DistanceSS::Perform(const TopoDS_Shape& theS1,
           Perform(aE2, aF1, mySeqSolShape2, mySeqSolShape1);
           break;
         }
-        case TopAbs_FACE: {
+        case TopAbs_FACE:
+        {
           TopoDS_Face aF2 = TopoDS::Face(theS2);
           Perform(aF1, aF2, mySeqSolShape1, mySeqSolShape2);
           break;

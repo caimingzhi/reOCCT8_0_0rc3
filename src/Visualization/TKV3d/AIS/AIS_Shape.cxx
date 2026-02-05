@@ -1,19 +1,3 @@
-// Created on: 1996-12-20
-// Created by: Robert COUBLANC
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Shape.hpp>
 
 #include <AIS_GraphicTool.hpp>
@@ -122,7 +106,8 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   switch (theMode)
   {
-    case AIS_WireFrame: {
+    case AIS_WireFrame:
+    {
       StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(myshape, myDrawer, true);
       try
       {
@@ -138,7 +123,8 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
       break;
     }
-    case AIS_Shaded: {
+    case AIS_Shaded:
+    {
       StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(myshape, myDrawer, true);
       if ((int)myshape.ShapeType() > 4)
       {
@@ -184,7 +170,8 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
 
     // Bounding box.
-    case 2: {
+    case 2:
+    {
       if (IsInfinite())
       {
         StdPrs_WFShape::Add(thePrs, myshape, myDrawer);
@@ -216,19 +203,22 @@ void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   th
   {
     case TopAbs_VERTEX:
     case TopAbs_EDGE:
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       thePrs->SetDisplayPriority(Graphic3d_DisplayPriority_Below);
       StdPrs_WFShape::Add(thePrs, theShape, theDrawer);
       return;
     }
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       if (theShape.NbChildren() == 0)
       {
         return;
       }
       break;
     }
-    default: {
+    default:
+    {
       break;
     }
   }
@@ -256,13 +246,15 @@ void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   th
       OCC_CATCH_SIGNALS
       switch (theDrawer->TypeOfHLR())
       {
-        case Prs3d_TOH_Algo: {
+        case Prs3d_TOH_Algo:
+        {
           StdPrs_HLRShape aBuilder;
           aBuilder.ComputeHLR(thePrs, theShape, theDrawer, theProjector);
           break;
         }
         case Prs3d_TOH_PolyAlgo:
-        case Prs3d_TOH_NotSet: {
+        case Prs3d_TOH_NotSet:
+        {
           StdPrs_HLRPolyShape aBuilder;
           aBuilder.ComputeHLR(thePrs, theShape, theDrawer, theProjector);
           break;

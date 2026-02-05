@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <IMeshData_Types.hpp>
 #include <Message_ProgressRange.hpp>
@@ -25,4 +24,3 @@ protected:
   //! Constructor.
   IMeshTools_MeshAlgo() {}
 };
-

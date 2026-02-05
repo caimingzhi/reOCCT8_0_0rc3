@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_TypeOfTriedronPosition.hpp>
 #include <BVH_Box.hpp>
 #include <Graphic3d_Camera.hpp>
@@ -547,7 +546,8 @@ private:
 private:
   Graphic3d_TransModeFlags myMode; //!< Transformation persistence mode flags
 
-  union {
+  union
+  {
     PersParams3d Params3d;
     PersParams2d Params2d;
   } myParams;
@@ -707,4 +707,3 @@ NCollection_Mat4<T> Graphic3d_TransformPers::Compute(const occ::handle<Graphic3d
         theToApplyProjPers);
   return anUnviewMat * aWorldView;
 }
-

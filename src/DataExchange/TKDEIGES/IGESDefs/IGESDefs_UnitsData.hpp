@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_HAsciiString.hpp>
@@ -55,4 +54,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> theUnitValues;
   occ::handle<NCollection_HArray1<double>>                                theUnitScales;
 };
-

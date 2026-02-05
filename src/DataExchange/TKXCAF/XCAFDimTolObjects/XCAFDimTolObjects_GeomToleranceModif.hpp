@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines modifirs
 enum XCAFDimTolObjects_GeomToleranceModif
 {
@@ -22,4 +21,3 @@ enum XCAFDimTolObjects_GeomToleranceModif
   XCAFDimTolObjects_GeomToleranceModif_All_Around,
   XCAFDimTolObjects_GeomToleranceModif_All_Over,
 };
-

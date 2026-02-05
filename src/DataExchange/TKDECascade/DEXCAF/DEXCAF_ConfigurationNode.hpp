@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <PCDM_ReaderFilter.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -83,4 +82,3 @@ public:
 
   } InternalParameters;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -52,4 +51,3 @@ private:
   double                                theBlue;
   occ::handle<TCollection_HAsciiString> theColorName;
 };
-

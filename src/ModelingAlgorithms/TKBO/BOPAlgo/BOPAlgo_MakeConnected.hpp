@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -278,4 +277,3 @@ protected: //! @name Fields
   TopoDS_Shape myGlued; //!< The resulting connected (glued) shape
   TopoDS_Shape myShape; //!< The resulting shape
 };
-

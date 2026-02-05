@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <NCollection_DefineAlloc.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -34,4 +33,3 @@ public:
 private:
   TCollection_AsciiString myName; //!< alert name, if defined is used in GetMessageKey
 };
-

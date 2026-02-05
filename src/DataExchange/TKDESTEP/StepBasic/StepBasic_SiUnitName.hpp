@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepBasic_SiUnitName
 {
   StepBasic_sunMetre,
@@ -32,4 +31,3 @@ enum StepBasic_SiUnitName
   StepBasic_sunGray,
   StepBasic_sunSievert
 };
-

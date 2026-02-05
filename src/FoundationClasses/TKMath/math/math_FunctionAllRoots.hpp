@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -81,6 +80,7 @@ private:
   NCollection_Sequence<int>    ifin;
   NCollection_Sequence<int>    iiso;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -147,5 +147,3 @@ inline int math_FunctionAllRoots::GetPointState(const int Index) const
   StdFail_NotDone_Raise_if(!done, " ");
   return iiso.Value(Index);
 }
-
-

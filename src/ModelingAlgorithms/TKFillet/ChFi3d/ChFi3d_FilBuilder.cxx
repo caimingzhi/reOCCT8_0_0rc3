@@ -1,21 +1,3 @@
-// Created on: 1995-04-25
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified:    MPS :  (10-04-97) portage WNT pour GetFilletShape
-
 #include <Adaptor3d_TopolTool.hpp>
 #include <BRepBlend_ConstRad.hpp>
 #include <BRepBlend_ConstRadInv.hpp>
@@ -480,7 +462,8 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
   GeomAbs_SurfaceType                                  typ = AS.GetType();
   switch (typ)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       u1                       = p1f.X();
       u2                       = p2f.X();
       v1                       = std::max(p1f.Y(), p2f.Y());
@@ -493,7 +476,8 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       sec2.Set(ElSLib::CylinderVIso(Cy.Position(), Cy.Radius(), v2), u1, u2);
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       v1            = p1f.Y();
       v2            = p2f.Y();
       u1            = std::max(p1f.X(), p2f.X());
@@ -513,7 +497,8 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       }
     }
     break;
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       v1            = p1f.Y();
       v2            = p2f.Y();
       u1            = std::max(p1f.X(), p2f.X());

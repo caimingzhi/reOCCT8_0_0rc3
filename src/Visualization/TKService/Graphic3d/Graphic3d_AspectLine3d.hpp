@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 
 //! Creates and updates a group of attributes for 3d line primitives.
@@ -43,4 +42,3 @@ public:
   //! Warning: Raises Standard_OutOfRange if the width is a negative value.
   void SetWidth(float theWidth) { SetLineWidth(theWidth); }
 };
-

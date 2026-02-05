@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_MMgrRoot.hpp>
 
 #include <mutex>
@@ -129,4 +128,3 @@ protected:
   std::mutex myMutex;      //!< Mutex to protect free lists data
   std::mutex myMutexPools; //!< Mutex to protect small block pools data
 };
-

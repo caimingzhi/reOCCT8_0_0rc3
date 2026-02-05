@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DimensionMismatch.hpp>
 #include <Standard_OutOfMemory.hpp>
 #include <Standard_NotImplemented.hpp>
@@ -444,4 +443,3 @@ protected:
   bool           myIsOwner = false;
   allocator_type myAllocator;
 };
-

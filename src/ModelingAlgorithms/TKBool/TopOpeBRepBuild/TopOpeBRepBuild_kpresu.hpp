@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define RESUNDEF (-100)  // resultat indefini
 #define RESNEWSHA2 (-12) // nouveau shape de meme type
 #define RESNEWSHA1 (-11) // nouveau shape de meme type
@@ -22,4 +21,3 @@
 #define SHEGARDCOUR (4) // prendre le shell courant sans classifier
 #define SHEGARDAUTR (5) // prendre tous les autres shells sans classifier
 #define SHEGARDTOUS (6) // prendre tous les shells sans classifier
-

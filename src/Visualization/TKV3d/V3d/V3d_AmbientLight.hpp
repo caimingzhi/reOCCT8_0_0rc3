@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_Light.hpp>
 
 //! Creation of an ambient light source in a viewer.
@@ -33,4 +32,3 @@ private:
   using Graphic3d_CLight::SetSmoothRadius;
   using Graphic3d_CLight::Smoothness;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 
 #include <BinTools_FormatVersion.hpp>
@@ -85,4 +84,3 @@ public:
 
   } InternalParameters;
 };
-

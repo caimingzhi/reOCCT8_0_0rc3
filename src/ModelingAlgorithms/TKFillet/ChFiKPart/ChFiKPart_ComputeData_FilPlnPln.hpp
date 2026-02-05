@@ -1,6 +1,5 @@
 #pragma once
 
-
 bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pl1,
@@ -11,4 +10,3 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const gp_Lin&                       Spine,
                           const double                        First,
                           const TopAbs_Orientation            Of1);
-

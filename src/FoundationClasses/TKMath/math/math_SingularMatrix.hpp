@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <Standard_Failure.hpp>
@@ -17,4 +16,3 @@ DEFINE_STANDARD_HANDLE(math_SingularMatrix, Standard_Failure)
 #endif
 
 DEFINE_STANDARD_EXCEPTION(math_SingularMatrix, Standard_Failure)
-

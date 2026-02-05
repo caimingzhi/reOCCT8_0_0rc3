@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <math_FunctionSetWithDerivatives.hpp>
 #include <math_Vector.hpp>
@@ -71,4 +70,3 @@ private:
   occ::handle<Adaptor3d_Curve>   TheCurve;
   occ::handle<Adaptor3d_Surface> TheSurface;
 };
-

@@ -25,7 +25,7 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1e-10;
+  constexpr double THE_TOLERANCE = 1e-10;
 }
 
 //==================================================================================================

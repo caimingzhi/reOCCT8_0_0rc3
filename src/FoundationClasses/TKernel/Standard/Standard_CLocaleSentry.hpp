@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 #include <locale.h>
@@ -87,4 +86,3 @@ public:
 };
 
 #endif // __ANDROID__
-

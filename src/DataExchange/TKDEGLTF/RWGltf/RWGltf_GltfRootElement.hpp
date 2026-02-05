@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Root elements within glTF JSON document.
 enum RWGltf_GltfRootElement
 {
@@ -52,4 +51,3 @@ inline const char* RWGltf_GltfRootElementName(RWGltf_GltfRootElement theElem)
                                                                   "extensionsRequired"};
   return THE_ROOT_NAMES[theElem];
 }
-

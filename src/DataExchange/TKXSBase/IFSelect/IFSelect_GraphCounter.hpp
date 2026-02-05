@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_SignCounter.hpp>
@@ -42,4 +41,3 @@ public:
 private:
   occ::handle<IFSelect_SelectDeduct> theapplied;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <AdvApp2Var_Data_f2c.hpp>
 

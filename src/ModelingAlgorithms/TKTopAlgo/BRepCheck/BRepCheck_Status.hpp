@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum BRepCheck_Status
 {
   BRepCheck_NoError,
@@ -41,4 +40,3 @@ enum BRepCheck_Status
   BRepCheck_EnclosedRegion,
   BRepCheck_CheckFail
 };
-

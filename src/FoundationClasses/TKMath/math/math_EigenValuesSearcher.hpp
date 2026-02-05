@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -64,4 +63,3 @@ private:
   NCollection_Array1<double> myEigenValues;  //!< Computed eigenvalues
   NCollection_Array2<double> myEigenVectors; //!< Computed eigenvectors stored column-wise
 };
-

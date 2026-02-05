@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Traverse.hpp>
 
 //! Abstract class for computation of the min distance between some
@@ -62,4 +61,3 @@ protected:               //! @name Fields
   bool       myIsDone;   //!< State of the algorithm
   ObjectType myObject;   //!< Object to compute the distance to
 };
-

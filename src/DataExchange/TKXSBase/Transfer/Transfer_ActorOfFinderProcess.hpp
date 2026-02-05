@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <ShapeProcess.hpp>
 #include <Transfer_ActorOfProcessForFinder.hpp>
@@ -90,4 +89,3 @@ private:
   XSAlgo_ShapeProcessor::ProcessingFlags myShapeProcFlags; //!< Flags defining operations to be performed on shapes.
   // clang-format on
 };
-

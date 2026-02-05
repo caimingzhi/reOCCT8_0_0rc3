@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -29,4 +28,3 @@ public:
     StepData_StepWriter&                                         SW,
     const occ::handle<StepVisual_DraughtingPreDefinedCurveFont>& ent) const;
 };
-

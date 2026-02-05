@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -120,4 +119,3 @@ private:
                                                                      theTextDisplayTemplates;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> theContFlowAssociativities;
 };
-

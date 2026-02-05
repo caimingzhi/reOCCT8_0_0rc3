@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Persistent.hpp>
 
 class TDocStd_Document;
@@ -26,4 +25,3 @@ public:
 private:
   occ::handle<StdLPersistent_Data> myData;
 };
-

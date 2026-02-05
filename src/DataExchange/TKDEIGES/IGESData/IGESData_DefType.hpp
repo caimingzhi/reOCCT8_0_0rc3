@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Some fields of an IGES entity may be
 //! - Undefined
 //! - Defined as a positive integer
@@ -26,4 +25,3 @@ enum IGESData_DefType
   IGESData_ErrorVal,
   IGESData_ErrorRef
 };
-

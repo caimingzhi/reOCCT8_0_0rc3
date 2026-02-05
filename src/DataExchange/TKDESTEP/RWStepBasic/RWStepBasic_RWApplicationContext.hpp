@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -27,4 +26,3 @@ public:
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                             SW,
                                  const occ::handle<StepBasic_ApplicationContext>& ent) const;
 };
-

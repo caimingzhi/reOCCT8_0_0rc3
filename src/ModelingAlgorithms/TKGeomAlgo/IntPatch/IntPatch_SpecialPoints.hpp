@@ -1,11 +1,11 @@
 #pragma once
 
-
 //! Contains methods to add some special points
 //! (such as apex of cone, pole of sphere,
 //! point on surface boundary etc.) in the intersection line.
 
 #include <Adaptor3d_Surface.hpp>
+
 //! Created on: 2016-06-03
 //! Created by: NIKOLAI BUKHALOV
 //! Copyright (c) 2016 OPEN CASCADE SAS
@@ -21,7 +21,6 @@
 //! Alternatively, this file may be used under the terms of Open CASCADE
 //! commercial license or contractual agreement.
 
-
 //! This enum describes the different kinds of
 //! special (singular) points of Surface-Surface
 //! intersection algorithm. Such as pole of sphere,
@@ -36,8 +35,6 @@ enum IntPatch_SpecPntType
   IntPatch_SPntPoleSeamU,
   IntPatch_SPntPole
 };
-
-
 
 class gp_Cone;
 class gp_Vec;
@@ -171,4 +168,3 @@ protected:
                                                         const gp_XYZ& thePlnNormal,
                                                         gp_XYZ        theResult[2]);
 };
-

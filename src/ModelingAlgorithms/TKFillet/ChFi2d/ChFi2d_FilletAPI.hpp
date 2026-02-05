@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ChFi2d_FilletAlgo.hpp>
 #include <ChFi2d_AnaFilletAlgo.hpp>
 
@@ -76,4 +75,3 @@ private:
   ChFi2d_AnaFilletAlgo myAnaFilletAlgo;
   bool                 myIsAnalytical;
 };
-

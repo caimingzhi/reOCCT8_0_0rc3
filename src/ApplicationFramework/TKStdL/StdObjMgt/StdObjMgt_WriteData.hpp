@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Storage_BaseDriver.hpp>
 
@@ -72,4 +71,3 @@ private:
 
 Standard_EXPORT StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData,
                                                 const Standard_GUID& theGUID);
-

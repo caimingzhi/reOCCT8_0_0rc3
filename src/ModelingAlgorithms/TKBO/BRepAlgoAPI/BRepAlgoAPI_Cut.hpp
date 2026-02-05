@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -44,4 +43,3 @@ public:
                                   const bool                   bFWD     = true,
                                   const Message_ProgressRange& theRange = Message_ProgressRange());
 };
-

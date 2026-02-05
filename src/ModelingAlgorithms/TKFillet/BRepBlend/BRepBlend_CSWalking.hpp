@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <BRepBlend_PointOnRst.hpp>
@@ -99,4 +98,3 @@ private:
   bool                                     comptra;
   double                                   sens;
 };
-

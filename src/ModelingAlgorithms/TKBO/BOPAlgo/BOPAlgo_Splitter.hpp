@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -57,4 +56,3 @@ protected:
   //! shape to avoid multiple enclosure into compounds.
   Standard_EXPORT void BuildResult(const TopAbs_ShapeEnum theType) override;
 };
-

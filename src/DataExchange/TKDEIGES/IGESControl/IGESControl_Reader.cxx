@@ -230,7 +230,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
 
     switch (mode)
     {
-      case IFSelect_GeneralInfo: {
+      case IFSelect_GeneralInfo:
+      {
         Message_Msg msg3005("IGES_3005");
         TF->Send(msg3005, Message_Info);
         Message_Msg msg3010("IGES_3010");
@@ -251,7 +252,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         break;
       }
       case IFSelect_CountByItem:
-      case IFSelect_ListByItem: {
+      case IFSelect_ListByItem:
+      {
         Message_Msg msg3030("IGES_3030");
         TF->Send(msg3030, Message_Info);
         NCollection_DataMap<TCollection_AsciiString, int>::Iterator aMapCountIter(aMapCount);
@@ -290,7 +292,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         }
         break;
       }
-      case IFSelect_ResultCount: {
+      case IFSelect_ResultCount:
+      {
         Message_Msg msg3040("IGES_3040");
         TF->Send(msg3040, Message_Info);
         Message_Msg msg3011("IGES_3011");
@@ -309,7 +312,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         }
         break;
       }
-      case IFSelect_Mapping: {
+      case IFSelect_Mapping:
+      {
         Message_Msg msg3040("IGES_3050");
         TF->Send(msg3040, Message_Info);
         Message_Msg msg3011("IGES_3011");

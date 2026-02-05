@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Viewer.hpp>
 #include <Draw.hpp>
 
@@ -22,4 +21,3 @@ extern void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitApp
 extern Draw_Viewer dout;
 extern bool        Draw_Batch;
 #endif
-

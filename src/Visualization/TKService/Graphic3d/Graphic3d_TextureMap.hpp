@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureRoot.hpp>
 #include <Graphic3d_TypeOfTexture.hpp>
 #include <Graphic3d_LevelOfTextureAnisotropy.hpp>
@@ -56,4 +55,3 @@ protected:
   Standard_EXPORT Graphic3d_TextureMap(const occ::handle<Image_PixMap>& thePixMap,
                                        const Graphic3d_TypeOfTexture    theType);
 };
-

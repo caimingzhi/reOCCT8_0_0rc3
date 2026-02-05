@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Types.hpp>
 
 #include <limits>
@@ -68,4 +67,3 @@ private:
     }
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PCDM_RetrievalDriver.hpp>
 #include <Storage_Error.hpp>
 
@@ -42,4 +41,3 @@ private:
   //! Update the reader status and raise an exception appropriate for the given storage error.
   Standard_EXPORT void raiseOnStorageError(Storage_Error theError);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <BSplCLib_Cache.hpp>
 #include <Geom2d_Curve.hpp>
@@ -218,4 +217,3 @@ protected:
   double                    myLast;
   CurveDataVariant myCurveData; ///< Curve-specific evaluation data (BSpline, Bezier, offset)
 };
-

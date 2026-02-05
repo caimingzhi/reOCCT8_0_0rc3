@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <NCollection_CellFilter.hpp>
 #include <math_MultipleVarFunction.hpp>
@@ -250,4 +249,3 @@ private:
 
   double myF; // Current value of Global optimum.
 };
-

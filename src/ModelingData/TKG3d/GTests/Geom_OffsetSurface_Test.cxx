@@ -426,11 +426,11 @@ TEST(Geom_OffsetSurface_EquivalentSurface, EquivalentSurface_EvaluationConsisten
 
 namespace
 {
-//! Helper to compare vectors with tolerance.
-bool VectorsEqual(const gp_Vec& theV1, const gp_Vec& theV2, double theTol)
-{
-  return (theV1 - theV2).Magnitude() < theTol;
-}
+  //! Helper to compare vectors with tolerance.
+  bool VectorsEqual(const gp_Vec& theV1, const gp_Vec& theV2, double theTol)
+  {
+    return (theV1 - theV2).Magnitude() < theTol;
+  }
 } // namespace
 
 TEST(Geom_OffsetSurface_Derivatives, Plane_D0D1D2D3_Consistency)

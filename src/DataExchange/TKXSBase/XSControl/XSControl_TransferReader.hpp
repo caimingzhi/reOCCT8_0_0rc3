@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -371,4 +370,3 @@ private:
   NCollection_DataMap<int, occ::handle<Standard_Transient>>                     myResults;
   occ::handle<NCollection_HSequence<TopoDS_Shape>>                              myShapeResult;
 };
-

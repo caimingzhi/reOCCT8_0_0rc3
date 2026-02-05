@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax3.hpp>
@@ -68,4 +67,3 @@ private:
   double                           myYSize;
   double                           myOffSet;
 };
-

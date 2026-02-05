@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Circ.hpp>
 #include <gp_Elips.hpp>
 #include <gp_Hypr.hpp>
@@ -140,4 +139,3 @@ public:
 
   Standard_EXPORT ~Adaptor3d_Curve() override;
 };
-

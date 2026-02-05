@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -49,4 +48,3 @@ protected:
   //! Empty constructor
   Standard_EXPORT BRepAlgoAPI_Algo(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 };
-

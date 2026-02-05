@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -41,4 +40,3 @@ private:
   occ::handle<StepShape_TopologicalRepresentationItem> myResult;
   TopoDSToStep_MakeEdgeError                           myError;
 };
-

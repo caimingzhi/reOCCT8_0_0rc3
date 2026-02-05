@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -580,6 +579,7 @@ protected:
   int                                myStatusLoop;
   int                                myStatus;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -764,5 +764,3 @@ inline double ShapeAnalysis_Wire::MaxDistance2d() const
 {
   return myMax2d;
 }
-
-

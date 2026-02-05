@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -29,4 +28,3 @@ public:
   Standard_EXPORT static occ::handle<Geom_Surface> MakeSurface(const Adaptor3d_Surface& theS,
                                                                const bool theTrimFlag = true);
 };
-

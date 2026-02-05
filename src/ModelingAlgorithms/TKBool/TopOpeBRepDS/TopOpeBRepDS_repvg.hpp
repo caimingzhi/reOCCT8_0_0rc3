@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_define.hpp>
 Standard_EXPORT void FDS_repvg(const TopOpeBRepDS_DataStructure&                         BDS,
                                const int                                                 EIX,

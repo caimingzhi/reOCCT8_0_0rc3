@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -104,4 +103,3 @@ private:
   //! @return Operation name.
   static const char* toOperationName(const Operation theOperation);
 };
-

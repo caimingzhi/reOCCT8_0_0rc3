@@ -1,24 +1,3 @@
-// Created on: 1992-08-06
-// Created by: Laurent BUCHARD
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//----------------------------------------------------------------------
-//-- Purposse: Geometric Intersection between two Natural Quadric
-//--          If the intersection is not a conic,
-//--          analytical methods must be called.
-//----------------------------------------------------------------------
 #ifndef OCCT_DEBUG
   #define No_Standard_RangeError
   #define No_Standard_OutOfRange
@@ -1546,7 +1525,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     {
       switch (INTER_QUAD_PLN.TypeInter())
       {
-        case IntAna_Ellipse: {
+        case IntAna_Ellipse:
+        {
           typeres    = IntAna_Ellipse;
           gp_Elips E = INTER_QUAD_PLN.Ellipse(1);
           pt1        = E.Location();
@@ -1557,7 +1537,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint      = 1;
           break;
         }
-        case IntAna_Circle: {
+        case IntAna_Circle:
+        {
           typeres   = IntAna_Circle;
           gp_Circ C = INTER_QUAD_PLN.Circle(1);
           pt1       = C.Location();
@@ -1567,7 +1548,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint     = 1;
           break;
         }
-        case IntAna_Hyperbola: {
+        case IntAna_Hyperbola:
+        {
           typeres   = IntAna_Hyperbola;
           gp_Hypr H = INTER_QUAD_PLN.Hyperbola(1);
           pt1 = pt2 = H.Location();
@@ -1578,7 +1560,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint                 = 2;
           break;
         }
-        case IntAna_Line: {
+        case IntAna_Line:
+        {
           typeres  = IntAna_Line;
           gp_Lin H = INTER_QUAD_PLN.Line(1);
           pt1 = pt2 = H.Location();
@@ -1824,7 +1807,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     {
       switch (INTER_QUAD_PLN.TypeInter())
       {
-        case IntAna_Ellipse: {
+        case IntAna_Ellipse:
+        {
           typeres    = IntAna_Ellipse;
           gp_Elips E = INTER_QUAD_PLN.Ellipse(1);
           pt1        = E.Location();
@@ -1835,7 +1819,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint      = 1;
           break;
         }
-        case IntAna_Circle: {
+        case IntAna_Circle:
+        {
           typeres   = IntAna_Circle;
           gp_Circ C = INTER_QUAD_PLN.Circle(1);
           pt1       = C.Location();
@@ -1845,7 +1830,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint     = 1;
           break;
         }
-        case IntAna_Parabola: {
+        case IntAna_Parabola:
+        {
           typeres      = IntAna_Parabola;
           gp_Parab Prb = INTER_QUAD_PLN.Parabola(1);
           pt1          = Prb.Location();
@@ -1855,7 +1841,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint        = 1;
           break;
         }
-        case IntAna_Hyperbola: {
+        case IntAna_Hyperbola:
+        {
           typeres   = IntAna_Hyperbola;
           gp_Hypr H = INTER_QUAD_PLN.Hyperbola(1);
           pt1 = pt2 = H.Location();
@@ -2433,25 +2420,29 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
   {
     switch (i)
     {
-      case 0: {
+      case 0:
+      {
         pt1    = aPt[i];
         param1 = aParam[i];
         dir1   = aDir[i];
         break;
       }
-      case 1: {
+      case 1:
+      {
         pt2    = aPt[i];
         param2 = aParam[i];
         dir2   = aDir[i];
         break;
       }
-      case 2: {
+      case 2:
+      {
         pt3    = aPt[i];
         param3 = aParam[i];
         dir3   = aDir[i];
         break;
       }
-      case 3: {
+      case 3:
+      {
         pt4    = aPt[i];
         param4 = aParam[i];
         dir4   = aDir[i];

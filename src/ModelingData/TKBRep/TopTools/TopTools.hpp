@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -64,4 +63,3 @@ public:
   //! position.
   Standard_EXPORT static void Dummy(const int I);
 };
-

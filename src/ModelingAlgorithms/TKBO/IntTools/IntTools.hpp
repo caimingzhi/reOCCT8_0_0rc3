@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 #include <IntTools_Root.hpp>
 #include <NCollection_Sequence.hpp>
@@ -48,4 +47,3 @@ public:
                                          const double                Deflect,
                                          NCollection_Array1<double>& anArgs);
 };
-

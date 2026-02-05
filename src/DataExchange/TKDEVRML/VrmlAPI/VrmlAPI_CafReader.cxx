@@ -27,78 +27,78 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlAPI_CafReader, Standard_Transient)
 
 namespace
 {
-//=================================================================================================
+  //=================================================================================================
 
-static TCollection_AsciiString getVrmlErrorName(VrmlData_ErrorStatus theStatus)
-{
-  switch (theStatus)
+  static TCollection_AsciiString getVrmlErrorName(VrmlData_ErrorStatus theStatus)
   {
-    case VrmlData_StatusOK:
-      return "";
-    case VrmlData_EmptyData:
-      return "EmptyData";
-    case VrmlData_UnrecoverableError:
-      return "UnrecoverableError";
-    case VrmlData_GeneralError:
-      return "GeneralError";
-    case VrmlData_EndOfFile:
-      return "EndOfFile";
-    case VrmlData_NotVrmlFile:
-      return "NotVrmlFile";
-    case VrmlData_CannotOpenFile:
-      return "CannotOpenFile";
-    case VrmlData_VrmlFormatError:
-      return "VrmlFormatError";
-    case VrmlData_NumericInputError:
-      return "NumericInputError";
-    case VrmlData_IrrelevantNumber:
-      return "IrrelevantNumber";
-    case VrmlData_BooleanInputError:
-      return "BooleanInputError";
-    case VrmlData_StringInputError:
-      return "StringInputError";
-    case VrmlData_NodeNameUnknown:
-      return "NodeNameUnknown";
-    case VrmlData_NonPositiveSize:
-      return "NonPositiveSize";
-    case VrmlData_ReadUnknownNode:
-      return "ReadUnknownNode";
-    case VrmlData_NonSupportedFeature:
-      return "NonSupportedFeature";
-    case VrmlData_OutputStreamUndefined:
-      return "OutputStreamUndefined";
-    case VrmlData_NotImplemented:
-      return "NotImplemented";
-  }
-  return "UNKNOWN";
-}
-
-//=================================================================================================
-
-static void performMeshSubshape(
-  NCollection_DataMap<TopoDS_Shape, RWMesh_NodeAttributes, TopTools_ShapeMapHasher>& theAttribMap,
-  const NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>&
-                      theShapeAppMap,
-  const TopoDS_Shape& theShape)
-{
-  occ::handle<VrmlData_Appearance> anAppearance;
-  if (theShapeAppMap.Find(theShape.TShape(), anAppearance))
-  {
-    if (!anAppearance.IsNull() && !anAppearance->Material().IsNull())
+    switch (theStatus)
     {
-      RWMesh_NodeAttributes aFaceAttribs;
-      theAttribMap.Find(theShape, aFaceAttribs);
-      aFaceAttribs.Style.SetColorSurf(anAppearance->Material()->DiffuseColor());
-      theAttribMap.Bind(theShape, aFaceAttribs);
+      case VrmlData_StatusOK:
+        return "";
+      case VrmlData_EmptyData:
+        return "EmptyData";
+      case VrmlData_UnrecoverableError:
+        return "UnrecoverableError";
+      case VrmlData_GeneralError:
+        return "GeneralError";
+      case VrmlData_EndOfFile:
+        return "EndOfFile";
+      case VrmlData_NotVrmlFile:
+        return "NotVrmlFile";
+      case VrmlData_CannotOpenFile:
+        return "CannotOpenFile";
+      case VrmlData_VrmlFormatError:
+        return "VrmlFormatError";
+      case VrmlData_NumericInputError:
+        return "NumericInputError";
+      case VrmlData_IrrelevantNumber:
+        return "IrrelevantNumber";
+      case VrmlData_BooleanInputError:
+        return "BooleanInputError";
+      case VrmlData_StringInputError:
+        return "StringInputError";
+      case VrmlData_NodeNameUnknown:
+        return "NodeNameUnknown";
+      case VrmlData_NonPositiveSize:
+        return "NonPositiveSize";
+      case VrmlData_ReadUnknownNode:
+        return "ReadUnknownNode";
+      case VrmlData_NonSupportedFeature:
+        return "NonSupportedFeature";
+      case VrmlData_OutputStreamUndefined:
+        return "OutputStreamUndefined";
+      case VrmlData_NotImplemented:
+        return "NotImplemented";
+    }
+    return "UNKNOWN";
+  }
+
+  //=================================================================================================
+
+  static void performMeshSubshape(
+    NCollection_DataMap<TopoDS_Shape, RWMesh_NodeAttributes, TopTools_ShapeMapHasher>& theAttribMap,
+    const NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>&
+                        theShapeAppMap,
+    const TopoDS_Shape& theShape)
+  {
+    occ::handle<VrmlData_Appearance> anAppearance;
+    if (theShapeAppMap.Find(theShape.TShape(), anAppearance))
+    {
+      if (!anAppearance.IsNull() && !anAppearance->Material().IsNull())
+      {
+        RWMesh_NodeAttributes aFaceAttribs;
+        theAttribMap.Find(theShape, aFaceAttribs);
+        aFaceAttribs.Style.SetColorSurf(anAppearance->Material()->DiffuseColor());
+        theAttribMap.Bind(theShape, aFaceAttribs);
+      }
+    }
+
+    for (TopoDS_Iterator aSubShapeIter(theShape, true, false); aSubShapeIter.More();
+         aSubShapeIter.Next())
+    {
+      performMeshSubshape(theAttribMap, theShapeAppMap, aSubShapeIter.Value());
     }
   }
-
-  for (TopoDS_Iterator aSubShapeIter(theShape, true, false); aSubShapeIter.More();
-       aSubShapeIter.Next())
-  {
-    performMeshSubshape(theAttribMap, theShapeAppMap, aSubShapeIter.Value());
-  }
-}
 } // namespace
 
 //=================================================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -65,4 +64,3 @@ private:
   occ::handle<NCollection_HArray1<int>>    NextCoeff;
   bool                                     IsDecomp;
 };
-

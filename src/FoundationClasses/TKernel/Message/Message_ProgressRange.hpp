@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 class Message_ProgressScope;
@@ -120,4 +119,3 @@ inline void Message_ProgressRange::Close()
   myParentScope = nullptr;
   myWasUsed     = true;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum GeomFill_Trihedron
 {
   GeomFill_IsCorrectedFrenet,
@@ -14,4 +13,3 @@ enum GeomFill_Trihedron
   GeomFill_IsGuidePlanWithContact,
   GeomFill_IsDiscreteTrihedron
 };
-

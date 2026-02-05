@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_Attribute.hpp>
 #include <TCollection_ExtendedString.hpp>
 #include <NCollection_DataMap.hpp>
@@ -297,4 +296,3 @@ protected:
   occ::handle<TDataStd_HDataMapOfStringHArray1OfInteger> myArraysOfIntegers;
   occ::handle<TDataStd_HDataMapOfStringHArray1OfReal>    myArraysOfReals;
 };
-

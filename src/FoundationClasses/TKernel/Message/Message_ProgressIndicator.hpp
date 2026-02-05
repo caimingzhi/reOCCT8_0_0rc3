@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
@@ -146,4 +145,3 @@ inline void Message_ProgressIndicator::Increment(const double                 th
   // to Show() will see the position exactly as it was just set above
   Show(theScope, false);
 }
-

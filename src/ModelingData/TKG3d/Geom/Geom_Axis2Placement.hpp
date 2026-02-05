@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Geom_AxisPlacement.hpp>
@@ -109,4 +108,3 @@ private:
   gp_Dir vxdir;
   gp_Dir vydir;
 };
-

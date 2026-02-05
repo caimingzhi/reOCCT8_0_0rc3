@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -48,4 +47,3 @@ private:
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& FM,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& EM);
 };
-

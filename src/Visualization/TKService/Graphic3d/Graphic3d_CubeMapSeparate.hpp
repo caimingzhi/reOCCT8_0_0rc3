@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CubeMap.hpp>
 #include <NCollection_Array1.hpp>
 #include <OSD_Path.hpp>
@@ -54,4 +53,3 @@ private:
   //! Nulifies whole images array.
   void resetImages();
 };
-

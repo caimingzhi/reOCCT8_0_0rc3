@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepDimTol_GeometricToleranceWithDatumReference.hpp>
@@ -16,4 +15,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(StepDimTol_CircularRunoutTolerance,
                           StepDimTol_GeometricToleranceWithDatumReference)
 };
-

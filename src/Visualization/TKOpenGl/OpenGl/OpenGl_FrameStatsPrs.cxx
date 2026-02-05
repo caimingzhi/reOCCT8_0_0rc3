@@ -23,21 +23,21 @@
 
 namespace
 {
-//! Auxiliary structure defining vertex with two attributes.
-struct OpenGl_Vec3Vec4ub
-{
-  NCollection_Vec3<float>   Pos;
-  NCollection_Vec4<uint8_t> Color;
-};
+  //! Auxiliary structure defining vertex with two attributes.
+  struct OpenGl_Vec3Vec4ub
+  {
+    NCollection_Vec3<float>   Pos;
+    NCollection_Vec4<uint8_t> Color;
+  };
 
-//! Auxiliary function formatting rendering time in " 10 ms (100 FPS)" format.
-static TCollection_AsciiString formatTimeMs(double theSeconds)
-{
-  const double aFpsVal = theSeconds != 0.0 ? 1.0 / theSeconds : 0.0;
-  char         aFps[50];
-  Sprintf(aFps, "%.1f", aFpsVal);
-  return TCollection_AsciiString() + int(theSeconds * 1000.0) + " ms (" + aFps + " FPS)";
-}
+  //! Auxiliary function formatting rendering time in " 10 ms (100 FPS)" format.
+  static TCollection_AsciiString formatTimeMs(double theSeconds)
+  {
+    const double aFpsVal = theSeconds != 0.0 ? 1.0 / theSeconds : 0.0;
+    char         aFps[50];
+    Sprintf(aFps, "%.1f", aFpsVal);
+    return TCollection_AsciiString() + int(theSeconds * 1000.0) + " ms (" + aFps + " FPS)";
+  }
 } // namespace
 
 //=================================================================================================

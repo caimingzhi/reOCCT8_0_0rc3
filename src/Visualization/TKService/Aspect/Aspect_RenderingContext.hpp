@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 #if defined(__APPLE__) && !defined(HAVE_XLIB)
@@ -24,4 +23,3 @@ Standard_ENABLE_DEPRECATION_WARNINGS
 #else
 typedef void* Aspect_RenderingContext; // GLXContext under UNIX
 #endif
-

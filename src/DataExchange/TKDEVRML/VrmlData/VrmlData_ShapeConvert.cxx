@@ -1,18 +1,3 @@
-// Created on: 2007-08-04
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2007-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <VrmlData_ShapeConvert.hpp>
 #include <VrmlData_Scene.hpp>
 #include <VrmlData_Group.hpp>
@@ -106,7 +91,8 @@ occ::handle<VrmlData_Geometry> VrmlData_ShapeConvert::makeTShapeNode(
   aTestedShape.Orientation(isReverse ? TopAbs_REVERSED : TopAbs_FORWARD);
   switch (theShapeType)
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       const TopoDS_Face& aFace = TopoDS::Face(theShape);
       if (!aFace.IsNull())
       {
@@ -138,14 +124,16 @@ occ::handle<VrmlData_Geometry> VrmlData_ShapeConvert::makeTShapeNode(
       }
     }
     break;
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       const TopoDS_Wire& aWire = TopoDS::Wire(theShape);
       if (!aWire.IsNull())
       {
       }
     }
     break;
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       const TopoDS_Edge& aEdge = TopoDS::Edge(theShape);
       if (!aEdge.IsNull())
       {

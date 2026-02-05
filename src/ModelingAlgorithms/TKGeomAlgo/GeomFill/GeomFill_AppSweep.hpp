@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -178,4 +177,3 @@ private:
 #undef TheLine_hxx
 #undef AppBlend_AppSurf
 #undef AppBlend_AppSurf_hxx
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -46,4 +45,3 @@ private:
   StepBasic_SizeSelect                  markerSize;
   occ::handle<StepVisual_Colour>        markerColour;
 };
-

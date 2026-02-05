@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -20,4 +19,3 @@ public:
   //! Returns the Protocol for this Package
   Standard_EXPORT static occ::handle<IGESAppli_Protocol> Protocol();
 };
-

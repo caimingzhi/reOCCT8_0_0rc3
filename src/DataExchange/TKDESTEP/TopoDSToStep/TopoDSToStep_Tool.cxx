@@ -1,19 +1,3 @@
-// Created on: 1994-11-30
-// Created by: Frederic MAUPAS
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Tool.hpp>
 #include <StepData_StepModel.hpp>
 #include <StepShape_TopologicalRepresentationItem.hpp>
@@ -92,15 +76,18 @@ void TopoDSToStep_Tool::SetCurrentShell(const TopoDS_Shell& S)
   std::cout << "Process a Shell which is ";
   switch (S.Orientation())
   {
-    case TopAbs_FORWARD: {
+    case TopAbs_FORWARD:
+    {
       std::cout << "FORWARD in the Solid;" << std::endl;
       break;
     }
-    case TopAbs_REVERSED: {
+    case TopAbs_REVERSED:
+    {
       std::cout << "REVERSED in the Solid;" << std::endl;
       break;
     }
-    default: {
+    default:
+    {
       std::cout << "INTERNAL OR EXTERNAL SHELL" << std::endl;
     }
   }
@@ -123,15 +110,18 @@ void TopoDSToStep_Tool::SetCurrentFace(const TopoDS_Face& F)
   std::cout << "  Process a Face which is ";
   switch (F.Orientation())
   {
-    case TopAbs_FORWARD: {
+    case TopAbs_FORWARD:
+    {
       std::cout << "FORWARD in the Shell;" << std::endl;
       break;
     }
-    case TopAbs_REVERSED: {
+    case TopAbs_REVERSED:
+    {
       std::cout << "REVERSED in the Shell;" << std::endl;
       break;
     }
-    default: {
+    default:
+    {
       std::cout << "INTERNAL OR EXTERNAL FACE" << std::endl;
     }
   }
@@ -157,15 +147,18 @@ void TopoDSToStep_Tool::SetCurrentWire(const TopoDS_Wire& W)
   std::cout << "    Process a Wire which is ";
   switch (W.Orientation())
   {
-    case TopAbs_FORWARD: {
+    case TopAbs_FORWARD:
+    {
       std::cout << "FORWARD in the Face" << std::endl;
       break;
     }
-    case TopAbs_REVERSED: {
+    case TopAbs_REVERSED:
+    {
       std::cout << "REVERSED in the Face;" << std::endl;
       break;
     }
-    default: {
+    default:
+    {
       std::cout << "INTERNAL OR EXTERNAL Wire" << std::endl;
     }
   }
@@ -188,15 +181,18 @@ void TopoDSToStep_Tool::SetCurrentEdge(const TopoDS_Edge& E)
   std::cout << "      Process Edge which is ";
   switch (E.Orientation())
   {
-    case TopAbs_FORWARD: {
+    case TopAbs_FORWARD:
+    {
       std::cout << "FORWARD in the Wire" << std::endl;
       break;
     }
-    case TopAbs_REVERSED: {
+    case TopAbs_REVERSED:
+    {
       std::cout << "REVERSED in the Wire" << std::endl;
       break;
     }
-    default: {
+    default:
+    {
       std::cout << "INTERNAL OR EXTERNAL EDGE" << std::endl;
     }
   }

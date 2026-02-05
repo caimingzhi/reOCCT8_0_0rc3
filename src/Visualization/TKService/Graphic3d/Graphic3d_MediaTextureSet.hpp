@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_IFrameQueue.hpp>
 #include <Graphic3d_MediaTexture.hpp>
 #include <Graphic3d_TextureSet.hpp>
@@ -94,4 +93,3 @@ protected:
   bool                myIsFullRangeYUV;    //!< front frame defines full-range or reduced-range YUV
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -118,6 +117,7 @@ private:
   bool              uS2;
   bool              vS2;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -211,5 +211,3 @@ inline bool IntPatch_Line::IsVIsoOnS2() const
 
   return vS2;
 }
-
-

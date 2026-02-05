@@ -38,11 +38,11 @@ IMPLEMENT_STANDARD_RTTIEXT(XSControl_WorkSession, IFSelect_WorkSession)
 
 namespace
 {
-std::mutex& GetGlobalMutex()
-{
-  static std::mutex WS_GLOBAL_MUTEX;
-  return WS_GLOBAL_MUTEX;
-}
+  std::mutex& GetGlobalMutex()
+  {
+    static std::mutex WS_GLOBAL_MUTEX;
+    return WS_GLOBAL_MUTEX;
+  }
 } // namespace
 
 //=================================================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_IView.hpp>
 #include <SelectMgr_Selection.hpp>
 #include <SelectMgr_ViewerSelector.hpp>
@@ -49,4 +48,3 @@ private:
   int  myPixTol;
   bool myToUpdateTol;
 };
-

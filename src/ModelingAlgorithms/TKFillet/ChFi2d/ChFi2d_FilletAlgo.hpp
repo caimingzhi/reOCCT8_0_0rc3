@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Wire.hpp>
 #include <Geom2d_Curve.hpp>
@@ -211,4 +210,3 @@ private:
   NCollection_Sequence<bool> myValid;
   NCollection_Sequence<int>  myNear;
 };
-

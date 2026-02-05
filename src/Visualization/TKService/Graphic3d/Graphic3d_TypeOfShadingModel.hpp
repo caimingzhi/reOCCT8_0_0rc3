@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Definition of the color shading model.
 enum Graphic3d_TypeOfShadingModel
 {
@@ -57,4 +56,3 @@ enum
   //! Graphic3d_TypeOfShadingModel
   Graphic3d_TypeOfShadingModel_NB = Graphic3d_TypeOfShadingModel_PbrFacet + 1
 };
-

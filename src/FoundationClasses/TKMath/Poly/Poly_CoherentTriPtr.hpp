@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
@@ -169,4 +168,3 @@ private:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

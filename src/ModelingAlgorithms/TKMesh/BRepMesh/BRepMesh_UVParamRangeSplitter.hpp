@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_DefaultRangeSplitter.hpp>
 #include <IMeshData_Types.hpp>
 
@@ -47,4 +46,3 @@ private:
   IMeshData::IMapOfReal                 myUParams;
   IMeshData::IMapOfReal                 myVParams;
 };
-

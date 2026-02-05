@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #if defined(_WIN32) && !defined(OCCT_UWP)

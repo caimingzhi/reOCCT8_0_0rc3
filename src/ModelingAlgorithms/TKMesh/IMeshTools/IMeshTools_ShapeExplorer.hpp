@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Shape.hpp>
 #include <Standard_Type.hpp>
 #include <IMeshTools_ShapeVisitor.hpp>
@@ -21,4 +20,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IMeshTools_ShapeExplorer, IMeshData_Shape)
 };
-

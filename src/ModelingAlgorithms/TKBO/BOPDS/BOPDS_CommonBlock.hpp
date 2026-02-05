@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -127,4 +126,3 @@ protected:
   NCollection_List<int> myFaces;     //!< Faces on which the pave blocks are lying
   double                myTolerance; //!< Tolerance of the common block
 };
-

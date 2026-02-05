@@ -1,19 +1,3 @@
-// Created on: 1997-01-17
-// Created by: Robert COUBLANC
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_InteractiveContext.hpp>
 
 #include <AIS_InteractiveObject.hpp>
@@ -45,69 +29,70 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_InteractiveContext, Standard_Transient)
 
 namespace
 {
-typedef NCollection_DataMap<
-  occ::handle<SelectMgr_SelectableObject>,
-  occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>
-  AIS_MapOfObjectOwners;
-typedef NCollection_DataMap<
-  occ::handle<SelectMgr_SelectableObject>,
-  occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>::
-  Iterator AIS_MapIteratorOfMapOfObjectOwners;
+  typedef NCollection_DataMap<
+    occ::handle<SelectMgr_SelectableObject>,
+    occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>
+    AIS_MapOfObjectOwners;
+  typedef NCollection_DataMap<
+    occ::handle<SelectMgr_SelectableObject>,
+    occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>::
+    Iterator AIS_MapIteratorOfMapOfObjectOwners;
 
-//! Initialize default highlighting attributes.
-static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDrawer,
-                                         const Quantity_Color&            theColor)
-{
-  theDrawer->SetMethod(Aspect_TOHM_COLOR);
-  theDrawer->SetDisplayMode(0);
-  theDrawer->SetColor(theColor);
-
-  theDrawer->SetupOwnShadingAspect();
-  theDrawer->SetupOwnPointAspect();
-  theDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
-  *theDrawer->LineAspect()->Aspect() = *theDrawer->Link()->LineAspect()->Aspect();
-  theDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
-  *theDrawer->WireAspect()->Aspect() = *theDrawer->Link()->WireAspect()->Aspect();
-  theDrawer->SetPlaneAspect(new Prs3d_PlaneAspect());
-  *theDrawer->PlaneAspect()->EdgesAspect() = *theDrawer->Link()->PlaneAspect()->EdgesAspect();
-  theDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
-  *theDrawer->FreeBoundaryAspect()->Aspect() = *theDrawer->Link()->FreeBoundaryAspect()->Aspect();
-  theDrawer->SetUnFreeBoundaryAspect(
-    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
-  *theDrawer->UnFreeBoundaryAspect()->Aspect() =
-    *theDrawer->Link()->UnFreeBoundaryAspect()->Aspect();
-  theDrawer->SetDatumAspect(new Prs3d_DatumAspect());
-
-  theDrawer->ShadingAspect()->SetColor(theColor);
-  theDrawer->WireAspect()->SetColor(theColor);
-  theDrawer->LineAspect()->SetColor(theColor);
-  theDrawer->PlaneAspect()->ArrowAspect()->SetColor(theColor);
-  theDrawer->PlaneAspect()->IsoAspect()->SetColor(theColor);
-  theDrawer->PlaneAspect()->EdgesAspect()->SetColor(theColor);
-  theDrawer->FreeBoundaryAspect()->SetColor(theColor);
-  theDrawer->UnFreeBoundaryAspect()->SetColor(theColor);
-  theDrawer->PointAspect()->SetColor(theColor);
-  for (int aPartIter = 0; aPartIter < Prs3d_DatumParts_None; ++aPartIter)
+  //! Initialize default highlighting attributes.
+  static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDrawer,
+                                           const Quantity_Color&            theColor)
   {
-    if (occ::handle<Prs3d_LineAspect> aLineAsp =
-          theDrawer->DatumAspect()->LineAspect((Prs3d_DatumParts)aPartIter))
+    theDrawer->SetMethod(Aspect_TOHM_COLOR);
+    theDrawer->SetDisplayMode(0);
+    theDrawer->SetColor(theColor);
+
+    theDrawer->SetupOwnShadingAspect();
+    theDrawer->SetupOwnPointAspect();
+    theDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+    *theDrawer->LineAspect()->Aspect() = *theDrawer->Link()->LineAspect()->Aspect();
+    theDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+    *theDrawer->WireAspect()->Aspect() = *theDrawer->Link()->WireAspect()->Aspect();
+    theDrawer->SetPlaneAspect(new Prs3d_PlaneAspect());
+    *theDrawer->PlaneAspect()->EdgesAspect() = *theDrawer->Link()->PlaneAspect()->EdgesAspect();
+    theDrawer->SetFreeBoundaryAspect(
+      new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+    *theDrawer->FreeBoundaryAspect()->Aspect() = *theDrawer->Link()->FreeBoundaryAspect()->Aspect();
+    theDrawer->SetUnFreeBoundaryAspect(
+      new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+    *theDrawer->UnFreeBoundaryAspect()->Aspect() =
+      *theDrawer->Link()->UnFreeBoundaryAspect()->Aspect();
+    theDrawer->SetDatumAspect(new Prs3d_DatumAspect());
+
+    theDrawer->ShadingAspect()->SetColor(theColor);
+    theDrawer->WireAspect()->SetColor(theColor);
+    theDrawer->LineAspect()->SetColor(theColor);
+    theDrawer->PlaneAspect()->ArrowAspect()->SetColor(theColor);
+    theDrawer->PlaneAspect()->IsoAspect()->SetColor(theColor);
+    theDrawer->PlaneAspect()->EdgesAspect()->SetColor(theColor);
+    theDrawer->FreeBoundaryAspect()->SetColor(theColor);
+    theDrawer->UnFreeBoundaryAspect()->SetColor(theColor);
+    theDrawer->PointAspect()->SetColor(theColor);
+    for (int aPartIter = 0; aPartIter < Prs3d_DatumParts_None; ++aPartIter)
     {
-      aLineAsp->SetColor(theColor);
+      if (occ::handle<Prs3d_LineAspect> aLineAsp =
+            theDrawer->DatumAspect()->LineAspect((Prs3d_DatumParts)aPartIter))
+      {
+        aLineAsp->SetColor(theColor);
+      }
     }
+
+    theDrawer->WireAspect()->SetWidth(2.0);
+    theDrawer->LineAspect()->SetWidth(2.0);
+    theDrawer->PlaneAspect()->EdgesAspect()->SetWidth(2.0);
+    theDrawer->FreeBoundaryAspect()->SetWidth(2.0);
+    theDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
+    theDrawer->PointAspect()->SetTypeOfMarker(Aspect_TOM_O_POINT);
+    theDrawer->PointAspect()->SetScale(2.0);
+
+    // the triangulation should be computed using main presentation attributes,
+    // and should not be overridden by highlighting
+    theDrawer->SetAutoTriangulation(false);
   }
-
-  theDrawer->WireAspect()->SetWidth(2.0);
-  theDrawer->LineAspect()->SetWidth(2.0);
-  theDrawer->PlaneAspect()->EdgesAspect()->SetWidth(2.0);
-  theDrawer->FreeBoundaryAspect()->SetWidth(2.0);
-  theDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
-  theDrawer->PointAspect()->SetTypeOfMarker(Aspect_TOM_O_POINT);
-  theDrawer->PointAspect()->SetScale(2.0);
-
-  // the triangulation should be computed using main presentation attributes,
-  // and should not be overridden by highlighting
-  theDrawer->SetAutoTriangulation(false);
-}
 } // namespace
 
 //=================================================================================================
@@ -1656,11 +1641,13 @@ void AIS_InteractiveContext::Status(const occ::handle<AIS_InteractiveObject>& th
   const occ::handle<AIS_GlobalStatus>& aStatus = myObjects(theIObj);
   switch (theIObj->DisplayStatus())
   {
-    case PrsMgr_DisplayStatus_Displayed: {
+    case PrsMgr_DisplayStatus_Displayed:
+    {
       theStatus += "\t| -->Displayed\n";
       break;
     }
-    case PrsMgr_DisplayStatus_Erased: {
+    case PrsMgr_DisplayStatus_Erased:
+    {
       theStatus += "\t| -->Erased\n";
       break;
     }
@@ -3708,7 +3695,8 @@ void AIS_InteractiveContext::SetSelectionModeActive(
   {
     switch (theActiveFilter)
     {
-      case AIS_SelectionModesConcurrency_Single: {
+      case AIS_SelectionModesConcurrency_Single:
+      {
         for (NCollection_List<int>::Iterator aModeIter((*aStat)->SelectionModes());
              aModeIter.More();
              aModeIter.Next())
@@ -3718,7 +3706,8 @@ void AIS_InteractiveContext::SetSelectionModeActive(
         (*aStat)->ClearSelectionModes();
         break;
       }
-      case AIS_SelectionModesConcurrency_GlobalOrLocal: {
+      case AIS_SelectionModesConcurrency_GlobalOrLocal:
+      {
         const int             aGlobSelMode = theObj->GlobalSelectionMode();
         NCollection_List<int> aRemovedModes;
         for (NCollection_List<int>::Iterator aModeIter((*aStat)->SelectionModes());
@@ -3746,7 +3735,8 @@ void AIS_InteractiveContext::SetSelectionModeActive(
         }
         break;
       }
-      case AIS_SelectionModesConcurrency_Multiple: {
+      case AIS_SelectionModesConcurrency_Multiple:
+      {
         break;
       }
     }

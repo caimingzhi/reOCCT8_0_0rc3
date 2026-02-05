@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_TypeOfSensitivity.hpp>
 #include <Select3D_SensitivePoly.hpp>
 #include <SelectMgr_SelectingVolumeManager.hpp>
@@ -61,4 +60,3 @@ private:
   gp_Pnt                     myCentroid; //!< Center of triangle
   gp_Pnt                     myPoints[3];
 };
-

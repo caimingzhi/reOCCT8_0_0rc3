@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS.hpp>
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Shape.hpp>
@@ -91,4 +90,3 @@ private:
   int                                                           myEdge;
   int                                                           myVertex;
 };
-

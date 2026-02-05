@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! different types of objects in DataStructure
 enum TopOpeBRepDS_Kind
 {
@@ -17,4 +16,3 @@ enum TopOpeBRepDS_Kind
   TopOpeBRepDS_COMPOUND,
   TopOpeBRepDS_UNKNOWN
 };
-

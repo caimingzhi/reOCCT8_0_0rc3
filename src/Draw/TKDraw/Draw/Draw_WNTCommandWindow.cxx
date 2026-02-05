@@ -1,19 +1,3 @@
-// Created on: 1998-08-06
-// Created by: Administrateur Atelier MDL
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifdef _WIN32
 
   #include <windows.h>
@@ -34,8 +18,8 @@ bool Draw_Interprete(const char* command);
 
 namespace
 {
-// Definition of global variables
-static WNDPROC OldEditProc; // Save the standard procedure of the edition (sub-class)
+  // Definition of global variables
+  static WNDPROC OldEditProc; // Save the standard procedure of the edition (sub-class)
 } // namespace
 
 /*--------------------------------------------------------*\
@@ -68,19 +52,22 @@ LRESULT APIENTRY CommandProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   switch (wMsg)
   {
-    case WM_CREATE: {
+    case WM_CREATE:
+    {
       CommandCreateProc(hWnd);
       HWND hWndEdit = (HWND)GetWindowLongPtrW(hWnd, CLIENTWND);
       SendMessageW(hWndEdit, EM_REPLACESEL, 0, (LPARAM)THE_PROMPT);
       return 0;
     }
-    case WM_GETMINMAXINFO: {
+    case WM_GETMINMAXINFO:
+    {
       MINMAXINFO* lpmmi       = (MINMAXINFO*)lParam;
       lpmmi->ptMinTrackSize.x = 200;
       lpmmi->ptMinTrackSize.y = 50;
       return 0;
     }
-    case WM_SIZE: {
+    case WM_SIZE:
+    {
       HWND hWndEdit = (HWND)GetWindowLongPtrW(hWnd, CLIENTWND);
       MoveWindow(hWndEdit, 0, 0, LOWORD(lParam), HIWORD(lParam), TRUE);
       // Place the cursor at the end of the buffer
@@ -89,7 +76,8 @@ LRESULT APIENTRY CommandProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
       SendMessageW(hWnd, EM_SETSEL, index, index);
       return 0;
     }
-    case WM_SETFOCUS: {
+    case WM_SETFOCUS:
+    {
       HWND hWndEdit = (HWND)GetWindowLongPtrW(hWnd, CLIENTWND);
       SetFocus(hWndEdit);
       return 0;
@@ -176,7 +164,8 @@ LRESULT APIENTRY EditProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
   static LRESULT nbline; // Process the buffer of the edit window
   switch (wMsg)
   {
-    case WM_CHAR: {
+    case WM_CHAR:
+    {
       if (console_semaphore != WAIT_CONSOLE_COMMAND)
       {
         return 0;
@@ -184,7 +173,8 @@ LRESULT APIENTRY EditProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
       switch (LOWORD(wParam))
       {
         // Overload of character \n
-        case 0x0d: {
+        case 0x0d:
+        {
           wchar_t aCmdBuffer[COMMANDSIZE];
           GetCommand(hWnd, aCmdBuffer);
           // Standard processing
@@ -216,7 +206,8 @@ LRESULT APIENTRY EditProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
           }
           return 0;
         }
-        default: {
+        default:
+        {
           if (IsAlphanumeric((char)LOWORD(wParam)))
           {
             // Place the cursor at the end of text before display
@@ -230,7 +221,8 @@ LRESULT APIENTRY EditProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
       }
       break;
     }
-    case WM_KEYDOWN: {
+    case WM_KEYDOWN:
+    {
       if (console_semaphore != WAIT_CONSOLE_COMMAND)
       {
         return 0;

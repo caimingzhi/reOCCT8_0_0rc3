@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -42,4 +41,3 @@ private:
   occ::handle<Geom_Curve> myC1;
   occ::handle<Geom_Curve> myC2;
 };
-

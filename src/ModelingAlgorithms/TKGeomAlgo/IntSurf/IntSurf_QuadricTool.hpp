@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -39,6 +38,7 @@ public:
   //! returns the tolerance of the zero of the implicit function
   Standard_EXPORT static double Tolerance(const IntSurf_Quadric& Quad);
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -85,5 +85,3 @@ inline void IntSurf_QuadricTool::ValueAndGradient(const IntSurf_Quadric& Quad,
 
   Quad.ValAndGrad(gp_Pnt(X, Y, Z), Val, V);
 }
-
-

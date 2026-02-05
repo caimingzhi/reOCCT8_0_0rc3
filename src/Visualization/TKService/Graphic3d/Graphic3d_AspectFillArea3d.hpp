@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 
 //! This class defines graphic attributes for opaque 3d primitives (polygons, triangles,
@@ -41,6 +40,6 @@ public:
 
 public:
   Standard_DEPRECATED("Deprecated method, ToDrawEdges() should be used instead")
+
   bool Edge() const { return ToDrawEdges(); }
 };
-

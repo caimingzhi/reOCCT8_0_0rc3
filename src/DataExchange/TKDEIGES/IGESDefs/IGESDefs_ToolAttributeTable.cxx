@@ -1,21 +1,3 @@
-// Created by: CKY / Contract Toubro-Larsen
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//--------------------------------------------------------------------
-//--------------------------------------------------------------------
-
 #include <IGESData_DirChecker.hpp>
 #include <IGESData_Dump.hpp>
 #include <IGESData_IGESDumper.hpp>
@@ -76,7 +58,8 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           for (j = 1; j <= avc; j++)
             PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
           break;
-        case 1: {
+        case 1:
+        {
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);
           int item;
@@ -88,7 +71,8 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           }
         }
         break;
-        case 2: {
+        case 2:
+        {
           occ::handle<NCollection_HArray1<double>> attrReal =
             new NCollection_HArray1<double>(1, avc);
           list2->SetValue(i, k, attrReal);
@@ -101,7 +85,8 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           }
         }
         break;
-        case 3: {
+        case 3:
+        {
           occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> attrStr =
             new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(1, avc);
           list2->SetValue(i, k, attrStr);
@@ -114,7 +99,8 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           }
         }
         break;
-        case 4: {
+        case 4:
+        {
           occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> attrEnt =
             new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, avc);
           list2->SetValue(i, k, attrEnt);
@@ -131,7 +117,8 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           for (j = 1; j <= avc; j++)
             PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
           break;
-        case 6: { // Here item takes value 0 or 1
+        case 6:
+        { // Here item takes value 0 or 1
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);
           int item;
@@ -238,7 +225,8 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
       {
         case 0: ////    list2->SetValue(i,k,NULL);    by default
           break;
-        case 1: {
+        case 1:
+        {
           DeclareAndCast(NCollection_HArray1<int>, otherInt, another->AttributeList(i, k));
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);
@@ -246,7 +234,8 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
             attrInt->SetValue(j, otherInt->Value(j));
         }
         break;
-        case 2: {
+        case 2:
+        {
           DeclareAndCast(NCollection_HArray1<double>, otherReal, another->AttributeList(i, k));
           occ::handle<NCollection_HArray1<double>> attrReal =
             new NCollection_HArray1<double>(1, avc);
@@ -255,7 +244,8 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
             attrReal->SetValue(j, otherReal->Value(j));
         }
         break;
-        case 3: {
+        case 3:
+        {
           DeclareAndCast(NCollection_HArray1<occ::handle<TCollection_HAsciiString>>,
                          otherStr,
                          another->AttributeList(i, k));
@@ -266,7 +256,8 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
             attrStr->SetValue(j, new TCollection_HAsciiString(otherStr->Value(j)));
         }
         break;
-        case 4: {
+        case 4:
+        {
           DeclareAndCast(NCollection_HArray1<occ::handle<IGESData_IGESEntity>>,
                          otherEnt,
                          another->AttributeList(i, k));
@@ -280,7 +271,8 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
         break;
         case 5: /////	      list2->SetValue(i,k,NULL);    by default
           break;
-        case 6: { // Here item takes value 0 or 1
+        case 6:
+        { // Here item takes value 0 or 1
           DeclareAndCast(NCollection_HArray1<int>, otherInt, another->AttributeList(i, k));
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);

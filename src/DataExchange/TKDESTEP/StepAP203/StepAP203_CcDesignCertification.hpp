@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP203_CertifiedItem.hpp>
@@ -34,4 +33,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP203_CertifiedItem>> theItems;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_define.hpp>
 
 #include <TopOpeBRepBuild_PWireEdgeSet.hpp>
@@ -48,4 +47,3 @@
 #define MTBloslos NCollection_List<TopOpeBRepBuild_ShapeListOfShape>
 #define MTBslos TopOpeBRepBuild_ShapeListOfShape
 #define MTBhb occ::handle<TopOpeBRepBuild_HBuilder>
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_RangeError.hpp>
@@ -230,4 +229,3 @@ inline Standard_OStream& operator<<(Standard_OStream&                 theStream,
   theRoots.Dump(theStream);
   return theStream;
 }
-

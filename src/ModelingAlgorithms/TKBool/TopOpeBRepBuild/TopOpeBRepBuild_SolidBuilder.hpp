@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -64,4 +63,3 @@ private:
   TopOpeBRepBuild_BlockBuilder     myBlockBuilder;
   TopOpeBRepBuild_SolidAreaBuilder mySolidAreaBuilder;
 };
-

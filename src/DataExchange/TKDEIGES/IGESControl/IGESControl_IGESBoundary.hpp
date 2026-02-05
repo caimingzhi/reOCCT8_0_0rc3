@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -55,4 +54,3 @@ protected:
     const int                                                                 number,
     occ::handle<ShapeExtend_WireData>&                                        lsewd) override;
 };
-

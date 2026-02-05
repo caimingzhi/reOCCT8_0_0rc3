@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Clipping.hpp>
 
 //! The iterator through clipping planes.
@@ -56,4 +55,3 @@ private:
   const NCollection_Vector<bool>*          myDisabled;
   int                                      myCurrIndex;
 };
-

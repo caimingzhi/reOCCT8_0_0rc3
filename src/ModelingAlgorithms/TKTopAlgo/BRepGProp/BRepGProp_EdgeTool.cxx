@@ -42,7 +42,8 @@ int BRepGProp_EdgeTool::IntegrationOrder(const BRepAdaptor_Curve& BAC)
     case GeomAbs_Parabola:
       return 5;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       const GeomAdaptor_Curve&       GAC = BAC.Curve();
       const occ::handle<Geom_Curve>& GC  = GAC.Curve();
       occ::handle<Geom_BezierCurve>  GBZC(occ::down_cast<Geom_BezierCurve>(GC));
@@ -50,7 +51,8 @@ int BRepGProp_EdgeTool::IntegrationOrder(const BRepAdaptor_Curve& BAC)
       return n;
     }
     break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       const GeomAdaptor_Curve&       GAC = BAC.Curve();
       const occ::handle<Geom_Curve>& GC  = GAC.Curve();
       occ::handle<Geom_BSplineCurve> GBSC(occ::down_cast<Geom_BSplineCurve>(GC));

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines modifirs
 enum XCAFDimTolObjects_DatumSingleModif
 {
@@ -27,4 +26,3 @@ enum XCAFDimTolObjects_DatumSingleModif
   XCAFDimTolObjects_DatumSingleModif_Point,
   XCAFDimTolObjects_DatumSingleModif_Translation
 };
-

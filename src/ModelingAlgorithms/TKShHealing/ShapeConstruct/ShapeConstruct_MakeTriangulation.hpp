@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -33,4 +32,3 @@ private:
   double      myPrecision;
   TopoDS_Wire myWire;
 };
-

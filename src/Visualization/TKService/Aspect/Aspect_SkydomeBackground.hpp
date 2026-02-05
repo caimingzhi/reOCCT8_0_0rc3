@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Dir.hpp>
 #include <NCollection_Vec3.hpp>
 #include <Standard_TypeDef.hpp>
@@ -85,4 +84,3 @@ private:
   float  myFogginess;    //!< Fog intensity
   int    mySize;         //!< Size of cubemap in pixels
 };
-

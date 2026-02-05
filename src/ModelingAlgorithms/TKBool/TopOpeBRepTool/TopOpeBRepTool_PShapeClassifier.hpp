@@ -1,6 +1,4 @@
 #pragma once
 
-
 class TopOpeBRepTool_ShapeClassifier;
 typedef TopOpeBRepTool_ShapeClassifier* TopOpeBRepTool_PShapeClassifier;
-

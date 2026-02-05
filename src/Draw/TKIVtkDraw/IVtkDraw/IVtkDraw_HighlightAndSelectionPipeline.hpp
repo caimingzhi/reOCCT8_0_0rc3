@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <NCollection_Shared.hpp>
 #include <Standard_Transient.hpp>
@@ -96,4 +95,3 @@ private:
 typedef NCollection_Shared<
   NCollection_DataMap<IVtk_IdType, occ::handle<IVtkDraw_HighlightAndSelectionPipeline>>>
   ShapePipelineMap;
-

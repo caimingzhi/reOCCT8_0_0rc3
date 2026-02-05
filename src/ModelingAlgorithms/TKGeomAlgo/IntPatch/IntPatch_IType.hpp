@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntPatch_IType
 {
   IntPatch_Lin,
@@ -12,4 +11,3 @@ enum IntPatch_IType
   IntPatch_Walking,
   IntPatch_Restriction
 };
-

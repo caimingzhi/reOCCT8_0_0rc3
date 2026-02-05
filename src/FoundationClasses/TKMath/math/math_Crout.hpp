@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -66,6 +65,7 @@ private:
   bool        Done;
   double      Det;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -110,5 +110,3 @@ inline void math_Crout::Invert(math_Matrix& Inv) const
   StdFail_NotDone_Raise_if(!Done, " ");
   Inv = InvA;
 }
-
-

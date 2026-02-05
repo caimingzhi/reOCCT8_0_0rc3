@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_PropertyDefinitionRepresentation.hpp>
@@ -16,4 +15,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(StepShape_ShapeDefinitionRepresentation,
                           StepRepr_PropertyDefinitionRepresentation)
 };
-

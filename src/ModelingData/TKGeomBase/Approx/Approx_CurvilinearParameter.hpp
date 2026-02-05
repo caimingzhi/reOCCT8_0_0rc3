@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -93,4 +92,3 @@ private:
   occ::handle<Geom2d_BSplineCurve> myCurve2d2;
   double                           myMaxError2d2;
 };
-

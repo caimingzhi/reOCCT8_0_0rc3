@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Integer.hpp>
 
@@ -97,4 +96,3 @@ public:
                                          void*     theContext   = nullptr,
                                          const int theNbTopSkip = 0);
 };
-

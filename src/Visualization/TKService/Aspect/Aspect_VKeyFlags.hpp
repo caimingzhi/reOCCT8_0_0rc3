@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Key modifier, for combining with general key from Aspect_VKey.
 typedef unsigned int Aspect_VKeyFlags;
 
@@ -34,4 +33,3 @@ enum
   Aspect_VKeyMouse_MainButtons =
     Aspect_VKeyMouse_LeftButton | Aspect_VKeyMouse_MiddleButton | Aspect_VKeyMouse_RightButton
 };
-

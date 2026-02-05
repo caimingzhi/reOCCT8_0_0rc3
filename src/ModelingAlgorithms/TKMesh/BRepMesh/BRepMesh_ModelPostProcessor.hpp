@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_ModelAlgo.hpp>
 #include <IMeshData_Types.hpp>
 
@@ -23,4 +22,3 @@ protected:
                                        const IMeshTools_Parameters&        theParameters,
                                        const Message_ProgressRange&        theRange) override;
 };
-

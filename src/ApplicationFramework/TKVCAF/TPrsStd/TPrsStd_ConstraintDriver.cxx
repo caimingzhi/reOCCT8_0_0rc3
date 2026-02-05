@@ -61,67 +61,83 @@ bool TPrsStd_ConstraintDriver::Update(const TDF_Label&                    aLabel
 
   switch (thetype)
   {
-    case TDataXtd_DISTANCE: {
+    case TDataXtd_DISTANCE:
+    {
       TPrsStd_ConstraintTools::ComputeDistance(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_PARALLEL: {
+    case TDataXtd_PARALLEL:
+    {
       TPrsStd_ConstraintTools::ComputeParallel(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_PERPENDICULAR: {
+    case TDataXtd_PERPENDICULAR:
+    {
       TPrsStd_ConstraintTools::ComputePerpendicular(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_CONCENTRIC: {
+    case TDataXtd_CONCENTRIC:
+    {
       TPrsStd_ConstraintTools::ComputeConcentric(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_SYMMETRY: {
+    case TDataXtd_SYMMETRY:
+    {
       TPrsStd_ConstraintTools::ComputeSymmetry(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_MIDPOINT: {
+    case TDataXtd_MIDPOINT:
+    {
       TPrsStd_ConstraintTools::ComputeMidPoint(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_TANGENT: {
+    case TDataXtd_TANGENT:
+    {
       TPrsStd_ConstraintTools::ComputeTangent(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_ANGLE: {
+    case TDataXtd_ANGLE:
+    {
       TPrsStd_ConstraintTools::ComputeAngle(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_RADIUS: {
+    case TDataXtd_RADIUS:
+    {
       TPrsStd_ConstraintTools::ComputeRadius(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_MINOR_RADIUS: {
+    case TDataXtd_MINOR_RADIUS:
+    {
       TPrsStd_ConstraintTools::ComputeMinRadius(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_MAJOR_RADIUS: {
+    case TDataXtd_MAJOR_RADIUS:
+    {
       TPrsStd_ConstraintTools::ComputeMaxRadius(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_DIAMETER: {
+    case TDataXtd_DIAMETER:
+    {
       TPrsStd_ConstraintTools::ComputeDiameter(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_FIX: {
+    case TDataXtd_FIX:
+    {
       TPrsStd_ConstraintTools::ComputeFix(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_OFFSET: {
+    case TDataXtd_OFFSET:
+    {
       TPrsStd_ConstraintTools::ComputeOffset(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_COINCIDENT: {
+    case TDataXtd_COINCIDENT:
+    {
       TPrsStd_ConstraintTools::ComputeCoincident(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_ROUND: {
+    case TDataXtd_ROUND:
+    {
       TPrsStd_ConstraintTools::ComputeRound(apConstraint, anAIS);
       break;
     }
@@ -129,19 +145,23 @@ bool TPrsStd_ConstraintDriver::Update(const TDF_Label&                    aLabel
     case TDataXtd_MATE:
     case TDataXtd_ALIGN_FACES:
     case TDataXtd_ALIGN_AXES:
-    case TDataXtd_AXES_ANGLE: {
+    case TDataXtd_AXES_ANGLE:
+    {
       TPrsStd_ConstraintTools::ComputePlacement(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_EQUAL_DISTANCE: {
+    case TDataXtd_EQUAL_DISTANCE:
+    {
       TPrsStd_ConstraintTools::ComputeEqualDistance(apConstraint, anAIS);
       break;
     }
-    case TDataXtd_EQUAL_RADIUS: {
+    case TDataXtd_EQUAL_RADIUS:
+    {
       TPrsStd_ConstraintTools::ComputeEqualRadius(apConstraint, anAIS);
       break;
     }
-    default: {
+    default:
+    {
       TPrsStd_ConstraintTools::ComputeOthers(apConstraint, anAIS);
       break;
     }

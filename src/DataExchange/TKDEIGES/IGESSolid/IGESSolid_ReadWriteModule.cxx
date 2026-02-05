@@ -136,7 +136,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESSolid_Block, anent, ent);
       if (anent.IsNull())
         return;
@@ -144,7 +145,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESSolid_BooleanTree, anent, ent);
       if (anent.IsNull())
         return;
@@ -152,7 +154,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESSolid_ConeFrustum, anent, ent);
       if (anent.IsNull())
         return;
@@ -160,7 +163,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESSolid_ConicalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -168,7 +172,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESSolid_Cylinder, anent, ent);
       if (anent.IsNull())
         return;
@@ -176,7 +181,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESSolid_CylindricalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -184,7 +190,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESSolid_EdgeList, anent, ent);
       if (anent.IsNull())
         return;
@@ -192,7 +199,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESSolid_Ellipsoid, anent, ent);
       if (anent.IsNull())
         return;
@@ -200,7 +208,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESSolid_Face, anent, ent);
       if (anent.IsNull())
         return;
@@ -208,7 +217,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESSolid_Loop, anent, ent);
       if (anent.IsNull())
         return;
@@ -216,7 +226,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESSolid_ManifoldSolid, anent, ent);
       if (anent.IsNull())
         return;
@@ -224,7 +235,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESSolid_PlaneSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -232,7 +244,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESSolid_RightAngularWedge, anent, ent);
       if (anent.IsNull())
         return;
@@ -240,7 +253,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESSolid_SelectedComponent, anent, ent);
       if (anent.IsNull())
         return;
@@ -248,7 +262,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESSolid_Shell, anent, ent);
       if (anent.IsNull())
         return;
@@ -256,7 +271,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESSolid_SolidAssembly, anent, ent);
       if (anent.IsNull())
         return;
@@ -264,7 +280,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESSolid_SolidInstance, anent, ent);
       if (anent.IsNull())
         return;
@@ -272,7 +289,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESSolid_SolidOfLinearExtrusion, anent, ent);
       if (anent.IsNull())
         return;
@@ -280,7 +298,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESSolid_SolidOfRevolution, anent, ent);
       if (anent.IsNull())
         return;
@@ -288,7 +307,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESSolid_Sphere, anent, ent);
       if (anent.IsNull())
         return;
@@ -296,7 +316,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESSolid_SphericalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -304,7 +325,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESSolid_ToroidalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -312,7 +334,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESSolid_Torus, anent, ent);
       if (anent.IsNull())
         return;
@@ -320,7 +343,8 @@ void IGESSolid_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 24: {
+    case 24:
+    {
       DeclareAndCast(IGESSolid_VertexList, anent, ent);
       if (anent.IsNull())
         return;
@@ -339,7 +363,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESSolid_Block, anent, ent);
       if (anent.IsNull())
         return;
@@ -347,7 +372,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESSolid_BooleanTree, anent, ent);
       if (anent.IsNull())
         return;
@@ -355,7 +381,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESSolid_ConeFrustum, anent, ent);
       if (anent.IsNull())
         return;
@@ -363,7 +390,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESSolid_ConicalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -371,7 +399,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESSolid_Cylinder, anent, ent);
       if (anent.IsNull())
         return;
@@ -379,7 +408,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESSolid_CylindricalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -387,7 +417,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESSolid_EdgeList, anent, ent);
       if (anent.IsNull())
         return;
@@ -395,7 +426,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESSolid_Ellipsoid, anent, ent);
       if (anent.IsNull())
         return;
@@ -403,7 +435,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESSolid_Face, anent, ent);
       if (anent.IsNull())
         return;
@@ -411,7 +444,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESSolid_Loop, anent, ent);
       if (anent.IsNull())
         return;
@@ -419,7 +453,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESSolid_ManifoldSolid, anent, ent);
       if (anent.IsNull())
         return;
@@ -427,7 +462,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESSolid_PlaneSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -435,7 +471,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESSolid_RightAngularWedge, anent, ent);
       if (anent.IsNull())
         return;
@@ -443,7 +480,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESSolid_SelectedComponent, anent, ent);
       if (anent.IsNull())
         return;
@@ -451,7 +489,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESSolid_Shell, anent, ent);
       if (anent.IsNull())
         return;
@@ -459,7 +498,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESSolid_SolidAssembly, anent, ent);
       if (anent.IsNull())
         return;
@@ -467,7 +507,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESSolid_SolidInstance, anent, ent);
       if (anent.IsNull())
         return;
@@ -475,7 +516,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESSolid_SolidOfLinearExtrusion, anent, ent);
       if (anent.IsNull())
         return;
@@ -483,7 +525,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESSolid_SolidOfRevolution, anent, ent);
       if (anent.IsNull())
         return;
@@ -491,7 +534,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESSolid_Sphere, anent, ent);
       if (anent.IsNull())
         return;
@@ -499,7 +543,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESSolid_SphericalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -507,7 +552,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESSolid_ToroidalSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -515,7 +561,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESSolid_Torus, anent, ent);
       if (anent.IsNull())
         return;
@@ -523,7 +570,8 @@ void IGESSolid_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 24: {
+    case 24:
+    {
       DeclareAndCast(IGESSolid_VertexList, anent, ent);
       if (anent.IsNull())
         return;

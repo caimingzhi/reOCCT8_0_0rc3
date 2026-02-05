@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Aspects.hpp>
 #include <OpenGl_FrameStats.hpp>
 #include <OpenGl_Text.hpp>
@@ -56,4 +55,3 @@ protected:
   occ::handle<OpenGl_VertexBuffer>        myChartLines;     //!< array of chart lines
   OpenGl_Text                             myChartLabels[3]; //!< chart labels
 };
-

@@ -25,184 +25,184 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-10;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-10;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-// ============================================================================
-// Adapter classes for old API (inherit from math_Function)
-// ============================================================================
+  // ============================================================================
+  // Adapter classes for old API (inherit from math_Function)
+  // ============================================================================
 
-//! f(x) = sin(x)
-//! Integral from 0 to PI = 2
-class SinFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = sin(x)
+  //! Integral from 0 to PI = 2
+  class SinFuncOld : public math_Function
   {
-    theF = std::sin(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::sin(theX);
+      return true;
+    }
+  };
 
-//! f(x) = x^2
-//! Integral from 0 to 1 = 1/3
-class QuadraticFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^2
+  //! Integral from 0 to 1 = 1/3
+  class QuadraticFuncOld : public math_Function
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 
-//! f(x) = e^x
-//! Integral from 0 to 1 = e - 1
-class ExpFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = e^x
+  //! Integral from 0 to 1 = e - 1
+  class ExpFuncOld : public math_Function
   {
-    theF = std::exp(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::exp(theX);
+      return true;
+    }
+  };
 
-//! f(x) = cos(x)
-//! Integral from 0 to PI/2 = 1
-class CosFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = cos(x)
+  //! Integral from 0 to PI/2 = 1
+  class CosFuncOld : public math_Function
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-//! f(x) = 1/(1+x)
-//! Integral from 0 to 1 = ln(2)
-class LogIntegrandOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = 1/(1+x)
+  //! Integral from 0 to 1 = ln(2)
+  class LogIntegrandOld : public math_Function
   {
-    theF = 1.0 / (1.0 + theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = 1.0 / (1.0 + theX);
+      return true;
+    }
+  };
 
-//! f(x) = x
-//! Integral from 0 to 1 = 1/2
-class LinearFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x
+  //! Integral from 0 to 1 = 1/2
+  class LinearFuncOld : public math_Function
   {
-    theF = theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX;
+      return true;
+    }
+  };
 
-//! f(x) = x^3
-//! Integral from 0 to 1 = 1/4
-class CubicFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^3
+  //! Integral from 0 to 1 = 1/4
+  class CubicFuncOld : public math_Function
   {
-    theF = theX * theX * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX * theX;
+      return true;
+    }
+  };
 
-//! f(x) = 1 (constant)
-//! Integral from a to b = b - a
-class ConstantFuncOld : public math_Function
-{
-public:
-  bool Value(const double /*theX*/, double& theF) override
+  //! f(x) = 1 (constant)
+  //! Integral from a to b = b - a
+  class ConstantFuncOld : public math_Function
   {
-    theF = 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double /*theX*/, double& theF) override
+    {
+      theF = 1.0;
+      return true;
+    }
+  };
 
-// ============================================================================
-// Function classes for new API
-// ============================================================================
+  // ============================================================================
+  // Function classes for new API
+  // ============================================================================
 
-struct SinFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct SinFuncNew
   {
-    theF = std::sin(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(theX);
+      return true;
+    }
+  };
 
-struct QuadraticFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct QuadraticFuncNew
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 
-struct ExpFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct ExpFuncNew
   {
-    theF = std::exp(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX);
+      return true;
+    }
+  };
 
-struct CosFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct CosFuncNew
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-struct LogIntegrandNew
-{
-  bool Value(double theX, double& theF) const
+  struct LogIntegrandNew
   {
-    theF = 1.0 / (1.0 + theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = 1.0 / (1.0 + theX);
+      return true;
+    }
+  };
 
-struct LinearFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct LinearFuncNew
   {
-    theF = theX;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX;
+      return true;
+    }
+  };
 
-struct CubicFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct CubicFuncNew
   {
-    theF = theX * theX * theX;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX * theX;
+      return true;
+    }
+  };
 
-struct ConstantFuncNew
-{
-  bool Value(double /*theX*/, double& theF) const
+  struct ConstantFuncNew
   {
-    theF = 1.0;
-    return true;
-  }
-};
+    bool Value(double /*theX*/, double& theF) const
+    {
+      theF = 1.0;
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

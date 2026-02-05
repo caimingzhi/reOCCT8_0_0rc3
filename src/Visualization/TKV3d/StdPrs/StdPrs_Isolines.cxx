@@ -1,18 +1,3 @@
-// Created on: 2014-10-14
-// Created by: Anton POLETAEV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <StdPrs_Isolines.hpp>
 
 #include <Adaptor3d_IsoCurve.hpp>
@@ -43,102 +28,103 @@
 
 namespace
 {
-const gp_Lin2d isoU(const double theU)
-{
-  return gp_Lin2d(gp_Pnt2d(theU, 0.0), gp::DY2d());
-}
-
-const gp_Lin2d isoV(const double theV)
-{
-  return gp_Lin2d(gp_Pnt2d(0.0, theV), gp::DX2d());
-}
-
-typedef NCollection_Shared<NCollection_Vector<StdPrs_Isolines::SegOnIso>> VecOfSegments;
-typedef NCollection_Sequence<occ::handle<VecOfSegments>>                  SeqOfVecOfSegments;
-
-//! Pack isoline segments into polylines.
-static void sortSegments(const SeqOfVecOfSegments&                                     theSegments,
-                         NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& thePolylines)
-{
-  for (SeqOfVecOfSegments::Iterator aLineIter(theSegments); aLineIter.More(); aLineIter.Next())
+  const gp_Lin2d isoU(const double theU)
   {
-    occ::handle<VecOfSegments>& anIsoSegs = aLineIter.ChangeValue();
-    std::stable_sort(anIsoSegs->begin(), anIsoSegs->end());
+    return gp_Lin2d(gp_Pnt2d(theU, 0.0), gp::DY2d());
+  }
 
-    occ::handle<NCollection_HSequence<gp_Pnt>> aPolyline = new NCollection_HSequence<gp_Pnt>();
-    thePolylines.Append(aPolyline);
-    double aLast = 0.0;
-    for (VecOfSegments::Iterator aSegIter(*anIsoSegs); aSegIter.More(); aSegIter.Next())
+  const gp_Lin2d isoV(const double theV)
+  {
+    return gp_Lin2d(gp_Pnt2d(0.0, theV), gp::DX2d());
+  }
+
+  typedef NCollection_Shared<NCollection_Vector<StdPrs_Isolines::SegOnIso>> VecOfSegments;
+  typedef NCollection_Sequence<occ::handle<VecOfSegments>>                  SeqOfVecOfSegments;
+
+  //! Pack isoline segments into polylines.
+  static void sortSegments(
+    const SeqOfVecOfSegments&                                     theSegments,
+    NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& thePolylines)
+  {
+    for (SeqOfVecOfSegments::Iterator aLineIter(theSegments); aLineIter.More(); aLineIter.Next())
     {
-      if (!aPolyline->IsEmpty()
-          && std::abs(aSegIter.Value()[0].Param - aLast) > Precision::PConfusion())
-      {
-        aPolyline = new NCollection_HSequence<gp_Pnt>();
-        thePolylines.Append(aPolyline);
-      }
+      occ::handle<VecOfSegments>& anIsoSegs = aLineIter.ChangeValue();
+      std::stable_sort(anIsoSegs->begin(), anIsoSegs->end());
 
-      aPolyline->Append(aSegIter.Value()[0].Pnt);
-      aPolyline->Append(aSegIter.Value()[1].Pnt);
-      aLast = aSegIter.Value()[1].Param;
+      occ::handle<NCollection_HSequence<gp_Pnt>> aPolyline = new NCollection_HSequence<gp_Pnt>();
+      thePolylines.Append(aPolyline);
+      double aLast = 0.0;
+      for (VecOfSegments::Iterator aSegIter(*anIsoSegs); aSegIter.More(); aSegIter.Next())
+      {
+        if (!aPolyline->IsEmpty()
+            && std::abs(aSegIter.Value()[0].Param - aLast) > Precision::PConfusion())
+        {
+          aPolyline = new NCollection_HSequence<gp_Pnt>();
+          thePolylines.Append(aPolyline);
+        }
+
+        aPolyline->Append(aSegIter.Value()[0].Pnt);
+        aPolyline->Append(aSegIter.Value()[1].Pnt);
+        aLast = aSegIter.Value()[1].Param;
+      }
     }
   }
-}
 
-//! Reorder and adjust to the limit a curve's parameter values.
-//! @param theCurve [in] the curve.
-//! @param theLimit [in] the parameter limit value.
-//! @param theFirst [in/out] the first parameter value.
-//! @param theLast  [in/out] the last parameter value.
-static void findLimits(const Adaptor3d_Curve& theCurve,
-                       const double           theLimit,
-                       double&                theFirst,
-                       double&                theLast)
-{
-  theFirst = std::max(theCurve.FirstParameter(), theFirst);
-  theLast  = std::min(theCurve.LastParameter(), theLast);
-
-  bool isFirstInf = Precision::IsNegativeInfinite(theFirst);
-  bool isLastInf  = Precision::IsPositiveInfinite(theLast);
-
-  if (!isFirstInf && !isLastInf)
+  //! Reorder and adjust to the limit a curve's parameter values.
+  //! @param theCurve [in] the curve.
+  //! @param theLimit [in] the parameter limit value.
+  //! @param theFirst [in/out] the first parameter value.
+  //! @param theLast  [in/out] the last parameter value.
+  static void findLimits(const Adaptor3d_Curve& theCurve,
+                         const double           theLimit,
+                         double&                theFirst,
+                         double&                theLast)
   {
-    return;
-  }
+    theFirst = std::max(theCurve.FirstParameter(), theFirst);
+    theLast  = std::min(theCurve.LastParameter(), theLast);
 
-  gp_Pnt aP1, aP2;
-  double aDelta = 1.0;
-  if (isFirstInf && isLastInf)
-  {
-    do
+    bool isFirstInf = Precision::IsNegativeInfinite(theFirst);
+    bool isLastInf  = Precision::IsPositiveInfinite(theLast);
+
+    if (!isFirstInf && !isLastInf)
     {
-      aDelta *= 2.0;
-      theFirst = -aDelta;
-      theLast  = aDelta;
-      theCurve.D0(theFirst, aP1);
+      return;
+    }
+
+    gp_Pnt aP1, aP2;
+    double aDelta = 1.0;
+    if (isFirstInf && isLastInf)
+    {
+      do
+      {
+        aDelta *= 2.0;
+        theFirst = -aDelta;
+        theLast  = aDelta;
+        theCurve.D0(theFirst, aP1);
+        theCurve.D0(theLast, aP2);
+      } while (aP1.Distance(aP2) < theLimit);
+    }
+    else if (isFirstInf)
+    {
       theCurve.D0(theLast, aP2);
-    } while (aP1.Distance(aP2) < theLimit);
-  }
-  else if (isFirstInf)
-  {
-    theCurve.D0(theLast, aP2);
-    do
+      do
+      {
+        aDelta *= 2.0;
+        theFirst = theLast - aDelta;
+        theCurve.D0(theFirst, aP1);
+      } while (aP1.Distance(aP2) < theLimit);
+    }
+    else if (isLastInf)
     {
-      aDelta *= 2.0;
-      theFirst = theLast - aDelta;
       theCurve.D0(theFirst, aP1);
-    } while (aP1.Distance(aP2) < theLimit);
+      do
+      {
+        aDelta *= 2.0;
+        theLast = theFirst + aDelta;
+        theCurve.D0(theLast, aP2);
+      } while (aP1.Distance(aP2) < theLimit);
+    }
   }
-  else if (isLastInf)
-  {
-    theCurve.D0(theFirst, aP1);
-    do
-    {
-      aDelta *= 2.0;
-      theLast = theFirst + aDelta;
-      theCurve.D0(theLast, aP2);
-    } while (aP1.Distance(aP2) < theLimit);
-  }
-}
 
 } // namespace
 

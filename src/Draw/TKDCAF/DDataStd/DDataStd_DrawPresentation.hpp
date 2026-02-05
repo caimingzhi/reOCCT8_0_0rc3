@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -84,4 +83,3 @@ private:
   bool                         isDisplayed;
   occ::handle<Draw_Drawable3D> myDrawable;
 };
-

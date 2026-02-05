@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntAna_ResultType
 {
   IntAna_Point,
@@ -14,4 +13,3 @@ enum IntAna_ResultType
   IntAna_Same,
   IntAna_NoGeometricSolution
 };
-

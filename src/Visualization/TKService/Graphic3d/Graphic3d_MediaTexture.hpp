@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Texture2D.hpp>
 
 #include <mutex>
@@ -38,4 +37,3 @@ protected:
   int                               myPlane;
   mutable occ::handle<Image_PixMap> myPixMapWrapper;
 };
-

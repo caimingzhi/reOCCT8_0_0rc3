@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Geom_Vector.hpp>
@@ -93,4 +92,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Geom_Direction, Geom_Vector)
 };
-

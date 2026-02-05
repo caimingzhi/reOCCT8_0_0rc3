@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_SStream.hpp>
 
 #include <memory>
@@ -37,4 +36,3 @@
       return #C1;                                                                                  \
     }                                                                                              \
   };
-

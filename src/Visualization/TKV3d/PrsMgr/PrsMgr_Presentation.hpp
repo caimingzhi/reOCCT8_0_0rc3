@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Presentation.hpp>
 
 class PrsMgr_PresentationManager;
@@ -19,6 +18,7 @@ public:
   Standard_EXPORT ~PrsMgr_Presentation() override;
 
   Standard_DEPRECATED("Dummy to simplify porting - returns self")
+
   Prs3d_Presentation* Presentation() { return this; }
 
   //! returns the PresentationManager in which the presentation has been created.
@@ -82,4 +82,3 @@ protected:
   int                                     myMode;
   bool                                    myMustBeUpdated;
 };
-

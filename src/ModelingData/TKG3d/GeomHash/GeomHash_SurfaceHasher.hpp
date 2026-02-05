@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <cstddef>
 
@@ -18,4 +17,3 @@ struct GeomHash_SurfaceHasher
   Standard_EXPORT bool operator()(const occ::handle<Geom_Surface>& theSurface1,
                                   const occ::handle<Geom_Surface>& theSurface2) const noexcept;
 };
-

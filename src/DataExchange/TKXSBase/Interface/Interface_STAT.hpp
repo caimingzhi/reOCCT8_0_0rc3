@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -191,4 +190,3 @@ private:
   occ::handle<NCollection_HSequence<int>>                     thephfin;
   occ::handle<NCollection_HSequence<double>>                  thestw;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Face.hpp>
 
 struct IMeshTools_Parameters;
@@ -101,4 +100,3 @@ protected:
   std::pair<double, double> myTolerance;
   bool                      myIsValid;
 };
-

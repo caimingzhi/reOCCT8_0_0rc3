@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -67,4 +66,3 @@ private:
   uint64_t                myValue[2];
   bool                    myIsPostRead;
 };
-

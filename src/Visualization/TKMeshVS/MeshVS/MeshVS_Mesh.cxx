@@ -1,18 +1,3 @@
-// Created on: 2003-09-09
-// Created by: Alexander SOLOVYOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_InteractiveContext.hpp>
 #include <Aspect_InteriorStyle.hpp>
 #include <Bnd_Box.hpp>
@@ -319,7 +304,8 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
   {
     switch (theMode)
     {
-      case MeshVS_SMF_Node: {
+      case MeshVS_SMF_Node:
+      {
         myNodeOwners.Clear();
         for (TColStd_MapIteratorOfPackedMapOfInteger anIter(anAllNodesMap); anIter.More();
              anIter.Next())
@@ -349,7 +335,8 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
         }
         break;
       }
-      case MeshVS_SMF_Mesh: {
+      case MeshVS_SMF_Mesh:
+      {
         if (myWholeMeshOwner.IsNull())
         {
           myWholeMeshOwner = new SelectMgr_EntityOwner(this);
@@ -357,7 +344,8 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
 
         switch (mySelectionMethod)
         {
-          case MeshVS_MSM_BOX: {
+          case MeshVS_MSM_BOX:
+          {
             Bnd_Box aBndBox;
             BoundingBox(aBndBox);
             if (!aBndBox.IsVoid())
@@ -366,12 +354,14 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
             }
             break;
           }
-          case MeshVS_MSM_NODES: {
+          case MeshVS_MSM_NODES:
+          {
             theSelection->Add(
               new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MSM_NODES));
             break;
           }
-          case MeshVS_MSM_PRECISE: {
+          case MeshVS_MSM_PRECISE:
+          {
             theSelection->Add(
               new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MSM_PRECISE));
 
@@ -445,7 +435,8 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
         }
         break;
       }
-      case MeshVS_SMF_Group: {
+      case MeshVS_SMF_Group:
+      {
         myGroupOwners.Clear();
 
         TColStd_PackedMapOfInteger anAllGroupsMap;

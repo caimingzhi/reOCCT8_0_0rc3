@@ -1,23 +1,3 @@
-// Created on: 2001-07-20
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2001-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// AGV 060302: Input from std::istream
-//             AGV 130302: Return error if there are data after the root element
-
-// #define LDOM_PARSER_TRACE
-
 #include <LDOMParser.hpp>
 #include <LDOM_MemManager.hpp>
 #include <LDOM_XmlReader.hpp>
@@ -333,7 +313,8 @@ bool LDOMParser::ParseElement(Standard_IStream& theIStream, bool& theDocStart)
         }
         isError = ParseElement(theIStream, theDocStart);
         break;
-      case LDOM_XmlReader::XML_END_ELEMENT: {
+      case LDOM_XmlReader::XML_END_ELEMENT:
+      {
         const char* aParentName = static_cast<const char*>(aParent->GetTagName());
         aTextStr                = (char*)myCurrentData.str();
         if (strcmp(aTextStr, aParentName) != 0)
@@ -378,7 +359,8 @@ bool LDOMParser::ParseElement(Standard_IStream& theIStream, bool& theDocStart)
         aLocType   = LDOM_Node::CDATA_SECTION_NODE;
         aTextStr   = (char*)myCurrentData.str();
         aTextValue = LDOMBasicString(aTextStr, myCurrentData.Length(), myDocument);
-      create_text_node: {
+      create_text_node:
+      {
         LDOM_BasicNode& aTextNode = LDOM_BasicText::Create(aLocType, aTextValue, myDocument);
         aParent->AppendChild(&aTextNode, aLastChild);
       }

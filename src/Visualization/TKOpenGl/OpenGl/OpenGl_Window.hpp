@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_RenderingContext.hpp>
 #include <Aspect_Window.hpp>
 #include <OpenGl_GlCore11.hpp>
@@ -86,4 +85,3 @@ protected:
 
   int mySwapInterval; //!< last assigned swap interval (VSync) for this window
 };
-

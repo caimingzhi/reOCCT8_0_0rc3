@@ -1,31 +1,3 @@
-// Created on: 1995-01-03
-// Created by: Frederic MAUPAS
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// pdn 30.11.98: fixes improved
-// pdn 20.12.98: to keep pcurves
-// pdn 28.12.98: PRO10366 shifting pcurve between two singularities
-//: p4 abv, pdn 23.02.99: PRO9234 #15720: call BRepTools::Update() for faces
-//: q7 abv 23.03.99: bm4_al_eye.stp #53710: remove pseudo-seams
-//    rln 31.03.99 S4135: prohibit fixing intersection of non-adjacent edges (temporarily)
-// #4  szv          S4163: optimization
-//%19 pdn 17.04.99 using ShapeFix_Wire::FixEdgeCurves instead of ShapeFix_PCurves
-//    smh 31.01.01 Bad data in file : case of vertex loop on plane face
-// sln 01.10.2001 BUC61003. StepToTopoDS_TranslateFace::Init function is corrected (verifying
-// Handle(...).IsNull() is added)
-
 #include <BRep_Builder.hpp>
 #include <BRep_TEdge.hpp>
 #include <BRep_Tool.hpp>
@@ -101,330 +73,331 @@
 
 namespace
 {
-// ============================================================================
-// Method  : SetNodes
-// Purpose : Set nodes to the triangulation from an array
-// ============================================================================
-static void SetNodes(const occ::handle<Poly_Triangulation>&    theMesh,
-                     occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
-                     const int                                 theNumPnindex,
-                     occ::handle<NCollection_HArray1<int>>&    thePnindices,
-                     const double                              theLengthFactor)
-{
-  for (int aPnIndex = 1; aPnIndex <= theMesh->NbNodes(); ++aPnIndex)
+  // ============================================================================
+  // Method  : SetNodes
+  // Purpose : Set nodes to the triangulation from an array
+  // ============================================================================
+  static void SetNodes(const occ::handle<Poly_Triangulation>&    theMesh,
+                       occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
+                       const int                                 theNumPnindex,
+                       occ::handle<NCollection_HArray1<int>>&    thePnindices,
+                       const double                              theLengthFactor)
   {
-    const gp_XYZ& aPoint =
-      theNodes->Value((theNumPnindex > 0) ? thePnindices->Value(aPnIndex) : aPnIndex);
-    theMesh->SetNode(aPnIndex, theLengthFactor * aPoint);
+    for (int aPnIndex = 1; aPnIndex <= theMesh->NbNodes(); ++aPnIndex)
+    {
+      const gp_XYZ& aPoint =
+        theNodes->Value((theNumPnindex > 0) ? thePnindices->Value(aPnIndex) : aPnIndex);
+      theMesh->SetNode(aPnIndex, theLengthFactor * aPoint);
+    }
   }
-}
 
-// ============================================================================
-// Method  : SetNormals
-// Purpose : Set normals to the triangulation from an array
-// ============================================================================
-static void SetNormals(const occ::handle<Poly_Triangulation>&          theMesh,
-                       const occ::handle<NCollection_HArray2<double>>& theNormals,
-                       const int                                       theNormNum,
-                       const int                                       theNumPnindex)
-{
-  if (theNormals->RowLength() != 3)
+  // ============================================================================
+  // Method  : SetNormals
+  // Purpose : Set normals to the triangulation from an array
+  // ============================================================================
+  static void SetNormals(const occ::handle<Poly_Triangulation>&          theMesh,
+                         const occ::handle<NCollection_HArray2<double>>& theNormals,
+                         const int                                       theNormNum,
+                         const int                                       theNumPnindex)
   {
-    return;
-  }
-  gp_XYZ aNorm;
-  if (theNormNum == 1)
-  {
-    aNorm.SetX(theNormals->Value(1, 1));
-    aNorm.SetY(theNormals->Value(1, 2));
-    aNorm.SetZ(theNormals->Value(1, 3));
-    for (int aPnIndex = 1; aPnIndex <= theNumPnindex; ++aPnIndex)
+    if (theNormals->RowLength() != 3)
     {
-      theMesh->SetNormal(aPnIndex, aNorm);
+      return;
     }
-  }
-  else if (theNumPnindex == theNormNum)
-  {
-    for (int aNormIndex = 1; aNormIndex <= theNormNum; ++aNormIndex)
+    gp_XYZ aNorm;
+    if (theNormNum == 1)
     {
-      aNorm.SetX(theNormals->Value(aNormIndex, 1));
-      aNorm.SetY(theNormals->Value(aNormIndex, 2));
-      aNorm.SetZ(theNormals->Value(aNormIndex, 3));
-      theMesh->SetNormal(aNormIndex, aNorm);
-    }
-  }
-}
-
-// ============================================================================
-// Method  : SetTriangles
-// Purpose : Set triangles to the triangulation from an array
-// ============================================================================
-static void SetTriangles(
-  const occ::handle<Poly_Triangulation>&                                   theMesh,
-  const occ::handle<NCollection_HArray2<int>>&                             theTriangles,
-  const int                                                                theTrianStripsNum,
-  const occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTrianStrips,
-  const int                                                                theTrianFansNum,
-  const occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTrianFans)
-{
-  if (theTrianStripsNum == 0 && theTrianFansNum == 0)
-  {
-    for (int aTrianIndex = 1; aTrianIndex <= theMesh->NbTriangles(); ++aTrianIndex)
-    {
-      theMesh->SetTriangle(aTrianIndex,
-                           Poly_Triangle(theTriangles->Value(aTrianIndex, 1),
-                                         theTriangles->Value(aTrianIndex, 2),
-                                         theTriangles->Value(aTrianIndex, 3)));
-    }
-  }
-  else
-  {
-    int aTriangleIndex = 1;
-    for (int aTrianStripIndex = 1; aTrianStripIndex <= theTrianStripsNum; ++aTrianStripIndex)
-    {
-      occ::handle<NCollection_HArray1<int>> aTriangleStrip =
-        occ::down_cast<NCollection_HArray1<int>>(theTrianStrips->Value(aTrianStripIndex));
-      for (int anIndex = 3; anIndex <= aTriangleStrip->Length(); anIndex += 2)
+      aNorm.SetX(theNormals->Value(1, 1));
+      aNorm.SetY(theNormals->Value(1, 2));
+      aNorm.SetZ(theNormals->Value(1, 3));
+      for (int aPnIndex = 1; aPnIndex <= theNumPnindex; ++aPnIndex)
       {
-        if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
-            && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+        theMesh->SetNormal(aPnIndex, aNorm);
+      }
+    }
+    else if (theNumPnindex == theNormNum)
+    {
+      for (int aNormIndex = 1; aNormIndex <= theNormNum; ++aNormIndex)
+      {
+        aNorm.SetX(theNormals->Value(aNormIndex, 1));
+        aNorm.SetY(theNormals->Value(aNormIndex, 2));
+        aNorm.SetZ(theNormals->Value(aNormIndex, 3));
+        theMesh->SetNormal(aNormIndex, aNorm);
+      }
+    }
+  }
+
+  // ============================================================================
+  // Method  : SetTriangles
+  // Purpose : Set triangles to the triangulation from an array
+  // ============================================================================
+  static void SetTriangles(
+    const occ::handle<Poly_Triangulation>&                                   theMesh,
+    const occ::handle<NCollection_HArray2<int>>&                             theTriangles,
+    const int                                                                theTrianStripsNum,
+    const occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTrianStrips,
+    const int                                                                theTrianFansNum,
+    const occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTrianFans)
+  {
+    if (theTrianStripsNum == 0 && theTrianFansNum == 0)
+    {
+      for (int aTrianIndex = 1; aTrianIndex <= theMesh->NbTriangles(); ++aTrianIndex)
+      {
+        theMesh->SetTriangle(aTrianIndex,
+                             Poly_Triangle(theTriangles->Value(aTrianIndex, 1),
+                                           theTriangles->Value(aTrianIndex, 2),
+                                           theTriangles->Value(aTrianIndex, 3)));
+      }
+    }
+    else
+    {
+      int aTriangleIndex = 1;
+      for (int aTrianStripIndex = 1; aTrianStripIndex <= theTrianStripsNum; ++aTrianStripIndex)
+      {
+        occ::handle<NCollection_HArray1<int>> aTriangleStrip =
+          occ::down_cast<NCollection_HArray1<int>>(theTrianStrips->Value(aTrianStripIndex));
+        for (int anIndex = 3; anIndex <= aTriangleStrip->Length(); anIndex += 2)
         {
-          theMesh->SetTriangle(aTriangleIndex++,
-                               Poly_Triangle(aTriangleStrip->Value(anIndex - 2),
-                                             aTriangleStrip->Value(anIndex),
-                                             aTriangleStrip->Value(anIndex - 1)));
+          if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
+              && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+          {
+            theMesh->SetTriangle(aTriangleIndex++,
+                                 Poly_Triangle(aTriangleStrip->Value(anIndex - 2),
+                                               aTriangleStrip->Value(anIndex),
+                                               aTriangleStrip->Value(anIndex - 1)));
+          }
+        }
+        for (int anIndex = 4; anIndex <= aTriangleStrip->Length(); anIndex += 2)
+        {
+          if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
+              && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+          {
+            theMesh->SetTriangle(aTriangleIndex++,
+                                 Poly_Triangle(aTriangleStrip->Value(anIndex - 2),
+                                               aTriangleStrip->Value(anIndex - 1),
+                                               aTriangleStrip->Value(anIndex)));
+          }
         }
       }
-      for (int anIndex = 4; anIndex <= aTriangleStrip->Length(); anIndex += 2)
+      for (int aTrianFanIndex = 1; aTrianFanIndex <= theTrianFansNum; ++aTrianFanIndex)
       {
-        if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
-            && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+        occ::handle<NCollection_HArray1<int>> aTriangleFan =
+          occ::down_cast<NCollection_HArray1<int>>(theTrianFans->Value(aTrianFanIndex));
+        for (int anIndex = 3; anIndex <= aTriangleFan->Length(); ++anIndex)
         {
-          theMesh->SetTriangle(aTriangleIndex++,
-                               Poly_Triangle(aTriangleStrip->Value(anIndex - 2),
-                                             aTriangleStrip->Value(anIndex - 1),
-                                             aTriangleStrip->Value(anIndex)));
-        }
-      }
-    }
-    for (int aTrianFanIndex = 1; aTrianFanIndex <= theTrianFansNum; ++aTrianFanIndex)
-    {
-      occ::handle<NCollection_HArray1<int>> aTriangleFan =
-        occ::down_cast<NCollection_HArray1<int>>(theTrianFans->Value(aTrianFanIndex));
-      for (int anIndex = 3; anIndex <= aTriangleFan->Length(); ++anIndex)
-      {
-        if (aTriangleFan->Value(anIndex) != aTriangleFan->Value(anIndex - 2)
-            && aTriangleFan->Value(anIndex - 1) != aTriangleFan->Value(anIndex - 2))
-        {
-          theMesh->SetTriangle(aTriangleIndex++,
-                               Poly_Triangle(aTriangleFan->Value(1),
-                                             aTriangleFan->Value(anIndex),
-                                             aTriangleFan->Value(anIndex - 1)));
+          if (aTriangleFan->Value(anIndex) != aTriangleFan->Value(anIndex - 2)
+              && aTriangleFan->Value(anIndex - 1) != aTriangleFan->Value(anIndex - 2))
+          {
+            theMesh->SetTriangle(aTriangleIndex++,
+                                 Poly_Triangle(aTriangleFan->Value(1),
+                                               aTriangleFan->Value(anIndex),
+                                               aTriangleFan->Value(anIndex - 1)));
+          }
         }
       }
     }
   }
-}
 
-// ============================================================================
-// Method  : GetSimpleFaceElements
-// Purpose : Get elements from simple face
-// ============================================================================
-template <class Type>
-static void GetSimpleFaceElements(const Type&                               theFace,
-                                  occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
-                                  occ::handle<NCollection_HArray2<double>>& theNormals,
-                                  occ::handle<NCollection_HArray2<int>>&    theTriangles,
-                                  int&                                      thePnIndNb,
-                                  int&                                      theNormNb,
-                                  int&                                      theTriNb,
-                                  occ::handle<NCollection_HArray1<int>>&    thePnindices)
-{
-  theNodes     = theFace->Coordinates()->Points();
-  theNormals   = theFace->Normals();
-  theTriangles = theFace->Triangles();
-  thePnIndNb   = theFace->NbPnindex();
-  theNormNb    = theFace->NbNormals();
-  theTriNb     = theFace->NbTriangles();
-  thePnindices = new NCollection_HArray1<int>(1, thePnIndNb);
-  for (int anIndx = 1; anIndx <= thePnIndNb; ++anIndx)
+  // ============================================================================
+  // Method  : GetSimpleFaceElements
+  // Purpose : Get elements from simple face
+  // ============================================================================
+  template <class Type>
+  static void GetSimpleFaceElements(const Type&                               theFace,
+                                    occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
+                                    occ::handle<NCollection_HArray2<double>>& theNormals,
+                                    occ::handle<NCollection_HArray2<int>>&    theTriangles,
+                                    int&                                      thePnIndNb,
+                                    int&                                      theNormNb,
+                                    int&                                      theTriNb,
+                                    occ::handle<NCollection_HArray1<int>>&    thePnindices)
   {
-    thePnindices->SetValue(anIndx, theFace->PnindexValue(anIndx));
-  }
-}
-
-// ============================================================================
-// Method  : GetComplexFaceElements
-// Purpose : Get elements from complex face
-// ============================================================================
-template <class Type>
-static void GetComplexFaceElements(
-  const Type&                                                        theFace,
-  occ::handle<NCollection_HArray1<gp_XYZ>>&                          theNodes,
-  occ::handle<NCollection_HArray2<double>>&                          theNormals,
-  occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTriangleStrips,
-  occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTriangleFans,
-  int&                                                               thePnIndNb,
-  int&                                                               theNormNb,
-  int&                                                               theTriStripsNb,
-  int&                                                               theTriFansNb,
-  occ::handle<NCollection_HArray1<int>>&                             thePnindices)
-{
-  theNodes          = theFace->Coordinates()->Points();
-  theNormals        = theFace->Normals();
-  theTriangleStrips = theFace->TriangleStrips();
-  theTriangleFans   = theFace->TriangleFans();
-  thePnIndNb        = theFace->NbPnindex();
-  theNormNb         = theFace->NbNormals();
-  theTriStripsNb    = theFace->NbTriangleStrips();
-  theTriFansNb      = theFace->NbTriangleFans();
-  thePnindices      = new NCollection_HArray1<int>(1, thePnIndNb);
-  for (int anIndx = 1; anIndx <= thePnIndNb; ++anIndx)
-  {
-    thePnindices->SetValue(anIndx, theFace->PnindexValue(anIndx));
-  }
-}
-
-// ============================================================================
-// Method  : CreatePolyTriangulation
-// Purpose : Create PolyTriangulation
-// ============================================================================
-static occ::handle<Poly_Triangulation> CreatePolyTriangulation(
-  const occ::handle<StepVisual_TessellatedItem>& theTI,
-  const StepData_Factors&                        theLocalFactors)
-{
-  occ::handle<Poly_Triangulation> aMesh;
-  if (theTI.IsNull())
-  {
-    return occ::handle<Poly_Triangulation>();
-  }
-
-  occ::handle<NCollection_HArray1<gp_XYZ>> aNodes;
-  occ::handle<NCollection_HArray2<double>> aNormals;
-  occ::handle<NCollection_HArray2<int>>    aTriangles;
-  int                                      aNumPnindex = 0;
-  int                                      aNormNum    = 0;
-  int                                      aTrianNum   = 0;
-  occ::handle<NCollection_HArray1<int>>    aPnindices;
-
-  occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriaStrips;
-  occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriaFans;
-  int                                                               aTrianStripsNum = 0;
-  int                                                               aTrianFansNum   = 0;
-
-  if (theTI->IsKind(STANDARD_TYPE(StepVisual_TriangulatedFace)))
-  {
-    occ::handle<StepVisual_TriangulatedFace> aTF =
-      occ::down_cast<StepVisual_TriangulatedFace>(theTI);
-    GetSimpleFaceElements(aTF,
-                          aNodes,
-                          aNormals,
-                          aTriangles,
-                          aNumPnindex,
-                          aNormNum,
-                          aTrianNum,
-                          aPnindices);
-  }
-  else if (theTI->IsKind(STANDARD_TYPE(StepVisual_TriangulatedSurfaceSet)))
-  {
-    occ::handle<StepVisual_TriangulatedSurfaceSet> aTSS =
-      occ::down_cast<StepVisual_TriangulatedSurfaceSet>(theTI);
-    GetSimpleFaceElements(aTSS,
-                          aNodes,
-                          aNormals,
-                          aTriangles,
-                          aNumPnindex,
-                          aNormNum,
-                          aTrianNum,
-                          aPnindices);
-  }
-  else if (theTI->IsKind(STANDARD_TYPE(StepVisual_ComplexTriangulatedFace)))
-  {
-    occ::handle<StepVisual_ComplexTriangulatedFace> aTF =
-      occ::down_cast<StepVisual_ComplexTriangulatedFace>(theTI);
-    GetComplexFaceElements(aTF,
-                           aNodes,
-                           aNormals,
-                           aTriaStrips,
-                           aTriaFans,
-                           aNumPnindex,
-                           aNormNum,
-                           aTrianStripsNum,
-                           aTrianFansNum,
-                           aPnindices);
-  }
-  else if (theTI->IsKind(STANDARD_TYPE(StepVisual_ComplexTriangulatedSurfaceSet)))
-  {
-    occ::handle<StepVisual_ComplexTriangulatedSurfaceSet> aTSS =
-      occ::down_cast<StepVisual_ComplexTriangulatedSurfaceSet>(theTI);
-    GetComplexFaceElements(aTSS,
-                           aNodes,
-                           aNormals,
-                           aTriaStrips,
-                           aTriaFans,
-                           aNumPnindex,
-                           aNormNum,
-                           aTrianStripsNum,
-                           aTrianFansNum,
-                           aPnindices);
-  }
-  else
-  {
-    return occ::handle<Poly_Triangulation>();
-  }
-
-  const bool aHasUVNodes = false;
-  const bool aHasNormals = (aNormNum > 0);
-  const int  aNbNodes    = (aNumPnindex > 0) ? aNumPnindex : aNodes->Length();
-
-  if (aTrianStripsNum == 0 && aTrianFansNum == 0)
-  {
-    aMesh = new Poly_Triangulation(aNbNodes, aTrianNum, aHasUVNodes, aHasNormals);
-  }
-  else
-  {
-    int aNbTriaStrips = 0;
-    int aNbTriaFans   = 0;
-
-    for (int aTrianStripIndex = 1; aTrianStripIndex <= aTrianStripsNum; ++aTrianStripIndex)
+    theNodes     = theFace->Coordinates()->Points();
+    theNormals   = theFace->Normals();
+    theTriangles = theFace->Triangles();
+    thePnIndNb   = theFace->NbPnindex();
+    theNormNb    = theFace->NbNormals();
+    theTriNb     = theFace->NbTriangles();
+    thePnindices = new NCollection_HArray1<int>(1, thePnIndNb);
+    for (int anIndx = 1; anIndx <= thePnIndNb; ++anIndx)
     {
-      occ::handle<NCollection_HArray1<int>> aTriangleStrip =
-        occ::down_cast<NCollection_HArray1<int>>(aTriaStrips->Value(aTrianStripIndex));
-      for (int anIndex = 3; anIndex <= aTriangleStrip->Length(); anIndex += 2)
-      {
-        if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
-            && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
-          ++aNbTriaStrips;
-      }
-      for (int anIndex = 4; anIndex <= aTriangleStrip->Length(); anIndex += 2)
-      {
-        if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
-            && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
-          ++aNbTriaStrips;
-      }
+      thePnindices->SetValue(anIndx, theFace->PnindexValue(anIndx));
+    }
+  }
+
+  // ============================================================================
+  // Method  : GetComplexFaceElements
+  // Purpose : Get elements from complex face
+  // ============================================================================
+  template <class Type>
+  static void GetComplexFaceElements(
+    const Type&                                                        theFace,
+    occ::handle<NCollection_HArray1<gp_XYZ>>&                          theNodes,
+    occ::handle<NCollection_HArray2<double>>&                          theNormals,
+    occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTriangleStrips,
+    occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& theTriangleFans,
+    int&                                                               thePnIndNb,
+    int&                                                               theNormNb,
+    int&                                                               theTriStripsNb,
+    int&                                                               theTriFansNb,
+    occ::handle<NCollection_HArray1<int>>&                             thePnindices)
+  {
+    theNodes          = theFace->Coordinates()->Points();
+    theNormals        = theFace->Normals();
+    theTriangleStrips = theFace->TriangleStrips();
+    theTriangleFans   = theFace->TriangleFans();
+    thePnIndNb        = theFace->NbPnindex();
+    theNormNb         = theFace->NbNormals();
+    theTriStripsNb    = theFace->NbTriangleStrips();
+    theTriFansNb      = theFace->NbTriangleFans();
+    thePnindices      = new NCollection_HArray1<int>(1, thePnIndNb);
+    for (int anIndx = 1; anIndx <= thePnIndNb; ++anIndx)
+    {
+      thePnindices->SetValue(anIndx, theFace->PnindexValue(anIndx));
+    }
+  }
+
+  // ============================================================================
+  // Method  : CreatePolyTriangulation
+  // Purpose : Create PolyTriangulation
+  // ============================================================================
+  static occ::handle<Poly_Triangulation> CreatePolyTriangulation(
+    const occ::handle<StepVisual_TessellatedItem>& theTI,
+    const StepData_Factors&                        theLocalFactors)
+  {
+    occ::handle<Poly_Triangulation> aMesh;
+    if (theTI.IsNull())
+    {
+      return occ::handle<Poly_Triangulation>();
     }
 
-    for (int aTrianFanIndex = 1; aTrianFanIndex <= aTrianFansNum; ++aTrianFanIndex)
+    occ::handle<NCollection_HArray1<gp_XYZ>> aNodes;
+    occ::handle<NCollection_HArray2<double>> aNormals;
+    occ::handle<NCollection_HArray2<int>>    aTriangles;
+    int                                      aNumPnindex = 0;
+    int                                      aNormNum    = 0;
+    int                                      aTrianNum   = 0;
+    occ::handle<NCollection_HArray1<int>>    aPnindices;
+
+    occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriaStrips;
+    occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriaFans;
+    int                                                               aTrianStripsNum = 0;
+    int                                                               aTrianFansNum   = 0;
+
+    if (theTI->IsKind(STANDARD_TYPE(StepVisual_TriangulatedFace)))
     {
-      occ::handle<NCollection_HArray1<int>> aTriangleFan =
-        occ::down_cast<NCollection_HArray1<int>>(aTriaFans->Value(aTrianFanIndex));
-      aNbTriaFans += aTriangleFan->Length() - 2;
+      occ::handle<StepVisual_TriangulatedFace> aTF =
+        occ::down_cast<StepVisual_TriangulatedFace>(theTI);
+      GetSimpleFaceElements(aTF,
+                            aNodes,
+                            aNormals,
+                            aTriangles,
+                            aNumPnindex,
+                            aNormNum,
+                            aTrianNum,
+                            aPnindices);
+    }
+    else if (theTI->IsKind(STANDARD_TYPE(StepVisual_TriangulatedSurfaceSet)))
+    {
+      occ::handle<StepVisual_TriangulatedSurfaceSet> aTSS =
+        occ::down_cast<StepVisual_TriangulatedSurfaceSet>(theTI);
+      GetSimpleFaceElements(aTSS,
+                            aNodes,
+                            aNormals,
+                            aTriangles,
+                            aNumPnindex,
+                            aNormNum,
+                            aTrianNum,
+                            aPnindices);
+    }
+    else if (theTI->IsKind(STANDARD_TYPE(StepVisual_ComplexTriangulatedFace)))
+    {
+      occ::handle<StepVisual_ComplexTriangulatedFace> aTF =
+        occ::down_cast<StepVisual_ComplexTriangulatedFace>(theTI);
+      GetComplexFaceElements(aTF,
+                             aNodes,
+                             aNormals,
+                             aTriaStrips,
+                             aTriaFans,
+                             aNumPnindex,
+                             aNormNum,
+                             aTrianStripsNum,
+                             aTrianFansNum,
+                             aPnindices);
+    }
+    else if (theTI->IsKind(STANDARD_TYPE(StepVisual_ComplexTriangulatedSurfaceSet)))
+    {
+      occ::handle<StepVisual_ComplexTriangulatedSurfaceSet> aTSS =
+        occ::down_cast<StepVisual_ComplexTriangulatedSurfaceSet>(theTI);
+      GetComplexFaceElements(aTSS,
+                             aNodes,
+                             aNormals,
+                             aTriaStrips,
+                             aTriaFans,
+                             aNumPnindex,
+                             aNormNum,
+                             aTrianStripsNum,
+                             aTrianFansNum,
+                             aPnindices);
+    }
+    else
+    {
+      return occ::handle<Poly_Triangulation>();
     }
 
-    aMesh = new Poly_Triangulation(aNbNodes, aNbTriaStrips + aNbTriaFans, aHasUVNodes, aHasNormals);
+    const bool aHasUVNodes = false;
+    const bool aHasNormals = (aNormNum > 0);
+    const int  aNbNodes    = (aNumPnindex > 0) ? aNumPnindex : aNodes->Length();
+
+    if (aTrianStripsNum == 0 && aTrianFansNum == 0)
+    {
+      aMesh = new Poly_Triangulation(aNbNodes, aTrianNum, aHasUVNodes, aHasNormals);
+    }
+    else
+    {
+      int aNbTriaStrips = 0;
+      int aNbTriaFans   = 0;
+
+      for (int aTrianStripIndex = 1; aTrianStripIndex <= aTrianStripsNum; ++aTrianStripIndex)
+      {
+        occ::handle<NCollection_HArray1<int>> aTriangleStrip =
+          occ::down_cast<NCollection_HArray1<int>>(aTriaStrips->Value(aTrianStripIndex));
+        for (int anIndex = 3; anIndex <= aTriangleStrip->Length(); anIndex += 2)
+        {
+          if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
+              && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+            ++aNbTriaStrips;
+        }
+        for (int anIndex = 4; anIndex <= aTriangleStrip->Length(); anIndex += 2)
+        {
+          if (aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 2)
+              && aTriangleStrip->Value(anIndex) != aTriangleStrip->Value(anIndex - 1))
+            ++aNbTriaStrips;
+        }
+      }
+
+      for (int aTrianFanIndex = 1; aTrianFanIndex <= aTrianFansNum; ++aTrianFanIndex)
+      {
+        occ::handle<NCollection_HArray1<int>> aTriangleFan =
+          occ::down_cast<NCollection_HArray1<int>>(aTriaFans->Value(aTrianFanIndex));
+        aNbTriaFans += aTriangleFan->Length() - 2;
+      }
+
+      aMesh =
+        new Poly_Triangulation(aNbNodes, aNbTriaStrips + aNbTriaFans, aHasUVNodes, aHasNormals);
+    }
+
+    SetNodes(aMesh, aNodes, aNumPnindex, aPnindices, theLocalFactors.LengthFactor());
+
+    if (aHasNormals)
+    {
+      SetNormals(aMesh, aNormals, aNormNum, aNbNodes);
+    }
+
+    SetTriangles(aMesh, aTriangles, aTrianStripsNum, aTriaStrips, aTrianFansNum, aTriaFans);
+
+    return aMesh;
   }
-
-  SetNodes(aMesh, aNodes, aNumPnindex, aPnindices, theLocalFactors.LengthFactor());
-
-  if (aHasNormals)
-  {
-    SetNormals(aMesh, aNormals, aNormNum, aNbNodes);
-  }
-
-  SetTriangles(aMesh, aTriangles, aTrianStripsNum, aTriaStrips, aTrianFansNum, aTriaFans);
-
-  return aMesh;
-}
 } // namespace
 
 //=================================================================================================

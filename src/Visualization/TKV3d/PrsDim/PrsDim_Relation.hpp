@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Aspect_TypeOfLine.hpp>
 #include <Aspect_TypeOfMarker.hpp>
@@ -216,4 +215,3 @@ protected:
   bool                       myIsSetBndBox;
   bool                       myArrowSizeIsDefined;
 };
-

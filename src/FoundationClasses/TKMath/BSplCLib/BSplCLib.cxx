@@ -1,32 +1,3 @@
-// Created on: 1991-08-09
-// Created by: JCV
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified RLE 9 Sep 1993
-// pmn : modified 28-01-97  : fixed a mistake in LocateParameter (PRO6973)
-// pmn : modified 4-11-96   : fixed a mistake in BuildKnots (PRO6124)
-// pmn : modified 28-Jun-96 : fixed a mistake in AntiBoorScheme
-// xab : modified 15-Jun-95 : fixed a mistake in IsRational
-// xab : modified 15-Mar-95 : removed Epsilon comparison in IsRational
-//                            added RationalDerivatives.
-// xab : 30-Mar-95 : fixed coupling with lti in RationalDerivatives
-// xab : 15-Mar-96 : fixed a typo in Eval with extrapolation
-// jct : 15-Apr-97 : added TangExtendToConstraint
-// jct : 24-Apr-97 : correction on computation of Tbord and NewFlatKnots
-//                   in TangExtendToConstraint; Continuity can be equal to 0
-
 #include <BSplCLib.hpp>
 #include <ElCLib.hpp>
 #include <gp_Pnt.hpp>
@@ -815,7 +786,8 @@ void BSplCLib::Eval(const double U,
   switch (Dimension)
   {
 
-    case 1: {
+    case 1:
+    {
 
       for (step = -1; step < Dm1; step++)
       {
@@ -837,7 +809,8 @@ void BSplCLib::Eval(const double U,
       }
       break;
     }
-    case 2: {
+    case 2:
+    {
 
       for (step = -1; step < Dm1; step++)
       {
@@ -861,7 +834,8 @@ void BSplCLib::Eval(const double U,
       }
       break;
     }
-    case 3: {
+    case 3:
+    {
 
       for (step = -1; step < Dm1; step++)
       {
@@ -887,7 +861,8 @@ void BSplCLib::Eval(const double U,
       }
       break;
     }
-    case 4: {
+    case 4:
+    {
 
       for (step = -1; step < Dm1; step++)
       {
@@ -915,7 +890,8 @@ void BSplCLib::Eval(const double U,
       }
       break;
     }
-    default: {
+    default:
+    {
       int k;
 
       for (step = -1; step < Dm1; step++)
@@ -1144,7 +1120,8 @@ void BSplCLib::Bohm(const double U,
   DDmi  = (Degree << 1) + 1;
   switch (Dimension)
   {
-    case 1: {
+    case 1:
+    {
       psDD     = psav + Degree;
       psDDmDim = psDD - 1;
 
@@ -1195,7 +1172,8 @@ void BSplCLib::Bohm(const double U,
       }
       break;
     }
-    case 2: {
+    case 2:
+    {
       psDD     = psav + (Degree << 1);
       psDDmDim = psDD - 2;
 
@@ -1256,7 +1234,8 @@ void BSplCLib::Bohm(const double U,
       }
       break;
     }
-    case 3: {
+    case 3:
+    {
       psDD     = psav + (Degree << 1) + Degree;
       psDDmDim = psDD - 3;
 
@@ -1326,7 +1305,8 @@ void BSplCLib::Bohm(const double U,
       }
       break;
     }
-    case 4: {
+    case 4:
+    {
       psDD     = psav + (Degree << 2);
       psDDmDim = psDD - 4;
 
@@ -1405,7 +1385,8 @@ void BSplCLib::Bohm(const double U,
       }
       break;
     }
-    default: {
+    default:
+    {
       int k;
       int Dim2 = Dimension << 1;
       psDD     = psav + Degree * Dimension;
@@ -1494,14 +1475,16 @@ void BSplCLib::BuildKnots(const int                         Degree,
   {
     switch (Degree)
     {
-      case 1: {
+      case 1:
+      {
         int j   = Index;
         knot[0] = pkn[j];
         j++;
         knot[1] = pkn[j];
         break;
       }
-      case 2: {
+      case 2:
+      {
         int j   = Index - 1;
         knot[0] = pkn[j];
         j++;
@@ -1512,7 +1495,8 @@ void BSplCLib::BuildKnots(const int                         Degree,
         knot[3] = pkn[j];
         break;
       }
-      case 3: {
+      case 3:
+      {
         int j   = Index - 2;
         knot[0] = pkn[j];
         j++;
@@ -1527,7 +1511,8 @@ void BSplCLib::BuildKnots(const int                         Degree,
         knot[5] = pkn[j];
         break;
       }
-      case 4: {
+      case 4:
+      {
         int j   = Index - 3;
         knot[0] = pkn[j];
         j++;
@@ -1546,7 +1531,8 @@ void BSplCLib::BuildKnots(const int                         Degree,
         knot[7] = pkn[j];
         break;
       }
-      case 5: {
+      case 5:
+      {
         int j   = Index - 4;
         knot[0] = pkn[j];
         j++;
@@ -1569,7 +1555,8 @@ void BSplCLib::BuildKnots(const int                         Degree,
         knot[9] = pkn[j];
         break;
       }
-      case 6: {
+      case 6:
+      {
         int j   = Index - 5;
         knot[0] = pkn[j];
         j++;
@@ -1596,7 +1583,8 @@ void BSplCLib::BuildKnots(const int                         Degree,
         knot[11] = pkn[j];
         break;
       }
-      default: {
+      default:
+      {
         int i, j;
         int Deg2 = Degree << 1;
         j        = Index - Degree;
@@ -4076,7 +4064,8 @@ void BSplCLib::Resolution(double&                           Poles,
   num_poles        = FlatKnots.Length() - Deg1;
   switch (ArrayDimension)
   {
-    case 2: {
+    case 2:
+    {
       if (Weights != nullptr)
       {
         const double* WG = &(*Weights)(Weights->Lower());
@@ -4164,7 +4153,8 @@ void BSplCLib::Resolution(double&                           Poles,
       }
       break;
     }
-    case 3: {
+    case 3:
+    {
       if (Weights != nullptr)
       {
         const double* WG = &(*Weights)(Weights->Lower());
@@ -4268,7 +4258,8 @@ void BSplCLib::Resolution(double&                           Poles,
       }
       break;
     }
-    case 4: {
+    case 4:
+    {
       if (Weights != nullptr)
       {
         const double* WG = &(*Weights)(Weights->Lower());
@@ -4388,7 +4379,8 @@ void BSplCLib::Resolution(double&                           Poles,
       }
       break;
     }
-    default: {
+    default:
+    {
       int kk;
       if (Weights != nullptr)
       {

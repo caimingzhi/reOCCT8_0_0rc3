@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -136,4 +135,3 @@ private:
   occ::handle<Transfer_Binder> thenextr;
   occ::handle<Transfer_Binder> theendr;
 };
-

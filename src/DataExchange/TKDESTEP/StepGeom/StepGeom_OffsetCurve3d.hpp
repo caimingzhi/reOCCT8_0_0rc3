@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -46,4 +45,3 @@ private:
   StepData_Logical                selfIntersect;
   occ::handle<StepGeom_Direction> refDirection;
 };
-

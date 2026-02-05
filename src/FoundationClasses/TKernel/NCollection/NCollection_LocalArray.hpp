@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_TypeDef.hpp>
 
@@ -55,4 +54,3 @@ protected:
   theItem* myPtr;
   size_t   mySize;
 };
-

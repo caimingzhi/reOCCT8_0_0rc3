@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -45,4 +44,3 @@ private:
   occ::handle<Interface_InterfaceModel>               themod;
   NCollection_Array1<occ::handle<Standard_Transient>> theres;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2015-02-20
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_View.hpp>
 
 #include <Graphic3d_TextureParams.hpp>
@@ -44,26 +29,26 @@
 
 namespace
 {
-//! Defines OpenGL texture samplers.
-static const Graphic3d_TextureUnit OpenGl_RT_EnvMapTexture = Graphic3d_TextureUnit_0;
+  //! Defines OpenGL texture samplers.
+  static const Graphic3d_TextureUnit OpenGl_RT_EnvMapTexture = Graphic3d_TextureUnit_0;
 
-static const Graphic3d_TextureUnit OpenGl_RT_SceneNodeInfoTexture  = Graphic3d_TextureUnit_1;
-static const Graphic3d_TextureUnit OpenGl_RT_SceneMinPointTexture  = Graphic3d_TextureUnit_2;
-static const Graphic3d_TextureUnit OpenGl_RT_SceneMaxPointTexture  = Graphic3d_TextureUnit_3;
-static const Graphic3d_TextureUnit OpenGl_RT_SceneTransformTexture = Graphic3d_TextureUnit_4;
+  static const Graphic3d_TextureUnit OpenGl_RT_SceneNodeInfoTexture  = Graphic3d_TextureUnit_1;
+  static const Graphic3d_TextureUnit OpenGl_RT_SceneMinPointTexture  = Graphic3d_TextureUnit_2;
+  static const Graphic3d_TextureUnit OpenGl_RT_SceneMaxPointTexture  = Graphic3d_TextureUnit_3;
+  static const Graphic3d_TextureUnit OpenGl_RT_SceneTransformTexture = Graphic3d_TextureUnit_4;
 
-static const Graphic3d_TextureUnit OpenGl_RT_GeometryVertexTexture = Graphic3d_TextureUnit_5;
-static const Graphic3d_TextureUnit OpenGl_RT_GeometryNormalTexture = Graphic3d_TextureUnit_6;
-static const Graphic3d_TextureUnit OpenGl_RT_GeometryTexCrdTexture = Graphic3d_TextureUnit_7;
-static const Graphic3d_TextureUnit OpenGl_RT_GeometryTriangTexture = Graphic3d_TextureUnit_8;
+  static const Graphic3d_TextureUnit OpenGl_RT_GeometryVertexTexture = Graphic3d_TextureUnit_5;
+  static const Graphic3d_TextureUnit OpenGl_RT_GeometryNormalTexture = Graphic3d_TextureUnit_6;
+  static const Graphic3d_TextureUnit OpenGl_RT_GeometryTexCrdTexture = Graphic3d_TextureUnit_7;
+  static const Graphic3d_TextureUnit OpenGl_RT_GeometryTriangTexture = Graphic3d_TextureUnit_8;
 
-static const Graphic3d_TextureUnit OpenGl_RT_RaytraceMaterialTexture = Graphic3d_TextureUnit_9;
-static const Graphic3d_TextureUnit OpenGl_RT_RaytraceLightSrcTexture = Graphic3d_TextureUnit_10;
+  static const Graphic3d_TextureUnit OpenGl_RT_RaytraceMaterialTexture = Graphic3d_TextureUnit_9;
+  static const Graphic3d_TextureUnit OpenGl_RT_RaytraceLightSrcTexture = Graphic3d_TextureUnit_10;
 
-static const Graphic3d_TextureUnit OpenGl_RT_FsaaInputTexture = Graphic3d_TextureUnit_11;
-static const Graphic3d_TextureUnit OpenGl_RT_PrevAccumTexture = Graphic3d_TextureUnit_12;
+  static const Graphic3d_TextureUnit OpenGl_RT_FsaaInputTexture = Graphic3d_TextureUnit_11;
+  static const Graphic3d_TextureUnit OpenGl_RT_PrevAccumTexture = Graphic3d_TextureUnit_12;
 
-static const Graphic3d_TextureUnit OpenGl_RT_RaytraceDepthTexture = Graphic3d_TextureUnit_13;
+  static const Graphic3d_TextureUnit OpenGl_RT_RaytraceDepthTexture = Graphic3d_TextureUnit_13;
 } // namespace
 
 // =======================================================================
@@ -376,13 +361,15 @@ OpenGl_RaytraceMaterial OpenGl_View::convertMaterial(
   const NCollection_Vec3<float>& aSrcEms = aSrcMat.EmissiveColor();
   switch (aSrcMat.MaterialType())
   {
-    case Graphic3d_MATERIAL_ASPECT: {
+    case Graphic3d_MATERIAL_ASPECT:
+    {
       aResMat.Ambient.SetValues(aSrcAmb * aMatCol, 1.0f);
       aResMat.Diffuse.SetValues(aSrcDif * aMatCol, -1.0f); // -1 is no texture
       aResMat.Emission.SetValues(aSrcEms * aMatCol, 1.0f);
       break;
     }
-    case Graphic3d_MATERIAL_PHYSIC: {
+    case Graphic3d_MATERIAL_PHYSIC:
+    {
       aResMat.Ambient.SetValues(aSrcAmb, 1.0f);
       aResMat.Diffuse.SetValues(aSrcDif, -1.0f); // -1 is no texture
       aResMat.Emission.SetValues(aSrcEms, 1.0f);

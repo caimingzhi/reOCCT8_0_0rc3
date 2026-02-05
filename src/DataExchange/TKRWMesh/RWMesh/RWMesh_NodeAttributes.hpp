@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
@@ -16,4 +15,3 @@ struct RWMesh_NodeAttributes
   occ::handle<TDataStd_NamedData> NamedData; //!< optional metadata
   XCAFPrs_Style                   Style;     //!< presentation style
 };
-

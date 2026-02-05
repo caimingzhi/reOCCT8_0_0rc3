@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CStructure.hpp>
 
 #include <OpenGl_GraphicDriver.hpp>
@@ -167,4 +166,3 @@ protected:
   bool           myIsMirrored; //!< Used to tell OpenGl to interpret polygons in clockwise order.
   // clang-format on
 };
-

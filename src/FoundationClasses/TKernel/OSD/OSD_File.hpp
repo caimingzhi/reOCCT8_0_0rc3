@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <OSD_FileNode.hpp>
+
 // Copyright (c) 1992-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -15,7 +15,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Used by OSD_File in the method Seek.
 enum OSD_FromWhere
@@ -25,7 +24,6 @@ enum OSD_FromWhere
   OSD_FromEnd
 };
 
-
 // Copyright (c) 1992-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -39,7 +37,6 @@ enum OSD_FromWhere
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Specifies the type of files.
 enum OSD_KindFile
@@ -51,7 +48,6 @@ enum OSD_KindFile
   OSD_UNKNOWN
 };
 
-
 // Copyright (c) 1992-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -65,7 +61,6 @@ enum OSD_KindFile
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! locks for files.
 //! NoLock is the default value when opening a file.
@@ -86,7 +81,6 @@ enum OSD_LockType
   OSD_WriteLock,
   OSD_ExclusiveLock
 };
-
 
 #include <OSD_OpenMode.hpp>
 
@@ -261,4 +255,3 @@ private:
   OSD_OpenMode myMode;
   bool         ImperativeFlag;
 };
-

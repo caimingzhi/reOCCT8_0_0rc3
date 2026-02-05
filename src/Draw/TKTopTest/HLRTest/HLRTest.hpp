@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -37,4 +36,3 @@ public:
   //! Defines commands to test the Hidden Line Removal
   Standard_EXPORT static void Commands(Draw_Interpretor& I);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Texture unit.
 enum Graphic3d_TextureUnit
 {
@@ -89,4 +88,3 @@ enum
 {
   Graphic3d_TextureUnit_NB = Graphic3d_TextureUnit_15 + 1,
 };
-

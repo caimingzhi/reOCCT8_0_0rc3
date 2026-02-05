@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
@@ -110,4 +109,3 @@ public:
   // CASCADE RTTI
   DEFINE_STANDARD_RTTIEXT(LDOM_MemManager, Standard_Transient)
 };
-

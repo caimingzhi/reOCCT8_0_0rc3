@@ -1,25 +1,3 @@
-// Created on: 1995-01-03
-// Created by: Frederic MAUPAS
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//: i6 abv 17 Sep 98: ProSTEP TR9 r0601-ct.stp: to be able read GeometricSet
-// gka 11.01.99 file PRO7755.stp #2018: work-around error in BRepLib_MakeFace
-//: n4 abv 12.02.99: S4132: treatment of GEOMETRIC_SETs implemented
-//: o7 abv 18.02.99: bm1_sy_fuel.stp #1427(items 1,2) protection against null entity
-// abv,gka 05.04.99 S4136: parameter names changed; avoid extra call to FixSameParameter
-
 #include <BRep_Builder.hpp>
 #include <BRepBuilderAPI_MakeEdge.hpp>
 #include <BRepBuilderAPI_MakeFace.hpp>

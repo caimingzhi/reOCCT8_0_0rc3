@@ -1,22 +1,3 @@
-// Created on: 1992-10-19
-// Created by: Remi GILET
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Fri Jul  1 16:23:17 2005 IDEM(Airbus)
-//  Modified by skv - Wed Jul  7 17:21:09 2004 IDEM(Airbus)
-
 #include <Bisector_BisecAna.hpp>
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dBisec.hpp>
@@ -337,7 +318,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       //                       Bissectrice circle - circle.                         +
       //=============================================================================
 
-    case 1: {
+    case 1:
+    {
       double radius1 = circle1.Radius();
       double radius2 = circle2.Radius();
 
@@ -632,7 +614,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       //                       Bissectrice circle - straight.                         +
       //=============================================================================
 
-    case 2: {
+    case 2:
+    {
       // small reframing of circles. in case OnCurve.
       // If the circle and the straight line are almost tangent they become tangent.
       if (oncurve)
@@ -780,7 +763,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       //=============================================================================
       //                       Bissectrice straight - straight.                     +
       //=============================================================================
-    case 3: {
+    case 3:
+    {
       gp_Dir2d Direc1(line1.Direction());
       gp_Dir2d Direc2(line2.Direction());
       gp_Lin2d line;
@@ -957,7 +941,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       //=============================================================================
       //                       Bissectrice point - circle.                          +
       //=============================================================================
-    case 1: {
+    case 1:
+    {
       GccAna_CircPnt2dBisec Bisector(circle, asecondpoint->Pnt2d(), tolerance);
       double                distancemini = Precision::Infinite();
       if (Bisector.IsDone())
@@ -1077,7 +1062,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       //=============================================================================
       //                       Bissectrice point - straight.                          +
       //=============================================================================
-    case 2: {
+    case 2:
+    {
       GccAna_LinPnt2dBisec Bisector(line, asecondpoint->Pnt2d());
 
 #ifdef OCCT_DEBUG
@@ -1123,7 +1109,8 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
     }
     break;
 
-    default: {
+    default:
+    {
       std::cout << "Not yet implemented" << std::endl;
       break;
     }

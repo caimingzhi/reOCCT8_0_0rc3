@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 
 #include <gp_Pnt.hpp>
@@ -151,4 +150,3 @@ public:
   //! CASCADE RTTI
   DEFINE_STANDARD_RTTIEXT(AIS_TextLabel, AIS_InteractiveObject)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
@@ -29,4 +28,3 @@ protected:
   //! Removes parameter with the given index.
   Standard_EXPORT virtual void removeParameter(const int theIndex) = 0;
 };
-

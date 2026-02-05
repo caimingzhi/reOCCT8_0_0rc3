@@ -1,21 +1,3 @@
-// Created on: 1998-08-12
-// Created by: Galina KULIKOVA
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// pdn 17.12.98 ie_exhaust-A.stp
-
 #include <Bnd_Box.hpp>
 #include <NCollection_Array1.hpp>
 #include <BRep_Builder.hpp>
@@ -56,18 +38,18 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Shell, ShapeFix_Root)
 
 namespace
 {
-// Type aliases for unordered maps with custom allocators
-using FaceEdgesMap = NCollection_IndexedDataMap<TopoDS_Face, NCollection_Array1<TopoDS_Edge>>;
-using EdgeFacesAllocator =
-  NCollection_Allocator<std::pair<const TopoDS_Edge, NCollection_DynamicArray<TopoDS_Face>>>;
-using EdgeFacesMap = std::unordered_map<TopoDS_Edge,
-                                        NCollection_DynamicArray<TopoDS_Face>,
-                                        TopTools_ShapeMapHasher,
-                                        TopTools_ShapeMapHasher,
-                                        EdgeFacesAllocator>;
+  // Type aliases for unordered maps with custom allocators
+  using FaceEdgesMap = NCollection_IndexedDataMap<TopoDS_Face, NCollection_Array1<TopoDS_Edge>>;
+  using EdgeFacesAllocator =
+    NCollection_Allocator<std::pair<const TopoDS_Edge, NCollection_DynamicArray<TopoDS_Face>>>;
+  using EdgeFacesMap = std::unordered_map<TopoDS_Edge,
+                                          NCollection_DynamicArray<TopoDS_Face>,
+                                          TopTools_ShapeMapHasher,
+                                          TopTools_ShapeMapHasher,
+                                          EdgeFacesAllocator>;
 
-// Default increment for dynamic array of faces per edge
-constexpr int DEFAULT_EDGE_FACES_INCREMENT = 5;
+  // Default increment for dynamic array of faces per edge
+  constexpr int DEFAULT_EDGE_FACES_INCREMENT = 5;
 } // namespace
 
 //=================================================================================================

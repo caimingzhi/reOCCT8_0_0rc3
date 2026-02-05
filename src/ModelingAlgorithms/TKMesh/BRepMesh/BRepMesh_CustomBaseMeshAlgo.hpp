@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_ConstrainedBaseMeshAlgo.hpp>
 #include <NCollection_Shared.hpp>
 
@@ -65,4 +64,3 @@ protected:
   //! Builds base triangulation using custom triangulation algorithm.
   Standard_EXPORT virtual void buildBaseTriangulation() = 0;
 };
-

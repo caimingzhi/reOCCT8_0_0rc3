@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -39,6 +38,7 @@ private:
   int  myVnbSplit;
   bool myIsSplittingIntoSquares;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -71,5 +71,3 @@ inline void ShapeUpgrade_SplitSurfaceArea::SetNumbersUVSplits(const int theNbUsp
   if (myUnbSplit > 0 && myVnbSplit > 0)
     myNbParts = myUnbSplit * myVnbSplit;
 }
-
-

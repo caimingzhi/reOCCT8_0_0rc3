@@ -54,7 +54,8 @@ uint64_t BinTools_IStream::ReadReference()
       aDelta = uint64_t(myStream->get());
       myPosition++;
       break;
-    case BinTools_ObjectType_Reference16: {
+    case BinTools_ObjectType_Reference16:
+    {
       uint16_t aDelta16 = 0;
       myStream->read((char*)&aDelta16, sizeof(uint16_t));
       myPosition += 2;
@@ -64,7 +65,8 @@ uint64_t BinTools_IStream::ReadReference()
       aDelta = uint64_t(aDelta16);
       break;
     }
-    case BinTools_ObjectType_Reference32: {
+    case BinTools_ObjectType_Reference32:
+    {
       uint32_t aDelta32 = 0;
       myStream->read((char*)&aDelta32, sizeof(uint32_t));
       myPosition += 4;

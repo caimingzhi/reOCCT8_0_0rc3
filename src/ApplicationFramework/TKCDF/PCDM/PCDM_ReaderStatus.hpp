@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Status of reading of a document.
 //! The following values are accessible:
 //! - PCDM_RS_OK: the document was successfully read;
@@ -54,4 +53,3 @@ enum PCDM_ReaderStatus
   PCDM_RS_NoModel,                     //!< NOT USED
   PCDM_RS_UserBreak                    //!< User interrupted reading
 };
-

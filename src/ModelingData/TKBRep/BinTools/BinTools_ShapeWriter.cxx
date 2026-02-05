@@ -92,7 +92,8 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
     OCC_CATCH_SIGNALS
     switch (aShape.ShapeType())
     {
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         TopoDS_Vertex aV = TopoDS::Vertex(aShape);
         theStream << BRep_Tool::Tolerance(aV);
         gp_Pnt aP = BRep_Tool::Pnt(aV);
@@ -128,7 +129,8 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
         theStream << (uint8_t)0;
       }
       break;
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         occ::handle<BRep_TEdge> aTE = occ::down_cast<BRep_TEdge>(aShape.TShape());
         theStream << aTE->Tolerance();
         theStream.PutBools(aTE->SameParameter(), aTE->SameRange(), aTE->Degenerated());
@@ -212,7 +214,8 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
         theStream << (uint8_t)0;
       }
       break;
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
 
         occ::handle<BRep_TFace> aTF = occ::down_cast<BRep_TFace>(aShape.TShape());
         const TopoDS_Face&      aF  = TopoDS::Face(aShape);
@@ -239,7 +242,8 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
           theStream << (uint8_t)0; // without triangulation
       }
       break;
-      default: {
+      default:
+      {
       }
     }
   }

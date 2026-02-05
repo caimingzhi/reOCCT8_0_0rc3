@@ -21,11 +21,11 @@ IMPLEMENT_STANDARD_RTTIEXT(DEIGES_ConfigurationNode, DE_ShapeFixConfigurationNod
 
 namespace
 {
-static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
-{
-  static const TCollection_AsciiString aScope = "provider";
-  return aScope;
-}
+  static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
+  {
+    static const TCollection_AsciiString aScope = "provider";
+    return aScope;
+  }
 
 } // namespace
 

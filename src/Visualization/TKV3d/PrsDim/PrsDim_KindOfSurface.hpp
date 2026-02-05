@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum PrsDim_KindOfSurface
 {
   PrsDim_KOS_Plane,
@@ -12,4 +11,3 @@ enum PrsDim_KindOfSurface
   PrsDim_KOS_Extrusion,
   PrsDim_KOS_OtherSurface
 };
-

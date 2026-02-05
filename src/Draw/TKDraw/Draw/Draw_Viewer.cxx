@@ -1,19 +1,3 @@
-// Created on: 1992-04-06
-// Created by: Remi LEQUETTE
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Draw_Viewer.hpp>
 #include <Draw_View.hpp>
 
@@ -985,7 +969,8 @@ void Draw_Viewer::Select(int& theId, int& theX, int& theY, int& theButton, bool 
     Draw_Window::GetNextEvent(ev);
     switch (ev.type)
     {
-      case ButtonPress: {
+      case ButtonPress:
+      {
         int aViewIter = 0;
         for (; aViewIter < MAXVIEW; ++aViewIter)
         {
@@ -1011,7 +996,8 @@ void Draw_Viewer::Select(int& theId, int& theX, int& theY, int& theButton, bool 
         }
         break;
       }
-      case MotionNotify: {
+      case MotionNotify:
+      {
         if (theToWait)
         {
           break;
@@ -1269,7 +1255,8 @@ void Draw_Display::DrawString(const gp_Pnt2d& ppt,
   switch (CurrentMode)
   {
 
-    case DRAW: {
+    case DRAW:
+    {
       int X = (int)(pt.X() + moveX + curview->GetDx());
       int Y = (int)(-pt.Y() + moveY - curview->GetDy());
       curview->DrawString(X, Y, (char*)S);
@@ -1287,7 +1274,8 @@ void Draw_Display::DrawString(const gp_Pnt2d& ppt,
     }
     break;
 
-    case POSTSCRIPT: {
+    case POSTSCRIPT:
+    {
       int x = (int)((pt.X() + moveX - ps_vx) * ps_kx + ps_px);
       int y = (int)((pt.Y() + moveY - ps_vy) * ps_ky + ps_py);
       (*ps_stream) << "stroke\n";
@@ -1400,7 +1388,8 @@ void Draw_Display::MoveTo(const gp_Pnt2d& pp)
       PtCur = pt;
       break;
 
-    case POSTSCRIPT: {
+    case POSTSCRIPT:
+    {
       int x = (int)((pt.X() - ps_vx) * ps_kx + ps_px);
       int y = (int)((pt.Y() - ps_vy) * ps_ky + ps_py);
       (*ps_stream) << "stroke\nnewpath\n" << x << " " << y << " m\n";
@@ -1544,7 +1533,8 @@ void Draw_Display::DrawTo(const gp_Pnt2d& pp2)
   switch (CurrentMode)
   {
 
-    case DRAW: {
+    case DRAW:
+    {
 
 #if 1
       int x0, y0, x1, y1;
@@ -1685,7 +1675,8 @@ void Draw_Display::DrawTo(const gp_Pnt2d& pp2)
       }
       break;
 
-    case POSTSCRIPT: {
+    case POSTSCRIPT:
+    {
       int x = (int)((p2.X() - ps_vx) * ps_kx + ps_px);
       int y = (int)((p2.Y() - ps_vy) * ps_ky + ps_py);
       (*ps_stream) << x << " " << y << " l\n";

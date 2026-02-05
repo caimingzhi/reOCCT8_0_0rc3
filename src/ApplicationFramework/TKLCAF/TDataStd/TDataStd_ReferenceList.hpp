@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -98,4 +97,3 @@ private:
   NCollection_List<TDF_Label> myList;
   Standard_GUID               myID;
 };
-

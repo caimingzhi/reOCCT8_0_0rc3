@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -33,4 +32,3 @@ public:
                                   const gp_Pnt&                          SecondPoint,
                                   const occ::handle<Geom_Plane>&         Plane);
 };
-

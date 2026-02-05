@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NoSuchObject.hpp>
 #include <NCollection_DefineAlloc.hpp>
 #include <NCollection_ListNode.hpp>
@@ -173,4 +172,3 @@ protected:
   // ------------ FRIEND CLASSES ------------
   friend class Iterator;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2.hpp>
 #include <Geom_Curve.hpp>
 
@@ -102,4 +101,3 @@ public:
 protected:
   gp_Ax2 pos;
 };
-

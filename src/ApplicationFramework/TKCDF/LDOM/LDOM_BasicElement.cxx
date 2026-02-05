@@ -1,20 +1,3 @@
-// Created on: 2001-06-26
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2001-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// AGV 140202: Replace(const char *) for (LDOMBasicString)=>myTagName
-
 #include <LDOM_BasicElement.hpp>
 #include <LDOM_BasicAttribute.hpp>
 #include <LDOM_BasicText.hpp>
@@ -57,19 +40,22 @@ void LDOM_BasicElement::RemoveNodes()
     const LDOM_BasicNode* aNext = aNode->GetSibling();
     switch (aNode->getNodeType())
     {
-      case LDOM_Node::ELEMENT_NODE: {
+      case LDOM_Node::ELEMENT_NODE:
+      {
         LDOM_BasicElement& anElement = *(LDOM_BasicElement*)aNode;
         anElement                    = nullptr;
         break;
       }
-      case LDOM_Node::ATTRIBUTE_NODE: {
+      case LDOM_Node::ATTRIBUTE_NODE:
+      {
         LDOM_BasicAttribute& anAttr = *(LDOM_BasicAttribute*)aNode;
         anAttr                      = nullptr;
         break;
       }
       case LDOM_Node::TEXT_NODE:
       case LDOM_Node::COMMENT_NODE:
-      case LDOM_Node::CDATA_SECTION_NODE: {
+      case LDOM_Node::CDATA_SECTION_NODE:
+      {
         LDOM_BasicText& aTxt = *(LDOM_BasicText*)aNode;
         aTxt                 = nullptr;
         break;
@@ -415,7 +401,8 @@ void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOth
     const LDOM_Node::NodeType aNewNodeType = aBNode->getNodeType();
     switch (aNewNodeType)
     {
-      case LDOM_Node::ELEMENT_NODE: {
+      case LDOM_Node::ELEMENT_NODE:
+      {
         const LDOM_BasicElement& aBNodeElem = *(const LDOM_BasicElement*)aBNode;
         const char*              aTagString = aBNodeElem.GetTagName();
         LDOM_BasicElement&       aNewBNodeElem =
@@ -428,7 +415,8 @@ void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOth
         goto loop_attr;
       case LDOM_Node::TEXT_NODE:
       case LDOM_Node::COMMENT_NODE:
-      case LDOM_Node::CDATA_SECTION_NODE: {
+      case LDOM_Node::CDATA_SECTION_NODE:
+      {
         const LDOM_BasicText& aBNodeText = *(const LDOM_BasicText*)aBNode;
         aNewBNode                        = &LDOM_BasicText::Create(aNewNodeType,
                                             LDOMString(aBNodeText.GetData(), aDocument),

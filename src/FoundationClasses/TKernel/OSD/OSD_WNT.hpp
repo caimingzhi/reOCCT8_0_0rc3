@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifndef STRICT
   #define STRICT
 #endif /* STRICT */
@@ -95,4 +94,3 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-

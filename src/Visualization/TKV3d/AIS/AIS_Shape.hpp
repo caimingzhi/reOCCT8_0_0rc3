@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_DisplayMode.hpp>
 #include <AIS_InteractiveObject.hpp>
 #include <Bnd_Box.hpp>
@@ -318,4 +317,3 @@ protected:
   double       myInitAng;
   bool         myCompBB; //!< if TRUE, then bounding box should be recomputed
 };
-

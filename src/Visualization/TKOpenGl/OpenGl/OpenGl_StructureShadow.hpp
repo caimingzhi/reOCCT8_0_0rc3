@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Structure.hpp>
 
 //! Dummy structure which just redirects to groups of another structure.
@@ -25,4 +24,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_StructureShadow, OpenGl_Structure) // Type definition
 };
-

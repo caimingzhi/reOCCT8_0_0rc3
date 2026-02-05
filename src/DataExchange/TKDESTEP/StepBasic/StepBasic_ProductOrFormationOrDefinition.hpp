@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -38,4 +37,3 @@ public:
   //! Returns Value as ProductDefinition (or Null if another type)
   Standard_EXPORT occ::handle<StepBasic_ProductDefinition> ProductDefinition() const;
 };
-

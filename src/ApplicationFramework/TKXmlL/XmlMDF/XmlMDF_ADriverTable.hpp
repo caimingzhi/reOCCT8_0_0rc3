@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Type.hpp>
@@ -49,4 +48,3 @@ public:
 private:
   NCollection_DataMap<occ::handle<Standard_Type>, occ::handle<XmlMDF_ADriver>> myMap;
 };
-

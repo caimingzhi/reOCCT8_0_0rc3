@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -60,4 +59,3 @@ private:
   occ::handle<Geom_Curve>   myMeridian;
   occ::handle<Geom2d_Curve> myPMeridian;
 };
-

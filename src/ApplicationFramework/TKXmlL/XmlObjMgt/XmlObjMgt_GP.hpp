@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -27,4 +26,3 @@ public:
 
   Standard_EXPORT static bool Translate(const XmlObjMgt_DOMString& aStr, gp_XYZ& T);
 };
-

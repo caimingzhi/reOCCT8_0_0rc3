@@ -1,18 +1,3 @@
-// Created on: 2000-08-17
-// Created by: Andrey BETENEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <IGESCAFControl.hpp>
 #include <IGESCAFControl_Writer.hpp>
 #include <IGESData_IGESModel.hpp>
@@ -51,60 +36,61 @@
 
 namespace
 {
-typedef NCollection_DataMap<TopoDS_Shape, TCollection_ExtendedString> DataMapOfShapeNames;
+  typedef NCollection_DataMap<TopoDS_Shape, TCollection_ExtendedString> DataMapOfShapeNames;
 
-void CollectShapeNames(const TDF_Label&                  theLabel,
-                       const TopLoc_Location&            theLocation,
-                       const occ::handle<TDataStd_Name>& thePrevName,
-                       DataMapOfShapeNames&              theMapOfShapeNames)
-{
-  bool      hasReferredShape = false;
-  bool      hasComponents    = false;
-  TDF_Label aReferredLabel;
-
-  occ::handle<TDataStd_Name> aName;
-  theLabel.FindAttribute(TDataStd_Name::GetID(), aName);
-
-  if (XCAFDoc_ShapeTool::GetReferredShape(theLabel, aReferredLabel))
+  void CollectShapeNames(const TDF_Label&                  theLabel,
+                         const TopLoc_Location&            theLocation,
+                         const occ::handle<TDataStd_Name>& thePrevName,
+                         DataMapOfShapeNames&              theMapOfShapeNames)
   {
-    TopLoc_Location aSubLocation = theLocation.Multiplied(XCAFDoc_ShapeTool::GetLocation(theLabel));
-    CollectShapeNames(aReferredLabel, aSubLocation, aName, theMapOfShapeNames);
-    hasReferredShape = true;
-  }
+    bool      hasReferredShape = false;
+    bool      hasComponents    = false;
+    TDF_Label aReferredLabel;
 
-  NCollection_Sequence<TDF_Label> aSeq;
-  if (XCAFDoc_ShapeTool::GetComponents(theLabel, aSeq))
-  {
-    for (int anIter = 1; anIter <= aSeq.Length(); anIter++)
+    occ::handle<TDataStd_Name> aName;
+    theLabel.FindAttribute(TDataStd_Name::GetID(), aName);
+
+    if (XCAFDoc_ShapeTool::GetReferredShape(theLabel, aReferredLabel))
     {
-      CollectShapeNames(aSeq.Value(anIter), theLocation, aName, theMapOfShapeNames);
+      TopLoc_Location aSubLocation =
+        theLocation.Multiplied(XCAFDoc_ShapeTool::GetLocation(theLabel));
+      CollectShapeNames(aReferredLabel, aSubLocation, aName, theMapOfShapeNames);
+      hasReferredShape = true;
     }
-    hasComponents = true;
-  }
 
-  aSeq.Clear();
-  if (XCAFDoc_ShapeTool::GetSubShapes(theLabel, aSeq))
-  {
-    for (int anIter = 1; anIter <= aSeq.Length(); anIter++)
+    NCollection_Sequence<TDF_Label> aSeq;
+    if (XCAFDoc_ShapeTool::GetComponents(theLabel, aSeq))
+    {
+      for (int anIter = 1; anIter <= aSeq.Length(); anIter++)
+      {
+        CollectShapeNames(aSeq.Value(anIter), theLocation, aName, theMapOfShapeNames);
+      }
+      hasComponents = true;
+    }
+
+    aSeq.Clear();
+    if (XCAFDoc_ShapeTool::GetSubShapes(theLabel, aSeq))
+    {
+      for (int anIter = 1; anIter <= aSeq.Length(); anIter++)
+      {
+        TopoDS_Shape aShape;
+        if (!XCAFDoc_ShapeTool::GetShape(aSeq.Value(anIter), aShape))
+          continue;
+        if (!aSeq.Value(anIter).FindAttribute(TDataStd_Name::GetID(), aName))
+          continue;
+        theMapOfShapeNames.Bind(aShape, aName->Get());
+      }
+    }
+
+    if (!hasReferredShape && !hasComponents && !thePrevName.IsNull())
     {
       TopoDS_Shape aShape;
-      if (!XCAFDoc_ShapeTool::GetShape(aSeq.Value(anIter), aShape))
-        continue;
-      if (!aSeq.Value(anIter).FindAttribute(TDataStd_Name::GetID(), aName))
-        continue;
-      theMapOfShapeNames.Bind(aShape, aName->Get());
+      if (!XCAFDoc_ShapeTool::GetShape(theLabel, aShape))
+        return;
+      aShape.Move(theLocation, false);
+      theMapOfShapeNames.Bind(aShape, thePrevName->Get());
     }
   }
-
-  if (!hasReferredShape && !hasComponents && !thePrevName.IsNull())
-  {
-    TopoDS_Shape aShape;
-    if (!XCAFDoc_ShapeTool::GetShape(theLabel, aShape))
-      return;
-    aShape.Move(theLocation, false);
-    theMapOfShapeNames.Bind(aShape, thePrevName->Get());
-  }
-}
 } // namespace
 
 //=================================================================================================

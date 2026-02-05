@@ -1,19 +1,3 @@
-// Created on: 1995-03-08
-// Created by: Laurent BUCHARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <CSLib_Class2d.hpp>
 #include <gp_Pnt2d.hpp>
 #include <Precision.hpp>
@@ -22,20 +6,22 @@
 
 namespace
 {
-//! Transforms a coordinate from original space to normalized [0,1] space.
-//! @param[in] theU       Original coordinate value
-//! @param[in] theUMin    Minimum bound of original range
-//! @param[in] theURange  Range of original domain (theUMax - theUMin)
-//! @return Normalized coordinate in [0,1], or original value if range is too small
-inline double transformToNormalized(const double theU, const double theUMin, const double theURange)
-{
-  constexpr double THE_MIN_RANGE = 1e-10;
-  if (theURange > THE_MIN_RANGE)
+  //! Transforms a coordinate from original space to normalized [0,1] space.
+  //! @param[in] theU       Original coordinate value
+  //! @param[in] theUMin    Minimum bound of original range
+  //! @param[in] theURange  Range of original domain (theUMax - theUMin)
+  //! @return Normalized coordinate in [0,1], or original value if range is too small
+  inline double transformToNormalized(const double theU,
+                                      const double theUMin,
+                                      const double theURange)
   {
-    return (theU - theUMin) / theURange;
+    constexpr double THE_MIN_RANGE = 1e-10;
+    if (theURange > THE_MIN_RANGE)
+    {
+      return (theU - theUMin) / theURange;
+    }
+    return theU;
   }
-  return theU;
-}
 } // namespace
 
 //=================================================================================================

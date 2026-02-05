@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -30,4 +29,3 @@ private:
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_MechanismStateRepresentation, StepRepr_Representation)
 };
-

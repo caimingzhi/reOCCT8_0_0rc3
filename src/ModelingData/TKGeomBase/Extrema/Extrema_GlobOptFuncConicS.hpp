@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <math_MultipleVarFunction.hpp>
 #include <GeomAbs_CurveType.hpp>
@@ -58,4 +57,3 @@ private:
   double myVf;
   double myVl;
 };
-

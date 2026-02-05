@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -72,4 +71,3 @@ private:
   int  thecnt;
   bool thelst;
 };
-

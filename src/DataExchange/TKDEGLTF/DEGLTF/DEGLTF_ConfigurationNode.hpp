@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <RWGltf_WriterTrsfFormat.hpp>
 #include <RWMesh_CoordinateSystem.hpp>
@@ -101,4 +100,3 @@ public:
     // clang-format on
   } InternalParameters;
 };
-

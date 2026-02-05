@@ -1,10 +1,10 @@
 #pragma once
 
-
 #include <Aspect_GenId.hpp>
 #include <Graphic3d_CStructure.hpp>
 #include <Graphic3d_ZLayerId.hpp>
 #include <Graphic3d_ZLayerSettings.hpp>
+
 // Copyright (c) 2016 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -17,7 +17,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Type of graphic resource limit.
 enum Graphic3d_TypeOfLimit
@@ -55,7 +54,6 @@ enum Graphic3d_TypeOfLimit
                                          //!< with empty FBO for images with big width is applied.
   Graphic3d_TypeOfLimit_NB               //!< number of elements in this enumeration
 };
-
 
 #include <Standard_Integer.hpp>
 #include <NCollection_Sequence.hpp>
@@ -187,4 +185,3 @@ protected:
   NCollection_List<occ::handle<Graphic3d_Layer>>                        myLayers;
   NCollection_DataMap<Graphic3d_ZLayerId, occ::handle<Graphic3d_Layer>> myLayerIds;
 };
-

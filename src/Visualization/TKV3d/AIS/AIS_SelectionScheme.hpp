@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Sets selection schemes for interactive contexts.
 enum AIS_SelectionScheme
 {
@@ -14,4 +13,3 @@ enum AIS_SelectionScheme
                                     //!< empty, and current selection contains detected element, it
                                     //!< will be selected
 };
-

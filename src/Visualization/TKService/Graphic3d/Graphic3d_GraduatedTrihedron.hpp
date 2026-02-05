@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Font_FontAspect.hpp>
 #include <NCollection_Array1.hpp>
 #include <Quantity_Color.hpp>

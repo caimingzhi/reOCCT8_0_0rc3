@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 class Standard_Transient;
@@ -29,4 +28,3 @@ public:
   //! in the specified application
   Standard_EXPORT static void DefineFormat(const occ::handle<TDocStd_Application>& theApp);
 };
-

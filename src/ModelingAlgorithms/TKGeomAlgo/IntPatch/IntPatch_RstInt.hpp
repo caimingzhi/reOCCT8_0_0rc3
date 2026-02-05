@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class IntPatch_Line;
@@ -20,4 +19,3 @@ public:
                                               const bool                              OnFirst,
                                               const double                            Tol);
 };
-

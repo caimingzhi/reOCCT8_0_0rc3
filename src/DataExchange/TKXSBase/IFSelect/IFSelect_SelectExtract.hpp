@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -71,4 +70,3 @@ protected:
 private:
   bool thesort;
 };
-

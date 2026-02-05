@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class LProp3d_SurfaceTool
@@ -54,4 +53,3 @@ public:
                                      double&                               U2,
                                      double&                               V2);
 };
-

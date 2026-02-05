@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -32,4 +31,3 @@ private:
   StepVisual_SurfaceSide                   side;
   occ::handle<StepVisual_SurfaceSideStyle> style;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
@@ -102,4 +101,3 @@ private:
 #undef TheISurfaceTool_hxx
 #undef IntImp_ZerImpFunc
 #undef IntImp_ZerImpFunc_hxx
-

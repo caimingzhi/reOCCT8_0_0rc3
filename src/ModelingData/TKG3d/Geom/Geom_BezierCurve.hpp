@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt.hpp>
@@ -326,4 +325,3 @@ private:
   double                                   maxderivinv;
   bool                                     maxderivinvok;
 };
-

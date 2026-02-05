@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <gp_Ax1.hpp>
 #include <gp_Ax2.hpp>
@@ -469,4 +468,3 @@ inline gp_Ax1 gp_Hypr::Directrix2() const
   anOrig.Add(pos.Location().XYZ());
   return gp_Ax1(gp_Pnt(anOrig), pos.YDirection());
 }
-

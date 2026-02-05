@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <IVtk_Interface.hpp>
 #include <IVtk_Types.hpp>
@@ -81,4 +80,3 @@ public:
     return InsertPoint(thePnt, NCollection_Vec3<float>(0.0f, 0.0f, 1.0f));
   }
 };
-

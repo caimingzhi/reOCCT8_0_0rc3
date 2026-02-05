@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_ExtendedString.hpp>
@@ -64,4 +63,3 @@ protected:
   TCollection_ExtendedString                   myExpression;
   NCollection_List<occ::handle<TDF_Attribute>> myVariables;
 };
-

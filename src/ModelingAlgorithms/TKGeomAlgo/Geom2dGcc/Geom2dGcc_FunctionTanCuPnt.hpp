@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -39,4 +38,3 @@ private:
   Geom2dAdaptor_Curve TheCurv;
   gp_Pnt2d            ThePoint;
 };
-

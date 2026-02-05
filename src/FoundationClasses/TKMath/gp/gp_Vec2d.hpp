@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_VectorWithNullMagnitude.hpp>
 #include <gp_XY.hpp>
 
@@ -390,4 +389,3 @@ inline gp_Vec2d operator*(const double theScalar, const gp_Vec2d& theV)
 {
   return theV.Multiplied(theScalar);
 }
-

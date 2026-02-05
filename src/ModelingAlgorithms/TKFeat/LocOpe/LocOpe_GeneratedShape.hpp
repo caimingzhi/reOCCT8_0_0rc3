@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -34,4 +33,3 @@ protected:
   NCollection_List<TopoDS_Shape> myGEdges;
   NCollection_List<TopoDS_Shape> myList;
 };
-

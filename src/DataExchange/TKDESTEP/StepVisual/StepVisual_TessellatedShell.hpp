@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedItem.hpp>
@@ -59,4 +58,3 @@ private:
   occ::handle<StepShape_ConnectedFaceSet> myTopologicalLink; //!< optional
   bool myHasTopologicalLink;                                 //!< flag "is TopologicalLink defined"
 };
-

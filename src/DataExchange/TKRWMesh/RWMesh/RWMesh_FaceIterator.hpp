@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_ShapeIterator.hpp>
 
 #include <BRepLProp_SLProps.hpp>
@@ -162,4 +161,3 @@ private:
   bool           myIsMirrored;  //!< flag indicating that face triangles should be mirrored
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CullingTool.hpp>
 #include <Graphic3d_WorldViewProjState.hpp>
 #include <math_BullardGenerator.hpp>
@@ -1104,4 +1103,3 @@ public:
   friend class OpenGl_LayerList;
   friend class OpenGl_FrameStats;
 };
-

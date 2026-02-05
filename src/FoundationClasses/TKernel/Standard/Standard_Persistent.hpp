@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 //! Root of "persistent" classes, a legacy support of
@@ -26,4 +25,3 @@ private:
 
   friend class Storage_Schema;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepExtrema_ElementFilter.hpp>
 #include <NCollection_DataMap.hpp>
 #include <TColStd_PackedMapOfInteger.hpp>
@@ -206,4 +205,3 @@ private:
   //! Information of projection point state from 2nd BVH providing the minimal distance
   PrjState myMinPrjState;
 };
-

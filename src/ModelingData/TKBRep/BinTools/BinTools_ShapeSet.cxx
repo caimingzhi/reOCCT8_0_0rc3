@@ -1,18 +1,3 @@
-// Created on: 2004-05-11
-// Created by: Sergey ZARITCHNY
-// Copyright (c) 2004-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BinTools.hpp>
 #include <BinTools_Curve2dSet.hpp>
 #include <BinTools_ShapeSet.hpp>
@@ -788,7 +773,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
         // vertex
         //---------
 
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         TopoDS_Vertex& V = TopoDS::Vertex(S);
 
         // Read the point geometry
@@ -832,7 +818,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
             case 0:
               break;
 
-            case 1: {
+            case 1:
+            {
               BinTools::GetInteger(IS, c);
               if (myCurves.Curve(c).IsNull())
                 break;
@@ -841,7 +828,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
             }
             break;
 
-            case 2: {
+            case 2:
+            {
               BinTools::GetInteger(IS, pc);
               BinTools::GetInteger(IS, s);
               if (myCurves2d.Curve2d(pc).IsNull() || mySurfaces.Surface(s).IsNull())
@@ -856,7 +844,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
             }
             break;
 
-            case 3: {
+            case 3:
+            {
               BinTools::GetReal(IS, p2);
               BinTools::GetInteger(IS, s);
               if (mySurfaces.Surface(s).IsNull())
@@ -868,7 +857,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
             }
             break;
 
-            default: {
+            default:
+            {
               Standard_SStream aMsg;
               aMsg << "BinTools_SurfaceSet::ReadGeometry: UnExpected BRep_PointRepresentation = "
                    << val << std::endl;
@@ -1085,7 +1075,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
                 }
                 // range
                 break;
-              default: {
+              default:
+              {
                 Standard_SStream aMsg;
                 aMsg << "Unexpected Curve Representation =" << val << std::endl;
                 throw Standard_Failure(aMsg.str().c_str());
@@ -1107,7 +1098,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
         // face
         //---------
 
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         // create a face :
         TopoDS_Face& F = TopoDS::Face(S);
         myBuilder.MakeFace(F);
@@ -1163,7 +1155,8 @@ void BinTools_ShapeSet::ReadShape(const TopAbs_ShapeEnum T, Standard_IStream& IS
         myBuilder.MakeCompound(TopoDS::Compound(S));
         break;
 
-      default: {
+      default:
+      {
         Standard_SStream aMsg;
         aMsg << "Unexpected topology type = " << T << std::endl;
         throw Standard_Failure(aMsg.str().c_str());

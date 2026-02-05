@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -167,4 +166,3 @@ public:
                                                const TDF_Label&    aLabel,
                                                const TDF_IDFilter& aFilter);
 };
-

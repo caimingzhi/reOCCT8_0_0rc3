@@ -30,181 +30,182 @@ IMPLEMENT_STANDARD_RTTIEXT(DEVRML_Provider, DE_Provider)
 
 namespace
 {
-// Helper function to validate configuration node and downcast
-static occ::handle<DEVRML_ConfigurationNode> ValidateConfigurationNode(
-  const occ::handle<DE_ConfigurationNode>& theNode,
-  const TCollection_AsciiString&           theContext)
-{
-  if (!DE_ValidationUtils::ValidateConfigurationNode(theNode,
-                                                     STANDARD_TYPE(DEVRML_ConfigurationNode),
-                                                     theContext))
+  // Helper function to validate configuration node and downcast
+  static occ::handle<DEVRML_ConfigurationNode> ValidateConfigurationNode(
+    const occ::handle<DE_ConfigurationNode>& theNode,
+    const TCollection_AsciiString&           theContext)
   {
-    return occ::handle<DEVRML_ConfigurationNode>();
-  }
-  return occ::down_cast<DEVRML_ConfigurationNode>(theNode);
-}
-
-// Static function to handle VrmlData_Scene status errors
-static bool HandleVrmlSceneStatus(const VrmlData_Scene&          theScene,
-                                  const TCollection_AsciiString& theContext)
-{
-  const char* aStr = nullptr;
-  switch (theScene.Status())
-  {
-    case VrmlData_StatusOK:
-      return true;
-    case VrmlData_EmptyData:
-      aStr = "EmptyData";
-      break;
-    case VrmlData_UnrecoverableError:
-      aStr = "UnrecoverableError";
-      break;
-    case VrmlData_GeneralError:
-      aStr = "GeneralError";
-      break;
-    case VrmlData_EndOfFile:
-      aStr = "EndOfFile";
-      break;
-    case VrmlData_NotVrmlFile:
-      aStr = "NotVrmlFile";
-      break;
-    case VrmlData_CannotOpenFile:
-      aStr = "CannotOpenFile";
-      break;
-    case VrmlData_VrmlFormatError:
-      aStr = "VrmlFormatError";
-      break;
-    case VrmlData_NumericInputError:
-      aStr = "NumericInputError";
-      break;
-    case VrmlData_IrrelevantNumber:
-      aStr = "IrrelevantNumber";
-      break;
-    case VrmlData_BooleanInputError:
-      aStr = "BooleanInputError";
-      break;
-    case VrmlData_StringInputError:
-      aStr = "StringInputError";
-      break;
-    case VrmlData_NodeNameUnknown:
-      aStr = "NodeNameUnknown";
-      break;
-    case VrmlData_NonPositiveSize:
-      aStr = "NonPositiveSize";
-      break;
-    case VrmlData_ReadUnknownNode:
-      aStr = "ReadUnknownNode";
-      break;
-    case VrmlData_NonSupportedFeature:
-      aStr = "NonSupportedFeature";
-      break;
-    case VrmlData_OutputStreamUndefined:
-      aStr = "OutputStreamUndefined";
-      break;
-    case VrmlData_NotImplemented:
-      aStr = "NotImplemented";
-      break;
-    default:
-      break;
-  }
-
-  if (aStr)
-  {
-    Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
-                        << ": ++ VRML Error: " << aStr << " in line " << theScene.GetLineError();
-    return false;
-  }
-  return true;
-}
-
-// Static function to calculate scaling factor
-static double CalculateScalingFactor(const occ::handle<TDocStd_Document>&         theDocument,
-                                     const occ::handle<DEVRML_ConfigurationNode>& theNode,
-                                     const TCollection_AsciiString&               theContext)
-{
-  double aScaling       = 1.;
-  double aScaleFactorMM = 1.;
-  if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
-                                          aScaleFactorMM,
-                                          UnitsMethods_LengthUnit_Millimeter))
-  {
-    aScaling = aScaleFactorMM / theNode->GlobalParameters.LengthUnit;
-  }
-  else
-  {
-    aScaling = theNode->GlobalParameters.SystemUnit / theNode->GlobalParameters.LengthUnit;
-    Message::SendWarning()
-      << "Warning in the DEVRML_Provider during " << theContext
-      << ": The document has no information on Units. Using global parameter as initial Unit.";
-  }
-  return aScaling;
-}
-
-// Static function to extract VRML directory path from file path
-static TCollection_AsciiString ExtractVrmlDirectory(const TCollection_AsciiString& thePath)
-{
-  OSD_Path                aPath(thePath.ToCString());
-  TCollection_AsciiString aVrmlDir(".");
-  TCollection_AsciiString aDisk = aPath.Disk();
-  TCollection_AsciiString aTrek = aPath.Trek();
-  if (!aTrek.IsEmpty())
-  {
-    if (!aDisk.IsEmpty())
+    if (!DE_ValidationUtils::ValidateConfigurationNode(theNode,
+                                                       STANDARD_TYPE(DEVRML_ConfigurationNode),
+                                                       theContext))
     {
-      aVrmlDir = aDisk;
+      return occ::handle<DEVRML_ConfigurationNode>();
+    }
+    return occ::down_cast<DEVRML_ConfigurationNode>(theNode);
+  }
+
+  // Static function to handle VrmlData_Scene status errors
+  static bool HandleVrmlSceneStatus(const VrmlData_Scene&          theScene,
+                                    const TCollection_AsciiString& theContext)
+  {
+    const char* aStr = nullptr;
+    switch (theScene.Status())
+    {
+      case VrmlData_StatusOK:
+        return true;
+      case VrmlData_EmptyData:
+        aStr = "EmptyData";
+        break;
+      case VrmlData_UnrecoverableError:
+        aStr = "UnrecoverableError";
+        break;
+      case VrmlData_GeneralError:
+        aStr = "GeneralError";
+        break;
+      case VrmlData_EndOfFile:
+        aStr = "EndOfFile";
+        break;
+      case VrmlData_NotVrmlFile:
+        aStr = "NotVrmlFile";
+        break;
+      case VrmlData_CannotOpenFile:
+        aStr = "CannotOpenFile";
+        break;
+      case VrmlData_VrmlFormatError:
+        aStr = "VrmlFormatError";
+        break;
+      case VrmlData_NumericInputError:
+        aStr = "NumericInputError";
+        break;
+      case VrmlData_IrrelevantNumber:
+        aStr = "IrrelevantNumber";
+        break;
+      case VrmlData_BooleanInputError:
+        aStr = "BooleanInputError";
+        break;
+      case VrmlData_StringInputError:
+        aStr = "StringInputError";
+        break;
+      case VrmlData_NodeNameUnknown:
+        aStr = "NodeNameUnknown";
+        break;
+      case VrmlData_NonPositiveSize:
+        aStr = "NonPositiveSize";
+        break;
+      case VrmlData_ReadUnknownNode:
+        aStr = "ReadUnknownNode";
+        break;
+      case VrmlData_NonSupportedFeature:
+        aStr = "NonSupportedFeature";
+        break;
+      case VrmlData_OutputStreamUndefined:
+        aStr = "OutputStreamUndefined";
+        break;
+      case VrmlData_NotImplemented:
+        aStr = "NotImplemented";
+        break;
+      default:
+        break;
+    }
+
+    if (aStr)
+    {
+      Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+                          << ": ++ VRML Error: " << aStr << " in line " << theScene.GetLineError();
+      return false;
+    }
+    return true;
+  }
+
+  // Static function to calculate scaling factor
+  static double CalculateScalingFactor(const occ::handle<TDocStd_Document>&         theDocument,
+                                       const occ::handle<DEVRML_ConfigurationNode>& theNode,
+                                       const TCollection_AsciiString&               theContext)
+  {
+    double aScaling       = 1.;
+    double aScaleFactorMM = 1.;
+    if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
+                                            aScaleFactorMM,
+                                            UnitsMethods_LengthUnit_Millimeter))
+    {
+      aScaling = aScaleFactorMM / theNode->GlobalParameters.LengthUnit;
     }
     else
     {
-      aVrmlDir.Clear();
+      aScaling = theNode->GlobalParameters.SystemUnit / theNode->GlobalParameters.LengthUnit;
+      Message::SendWarning()
+        << "Warning in the DEVRML_Provider during " << theContext
+        << ": The document has no information on Units. Using global parameter as initial Unit.";
     }
-    aTrek.ChangeAll('|', '/');
-    aVrmlDir += aTrek;
-  }
-  return aVrmlDir;
-}
-
-// Static function to process VRML scene from stream and extract shape
-static bool ProcessVrmlScene(Standard_IStream&                            theStream,
-                             const occ::handle<DEVRML_ConfigurationNode>& theNode,
-                             const TCollection_AsciiString&               theVrmlDir,
-                             TopoDS_Shape&                                theShape,
-                             const TCollection_AsciiString&               theContext)
-{
-  VrmlData_Scene aScene;
-  aScene.SetLinearScale(theNode->GlobalParameters.LengthUnit);
-  aScene.SetVrmlDir(theVrmlDir);
-
-  aScene << theStream;
-
-  if (!HandleVrmlSceneStatus(aScene, theContext))
-  {
-    return false;
+    return aScaling;
   }
 
-  if (aScene.Status() == VrmlData_StatusOK)
+  // Static function to extract VRML directory path from file path
+  static TCollection_AsciiString ExtractVrmlDirectory(const TCollection_AsciiString& thePath)
   {
-    NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>> aShapeAppMap;
-    TopoDS_Shape aShape = aScene.GetShape(aShapeAppMap);
-    theShape            = aShape;
-
-    // Verify that a valid shape was extracted
-    if (theShape.IsNull())
+    OSD_Path                aPath(thePath.ToCString());
+    TCollection_AsciiString aVrmlDir(".");
+    TCollection_AsciiString aDisk = aPath.Disk();
+    TCollection_AsciiString aTrek = aPath.Trek();
+    if (!aTrek.IsEmpty())
     {
-      Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
-                          << ": VRML scene processed successfully but no geometry was extracted";
+      if (!aDisk.IsEmpty())
+      {
+        aVrmlDir = aDisk;
+      }
+      else
+      {
+        aVrmlDir.Clear();
+      }
+      aTrek.ChangeAll('|', '/');
+      aVrmlDir += aTrek;
+    }
+    return aVrmlDir;
+  }
+
+  // Static function to process VRML scene from stream and extract shape
+  static bool ProcessVrmlScene(Standard_IStream&                            theStream,
+                               const occ::handle<DEVRML_ConfigurationNode>& theNode,
+                               const TCollection_AsciiString&               theVrmlDir,
+                               TopoDS_Shape&                                theShape,
+                               const TCollection_AsciiString&               theContext)
+  {
+    VrmlData_Scene aScene;
+    aScene.SetLinearScale(theNode->GlobalParameters.LengthUnit);
+    aScene.SetVrmlDir(theVrmlDir);
+
+    aScene << theStream;
+
+    if (!HandleVrmlSceneStatus(aScene, theContext))
+    {
       return false;
     }
-  }
-  else
-  {
-    // Scene status was not OK but HandleVrmlSceneStatus didn't catch it
-    Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
-                        << ": VRML scene status is not OK but no specific error was reported";
-    return false;
-  }
 
-  return true;
-}
+    if (aScene.Status() == VrmlData_StatusOK)
+    {
+      NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>
+                   aShapeAppMap;
+      TopoDS_Shape aShape = aScene.GetShape(aShapeAppMap);
+      theShape            = aShape;
+
+      // Verify that a valid shape was extracted
+      if (theShape.IsNull())
+      {
+        Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+                            << ": VRML scene processed successfully but no geometry was extracted";
+        return false;
+      }
+    }
+    else
+    {
+      // Scene status was not OK but HandleVrmlSceneStatus didn't catch it
+      Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+                          << ": VRML scene status is not OK but no specific error was reported";
+      return false;
+    }
+
+    return true;
+  }
 } // namespace
 
 //=================================================================================================

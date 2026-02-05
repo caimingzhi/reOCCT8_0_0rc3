@@ -23,22 +23,22 @@
 
 namespace
 {
-static int         THE_Interface_Category_init = 0;
-static const char* unspec                      = "unspecified";
+  static int         THE_Interface_Category_init = 0;
+  static const char* unspec                      = "unspecified";
 
-static volatile bool gMapTypesInit = false;
+  static volatile bool gMapTypesInit = false;
 
-static NCollection_Vector<TCollection_AsciiString>& theCats()
-{
-  static NCollection_Vector<TCollection_AsciiString> aCat;
-  return aCat;
-}
+  static NCollection_Vector<TCollection_AsciiString>& theCats()
+  {
+    static NCollection_Vector<TCollection_AsciiString> aCat;
+    return aCat;
+  }
 
-static std::mutex& GetMapTypesMutex()
-{
-  static std::mutex gMapTypesMutex;
-  return gMapTypesMutex;
-}
+  static std::mutex& GetMapTypesMutex()
+  {
+    static std::mutex gMapTypesMutex;
+    return gMapTypesMutex;
+  }
 
 } // namespace
 

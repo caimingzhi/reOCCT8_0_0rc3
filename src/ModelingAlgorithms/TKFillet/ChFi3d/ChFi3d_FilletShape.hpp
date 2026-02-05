@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Lists the types of fillet shapes. These include the following:
 //! -   ChFi3d_Rational (default value), which is the
 //! standard NURBS representation of circles,
@@ -16,4 +15,3 @@ enum ChFi3d_FilletShape
   ChFi3d_QuasiAngular,
   ChFi3d_Polynomial
 };
-

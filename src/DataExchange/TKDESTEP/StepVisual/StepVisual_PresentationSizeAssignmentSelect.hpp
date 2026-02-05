@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -36,4 +35,3 @@ public:
   //! returns Value as a AreaInSet (Null if another type)
   Standard_EXPORT occ::handle<StepVisual_AreaInSet> AreaInSet() const;
 };
-

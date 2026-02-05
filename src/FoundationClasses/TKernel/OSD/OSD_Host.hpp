@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -8,6 +7,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_Error.hpp>
 #include <OSD_SysType.hpp>
+
 // Copyright (c) 1992-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -21,7 +21,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! This is set of possible machine types
 //! used in OSD_Host::MachineType
@@ -40,8 +39,6 @@ enum OSD_OEMType
   OSD_LIN,
   OSD_AIX
 };
-
-
 
 //! Carries information about a Host
 //! System version ,host name, nodename ...
@@ -87,4 +84,3 @@ private:
   TCollection_AsciiString myName;
   OSD_Error               myError;
 };
-

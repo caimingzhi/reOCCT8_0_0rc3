@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <GeomAbs_SurfaceType.hpp>
 #include <IMeshTools_MeshAlgo.hpp>
@@ -26,4 +25,3 @@ protected:
   //! Constructor.
   IMeshTools_MeshAlgoFactory() {}
 };
-

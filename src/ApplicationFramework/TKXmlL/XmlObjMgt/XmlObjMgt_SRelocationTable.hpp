@@ -25,4 +25,3 @@ public:
 private:
   occ::handle<Storage_HeaderData> myHeaderData;
 };
-

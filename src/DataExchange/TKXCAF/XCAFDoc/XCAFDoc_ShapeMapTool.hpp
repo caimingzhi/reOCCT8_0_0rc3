@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopTools_ShapeMapHasher.hpp>
@@ -52,4 +51,3 @@ public:
 private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myMap;
 };
-

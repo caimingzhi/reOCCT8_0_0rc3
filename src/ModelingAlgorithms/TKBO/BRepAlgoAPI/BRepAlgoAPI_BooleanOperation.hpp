@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -90,4 +89,3 @@ protected:                                    //! @name Fields
   NCollection_List<TopoDS_Shape> myTools;     //!< Tool arguments of operation
   BOPAlgo_Operation              myOperation; //!< Type of Boolean Operation
 };
-

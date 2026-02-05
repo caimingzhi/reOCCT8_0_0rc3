@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Color.hpp>
 #include <DrawTrSurf_Drawable.hpp>
 #include <Draw_Interpretor.hpp>
@@ -69,4 +68,3 @@ protected:
   double                    radiusmax;
   double                    radiusratio;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 #include <AdvApp2Var_Data_f2c.hpp>
 
@@ -128,4 +127,3 @@ private:
     integer nrqst[2], ndelt[2], nbyte[2], mbyte[2];
   } mcrstac_;
 };
-

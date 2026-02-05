@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <Aspect_Grid.hpp>
 
@@ -52,4 +51,3 @@ private:
   double myA1;
   double myB1;
 };
-

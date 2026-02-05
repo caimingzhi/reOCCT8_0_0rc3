@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_OBB.hpp>
 #include <Graphic3d_ArrayOfSegments.hpp>
 #include <Graphic3d_ArrayOfTriangles.hpp>
@@ -127,4 +126,3 @@ public:
     theSegments->AddEdges(aFrom + 4, aFrom + 8);
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMDF_ADriver.hpp>
 
 class XmlTObjDrivers_ObjectDriver : public XmlMDF_ADriver
@@ -39,5 +38,5 @@ public:
 // Define handle class
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

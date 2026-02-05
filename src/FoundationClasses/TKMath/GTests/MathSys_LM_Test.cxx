@@ -23,290 +23,290 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-6;
-constexpr double THE_LOOSE_TOL = 1.0e-3;
+  constexpr double THE_TOLERANCE = 1.0e-6;
+  constexpr double THE_LOOSE_TOL = 1.0e-3;
 
-// ============================================================================
-// Test function classes for new API
-// ============================================================================
+  // ============================================================================
+  // Test function classes for new API
+  // ============================================================================
 
-//! Simple linear system: F(x) = A*x - b
-//! System: x1 + x2 = 3, x1 - x2 = 1
-//! Solution: x1 = 2, x2 = 1
-struct LinearSystem2D
-{
-  int NbVariables() const { return 2; }
-
-  int NbEquations() const { return 2; }
-
-  bool Value(const math_Vector& theX, math_Vector& theF)
+  //! Simple linear system: F(x) = A*x - b
+  //! System: x1 + x2 = 3, x1 - x2 = 1
+  //! Solution: x1 = 2, x2 = 1
+  struct LinearSystem2D
   {
-    theF(1) = theX(1) + theX(2) - 3.0;
-    theF(2) = theX(1) - theX(2) - 1.0;
-    return true;
-  }
+    int NbVariables() const { return 2; }
 
-  bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
-  {
-    theD(1, 1) = 1.0;
-    theD(1, 2) = 1.0;
-    theD(2, 1) = 1.0;
-    theD(2, 2) = -1.0;
-    return true;
-  }
+    int NbEquations() const { return 2; }
 
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
-  {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
-
-//! Nonlinear system:
-//! F1(x,y) = x^2 + y^2 - 4
-//! F2(x,y) = x*y - 1
-//! Solution near (1.93, 0.52) for starting point (1,1)
-struct CircleHyperbola
-{
-  int NbVariables() const { return 2; }
-
-  int NbEquations() const { return 2; }
-
-  bool Value(const math_Vector& theX, math_Vector& theF)
-  {
-    theF(1) = theX(1) * theX(1) + theX(2) * theX(2) - 4.0;
-    theF(2) = theX(1) * theX(2) - 1.0;
-    return true;
-  }
-
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD)
-  {
-    theD(1, 1) = 2.0 * theX(1);
-    theD(1, 2) = 2.0 * theX(2);
-    theD(2, 1) = theX(2);
-    theD(2, 2) = theX(1);
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
-  {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
-
-//! Rosenbrock function in residual form for least squares
-//! F1(x,y) = 10*(y - x^2)
-//! F2(x,y) = 1 - x
-//! Minimum at (1,1) with F = (0,0)
-struct RosenbrockResidual
-{
-  int NbVariables() const { return 2; }
-
-  int NbEquations() const { return 2; }
-
-  bool Value(const math_Vector& theX, math_Vector& theF)
-  {
-    theF(1) = 10.0 * (theX(2) - theX(1) * theX(1));
-    theF(2) = 1.0 - theX(1);
-    return true;
-  }
-
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD)
-  {
-    theD(1, 1) = -20.0 * theX(1);
-    theD(1, 2) = 10.0;
-    theD(2, 1) = -1.0;
-    theD(2, 2) = 0.0;
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
-  {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
-
-//! Powell singular function (4D)
-//! F1 = x1 + 10*x2
-//! F2 = sqrt(5)*(x3 - x4)
-//! F3 = (x2 - 2*x3)^2
-//! F4 = sqrt(10)*(x1 - x4)^2
-//! Minimum at origin with F = 0
-struct PowellSingular
-{
-  int NbVariables() const { return 4; }
-
-  int NbEquations() const { return 4; }
-
-  bool Value(const math_Vector& theX, math_Vector& theF)
-  {
-    theF(1) = theX(1) + 10.0 * theX(2);
-    theF(2) = std::sqrt(5.0) * (theX(3) - theX(4));
-    theF(3) = (theX(2) - 2.0 * theX(3)) * (theX(2) - 2.0 * theX(3));
-    theF(4) = std::sqrt(10.0) * (theX(1) - theX(4)) * (theX(1) - theX(4));
-    return true;
-  }
-
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD)
-  {
-    theD.Init(0.0);
-    // F1 = x1 + 10*x2
-    theD(1, 1) = 1.0;
-    theD(1, 2) = 10.0;
-    // F2 = sqrt(5)*(x3 - x4)
-    theD(2, 3) = std::sqrt(5.0);
-    theD(2, 4) = -std::sqrt(5.0);
-    // F3 = (x2 - 2*x3)^2
-    const double aT1 = theX(2) - 2.0 * theX(3);
-    theD(3, 2)       = 2.0 * aT1;
-    theD(3, 3)       = -4.0 * aT1;
-    // F4 = sqrt(10)*(x1 - x4)^2
-    const double aT2 = theX(1) - theX(4);
-    theD(4, 1)       = 2.0 * std::sqrt(10.0) * aT2;
-    theD(4, 4)       = -2.0 * std::sqrt(10.0) * aT2;
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
-  {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
-
-//! Exponential fitting problem
-//! Data: (t_i, y_i), Model: f(t) = x1 * exp(x2 * t)
-//! Residuals: F_i = y_i - x1 * exp(x2 * t_i)
-struct ExponentialFit
-{
-  double myT[5] = {0.0, 1.0, 2.0, 3.0, 4.0};
-  double myY[5] = {1.0, 2.7, 7.4, 20.1, 54.6}; // Approx e^t
-
-  int NbVariables() const { return 2; }
-
-  int NbEquations() const { return 5; }
-
-  bool Value(const math_Vector& theX, math_Vector& theF)
-  {
-    for (int i = 0; i < 5; ++i)
+    bool Value(const math_Vector& theX, math_Vector& theF)
     {
-      theF(i + 1) = myY[i] - theX(1) * std::exp(theX(2) * myT[i]);
+      theF(1) = theX(1) + theX(2) - 3.0;
+      theF(2) = theX(1) - theX(2) - 1.0;
+      return true;
     }
-    return true;
-  }
 
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD)
-  {
-    for (int i = 0; i < 5; ++i)
+    bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
     {
-      const double aExp = std::exp(theX(2) * myT[i]);
-      theD(i + 1, 1)    = -aExp;
-      theD(i + 1, 2)    = -theX(1) * myT[i] * aExp;
+      theD(1, 1) = 1.0;
+      theD(1, 2) = 1.0;
+      theD(2, 1) = 1.0;
+      theD(2, 2) = -1.0;
+      return true;
     }
-    return true;
-  }
 
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  //! Nonlinear system:
+  //! F1(x,y) = x^2 + y^2 - 4
+  //! F2(x,y) = x*y - 1
+  //! Solution near (1.93, 0.52) for starting point (1,1)
+  struct CircleHyperbola
   {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
+    int NbVariables() const { return 2; }
 
-//! Overdetermined system (more equations than variables)
-//! F1 = x1 + x2 - 2
-//! F2 = x1 - x2 - 0
-//! F3 = 2*x1 + x2 - 3
-//! Least squares solution: x1 = 1, x2 = 1
-struct OverdeterminedSystem
-{
-  int NbVariables() const { return 2; }
+    int NbEquations() const { return 2; }
 
-  int NbEquations() const { return 3; }
+    bool Value(const math_Vector& theX, math_Vector& theF)
+    {
+      theF(1) = theX(1) * theX(1) + theX(2) * theX(2) - 4.0;
+      theF(2) = theX(1) * theX(2) - 1.0;
+      return true;
+    }
 
-  bool Value(const math_Vector& theX, math_Vector& theF)
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD)
+    {
+      theD(1, 1) = 2.0 * theX(1);
+      theD(1, 2) = 2.0 * theX(2);
+      theD(2, 1) = theX(2);
+      theD(2, 2) = theX(1);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  //! Rosenbrock function in residual form for least squares
+  //! F1(x,y) = 10*(y - x^2)
+  //! F2(x,y) = 1 - x
+  //! Minimum at (1,1) with F = (0,0)
+  struct RosenbrockResidual
   {
-    theF(1) = theX(1) + theX(2) - 2.0;
-    theF(2) = theX(1) - theX(2);
-    theF(3) = 2.0 * theX(1) + theX(2) - 3.0;
-    return true;
-  }
+    int NbVariables() const { return 2; }
 
-  bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
+    int NbEquations() const { return 2; }
+
+    bool Value(const math_Vector& theX, math_Vector& theF)
+    {
+      theF(1) = 10.0 * (theX(2) - theX(1) * theX(1));
+      theF(2) = 1.0 - theX(1);
+      return true;
+    }
+
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD)
+    {
+      theD(1, 1) = -20.0 * theX(1);
+      theD(1, 2) = 10.0;
+      theD(2, 1) = -1.0;
+      theD(2, 2) = 0.0;
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  //! Powell singular function (4D)
+  //! F1 = x1 + 10*x2
+  //! F2 = sqrt(5)*(x3 - x4)
+  //! F3 = (x2 - 2*x3)^2
+  //! F4 = sqrt(10)*(x1 - x4)^2
+  //! Minimum at origin with F = 0
+  struct PowellSingular
   {
-    theD(1, 1) = 1.0;
-    theD(1, 2) = 1.0;
-    theD(2, 1) = 1.0;
-    theD(2, 2) = -1.0;
-    theD(3, 1) = 2.0;
-    theD(3, 2) = 1.0;
-    return true;
-  }
+    int NbVariables() const { return 4; }
 
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    int NbEquations() const { return 4; }
+
+    bool Value(const math_Vector& theX, math_Vector& theF)
+    {
+      theF(1) = theX(1) + 10.0 * theX(2);
+      theF(2) = std::sqrt(5.0) * (theX(3) - theX(4));
+      theF(3) = (theX(2) - 2.0 * theX(3)) * (theX(2) - 2.0 * theX(3));
+      theF(4) = std::sqrt(10.0) * (theX(1) - theX(4)) * (theX(1) - theX(4));
+      return true;
+    }
+
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD)
+    {
+      theD.Init(0.0);
+      // F1 = x1 + 10*x2
+      theD(1, 1) = 1.0;
+      theD(1, 2) = 10.0;
+      // F2 = sqrt(5)*(x3 - x4)
+      theD(2, 3) = std::sqrt(5.0);
+      theD(2, 4) = -std::sqrt(5.0);
+      // F3 = (x2 - 2*x3)^2
+      const double aT1 = theX(2) - 2.0 * theX(3);
+      theD(3, 2)       = 2.0 * aT1;
+      theD(3, 3)       = -4.0 * aT1;
+      // F4 = sqrt(10)*(x1 - x4)^2
+      const double aT2 = theX(1) - theX(4);
+      theD(4, 1)       = 2.0 * std::sqrt(10.0) * aT2;
+      theD(4, 4)       = -2.0 * std::sqrt(10.0) * aT2;
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  //! Exponential fitting problem
+  //! Data: (t_i, y_i), Model: f(t) = x1 * exp(x2 * t)
+  //! Residuals: F_i = y_i - x1 * exp(x2 * t_i)
+  struct ExponentialFit
   {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
+    double myT[5] = {0.0, 1.0, 2.0, 3.0, 4.0};
+    double myY[5] = {1.0, 2.7, 7.4, 20.1, 54.6}; // Approx e^t
 
-// ============================================================================
-// Old API adapters for comparison
-// ============================================================================
+    int NbVariables() const { return 2; }
 
-class CircleHyperbolaOld : public math_FunctionSetWithDerivatives
-{
-public:
-  int NbVariables() const override { return 2; }
+    int NbEquations() const { return 5; }
 
-  int NbEquations() const override { return 2; }
+    bool Value(const math_Vector& theX, math_Vector& theF)
+    {
+      for (int i = 0; i < 5; ++i)
+      {
+        theF(i + 1) = myY[i] - theX(1) * std::exp(theX(2) * myT[i]);
+      }
+      return true;
+    }
 
-  bool Value(const math_Vector& theX, math_Vector& theF) override
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD)
+    {
+      for (int i = 0; i < 5; ++i)
+      {
+        const double aExp = std::exp(theX(2) * myT[i]);
+        theD(i + 1, 1)    = -aExp;
+        theD(i + 1, 2)    = -theX(1) * myT[i] * aExp;
+      }
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  //! Overdetermined system (more equations than variables)
+  //! F1 = x1 + x2 - 2
+  //! F2 = x1 - x2 - 0
+  //! F3 = 2*x1 + x2 - 3
+  //! Least squares solution: x1 = 1, x2 = 1
+  struct OverdeterminedSystem
   {
-    theF(1) = theX(1) * theX(1) + theX(2) * theX(2) - 4.0;
-    theF(2) = theX(1) * theX(2) - 1.0;
-    return true;
-  }
+    int NbVariables() const { return 2; }
 
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD) override
+    int NbEquations() const { return 3; }
+
+    bool Value(const math_Vector& theX, math_Vector& theF)
+    {
+      theF(1) = theX(1) + theX(2) - 2.0;
+      theF(2) = theX(1) - theX(2);
+      theF(3) = 2.0 * theX(1) + theX(2) - 3.0;
+      return true;
+    }
+
+    bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
+    {
+      theD(1, 1) = 1.0;
+      theD(1, 2) = 1.0;
+      theD(2, 1) = 1.0;
+      theD(2, 2) = -1.0;
+      theD(3, 1) = 2.0;
+      theD(3, 2) = 1.0;
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD)
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  // ============================================================================
+  // Old API adapters for comparison
+  // ============================================================================
+
+  class CircleHyperbolaOld : public math_FunctionSetWithDerivatives
   {
-    theD(1, 1) = 2.0 * theX(1);
-    theD(1, 2) = 2.0 * theX(2);
-    theD(2, 1) = theX(2);
-    theD(2, 2) = theX(1);
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD) override
+    int NbEquations() const override { return 2; }
+
+    bool Value(const math_Vector& theX, math_Vector& theF) override
+    {
+      theF(1) = theX(1) * theX(1) + theX(2) * theX(2) - 4.0;
+      theF(2) = theX(1) * theX(2) - 1.0;
+      return true;
+    }
+
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD) override
+    {
+      theD(1, 1) = 2.0 * theX(1);
+      theD(1, 2) = 2.0 * theX(2);
+      theD(2, 1) = theX(2);
+      theD(2, 2) = theX(1);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD) override
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
+
+  class RosenbrockResidualOld : public math_FunctionSetWithDerivatives
   {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-class RosenbrockResidualOld : public math_FunctionSetWithDerivatives
-{
-public:
-  int NbVariables() const override { return 2; }
+    int NbEquations() const override { return 2; }
 
-  int NbEquations() const override { return 2; }
+    bool Value(const math_Vector& theX, math_Vector& theF) override
+    {
+      theF(1) = 10.0 * (theX(2) - theX(1) * theX(1));
+      theF(2) = 1.0 - theX(1);
+      return true;
+    }
 
-  bool Value(const math_Vector& theX, math_Vector& theF) override
-  {
-    theF(1) = 10.0 * (theX(2) - theX(1) * theX(1));
-    theF(2) = 1.0 - theX(1);
-    return true;
-  }
+    bool Derivatives(const math_Vector& theX, math_Matrix& theD) override
+    {
+      theD(1, 1) = -20.0 * theX(1);
+      theD(1, 2) = 10.0;
+      theD(2, 1) = -1.0;
+      theD(2, 2) = 0.0;
+      return true;
+    }
 
-  bool Derivatives(const math_Vector& theX, math_Matrix& theD) override
-  {
-    theD(1, 1) = -20.0 * theX(1);
-    theD(1, 2) = 10.0;
-    theD(2, 1) = -1.0;
-    theD(2, 2) = 0.0;
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD) override
-  {
-    return Value(theX, theF) && Derivatives(theX, theD);
-  }
-};
+    bool Values(const math_Vector& theX, math_Vector& theF, math_Matrix& theD) override
+    {
+      return Value(theX, theF) && Derivatives(theX, theD);
+    }
+  };
 
 } // namespace
 

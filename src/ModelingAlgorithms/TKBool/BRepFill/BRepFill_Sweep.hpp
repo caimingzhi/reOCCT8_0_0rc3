@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -171,4 +170,3 @@ private:
   TopoDS_Wire                                                              FirstShape;
   TopoDS_Wire                                                              LastShape;
 };
-

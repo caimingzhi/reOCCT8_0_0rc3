@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_ArrayVec3d.hpp>
 
 /**

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Geom2d_BSplineCurve.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -37,4 +36,3 @@ private:
   double                           myMaxError2dU;
   double                           myMaxError2dV;
 };
-

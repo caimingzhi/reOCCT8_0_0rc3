@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DBRep_Edge.hpp>
 #include <NCollection_List.hpp>
 #include <DBRep_Face.hpp>
@@ -178,4 +177,3 @@ private:
   bool       myHid;
   double     myAng;
 };
-

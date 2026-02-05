@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Node.hpp>
 
 class LDOM_BasicNode;
@@ -50,4 +49,3 @@ private:
   occ::handle<LDOM_MemManager> myDoc;
   LDOM_BasicNodeSequence*      mySeq;
 };
-

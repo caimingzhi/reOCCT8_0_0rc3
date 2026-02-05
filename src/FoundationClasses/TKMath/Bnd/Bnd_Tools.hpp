@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box2d.hpp>
 #include <Bnd_Box.hpp>
 #include <BVH_Box.hpp>
@@ -25,4 +24,3 @@ public: //! @name Bnd_Box to BVH_Box conversion
     return BVH_Box<double, 3>(BVH_Vec3d(aXMin, aYMin, aZMin), BVH_Vec3d(aXMax, aYMax, aZMax));
   }
 };
-

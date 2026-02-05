@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedItem.hpp>
@@ -55,4 +54,3 @@ private:
   StepVisual_PathOrCompositeCurve myGeometricModelLink;    //!< optional
   bool                            myHasGeometricModelLink; //!< flag "is GeometricModelLink defined"
 };
-

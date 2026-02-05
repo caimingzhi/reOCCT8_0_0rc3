@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Interface_ReaderModule.hpp>
@@ -101,4 +100,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepData_ReadWriteModule, Interface_ReaderModule)
 };
-

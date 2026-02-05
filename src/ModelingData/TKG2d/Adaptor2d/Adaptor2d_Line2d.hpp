@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -122,4 +121,3 @@ private:
   double  myUlast;
   gp_Ax2d myAx2d;
 };
-

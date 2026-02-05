@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -118,4 +117,3 @@ private:
   DESTEP_Parameters::WriteMode_StepSchema              mySchema;
   TCollection_AsciiString                              myProductName;
 };
-

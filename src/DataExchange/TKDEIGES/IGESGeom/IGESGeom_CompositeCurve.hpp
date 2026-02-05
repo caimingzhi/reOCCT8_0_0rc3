@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_IGESEntity.hpp>
@@ -37,4 +36,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> theEntities;
 };
-

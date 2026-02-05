@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Quaternion.hpp>
 
 //! Perform Spherical Linear Interpolation of the quaternions,
@@ -71,4 +70,3 @@ private:
   gp_Quaternion myQEnd;
   double        myOmega;
 };
-

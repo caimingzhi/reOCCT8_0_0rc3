@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_Object.hpp>
 
 #include <TDF_Label.hpp>
@@ -83,5 +82,5 @@ public:
 //! Define handle class for TObj_LabelIterator
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

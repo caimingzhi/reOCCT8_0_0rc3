@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard.hpp>
 #include <Standard_Macro.hpp>
@@ -45,4 +44,3 @@ public:
 private:
   Standard_EXPORT static const occ::handle<WNT_WClass>& WClass();
 };
-

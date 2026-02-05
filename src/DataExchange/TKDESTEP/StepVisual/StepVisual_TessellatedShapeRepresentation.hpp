@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepShape_ShapeRepresentation.hpp>
@@ -15,4 +14,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_TessellatedShapeRepresentation, StepShape_ShapeRepresentation)
 };
-

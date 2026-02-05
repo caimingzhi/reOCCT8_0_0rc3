@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <D3DHost_FrameBuffer.hpp>
 #include <OpenGl_View.hpp>
 #include <OpenGl_Workspace.hpp>
@@ -99,4 +98,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(D3DHost_View, OpenGl_View)
 };
-

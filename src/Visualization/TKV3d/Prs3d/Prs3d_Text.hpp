@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Drawer.hpp>
 #include <Prs3d_Presentation.hpp>
 #include <Prs3d_TextAspect.hpp>
@@ -40,4 +39,3 @@ public:
     const gp_Ax2&                        theOrientation,
     const bool                           theHasOwnAnchor = true);
 };
-

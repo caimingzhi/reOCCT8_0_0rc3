@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 
 #include <gp_Circ.hpp>
@@ -20,6 +19,7 @@ public:
   //! owner theOwnerId, the circle theCircle, the boolean
   //! theIsFilled and the number of points theNbPnts.
   Standard_DEPRECATED("Deprecated constructor, theNbPnts parameter will be ignored")
+
   Select3D_SensitiveCircle(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                            const gp_Circ&                            theCircle,
                            const bool                                theIsFilled,
@@ -63,4 +63,3 @@ private:
   gp_Trsf                    myTrsf;     //!< Circle transformation to apply
   double                     myRadius;   //!< Circle radius
 };
-

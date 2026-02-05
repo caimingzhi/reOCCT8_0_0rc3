@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -204,4 +203,3 @@ public:
                                NCollection_Array1<gp_Pnt2d>& Poles2d,
                                NCollection_Array1<double>&   Weigths) override = 0;
 };
-

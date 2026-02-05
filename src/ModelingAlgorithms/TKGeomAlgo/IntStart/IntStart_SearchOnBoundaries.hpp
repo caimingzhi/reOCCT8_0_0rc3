@@ -367,35 +367,43 @@ static void BoundedArc(const TheArc&                    A,
       occ::handle<Geom_Curve> CurveConS;
       switch (TypeConS)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_Line:
+        {
           CurveConS = new Geom_Line(ConS.Line());
           break;
         }
-        case GeomAbs_Circle: {
+        case GeomAbs_Circle:
+        {
           CurveConS = new Geom_Circle(ConS.Circle());
           break;
         }
-        case GeomAbs_Ellipse: {
+        case GeomAbs_Ellipse:
+        {
           CurveConS = new Geom_Ellipse(ConS.Ellipse());
           break;
         }
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_Hyperbola:
+        {
           CurveConS = new Geom_Hyperbola(ConS.Hyperbola());
           break;
         }
-        case GeomAbs_Parabola: {
+        case GeomAbs_Parabola:
+        {
           CurveConS = new Geom_Parabola(ConS.Parabola());
           break;
         }
-        case GeomAbs_BezierCurve: {
+        case GeomAbs_BezierCurve:
+        {
           CurveConS = ConS.Bezier();
           break;
         }
-        case GeomAbs_BSplineCurve: {
+        case GeomAbs_BSplineCurve:
+        {
           CurveConS = ConS.BSpline();
           break;
         }
-        default: {
+        default:
+        {
           double MaxDeviation, AverageDeviation;
           GeomLib::BuildCurve3d(1.e-5,
                                 ConS,
@@ -412,23 +420,28 @@ static void BoundedArc(const TheArc&                    A,
       occ::handle<Geom_Surface>             QuadSurf;
       switch (TypeQuad)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           QuadSurf = new Geom_Plane(aQuadric.Plane());
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           QuadSurf = new Geom_CylindricalSurface(aQuadric.Cylinder());
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           QuadSurf = new Geom_ConicalSurface(aQuadric.Cone());
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           QuadSurf = new Geom_SphericalSurface(aQuadric.Sphere());
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           QuadSurf = new Geom_ToroidalSurface(aQuadric.Torus());
           break;
         }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Quaternion.hpp>
 
 //! Class perform linear interpolation (approximate rotation interpolation),
@@ -62,4 +61,3 @@ private:
   gp_Quaternion myQStart;
   gp_Quaternion myQEnd;
 };
-

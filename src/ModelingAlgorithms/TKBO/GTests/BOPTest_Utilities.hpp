@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gtest/gtest.h>
 
 #include <BOPAlgo_BOP.hpp>
@@ -963,4 +962,3 @@ protected:
   double                              myFuzzyValue;
   std::unique_ptr<BOPAlgo_PaveFiller> myPaveFiller;
 };
-

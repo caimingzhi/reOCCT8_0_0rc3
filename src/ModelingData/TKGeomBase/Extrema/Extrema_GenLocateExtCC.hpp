@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -125,4 +124,3 @@ private:
   ThePOnC myPoint1;
   ThePOnC myPoint2;
 };
-

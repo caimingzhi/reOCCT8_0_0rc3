@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <AIS_KindOfInteractive.hpp>
 #include <TopoDS_Shape.hpp>
@@ -124,4 +123,3 @@ protected:
   occ::handle<AIS_InteractiveObject> myReference;
   TopoDS_Shape                       myShape;
 };
-

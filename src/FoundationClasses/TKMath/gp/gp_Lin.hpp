@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax2.hpp>
 #include <gp_Dir.hpp>
@@ -228,4 +227,3 @@ inline gp_Lin gp_Lin::Normal(const gp_Pnt& theP) const
   aV = pos.Direction().CrossCrossed(aV, pos.Direction());
   return gp_Lin(theP, aV);
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapeProcess.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -162,4 +161,3 @@ private:
 private:
   occ::handle<XSControl_WorkSession> thesession;
 };
-

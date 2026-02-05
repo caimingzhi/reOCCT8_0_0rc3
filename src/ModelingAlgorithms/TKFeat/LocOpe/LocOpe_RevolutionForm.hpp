@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -53,4 +52,3 @@ private:
   gp_Pnt                                                                                     myPnt1;
   gp_Pnt                                                                                     myPnt2;
 };
-

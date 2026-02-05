@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -160,4 +159,3 @@ private:
   math_Vector                 XInit;
   math_Vector                 Sol;
 };
-

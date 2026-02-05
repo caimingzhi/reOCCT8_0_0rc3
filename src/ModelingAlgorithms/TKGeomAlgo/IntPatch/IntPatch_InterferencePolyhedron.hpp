@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -72,4 +71,3 @@ private:
   gp_XYZ vtt[3];
   double Incidence;
 };
-

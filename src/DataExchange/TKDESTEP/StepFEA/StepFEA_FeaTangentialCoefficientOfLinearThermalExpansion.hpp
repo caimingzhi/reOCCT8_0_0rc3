@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_SymmetricTensor23d.hpp>
@@ -32,4 +31,3 @@ public:
 private:
   StepFEA_SymmetricTensor23d theFeaConstants;
 };
-

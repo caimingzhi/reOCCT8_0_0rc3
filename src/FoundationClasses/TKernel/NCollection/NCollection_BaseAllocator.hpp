@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineHandle.hpp>
 #include <Standard_Transient.hpp>
 

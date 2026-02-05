@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_CompressedFormat.hpp>
 #include <NCollection_Array1.hpp>
 #include <Standard_Type.hpp>
@@ -45,4 +44,3 @@ protected:
   bool   myHasCompressed; //!< flag indicating that some compressed image formats are supported
   // clang-format on
 };
-

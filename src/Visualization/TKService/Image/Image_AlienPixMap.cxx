@@ -1,18 +1,3 @@
-// Created on: 2010-09-16
-// Created by: KGV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #if !defined(HAVE_FREEIMAGE) && defined(_WIN32)
   #define HAVE_WINCODEC
 #endif
@@ -56,390 +41,394 @@ IMPLEMENT_STANDARD_RTTIEXT(Image_AlienPixMap, Image_PixMap)
 namespace
 {
 #ifdef HAVE_FREEIMAGE
-static Image_Format convertFromFreeFormat(FREE_IMAGE_TYPE       theFormatFI,
-                                          FREE_IMAGE_COLOR_TYPE theColorTypeFI,
-                                          unsigned              theBitsPerPixel)
-{
-  switch (theFormatFI)
+  static Image_Format convertFromFreeFormat(FREE_IMAGE_TYPE       theFormatFI,
+                                            FREE_IMAGE_COLOR_TYPE theColorTypeFI,
+                                            unsigned              theBitsPerPixel)
   {
-    case FIT_RGBF:
-      return Image_Format_RGBF;
-    case FIT_RGBAF:
-      return Image_Format_RGBAF;
-    case FIT_FLOAT:
-      return Image_Format_GrayF;
-    case FIT_INT16:
-    case FIT_UINT16:
-      return Image_Format_Gray16;
-    case FIT_BITMAP: {
-      switch (theColorTypeFI)
+    switch (theFormatFI)
+    {
+      case FIT_RGBF:
+        return Image_Format_RGBF;
+      case FIT_RGBAF:
+        return Image_Format_RGBAF;
+      case FIT_FLOAT:
+        return Image_Format_GrayF;
+      case FIT_INT16:
+      case FIT_UINT16:
+        return Image_Format_Gray16;
+      case FIT_BITMAP:
       {
-        case FIC_MINISBLACK: {
-          return Image_Format_Gray;
-        }
-        case FIC_RGB: {
-          if (Image_PixMap::IsBigEndianHost())
+        switch (theColorTypeFI)
+        {
+          case FIC_MINISBLACK:
           {
-            return (theBitsPerPixel == 32) ? Image_Format_RGB32 : Image_Format_RGB;
+            return Image_Format_Gray;
           }
-          else
+          case FIC_RGB:
           {
-            return (theBitsPerPixel == 32) ? Image_Format_BGR32 : Image_Format_BGR;
+            if (Image_PixMap::IsBigEndianHost())
+            {
+              return (theBitsPerPixel == 32) ? Image_Format_RGB32 : Image_Format_RGB;
+            }
+            else
+            {
+              return (theBitsPerPixel == 32) ? Image_Format_BGR32 : Image_Format_BGR;
+            }
           }
+          case FIC_RGBALPHA:
+          {
+            return Image_PixMap::IsBigEndianHost() ? Image_Format_RGBA : Image_Format_BGRA;
+          }
+          default:
+            return Image_Format_UNKNOWN;
         }
-        case FIC_RGBALPHA: {
-          return Image_PixMap::IsBigEndianHost() ? Image_Format_RGBA : Image_Format_BGRA;
-        }
-        default:
-          return Image_Format_UNKNOWN;
       }
+      default:
+        return Image_Format_UNKNOWN;
     }
-    default:
-      return Image_Format_UNKNOWN;
-  }
-}
-
-static FREE_IMAGE_TYPE convertToFreeFormat(Image_Format theFormat)
-{
-  switch (theFormat)
-  {
-    case Image_Format_GrayF:
-    case Image_Format_AlphaF:
-      return FIT_FLOAT;
-    case Image_Format_RGBAF:
-      return FIT_RGBAF;
-    case Image_Format_RGBF:
-      return FIT_RGBF;
-    case Image_Format_RGBA:
-    case Image_Format_BGRA:
-    case Image_Format_RGB32:
-    case Image_Format_BGR32:
-    case Image_Format_RGB:
-    case Image_Format_BGR:
-    case Image_Format_Gray:
-    case Image_Format_Alpha:
-      return FIT_BITMAP;
-    case Image_Format_Gray16:
-      return FIT_UINT16;
-    default:
-      return FIT_UNKNOWN;
-  }
-}
-
-//! Wrapper for accessing C++ stream from FreeImage.
-class Image_FreeImageStream
-{
-public:
-  //! Construct wrapper over input stream.
-  Image_FreeImageStream(std::istream& theStream)
-      : myIStream(&theStream),
-        myOStream(nullptr),
-        myInitPos(theStream.tellg())
-  {
   }
 
-  //! Construct wrapper over output stream.
-  Image_FreeImageStream(std::ostream& theStream)
-      : myIStream(nullptr),
-        myOStream(&theStream),
-        myInitPos(theStream.tellp())
+  static FREE_IMAGE_TYPE convertToFreeFormat(Image_Format theFormat)
   {
-  }
-
-  //! Get io object.
-  FreeImageIO GetFiIO() const
-  {
-    FreeImageIO anIo;
-    memset(&anIo, 0, sizeof(anIo));
-    if (myIStream != nullptr)
+    switch (theFormat)
     {
-      anIo.read_proc = readProc;
-      anIo.seek_proc = seekProcIn;
-      anIo.tell_proc = tellProcIn;
+      case Image_Format_GrayF:
+      case Image_Format_AlphaF:
+        return FIT_FLOAT;
+      case Image_Format_RGBAF:
+        return FIT_RGBAF;
+      case Image_Format_RGBF:
+        return FIT_RGBF;
+      case Image_Format_RGBA:
+      case Image_Format_BGRA:
+      case Image_Format_RGB32:
+      case Image_Format_BGR32:
+      case Image_Format_RGB:
+      case Image_Format_BGR:
+      case Image_Format_Gray:
+      case Image_Format_Alpha:
+        return FIT_BITMAP;
+      case Image_Format_Gray16:
+        return FIT_UINT16;
+      default:
+        return FIT_UNKNOWN;
     }
-    if (myOStream != nullptr)
-    {
-      anIo.write_proc = writeProc;
-      // seek and tell are also used for saving in some formats (.tif for example)
-      anIo.seek_proc = seekProcOut;
-      anIo.tell_proc = tellProcOut;
-    }
-    return anIo;
   }
 
-public:
-  //! Simulate fread().
-  static unsigned int DLL_CALLCONV readProc(void*        theBuffer,
-                                            unsigned int theSize,
-                                            unsigned int theCount,
-                                            fi_handle    theHandle)
+  //! Wrapper for accessing C++ stream from FreeImage.
+  class Image_FreeImageStream
   {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    if (aThis->myIStream == nullptr)
+  public:
+    //! Construct wrapper over input stream.
+    Image_FreeImageStream(std::istream& theStream)
+        : myIStream(&theStream),
+          myOStream(nullptr),
+          myInitPos(theStream.tellg())
     {
+    }
+
+    //! Construct wrapper over output stream.
+    Image_FreeImageStream(std::ostream& theStream)
+        : myIStream(nullptr),
+          myOStream(&theStream),
+          myInitPos(theStream.tellp())
+    {
+    }
+
+    //! Get io object.
+    FreeImageIO GetFiIO() const
+    {
+      FreeImageIO anIo;
+      memset(&anIo, 0, sizeof(anIo));
+      if (myIStream != nullptr)
+      {
+        anIo.read_proc = readProc;
+        anIo.seek_proc = seekProcIn;
+        anIo.tell_proc = tellProcIn;
+      }
+      if (myOStream != nullptr)
+      {
+        anIo.write_proc = writeProc;
+        // seek and tell are also used for saving in some formats (.tif for example)
+        anIo.seek_proc = seekProcOut;
+        anIo.tell_proc = tellProcOut;
+      }
+      return anIo;
+    }
+
+  public:
+    //! Simulate fread().
+    static unsigned int DLL_CALLCONV readProc(void*        theBuffer,
+                                              unsigned int theSize,
+                                              unsigned int theCount,
+                                              fi_handle    theHandle)
+    {
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      if (aThis->myIStream == nullptr)
+      {
+        return 0;
+      }
+
+      if (!aThis->myIStream->read((char*)theBuffer,
+                                  std::streamsize(theSize) * std::streamsize(theCount)))
+      {
+        // aThis->myIStream->clear();
+      }
+      const std::streamsize aNbRead = aThis->myIStream->gcount();
+      return (unsigned int)(aNbRead / theSize);
+    }
+
+    //! Simulate fwrite().
+    static unsigned int DLL_CALLCONV writeProc(void*        theBuffer,
+                                               unsigned int theSize,
+                                               unsigned int theCount,
+                                               fi_handle    theHandle)
+    {
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      if (aThis->myOStream != nullptr
+          && aThis->myOStream->write((const char*)theBuffer,
+                                     std::streamsize(theSize) * std::streamsize(theCount)))
+      {
+        return theCount;
+      }
       return 0;
     }
 
-    if (!aThis->myIStream->read((char*)theBuffer,
-                                std::streamsize(theSize) * std::streamsize(theCount)))
+    //! Simulate fseek().
+    static int DLL_CALLCONV seekProcIn(fi_handle theHandle, long theOffset, int theOrigin)
     {
-      // aThis->myIStream->clear();
-    }
-    const std::streamsize aNbRead = aThis->myIStream->gcount();
-    return (unsigned int)(aNbRead / theSize);
-  }
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      if (aThis->myIStream == nullptr)
+      {
+        return -1;
+      }
 
-  //! Simulate fwrite().
-  static unsigned int DLL_CALLCONV writeProc(void*        theBuffer,
-                                             unsigned int theSize,
-                                             unsigned int theCount,
-                                             fi_handle    theHandle)
-  {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    if (aThis->myOStream != nullptr
-        && aThis->myOStream->write((const char*)theBuffer,
-                                   std::streamsize(theSize) * std::streamsize(theCount)))
-    {
-      return theCount;
-    }
-    return 0;
-  }
-
-  //! Simulate fseek().
-  static int DLL_CALLCONV seekProcIn(fi_handle theHandle, long theOffset, int theOrigin)
-  {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    if (aThis->myIStream == nullptr)
-    {
-      return -1;
-    }
-
-    bool isSeekDone = false;
-    switch (theOrigin)
-    {
-      case SEEK_SET:
-        if (aThis->myIStream->seekg((std::streamoff)aThis->myInitPos + theOffset, std::ios::beg))
-        {
-          isSeekDone = true;
-        }
-        break;
-      case SEEK_CUR:
-        if (aThis->myIStream->seekg(theOffset, std::ios::cur))
-        {
-          isSeekDone = true;
-        }
-        break;
-      case SEEK_END:
-        if (aThis->myIStream->seekg(theOffset, std::ios::end))
-        {
-          isSeekDone = true;
-        }
-        break;
-    }
-    return isSeekDone ? 0 : -1;
-  }
-
-  static int DLL_CALLCONV seekProcOut(fi_handle theHandle, long theOffset, int theOrigin)
-  {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    if (aThis->myOStream == nullptr)
-    {
-      return -1;
+      bool isSeekDone = false;
+      switch (theOrigin)
+      {
+        case SEEK_SET:
+          if (aThis->myIStream->seekg((std::streamoff)aThis->myInitPos + theOffset, std::ios::beg))
+          {
+            isSeekDone = true;
+          }
+          break;
+        case SEEK_CUR:
+          if (aThis->myIStream->seekg(theOffset, std::ios::cur))
+          {
+            isSeekDone = true;
+          }
+          break;
+        case SEEK_END:
+          if (aThis->myIStream->seekg(theOffset, std::ios::end))
+          {
+            isSeekDone = true;
+          }
+          break;
+      }
+      return isSeekDone ? 0 : -1;
     }
 
-    bool isSeekDone = false;
-    switch (theOrigin)
+    static int DLL_CALLCONV seekProcOut(fi_handle theHandle, long theOffset, int theOrigin)
     {
-      case SEEK_SET:
-        if (aThis->myOStream->seekp((std::streamoff)aThis->myInitPos + theOffset, std::ios::beg))
-        {
-          isSeekDone = true;
-        }
-        break;
-      case SEEK_CUR:
-        if (aThis->myOStream->seekp(theOffset, std::ios::cur))
-        {
-          isSeekDone = true;
-        }
-        break;
-      case SEEK_END:
-        if (aThis->myOStream->seekp(theOffset, std::ios::end))
-        {
-          isSeekDone = true;
-        }
-        break;
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      if (aThis->myOStream == nullptr)
+      {
+        return -1;
+      }
+
+      bool isSeekDone = false;
+      switch (theOrigin)
+      {
+        case SEEK_SET:
+          if (aThis->myOStream->seekp((std::streamoff)aThis->myInitPos + theOffset, std::ios::beg))
+          {
+            isSeekDone = true;
+          }
+          break;
+        case SEEK_CUR:
+          if (aThis->myOStream->seekp(theOffset, std::ios::cur))
+          {
+            isSeekDone = true;
+          }
+          break;
+        case SEEK_END:
+          if (aThis->myOStream->seekp(theOffset, std::ios::end))
+          {
+            isSeekDone = true;
+          }
+          break;
+      }
+      return isSeekDone ? 0 : -1;
     }
-    return isSeekDone ? 0 : -1;
-  }
 
-  //! Simulate ftell().
-  static long DLL_CALLCONV tellProcIn(fi_handle theHandle)
-  {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    const long             aPos =
-      aThis->myIStream != nullptr ? (long)(aThis->myIStream->tellg() - aThis->myInitPos) : 0;
-    return aPos;
-  }
+    //! Simulate ftell().
+    static long DLL_CALLCONV tellProcIn(fi_handle theHandle)
+    {
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      const long             aPos =
+        aThis->myIStream != nullptr ? (long)(aThis->myIStream->tellg() - aThis->myInitPos) : 0;
+      return aPos;
+    }
 
-  static long DLL_CALLCONV tellProcOut(fi_handle theHandle)
-  {
-    Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
-    const long             aPos =
-      aThis->myOStream != nullptr ? (long)(aThis->myOStream->tellp() - aThis->myInitPos) : 0;
-    return aPos;
-  }
+    static long DLL_CALLCONV tellProcOut(fi_handle theHandle)
+    {
+      Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
+      const long             aPos =
+        aThis->myOStream != nullptr ? (long)(aThis->myOStream->tellp() - aThis->myInitPos) : 0;
+      return aPos;
+    }
 
-private:
-  std::istream*  myIStream;
-  std::ostream*  myOStream;
-  std::streampos myInitPos;
-};
+  private:
+    std::istream*  myIStream;
+    std::ostream*  myOStream;
+    std::streampos myInitPos;
+  };
 
 #elif defined(HAVE_WINCODEC)
 
-//! Return a zero GUID
-static GUID getNullGuid()
-{
-  GUID aGuid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
-  return aGuid;
-}
-
-//! Returns GUID of image format from file name
-static GUID getFileFormatFromName(const TCollection_AsciiString& theFileName)
-{
-  TCollection_AsciiString aFileNameLower = theFileName;
-  aFileNameLower.LowerCase();
-  GUID aFileFormat = getNullGuid();
-  if (aFileNameLower.EndsWith(".bmp"))
+  //! Return a zero GUID
+  static GUID getNullGuid()
   {
-    aFileFormat = GUID_ContainerFormatBmp;
-  }
-  else if (aFileNameLower.EndsWith(".png"))
-  {
-    aFileFormat = GUID_ContainerFormatPng;
-  }
-  else if (aFileNameLower.EndsWith(".jpg") || aFileNameLower.EndsWith(".jpeg"))
-  {
-    aFileFormat = GUID_ContainerFormatJpeg;
-  }
-  else if (aFileNameLower.EndsWith(".tiff") || aFileNameLower.EndsWith(".tif"))
-  {
-    aFileFormat = GUID_ContainerFormatTiff;
-  }
-  else if (aFileNameLower.EndsWith(".gif"))
-  {
-    aFileFormat = GUID_ContainerFormatGif;
-  }
-  return aFileFormat;
-}
-
-//! Sentry over IUnknown pointer.
-template <class T>
-class Image_ComPtr
-{
-public:
-  //! Empty constructor.
-  Image_ComPtr()
-      : myPtr(NULL)
-  {
+    GUID aGuid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
+    return aGuid;
   }
 
-  //! Destructor.
-  ~Image_ComPtr() { Nullify(); }
-
-  //! Return TRUE if pointer is NULL.
-  bool IsNull() const { return myPtr == NULL; }
-
-  //! Release the pointer.
-  void Nullify()
+  //! Returns GUID of image format from file name
+  static GUID getFileFormatFromName(const TCollection_AsciiString& theFileName)
   {
-    if (myPtr != NULL)
+    TCollection_AsciiString aFileNameLower = theFileName;
+    aFileNameLower.LowerCase();
+    GUID aFileFormat = getNullGuid();
+    if (aFileNameLower.EndsWith(".bmp"))
     {
-      myPtr->Release();
-      myPtr = NULL;
+      aFileFormat = GUID_ContainerFormatBmp;
+    }
+    else if (aFileNameLower.EndsWith(".png"))
+    {
+      aFileFormat = GUID_ContainerFormatPng;
+    }
+    else if (aFileNameLower.EndsWith(".jpg") || aFileNameLower.EndsWith(".jpeg"))
+    {
+      aFileFormat = GUID_ContainerFormatJpeg;
+    }
+    else if (aFileNameLower.EndsWith(".tiff") || aFileNameLower.EndsWith(".tif"))
+    {
+      aFileFormat = GUID_ContainerFormatTiff;
+    }
+    else if (aFileNameLower.EndsWith(".gif"))
+    {
+      aFileFormat = GUID_ContainerFormatGif;
+    }
+    return aFileFormat;
+  }
+
+  //! Sentry over IUnknown pointer.
+  template <class T>
+  class Image_ComPtr
+  {
+  public:
+    //! Empty constructor.
+    Image_ComPtr()
+        : myPtr(NULL)
+    {
+    }
+
+    //! Destructor.
+    ~Image_ComPtr() { Nullify(); }
+
+    //! Return TRUE if pointer is NULL.
+    bool IsNull() const { return myPtr == NULL; }
+
+    //! Release the pointer.
+    void Nullify()
+    {
+      if (myPtr != NULL)
+      {
+        myPtr->Release();
+        myPtr = NULL;
+      }
+    }
+
+    //! Return pointer for initialization.
+    T*& ChangePtr()
+    {
+      Standard_ASSERT_RAISE(myPtr == NULL, "Pointer cannot be initialized twice!");
+      return myPtr;
+    }
+
+    //! Return pointer.
+    T* get() { return myPtr; }
+
+    //! Return pointer.
+    T* operator->() { return get(); }
+
+    //! Cast handle to contained type
+    T& operator*() { return *get(); }
+
+  private:
+    T* myPtr;
+  };
+
+  //! Convert WIC GUID to Image_Format.
+  static Image_Format convertFromWicFormat(const WICPixelFormatGUID& theFormat)
+  {
+    if (theFormat == GUID_WICPixelFormat32bppBGRA)
+    {
+      return Image_Format_BGRA;
+    }
+    else if (theFormat == GUID_WICPixelFormat32bppBGR)
+    {
+      return Image_Format_BGR32;
+    }
+    else if (theFormat == GUID_WICPixelFormat24bppRGB)
+    {
+      return Image_Format_RGB;
+    }
+    else if (theFormat == GUID_WICPixelFormat24bppBGR)
+    {
+      return Image_Format_BGR;
+    }
+    else if (theFormat == GUID_WICPixelFormat8bppGray)
+    {
+      return Image_Format_Gray;
+    }
+    else if (theFormat == GUID_WICPixelFormat16bppGray)
+    {
+      return Image_Format_Gray16;
+    }
+    return Image_Format_UNKNOWN;
+  }
+
+  //! Convert Image_Format to WIC GUID.
+  static WICPixelFormatGUID convertToWicFormat(Image_Format theFormat)
+  {
+    switch (theFormat)
+    {
+      case Image_Format_BGRA:
+        return GUID_WICPixelFormat32bppBGRA;
+      case Image_Format_BGR32:
+        return GUID_WICPixelFormat32bppBGR;
+      case Image_Format_RGB:
+        return GUID_WICPixelFormat24bppRGB;
+      case Image_Format_BGR:
+        return GUID_WICPixelFormat24bppBGR;
+      case Image_Format_Gray:
+        return GUID_WICPixelFormat8bppGray;
+        // clang-format off
+      case Image_Format_Alpha:  return GUID_WICPixelFormat8bppGray; // GUID_WICPixelFormat8bppAlpha
+        // clang-format on
+      case Image_Format_Gray16:
+        return GUID_WICPixelFormat16bppGray;
+      case Image_Format_GrayF: // GUID_WICPixelFormat32bppGrayFloat
+      case Image_Format_AlphaF:
+      case Image_Format_RGBAF: // GUID_WICPixelFormat128bppRGBAFloat
+      case Image_Format_RGBF:  // GUID_WICPixelFormat96bppRGBFloat
+      case Image_Format_RGBA:  // GUID_WICPixelFormat32bppRGBA
+      case Image_Format_RGB32: // GUID_WICPixelFormat32bppRGB
+      default:
+        return getNullGuid();
     }
   }
-
-  //! Return pointer for initialization.
-  T*& ChangePtr()
-  {
-    Standard_ASSERT_RAISE(myPtr == NULL, "Pointer cannot be initialized twice!");
-    return myPtr;
-  }
-
-  //! Return pointer.
-  T* get() { return myPtr; }
-
-  //! Return pointer.
-  T* operator->() { return get(); }
-
-  //! Cast handle to contained type
-  T& operator*() { return *get(); }
-
-private:
-  T* myPtr;
-};
-
-//! Convert WIC GUID to Image_Format.
-static Image_Format convertFromWicFormat(const WICPixelFormatGUID& theFormat)
-{
-  if (theFormat == GUID_WICPixelFormat32bppBGRA)
-  {
-    return Image_Format_BGRA;
-  }
-  else if (theFormat == GUID_WICPixelFormat32bppBGR)
-  {
-    return Image_Format_BGR32;
-  }
-  else if (theFormat == GUID_WICPixelFormat24bppRGB)
-  {
-    return Image_Format_RGB;
-  }
-  else if (theFormat == GUID_WICPixelFormat24bppBGR)
-  {
-    return Image_Format_BGR;
-  }
-  else if (theFormat == GUID_WICPixelFormat8bppGray)
-  {
-    return Image_Format_Gray;
-  }
-  else if (theFormat == GUID_WICPixelFormat16bppGray)
-  {
-    return Image_Format_Gray16;
-  }
-  return Image_Format_UNKNOWN;
-}
-
-//! Convert Image_Format to WIC GUID.
-static WICPixelFormatGUID convertToWicFormat(Image_Format theFormat)
-{
-  switch (theFormat)
-  {
-    case Image_Format_BGRA:
-      return GUID_WICPixelFormat32bppBGRA;
-    case Image_Format_BGR32:
-      return GUID_WICPixelFormat32bppBGR;
-    case Image_Format_RGB:
-      return GUID_WICPixelFormat24bppRGB;
-    case Image_Format_BGR:
-      return GUID_WICPixelFormat24bppBGR;
-    case Image_Format_Gray:
-      return GUID_WICPixelFormat8bppGray;
-      // clang-format off
-      case Image_Format_Alpha:  return GUID_WICPixelFormat8bppGray; // GUID_WICPixelFormat8bppAlpha
-      // clang-format on
-    case Image_Format_Gray16:
-      return GUID_WICPixelFormat16bppGray;
-    case Image_Format_GrayF: // GUID_WICPixelFormat32bppGrayFloat
-    case Image_Format_AlphaF:
-    case Image_Format_RGBAF: // GUID_WICPixelFormat128bppRGBAFloat
-    case Image_Format_RGBF:  // GUID_WICPixelFormat96bppRGBFloat
-    case Image_Format_RGBA:  // GUID_WICPixelFormat32bppRGBA
-    case Image_Format_RGB32: // GUID_WICPixelFormat32bppRGB
-    default:
-      return getNullGuid();
-  }
-}
 
 #endif
 } // namespace
@@ -1554,7 +1543,8 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
   switch (theFormat)
   {
     case FIF_PNG:
-    case FIF_BMP: {
+    case FIF_BMP:
+    {
       if (Format() == Image_Format_BGR32 || Format() == Image_Format_RGB32)
       {
         // stupid FreeImage treats reserved byte as alpha if some bytes not set to 0xFF
@@ -1572,7 +1562,8 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
       }
       break;
     }
-    case FIF_GIF: {
+    case FIF_GIF:
+    {
       FIBITMAP* aTmpBitmap = myLibImage;
       if (FreeImage_GetImageType(myLibImage) != FIT_BITMAP)
       {
@@ -1606,7 +1597,8 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
       break;
     }
     case FIF_HDR:
-    case FIF_EXR: {
+    case FIF_EXR:
+    {
       if (Format() == Image_Format_Gray || Format() == Image_Format_Alpha)
       {
         anImageToDump = FreeImage_ConvertToType(myLibImage, FIT_FLOAT);
@@ -1625,7 +1617,8 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
       }
       break;
     }
-    default: {
+    default:
+    {
       if (FreeImage_GetImageType(myLibImage) != FIT_BITMAP)
       {
         anImageToDump = FreeImage_ConvertToType(myLibImage, FIT_BITMAP);

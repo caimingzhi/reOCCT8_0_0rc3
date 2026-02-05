@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Mat4.hpp>
 #include <Standard_TypeDef.hpp>
 #include <NCollection_Array1.hpp>
@@ -97,4 +96,3 @@ public:
   DEFINE_STANDARD_ALLOC
   DEFINE_NCOLLECTION_ALLOC
 };
-

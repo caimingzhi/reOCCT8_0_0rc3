@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_Filter.hpp>
 #include <NCollection_List.hpp>
 #include <TopAbs_ShapeEnum.hpp>
@@ -37,4 +36,3 @@ public:
 protected:
   NCollection_List<occ::handle<SelectMgr_Filter>> myFilters;
 };
-

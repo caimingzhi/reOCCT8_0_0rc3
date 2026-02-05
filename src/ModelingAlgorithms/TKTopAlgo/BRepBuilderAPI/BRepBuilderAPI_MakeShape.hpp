@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -47,4 +46,3 @@ protected:
   TopoDS_Shape                   myShape;
   NCollection_List<TopoDS_Shape> myGenerated;
 };
-

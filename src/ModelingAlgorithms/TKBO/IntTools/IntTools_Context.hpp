@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -249,4 +248,3 @@ private:
   //! Clears map of already cached projectors.
   Standard_EXPORT void clearCachedPOnSProjectors();
 };
-

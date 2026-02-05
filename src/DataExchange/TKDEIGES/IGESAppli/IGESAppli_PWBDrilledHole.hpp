@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -49,4 +48,3 @@ private:
   double theFinishDiameter;
   int    theFunctionCode;
 };
-

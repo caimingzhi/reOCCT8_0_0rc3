@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Graphic3d_AspectLine3d.hpp>
 #include <Graphic3d_AspectMarker3d.hpp>
@@ -285,4 +284,3 @@ public:
   //! Always update dynamic highlighting.
   Standard_EXPORT bool IsForcedHilight() const override;
 };
-

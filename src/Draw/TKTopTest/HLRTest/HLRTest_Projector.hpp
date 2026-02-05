@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRAlgo_Projector.hpp>
 #include <Draw_Drawable3D.hpp>
 #include <Draw_Interpretor.hpp>
@@ -34,4 +33,3 @@ public:
 private:
   HLRAlgo_Projector myProjector;
 };
-

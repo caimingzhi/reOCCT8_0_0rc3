@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Lists the offset modes. These are the following:
 //! - BRepOffset_Skin which describes the offset along
 //! the surface of a solid, used to obtain a manifold topological space,
@@ -14,4 +13,3 @@ enum BRepOffset_Mode
   BRepOffset_Pipe,
   BRepOffset_RectoVerso
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_BaseAnimationObject.hpp>
 #include <gp_TrsfNLerp.hpp>
 
@@ -32,4 +31,3 @@ private:
   double myAngleStart; //!< start angle for rotation
   double myAngleEnd;   //!< end angle for rotation
 };
-

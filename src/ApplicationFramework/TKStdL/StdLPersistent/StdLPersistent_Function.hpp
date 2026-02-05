@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 
 #include <TFunction_Function.hpp>
@@ -41,4 +40,3 @@ private:
   Standard_GUID myDriverGUID;
   int           myFailure;
 };
-

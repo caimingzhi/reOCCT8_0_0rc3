@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_CString.hpp>
 
 //! Low-level glTF enumeration defining Accessor layout.
@@ -50,4 +49,3 @@ inline RWGltf_GltfAccessorLayout RWGltf_GltfParseAccessorType(const char* theTyp
   }
   return RWGltf_GltfAccessorLayout_UNKNOWN;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -214,4 +213,3 @@ private:
   NCollection_Vector<int>                                                 myParamUses;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> myModeWriteShapeN;
 };
-

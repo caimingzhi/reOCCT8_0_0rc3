@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -46,4 +45,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(FEmTool_SparseMatrix, Standard_Transient)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Extrema_FuncExtCS.hpp>
 #include <gp_Pnt.hpp>
 #include <NCollection_Array2.hpp>
@@ -145,4 +144,3 @@ private:
   const Adaptor3d_Surface*                 myS;
   occ::handle<NCollection_HArray2<gp_Pnt>> mySurfPnts;
 };
-

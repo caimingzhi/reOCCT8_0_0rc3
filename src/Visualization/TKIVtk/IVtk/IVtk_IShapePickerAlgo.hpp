@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_IView.hpp>
 #include <IVtk_IShape.hpp>
 
@@ -67,4 +66,3 @@ public: // @name Obtain picking results
   virtual void SubShapesPicked(const IVtk_IdType              theId,
                                NCollection_List<IVtk_IdType>& theShapeList) const = 0;
 };
-

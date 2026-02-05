@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GraphicDriver.hpp>
 
 //! This class defines D3D host for an OpenGl graphic driver
@@ -20,4 +19,3 @@ public:
 public:
   DEFINE_STANDARD_RTTIEXT(D3DHost_GraphicDriver, OpenGl_GraphicDriver)
 };
-

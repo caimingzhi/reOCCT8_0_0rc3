@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Expr_GeneralExpression.hpp>
 #include <Expr_NumericValue.hpp>
 #include <Expr_Sum.hpp>
@@ -49,4 +48,3 @@ Standard_EXPORT occ::handle<Expr_Division> operator/(const double               
 
 Standard_EXPORT occ::handle<Expr_Division> operator/(const occ::handle<Expr_GeneralExpression>& x,
                                                      const double                               y);
-

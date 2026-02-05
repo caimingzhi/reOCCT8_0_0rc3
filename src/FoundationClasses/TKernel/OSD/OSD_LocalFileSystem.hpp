@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_FileSystem.hpp>
 
 //! A file system opening local files (or files from mount systems).

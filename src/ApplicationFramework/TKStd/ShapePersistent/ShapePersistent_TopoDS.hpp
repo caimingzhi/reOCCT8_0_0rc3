@@ -13,14 +13,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 enum ShapePersistent_TriangleMode
 {
   ShapePersistent_WithTriangle,
   ShapePersistent_WithoutTriangle
 };
-
-
 
 #include <StdPersistent_HArray1.hpp>
 #include <StdLPersistent_HArray1.hpp>
@@ -171,4 +168,3 @@ inline const char* ShapePersistent_TopoDS::pTSimple<TopoDS_TCompound>::PName() c
 {
   return "PTopoDS_TCompound";
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Sphere.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -161,4 +160,3 @@ private:
   NCollection_Array2<Extrema_POnSurfParams>               myVEdgePntParams;
   Extrema_POnSurfParams                                   myGridParam;
 };
-

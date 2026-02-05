@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_SurfaceStyleElementSelect.hpp>
@@ -42,4 +41,3 @@ private:
   occ::handle<TCollection_HAsciiString>                                  name;
   occ::handle<NCollection_HArray1<StepVisual_SurfaceStyleElementSelect>> styles;
 };
-

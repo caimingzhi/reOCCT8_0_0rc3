@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_ConicalSurface.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -35,4 +34,3 @@ struct GeomHash_ConicalSurfaceHasher
            && std::abs(theCone1->SemiAngle() - theCone2->SemiAngle()) <= aTolerance;
   }
 };
-

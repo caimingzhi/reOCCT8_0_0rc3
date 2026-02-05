@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESDimen_LeaderArrow.hpp>
@@ -44,4 +43,3 @@ private:
   occ::handle<IGESDimen_GeneralNote>                                   theNote;
   occ::handle<NCollection_HArray1<occ::handle<IGESDimen_LeaderArrow>>> theLeaders;
 };
-

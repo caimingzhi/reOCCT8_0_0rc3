@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Select3D_BndBox3d.hpp>
 #include <SelectMgr_SelectingVolumeManager.hpp>
@@ -97,4 +96,3 @@ protected:
   occ::handle<Graphic3d_TransformPers> myTrsfPers;
   int                                  mySFactor;
 };
-

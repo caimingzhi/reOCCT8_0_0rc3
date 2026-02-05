@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -19,4 +18,3 @@ public:
   //! Defines and loads all basic functions for SWDRAW on Shapes
   Standard_EXPORT static void InitCommands(Draw_Interpretor& theCommands);
 };
-

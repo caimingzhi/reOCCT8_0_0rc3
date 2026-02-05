@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -20,4 +19,3 @@ public:
   //! The number of resulting faces will be num+1.
   Standard_EXPORT void SetNbSplitPoints(const int num);
 };
-

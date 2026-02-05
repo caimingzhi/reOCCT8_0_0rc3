@@ -21,38 +21,38 @@ IMPLEMENT_STANDARD_RTTIEXT(NCollection_IncAllocator, NCollection_BaseAllocator)
 
 namespace
 {
-// Bounds for checking block size level
-// clang-format off
+  // Bounds for checking block size level
+  // clang-format off
   static constexpr unsigned THE_SMALL_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 16;   // 196 KB
   static constexpr unsigned THE_MEDIUM_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 64;  // 786 KB
   static constexpr unsigned THE_LARGE_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 1024; // 12 MB
-// clang-format on
+  // clang-format on
 
-//=================================================================================================
+  //=================================================================================================
 
-NCollection_IncAllocator::IBlockSizeLevel computeLevel(const unsigned int theSize)
-{
-  if (theSize < NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE)
+  NCollection_IncAllocator::IBlockSizeLevel computeLevel(const unsigned int theSize)
   {
-    return NCollection_IncAllocator::IBlockSizeLevel::Min;
+    if (theSize < NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE)
+    {
+      return NCollection_IncAllocator::IBlockSizeLevel::Min;
+    }
+    else if (theSize < THE_SMALL_BOUND_BLOCK_SIZE)
+    {
+      return NCollection_IncAllocator::IBlockSizeLevel::Small;
+    }
+    else if (theSize < THE_MEDIUM_BOUND_BLOCK_SIZE)
+    {
+      return NCollection_IncAllocator::IBlockSizeLevel::Medium;
+    }
+    else if (theSize < THE_LARGE_BOUND_BLOCK_SIZE)
+    {
+      return NCollection_IncAllocator::IBlockSizeLevel::Large;
+    }
+    else
+    {
+      return NCollection_IncAllocator::IBlockSizeLevel::Max;
+    }
   }
-  else if (theSize < THE_SMALL_BOUND_BLOCK_SIZE)
-  {
-    return NCollection_IncAllocator::IBlockSizeLevel::Small;
-  }
-  else if (theSize < THE_MEDIUM_BOUND_BLOCK_SIZE)
-  {
-    return NCollection_IncAllocator::IBlockSizeLevel::Medium;
-  }
-  else if (theSize < THE_LARGE_BOUND_BLOCK_SIZE)
-  {
-    return NCollection_IncAllocator::IBlockSizeLevel::Large;
-  }
-  else
-  {
-    return NCollection_IncAllocator::IBlockSizeLevel::Max;
-  }
-}
 } // namespace
 
 //=================================================================================================

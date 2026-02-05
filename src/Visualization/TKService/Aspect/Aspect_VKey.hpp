@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_VKeyFlags.hpp>
 
 //! Define virtual key as integer number to allow extensions.
@@ -204,4 +203,3 @@ inline Aspect_VKeyFlags Aspect_VKey2Modifier(Aspect_VKey theKey)
       return 0;
   }
 }
-

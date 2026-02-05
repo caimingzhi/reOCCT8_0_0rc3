@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_History.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -218,4 +217,3 @@ protected:
 private:
   bool myConsiderLocation;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -188,4 +187,3 @@ private:
   TCollection_AsciiString                                          thename;
   occ::handle<Interface_IntVal>                                    thecurr;
 };
-

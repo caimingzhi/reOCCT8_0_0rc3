@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -50,4 +49,3 @@ public:
   //! defines commands to test projection of geometric objects
   Standard_EXPORT static void TestProjCommands(Draw_Interpretor& I);
 };
-

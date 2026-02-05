@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Presentation.hpp>
 
 //! Defines a "shadow" of existing presentation object with custom aspects.
@@ -31,4 +30,3 @@ private:
   occ::handle<Graphic3d_ViewAffinity> myParentAffinity;
   int                                 myParentStructId;
 };
-

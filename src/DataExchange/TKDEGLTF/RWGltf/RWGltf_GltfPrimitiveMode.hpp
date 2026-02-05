@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Low-level glTF enumeration defining Primitive type.
 //! Similar to Graphic3d_TypeOfData but does not define actual type and includes matrices.
 enum RWGltf_GltfPrimitiveMode
@@ -14,4 +13,3 @@ enum RWGltf_GltfPrimitiveMode
   RWGltf_GltfPrimitiveMode_TriangleStrip = 5,  //!< GL_TRIANGLE_STRIP
   RWGltf_GltfPrimitiveMode_TriangleFan   = 6,  //!< GL_TRIANGLE_FAN
 };
-

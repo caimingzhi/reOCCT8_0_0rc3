@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -67,4 +66,3 @@ private:
     NCollection_Sequence<TCollection_ExtendedString>& theUserInfo,
     const occ::handle<Message_Messenger>&             theMsgDriver);
 };
-

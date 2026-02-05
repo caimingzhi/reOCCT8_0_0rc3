@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -147,4 +146,3 @@ private:
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger>                       theResultDataLocs;
   occ::handle<IGESBasic_HArray1OfHArray1OfReal>                          theResultData;
 };
-

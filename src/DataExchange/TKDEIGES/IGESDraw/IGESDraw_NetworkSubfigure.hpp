@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -96,4 +95,3 @@ private:
   occ::handle<IGESGraph_TextDisplayTemplate>                           theDesignatorTemplate;
   occ::handle<NCollection_HArray1<occ::handle<IGESDraw_ConnectPoint>>> theConnectPoints;
 };
-

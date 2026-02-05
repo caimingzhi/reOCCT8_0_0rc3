@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DESTEP_Parameters.hpp>
 #include <DE_ShapeFixConfigurationNode.hpp>
 #include <Resource_FormatType.hpp>
@@ -79,4 +78,3 @@ public:
 public:
   DESTEP_Parameters InternalParameters;
 };
-

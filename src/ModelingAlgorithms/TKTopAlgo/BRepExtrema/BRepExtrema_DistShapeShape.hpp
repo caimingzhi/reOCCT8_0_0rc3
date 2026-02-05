@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_Sequence.hpp>
@@ -197,4 +196,3 @@ private:
   NCollection_Array1<Bnd_Box>                                   myBF2;
   bool                                                          myIsMultiThread;
 };
-

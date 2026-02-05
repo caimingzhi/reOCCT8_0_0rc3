@@ -1,8 +1,8 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -16,14 +16,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 enum StepFEA_CoordinateSystemType
 {
   StepFEA_Cartesian,
   StepFEA_Cylindrical,
   StepFEA_Spherical
 };
-
 
 #include <StepGeom_Axis2Placement3d.hpp>
 #include <Standard_Boolean.hpp>
@@ -67,4 +65,3 @@ private:
   StepFEA_CoordinateSystemType          theSystemType;
   occ::handle<TCollection_HAsciiString> theDescription;
 };
-

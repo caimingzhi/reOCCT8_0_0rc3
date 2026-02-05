@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifndef F2CTYPE_DEFINED
 typedef int    integer;
 typedef double doublereal;
@@ -128,7 +127,8 @@ typedef struct
 
 #define VOID void
 
-union Multitype { /* for multiple entry points */
+union Multitype
+{ /* for multiple entry points */
   integer1 g;
   shortint h;
   integer  i;

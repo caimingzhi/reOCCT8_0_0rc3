@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_DefineHandle.hpp>
 
@@ -50,4 +49,3 @@ private:
   double myAngle;
   double myMinSize;
 };
-

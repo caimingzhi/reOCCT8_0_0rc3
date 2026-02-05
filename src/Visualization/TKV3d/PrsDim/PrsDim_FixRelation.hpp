@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Circ.hpp>
 #include <TopoDS_Wire.hpp>
 #include <PrsDim_Relation.hpp>
@@ -104,4 +103,3 @@ private:
   TopoDS_Wire myWire;
   gp_Pnt      myPntAttach;
 };
-

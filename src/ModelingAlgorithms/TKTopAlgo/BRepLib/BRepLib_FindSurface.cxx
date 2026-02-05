@@ -1,19 +1,3 @@
-// Created on: 1994-07-22
-// Created by: Remi LEQUETTE
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
 #include <BRepAdaptor_Curve.hpp>
@@ -173,65 +157,66 @@ BRepLib_FindSurface::BRepLib_FindSurface(const TopoDS_Shape& S,
 
 namespace
 {
-static void fillParams(const NCollection_Array1<double>& theKnots,
-                       int                               theDegree,
-                       double                            theParMin,
-                       double                            theParMax,
-                       NCollection_Vector<double>&       theParams)
-{
-  double aPrevPar = theParMin;
-  theParams.Append(aPrevPar);
-
-  int aNbP = std::max(theDegree, 1);
-
-  for (int i = 1; (i < theKnots.Length()) && (theKnots(i) < (theParMax - Precision::PConfusion()));
-       ++i)
+  static void fillParams(const NCollection_Array1<double>& theKnots,
+                         int                               theDegree,
+                         double                            theParMin,
+                         double                            theParMax,
+                         NCollection_Vector<double>&       theParams)
   {
-    if (theKnots(i + 1) < theParMin + Precision::PConfusion())
-      continue;
+    double aPrevPar = theParMin;
+    theParams.Append(aPrevPar);
 
-    double aStep = (theKnots(i + 1) - theKnots(i)) / aNbP;
-    for (int k = 1; k <= aNbP; ++k)
+    int aNbP = std::max(theDegree, 1);
+
+    for (int i = 1;
+         (i < theKnots.Length()) && (theKnots(i) < (theParMax - Precision::PConfusion()));
+         ++i)
     {
-      double aPar = theKnots(i) + k * aStep;
-      if (aPar > theParMax - Precision::PConfusion())
-        break;
+      if (theKnots(i + 1) < theParMin + Precision::PConfusion())
+        continue;
 
-      if (aPar > aPrevPar + Precision::PConfusion())
+      double aStep = (theKnots(i + 1) - theKnots(i)) / aNbP;
+      for (int k = 1; k <= aNbP; ++k)
       {
-        theParams.Append(aPar);
-        aPrevPar = aPar;
+        double aPar = theKnots(i) + k * aStep;
+        if (aPar > theParMax - Precision::PConfusion())
+          break;
+
+        if (aPar > aPrevPar + Precision::PConfusion())
+        {
+          theParams.Append(aPar);
+          aPrevPar = aPar;
+        }
       }
     }
+    theParams.Append(theParMax);
   }
-  theParams.Append(theParMax);
-}
 
-static void fillPoints(const BRepAdaptor_Curve&          theCurve,
-                       const NCollection_Vector<double>& theParams,
-                       NCollection_Sequence<gp_Pnt>&     thePoints,
-                       NCollection_Sequence<double>&     theWeights)
-{
-  double aDistPrev = 0., aDistNext;
-  gp_Pnt aPPrev(theCurve.Value(theParams(0))), aPNext;
-
-  for (int iP = 1; iP <= theParams.Length(); ++iP)
+  static void fillPoints(const BRepAdaptor_Curve&          theCurve,
+                         const NCollection_Vector<double>& theParams,
+                         NCollection_Sequence<gp_Pnt>&     thePoints,
+                         NCollection_Sequence<double>&     theWeights)
   {
-    if (iP < theParams.Length())
-    {
-      double aParam = theParams(iP);
-      aPNext        = theCurve.Value(aParam);
-      aDistNext     = aPPrev.Distance(aPNext);
-    }
-    else
-      aDistNext = 0.0;
+    double aDistPrev = 0., aDistNext;
+    gp_Pnt aPPrev(theCurve.Value(theParams(0))), aPNext;
 
-    thePoints.Append(aPPrev);
-    theWeights.Append(aDistPrev + aDistNext);
-    aDistPrev = aDistNext;
-    aPPrev    = aPNext;
+    for (int iP = 1; iP <= theParams.Length(); ++iP)
+    {
+      if (iP < theParams.Length())
+      {
+        double aParam = theParams(iP);
+        aPNext        = theCurve.Value(aParam);
+        aDistNext     = aPPrev.Distance(aPNext);
+      }
+      else
+        aDistNext = 0.0;
+
+      thePoints.Append(aPPrev);
+      theWeights.Append(aDistPrev + aDistNext);
+      aDistPrev = aDistNext;
+      aPPrev    = aPNext;
+    }
   }
-}
 
 } // namespace
 
@@ -358,7 +343,8 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     NCollection_Vector<double> aParams;
     switch (c.GetType())
     {
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         occ::handle<Geom_BezierCurve> GC = c.Bezier();
         NCollection_Array1<double>    aKnots(1, 2);
         aKnots.SetValue(1, GC->FirstParameter());
@@ -367,12 +353,14 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
         fillParams(aKnots, GC->Degree(), dfUf, dfUl, aParams);
         break;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         occ::handle<Geom_BSplineCurve> GC = c.BSpline();
         fillParams(GC->Knots(), GC->Degree(), dfUf, dfUl, aParams);
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         // Two points on a straight segment
         aParams.Append(dfUf);
         aParams.Append(dfUl);
@@ -385,7 +373,8 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
         // Four points on other analytical curves
         iNbPoints = 4;
         [[fallthrough]];
-      default: {
+      default:
+      {
         // Put some points on other curves
         if (iNbPoints == 0)
           iNbPoints = 15 + c.NbIntervals(GeomAbs_C3);

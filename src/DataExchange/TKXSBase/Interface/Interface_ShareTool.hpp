@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 class Interface_HGraph;
@@ -99,4 +98,3 @@ public:
 private:
   occ::handle<Interface_HGraph> theHGraph;
 };
-

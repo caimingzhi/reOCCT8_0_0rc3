@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Font_BRepFont.hpp>
 #include <Font_TextFormatter.hpp>
 #include <gp_Ax3.hpp>
@@ -32,4 +31,3 @@ public:
 protected:
   BRep_Builder myBuilder;
 };
-

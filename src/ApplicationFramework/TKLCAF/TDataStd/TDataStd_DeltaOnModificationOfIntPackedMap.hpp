@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_DeltaOnModification.hpp>
@@ -26,4 +25,3 @@ private:
   occ::handle<TColStd_HPackedMapOfInteger> myAddition;
   occ::handle<TColStd_HPackedMapOfInteger> myDeletion;
 };
-

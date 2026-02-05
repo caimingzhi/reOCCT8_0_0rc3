@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -84,6 +83,7 @@ private:
   bool                       InfiniteStatus;
   bool                       Done;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -134,5 +134,3 @@ inline int math_TrigonometricFunctionRoots::NbSolutions() const
   StdFail_NotDone_Raise_if(!Done, " ");
   return NbSol;
 }
-
-

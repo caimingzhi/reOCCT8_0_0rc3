@@ -835,25 +835,29 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferSplineCurve(
 
   switch (result)
   {
-    case 5: {
+    case 5:
+    {
       Message_Msg msg246("XSTEP_246");
       SendFail(st, msg246);
       // less than on segment (no result produced)
       return resconv;
     }
-    case 4: {
+    case 4:
+    {
       Message_Msg msg1170("IGES_1170");
       SendFail(st, msg1170);
       // Polynomial equation is not correct ( no result produced
       return resconv;
     }
-    case 3: {
+    case 3:
+    {
       Message_Msg msg1175("IGES_1175");
       SendFail(st, msg1175);
       // Error during creation of control points ( no result produced)
       return resconv;
     }
-    case 2: {
+    case 2:
+    {
       Message_Msg msg1180("IGES_1180");
       SendFail(st, msg1180);
       // SplineType not processed (allowed : max 3) (no result produced)

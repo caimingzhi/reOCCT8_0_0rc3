@@ -18,8 +18,8 @@
 
 namespace
 {
-const double PI        = M_PI;
-const double TOLERANCE = 1.0e-6;
+  const double PI        = M_PI;
+  const double TOLERANCE = 1.0e-6;
 } // namespace
 
 TEST(math_TrigonometricFunctionRoots, FullEquationBasic)

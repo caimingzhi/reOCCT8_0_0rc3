@@ -1,17 +1,3 @@
-// Created on: 2014-11-10
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_TextLabel.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -223,7 +209,8 @@ void AIS_TextLabel::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 {
   switch (theMode)
   {
-    case 0: {
+    case 0:
+    {
       occ::handle<Prs3d_TextAspect> anAsp     = myDrawer->TextAspect();
       gp_Pnt                        aPosition = Position();
 
@@ -307,7 +294,8 @@ void AIS_TextLabel::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
 {
   switch (theMode)
   {
-    case 0: {
+    case 0:
+    {
       occ::handle<SelectMgr_EntityOwner> anEntityOwner = new SelectMgr_EntityOwner(this, 10);
 
       gp_Pnt aPosition = Position();

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 
 class Geom_Circle;
@@ -105,4 +104,3 @@ private:
   bool                     myCircleIsArc;
   bool                     myIsFilledCircleSens;
 };
-

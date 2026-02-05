@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_OStream.hpp>
 #include <Standard_TypeDef.hpp>
 
@@ -43,4 +42,3 @@ private:
   char* myABuffer;
   int   myABufferLen;
 };
-

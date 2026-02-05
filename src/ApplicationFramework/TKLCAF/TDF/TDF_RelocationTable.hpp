@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -150,4 +149,3 @@ private:
   NCollection_IndexedDataMap<occ::handle<Standard_Transient>, occ::handle<Standard_Transient>>
     myTransientTable;
 };
-

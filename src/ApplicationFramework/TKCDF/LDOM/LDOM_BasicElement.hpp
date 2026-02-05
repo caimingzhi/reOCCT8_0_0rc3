@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_BasicNode.hpp>
 #include <LDOMBasicString.hpp>
 #include <LDOM_Node.hpp>
@@ -102,4 +101,3 @@ private:
   unsigned long   myAttributeMask;
   LDOM_BasicNode* myFirstChild;
 };
-

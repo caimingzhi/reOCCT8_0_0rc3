@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_AttributeStream.hpp>
 #include <Message_Messenger.hpp>
 #include <Message_Report.hpp>
@@ -42,4 +41,3 @@ inline const occ::handle<Message_Messenger>& operator<<(
   TopoDS_AlertAttribute::Send(theMessenger, theShape);
   return theMessenger;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TFunction_Driver.hpp>
@@ -36,4 +35,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(DNaming_SelectionDriver, TFunction_Driver)
 };
-

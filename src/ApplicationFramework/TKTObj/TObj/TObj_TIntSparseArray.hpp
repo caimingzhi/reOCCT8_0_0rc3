@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_SparseArray.hpp>
 #include <TDF_Label.hpp>
 
@@ -118,5 +117,5 @@ public:
 //! Define handle class for TObj_TIntSparseArray
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

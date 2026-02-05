@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <cstring>
 #include <cmath>
 #include <NCollection_Vec2.hpp>
@@ -423,4 +422,3 @@ inline constexpr NCollection_Vec3<double>& NCollection_Vec3<double>::operator/=(
   Multiply(1.0 / theInvFactor);
   return *this;
 }
-

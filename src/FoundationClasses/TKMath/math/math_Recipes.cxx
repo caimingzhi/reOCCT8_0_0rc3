@@ -28,21 +28,21 @@
 
 namespace
 {
-static inline double PYTHAG(const double a, const double b)
-{
-  double at = fabs(a), bt = fabs(b), ct = 0.;
-  if (at > bt)
+  static inline double PYTHAG(const double a, const double b)
   {
-    ct = bt / at;
-    ct = at * sqrt(1.0 + ct * ct);
+    double at = fabs(a), bt = fabs(b), ct = 0.;
+    if (at > bt)
+    {
+      ct = bt / at;
+      ct = at * sqrt(1.0 + ct * ct);
+    }
+    else if (bt)
+    {
+      ct = at / bt;
+      ct = bt * sqrt(1.0 + ct * ct);
+    }
+    return ct;
   }
-  else if (bt)
-  {
-    ct = at / bt;
-    ct = bt * sqrt(1.0 + ct * ct);
-  }
-  return ct;
-}
 } // namespace
 
 #define SIGN(a, b) ((b) >= 0.0 ? fabs(a) : -fabs(a))

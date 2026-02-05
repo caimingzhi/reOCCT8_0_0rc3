@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Definition of line types
 enum Aspect_TypeOfLine
 {
@@ -11,4 +10,3 @@ enum Aspect_TypeOfLine
   Aspect_TOL_DOTDASH,    //!< mixed  10.0,1.0,2.0,1.0 (MM)
   Aspect_TOL_USERDEFINED //!< defined by Users
 };
-

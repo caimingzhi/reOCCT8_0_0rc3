@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Printer.hpp>
 #include <Draw_Interpretor.hpp>
 
@@ -21,4 +20,3 @@ protected:
 private:
   Draw_Interpretor* myTcl;
 };
-

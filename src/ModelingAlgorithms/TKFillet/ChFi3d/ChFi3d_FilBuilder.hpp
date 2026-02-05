@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <BlendFunc_SectionShape.hpp>
 #include <ChFi3d_Builder.hpp>
@@ -360,4 +359,3 @@ protected:
 private:
   BlendFunc_SectionShape myShape;
 };
-

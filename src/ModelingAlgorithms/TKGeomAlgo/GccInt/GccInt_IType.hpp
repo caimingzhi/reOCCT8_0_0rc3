@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum GccInt_IType
 {
   GccInt_Lin,
@@ -10,4 +9,3 @@ enum GccInt_IType
   GccInt_Hpr,
   GccInt_Pnt
 };
-

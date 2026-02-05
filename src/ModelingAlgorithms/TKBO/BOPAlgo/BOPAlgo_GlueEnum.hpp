@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! The Enumeration describes an additional option for the algorithms
 //! in the Boolean Component such as General Fuse, Boolean operations,
 //! Section, Maker Volume, Splitter and Cells Builder algorithms.
@@ -46,4 +45,3 @@ enum BOPAlgo_GlueEnum
   BOPAlgo_GlueShift,
   BOPAlgo_GlueFull
 };
-

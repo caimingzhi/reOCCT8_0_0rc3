@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_GeneralModifier.hpp>
@@ -87,4 +86,3 @@ private:
   int                                                         thenbent;
   int                                                         theentcnt;
 };
-

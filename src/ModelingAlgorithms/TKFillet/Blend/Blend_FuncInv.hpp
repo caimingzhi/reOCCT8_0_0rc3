@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -74,4 +73,3 @@ public:
   //! Tol is the tolerance used in 3d space.
   Standard_EXPORT virtual bool IsSolution(const math_Vector& Sol, const double Tol) = 0;
 };
-

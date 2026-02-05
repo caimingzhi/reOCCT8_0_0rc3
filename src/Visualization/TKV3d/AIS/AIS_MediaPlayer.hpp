@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Graphic3d_MediaTextureSet.hpp>
 
@@ -76,4 +75,3 @@ protected:
   NCollection_Vec2<int>                   myFrameSize;
   bool                                    myToClosePlayer;
 };
-

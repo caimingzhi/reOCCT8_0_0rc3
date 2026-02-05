@@ -1,24 +1,3 @@
-// Created on: 1994-07-06
-// Created by: Laurent PAINNOT
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified by MPS (june 96) : correction du trap dans le cas droite/Bezier
-// Modified by MPS (mai 97) : PRO 7598
-//                            tri des solutions pour eviter de rendre plusieurs
-//                            fois la meme solution
-
 #include <Adaptor3d_Curve.hpp>
 #include <Bnd_Range.hpp>
 #include <ElCLib.hpp>
@@ -240,27 +219,32 @@ void Extrema_ExtCC::Perform()
     }
     switch (aType2)
     {
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Line(), Tol);
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Circle: {
+      case GeomAbs_Circle:
+      {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Circle(), Tol);
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_Ellipse:
+      {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Ellipse());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_Hyperbola:
+      {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Hyperbola());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_Parabola:
+      {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Parabola());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;

@@ -1,19 +1,3 @@
-// Created on: 1998-02-02
-// Created by: Philippe MANGIN
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomFill_LocationLaw.hpp>
 #include <GeomFill_LocFunction.hpp>
 #include <gp_Mat.hpp>
@@ -117,22 +101,26 @@ void GeomFill_LocFunction::DN(const double Param,
   Ier = 0;
   switch (Order)
   {
-    case 0: {
+    case 0:
+    {
       B           = D0(Param, First, Last);
       LocalResult = (double*)(&V(1));
       break;
     }
-    case 1: {
+    case 1:
+    {
       B           = D1(Param, First, Last);
       LocalResult = (double*)(&DV(1));
       break;
     }
-    case 2: {
+    case 2:
+    {
       B           = D2(Param, First, Last);
       LocalResult = (double*)(&D2V(1));
       break;
     }
-    default: {
+    default:
+    {
       B = false;
     }
   }

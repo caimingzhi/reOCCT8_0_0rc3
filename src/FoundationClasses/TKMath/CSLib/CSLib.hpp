@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <CSLib_DerivativeStatus.hpp>
 #include <CSLib_NormalStatus.hpp>
 #include <Standard.hpp>
@@ -162,4 +161,3 @@ public:
                                          int                               theIduref = 0,
                                          int                               theIdvref = 0);
 };
-

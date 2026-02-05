@@ -1,21 +1,3 @@
-// Created on: 1994-09-05
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// 09-Aug-95 : xab : changed the ProjLib_ProjectOnPlane in the case
-//                   of the line and the parameteriation is kept
 #include <ProjLib_ProjectOnPlane.hpp>
 #include <Approx_FitAndDivide.hpp>
 #include <AppParCurves_MultiCurve.hpp>
@@ -563,7 +545,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
 
   switch (Type)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       //     P(u) = O + u * Xc
       // ==> Q(u) = f(P(u))
       //          = f(O) + u * f(Xc)
@@ -656,7 +639,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       }
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       // For circle and ellipse we have the following relations:
       // (Note: for circle R1 = R2 = R)
       //     P(u) = O + R1 * std::cos(u) * Xc + R2 * std::sin(u) * Yc
@@ -668,7 +652,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       R1 = R2 = Circ.Radius();
     }
       [[fallthrough]];
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       if (Type == GeomAbs_Ellipse)
       {
         gp_Elips E = myCurve->Ellipse();
@@ -820,7 +805,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       }
     }
     break;
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       //     P(u) = O + (u*u)/(4*f) * Xc + u * Yc
       // ==> Q(u) = f(P(u))
       //          = f(O) + (u*u)/(4*f) * f(Xc) + u * f(Yc)
@@ -871,7 +857,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       }
     }
     break;
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       //     P(u) = O + R1 * std::cosh(u) * Xc + R2 * std::sinh(u) * Yc
       // ==> Q(u) = f(P(u))
       //          = f(O) + R1 * std::cosh(u) * f(Xc) + R2 * std::sinh(u) * f(Yc)
@@ -929,7 +916,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       }
     }
     break;
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       occ::handle<Geom_BezierCurve> BezierCurvePtr = myCurve->Bezier();
       int                           NbPoles        = BezierCurvePtr->NbPoles();
 
@@ -950,7 +938,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       //  Modified by Sergey KHROMOV - Tue Jan 29 16:57:30 2002 End
     }
     break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       occ::handle<Geom_BSplineCurve> BSplineCurvePtr = myCurve->BSpline();
       //
       //    make a copy of the curve and projects its poles
@@ -972,7 +961,8 @@ void ProjLib_ProjectOnPlane::Load(const occ::handle<Adaptor3d_Curve>& C,
       //  Modified by Sergey KHROMOV - Tue Jan 29 16:57:30 2002 End
     }
     break;
-    default: {
+    default:
+    {
       myKeepParam = true;
       myIsApprox  = true;
       myType      = GeomAbs_BSplineCurve;

@@ -1,18 +1,3 @@
-// Created on: 2013-04-06
-// Created by: Kirill Gavrilov
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Xw_Window.hpp>
 
 #include <Aspect_ScrollDelta.hpp>
@@ -590,7 +575,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
   // Handle event for the chosen display connection
   switch (theMsg.type)
   {
-    case ClientMessage: {
+    case ClientMessage:
+    {
       if ((Atom)theMsg.xclient.data.l[0] == myDisplay->GetAtom(Aspect_XA_DELETE_WINDOW)
           && theMsg.xclient.window == (Window)myXWindow)
       {
@@ -600,14 +586,16 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
       return false;
     }
     case FocusIn:
-    case FocusOut: {
+    case FocusOut:
+    {
       if (theMsg.xfocus.window == (Window)myXWindow)
       {
         theListener.ProcessFocus(theMsg.type == FocusIn);
       }
       return true;
     }
-    case Expose: {
+    case Expose:
+    {
       if (theMsg.xexpose.window == (Window)myXWindow)
       {
         theListener.ProcessExpose();
@@ -624,7 +612,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
 
       return true;
     }
-    case ConfigureNotify: {
+    case ConfigureNotify:
+    {
       // remove all the StructureNotifyMask and process them at once
       for (int aNbMaxEvents = XPending(aDisplay); aNbMaxEvents > 0; --aNbMaxEvents)
       {
@@ -641,7 +630,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
       return true;
     }
     case KeyPress:
-    case KeyRelease: {
+    case KeyRelease:
+    {
       XKeyEvent*        aKeyEvent = (XKeyEvent*)&theMsg;
       const KeySym      aKeySym   = XLookupKeysym(aKeyEvent, 0);
       const Aspect_VKey aVKey     = Xw_Window::VirtualKeyFromNative(aKeySym);
@@ -661,7 +651,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
       return true;
     }
     case ButtonPress:
-    case ButtonRelease: {
+    case ButtonRelease:
+    {
       const NCollection_Vec2<int> aPos(theMsg.xbutton.x, theMsg.xbutton.y);
       Aspect_VKeyFlags            aFlags  = Aspect_VKeyFlags_NONE;
       Aspect_VKeyMouse            aButton = Aspect_VKeyMouse_NONE;
@@ -712,7 +703,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
       theListener.ProcessInput();
       return true;
     }
-    case MotionNotify: {
+    case MotionNotify:
+    {
       if (theMsg.xmotion.window != (Window)myXWindow)
       {
         return false;

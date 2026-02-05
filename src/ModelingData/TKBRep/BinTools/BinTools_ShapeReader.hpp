@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinTools_ShapeSetBase.hpp>
 #include <BinTools_IStream.hpp>
 #include <NCollection_DataMap.hpp>
@@ -61,4 +60,3 @@ private:
   NCollection_DataMap<uint64_t, occ::handle<Poly_PolygonOnTriangulation>> myPolygonPos;
   NCollection_DataMap<uint64_t, occ::handle<Poly_Triangulation>>          myTriangulationPos;
 };
-

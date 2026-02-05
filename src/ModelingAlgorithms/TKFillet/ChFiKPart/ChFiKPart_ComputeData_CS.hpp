@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Cylinder.hpp>
 #include <gp_Circ.hpp>
@@ -16,4 +15,3 @@ void ChFiKPart_CornerSpine(const occ::handle<Adaptor3d_Surface>& S1,
                            gp_Circ&                              circ,
                            double&                               First,
                            double&                               Last);
-

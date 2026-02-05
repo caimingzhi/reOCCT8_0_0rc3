@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -79,6 +78,7 @@ private:
   int    myU;
   int    myV;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -121,5 +121,3 @@ inline double Bnd_Sphere::Radius() const
 {
   return myRadius;
 }
-
-

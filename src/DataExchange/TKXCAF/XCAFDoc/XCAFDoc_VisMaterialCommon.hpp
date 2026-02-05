@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -82,4 +81,3 @@ struct XCAFDoc_VisMaterialCommon
     OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, IsDefined)
   }
 };
-

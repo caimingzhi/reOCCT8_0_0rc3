@@ -81,32 +81,32 @@ void Standard_Type::Print(Standard_OStream& AStream) const
 namespace
 {
 
-struct typeNameHasher
-{
-  size_t operator()(const char* theType) const noexcept
+  struct typeNameHasher
   {
-    const int aLen = static_cast<int>(strlen(theType));
-    return opencascade::hashBytes(theType, aLen);
+    size_t operator()(const char* theType) const noexcept
+    {
+      const int aLen = static_cast<int>(strlen(theType));
+      return opencascade::hashBytes(theType, aLen);
+    }
+
+    bool operator()(const char* theType1, const char* theType2) const noexcept
+    {
+      return strcmp(theType1, theType2) == 0;
+    }
+  };
+
+  using registry_type = NCollection_DataMap<const char*, Standard_Type*, typeNameHasher>;
+
+  // Registry is made static in the function to ensure that it gets
+  // initialized by the time of first access
+  registry_type& GetRegistry()
+  {
+    static registry_type theRegistry(2048, NCollection_BaseAllocator::CommonBaseAllocator());
+    return theRegistry;
   }
 
-  bool operator()(const char* theType1, const char* theType2) const noexcept
-  {
-    return strcmp(theType1, theType2) == 0;
-  }
-};
-
-using registry_type = NCollection_DataMap<const char*, Standard_Type*, typeNameHasher>;
-
-// Registry is made static in the function to ensure that it gets
-// initialized by the time of first access
-registry_type& GetRegistry()
-{
-  static registry_type theRegistry(2048, NCollection_BaseAllocator::CommonBaseAllocator());
-  return theRegistry;
-}
-
-// To initialize theRegistry map as soon as possible to be destroyed the latest
-occ::handle<Standard_Type> theType = STANDARD_TYPE(Standard_Transient);
+  // To initialize theRegistry map as soon as possible to be destroyed the latest
+  occ::handle<Standard_Type> theType = STANDARD_TYPE(Standard_Transient);
 } // namespace
 
 Standard_Type* Standard_Type::Register(const std::type_info&             theInfo,

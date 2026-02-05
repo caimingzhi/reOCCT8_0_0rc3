@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericEmpty.hpp>
 class TDF_Label;
 class gp_Lin;
@@ -41,4 +40,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataXtd_Axis, TDataStd_GenericEmpty)
 };
-

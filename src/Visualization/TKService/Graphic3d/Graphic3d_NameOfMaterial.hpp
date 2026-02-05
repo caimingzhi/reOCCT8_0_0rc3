@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! List of named materials (predefined presets).
 //! Each preset defines either physical (having natural color) or generic (mutable color) material
 //! (@sa Graphic3d_TypeOfMaterial).
@@ -64,4 +63,3 @@ enum Graphic3d_NameOfMaterial
   Graphic3d_NOM_DEFAULT       = Graphic3d_NameOfMaterial_DEFAULT,
   Graphic3d_NOM_UserDefined   = Graphic3d_NameOfMaterial_UserDefined
 };
-

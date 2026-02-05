@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericEmpty.hpp>
 class TDF_Label;
 class gp_Pln;
@@ -39,4 +38,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataXtd_Plane, TDataStd_GenericEmpty)
 };
-

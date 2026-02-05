@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -79,4 +78,3 @@ public:
     TransferManifoldSolid(const occ::handle<IGESSolid_ManifoldSolid>& start,
                           const Message_ProgressRange& theProgress = Message_ProgressRange());
 };
-

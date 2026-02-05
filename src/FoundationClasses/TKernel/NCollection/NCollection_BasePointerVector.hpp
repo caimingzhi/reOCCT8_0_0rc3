@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Allocator.hpp>
@@ -88,4 +87,3 @@ private:
   void**                       myArray    = nullptr; //! Array of pointers
   NCollection_Allocator<void*> myAllocator;
 };
-

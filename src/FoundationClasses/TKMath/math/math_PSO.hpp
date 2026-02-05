@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_MultipleVarFunction.hpp>
 #include <math_Vector.hpp>
 
@@ -87,4 +86,3 @@ private:
   int                       myNbParticles; // Particles number.
   int                       myNbIter;
 };
-

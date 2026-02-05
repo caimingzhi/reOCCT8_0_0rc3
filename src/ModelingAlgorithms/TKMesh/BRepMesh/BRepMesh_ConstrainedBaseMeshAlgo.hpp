@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_BaseMeshAlgo.hpp>
 
 class BRepMesh_Delaun;
@@ -33,4 +32,3 @@ protected:
   {
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 typedef int MeshVS_BuilderPriority;
 
 enum
@@ -13,4 +12,3 @@ enum
   MeshVS_BP_User       = 30,
   MeshVS_BP_Default    = MeshVS_BP_User
 };
-

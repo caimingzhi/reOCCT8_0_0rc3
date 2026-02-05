@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <algorithm>
 #include <cmath>
 #include <climits>
@@ -18,6 +17,7 @@
 //! Equivalent to std::abs.
 Standard_DEPRECATED("This function duplicates std::abs and will be removed in future releases. "
                     "Use std::abs instead.")
+
 inline float Abs(const float theValue)
 {
   return std::abs(theValue);
@@ -81,6 +81,7 @@ inline float Abs(const float theValue)
 //! Equivalent to std::max.
 Standard_DEPRECATED("This function duplicates std::max and will be removed in future releases. "
                     "Use std::max instead.")
+
 constexpr float Max(const float theValue1, const float theValue2)
 {
   return (std::max)(theValue1, theValue2);
@@ -90,8 +91,8 @@ constexpr float Max(const float theValue1, const float theValue2)
 //! Equivalent to std::min.
 Standard_DEPRECATED("This function duplicates std::min and will be removed in future releases. "
                     "Use std::min instead.")
+
 constexpr float Min(const float theValue1, const float theValue2)
 {
   return (std::min)(theValue1, theValue2);
 }
-

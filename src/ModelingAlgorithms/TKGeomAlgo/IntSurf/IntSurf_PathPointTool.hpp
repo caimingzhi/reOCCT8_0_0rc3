@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -59,6 +58,7 @@ public:
   //! An exception is raised if Mult<=0 or Mult>multiplicity.
   static void Parameters(const IntSurf_PathPoint& PStart, const int Mult, double& U, double& V);
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -121,5 +121,3 @@ inline void IntSurf_PathPointTool::Parameters(const IntSurf_PathPoint& PStart,
 {
   PStart.Parameters(Mult, U, V);
 }
-
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_Packet.hpp>
 
 #include <TCollection_AsciiString.hpp>
@@ -108,4 +107,3 @@ protected:
   double           myPtsStartBase; //!< start time
   double           myDuration;     //!< duration
 };
-

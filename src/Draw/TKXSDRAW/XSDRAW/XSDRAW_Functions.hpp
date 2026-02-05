@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines additional commands for XSDRAW to :
 //! - control of initialisation (xinit, xnorm, newmodel)
 //! - analyse of the result of a transfer (recorded in a
@@ -17,4 +16,3 @@ public:
   //! Defines and loads all basic functions for XSDRAW (as ActFunc)
   Standard_EXPORT static void Init();
 };
-

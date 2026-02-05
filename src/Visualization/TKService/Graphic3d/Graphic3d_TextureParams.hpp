@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_LevelOfTextureAnisotropy.hpp>
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
@@ -136,4 +135,3 @@ private:
   bool                   myToRepeat;        //!< flag to repeat (true) or wrap (false) texture coordinates out of [0,1] range
   // clang-format on
 };
-

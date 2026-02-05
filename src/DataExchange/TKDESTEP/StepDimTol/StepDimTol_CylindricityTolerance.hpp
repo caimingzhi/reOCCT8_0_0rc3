@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepDimTol_GeometricTolerance.hpp>
@@ -15,4 +14,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepDimTol_CylindricityTolerance, StepDimTol_GeometricTolerance)
 };
-

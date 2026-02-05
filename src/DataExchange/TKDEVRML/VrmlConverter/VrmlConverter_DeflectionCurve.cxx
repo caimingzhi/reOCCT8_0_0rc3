@@ -127,7 +127,8 @@ static void DrawCurve(Adaptor3d_Curve&                         aCurve,
 
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Vec V;
       key  = true;
       HAV1 = new NCollection_HArray1<gp_Vec>(1, 2);
@@ -152,7 +153,8 @@ static void DrawCurve(Adaptor3d_Curve&                         aCurve,
       HAI1->SetValue(3, -1);
     }
     break;
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       double Radius = aCurve.Circle().Radius();
       if (!Precision::IsInfinite(Radius))
       {
@@ -195,7 +197,8 @@ static void DrawCurve(Adaptor3d_Curve&                         aCurve,
     }
     break;
 
-    default: {
+    default:
+    {
       GCPnts_QuasiUniformDeflection Algo(aCurve, TheDeflection, U1, U2);
       if (Algo.IsDone())
       {

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_ProgramError.hpp>
 
 //!@file
@@ -191,7 +190,6 @@ struct Standard_Static_Assert<true>
 //! evaluates to false
 #define Standard_STATIC_ASSERT(theExpr) Standard_Static_Assert<theExpr>::assert_ok();
 
-
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

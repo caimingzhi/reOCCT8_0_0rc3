@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -102,4 +101,3 @@ private:
 #undef TheCurveTool_hxx
 #undef IntCurve_Polygon2dGen
 #undef IntCurve_Polygon2dGen_hxx
-

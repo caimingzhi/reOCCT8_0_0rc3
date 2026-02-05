@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_LabelIterator.hpp>
 
 /**
@@ -39,5 +38,5 @@ public:
 //! Define handle class for TObj_ReferenceIterator
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

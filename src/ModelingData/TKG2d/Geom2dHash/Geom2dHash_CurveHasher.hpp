@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <cstddef>
 
@@ -17,4 +16,3 @@ struct Geom2dHash_CurveHasher
   Standard_EXPORT bool operator()(const occ::handle<Geom2d_Curve>& theCurve1,
                                   const occ::handle<Geom2d_Curve>& theCurve2) const noexcept;
 };
-

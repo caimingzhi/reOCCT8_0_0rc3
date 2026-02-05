@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <MeshVS_PrsBuilder.hpp>
 #include <NCollection_Sequence.hpp>
 #include <Standard_Integer.hpp>
@@ -208,4 +207,3 @@ private:
   occ::handle<MeshVS_DataSource>                       myDataSource;
   MeshVS_MeshSelectionMethod                           mySelectionMethod;
 };
-

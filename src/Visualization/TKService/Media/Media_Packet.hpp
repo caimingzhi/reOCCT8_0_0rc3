@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
@@ -63,4 +62,3 @@ protected:
   AVPacket* myPacket;      //!< packet
   double    myDurationSec; //!< packet duration in seconds
 };
-

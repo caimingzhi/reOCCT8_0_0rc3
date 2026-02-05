@@ -1,19 +1,3 @@
-// Created on: 1996-07-12
-// Created by: Stagiaire Mary FABIEN
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepTools_NurbsConvertModification.hpp>
 
 #include <BRep_GCurve.hpp>
@@ -57,169 +41,169 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepTools_NurbsConvertModification, BRepTools_CopyMod
 //
 namespace
 {
-static void GeomLib_ChangeUBounds(occ::handle<Geom_BSplineSurface>& aSurface,
-                                  const double                      newU1,
-                                  const double                      newU2)
-{
-  NCollection_Array1<double> knots(1, aSurface->NbUKnots());
-  aSurface->UKnots(knots);
-  BSplCLib::Reparametrize(newU1, newU2, knots);
-  aSurface->SetUKnots(knots);
-}
-
-static void GeomLib_ChangeVBounds(occ::handle<Geom_BSplineSurface>& aSurface,
-                                  const double                      newV1,
-                                  const double                      newV2)
-{
-  NCollection_Array1<double> knots(1, aSurface->NbVKnots());
-  aSurface->VKnots(knots);
-  BSplCLib::Reparametrize(newV1, newV2, knots);
-  aSurface->SetVKnots(knots);
-}
-
-// find 3D curve from theEdge in theMap, and return the transformed curve or NULL
-static occ::handle<Geom_Curve> newCurve(
-  const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
-                                   occ::handle<Standard_Transient>>& theMap,
-  const TopoDS_Edge&                                                 theEdge,
-  double&                                                            theFirst,
-  double&                                                            theLast)
-{
-  occ::handle<Geom_Curve> aNewCurve;
-
-  TopLoc_Location         aLoc;
-  occ::handle<Geom_Curve> aCurve = BRep_Tool::Curve(theEdge, aLoc, theFirst, theLast);
-  if (!aCurve.IsNull() && theMap.Contains(aCurve))
+  static void GeomLib_ChangeUBounds(occ::handle<Geom_BSplineSurface>& aSurface,
+                                    const double                      newU1,
+                                    const double                      newU2)
   {
-    aNewCurve = occ::down_cast<Geom_Curve>(theMap.FindFromKey(aCurve));
-    aNewCurve = occ::down_cast<Geom_Curve>(aNewCurve->Transformed(aLoc.Transformation()));
+    NCollection_Array1<double> knots(1, aSurface->NbUKnots());
+    aSurface->UKnots(knots);
+    BSplCLib::Reparametrize(newU1, newU2, knots);
+    aSurface->SetUKnots(knots);
   }
-  return aNewCurve;
-}
 
-// find 2D curve from theEdge on theFace in theMap, and return the transformed curve or NULL
-static occ::handle<Geom2d_Curve> newCurve(
-  const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
-                                   occ::handle<Standard_Transient>>& theMap,
-  const TopoDS_Edge&                                                 theEdge,
-  const TopoDS_Face&                                                 theFace,
-  double&                                                            theFirst,
-  double&                                                            theLast)
-{
-  occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(theEdge, theFace, theFirst, theLast);
-  return (!aC2d.IsNull() && theMap.Contains(aC2d))
-           ? occ::down_cast<Geom2d_Curve>(theMap.FindFromKey(aC2d))
-           : occ::handle<Geom2d_Curve>();
-}
-
-// find surface from theFace in theMap, and return the transformed surface or NULL
-static occ::handle<Geom_Surface> newSurface(
-  const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
-                                   occ::handle<Standard_Transient>>& theMap,
-  const TopoDS_Face&                                                 theFace)
-{
-  occ::handle<Geom_Surface> aNewSurf;
-
-  TopLoc_Location           aLoc;
-  occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(theFace, aLoc);
-  if (!aSurf.IsNull() && theMap.Contains(aSurf))
+  static void GeomLib_ChangeVBounds(occ::handle<Geom_BSplineSurface>& aSurface,
+                                    const double                      newV1,
+                                    const double                      newV2)
   {
-    aNewSurf = occ::down_cast<Geom_Surface>(theMap.FindFromKey(aSurf));
-    aNewSurf = occ::down_cast<Geom_Surface>(aNewSurf->Transformed(aLoc.Transformation()));
+    NCollection_Array1<double> knots(1, aSurface->NbVKnots());
+    aSurface->VKnots(knots);
+    BSplCLib::Reparametrize(newV1, newV2, knots);
+    aSurface->SetVKnots(knots);
   }
-  return aNewSurf;
-}
 
-static bool newParameter(const gp_Pnt&                  thePoint,
-                         const occ::handle<Geom_Curve>& theCurve,
-                         const double                   theFirst,
-                         const double                   theLast,
-                         const double                   theTol,
-                         double&                        theParam)
-{
-  GeomAdaptor_Curve   anAdaptor(theCurve);
-  Extrema_LocateExtPC proj(thePoint,
-                           anAdaptor,
-                           theParam,
-                           theFirst,
-                           theLast,
-                           Precision::PConfusion());
-  if (proj.IsDone())
+  // find 3D curve from theEdge in theMap, and return the transformed curve or NULL
+  static occ::handle<Geom_Curve> newCurve(
+    const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
+                                     occ::handle<Standard_Transient>>& theMap,
+    const TopoDS_Edge&                                                 theEdge,
+    double&                                                            theFirst,
+    double&                                                            theLast)
   {
-    double aDist2Min = proj.SquareDistance();
-    if (aDist2Min < theTol * theTol)
+    occ::handle<Geom_Curve> aNewCurve;
+
+    TopLoc_Location         aLoc;
+    occ::handle<Geom_Curve> aCurve = BRep_Tool::Curve(theEdge, aLoc, theFirst, theLast);
+    if (!aCurve.IsNull() && theMap.Contains(aCurve))
     {
-      theParam = proj.Point().Parameter();
-      return true;
+      aNewCurve = occ::down_cast<Geom_Curve>(theMap.FindFromKey(aCurve));
+      aNewCurve = occ::down_cast<Geom_Curve>(aNewCurve->Transformed(aLoc.Transformation()));
     }
+    return aNewCurve;
   }
-  return false;
-}
 
-static bool newParameter(const gp_Pnt2d&                  theUV,
-                         const occ::handle<Geom2d_Curve>& theCurve2d,
-                         const double                     theFirst,
-                         const double                     theLast,
-                         const double                     theTol,
-                         double&                          theParam)
-{
-  Geom2dAdaptor_Curve   anAdaptor(theCurve2d);
-  Extrema_LocateExtPC2d aProj(theUV, anAdaptor, theParam, Precision::PConfusion());
-  if (aProj.IsDone())
+  // find 2D curve from theEdge on theFace in theMap, and return the transformed curve or NULL
+  static occ::handle<Geom2d_Curve> newCurve(
+    const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
+                                     occ::handle<Standard_Transient>>& theMap,
+    const TopoDS_Edge&                                                 theEdge,
+    const TopoDS_Face&                                                 theFace,
+    double&                                                            theFirst,
+    double&                                                            theLast)
   {
-    double aDist2Min = aProj.SquareDistance();
-    if (aDist2Min < theTol * theTol)
-    {
-      theParam = aProj.Point().Parameter();
-      return true;
-    }
+    occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(theEdge, theFace, theFirst, theLast);
+    return (!aC2d.IsNull() && theMap.Contains(aC2d))
+             ? occ::down_cast<Geom2d_Curve>(theMap.FindFromKey(aC2d))
+             : occ::handle<Geom2d_Curve>();
   }
-  else
+
+  // find surface from theFace in theMap, and return the transformed surface or NULL
+  static occ::handle<Geom_Surface> newSurface(
+    const NCollection_IndexedDataMap<occ::handle<Standard_Transient>,
+                                     occ::handle<Standard_Transient>>& theMap,
+    const TopoDS_Face&                                                 theFace)
   {
-    // Try to use general extrema to find the parameter, because Extrema_LocateExtPC2d
-    // sometimes could not find a solution if the parameter's first approach is several
-    // spans away from the expected solution (test bugs/modalg_7/bug28722).
-    Extrema_ExtPC2d anExt(theUV, anAdaptor, theFirst, theLast);
-    if (anExt.IsDone())
+    occ::handle<Geom_Surface> aNewSurf;
+
+    TopLoc_Location           aLoc;
+    occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(theFace, aLoc);
+    if (!aSurf.IsNull() && theMap.Contains(aSurf))
     {
-      int    aMinInd    = 0;
-      double aMinSqDist = Precision::Infinite();
-      for (int anIndex = 1; anIndex <= anExt.NbExt(); ++anIndex)
-        if (anExt.SquareDistance(anIndex) < aMinSqDist)
-        {
-          aMinSqDist = anExt.SquareDistance(anIndex);
-          aMinInd    = anIndex;
-        }
-      if (aMinSqDist < theTol * theTol)
+      aNewSurf = occ::down_cast<Geom_Surface>(theMap.FindFromKey(aSurf));
+      aNewSurf = occ::down_cast<Geom_Surface>(aNewSurf->Transformed(aLoc.Transformation()));
+    }
+    return aNewSurf;
+  }
+
+  static bool newParameter(const gp_Pnt&                  thePoint,
+                           const occ::handle<Geom_Curve>& theCurve,
+                           const double                   theFirst,
+                           const double                   theLast,
+                           const double                   theTol,
+                           double&                        theParam)
+  {
+    GeomAdaptor_Curve   anAdaptor(theCurve);
+    Extrema_LocateExtPC proj(thePoint,
+                             anAdaptor,
+                             theParam,
+                             theFirst,
+                             theLast,
+                             Precision::PConfusion());
+    if (proj.IsDone())
+    {
+      double aDist2Min = proj.SquareDistance();
+      if (aDist2Min < theTol * theTol)
       {
-        theParam = anExt.Point(aMinInd).Parameter();
+        theParam = proj.Point().Parameter();
         return true;
       }
     }
+    return false;
   }
-  return false;
-}
 
-static bool newUV(const gp_Pnt&                    thePoint,
-                  const occ::handle<Geom_Surface>& theSurf,
-                  const double                     theTol,
-                  gp_Pnt2d&                        theUV)
-{
-  GeomAdaptor_Surface    anAdaptor(theSurf);
-  Extrema_GenLocateExtPS aProj(anAdaptor);
-  aProj.Perform(thePoint, theUV.X(), theUV.Y());
-  if (aProj.IsDone())
+  static bool newParameter(const gp_Pnt2d&                  theUV,
+                           const occ::handle<Geom2d_Curve>& theCurve2d,
+                           const double                     theFirst,
+                           const double                     theLast,
+                           const double                     theTol,
+                           double&                          theParam)
   {
-    double aDist2Min = aProj.SquareDistance();
-    if (aDist2Min < theTol * theTol)
+    Geom2dAdaptor_Curve   anAdaptor(theCurve2d);
+    Extrema_LocateExtPC2d aProj(theUV, anAdaptor, theParam, Precision::PConfusion());
+    if (aProj.IsDone())
     {
-      gp_XY& aUV = theUV.ChangeCoord();
-      aProj.Point().Parameter(aUV.ChangeCoord(1), aUV.ChangeCoord(2));
-      return true;
+      double aDist2Min = aProj.SquareDistance();
+      if (aDist2Min < theTol * theTol)
+      {
+        theParam = aProj.Point().Parameter();
+        return true;
+      }
     }
+    else
+    {
+      // Try to use general extrema to find the parameter, because Extrema_LocateExtPC2d
+      // sometimes could not find a solution if the parameter's first approach is several
+      // spans away from the expected solution (test bugs/modalg_7/bug28722).
+      Extrema_ExtPC2d anExt(theUV, anAdaptor, theFirst, theLast);
+      if (anExt.IsDone())
+      {
+        int    aMinInd    = 0;
+        double aMinSqDist = Precision::Infinite();
+        for (int anIndex = 1; anIndex <= anExt.NbExt(); ++anIndex)
+          if (anExt.SquareDistance(anIndex) < aMinSqDist)
+          {
+            aMinSqDist = anExt.SquareDistance(anIndex);
+            aMinInd    = anIndex;
+          }
+        if (aMinSqDist < theTol * theTol)
+        {
+          theParam = anExt.Point(aMinInd).Parameter();
+          return true;
+        }
+      }
+    }
+    return false;
   }
-  return false;
-}
+
+  static bool newUV(const gp_Pnt&                    thePoint,
+                    const occ::handle<Geom_Surface>& theSurf,
+                    const double                     theTol,
+                    gp_Pnt2d&                        theUV)
+  {
+    GeomAdaptor_Surface    anAdaptor(theSurf);
+    Extrema_GenLocateExtPS aProj(anAdaptor);
+    aProj.Perform(thePoint, theUV.X(), theUV.Y());
+    if (aProj.IsDone())
+    {
+      double aDist2Min = aProj.SquareDistance();
+      if (aDist2Min < theTol * theTol)
+      {
+        gp_XY& aUV = theUV.ChangeCoord();
+        aProj.Point().Parameter(aUV.ChangeCoord(1), aUV.ChangeCoord(2));
+        return true;
+      }
+    }
+    return false;
+  }
 } // namespace
 
 //=================================================================================================

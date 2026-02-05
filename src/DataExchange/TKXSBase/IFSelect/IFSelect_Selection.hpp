@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -57,4 +56,3 @@ protected:
   //! Default answer is False. Can be redefined.
   Standard_EXPORT virtual bool HasUniqueResult() const;
 };
-

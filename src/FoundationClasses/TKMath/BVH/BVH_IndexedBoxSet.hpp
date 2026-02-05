@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_BoxSet.hpp>
 
 //! Implements easy to use interfaces for adding the elements into
@@ -82,4 +81,3 @@ public: //! @name Necessary overrides for BVH construction
 protected: //! @name Fields
   std::vector<int> myIndices;
 };
-

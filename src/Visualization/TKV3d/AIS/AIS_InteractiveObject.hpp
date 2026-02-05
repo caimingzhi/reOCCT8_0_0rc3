@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_KindOfInteractive.hpp>
 #include <AIS_DragAction.hpp>
 #include <SelectMgr_SelectableObject.hpp>
@@ -140,4 +139,3 @@ protected:
   // clang-format on
   occ::handle<Standard_Transient> myOwner; //!< application-specific owner object
 };
-

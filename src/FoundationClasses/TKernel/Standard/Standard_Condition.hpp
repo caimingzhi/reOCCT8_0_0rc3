@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Macro.hpp>
 
@@ -87,4 +86,3 @@ private:
   std::condition_variable myCondition;
   std::atomic<bool>       myFlag;
 };
-

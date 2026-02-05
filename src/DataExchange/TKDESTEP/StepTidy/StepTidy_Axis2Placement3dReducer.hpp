@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 #include <StepTidy_Axis2Placement3dHasher.hpp>
 
@@ -141,4 +140,3 @@ private:
                                       const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                       const occ::handle<Standard_Transient>&        theSharing);
 };
-

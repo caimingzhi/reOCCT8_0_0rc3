@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Indicates the outcome of the
 //! construction of an edge, i.e. whether it has been successful or
 //! not, as explained below:
@@ -35,4 +34,3 @@ enum BRepBuilderAPI_EdgeError
   BRepBuilderAPI_DifferentsPointAndParameter,
   BRepBuilderAPI_LineThroughIdenticPoints
 };
-

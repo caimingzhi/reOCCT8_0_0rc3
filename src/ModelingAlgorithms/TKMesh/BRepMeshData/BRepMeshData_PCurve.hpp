@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_PCurve.hpp>
 #include <Standard_Type.hpp>
 #include <NCollection_IncAllocator.hpp>
@@ -56,4 +55,3 @@ private:
   IMeshData::Model::SequenceOfReal    myParameters;
   IMeshData::Model::SequenceOfInteger myIndices;
 };
-

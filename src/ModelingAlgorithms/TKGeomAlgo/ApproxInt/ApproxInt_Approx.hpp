@@ -249,7 +249,8 @@ void ApproxInt_Approx::Perform(const ThePSurface&           Surf1,
         Quad.SetValue(ThePSurfaceTool::Cone(Surf1));
         break;
 
-      default: {
+      default:
+      {
         SecondIsImplicit = true;
         switch (typeS2)
         {

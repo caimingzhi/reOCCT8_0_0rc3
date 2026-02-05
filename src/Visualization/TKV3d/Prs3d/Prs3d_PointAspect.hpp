@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_BasicAspect.hpp>
 #include <Graphic3d_AspectMarker3d.hpp>
 #include <Graphic3d_MarkerImage.hpp>
@@ -61,4 +60,3 @@ public:
 protected:
   occ::handle<Graphic3d_AspectMarker3d> myAspect;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -294,4 +293,3 @@ private:
   occ::handle<Interface_InterfaceModel>               themodel;
   int                                                 thetouched;
 };
-

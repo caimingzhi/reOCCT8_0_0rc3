@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <CDM_Document.hpp>
@@ -47,4 +46,3 @@ private:
 
   NCollection_List<occ::handle<CDM_Document>> myDocuments;
 };
-

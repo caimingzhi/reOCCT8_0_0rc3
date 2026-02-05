@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -33,4 +32,3 @@ public:
 private:
   int mycase;
 };
-

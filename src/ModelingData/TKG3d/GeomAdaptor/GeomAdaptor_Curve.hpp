@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <BSplCLib_Cache.hpp>
 #include <Geom_Curve.hpp>
@@ -253,4 +252,3 @@ private:
   double                  myLast;
   CurveDataVariant myCurveData; ///< Curve-specific evaluation data (BSpline, Bezier, offset, etc.)
 };
-

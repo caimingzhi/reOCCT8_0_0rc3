@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -88,4 +87,3 @@ protected:
   TDataStd_RealEnum myDimension;
   Standard_GUID     myID;
 };
-

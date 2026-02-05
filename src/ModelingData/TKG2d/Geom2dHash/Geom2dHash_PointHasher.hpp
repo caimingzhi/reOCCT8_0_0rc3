@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <gp_Pnt2d.hpp>
 #include <cmath>
@@ -30,4 +29,3 @@ struct Geom2dHash_PointHasher
            && std::abs(thePoint1.Y() - thePoint2.Y()) <= aTolerance;
   }
 };
-

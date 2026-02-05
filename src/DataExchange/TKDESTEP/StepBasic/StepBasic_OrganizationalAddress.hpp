@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -68,4 +67,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_Organization>>> organizations;
   occ::handle<TCollection_HAsciiString>                                 description;
 };
-

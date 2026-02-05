@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <gp_Pnt.hpp>
@@ -224,4 +223,3 @@ private:
   BlendFunc_SectionShape         mySShape;
   Convert_ParameterisationType   myTConv;
 };
-

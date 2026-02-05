@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRBRep_TheCurveLocatorOfTheProjPCurOfCInter.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -255,4 +254,3 @@ private:
 #undef IntCurve_ExactIntersectionPointOfTheIntPCurvePCurve_hxx
 #undef IntCurve_IntCurveCurveGen
 #undef IntCurve_IntCurveCurveGen_hxx
-

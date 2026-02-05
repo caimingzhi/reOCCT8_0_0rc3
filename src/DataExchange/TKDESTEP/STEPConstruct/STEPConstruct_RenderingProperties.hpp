@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Quantity_Color.hpp>
 #include <Quantity_ColorRGBA.hpp>
 #include <StepVisual_ShadingSurfaceMethod.hpp>
@@ -219,4 +218,3 @@ private:
   //! Specular color, applyed on the surface color
   std::pair<Quantity_Color, bool> mySpecularColour;
 };
-

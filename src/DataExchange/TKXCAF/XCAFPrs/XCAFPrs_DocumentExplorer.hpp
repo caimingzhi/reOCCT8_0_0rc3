@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vector.hpp>
 #include <XCAFPrs_DocumentNode.hpp>
 #include <TDF_Label.hpp>
@@ -166,4 +165,3 @@ protected:
   XCAFPrs_DocumentNode          myCurrent;                //!< current label info
   XCAFPrs_DocumentExplorerFlags myFlags;                  //!< iteration flags
 };
-

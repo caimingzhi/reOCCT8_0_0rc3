@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec3.hpp>
 
 //! Generic 4-components vector.
@@ -381,4 +380,3 @@ inline constexpr NCollection_Vec4<double>& NCollection_Vec4<double>::operator/=(
   Multiply(1.0 / theInvFactor);
   return *this;
 }
-

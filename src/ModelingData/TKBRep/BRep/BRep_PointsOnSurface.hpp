@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRep_PointRepresentation.hpp>
@@ -30,4 +29,3 @@ protected:
 private:
   occ::handle<Geom_Surface> mySurface;
 };
-

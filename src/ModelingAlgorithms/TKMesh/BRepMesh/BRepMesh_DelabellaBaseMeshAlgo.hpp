@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_CustomBaseMeshAlgo.hpp>
 
 //! Class provides base functionality to build face triangulation using Delabella project.
@@ -20,4 +19,3 @@ protected:
   //! Builds base triangulation using Delabella project.
   Standard_EXPORT void buildBaseTriangulation() override;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Class is a container of the flags used
 //! by intersection algorithm
 class BOPAlgo_SectionAttribute
@@ -47,4 +46,3 @@ private:
   bool myPCurve1;
   bool myPCurve2;
 };
-

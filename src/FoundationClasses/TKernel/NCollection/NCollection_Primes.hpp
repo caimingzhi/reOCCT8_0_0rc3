@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 //! Namespace provides a collection of prime numbers.
@@ -17,8 +16,7 @@
 //! 301989889, 573308929, 1019215873, 2038431745
 namespace NCollection_Primes
 {
-//! Returns the next prime number greater than or equal to theN.
-//! If theN exceeds the largest available prime, returns theN + 1.
-Standard_EXPORT int NextPrimeForMap(const int theN) noexcept;
+  //! Returns the next prime number greater than or equal to theN.
+  //! If theN exceeds the largest available prime, returns theN + 1.
+  Standard_EXPORT int NextPrimeForMap(const int theN) noexcept;
 }; // namespace NCollection_Primes
-

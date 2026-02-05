@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Provides information about the continuity of a curve:
 //! -   C0: only geometric continuity.
 //! -   G1: for each point on the curve, the tangent vectors
@@ -38,4 +37,3 @@ enum GeomAbs_Shape
   GeomAbs_C3,
   GeomAbs_CN
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message.hpp>
 #include <Message_Messenger.hpp>
 #include <Message_ProgressRange.hpp>
@@ -26,7 +25,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <TCollection_AsciiString.hpp>
 
 //! Sub-mesh definition for OBJ reader.
@@ -37,7 +35,6 @@ struct RWObj_SubMesh
   TCollection_AsciiString SmoothGroup; //!< name of active smoothing group
   TCollection_AsciiString Material;    //!< name of active material
 };
-
 
 // Author: Kirill Gavrilov
 // Copyright (c) 2017-2019 OPEN CASCADE SAS
@@ -53,7 +50,6 @@ struct RWObj_SubMesh
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Reason for creating a new group within OBJ reader.
 enum RWObj_SubMeshReason
 {
@@ -63,7 +59,6 @@ enum RWObj_SubMeshReason
   RWObj_SubMeshReason_NewMaterial, //!< new material (usemtl item)
   RWObj_SubMeshReason_NewSmoothGroup //!< new smoothing group (s item)
 };
-
 
 #include <RWObj_Tools.hpp>
 #include <Standard_HashUtils.hpp>
@@ -422,4 +417,3 @@ protected:
   RWObj_SubMesh    myActiveSubMesh; //!< active sub-mesh definition
   std::vector<int> myCurrElem;      //!< indices for the current element
 };
-

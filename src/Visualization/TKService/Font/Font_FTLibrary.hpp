@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
 
@@ -35,4 +34,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(Font_FTLibrary, Standard_Transient) // Type definition
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_OffsetCurve.hpp>
 #include <GeomHash_DirectionHasher.hpp>
@@ -40,4 +39,3 @@ struct GeomHash_OffsetCurveHasher
            && aDirHasher(theCurve1->Direction(), theCurve2->Direction());
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -49,4 +48,3 @@ inline void ShallowDump(const occ::handle<TopLoc_Datum3D>& me, Standard_OStream&
 {
   me->ShallowDump(S);
 }
-

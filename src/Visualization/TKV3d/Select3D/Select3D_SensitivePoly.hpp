@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Circ.hpp>
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -28,7 +27,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <gp_Pnt.hpp>
 
 struct Select3D_Pnt
@@ -47,8 +45,6 @@ struct Select3D_Pnt
     return *this;
   }
 };
-
-
 
 // A framework for safe management of Select3D_SensitivePoly polygons of 3D points
 class Select3D_PointData
@@ -116,7 +112,6 @@ private:
   Select3D_Pnt* mypolyg3d;
   int           mynbpoints;
 };
-
 
 #include <Select3D_SensitiveSet.hpp>
 #include <Select3D_TypeOfSensitivity.hpp>
@@ -248,4 +243,3 @@ protected:
   mutable bool         myIsComputed;     //!< Is true if all the points and data structures of polygon are initialized
   // clang-format on
 };
-

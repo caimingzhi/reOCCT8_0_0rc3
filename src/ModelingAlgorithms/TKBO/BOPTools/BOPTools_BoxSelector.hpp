@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Traverse.hpp>
 #include <BVH_BoxSet.hpp>
 
@@ -61,4 +60,3 @@ protected:                              //! @name Fields
   BVH_Box<double, Dimension> myBox;     //!< Selection box
   NCollection_List<int>      myIndices; //!< Selected indices
 };
-

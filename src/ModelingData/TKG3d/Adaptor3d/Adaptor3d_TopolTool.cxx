@@ -798,17 +798,20 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
   GeomAbs_SurfaceType typS = myS->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       nbsv = 2;
       nbsu = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       nbsv = 3 + myS->NbVPoles();
       nbsu = 3 + myS->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       nbsv = myS->NbVKnots();
       nbsv *= myS->VDegree();
       if (nbsv < 4)
@@ -824,12 +827,14 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
     case GeomAbs_Sphere:
     case GeomAbs_Torus:
     case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       nbsv = 15;
       nbsu = 15;
     }
     break;
-    default: {
+    default:
+    {
       nbsu = 10;
       nbsv = 10;
     }

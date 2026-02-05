@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -82,4 +81,3 @@ private:
   occ::handle<Transfer_ActorOfProcessForFinder> thenext;
   bool                                          thelast;
 };
-

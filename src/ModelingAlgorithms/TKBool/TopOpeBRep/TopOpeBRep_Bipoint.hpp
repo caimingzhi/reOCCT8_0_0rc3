@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -23,4 +22,3 @@ private:
   int myI1;
   int myI2;
 };
-

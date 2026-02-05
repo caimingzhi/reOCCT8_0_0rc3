@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_Format.hpp>
 #include <Image_CompressedFormat.hpp>
 #include <NCollection_Array1.hpp>
@@ -97,4 +96,3 @@ protected:
   bool           myIsCompleteMips;    //!< flag indicating complete mip map level set (up to 1x1 resolution)
   // clang-format on
 };
-

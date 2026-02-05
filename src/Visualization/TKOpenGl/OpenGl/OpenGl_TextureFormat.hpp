@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_CompressedFormat.hpp>
 #include <Image_Format.hpp>
 #include <OpenGl_GlCore13.hpp>
@@ -318,4 +317,3 @@ inline OpenGl_TextureFormat OpenGl_TextureFormat::Create()
   aFormat.SetPixelFormat(aPixelFormat);
   return aFormat;
 }
-

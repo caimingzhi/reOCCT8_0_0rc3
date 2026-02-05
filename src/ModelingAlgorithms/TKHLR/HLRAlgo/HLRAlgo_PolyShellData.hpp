@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box.hpp>
 #include <HLRAlgo_BiPoint.hpp>
 #include <NCollection_List.hpp>
@@ -42,4 +41,3 @@ private:
   NCollection_Array1<occ::handle<HLRAlgo_PolyData>> myHPolHi;
   NCollection_List<HLRAlgo_BiPoint>                 mySegList;
 };
-

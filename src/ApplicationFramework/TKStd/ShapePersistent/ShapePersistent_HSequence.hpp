@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NotImplemented.hpp>
 
 #include <StdObjMgt_Persistent.hpp>
@@ -136,4 +135,3 @@ const char* ShapePersistent_HSequence::instance<NCollection_HSequence<gp_Vec>>::
 
 template <>
 const char* ShapePersistent_HSequence::node<NCollection_HSequence<gp_Vec>>::PName() const;
-

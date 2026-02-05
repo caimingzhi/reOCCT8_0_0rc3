@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Poly_Triangulation.hpp>
 #include <RWMesh_CoordinateSystemConverter.hpp>
 
@@ -294,4 +293,3 @@ protected:
   bool                 myToPrintDebugMessages; //!< flag to print additional debug information
   // clang-format on
 };
-

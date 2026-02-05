@@ -29,185 +29,185 @@
 
 namespace
 {
-//! Print OpenVR compositor error.
-static const char* getVRCompositorError(vr::EVRCompositorError theVRError)
-{
-  switch (theVRError)
+  //! Print OpenVR compositor error.
+  static const char* getVRCompositorError(vr::EVRCompositorError theVRError)
   {
-    case vr::VRCompositorError_None:
-      return "None";
-    case vr::VRCompositorError_RequestFailed:
-      return "Request Failed";
-    case vr::VRCompositorError_IncompatibleVersion:
-      return "Incompatible Version";
-    case vr::VRCompositorError_DoNotHaveFocus:
-      return "Do not have focus";
-    case vr::VRCompositorError_InvalidTexture:
-      return "Invalid Texture";
-    case vr::VRCompositorError_IsNotSceneApplication:
-      return "Is not scene application";
-    case vr::VRCompositorError_TextureIsOnWrongDevice:
-      return "Texture is on wrong device";
-    case vr::VRCompositorError_TextureUsesUnsupportedFormat:
-      return "Texture uses unsupported format";
-    case vr::VRCompositorError_SharedTexturesNotSupported:
-      return "Shared textures not supported";
-    case vr::VRCompositorError_IndexOutOfRange:
-      return "Index out of range";
-    case vr::VRCompositorError_AlreadySubmitted:
-      return "Already submitted";
-    case vr::VRCompositorError_InvalidBounds:
-      return "Invalid Bounds";
-    case vr::VRCompositorError_AlreadySet:
-      return "Already set";
+    switch (theVRError)
+    {
+      case vr::VRCompositorError_None:
+        return "None";
+      case vr::VRCompositorError_RequestFailed:
+        return "Request Failed";
+      case vr::VRCompositorError_IncompatibleVersion:
+        return "Incompatible Version";
+      case vr::VRCompositorError_DoNotHaveFocus:
+        return "Do not have focus";
+      case vr::VRCompositorError_InvalidTexture:
+        return "Invalid Texture";
+      case vr::VRCompositorError_IsNotSceneApplication:
+        return "Is not scene application";
+      case vr::VRCompositorError_TextureIsOnWrongDevice:
+        return "Texture is on wrong device";
+      case vr::VRCompositorError_TextureUsesUnsupportedFormat:
+        return "Texture uses unsupported format";
+      case vr::VRCompositorError_SharedTexturesNotSupported:
+        return "Shared textures not supported";
+      case vr::VRCompositorError_IndexOutOfRange:
+        return "Index out of range";
+      case vr::VRCompositorError_AlreadySubmitted:
+        return "Already submitted";
+      case vr::VRCompositorError_InvalidBounds:
+        return "Invalid Bounds";
+      case vr::VRCompositorError_AlreadySet:
+        return "Already set";
+    }
+    return "UNKNOWN";
   }
-  return "UNKNOWN";
-}
 
-//! Print OpenVR input error.
-static const char* getVRInputError(vr::EVRInputError theVRError)
-{
-  switch (theVRError)
+  //! Print OpenVR input error.
+  static const char* getVRInputError(vr::EVRInputError theVRError)
   {
-    case vr::VRInputError_None:
-      return "None";
-    case vr::VRInputError_NameNotFound:
-      return "NameNotFound";
-    case vr::VRInputError_WrongType:
-      return "WrongType";
-    case vr::VRInputError_InvalidHandle:
-      return "InvalidHandle";
-    case vr::VRInputError_InvalidParam:
-      return "InvalidParam";
-    case vr::VRInputError_NoSteam:
-      return "NoSteam:";
-    case vr::VRInputError_MaxCapacityReached:
-      return "MaxCapacityReached";
-    case vr::VRInputError_IPCError:
-      return "IPCError";
-    case vr::VRInputError_NoActiveActionSet:
-      return "NoActiveActionSet";
-    case vr::VRInputError_InvalidDevice:
-      return "InvalidDevice";
-    case vr::VRInputError_InvalidSkeleton:
-      return "InvalidSkeleton";
-    case vr::VRInputError_InvalidBoneCount:
-      return "InvalidBoneCount";
-    case vr::VRInputError_InvalidCompressedData:
-      return "InvalidCompressedData";
-    case vr::VRInputError_NoData:
-      return "NoData";
-    case vr::VRInputError_BufferTooSmall:
-      return "BufferTooSmall";
-    case vr::VRInputError_MismatchedActionManifest:
-      return "MismatchedActionManifest";
-    case vr::VRInputError_MissingSkeletonData:
-      return "MissingSkeletonData";
-    case vr::VRInputError_InvalidBoneIndex:
-      return "InvalidBoneIndex";
-    case vr::VRInputError_InvalidPriority:
-      return "InvalidPriority";
-    case vr::VRInputError_PermissionDenied:
-      return "PermissionDenied";
-    case vr::VRInputError_InvalidRenderModel:
-      return "InvalidRenderModel";
+    switch (theVRError)
+    {
+      case vr::VRInputError_None:
+        return "None";
+      case vr::VRInputError_NameNotFound:
+        return "NameNotFound";
+      case vr::VRInputError_WrongType:
+        return "WrongType";
+      case vr::VRInputError_InvalidHandle:
+        return "InvalidHandle";
+      case vr::VRInputError_InvalidParam:
+        return "InvalidParam";
+      case vr::VRInputError_NoSteam:
+        return "NoSteam:";
+      case vr::VRInputError_MaxCapacityReached:
+        return "MaxCapacityReached";
+      case vr::VRInputError_IPCError:
+        return "IPCError";
+      case vr::VRInputError_NoActiveActionSet:
+        return "NoActiveActionSet";
+      case vr::VRInputError_InvalidDevice:
+        return "InvalidDevice";
+      case vr::VRInputError_InvalidSkeleton:
+        return "InvalidSkeleton";
+      case vr::VRInputError_InvalidBoneCount:
+        return "InvalidBoneCount";
+      case vr::VRInputError_InvalidCompressedData:
+        return "InvalidCompressedData";
+      case vr::VRInputError_NoData:
+        return "NoData";
+      case vr::VRInputError_BufferTooSmall:
+        return "BufferTooSmall";
+      case vr::VRInputError_MismatchedActionManifest:
+        return "MismatchedActionManifest";
+      case vr::VRInputError_MissingSkeletonData:
+        return "MissingSkeletonData";
+      case vr::VRInputError_InvalidBoneIndex:
+        return "InvalidBoneIndex";
+      case vr::VRInputError_InvalidPriority:
+        return "InvalidPriority";
+      case vr::VRInputError_PermissionDenied:
+        return "PermissionDenied";
+      case vr::VRInputError_InvalidRenderModel:
+        return "InvalidRenderModel";
+    }
+    return "UNKNOWN";
   }
-  return "UNKNOWN";
-}
 
-//! Convert OpenVR mat4x4 into OCCT mat4x4.
-static NCollection_Mat4<double> mat44vr2Occ(const vr::HmdMatrix44_t& theMat4)
-{
-  NCollection_Mat4<double> aMat4;
-  for (int aRow = 0; aRow < 4; ++aRow)
+  //! Convert OpenVR mat4x4 into OCCT mat4x4.
+  static NCollection_Mat4<double> mat44vr2Occ(const vr::HmdMatrix44_t& theMat4)
   {
-    aMat4.SetRow(aRow,
-                 NCollection_Vec4<double>(theMat4.m[aRow][0],
-                                          theMat4.m[aRow][1],
-                                          theMat4.m[aRow][2],
-                                          theMat4.m[aRow][3]));
+    NCollection_Mat4<double> aMat4;
+    for (int aRow = 0; aRow < 4; ++aRow)
+    {
+      aMat4.SetRow(aRow,
+                   NCollection_Vec4<double>(theMat4.m[aRow][0],
+                                            theMat4.m[aRow][1],
+                                            theMat4.m[aRow][2],
+                                            theMat4.m[aRow][3]));
+    }
+    return aMat4;
   }
-  return aMat4;
-}
 
-//! Convert OpenVR mat3x4 into OCCT gp_Trsf.
-static gp_Trsf mat34vr2OccTrsf(const vr::HmdMatrix34_t& theMat4)
-{
-  gp_Trsf aTrsf;
-  aTrsf.SetValues(theMat4.m[0][0],
-                  theMat4.m[0][1],
-                  theMat4.m[0][2],
-                  theMat4.m[0][3],
-                  theMat4.m[1][0],
-                  theMat4.m[1][1],
-                  theMat4.m[1][2],
-                  theMat4.m[1][3],
-                  theMat4.m[2][0],
-                  theMat4.m[2][1],
-                  theMat4.m[2][2],
-                  theMat4.m[2][3]);
-  return aTrsf;
-}
+  //! Convert OpenVR mat3x4 into OCCT gp_Trsf.
+  static gp_Trsf mat34vr2OccTrsf(const vr::HmdMatrix34_t& theMat4)
+  {
+    gp_Trsf aTrsf;
+    aTrsf.SetValues(theMat4.m[0][0],
+                    theMat4.m[0][1],
+                    theMat4.m[0][2],
+                    theMat4.m[0][3],
+                    theMat4.m[1][0],
+                    theMat4.m[1][1],
+                    theMat4.m[1][2],
+                    theMat4.m[1][3],
+                    theMat4.m[2][0],
+                    theMat4.m[2][1],
+                    theMat4.m[2][2],
+                    theMat4.m[2][3]);
+    return aTrsf;
+  }
 
-//! Convert OpenVR tracked pose.
-static Aspect_TrackedDevicePose poseVr2Occ(const vr::TrackedDevicePose_t& theVrPose,
-                                           const double                   theUnitFactor)
-{
-  Aspect_TrackedDevicePose aPose;
-  aPose.Velocity.SetCoord(theVrPose.vVelocity.v[0],
-                          theVrPose.vVelocity.v[1],
-                          theVrPose.vVelocity.v[2]);
-  aPose.AngularVelocity.SetCoord(theVrPose.vAngularVelocity.v[0],
-                                 theVrPose.vAngularVelocity.v[1],
-                                 theVrPose.vAngularVelocity.v[2]);
-  aPose.IsValidPose       = theVrPose.bPoseIsValid;
-  aPose.IsConnectedDevice = theVrPose.bDeviceIsConnected;
-  if (aPose.IsValidPose)
+  //! Convert OpenVR tracked pose.
+  static Aspect_TrackedDevicePose poseVr2Occ(const vr::TrackedDevicePose_t& theVrPose,
+                                             const double                   theUnitFactor)
   {
-    aPose.Orientation = mat34vr2OccTrsf(theVrPose.mDeviceToAbsoluteTracking);
-    if (theUnitFactor != 1.0)
+    Aspect_TrackedDevicePose aPose;
+    aPose.Velocity.SetCoord(theVrPose.vVelocity.v[0],
+                            theVrPose.vVelocity.v[1],
+                            theVrPose.vVelocity.v[2]);
+    aPose.AngularVelocity.SetCoord(theVrPose.vAngularVelocity.v[0],
+                                   theVrPose.vAngularVelocity.v[1],
+                                   theVrPose.vAngularVelocity.v[2]);
+    aPose.IsValidPose       = theVrPose.bPoseIsValid;
+    aPose.IsConnectedDevice = theVrPose.bDeviceIsConnected;
+    if (aPose.IsValidPose)
     {
-      aPose.Orientation.SetTranslationPart(aPose.Orientation.TranslationPart() * theUnitFactor);
+      aPose.Orientation = mat34vr2OccTrsf(theVrPose.mDeviceToAbsoluteTracking);
+      if (theUnitFactor != 1.0)
+      {
+        aPose.Orientation.SetTranslationPart(aPose.Orientation.TranslationPart() * theUnitFactor);
+      }
     }
+    return aPose;
   }
-  return aPose;
-}
 
-//! Find location of default actions manifest file (based on CSF_OCCTResourcePath or CASROOT
-//! variables).
-TCollection_AsciiString defaultActionsManifestInit()
-{
-  const TCollection_AsciiString THE_ACTIONS_JSON = "occtvr_actions.json";
-  const TCollection_AsciiString aResRoot(OSD_Environment("CSF_OCCTResourcePath").Value());
-  if (!aResRoot.IsEmpty())
+  //! Find location of default actions manifest file (based on CSF_OCCTResourcePath or CASROOT
+  //! variables).
+  TCollection_AsciiString defaultActionsManifestInit()
   {
-    if (OSD_File(aResRoot + "/" + THE_ACTIONS_JSON).Exists())
+    const TCollection_AsciiString THE_ACTIONS_JSON = "occtvr_actions.json";
+    const TCollection_AsciiString aResRoot(OSD_Environment("CSF_OCCTResourcePath").Value());
+    if (!aResRoot.IsEmpty())
     {
-      return aResRoot + "/" + THE_ACTIONS_JSON;
+      if (OSD_File(aResRoot + "/" + THE_ACTIONS_JSON).Exists())
+      {
+        return aResRoot + "/" + THE_ACTIONS_JSON;
+      }
+      if (OSD_File(aResRoot + "/XRResources/" + THE_ACTIONS_JSON).Exists())
+      {
+        return aResRoot + "/XRResources/" + THE_ACTIONS_JSON;
+      }
     }
-    if (OSD_File(aResRoot + "/XRResources/" + THE_ACTIONS_JSON).Exists())
+    const TCollection_AsciiString aCasRoot(OSD_Environment("CASROOT").Value());
+    if (!aCasRoot.IsEmpty())
     {
-      return aResRoot + "/XRResources/" + THE_ACTIONS_JSON;
+      if (OSD_File(aCasRoot + "/" + THE_ACTIONS_JSON).Exists())
+      {
+        return aCasRoot + "/" + THE_ACTIONS_JSON;
+      }
+      if (OSD_File(aCasRoot + "/XRResources/" + THE_ACTIONS_JSON).Exists())
+      {
+        return aCasRoot + "/XRResources/" + THE_ACTIONS_JSON;
+      }
+      if (OSD_File(aCasRoot + "/XRResources/src/" + THE_ACTIONS_JSON).Exists())
+      {
+        return aCasRoot + "/XRResources/src/" + THE_ACTIONS_JSON;
+      }
     }
+    return OSD_Process::ExecutableFolder() + "/occtvr_actions.json";
   }
-  const TCollection_AsciiString aCasRoot(OSD_Environment("CASROOT").Value());
-  if (!aCasRoot.IsEmpty())
-  {
-    if (OSD_File(aCasRoot + "/" + THE_ACTIONS_JSON).Exists())
-    {
-      return aCasRoot + "/" + THE_ACTIONS_JSON;
-    }
-    if (OSD_File(aCasRoot + "/XRResources/" + THE_ACTIONS_JSON).Exists())
-    {
-      return aCasRoot + "/XRResources/" + THE_ACTIONS_JSON;
-    }
-    if (OSD_File(aCasRoot + "/XRResources/src/" + THE_ACTIONS_JSON).Exists())
-    {
-      return aCasRoot + "/XRResources/src/" + THE_ACTIONS_JSON;
-    }
-  }
-  return OSD_Process::ExecutableFolder() + "/occtvr_actions.json";
-}
 } // namespace
 #endif
 
@@ -1183,15 +1183,18 @@ void Aspect_OpenVRSession::ProcessEvents()
 
       switch (anAction->Type())
       {
-        case Aspect_XRActionType_InputDigital: {
+        case Aspect_XRActionType_InputDigital:
+        {
           GetDigitalActionData(anAction);
           break;
         }
-        case Aspect_XRActionType_InputAnalog: {
+        case Aspect_XRActionType_InputAnalog:
+        {
           GetAnalogActionData(anAction);
           break;
         }
-        case Aspect_XRActionType_InputPose: {
+        case Aspect_XRActionType_InputPose:
+        {
           GetPoseActionDataForNextFrame(anAction);
           break;
         }

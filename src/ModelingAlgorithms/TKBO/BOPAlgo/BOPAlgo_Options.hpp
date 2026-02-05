@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Report.hpp>
 #include <Standard_OStream.hpp>
 
@@ -132,4 +131,3 @@ protected:
   double                                 myFuzzyValue;
   bool                                   myUseOBB;
 };
-

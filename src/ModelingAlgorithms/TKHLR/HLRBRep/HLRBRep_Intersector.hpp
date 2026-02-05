@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -79,4 +78,3 @@ private:
   HLRBRep_Surface*                   mySurface;
   HLRBRep_ThePolyhedronOfInterCSurf* myPolyhedron;
 };
-

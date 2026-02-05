@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -23,4 +22,3 @@ public:
   //! Here, the true name of the Type of a Shape
   Standard_EXPORT static const char* TypeName(const TopoDS_Shape& ent);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Poly_Triangulation.hpp>
@@ -127,4 +126,3 @@ private:
   double                                            myTolerance;
   bool                                              myNaturalRestriction;
 };
-

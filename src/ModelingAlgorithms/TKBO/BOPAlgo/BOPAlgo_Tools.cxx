@@ -1,17 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BOPAlgo_Tools.hpp>
 
 #include <BOPAlgo_Builder.hpp>
@@ -918,7 +904,8 @@ bool FindPlane(const BRepAdaptor_Curve& theCurve, gp_Pln& thePlane)
     case GeomAbs_Parabola:
       aVN = theCurve.Parabola().Position().Direction();
       break;
-    default: {
+    default:
+    {
       // for all other types of curve compute two tangent vectors
       // on the curve and cross them
       bFound = false;
@@ -1717,7 +1704,8 @@ void BOPAlgo_Tools::FillInternals(
     {
       case TopAbs_VERTEX:
       case TopAbs_EDGE:
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         const NCollection_List<TopoDS_Shape>* pIm = theImages.Seek(aPart);
         if (pIm)
         {
@@ -1734,7 +1722,8 @@ void BOPAlgo_Tools::FillInternals(
 
         break;
       }
-      default: {
+      default:
+      {
         for (TopoDS_Iterator it(aPart); it.More(); it.Next())
           aLPartsInput.Append(it.Value());
         break;

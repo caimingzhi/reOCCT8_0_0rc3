@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Dimension.hpp>
 #include <gp_Pnt.hpp>
 #include <gp_Circ.hpp>
@@ -144,4 +143,3 @@ private:
   gp_Pnt       myAnchorPoint;
   TopoDS_Shape myShape;
 };
-

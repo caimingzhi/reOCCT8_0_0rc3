@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_CharacterData.hpp>
 
 //  Class LDOM_Text
@@ -44,4 +43,3 @@ protected:
   {
   }
 };
-

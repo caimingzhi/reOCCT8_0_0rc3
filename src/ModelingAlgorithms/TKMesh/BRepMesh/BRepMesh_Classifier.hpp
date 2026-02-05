@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Types.hpp>
 #include <NCollection_Handle.hpp>
 
@@ -44,4 +43,3 @@ private:
   NCollection_Vector<NCollection_Handle<CSLib_Class2d>> myTabClass;
   IMeshData::VectorOfBoolean                            myTabOrient;
 };
-

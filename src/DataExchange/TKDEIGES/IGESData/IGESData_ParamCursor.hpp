@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -112,6 +111,7 @@ private:
   int  thetsize;
   bool theadv;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -161,5 +161,3 @@ inline bool IGESData_ParamCursor::Advance() const
 {
   return theadv;
 }
-
-

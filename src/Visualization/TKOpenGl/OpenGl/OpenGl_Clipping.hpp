@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_SequenceOfHClipPlane.hpp>
 #include <NCollection_Vector.hpp>
 #include <Standard_TypeDef.hpp>
@@ -148,4 +147,3 @@ private:
   OpenGl_Clipping(const OpenGl_Clipping&)            = delete;
   OpenGl_Clipping& operator=(const OpenGl_Clipping&) = delete;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 #include <PrsMgr_PresentableObject.hpp>
 
@@ -27,4 +26,3 @@ public:
 private:
   TopoDS_Shape mysh;
 };
-

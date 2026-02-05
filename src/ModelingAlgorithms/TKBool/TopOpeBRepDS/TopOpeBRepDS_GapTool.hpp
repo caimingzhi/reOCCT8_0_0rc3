@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -64,4 +63,3 @@ private:
   NCollection_DataMap<int, NCollection_List<occ::handle<TopOpeBRepDS_Interference>>> myGToI;
   NCollection_DataMap<occ::handle<TopOpeBRepDS_Interference>, TopoDS_Shape>          myInterToShape;
 };
-

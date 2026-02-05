@@ -1,19 +1,3 @@
-// Created on: 1996-09-26
-// Created by: Arnaud BOUZY
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Resource_ConvertUnicode.hpp>
 #include <Resource_Manager.hpp>
 #include <Resource_Unicode.hpp>
@@ -286,31 +270,36 @@ bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_Ext
         int aLength = tostr.Length();
         switch (pointer)
         {
-          case 1133: {
+          case 1133:
+          {
             tostr.Insert(aLength + 1, (char16_t)0x00CA);
             tostr.Insert(aLength + 2, (char16_t)0x0304);
             currentch++;
             continue;
           }
-          case 1135: {
+          case 1135:
+          {
             tostr.Insert(aLength + 1, (char16_t)0x00CA);
             tostr.Insert(aLength + 2, (char16_t)0x030C);
             currentch++;
             continue;
           }
-          case 1164: {
+          case 1164:
+          {
             tostr.Insert(aLength + 1, (char16_t)0x00EA);
             tostr.Insert(aLength + 2, (char16_t)0x0304);
             currentch++;
             continue;
           }
-          case 1166: {
+          case 1166:
+          {
             tostr.Insert(aLength + 1, (char16_t)0x00EA);
             tostr.Insert(aLength + 2, (char16_t)0x030C);
             currentch++;
             continue;
           }
-          default: {
+          default:
+          {
             if (pointer < 19782)
             {
               unsigned int uni = big5uni[pointer];
@@ -638,19 +627,23 @@ void Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFor
 {
   switch (theFormat)
   {
-    case Resource_FormatType_SJIS: {
+    case Resource_FormatType_SJIS:
+    {
       ConvertSJISToUnicode(theFromStr, theToStr);
       break;
     }
-    case Resource_FormatType_EUC: {
+    case Resource_FormatType_EUC:
+    {
       ConvertEUCToUnicode(theFromStr, theToStr);
       break;
     }
-    case Resource_FormatType_GB: {
+    case Resource_FormatType_GB:
+    {
       ConvertGBToUnicode(theFromStr, theToStr);
       break;
     }
-    case Resource_FormatType_ANSI: {
+    case Resource_FormatType_ANSI:
+    {
       theToStr = TCollection_ExtendedString(theFromStr, false);
       break;
     }
@@ -672,7 +665,8 @@ void Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFor
     case Resource_FormatType_iso8859_7:
     case Resource_FormatType_iso8859_8:
     case Resource_FormatType_iso8859_9:
-    case Resource_FormatType_CP850: {
+    case Resource_FormatType_CP850:
+    {
       const int       aCodePageIndex = (int)theFormat - (int)Resource_FormatType_CP1250;
       const char16_t* aCodePage      = THE_CODEPAGES_ANSI[aCodePageIndex];
       theToStr.Clear();
@@ -688,19 +682,23 @@ void Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFor
       }
       break;
     }
-    case Resource_FormatType_Big5: {
+    case Resource_FormatType_Big5:
+    {
       ConvertBig5ToUnicode(theFromStr, theToStr);
       break;
     }
-    case Resource_FormatType_GBK: {
+    case Resource_FormatType_GBK:
+    {
       ConvertGBKToUnicode(theFromStr, theToStr);
       break;
     }
-    case Resource_FormatType_UTF8: {
+    case Resource_FormatType_UTF8:
+    {
       theToStr = TCollection_ExtendedString(theFromStr, true);
       break;
     }
-    case Resource_FormatType_SystemLocale: {
+    case Resource_FormatType_SystemLocale:
+    {
       NCollection_UtfString<char16_t> aString;
       aString.FromLocale(theFromStr);
       theToStr = TCollection_ExtendedString(aString.ToCString());
@@ -716,16 +714,20 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
 {
   switch (theFormat)
   {
-    case Resource_FormatType_SJIS: {
+    case Resource_FormatType_SJIS:
+    {
       return ConvertUnicodeToSJIS(theFromStr, theToStr, theMaxSize);
     }
-    case Resource_FormatType_EUC: {
+    case Resource_FormatType_EUC:
+    {
       return ConvertUnicodeToEUC(theFromStr, theToStr, theMaxSize);
     }
-    case Resource_FormatType_GB: {
+    case Resource_FormatType_GB:
+    {
       return ConvertUnicodeToGB(theFromStr, theToStr, theMaxSize);
     }
-    case Resource_FormatType_ANSI: {
+    case Resource_FormatType_ANSI:
+    {
       return ConvertUnicodeToANSI(theFromStr, theToStr, theMaxSize);
     }
     case Resource_FormatType_CP1250:
@@ -746,7 +748,8 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
     case Resource_FormatType_iso8859_7:
     case Resource_FormatType_iso8859_8:
     case Resource_FormatType_iso8859_9:
-    case Resource_FormatType_CP850: {
+    case Resource_FormatType_CP850:
+    {
       if (theMaxSize < theFromStr.Length())
       {
         return false;
@@ -784,7 +787,8 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
       theToStr[theMaxSize - 1] = '\0';
       return true;
     }
-    case Resource_FormatType_UTF8: {
+    case Resource_FormatType_UTF8:
+    {
       if (theMaxSize < theFromStr.LengthOfCString())
       {
         return false;
@@ -792,12 +796,14 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
       theFromStr.ToUTF8CString(theToStr);
       return true;
     }
-    case Resource_FormatType_SystemLocale: {
+    case Resource_FormatType_SystemLocale:
+    {
       const NCollection_UtfString<char16_t> aString(theFromStr.ToExtString());
       return aString.ToLocale(theToStr, theMaxSize);
     }
     case Resource_FormatType_GBK:
-    case Resource_FormatType_Big5: {
+    case Resource_FormatType_Big5:
+    {
       throw Standard_NotImplemented("Resource_Unicode::ConvertUnicodeToFormat - convert from GBK "
                                     "and Big5 to Unocode is not implemented");
     }

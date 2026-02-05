@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESSolid_Shell.hpp>
@@ -59,4 +58,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Shell>>> theVoidShells;
   occ::handle<NCollection_HArray1<int>>                          theOrientFlags;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box.hpp>
 #include <Poly_Triangle.hpp>
 #include <NCollection_Array1.hpp>
@@ -20,7 +19,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Purpose of triangulation using.
 typedef unsigned int Poly_MeshPurpose;
 
@@ -39,7 +37,6 @@ enum
             //   values
   Poly_MeshPurpose_USER = 0x0020 //!< application-defined flags
 };
-
 
 #include <gp_Pnt.hpp>
 #include <gp_Pnt2d.hpp>
@@ -343,12 +340,15 @@ public:
   Standard_EXPORT void SetNormals(const occ::handle<NCollection_HArray1<float>>& theNormals);
 
   Standard_DEPRECATED("Deprecated method, Triangle() should be used instead")
+
   const NCollection_Array1<Poly_Triangle>& Triangles() const { return myTriangles; }
 
   Standard_DEPRECATED("Deprecated method, SetTriangle() should be used instead")
+
   NCollection_Array1<Poly_Triangle>& ChangeTriangles() { return myTriangles; }
 
   Standard_DEPRECATED("Deprecated method, SetTriangle() should be used instead")
+
   Poly_Triangle& ChangeTriangle(const int theIndex) { return myTriangles.ChangeValue(theIndex); }
 
 public: //! @name late-load deferred data interface
@@ -413,4 +413,3 @@ protected:
 
   occ::handle<Poly_TriangulationParameters> myParams;
 };
-

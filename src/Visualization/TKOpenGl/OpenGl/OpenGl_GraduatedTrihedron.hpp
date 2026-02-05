@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_GraduatedTrihedron.hpp>
 #include <NCollection_Array1.hpp>
 #include <OpenGl_Aspects.hpp>
@@ -210,4 +209,3 @@ private:
     XYO_XYZ = 1 << 9
   };
 };
-

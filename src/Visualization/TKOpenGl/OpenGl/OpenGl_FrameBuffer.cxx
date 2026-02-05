@@ -1,17 +1,3 @@
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2011-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_FrameBuffer.hpp>
 
 #include <OpenGl_ArbFBO.hpp>
@@ -25,42 +11,42 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameBuffer, OpenGl_NamedResource)
 
 namespace
 {
-//! Checks whether two format arrays are equal or not.
-static bool operator==(const NCollection_Vector<int>& theFmt1,
-                       const NCollection_Vector<int>& theFmt2)
-{
-  if (theFmt1.Length() != theFmt2.Length())
-    return false;
-  NCollection_Vector<int>::Iterator anIt1(theFmt1);
-  NCollection_Vector<int>::Iterator anIt2(theFmt1);
-  for (; anIt1.More(); anIt1.Next(), anIt2.Next())
+  //! Checks whether two format arrays are equal or not.
+  static bool operator==(const NCollection_Vector<int>& theFmt1,
+                         const NCollection_Vector<int>& theFmt2)
   {
-    if (anIt1.Value() != anIt2.Value())
+    if (theFmt1.Length() != theFmt2.Length())
       return false;
+    NCollection_Vector<int>::Iterator anIt1(theFmt1);
+    NCollection_Vector<int>::Iterator anIt2(theFmt1);
+    for (; anIt1.More(); anIt1.Next(), anIt2.Next())
+    {
+      if (anIt1.Value() != anIt2.Value())
+        return false;
+    }
+    return true;
   }
-  return true;
-}
 
-//! Return TRUE if GL_DEPTH_STENCIL_ATTACHMENT can be used.
-static bool hasDepthStencilAttach(const occ::handle<OpenGl_Context>& theCtx)
-{
+  //! Return TRUE if GL_DEPTH_STENCIL_ATTACHMENT can be used.
+  static bool hasDepthStencilAttach(const occ::handle<OpenGl_Context>& theCtx)
+  {
 #ifdef __EMSCRIPTEN__
-  // supported since WebGL 2.0,
-  // while WebGL 1.0 + GL_WEBGL_depth_texture needs GL_DEPTH_STENCIL_ATTACHMENT
-  // and NOT separate GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls which is different to OpenGL
-  // ES 2.0 + extension
-  return theCtx->IsGlGreaterEqual(3, 0) || theCtx->extPDS;
+    // supported since WebGL 2.0,
+    // while WebGL 1.0 + GL_WEBGL_depth_texture needs GL_DEPTH_STENCIL_ATTACHMENT
+    // and NOT separate GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls which is different to OpenGL
+    // ES 2.0 + extension
+    return theCtx->IsGlGreaterEqual(3, 0) || theCtx->extPDS;
 #else
-  // supported since OpenGL ES 3.0,
-  // while OpenGL ES 2.0 + GL_EXT_packed_depth_stencil needs separate
-  // GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls
-  //
-  // available on desktop since OpenGL 3.0
-  // or OpenGL 2.0 + GL_ARB_framebuffer_object (GL_EXT_framebuffer_object is unsupported by OCCT)
-  return theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
-         || theCtx->IsGlGreaterEqual(3, 0);
+    // supported since OpenGL ES 3.0,
+    // while OpenGL ES 2.0 + GL_EXT_packed_depth_stencil needs separate
+    // GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls
+    //
+    // available on desktop since OpenGL 3.0
+    // or OpenGL 2.0 + GL_ARB_framebuffer_object (GL_EXT_framebuffer_object is unsupported by OCCT)
+    return theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
+           || theCtx->IsGlGreaterEqual(3, 0);
 #endif
-}
+  }
 } // namespace
 
 //=================================================================================================
@@ -1052,7 +1038,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   bool   toConvRgba2Rgb = false;
   switch (theImage.Format())
   {
-    case Image_Format_Gray: {
+    case Image_Format_Gray:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
@@ -1064,7 +1051,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType   = GL_UNSIGNED_BYTE;
       break;
     }
-    case Image_Format_Gray16: {
+    case Image_Format_Gray16:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
@@ -1076,7 +1064,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType   = GL_UNSIGNED_SHORT;
       break;
     }
-    case Image_Format_GrayF: {
+    case Image_Format_GrayF:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
@@ -1088,7 +1077,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType   = GL_FLOAT;
       break;
     }
-    case Image_Format_RGF: {
+    case Image_Format_RGF:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
@@ -1098,7 +1088,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType   = GL_FLOAT;
       break;
     }
-    case Image_Format_RGB: {
+    case Image_Format_RGB:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
@@ -1111,7 +1102,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType = GL_UNSIGNED_BYTE;
       break;
     }
-    case Image_Format_BGR: {
+    case Image_Format_BGR:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
@@ -1125,7 +1117,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_BGRA:
-    case Image_Format_BGR32: {
+    case Image_Format_BGR32:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
@@ -1138,7 +1131,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType = GL_UNSIGNED_BYTE;
       break;
     }
-    case Image_Format_BGRF: {
+    case Image_Format_BGRF:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
@@ -1148,7 +1142,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       aType   = GL_FLOAT;
       break;
     }
-    case Image_Format_BGRAF: {
+    case Image_Format_BGRAF:
+    {
       if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;

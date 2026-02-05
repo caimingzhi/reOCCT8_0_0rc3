@@ -30,31 +30,31 @@
 
 namespace
 {
-//! Functor for testing concurrent access to TopLoc_Location::Transformation()
-struct TopLocTransformFunctor
-{
-  TopLocTransformFunctor(const std::vector<TopoDS_Shape>& theShapeVec)
-      : myShapeVec(&theShapeVec),
-        myIsRaceDetected(0)
+  //! Functor for testing concurrent access to TopLoc_Location::Transformation()
+  struct TopLocTransformFunctor
   {
-  }
-
-  void operator()(size_t i) const
-  {
-    if (!myIsRaceDetected)
+    TopLocTransformFunctor(const std::vector<TopoDS_Shape>& theShapeVec)
+        : myShapeVec(&theShapeVec),
+          myIsRaceDetected(0)
     {
-      const TopoDS_Vertex& aVertex = TopoDS::Vertex(myShapeVec->at(i));
-      gp_Pnt               aPoint  = BRep_Tool::Pnt(aVertex);
-      if (aPoint.X() != static_cast<double>(i))
+    }
+
+    void operator()(size_t i) const
+    {
+      if (!myIsRaceDetected)
       {
-        ++myIsRaceDetected;
+        const TopoDS_Vertex& aVertex = TopoDS::Vertex(myShapeVec->at(i));
+        gp_Pnt               aPoint  = BRep_Tool::Pnt(aVertex);
+        if (aPoint.X() != static_cast<double>(i))
+        {
+          ++myIsRaceDetected;
+        }
       }
     }
-  }
 
-  const std::vector<TopoDS_Shape>* myShapeVec;
-  mutable std::atomic<int>         myIsRaceDetected;
-};
+    const std::vector<TopoDS_Shape>* myShapeVec;
+    mutable std::atomic<int>         myIsRaceDetected;
+  };
 } // namespace
 
 TEST(TopLoc_Location_Test, OCC25545_ConcurrentTransformationAccess)

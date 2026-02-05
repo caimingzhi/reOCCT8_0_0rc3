@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 /**
@@ -43,4 +42,3 @@ public:
   //! Default implementation does nothing and returns 0.
   Standard_EXPORT virtual int Purge(bool isDestroyed = false);
 };
-

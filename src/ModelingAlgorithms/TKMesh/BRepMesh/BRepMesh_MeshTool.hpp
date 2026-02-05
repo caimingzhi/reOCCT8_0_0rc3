@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <BRepMesh_DataStructureOfDelaun.hpp>
 #include <BRepMesh_CircleTool.hpp>
@@ -196,4 +195,3 @@ private:
 private:
   occ::handle<BRepMesh_DataStructureOfDelaun> myStructure;
 };
-

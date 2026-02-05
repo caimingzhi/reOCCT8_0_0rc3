@@ -1,18 +1,3 @@
-// Created on: 2013-08-15
-// Created by: Anton POLETAEV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_CappingPlaneResource.hpp>
 
 #include <OpenGl_Context.hpp>
@@ -23,26 +8,26 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_CappingPlaneResource, OpenGl_Resource)
 
 namespace
 {
-//! 12 plane vertices, interleaved:
-//!  - 4 floats, position
-//!  - 4 floats, normal
-//!  - 4 floats, UV texture coordinates
-static const GLfloat THE_CAPPING_PLN_VERTS[12 * (4 + 4 + 4)] = {
-  0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
-  0.0f,  0.0f, 1.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,
-  1.0f,  0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f, 0.0f,
+  //! 12 plane vertices, interleaved:
+  //!  - 4 floats, position
+  //!  - 4 floats, normal
+  //!  - 4 floats, UV texture coordinates
+  static const GLfloat THE_CAPPING_PLN_VERTS[12 * (4 + 4 + 4)] = {
+    0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
+    0.0f,  0.0f, 1.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,
+    1.0f,  0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f, 0.0f,
 
-  0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
-  -1.0f, 0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  0.0f, 0.0f,
-  0.0f,  0.0f, 1.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,
+    0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
+    -1.0f, 0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+    0.0f,  0.0f, 1.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,
 
-  0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
-  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, 0.0f,
-  -1.0f, 0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+    0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
+    0.0f,  0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  0.0f, 0.0f,
 
-  0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
-  1.0f,  0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f, 0.0f,
-  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, 0.0f};
+    0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
+    1.0f,  0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f, 0.0f,
+    0.0f,  0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, 0.0f};
 } // namespace
 
 //=================================================================================================

@@ -302,7 +302,8 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
   {
     case VrmlConverter_NoCamera:
       break;
-    case VrmlConverter_PerspectiveCamera: {
+    case VrmlConverter_PerspectiveCamera:
+    {
       Vrml_TransformSeparator TS;
       TS.Print(anOStream);
       myMatrixTransform.Print(anOStream);
@@ -312,7 +313,8 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
       TS.Print(anOStream);
     }
     break;
-    case VrmlConverter_OrthographicCamera: {
+    case VrmlConverter_OrthographicCamera:
+    {
       Vrml_TransformSeparator TS;
       TS.Print(anOStream);
       myMatrixTransform.Print(anOStream);
@@ -328,15 +330,18 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
   {
     case VrmlConverter_NoLight:
       break;
-    case VrmlConverter_DirectionLight: {
+    case VrmlConverter_DirectionLight:
+    {
       myDirectionalLight.Print(anOStream);
     }
     break;
-    case VrmlConverter_PointLight: {
+    case VrmlConverter_PointLight:
+    {
       myPointLight.Print(anOStream);
     }
     break;
-    case VrmlConverter_SpotLight: {
+    case VrmlConverter_SpotLight:
+    {
       mySpotLight.Print(anOStream);
     }
     break;

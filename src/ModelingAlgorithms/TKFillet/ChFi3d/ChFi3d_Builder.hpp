@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Curve2d.hpp>
 #include <BRepAdaptor_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -828,4 +827,3 @@ private:
   TopoDS_Shape                   myShapeResult;
   TopoDS_Shape                   badShape;
 };
-

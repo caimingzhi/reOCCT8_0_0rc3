@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Type alias for curve pointer used in HLRBRep algorithms.
 //! This provides a named type (void*) for curve pointers used in generic
 //! algorithm interfaces, replacing the deprecated void*.
@@ -12,4 +11,3 @@ typedef void* HLRBRep_CurvePtr;
 //! This provides a named type (void*) for surface pointers used in generic
 //! algorithm interfaces, replacing the deprecated void*.
 typedef void* HLRBRep_SurfacePtr;
-

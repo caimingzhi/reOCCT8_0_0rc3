@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAbs_CurveType.hpp>
 #include <Geom2d_Curve.hpp>
 #include <Geom_Curve.hpp>
@@ -242,4 +241,3 @@ Standard_EXPORT void FUN_ds_CopyEdge(const TopoDS_Shape& Ein, TopoDS_Shape& Eou)
 Standard_EXPORT void FUN_ds_Parameter(const TopoDS_Shape& E, const TopoDS_Shape& V, const double P);
 Standard_EXPORT bool FUN_tool_MakeWire(const NCollection_List<TopoDS_Shape>& loE,
                                        TopoDS_Wire&                          newW);
-

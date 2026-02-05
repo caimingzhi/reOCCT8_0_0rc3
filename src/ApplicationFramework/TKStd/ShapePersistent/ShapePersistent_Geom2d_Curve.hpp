@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapePersistent_Geom2d.hpp>
 #include <ShapePersistent_HArray1.hpp>
 #include <StdLPersistent_HArray1.hpp>
@@ -307,4 +306,3 @@ template <>
 void ShapePersistent_Geom2d_Curve::
   instance<ShapePersistent_Geom2d_Curve::Conic, Geom2d_Parabola, gp_Parab2d>::Write(
     StdObjMgt_WriteData& theWriteData) const;
-

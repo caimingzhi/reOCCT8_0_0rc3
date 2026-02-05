@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BOPDS_PaveBlock.hpp>
 
 /**

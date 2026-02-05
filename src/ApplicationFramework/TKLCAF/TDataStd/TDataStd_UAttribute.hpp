@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_GUID.hpp>
@@ -48,4 +47,3 @@ public:
 private:
   Standard_GUID myID;
 };
-

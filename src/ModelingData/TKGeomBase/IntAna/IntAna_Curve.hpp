@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -152,4 +151,3 @@ private:
   //! Trim boundaries
   double myFirstParameter, myLastParameter;
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1996-12-05
-// Created by: Arnaud BOUZY/Odile Olivier
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <PrsDim_LengthDimension.hpp>
 
 #include <PrsDim.hpp>
@@ -546,7 +530,8 @@ bool PrsDim_LengthDimension::InitTwoShapesPoints(const TopoDS_Shape& theFirstSha
   bool   isSuccess  = false;
   switch (theFirstShape.ShapeType())
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       // Initialization for face
       gp_Pln                    aFirstPlane;
       occ::handle<Geom_Surface> aFirstSurface;
@@ -673,7 +658,8 @@ bool PrsDim_LengthDimension::InitTwoShapesPoints(const TopoDS_Shape& theFirstSha
     }
     break;
 
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       if (theSecondShape.ShapeType() == TopAbs_VERTEX)
       {
         myGeometryType = GeometryType_EdgeVertex;
@@ -721,7 +707,8 @@ bool PrsDim_LengthDimension::InitTwoShapesPoints(const TopoDS_Shape& theFirstSha
     }
     break;
 
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       if (theSecondShape.ShapeType() == TopAbs_VERTEX)
       {
         myGeometryType = GeometryType_Points;

@@ -1,25 +1,9 @@
 #pragma once
 
-
 #include <Aspect_TypeOfFacingModel.hpp>
 #include <gp_GTrsf.hpp>
 #include <Graphic3d_ClipPlane.hpp>
 #include <Prs3d_Drawer.hpp>
-// Created on: 2014-08-11
-// Created by: duv
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <NCollection_List.hpp>
 
@@ -27,26 +11,9 @@
 class PrsMgr_PresentableObject; // use forward declaration since PrsMgr_PresentableObject.hpp uses NCollection_List<occ::handle<PrsMgr_PresentableObject>>
 // clang-format on
 
-
 #include <PrsMgr_Presentation.hpp>
 #include <NCollection_Sequence.hpp>
 #include <PrsMgr_DisplayStatus.hpp>
-// Created on: 1995-01-25
-// Created by: Jean-Louis Frenkel
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <Standard_Macro.hpp>
 
@@ -62,7 +29,6 @@ enum PrsMgr_TypeOfPresentation3d
 
 Standard_DEPRECATED("PrsMgr_TOP_ProjectorDependent should be used instead")
 const PrsMgr_TypeOfPresentation3d PrsMgr_TOP_ProjectorDependant = PrsMgr_TOP_ProjectorDependent;
-
 
 #include <Standard_Integer.hpp>
 #include <NCollection_List.hpp>
@@ -624,6 +590,7 @@ protected:
   //! Recomputes all presentations of the object.
   Standard_DEPRECATED("This method is deprecated - SetToUpdate() + UpdatePresentations() should be "
                       "called instead")
+
   void Update(bool theToIncludeHidden = false)
   {
     SetToUpdate();
@@ -667,4 +634,3 @@ protected:
   bool                       myToPropagateVisualState;  //!< flag indicating if visual state (display/erase/color) should be propagated to all children
   // clang-format on
 };
-

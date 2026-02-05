@@ -19,22 +19,22 @@
 
 namespace
 {
-//! Creates a BSplCLib_Cache for a Bezier curve.
-//! @param theCurve the Bezier curve geometry
-//! @return initialized cache ready for evaluation
-occ::handle<BSplCLib_Cache> CreateBezierCache(const occ::handle<Geom_BezierCurve>& theCurve)
-{
-  const int                  aDegree = theCurve->Degree();
-  NCollection_Array1<double> aFlatKnots(BSplCLib::FlatBezierKnots(aDegree), 1, 2 * (aDegree + 1));
+  //! Creates a BSplCLib_Cache for a Bezier curve.
+  //! @param theCurve the Bezier curve geometry
+  //! @return initialized cache ready for evaluation
+  occ::handle<BSplCLib_Cache> CreateBezierCache(const occ::handle<Geom_BezierCurve>& theCurve)
+  {
+    const int                  aDegree = theCurve->Degree();
+    NCollection_Array1<double> aFlatKnots(BSplCLib::FlatBezierKnots(aDegree), 1, 2 * (aDegree + 1));
 
-  occ::handle<BSplCLib_Cache> aCache = new BSplCLib_Cache(aDegree,
-                                                          theCurve->IsPeriodic(),
-                                                          aFlatKnots,
-                                                          theCurve->Poles(),
-                                                          theCurve->Weights());
-  aCache->BuildCache(0.5, aFlatKnots, theCurve->Poles(), theCurve->Weights());
-  return aCache;
-}
+    occ::handle<BSplCLib_Cache> aCache = new BSplCLib_Cache(aDegree,
+                                                            theCurve->IsPeriodic(),
+                                                            aFlatKnots,
+                                                            theCurve->Poles(),
+                                                            theCurve->Weights());
+    aCache->BuildCache(0.5, aFlatKnots, theCurve->Poles(), theCurve->Weights());
+    return aCache;
+  }
 } // namespace
 
 //==================================================================================================

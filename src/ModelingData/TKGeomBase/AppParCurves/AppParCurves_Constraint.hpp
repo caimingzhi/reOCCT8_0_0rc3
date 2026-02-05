@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! -   NoConstraint: this point has no constraints.
 //! -   PassPoint: the approximation curve passes through this point.
 //! -   TangencyPoint: this point has a tangency constraint.
@@ -12,4 +11,3 @@ enum AppParCurves_Constraint
   AppParCurves_TangencyPoint,
   AppParCurves_CurvaturePoint
 };
-

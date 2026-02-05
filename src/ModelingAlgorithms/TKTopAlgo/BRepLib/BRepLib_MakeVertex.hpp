@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -19,4 +18,3 @@ public:
   Standard_EXPORT const TopoDS_Vertex& Vertex();
   Standard_EXPORT                      operator TopoDS_Vertex();
 };
-

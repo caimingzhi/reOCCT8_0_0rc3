@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopAbs_ShapeEnum.hpp>
 
 #include <TopAbs_Orientation.hpp>
@@ -73,4 +72,3 @@
 #define MDSmosd                                                                                    \
   NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeData, TopTools_ShapeMapHasher>
 #define MDSitl TopOpeBRepDS_InterferenceTool
-

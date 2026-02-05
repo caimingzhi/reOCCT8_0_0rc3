@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HString.hpp>
 
@@ -45,4 +44,3 @@ private:
   bool                                  myIsConstant;
   Handle(StdLPersistent_HString::Ascii) myUnit;
 };
-

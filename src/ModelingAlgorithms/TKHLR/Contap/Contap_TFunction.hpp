@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Contap_TFunction
 {
   Contap_ContourStd,
@@ -8,4 +7,3 @@ enum Contap_TFunction
   Contap_DraftStd,
   Contap_DraftPrs
 };
-

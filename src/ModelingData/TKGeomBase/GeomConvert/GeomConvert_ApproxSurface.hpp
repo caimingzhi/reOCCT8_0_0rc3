@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <Standard_OStream.hpp>
@@ -92,4 +91,3 @@ private:
   occ::handle<Geom_BSplineSurface> myBSplSurf;
   double                           myMaxError;
 };
-

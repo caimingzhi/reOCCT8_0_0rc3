@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <Transfer_Finder.hpp>
@@ -469,4 +468,3 @@ private:
                              Transfer_FindHasher>
     themap;
 };
-

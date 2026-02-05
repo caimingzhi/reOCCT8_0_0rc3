@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Attribute.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -28,4 +27,3 @@ public:
 private:
   Standard_SStream myStream; //!< container of values
 };
-

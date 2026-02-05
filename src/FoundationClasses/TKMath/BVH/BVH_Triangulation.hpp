@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet.hpp>
 
 //! Triangulation as an example of BVH primitive set.
@@ -79,4 +78,3 @@ public:
     std::swap(anIndices1, anIndices2);
   }
 };
-

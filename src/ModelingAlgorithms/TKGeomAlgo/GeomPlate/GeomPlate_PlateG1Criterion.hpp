@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -34,4 +33,3 @@ private:
   NCollection_Sequence<gp_XY>  myData;
   NCollection_Sequence<gp_XYZ> myXYZ;
 };
-

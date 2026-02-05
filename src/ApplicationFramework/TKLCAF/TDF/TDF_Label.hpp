@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -272,26 +271,6 @@ private:
 
   TDF_LabelNodePtr myLabelNode;
 };
-// Created by: DAUTRY Philippe
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//              --------------
-
-// Version:     0.0
-// Version Date            Purpose
-//              0.0     Feb  7 1997     Creation
 
 #include <TDF_LabelNode.hpp>
 #include <TDF_TagSource.hpp>
@@ -301,14 +280,14 @@ private:
 
 namespace std
 {
-template <>
-struct hash<TDF_Label>
-{
-  size_t operator()(const TDF_Label& theLabel) const noexcept
+  template <>
+  struct hash<TDF_Label>
   {
-    return static_cast<size_t>(reinterpret_cast<std::uintptr_t>(theLabel.myLabelNode));
-  }
-};
+    size_t operator()(const TDF_Label& theLabel) const noexcept
+    {
+      return static_cast<size_t>(reinterpret_cast<std::uintptr_t>(theLabel.myLabelNode));
+    }
+  };
 } // namespace std
 
 inline TDF_Label::TDF_Label()
@@ -391,5 +370,3 @@ inline TDF_Label TDF_Label::NewChild() const
 {
   return TDF_TagSource::NewChild(*this);
 }
-
-

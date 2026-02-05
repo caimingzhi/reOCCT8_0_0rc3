@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -87,4 +86,3 @@ private:
   occ::handle<NCollection_HSequence<occ::handle<Units_Quantity>>> thequantitiessequence;
   occ::handle<NCollection_HSequence<int>>                         theactiveunitssequence;
 };
-

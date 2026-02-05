@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -56,6 +55,7 @@ private:
   gp_Dir2d                                  dirtg;
   occ::handle<NCollection_HSequence<gp_XY>> sequv;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -156,5 +156,3 @@ inline void IntSurf_PathPoint::Parameters(const int Index, double& U, double& V)
   U = uv.X();
   V = uv.Y();
 }
-
-

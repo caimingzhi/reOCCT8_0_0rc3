@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_Object.hpp>
 #include <TObj_Persistence.hpp>
 
@@ -131,5 +130,5 @@ public:
 //! Define handle class for TObj_Partition
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

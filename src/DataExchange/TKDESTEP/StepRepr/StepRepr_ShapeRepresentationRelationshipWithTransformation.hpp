@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_RepresentationRelationshipWithTransformation.hpp>
@@ -15,4 +14,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(StepRepr_ShapeRepresentationRelationshipWithTransformation,
                           StepRepr_RepresentationRelationshipWithTransformation)
 };
-

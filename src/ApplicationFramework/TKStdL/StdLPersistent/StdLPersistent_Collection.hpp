@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HArray1.hpp>
 
@@ -178,4 +177,3 @@ public:
   typedef instance_1<ExtStringArray> ExtStringArray_1;
   typedef instance_1<IntPackedMap>   IntPackedMap_1;
 };
-

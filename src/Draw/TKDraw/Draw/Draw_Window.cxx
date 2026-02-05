@@ -1,20 +1,3 @@
-// Created on: 1994-07-27
-// Created by: Remi LEQUETTE
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// include windows.h first to have all definitions available
 #ifdef _WIN32
   #include <windows.h>
 #endif
@@ -1123,7 +1106,8 @@ static void processXEvents(ClientData, int)
       {
         switch (anEvent.type)
         {
-          case ClientMessage: {
+          case ClientMessage:
+          {
             if (anEvent.xclient.data.l[0]
                 == (int)Draw_DisplayConnection->GetAtom(Aspect_XA_DELETE_WINDOW))
             {
@@ -1131,7 +1115,8 @@ static void processXEvents(ClientData, int)
             }
             break;
           }
-          case Expose: {
+          case Expose:
+          {
             aDrawWin->WExpose();
             break;
           }
@@ -1158,7 +1143,8 @@ void Draw_Window::GetNextEvent(Draw_Window::Draw_XEvent& theEvent)
   XNextEvent(Draw_WindowDisplay, &anXEvent);
   switch (anXEvent.type)
   {
-    case ButtonPress: {
+    case ButtonPress:
+    {
       theEvent.type   = 4;
       theEvent.window = anXEvent.xbutton.window;
       theEvent.button = anXEvent.xbutton.button;
@@ -1166,7 +1152,8 @@ void Draw_Window::GetNextEvent(Draw_Window::Draw_XEvent& theEvent)
       theEvent.y      = anXEvent.xbutton.y;
       break;
     }
-    case MotionNotify: {
+    case MotionNotify:
+    {
       theEvent.type   = 6;
       theEvent.window = anXEvent.xmotion.window;
       theEvent.button = 0;
@@ -1502,11 +1489,13 @@ LRESULT APIENTRY Draw_Window::DrawProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPAR
 
   switch (wMsg)
   {
-    case WM_CLOSE: {
+    case WM_CLOSE:
+    {
       aLocWin->Hide();
       return 0; // do nothing - window destruction should be performed by application
     }
-    case WM_PAINT: {
+    case WM_PAINT:
+    {
       PAINTSTRUCT ps;
       BeginPaint(hWnd, &ps);
       if (aLocWin->GetUseBuffer())
@@ -1520,7 +1509,8 @@ LRESULT APIENTRY Draw_Window::DrawProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPAR
       EndPaint(hWnd, &ps);
       return 0;
     }
-    case WM_SIZE: {
+    case WM_SIZE:
+    {
       if (aLocWin->GetUseBuffer())
       {
         aLocWin->InitBuffer();

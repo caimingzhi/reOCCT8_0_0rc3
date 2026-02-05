@@ -37,48 +37,48 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESToBRep_Actor, Transfer_ActorOfTransientProcess)
 
 namespace
 {
-//=======================================================================
-// function : EncodeRegul
-// purpose  : INTERNAL to encode regularity on edges
-//=======================================================================
-static bool EncodeRegul(const TopoDS_Shape& theShape)
-{
-  const double aToleranceAngle = Interface_Static::RVal("read.encoderegularity.angle");
-  if (theShape.IsNull())
+  //=======================================================================
+  // function : EncodeRegul
+  // purpose  : INTERNAL to encode regularity on edges
+  //=======================================================================
+  static bool EncodeRegul(const TopoDS_Shape& theShape)
   {
-    return true;
-  }
-  if (aToleranceAngle <= 0.)
-  {
+    const double aToleranceAngle = Interface_Static::RVal("read.encoderegularity.angle");
+    if (theShape.IsNull())
+    {
+      return true;
+    }
+    if (aToleranceAngle <= 0.)
+    {
+      return true;
+    }
+
+    try
+    {
+      OCC_CATCH_SIGNALS
+      BRepLib::EncodeRegularity(theShape, aToleranceAngle);
+    }
+    catch (const Standard_Failure&)
+    {
+      return false;
+    }
     return true;
   }
 
-  try
+  //=======================================================================
+  // function : TrimTolerances
+  // purpose  : Trims tolerances of the shape according to static parameters
+  //=======================================================================
+  static void TrimTolerances(const TopoDS_Shape& theShape, const double theTolerance)
   {
-    OCC_CATCH_SIGNALS
-    BRepLib::EncodeRegularity(theShape, aToleranceAngle);
+    if (Interface_Static::IVal("read.maxprecision.mode") == 1)
+    {
+      ShapeFix_ShapeTolerance aSFST;
+      aSFST.LimitTolerance(theShape,
+                           0,
+                           std::max(theTolerance, Interface_Static::RVal("read.maxprecision.val")));
+    }
   }
-  catch (const Standard_Failure&)
-  {
-    return false;
-  }
-  return true;
-}
-
-//=======================================================================
-// function : TrimTolerances
-// purpose  : Trims tolerances of the shape according to static parameters
-//=======================================================================
-static void TrimTolerances(const TopoDS_Shape& theShape, const double theTolerance)
-{
-  if (Interface_Static::IVal("read.maxprecision.mode") == 1)
-  {
-    ShapeFix_ShapeTolerance aSFST;
-    aSFST.LimitTolerance(theShape,
-                         0,
-                         std::max(theTolerance, Interface_Static::RVal("read.maxprecision.val")));
-  }
-}
 } // namespace
 
 //=======================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -48,6 +47,7 @@ private:
   double theFi[4];
   double theTheta[4];
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -121,5 +121,3 @@ inline void IntAna_IntLinTorus::ParamOnTorus(const int Index, double& FI, double
   FI    = theFi[Index - 1];
   THETA = theTheta[Index - 1];
 }
-
-

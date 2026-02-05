@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
+
 // Copyright (c) 2018 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -14,7 +14,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Stats counter.
 enum Graphic3d_FrameStatsCounter
@@ -74,7 +73,6 @@ enum
   Graphic3d_FrameStatsCounter_IMMEDIATE_UPPER = Graphic3d_FrameStatsCounter_NbPointsImmediate,
 };
 
-
 // Copyright (c) 2018 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -87,7 +85,6 @@ enum
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Timers for collecting frame performance statistics.
 enum Graphic3d_FrameStatsTimer
@@ -103,7 +100,6 @@ enum
 {
   Graphic3d_FrameStatsTimer_NB = Graphic3d_FrameStatsTimer_CpuDynamics + 1
 };
-
 
 #include <OSD_Timer.hpp>
 
@@ -229,4 +225,3 @@ protected:
   std::vector<OSD_Timer> myOsdTimers;  //!< precise timers for time measurements
   std::vector<double>    myTimersPrev; //!< previous timers values
 };
-

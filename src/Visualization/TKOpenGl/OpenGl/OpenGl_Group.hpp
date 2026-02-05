@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Group.hpp>
 #include <Graphic3d_Structure.hpp>
 
@@ -119,4 +118,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_Group, Graphic3d_Group) // Type definition
 };
-

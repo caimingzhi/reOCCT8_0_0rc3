@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -69,4 +68,3 @@ public:
 private:
   NCollection_Map<TDF_Label> myModified;
 };
-

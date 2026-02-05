@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -8,130 +7,30 @@
 #include <NCollection_Sequence.hpp>
 #include <Standard_Integer.hpp>
 #include <Standard_ShortReal.hpp>
-// Created on: 2003-03-24
-// Created by: Michael SAZONOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <Standard_TypeDef.hpp>
 
 typedef char* BinObjMgt_PChar;
 
-// Created on: 2007-08-10
-// Created by: Vlad ROMASHKO
-// Copyright (c) 2007-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
 #include <Standard_TypeDef.hpp>
 
 typedef uint8_t* BinObjMgt_PByte;
-
-
-// Created on: 2003-03-24
-// Created by: Michael SAZONOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <Standard_TypeDef.hpp>
 
 typedef char16_t* BinObjMgt_PExtChar;
 
-
-// Created on: 2002-10-31
-// Created by: Michael SAZONOV
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
 #include <Standard_TypeDef.hpp>
 
 typedef int* BinObjMgt_PInteger;
-
-
-// Created on: 2003-03-24
-// Created by: Michael SAZONOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <Standard_TypeDef.hpp>
 
 typedef double* BinObjMgt_PReal;
 
-
-// Created on: 2003-03-24
-// Created by: Michael SAZONOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
 #include <Standard_TypeDef.hpp>
 
 typedef float* BinObjMgt_PShortReal;
-
 
 #include <BinObjMgt_Position.hpp>
 #include <Standard_OStream.hpp>
@@ -458,20 +357,6 @@ private:
   occ::handle<BinObjMgt_Position> myStreamStart; ///< position where the direct writing to the script is started
   // clang-format on
 };
-// Created on: 2002-10-30
-// Created by: Michael SAZONOV
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #define BP_HEADSIZE ((int)(3 * sizeof(int)))
 #define BP_PIECESIZE 102400
@@ -679,5 +564,3 @@ inline const BinObjMgt_Persistent& BinObjMgt_Persistent::GetBoolean(bool& theVal
   theValue = anIntVal != 0;
   return *this;
 }
-
-

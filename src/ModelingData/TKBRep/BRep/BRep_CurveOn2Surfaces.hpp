@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRep_CurveRepresentation.hpp>
@@ -55,4 +54,3 @@ private:
   TopLoc_Location           myLocation2;
   GeomAbs_Shape             myContinuity;
 };
-

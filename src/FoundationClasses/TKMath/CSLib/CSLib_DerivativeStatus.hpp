@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Status of surface derivatives computation for normal calculation.
 //!
 //! Describes the result of attempting to compute a surface normal
@@ -15,4 +14,3 @@ enum CSLib_DerivativeStatus
   CSLib_D1vD1uRatioIsNull, //!< D1V is negligible: ||D1V|| / ||D1U|| <= RealEpsilon.
   CSLib_D1uIsParallelD1v   //!< D1U and D1V are parallel.
 };
-

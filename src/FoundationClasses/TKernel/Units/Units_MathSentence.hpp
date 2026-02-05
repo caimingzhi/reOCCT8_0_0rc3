@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -18,4 +17,3 @@ public:
   //! language.
   Standard_EXPORT Units_MathSentence(const char* astring);
 };
-

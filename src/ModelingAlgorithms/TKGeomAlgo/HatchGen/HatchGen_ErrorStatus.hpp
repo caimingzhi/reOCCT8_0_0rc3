@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Error status.
 enum HatchGen_ErrorStatus
 {
@@ -10,4 +9,3 @@ enum HatchGen_ErrorStatus
   HatchGen_IncoherentParity,
   HatchGen_IncompatibleStates
 };
-

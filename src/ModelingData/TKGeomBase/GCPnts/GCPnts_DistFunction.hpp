@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_Function.hpp>
 #include <math_MultipleVarFunction.hpp>
 #include <Adaptor3d_Curve.hpp>
@@ -47,4 +46,3 @@ private:
 };
 
 //
-

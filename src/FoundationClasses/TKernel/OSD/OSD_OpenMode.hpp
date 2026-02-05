@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Specifies the file open mode.
 enum OSD_OpenMode
 {
@@ -8,4 +7,3 @@ enum OSD_OpenMode
   OSD_WriteOnly,
   OSD_ReadWrite
 };
-

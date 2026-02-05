@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Face.hpp>
@@ -49,4 +48,3 @@ protected:
   bool        myFirstDone;
   bool        myLastDone;
 };
-

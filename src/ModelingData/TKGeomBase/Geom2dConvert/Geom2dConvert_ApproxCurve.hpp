@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <Standard_OStream.hpp>
@@ -75,4 +74,3 @@ private:
   occ::handle<Geom2d_BSplineCurve> myBSplCurve;
   double                           myMaxError;
 };
-

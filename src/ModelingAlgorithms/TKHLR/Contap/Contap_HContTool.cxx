@@ -1,19 +1,3 @@
-// Created on: 1995-07-02
-// Created by: Laurent BUCHARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_HVertex.hpp>
 #include <Contap_HContTool.hpp>
 #include <Extrema_EPCOfExtPC2d.hpp>
@@ -31,15 +15,18 @@ int Contap_HContTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
   GeomAbs_SurfaceType typS = S->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       nbs = 3 + S->NbVPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
       nbs = S->NbVKnots();
       nbs *= S->VDegree();
@@ -52,12 +39,14 @@ int Contap_HContTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
     case GeomAbs_Sphere:
     case GeomAbs_Torus:
     case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       nbs = 15;
     }
     break;
 
-    default: {
+    default:
+    {
       nbs = 10;
     }
     break;
@@ -73,15 +62,18 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
   GeomAbs_SurfaceType typS = S->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       nbs = 3 + S->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
       nbs = S->NbUKnots();
       nbs *= S->UDegree();
@@ -89,7 +81,8 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
         nbs = 2;
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       nbs = 20;
     }
     break;
@@ -97,12 +90,14 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
     case GeomAbs_Cone:
     case GeomAbs_Sphere:
     case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       nbs = 10;
     }
     break;
 
-    default: {
+    default:
+    {
       nbs = 10;
     }
     break;
@@ -237,7 +232,8 @@ int Contap_HContTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
     case GeomAbs_BezierCurve:
       nbsOnC = A->NbPoles();
       break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Attribute.hpp>
 #include <Message_MetricType.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -84,4 +83,3 @@ private:
   NCollection_IndexedDataMap<Message_MetricType, StartToStopValue> myMetrics; //!< computed metrics
   // clang-format on
 };
-

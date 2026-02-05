@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -94,6 +93,7 @@ private:
   int         mylowerAcol;
   int         myupperAcol;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -133,5 +133,3 @@ inline const math_Matrix& math_Householder::AllValues() const
   StdFail_NotDone_Raise_if(!Done, " ");
   return Sol;
 }
-
-

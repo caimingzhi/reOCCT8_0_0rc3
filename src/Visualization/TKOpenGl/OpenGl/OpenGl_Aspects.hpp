@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Element.hpp>
 #include <OpenGl_AspectsProgram.hpp>
 #include <OpenGl_AspectsTextureSet.hpp>
@@ -90,4 +89,3 @@ protected:
 public:
   DEFINE_STANDARD_ALLOC
 };
-

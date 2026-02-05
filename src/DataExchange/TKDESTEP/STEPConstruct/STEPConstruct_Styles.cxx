@@ -1,19 +1,3 @@
-// Created on: 1999-09-10
-// Created by: Andrey BETENEV
-// Copyright (c) 1999-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <APIHeaderSection_MakeHeader.hpp>
 #include <Interface_EntityIterator.hpp>
 #include <Quantity_Color.hpp>
@@ -73,151 +57,151 @@
 
 namespace
 {
-//=======================================================================
-// function : ProcessAsSurfaceStyleRendering
-// purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
-//           render color and render trnasparency from it. Returns true,
-//           if theSSES was of type StepVisual_SurfaceStyleRendering
-//           (even if color and transparency data couldn't be extracted
-//           for some reason), otherwise returns false.
-//=======================================================================
-bool ProcessAsSurfaceStyleRendering(const StepVisual_SurfaceStyleElementSelect& theSSES,
-                                    STEPConstruct_RenderingProperties&          theRenderingProps)
-{
-  const occ::handle<StepVisual_SurfaceStyleRendering> aSSR = theSSES.SurfaceStyleRendering();
-  if (aSSR.IsNull())
+  //=======================================================================
+  // function : ProcessAsSurfaceStyleRendering
+  // purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
+  //           render color and render trnasparency from it. Returns true,
+  //           if theSSES was of type StepVisual_SurfaceStyleRendering
+  //           (even if color and transparency data couldn't be extracted
+  //           for some reason), otherwise returns false.
+  //=======================================================================
+  bool ProcessAsSurfaceStyleRendering(const StepVisual_SurfaceStyleElementSelect& theSSES,
+                                      STEPConstruct_RenderingProperties&          theRenderingProps)
   {
-    return false;
-  }
-  const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aSSRWP =
-    occ::down_cast<StepVisual_SurfaceStyleRenderingWithProperties>(aSSR);
-  if (aSSRWP.IsNull())
-  {
-    return true;
-  }
-  theRenderingProps.Init(aSSRWP);
-  return theRenderingProps.IsDefined();
-}
-
-//=======================================================================
-// function : ProcessAsSurfaceStyleBoundary
-// purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
-//           boundary color from it. Returns true,
-//           if theSSES was of type StepVisual_SurfaceStyleBoundary
-//           (even if boundary color data couldn't be extracted
-//           for some reason), otherwise returns false.
-//=======================================================================
-bool ProcessAsSurfaceStyleBoundary(const StepVisual_SurfaceStyleElementSelect& theSSES,
-                                   occ::handle<StepVisual_Colour>&             theBoundaryColour)
-{
-  const occ::handle<StepVisual_SurfaceStyleBoundary> aSSB = theSSES.SurfaceStyleBoundary();
-  if (aSSB.IsNull())
-  {
-    return false;
-  }
-  const occ::handle<StepVisual_CurveStyle> aCS = aSSB->StyleOfBoundary();
-  if (aCS.IsNull())
-  {
-    return true;
-  }
-  theBoundaryColour = aCS->CurveColour();
-  return true;
-}
-
-//=======================================================================
-// function : ProcessAsSurfaceStyleFillArea
-// purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
-//           surface color from it. Doesn't return color for negative
-//           side. Returns true, if theSSES was of type
-//           StepVisual_SurfaceStyleFillArea (even if surface color data
-//           couldn't be extracted or some reason), otherwise returns
-//           false.
-//=======================================================================
-bool ProcessAsSurfaceStyleFillArea(const StepVisual_SurfaceStyleElementSelect& theSSES,
-                                   const StepVisual_SurfaceSide                theSide,
-                                   occ::handle<StepVisual_Colour>&             theSurfaceColour)
-{
-  const occ::handle<StepVisual_SurfaceStyleFillArea> aSSFA = theSSES.SurfaceStyleFillArea();
-  if (aSSFA.IsNull())
-  {
-    return false;
-  }
-  const occ::handle<StepVisual_FillAreaStyle> aFAS = aSSFA->FillArea();
-  if (aFAS.IsNull())
-  {
-    return true;
-  }
-
-  for (int aFSSIndex = 1; aFSSIndex <= aFAS->NbFillStyles(); aFSSIndex++)
-  {
-    const StepVisual_FillStyleSelect                  aFSS  = aFAS->FillStylesValue(aFSSIndex);
-    const occ::handle<StepVisual_FillAreaStyleColour> aFASC = aFSS.FillAreaStyleColour();
-    if (!aFASC.IsNull()
-        // If current surface color is null, we will use negative side color.
-        // Otherwise negative side color is ignored.
-        && (theSurfaceColour.IsNull()
-            || theSide != StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
+    const occ::handle<StepVisual_SurfaceStyleRendering> aSSR = theSSES.SurfaceStyleRendering();
+    if (aSSR.IsNull())
     {
-      theSurfaceColour = aFASC->FillColour();
+      return false;
     }
+    const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aSSRWP =
+      occ::down_cast<StepVisual_SurfaceStyleRenderingWithProperties>(aSSR);
+    if (aSSRWP.IsNull())
+    {
+      return true;
+    }
+    theRenderingProps.Init(aSSRWP);
+    return theRenderingProps.IsDefined();
   }
-  return true;
-}
 
-//=======================================================================
-// function : ProcessAsSurfaceStyleUsage
-// purpose  : Process StepVisual_PresentationStyleSelect to extract
-//           following data from it: surface color, boundary color,
-//           render color, render transparency. Returns true,
-//           if thePSS was of type StepVisual_SurfaceStyleUsage
-//           (even if no data at all could be extracted for some reason),
-//           otherwise returns false.
-//=======================================================================
-bool ProcessAsSurfaceStyleUsage(const StepVisual_PresentationStyleSelect& thePSS,
-                                occ::handle<StepVisual_Colour>&           theSurfaceColour,
-                                occ::handle<StepVisual_Colour>&           theBoundaryColour,
-                                STEPConstruct_RenderingProperties&        theRenderingProps)
-{
-  const occ::handle<StepVisual_SurfaceStyleUsage> aSSU = thePSS.SurfaceStyleUsage();
-  if (aSSU.IsNull())
+  //=======================================================================
+  // function : ProcessAsSurfaceStyleBoundary
+  // purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
+  //           boundary color from it. Returns true,
+  //           if theSSES was of type StepVisual_SurfaceStyleBoundary
+  //           (even if boundary color data couldn't be extracted
+  //           for some reason), otherwise returns false.
+  //=======================================================================
+  bool ProcessAsSurfaceStyleBoundary(const StepVisual_SurfaceStyleElementSelect& theSSES,
+                                     occ::handle<StepVisual_Colour>&             theBoundaryColour)
   {
-    return false;
+    const occ::handle<StepVisual_SurfaceStyleBoundary> aSSB = theSSES.SurfaceStyleBoundary();
+    if (aSSB.IsNull())
+    {
+      return false;
+    }
+    const occ::handle<StepVisual_CurveStyle> aCS = aSSB->StyleOfBoundary();
+    if (aCS.IsNull())
+    {
+      return true;
+    }
+    theBoundaryColour = aCS->CurveColour();
+    return true;
   }
 
-  const occ::handle<StepVisual_SurfaceSideStyle> aSSS = aSSU->Style();
-  for (int aSSESIndex = 1; aSSESIndex <= aSSS->NbStyles(); ++aSSESIndex)
+  //=======================================================================
+  // function : ProcessAsSurfaceStyleFillArea
+  // purpose  : Process StepVisual_SurfaceStyleElementSelect to extract a
+  //           surface color from it. Doesn't return color for negative
+  //           side. Returns true, if theSSES was of type
+  //           StepVisual_SurfaceStyleFillArea (even if surface color data
+  //           couldn't be extracted or some reason), otherwise returns
+  //           false.
+  //=======================================================================
+  bool ProcessAsSurfaceStyleFillArea(const StepVisual_SurfaceStyleElementSelect& theSSES,
+                                     const StepVisual_SurfaceSide                theSide,
+                                     occ::handle<StepVisual_Colour>&             theSurfaceColour)
   {
-    const StepVisual_SurfaceStyleElementSelect aSSES = aSSS->StylesValue(aSSESIndex);
-    // SurfaceStyleElementSelect can be of only one of the following types:
-    // SurfaceStyleFillArea, SurfaceStyleBoundary, SurfaceStyleRendering.
-    // So we're using && operator to stop as soon as this type is processed.
-    ProcessAsSurfaceStyleFillArea(aSSES, aSSU->Side(), theSurfaceColour)
-      || ProcessAsSurfaceStyleBoundary(aSSES, theBoundaryColour)
-      || ProcessAsSurfaceStyleRendering(aSSES, theRenderingProps);
-  }
-  return true;
-}
+    const occ::handle<StepVisual_SurfaceStyleFillArea> aSSFA = theSSES.SurfaceStyleFillArea();
+    if (aSSFA.IsNull())
+    {
+      return false;
+    }
+    const occ::handle<StepVisual_FillAreaStyle> aFAS = aSSFA->FillArea();
+    if (aFAS.IsNull())
+    {
+      return true;
+    }
 
-//=======================================================================
-// function : ProcessAsCurveStyle
-// purpose  : Process StepVisual_PresentationStyleSelect to extract a
-//           curve color from it. Returns true,
-//           if thePSS was of type StepVisual_SurfaceStyleRendering
-//           (even if curve color data couldn't be extracted
-//           for some reason), otherwise returns false.
-//=======================================================================
-bool ProcessAsCurveStyle(const StepVisual_PresentationStyleSelect& thePSS,
-                         occ::handle<StepVisual_Colour>&           theCurveColour)
-{
-  const occ::handle<StepVisual_CurveStyle> aCS = thePSS.CurveStyle();
-  if (aCS.IsNull())
+    for (int aFSSIndex = 1; aFSSIndex <= aFAS->NbFillStyles(); aFSSIndex++)
+    {
+      const StepVisual_FillStyleSelect                  aFSS  = aFAS->FillStylesValue(aFSSIndex);
+      const occ::handle<StepVisual_FillAreaStyleColour> aFASC = aFSS.FillAreaStyleColour();
+      if (!aFASC.IsNull()
+          // If current surface color is null, we will use negative side color.
+          // Otherwise negative side color is ignored.
+          && (theSurfaceColour.IsNull()
+              || theSide != StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
+      {
+        theSurfaceColour = aFASC->FillColour();
+      }
+    }
+    return true;
+  }
+
+  //=======================================================================
+  // function : ProcessAsSurfaceStyleUsage
+  // purpose  : Process StepVisual_PresentationStyleSelect to extract
+  //           following data from it: surface color, boundary color,
+  //           render color, render transparency. Returns true,
+  //           if thePSS was of type StepVisual_SurfaceStyleUsage
+  //           (even if no data at all could be extracted for some reason),
+  //           otherwise returns false.
+  //=======================================================================
+  bool ProcessAsSurfaceStyleUsage(const StepVisual_PresentationStyleSelect& thePSS,
+                                  occ::handle<StepVisual_Colour>&           theSurfaceColour,
+                                  occ::handle<StepVisual_Colour>&           theBoundaryColour,
+                                  STEPConstruct_RenderingProperties&        theRenderingProps)
   {
-    return false;
+    const occ::handle<StepVisual_SurfaceStyleUsage> aSSU = thePSS.SurfaceStyleUsage();
+    if (aSSU.IsNull())
+    {
+      return false;
+    }
+
+    const occ::handle<StepVisual_SurfaceSideStyle> aSSS = aSSU->Style();
+    for (int aSSESIndex = 1; aSSESIndex <= aSSS->NbStyles(); ++aSSESIndex)
+    {
+      const StepVisual_SurfaceStyleElementSelect aSSES = aSSS->StylesValue(aSSESIndex);
+      // SurfaceStyleElementSelect can be of only one of the following types:
+      // SurfaceStyleFillArea, SurfaceStyleBoundary, SurfaceStyleRendering.
+      // So we're using && operator to stop as soon as this type is processed.
+      ProcessAsSurfaceStyleFillArea(aSSES, aSSU->Side(), theSurfaceColour)
+        || ProcessAsSurfaceStyleBoundary(aSSES, theBoundaryColour)
+        || ProcessAsSurfaceStyleRendering(aSSES, theRenderingProps);
+    }
+    return true;
   }
 
-  theCurveColour = aCS->CurveColour();
-  return true;
-}
+  //=======================================================================
+  // function : ProcessAsCurveStyle
+  // purpose  : Process StepVisual_PresentationStyleSelect to extract a
+  //           curve color from it. Returns true,
+  //           if thePSS was of type StepVisual_SurfaceStyleRendering
+  //           (even if curve color data couldn't be extracted
+  //           for some reason), otherwise returns false.
+  //=======================================================================
+  bool ProcessAsCurveStyle(const StepVisual_PresentationStyleSelect& thePSS,
+                           occ::handle<StepVisual_Colour>&           theCurveColour)
+  {
+    const occ::handle<StepVisual_CurveStyle> aCS = thePSS.CurveStyle();
+    if (aCS.IsNull())
+    {
+      return false;
+    }
+
+    theCurveColour = aCS->CurveColour();
+    return true;
+  }
 } // namespace
 
 //=================================================================================================

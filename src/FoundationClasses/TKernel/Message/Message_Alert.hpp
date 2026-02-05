@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 //! Base class of the hierarchy of classes describing various situations
@@ -47,4 +46,3 @@ public:
   {                                                                                                \
     DEFINE_STANDARD_RTTI_INLINE(Alert, Message_Alert)                                              \
   };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -28,4 +27,3 @@ public:
 private:
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<Standard_Transient>> myMapObj;
 };
-

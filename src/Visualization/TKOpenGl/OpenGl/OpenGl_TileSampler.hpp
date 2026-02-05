@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Texture.hpp>
 // Copyright (c) 2012 Leonhard Gruenschloss (leonhard@gruenschloss.org)
 //
@@ -21,7 +20,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
 
 #include <vector>
 
@@ -156,7 +154,6 @@ inline void OpenGl_HaltonSampler::initFaure()
   initTables(aPerms);
 }
 
-
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -171,9 +168,9 @@ inline void OpenGl_HaltonSampler::initFaure()
 // commercial license or contractual agreement.
 
 #ifndef _Image_PixMapTypedData_Header
-#define _Image_PixMapTypedData_Header
+  #define _Image_PixMapTypedData_Header
 
-#include <Image_PixMapData.hpp>
+  #include <Image_PixMapData.hpp>
 
 //! Structure to manage image buffer with predefined pixel type.
 template <typename PixelType_t>
@@ -237,7 +234,6 @@ public:
 };
 
 #endif // _Image_PixMapTypedData_Header
-
 
 #include <vector>
 
@@ -379,4 +375,3 @@ protected:
   int                   myTileSize; //!< tile size
   NCollection_Vec2<int> myViewSize; //!< ray-tracing viewport
 };
-

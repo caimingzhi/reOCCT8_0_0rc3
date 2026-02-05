@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -183,4 +182,3 @@ private:
   NCollection_Array1<gp_Pnt2d>        pntcen3;
   NCollection_Array1<double>          parcen3;
 };
-

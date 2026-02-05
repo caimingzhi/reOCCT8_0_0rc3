@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -103,6 +102,7 @@ private:
   double                          myPreci;
   double                          myMaxTol;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -122,5 +122,3 @@ inline occ::handle<ShapeBuild_ReShape> ShapeFix_IntersectionTool::Context() cons
 {
   return myContext;
 }
-
-

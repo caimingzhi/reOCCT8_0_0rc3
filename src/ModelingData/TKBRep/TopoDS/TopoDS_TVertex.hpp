@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <TopAbs_ShapeEnum.hpp>
 #include <TopoDS_TShape.hpp>
@@ -28,4 +27,3 @@ protected:
     Convex(true);
   }
 };
-

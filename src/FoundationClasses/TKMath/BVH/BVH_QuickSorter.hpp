@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Sorter.hpp>
 #include <NCollection_Allocator.hpp>
 
@@ -41,9 +40,11 @@ public:
 
     // Sort indices by center value using std::sort (introsort - O(n log n) guaranteed)
     const int anAxis = myAxis;
-    std::sort(anIndices.begin(), anIndices.end(), [theSet, theStart, anAxis](int a, int b) {
-      return theSet->Center(theStart + a, anAxis) < theSet->Center(theStart + b, anAxis);
-    });
+    std::sort(
+      anIndices.begin(),
+      anIndices.end(),
+      [theSet, theStart, anAxis](int a, int b)
+      { return theSet->Center(theStart + a, anAxis) < theSet->Center(theStart + b, anAxis); });
 
     // Compute inverse permutation: invPerm[i] = where element i should go
     std::vector<int, NCollection_Allocator<int>> anInvPerm(aSize);
@@ -69,4 +70,3 @@ protected:
   //! Axis used to arrange the primitives (X - 0, Y - 1, Z - 2).
   int myAxis;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepDimTol_GeometricToleranceType
 {
   StepDimTol_GTTAngularityTolerance,
@@ -19,4 +18,3 @@ enum StepDimTol_GeometricToleranceType
   StepDimTol_GTTSymmetryTolerance,
   StepDimTol_GTTTotalRunoutTolerance
 };
-

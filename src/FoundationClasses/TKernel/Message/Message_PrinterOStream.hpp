@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Color definition for console/terminal output (limited palette).
 enum Message_ConsoleColor
 {
@@ -27,7 +26,6 @@ enum Message_ConsoleColor
   Message_ConsoleColor_Cyan,    //!< cyan    color
   Message_ConsoleColor_Magenta, //!< magenta color
 };
-
 
 #include <Message_Printer.hpp>
 #include <Standard_OStream.hpp>
@@ -93,4 +91,3 @@ private:
   bool  myIsFile;
   bool  myToColorize;
 };
-

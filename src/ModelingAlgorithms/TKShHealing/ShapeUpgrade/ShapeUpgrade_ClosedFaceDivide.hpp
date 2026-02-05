@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -37,4 +36,3 @@ public:
 private:
   int myNbSplit;
 };
-

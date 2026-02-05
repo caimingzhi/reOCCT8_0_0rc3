@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_ExtendedString.hpp>
@@ -124,4 +123,3 @@ private:
   bool                                                         myIsDelta;
   Standard_GUID                                                myID;
 };
-

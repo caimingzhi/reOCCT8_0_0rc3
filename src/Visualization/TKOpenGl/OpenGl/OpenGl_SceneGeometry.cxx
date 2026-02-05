@@ -1,18 +1,3 @@
-// Created on: 2013-08-27
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_SceneGeometry.hpp>
 
 #include <OSD_Parallel.hpp>
@@ -27,8 +12,8 @@
 
 namespace
 {
-//! Useful constant for null floating-point 4D vector.
-static const BVH_Vec4f ZERO_VEC_4F;
+  //! Useful constant for null floating-point 4D vector.
+  static const BVH_Vec4f ZERO_VEC_4F;
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_TriangleSet, OpenGl_BVHTriangulation3f)
@@ -555,45 +540,45 @@ bool OpenGl_RaytraceGeometry::UpdateTextureHandles(const occ::handle<OpenGl_Cont
 
 namespace OpenGl_Raytrace
 {
-// =======================================================================
-// function : IsRaytracedElement
-// purpose  : Checks to see if the element contains ray-trace geometry
-// =======================================================================
-bool IsRaytracedElement(const OpenGl_ElementNode* theNode)
-{
-  OpenGl_PrimitiveArray* anArray = dynamic_cast<OpenGl_PrimitiveArray*>(theNode->elem);
-  return anArray != nullptr && anArray->DrawMode() >= GL_TRIANGLES;
-}
-
-// =======================================================================
-// function : IsRaytracedElement
-// purpose  : Checks to see if the element contains ray-trace geometry
-// =======================================================================
-bool IsRaytracedElement(const OpenGl_Element* theElement)
-{
-  const OpenGl_PrimitiveArray* anArray = dynamic_cast<const OpenGl_PrimitiveArray*>(theElement);
-  return anArray != nullptr && anArray->DrawMode() >= GL_TRIANGLES;
-}
-
-// =======================================================================
-// function : IsRaytracedGroup
-// purpose  : Checks to see if the group contains ray-trace geometry
-// =======================================================================
-bool IsRaytracedGroup(const OpenGl_Group* theGroup)
-{
-  if (theGroup->HasPersistence())
+  // =======================================================================
+  // function : IsRaytracedElement
+  // purpose  : Checks to see if the element contains ray-trace geometry
+  // =======================================================================
+  bool IsRaytracedElement(const OpenGl_ElementNode* theNode)
   {
+    OpenGl_PrimitiveArray* anArray = dynamic_cast<OpenGl_PrimitiveArray*>(theNode->elem);
+    return anArray != nullptr && anArray->DrawMode() >= GL_TRIANGLES;
+  }
+
+  // =======================================================================
+  // function : IsRaytracedElement
+  // purpose  : Checks to see if the element contains ray-trace geometry
+  // =======================================================================
+  bool IsRaytracedElement(const OpenGl_Element* theElement)
+  {
+    const OpenGl_PrimitiveArray* anArray = dynamic_cast<const OpenGl_PrimitiveArray*>(theElement);
+    return anArray != nullptr && anArray->DrawMode() >= GL_TRIANGLES;
+  }
+
+  // =======================================================================
+  // function : IsRaytracedGroup
+  // purpose  : Checks to see if the group contains ray-trace geometry
+  // =======================================================================
+  bool IsRaytracedGroup(const OpenGl_Group* theGroup)
+  {
+    if (theGroup->HasPersistence())
+    {
+      return false;
+    }
+
+    for (const OpenGl_ElementNode* aNode = theGroup->FirstNode(); aNode != nullptr;
+         aNode                           = aNode->next)
+    {
+      if (IsRaytracedElement(aNode))
+      {
+        return true;
+      }
+    }
     return false;
   }
-
-  for (const OpenGl_ElementNode* aNode = theGroup->FirstNode(); aNode != nullptr;
-       aNode                           = aNode->next)
-  {
-    if (IsRaytracedElement(aNode))
-    {
-      return true;
-    }
-  }
-  return false;
-}
 } // namespace OpenGl_Raytrace

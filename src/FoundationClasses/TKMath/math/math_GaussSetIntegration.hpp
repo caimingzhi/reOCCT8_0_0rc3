@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -39,6 +38,7 @@ private:
   math_Vector Val;
   bool        Done;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -66,5 +66,3 @@ inline const math_Vector& math_GaussSetIntegration::Value() const
   StdFail_NotDone_Raise_if(!Done, "Integration ");
   return Val;
 }
-
-

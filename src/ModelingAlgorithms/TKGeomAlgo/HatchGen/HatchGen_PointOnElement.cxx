@@ -1,19 +1,3 @@
-// Created on: 1993-10-29
-// Created by: Jean Marc LACHAUME
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <HatchGen_PointOnElement.hpp>
 #include <IntRes2d_IntersectionPoint.hpp>
 #include <Standard_Macro.hpp>
@@ -55,27 +39,32 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
 
   switch (TrsH.TransitionType())
   {
-    case IntRes2d_In: {
+    case IntRes2d_In:
+    {
       myBefore = TopAbs_OUT;
       myAfter  = TopAbs_IN;
       myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_TRUE : HatchGen_TOUCH;
       break;
     }
-    case IntRes2d_Out: {
+    case IntRes2d_Out:
+    {
       myBefore = TopAbs_IN;
       myAfter  = TopAbs_OUT;
       myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_TRUE : HatchGen_TOUCH;
       break;
     }
       //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:34 2001 Begin
-    case IntRes2d_Touch: {
+    case IntRes2d_Touch:
+    {
       switch (TrsH.Situation())
       {
-        case IntRes2d_Inside: {
+        case IntRes2d_Inside:
+        {
           myType = HatchGen_TANGENT;
           switch (myPosit)
           {
-            case TopAbs_FORWARD: {
+            case TopAbs_FORWARD:
+            {
               if (TrsE.IsOpposite())
               {
                 myBefore = TopAbs_IN;
@@ -88,12 +77,14 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
               }
               break;
             }
-            case TopAbs_INTERNAL: {
+            case TopAbs_INTERNAL:
+            {
               myBefore = TopAbs_IN;
               myAfter  = TopAbs_IN;
               break;
             }
-            case TopAbs_REVERSED: {
+            case TopAbs_REVERSED:
+            {
               if (TrsE.IsOpposite())
               {
                 myBefore = TopAbs_OUT;
@@ -111,11 +102,13 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
           }
           break;
         }
-        case IntRes2d_Outside: {
+        case IntRes2d_Outside:
+        {
           myType = HatchGen_TANGENT;
           switch (myPosit)
           {
-            case TopAbs_FORWARD: {
+            case TopAbs_FORWARD:
+            {
               if (TrsE.IsOpposite())
               {
                 myBefore = TopAbs_OUT;
@@ -128,12 +121,14 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
               }
               break;
             }
-            case TopAbs_INTERNAL: {
+            case TopAbs_INTERNAL:
+            {
               myBefore = TopAbs_OUT;
               myAfter  = TopAbs_OUT;
               break;
             }
-            case TopAbs_REVERSED: {
+            case TopAbs_REVERSED:
+            {
               if (TrsE.IsOpposite())
               {
                 myBefore = TopAbs_IN;
@@ -151,7 +146,8 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
           }
           break;
         }
-        case IntRes2d_Unknown: {
+        case IntRes2d_Unknown:
+        {
           myBefore = TopAbs_UNKNOWN;
           myAfter  = TopAbs_UNKNOWN;
           myType   = HatchGen_TANGENT;
@@ -161,7 +157,8 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
       break;
     }
       //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:46 2001 End
-    case IntRes2d_Undecided: {
+    case IntRes2d_Undecided:
+    {
       myBefore = TopAbs_UNKNOWN;
       myAfter  = TopAbs_UNKNOWN;
       myType   = HatchGen_UNDETERMINED;

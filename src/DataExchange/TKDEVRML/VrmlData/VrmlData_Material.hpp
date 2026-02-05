@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Node.hpp>
 #include <Quantity_Color.hpp>
 

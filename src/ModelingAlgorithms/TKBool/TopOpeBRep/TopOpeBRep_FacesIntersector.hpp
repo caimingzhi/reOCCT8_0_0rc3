@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <GeomAbs_SurfaceType.hpp>
 #include <IntPatch_Intersection.hpp>
@@ -122,4 +121,3 @@ private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myEdgeRestrictionMap;
   TopoDS_Shape                                                  myNullShape;
 };
-

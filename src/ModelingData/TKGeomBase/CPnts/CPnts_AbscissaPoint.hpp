@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -180,6 +179,7 @@ private:
   double               myUMax;
   CPnts_MyRootFunction myF;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -218,5 +218,3 @@ inline void CPnts_AbscissaPoint::SetParameter(const double P)
   myParam = P;
   myDone  = true;
 }
-
-

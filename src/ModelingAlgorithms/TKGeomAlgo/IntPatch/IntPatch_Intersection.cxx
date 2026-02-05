@@ -1,17 +1,3 @@
-// Created by: Modelization
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <cstdio>
 #include <IntPatch_Intersection.hpp>
 
@@ -180,7 +166,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   S1,
     case GeomAbs_Cone:
     case GeomAbs_Torus:
       break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       gp_Dir                       aDirection = S1->Direction();
       gp_Ax3                       anAxis(gp::Origin(), aDirection);
       occ::handle<Adaptor3d_Curve> aBasisCurve = S1->BasisCurve();
@@ -203,7 +190,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   S1,
       }
     }
       [[fallthrough]];
-    default: {
+    default:
+    {
       IntPatch_PrmPrmIntersection interpp;
       interpp.Perform(S1, D1, TolTang, TolArc, myFleche, myUVMaxStep);
       if (interpp.IsDone())
@@ -807,7 +795,8 @@ static void FUN_NewFirstLast(const GeomAbs_CurveType& ga_ct,
   switch (ga_ct)
   {
     case GeomAbs_Line:
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       if (std::abs(Lst - Fst) > TrVal)
       {
         if (Fst >= 0. && Lst >= 0.)
@@ -829,7 +818,8 @@ static void FUN_NewFirstLast(const GeomAbs_CurveType& ga_ct,
       }
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       if (std::abs(Lst - Fst) > 10.)
       {
         if (Fst >= 0. && Lst >= 0.)
@@ -1057,7 +1047,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   theS
       //
       switch (aGeomSurf->GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           aGeomAx = aGeomSurf->Plane().Axis();
           if (aCTType == GeomAbs_Cone)
           {
@@ -1083,7 +1074,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   theS
           bToCheck = false;
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           if (aL1.Distance(aGeomSurf->Sphere().Location()) < Precision::Confusion())
           {
             bGeomGeom = 1;
@@ -1353,7 +1345,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   theS
       //
       switch (aGeomSurf->GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           aGeomAx = aGeomSurf->Plane().Axis();
           if (aCTType == GeomAbs_Cone)
           {
@@ -1379,7 +1372,8 @@ void IntPatch_Intersection::Perform(const occ::handle<Adaptor3d_Surface>&   theS
           bToCheck = false;
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           if (aL1.Distance(aGeomSurf->Sphere().Location()) < Precision::Confusion())
           {
             bGeomGeom = 1;

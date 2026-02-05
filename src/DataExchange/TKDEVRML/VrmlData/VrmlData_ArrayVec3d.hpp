@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Node.hpp>
 class gp_XYZ;
 

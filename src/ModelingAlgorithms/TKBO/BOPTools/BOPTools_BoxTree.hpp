@@ -1,21 +1,6 @@
 #pragma once
 
-
 #include <BOPTools_BoxSelector.hpp>
-// Created by: Eugeny MALTCHIKOV
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <BVH_Traverse.hpp>
 #include <BVH_BoxSet.hpp>
@@ -110,7 +95,6 @@ protected:                         //! @name Fields
   bool                 mySameBVHs; //!< Selection is performed from the same BVH trees
 };
 
-
 #include <Standard_Integer.hpp>
 #include <BVH_LinearBuilder.hpp>
 
@@ -137,4 +121,3 @@ typedef BOPTools_PairSelector<2>        BOPTools_Box2dPairSelector;
 typedef BOPTools_BoxSet<double, 3, int> BOPTools_BoxTree;
 typedef BOPTools_BoxSelector<3>         BOPTools_BoxTreeSelector;
 typedef BOPTools_PairSelector<3>        BOPTools_BoxPairSelector;
-

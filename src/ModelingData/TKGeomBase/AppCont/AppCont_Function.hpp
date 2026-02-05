@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec.hpp>
@@ -64,4 +63,3 @@ protected:
   int myNbPnt;
   int myNbPnt2d;
 };
-

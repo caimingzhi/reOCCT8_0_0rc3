@@ -1,18 +1,3 @@
-// Created on: 2014-05-22
-// Created by: Varvara POSKONINA
-// Copyright (c) 2005-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <SelectMgr_RectangularFrustum.hpp>
 
 #include <BVH_Tools.hpp>
@@ -145,66 +130,66 @@ bool SelectMgr_RectangularFrustum::segmentPlaneIntersection(
 
 namespace
 {
-// =======================================================================
-// function : computeFrustum
-// purpose  : Computes base frustum data: its vertices and edge directions
-// =======================================================================
-void computeFrustum(const gp_Pnt2d                               theMinPnt,
-                    const gp_Pnt2d&                              theMaxPnt,
-                    const occ::handle<SelectMgr_FrustumBuilder>& theBuilder,
-                    gp_Pnt*                                      theVertices,
-                    gp_Vec*                                      theEdges)
-{
-  // LeftTopNear
-  theVertices[0] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMaxPnt.Y(), 0.0);
-  // LeftTopFar
-  theVertices[1] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMaxPnt.Y(), 1.0);
-  // LeftBottomNear
-  theVertices[2] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMinPnt.Y(), 0.0);
-  // LeftBottomFar
-  theVertices[3] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMinPnt.Y(), 1.0);
-  // RightTopNear
-  theVertices[4] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMaxPnt.Y(), 0.0);
-  // RightTopFar
-  theVertices[5] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMaxPnt.Y(), 1.0);
-  // RightBottomNear
-  theVertices[6] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMinPnt.Y(), 0.0);
-  // RightBottomFar
-  theVertices[7] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMinPnt.Y(), 1.0);
+  // =======================================================================
+  // function : computeFrustum
+  // purpose  : Computes base frustum data: its vertices and edge directions
+  // =======================================================================
+  void computeFrustum(const gp_Pnt2d                               theMinPnt,
+                      const gp_Pnt2d&                              theMaxPnt,
+                      const occ::handle<SelectMgr_FrustumBuilder>& theBuilder,
+                      gp_Pnt*                                      theVertices,
+                      gp_Vec*                                      theEdges)
+  {
+    // LeftTopNear
+    theVertices[0] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMaxPnt.Y(), 0.0);
+    // LeftTopFar
+    theVertices[1] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMaxPnt.Y(), 1.0);
+    // LeftBottomNear
+    theVertices[2] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMinPnt.Y(), 0.0);
+    // LeftBottomFar
+    theVertices[3] = theBuilder->ProjectPntOnViewPlane(theMinPnt.X(), theMinPnt.Y(), 1.0);
+    // RightTopNear
+    theVertices[4] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMaxPnt.Y(), 0.0);
+    // RightTopFar
+    theVertices[5] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMaxPnt.Y(), 1.0);
+    // RightBottomNear
+    theVertices[6] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMinPnt.Y(), 0.0);
+    // RightBottomFar
+    theVertices[7] = theBuilder->ProjectPntOnViewPlane(theMaxPnt.X(), theMinPnt.Y(), 1.0);
 
-  // Horizontal
-  theEdges[0] = theVertices[4].XYZ() - theVertices[0].XYZ();
-  // Vertical
-  theEdges[1] = theVertices[2].XYZ() - theVertices[0].XYZ();
-  // LeftLower
-  theEdges[2] = theVertices[2].XYZ() - theVertices[3].XYZ();
-  // RightLower
-  theEdges[3] = theVertices[6].XYZ() - theVertices[7].XYZ();
-  // LeftUpper
-  theEdges[4] = theVertices[0].XYZ() - theVertices[1].XYZ();
-  // RightUpper
-  theEdges[5] = theVertices[4].XYZ() - theVertices[5].XYZ();
-}
+    // Horizontal
+    theEdges[0] = theVertices[4].XYZ() - theVertices[0].XYZ();
+    // Vertical
+    theEdges[1] = theVertices[2].XYZ() - theVertices[0].XYZ();
+    // LeftLower
+    theEdges[2] = theVertices[2].XYZ() - theVertices[3].XYZ();
+    // RightLower
+    theEdges[3] = theVertices[6].XYZ() - theVertices[7].XYZ();
+    // LeftUpper
+    theEdges[4] = theVertices[0].XYZ() - theVertices[1].XYZ();
+    // RightUpper
+    theEdges[5] = theVertices[4].XYZ() - theVertices[5].XYZ();
+  }
 
-// =======================================================================
-// function : computeNormals
-// purpose  : Computes normals to frustum faces
-// =======================================================================
-void computeNormals(const gp_Vec* theEdges, gp_Vec* theNormals)
-{
-  // Top
-  theNormals[0] = theEdges[0].Crossed(theEdges[4]);
-  // Bottom
-  theNormals[1] = theEdges[2].Crossed(theEdges[0]);
-  // Left
-  theNormals[2] = theEdges[4].Crossed(theEdges[1]);
-  // Right
-  theNormals[3] = theEdges[1].Crossed(theEdges[5]);
-  // Near
-  theNormals[4] = theEdges[0].Crossed(theEdges[1]);
-  // Far
-  theNormals[5] = -theNormals[4];
-}
+  // =======================================================================
+  // function : computeNormals
+  // purpose  : Computes normals to frustum faces
+  // =======================================================================
+  void computeNormals(const gp_Vec* theEdges, gp_Vec* theNormals)
+  {
+    // Top
+    theNormals[0] = theEdges[0].Crossed(theEdges[4]);
+    // Bottom
+    theNormals[1] = theEdges[2].Crossed(theEdges[0]);
+    // Left
+    theNormals[2] = theEdges[4].Crossed(theEdges[1]);
+    // Right
+    theNormals[3] = theEdges[1].Crossed(theEdges[5]);
+    // Near
+    theNormals[4] = theEdges[0].Crossed(theEdges[1]);
+    // Far
+    theNormals[5] = -theNormals[4];
+  }
 } // namespace
 
 // =======================================================================

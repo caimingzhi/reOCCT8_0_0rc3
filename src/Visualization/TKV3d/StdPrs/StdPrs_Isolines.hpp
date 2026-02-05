@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <Geom_Surface.hpp>
 #include <gp_Lin2d.hpp>
@@ -251,4 +250,3 @@ private:
     const gp_Pnt2d*                  theNodesUV,
     SegOnIso&                        theSegment);
 };
-

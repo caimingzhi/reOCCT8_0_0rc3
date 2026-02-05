@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -49,4 +48,3 @@ private:
   gp_XYZ                                     theCoord;
   occ::handle<IGESGeom_TransformationMatrix> theSystem;
 };
-

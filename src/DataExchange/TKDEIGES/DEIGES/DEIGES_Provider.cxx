@@ -30,119 +30,120 @@ IMPLEMENT_STANDARD_RTTIEXT(DEIGES_Provider, DE_Provider)
 
 namespace
 {
-// Helper function to validate configuration node
-bool validateConfigurationNode(const occ::handle<DE_ConfigurationNode>& theNode,
-                               const TCollection_AsciiString&           theContext)
-{
-  return DE_ValidationUtils::ValidateConfigurationNode(theNode,
-                                                       STANDARD_TYPE(DEIGES_ConfigurationNode),
-                                                       theContext);
-}
-
-// Helper function to configure IGES CAF reader parameters
-void configureIGESCAFReader(IGESCAFControl_Reader&                       theReader,
-                            const occ::handle<DEIGES_ConfigurationNode>& theNode)
-{
-  theReader.SetReadVisible(theNode->InternalParameters.ReadOnlyVisible);
-  theReader.SetColorMode(theNode->InternalParameters.ReadColor);
-  theReader.SetNameMode(theNode->InternalParameters.ReadName);
-  theReader.SetLayerMode(theNode->InternalParameters.ReadLayer);
-  theReader.SetShapeFixParameters(theNode->ShapeFixParameters);
-}
-
-// Helper function to configure IGES control reader parameters
-void configureIGESControlReader(IGESControl_Reader&                          theReader,
-                                const occ::handle<DEIGES_ConfigurationNode>& theNode)
-{
-  theReader.SetReadVisible(theNode->InternalParameters.ReadOnlyVisible);
-  theReader.SetShapeFixParameters(theNode->ShapeFixParameters);
-}
-
-// Helper function to setup IGES unit configuration
-void setupIGESUnits(IGESData_GlobalSection&                      theGS,
-                    const occ::handle<DEIGES_ConfigurationNode>& theNode,
-                    const occ::handle<TDocStd_Document>&         theDocument,
-                    const TCollection_AsciiString&               thePath,
-                    bool                                         theUseDocumentUnits)
-{
-  int aFlag = IGESData_BasicEditor::GetFlagByValue(theNode->GlobalParameters.LengthUnit);
-
-  if (theUseDocumentUnits && !theDocument.IsNull())
+  // Helper function to validate configuration node
+  bool validateConfigurationNode(const occ::handle<DE_ConfigurationNode>& theNode,
+                                 const TCollection_AsciiString&           theContext)
   {
-    double aScaleFactorMM = 1.;
-    bool   aHasUnits      = XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
-                                                         aScaleFactorMM,
-                                                         UnitsMethods_LengthUnit_Millimeter);
-    if (aHasUnits)
+    return DE_ValidationUtils::ValidateConfigurationNode(theNode,
+                                                         STANDARD_TYPE(DEIGES_ConfigurationNode),
+                                                         theContext);
+  }
+
+  // Helper function to configure IGES CAF reader parameters
+  void configureIGESCAFReader(IGESCAFControl_Reader&                       theReader,
+                              const occ::handle<DEIGES_ConfigurationNode>& theNode)
+  {
+    theReader.SetReadVisible(theNode->InternalParameters.ReadOnlyVisible);
+    theReader.SetColorMode(theNode->InternalParameters.ReadColor);
+    theReader.SetNameMode(theNode->InternalParameters.ReadName);
+    theReader.SetLayerMode(theNode->InternalParameters.ReadLayer);
+    theReader.SetShapeFixParameters(theNode->ShapeFixParameters);
+  }
+
+  // Helper function to configure IGES control reader parameters
+  void configureIGESControlReader(IGESControl_Reader&                          theReader,
+                                  const occ::handle<DEIGES_ConfigurationNode>& theNode)
+  {
+    theReader.SetReadVisible(theNode->InternalParameters.ReadOnlyVisible);
+    theReader.SetShapeFixParameters(theNode->ShapeFixParameters);
+  }
+
+  // Helper function to setup IGES unit configuration
+  void setupIGESUnits(IGESData_GlobalSection&                      theGS,
+                      const occ::handle<DEIGES_ConfigurationNode>& theNode,
+                      const occ::handle<TDocStd_Document>&         theDocument,
+                      const TCollection_AsciiString&               thePath,
+                      bool                                         theUseDocumentUnits)
+  {
+    int aFlag = IGESData_BasicEditor::GetFlagByValue(theNode->GlobalParameters.LengthUnit);
+
+    if (theUseDocumentUnits && !theDocument.IsNull())
     {
-      theGS.SetCascadeUnit(aScaleFactorMM);
+      double aScaleFactorMM = 1.;
+      bool   aHasUnits      = XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
+                                                           aScaleFactorMM,
+                                                           UnitsMethods_LengthUnit_Millimeter);
+      if (aHasUnits)
+      {
+        theGS.SetCascadeUnit(aScaleFactorMM);
+      }
+      else
+      {
+        theGS.SetCascadeUnit(theNode->GlobalParameters.SystemUnit);
+        Message::SendWarning() << "Warning in the DEIGES_Provider during writing the file "
+                               << thePath
+                               << "\t: The document has no information on Units. Using global "
+                                  "parameter as initial Unit.";
+      }
     }
     else
     {
       theGS.SetCascadeUnit(theNode->GlobalParameters.SystemUnit);
-      Message::SendWarning()
-        << "Warning in the DEIGES_Provider during writing the file " << thePath
-        << "\t: The document has no information on Units. Using global parameter as initial Unit.";
+    }
+
+    if (aFlag == 0)
+    {
+      theGS.SetScale(theNode->GlobalParameters.LengthUnit);
     }
   }
-  else
+
+  // Helper function to configure IGES CAF writer parameters
+  void configureIGESCAFWriter(IGESCAFControl_Writer&                       theWriter,
+                              const occ::handle<DEIGES_ConfigurationNode>& theNode,
+                              const occ::handle<TDocStd_Document>&         theDocument,
+                              const TCollection_AsciiString&               thePath)
   {
-    theGS.SetCascadeUnit(theNode->GlobalParameters.SystemUnit);
+    IGESData_GlobalSection aGS = theWriter.Model()->GlobalSection();
+    setupIGESUnits(aGS, theNode, theDocument, thePath, true);
+
+    theWriter.Model()->SetGlobalSection(aGS);
+    theWriter.SetColorMode(theNode->InternalParameters.WriteColor);
+    theWriter.SetNameMode(theNode->InternalParameters.WriteName);
+    theWriter.SetLayerMode(theNode->InternalParameters.WriteLayer);
+    theWriter.SetShapeFixParameters(theNode->ShapeFixParameters);
   }
 
-  if (aFlag == 0)
+  // Helper function to configure IGES control writer for shapes
+  void configureIGESControlWriter(IGESControl_Writer&                          theWriter,
+                                  const occ::handle<DEIGES_ConfigurationNode>& theNode)
   {
-    theGS.SetScale(theNode->GlobalParameters.LengthUnit);
+    IGESData_GlobalSection        aGS = theWriter.Model()->GlobalSection();
+    occ::handle<TDocStd_Document> aNullDoc;
+    setupIGESUnits(aGS, theNode, aNullDoc, "", false);
+
+    theWriter.Model()->SetGlobalSection(aGS);
+    theWriter.SetShapeFixParameters(theNode->ShapeFixParameters);
   }
-}
 
-// Helper function to configure IGES CAF writer parameters
-void configureIGESCAFWriter(IGESCAFControl_Writer&                       theWriter,
-                            const occ::handle<DEIGES_ConfigurationNode>& theNode,
-                            const occ::handle<TDocStd_Document>&         theDocument,
-                            const TCollection_AsciiString&               thePath)
-{
-  IGESData_GlobalSection aGS = theWriter.Model()->GlobalSection();
-  setupIGESUnits(aGS, theNode, theDocument, thePath, true);
-
-  theWriter.Model()->SetGlobalSection(aGS);
-  theWriter.SetColorMode(theNode->InternalParameters.WriteColor);
-  theWriter.SetNameMode(theNode->InternalParameters.WriteName);
-  theWriter.SetLayerMode(theNode->InternalParameters.WriteLayer);
-  theWriter.SetShapeFixParameters(theNode->ShapeFixParameters);
-}
-
-// Helper function to configure IGES control writer for shapes
-void configureIGESControlWriter(IGESControl_Writer&                          theWriter,
-                                const occ::handle<DEIGES_ConfigurationNode>& theNode)
-{
-  IGESData_GlobalSection        aGS = theWriter.Model()->GlobalSection();
-  occ::handle<TDocStd_Document> aNullDoc;
-  setupIGESUnits(aGS, theNode, aNullDoc, "", false);
-
-  theWriter.Model()->SetGlobalSection(aGS);
-  theWriter.SetShapeFixParameters(theNode->ShapeFixParameters);
-}
-
-// Helper function to setup IGES writer unit flags
-TCollection_AsciiString getIGESUnitString(const occ::handle<DEIGES_ConfigurationNode>& theNode)
-{
-  int aFlag = IGESData_BasicEditor::GetFlagByValue(theNode->GlobalParameters.LengthUnit);
-  return (aFlag > 0) ? IGESData_BasicEditor::UnitFlagName(aFlag) : "MM";
-}
-
-// Helper function to process read file operation
-bool processReadFile(IGESControl_Reader& theReader, const TCollection_AsciiString& thePath)
-{
-  IFSelect_ReturnStatus aReadStat = theReader.ReadFile(thePath.ToCString());
-  if (aReadStat != IFSelect_RetDone)
+  // Helper function to setup IGES writer unit flags
+  TCollection_AsciiString getIGESUnitString(const occ::handle<DEIGES_ConfigurationNode>& theNode)
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
-                        << "\t: abandon, no model loaded";
-    return false;
+    int aFlag = IGESData_BasicEditor::GetFlagByValue(theNode->GlobalParameters.LengthUnit);
+    return (aFlag > 0) ? IGESData_BasicEditor::UnitFlagName(aFlag) : "MM";
   }
-  return true;
-}
+
+  // Helper function to process read file operation
+  bool processReadFile(IGESControl_Reader& theReader, const TCollection_AsciiString& thePath)
+  {
+    IFSelect_ReturnStatus aReadStat = theReader.ReadFile(thePath.ToCString());
+    if (aReadStat != IFSelect_RetDone)
+    {
+      Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
+                          << "\t: abandon, no model loaded";
+      return false;
+    }
+    return true;
+  }
 
 } // namespace
 

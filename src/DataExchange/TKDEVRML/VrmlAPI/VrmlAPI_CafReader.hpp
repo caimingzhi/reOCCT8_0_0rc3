@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_CafReader.hpp>
 
 //! The Vrml mesh reader into XDE document.
@@ -20,4 +19,3 @@ protected:
                                    const Message_ProgressRange&   theProgress,
                                    const bool                     theToProbe) override;
 };
-

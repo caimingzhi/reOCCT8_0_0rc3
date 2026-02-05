@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Image_PixMap.hpp>
@@ -96,4 +95,3 @@ protected:
   float    myPixelRatio; //!< pixel aspect ratio
   bool     myIsLocked;   //!< locked state
 };
-

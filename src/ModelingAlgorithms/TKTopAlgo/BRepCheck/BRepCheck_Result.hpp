@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -78,4 +77,3 @@ private:
                       Handle(NCollection_Shared<NCollection_List<BRepCheck_Status>>),
                       TopTools_ShapeMapHasher>::Iterator myIter;
 };
-

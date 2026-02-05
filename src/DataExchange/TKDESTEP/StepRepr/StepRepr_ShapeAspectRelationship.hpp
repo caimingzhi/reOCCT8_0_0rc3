@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -61,4 +60,3 @@ private:
   occ::handle<StepRepr_ShapeAspect>     theRelatedShapeAspect;
   bool                                  defDescription;
 };
-

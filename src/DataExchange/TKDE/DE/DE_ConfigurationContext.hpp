@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_List.hpp>
@@ -144,4 +143,3 @@ private:
   NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>
     myResource; //!< Internal parameters map
 };
-

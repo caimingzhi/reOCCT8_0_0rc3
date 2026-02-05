@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -132,4 +131,3 @@ private:
   Extrema_FuncExtSS                        myF;
   const Adaptor3d_Surface*                 myS2;
 };
-

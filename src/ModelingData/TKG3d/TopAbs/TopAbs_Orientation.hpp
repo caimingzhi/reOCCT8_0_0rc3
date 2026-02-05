@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies the orientation of a topological shape.
 //! Orientation can represent a relation between two
 //! entities, or it can apply to a shape in its own right.
@@ -28,4 +27,3 @@ enum TopAbs_Orientation
   TopAbs_INTERNAL,
   TopAbs_EXTERNAL
 };
-

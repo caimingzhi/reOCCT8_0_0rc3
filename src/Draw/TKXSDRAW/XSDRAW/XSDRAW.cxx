@@ -50,39 +50,40 @@
 
 namespace
 {
-static int deja = 0, dejald = 0;
+  static int deja = 0, dejald = 0;
 
-static NCollection_DataMap<TCollection_AsciiString, int>           theolds;
-static occ::handle<NCollection_HSequence<TCollection_AsciiString>> thenews;
+  static NCollection_DataMap<TCollection_AsciiString, int>           theolds;
+  static occ::handle<NCollection_HSequence<TCollection_AsciiString>> thenews;
 
-static occ::handle<IFSelect_SessionPilot> thepilot; // detient Session, Model
+  static occ::handle<IFSelect_SessionPilot> thepilot; // detient Session, Model
 
-//=================================================================================================
+  //=================================================================================================
 
-static void collectActiveWorkSessions(const occ::handle<XSControl_WorkSession>& theWS,
-                                      const TCollection_AsciiString&            theName,
-                                      XSControl_WorkSessionMap&                 theMap,
-                                      const bool                                theIsFirst)
-{
-  if (theIsFirst)
+  static void collectActiveWorkSessions(const occ::handle<XSControl_WorkSession>& theWS,
+                                        const TCollection_AsciiString&            theName,
+                                        XSControl_WorkSessionMap&                 theMap,
+                                        const bool                                theIsFirst)
   {
-    theMap.Clear();
+    if (theIsFirst)
+    {
+      theMap.Clear();
+    }
+    if (theWS.IsNull())
+    {
+      return;
+    }
+    if (theMap.IsBound(theName))
+    {
+      return;
+    }
+    theMap.Bind(theName, theWS);
+    for (XSControl_WorkSessionMap::Iterator anIter(theWS->Context()); anIter.More(); anIter.Next())
+    {
+      occ::handle<XSControl_WorkSession> aWS =
+        occ::down_cast<XSControl_WorkSession>(anIter.Value());
+      collectActiveWorkSessions(aWS, anIter.Key(), theMap, false);
+    }
   }
-  if (theWS.IsNull())
-  {
-    return;
-  }
-  if (theMap.IsBound(theName))
-  {
-    return;
-  }
-  theMap.Bind(theName, theWS);
-  for (XSControl_WorkSessionMap::Iterator anIter(theWS->Context()); anIter.More(); anIter.Next())
-  {
-    occ::handle<XSControl_WorkSession> aWS = occ::down_cast<XSControl_WorkSession>(anIter.Value());
-    collectActiveWorkSessions(aWS, anIter.Key(), theMap, false);
-  }
-}
 } // namespace
 
 static int XSTEPDRAWRUN(Draw_Interpretor& di, int argc, const char** argv)

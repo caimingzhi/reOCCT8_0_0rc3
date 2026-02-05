@@ -166,7 +166,8 @@ static bool IsPointOnSurface(const occ::handle<Adaptor3d_Surface>& theSurf,
     case GeomAbs_Sphere:
     case GeomAbs_Torus:
     case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       Extrema_ExtPS anExtr(thePt,
                            *theSurf,
                            theSurf->UResolution(theTol),
@@ -203,7 +204,8 @@ static bool IsPointOnSurface(const occ::handle<Adaptor3d_Surface>& theSurf,
       }
     }
     break;
-    default: {
+    default:
+    {
       Extrema_GenLocateExtPS anExtr(*theSurf);
       anExtr.Perform(thePt, theUpar, theVpar);
       if (!anExtr.IsDone() || (anExtr.SquareDistance() > theTol * theTol))

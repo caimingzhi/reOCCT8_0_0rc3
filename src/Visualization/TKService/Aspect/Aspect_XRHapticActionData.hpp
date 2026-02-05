@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Haptic output XR action data.
 struct Aspect_XRHapticActionData
 {
@@ -24,4 +23,3 @@ struct Aspect_XRHapticActionData
   {
   }
 };
-

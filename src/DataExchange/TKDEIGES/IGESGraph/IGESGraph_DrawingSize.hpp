@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -42,4 +41,3 @@ private:
   double theXSize;
   double theYSize;
 };
-

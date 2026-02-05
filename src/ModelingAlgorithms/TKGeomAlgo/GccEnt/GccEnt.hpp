@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GccEnt_Position.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -104,4 +103,3 @@ public:
   //! or line are external to one another.
   Standard_EXPORT static GccEnt_QualifiedCirc Outside(const gp_Circ2d& Obj);
 };
-

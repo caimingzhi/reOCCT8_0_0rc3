@@ -39,151 +39,151 @@
 
 namespace
 {
-//! Compute polyline of shrunk triangle.
-static occ::handle<NCollection_HSequence<gp_Pnt>> shrunkTriangle(const gp_Pnt* thePnts,
-                                                                 const gp_XYZ& theCenter)
-{
-  const gp_XYZ                               aV1 = theCenter + (thePnts[0].XYZ() - theCenter) * 0.9;
-  const gp_XYZ                               aV2 = theCenter + (thePnts[1].XYZ() - theCenter) * 0.9;
-  const gp_XYZ                               aV3 = theCenter + (thePnts[2].XYZ() - theCenter) * 0.9;
-  occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-  aPoints->Append(aV1);
-  aPoints->Append(aV2);
-  aPoints->Append(aV3);
-  aPoints->Append(aV1);
-  return aPoints;
-}
-
-//! Fill in triangulation polylines.
-static void addTriangulation(
-  NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
-  NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqFree,
-  const occ::handle<Select3D_SensitiveTriangulation>&           theTri,
-  const gp_Trsf&                                                theLoc)
-{
-  gp_Trsf aTrsf = theLoc;
-  if (theTri->HasInitLocation())
+  //! Compute polyline of shrunk triangle.
+  static occ::handle<NCollection_HSequence<gp_Pnt>> shrunkTriangle(const gp_Pnt* thePnts,
+                                                                   const gp_XYZ& theCenter)
   {
-    aTrsf = theLoc * theTri->GetInitLocation();
-  }
-  const occ::handle<Poly_Triangulation>& aPolyTri = theTri->Triangulation();
-  for (int aTriIter = 1; aTriIter <= aPolyTri->NbTriangles(); ++aTriIter)
-  {
-    const Poly_Triangle& aTri     = aPolyTri->Triangle(aTriIter);
-    const gp_Pnt         aPnts[3] = {aPolyTri->Node(aTri(1)).Transformed(aTrsf),
-                                     aPolyTri->Node(aTri(2)).Transformed(aTrsf),
-                                     aPolyTri->Node(aTri(3)).Transformed(aTrsf)};
-    const gp_XYZ         aCenter  = (aPnts[0].XYZ() + aPnts[1].XYZ() + aPnts[2].XYZ()) / 3.0;
-    theSeqLines.Append(shrunkTriangle(aPnts, aCenter));
-  }
-
-  occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-  Prs3d::AddFreeEdges(*aPoints, aPolyTri, aTrsf);
-  if (!aPoints->IsEmpty())
-  {
-    theSeqFree.Append(aPoints);
-  }
-}
-
-//! Fill in bounding box polylines.
-static void addBoundingBox(
-  NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
-  const occ::handle<Select3D_SensitiveBox>&                     theSensBox,
-  const gp_Trsf&                                                theLoc)
-{
-  NCollection_Vec3<double> aMin, aMax;
-  theSensBox->Box().Get(aMin.x(), aMin.y(), aMin.z(), aMax.x(), aMax.y(), aMax.z());
-  gp_Pnt aPnts[8] = {gp_Pnt(aMin.x(), aMin.y(), aMin.z()),
-                     gp_Pnt(aMax.x(), aMin.y(), aMin.z()),
-                     gp_Pnt(aMax.x(), aMax.y(), aMin.z()),
-                     gp_Pnt(aMin.x(), aMax.y(), aMin.z()),
-                     gp_Pnt(aMin.x(), aMin.y(), aMax.z()),
-                     gp_Pnt(aMax.x(), aMin.y(), aMax.z()),
-                     gp_Pnt(aMax.x(), aMax.y(), aMax.z()),
-                     gp_Pnt(aMin.x(), aMax.y(), aMax.z())};
-  for (int aPntIter = 0; aPntIter <= 7; ++aPntIter)
-  {
-    aPnts[aPntIter].Transform(theLoc);
-  }
-
-  {
+    const gp_XYZ aV1 = theCenter + (thePnts[0].XYZ() - theCenter) * 0.9;
+    const gp_XYZ aV2 = theCenter + (thePnts[1].XYZ() - theCenter) * 0.9;
+    const gp_XYZ aV3 = theCenter + (thePnts[2].XYZ() - theCenter) * 0.9;
     occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-    for (int i = 0; i < 4; ++i)
+    aPoints->Append(aV1);
+    aPoints->Append(aV2);
+    aPoints->Append(aV3);
+    aPoints->Append(aV1);
+    return aPoints;
+  }
+
+  //! Fill in triangulation polylines.
+  static void addTriangulation(
+    NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
+    NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqFree,
+    const occ::handle<Select3D_SensitiveTriangulation>&           theTri,
+    const gp_Trsf&                                                theLoc)
+  {
+    gp_Trsf aTrsf = theLoc;
+    if (theTri->HasInitLocation())
     {
+      aTrsf = theLoc * theTri->GetInitLocation();
+    }
+    const occ::handle<Poly_Triangulation>& aPolyTri = theTri->Triangulation();
+    for (int aTriIter = 1; aTriIter <= aPolyTri->NbTriangles(); ++aTriIter)
+    {
+      const Poly_Triangle& aTri     = aPolyTri->Triangle(aTriIter);
+      const gp_Pnt         aPnts[3] = {aPolyTri->Node(aTri(1)).Transformed(aTrsf),
+                                       aPolyTri->Node(aTri(2)).Transformed(aTrsf),
+                                       aPolyTri->Node(aTri(3)).Transformed(aTrsf)};
+      const gp_XYZ         aCenter  = (aPnts[0].XYZ() + aPnts[1].XYZ() + aPnts[2].XYZ()) / 3.0;
+      theSeqLines.Append(shrunkTriangle(aPnts, aCenter));
+    }
+
+    occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
+    Prs3d::AddFreeEdges(*aPoints, aPolyTri, aTrsf);
+    if (!aPoints->IsEmpty())
+    {
+      theSeqFree.Append(aPoints);
+    }
+  }
+
+  //! Fill in bounding box polylines.
+  static void addBoundingBox(
+    NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
+    const occ::handle<Select3D_SensitiveBox>&                     theSensBox,
+    const gp_Trsf&                                                theLoc)
+  {
+    NCollection_Vec3<double> aMin, aMax;
+    theSensBox->Box().Get(aMin.x(), aMin.y(), aMin.z(), aMax.x(), aMax.y(), aMax.z());
+    gp_Pnt aPnts[8] = {gp_Pnt(aMin.x(), aMin.y(), aMin.z()),
+                       gp_Pnt(aMax.x(), aMin.y(), aMin.z()),
+                       gp_Pnt(aMax.x(), aMax.y(), aMin.z()),
+                       gp_Pnt(aMin.x(), aMax.y(), aMin.z()),
+                       gp_Pnt(aMin.x(), aMin.y(), aMax.z()),
+                       gp_Pnt(aMax.x(), aMin.y(), aMax.z()),
+                       gp_Pnt(aMax.x(), aMax.y(), aMax.z()),
+                       gp_Pnt(aMin.x(), aMax.y(), aMax.z())};
+    for (int aPntIter = 0; aPntIter <= 7; ++aPntIter)
+    {
+      aPnts[aPntIter].Transform(theLoc);
+    }
+
+    {
+      occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
+      for (int i = 0; i < 4; ++i)
+      {
+        aPoints->Append(aPnts[i]);
+      }
+      aPoints->Append(aPnts[0]);
+      theSeqLines.Append(aPoints);
+    }
+    {
+      occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
+      for (int i = 4; i < 8; i++)
+      {
+        aPoints->Append(aPnts[i]);
+      }
+      aPoints->Append(aPnts[4]);
+      theSeqLines.Append(aPoints);
+    }
+    for (int i = 0; i < 4; i++)
+    {
+      occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
       aPoints->Append(aPnts[i]);
+      aPoints->Append(aPnts[i + 4]);
+      theSeqLines.Append(aPoints);
     }
-    aPoints->Append(aPnts[0]);
-    theSeqLines.Append(aPoints);
   }
+
+  //! Fill in circle polylines.
+  static void addCircle(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
+                        const double                                                  theRadius,
+                        const gp_Trsf&                                                theTrsf,
+                        const double                                                  theHeight = 0)
   {
+    const double anUStep = 0.1;
+    gp_XYZ       aVec(0, 0, theHeight);
+
     occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-    for (int i = 4; i < 8; i++)
+    Geom_Circle                                aGeom(gp_Ax2(), theRadius);
+    for (double anU = 0.0f; anU < (2.0 * M_PI + anUStep); anU += anUStep)
     {
-      aPoints->Append(aPnts[i]);
+      gp_Pnt aCircPnt = aGeom.Value(anU).Coord() + aVec;
+      aCircPnt.Transform(theTrsf);
+      aPoints->Append(aCircPnt);
     }
-    aPoints->Append(aPnts[4]);
     theSeqLines.Append(aPoints);
   }
-  for (int i = 0; i < 4; i++)
+
+  //! Fill in cylinder polylines.
+  static void addCylinder(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
+                          const occ::handle<Select3D_SensitiveCylinder>&                theSensCyl,
+                          const gp_Trsf&                                                theLoc)
   {
-    occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-    aPoints->Append(aPnts[i]);
-    aPoints->Append(aPnts[i + 4]);
-    theSeqLines.Append(aPoints);
-  }
-}
+    occ::handle<NCollection_HSequence<gp_Pnt>> aVertLine1 = new NCollection_HSequence<gp_Pnt>();
+    occ::handle<NCollection_HSequence<gp_Pnt>> aVertLine2 = new NCollection_HSequence<gp_Pnt>();
 
-//! Fill in circle polylines.
-static void addCircle(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
-                      const double                                                  theRadius,
-                      const gp_Trsf&                                                theTrsf,
-                      const double                                                  theHeight = 0)
-{
-  const double anUStep = 0.1;
-  gp_XYZ       aVec(0, 0, theHeight);
+    const gp_Trsf& aTrsf   = theLoc.Multiplied(theSensCyl->Transformation());
+    const double   aHeight = theSensCyl->Height();
 
-  occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
-  Geom_Circle                                aGeom(gp_Ax2(), theRadius);
-  for (double anU = 0.0f; anU < (2.0 * M_PI + anUStep); anU += anUStep)
-  {
-    gp_Pnt aCircPnt = aGeom.Value(anU).Coord() + aVec;
-    aCircPnt.Transform(theTrsf);
-    aPoints->Append(aCircPnt);
-  }
-  theSeqLines.Append(aPoints);
-}
-
-//! Fill in cylinder polylines.
-static void addCylinder(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
-                        const occ::handle<Select3D_SensitiveCylinder>&                theSensCyl,
-                        const gp_Trsf&                                                theLoc)
-{
-  occ::handle<NCollection_HSequence<gp_Pnt>> aVertLine1 = new NCollection_HSequence<gp_Pnt>();
-  occ::handle<NCollection_HSequence<gp_Pnt>> aVertLine2 = new NCollection_HSequence<gp_Pnt>();
-
-  const gp_Trsf& aTrsf   = theLoc.Multiplied(theSensCyl->Transformation());
-  const double   aHeight = theSensCyl->Height();
-
-  for (int aCircNum = 0; aCircNum < 3; aCircNum++)
-  {
-    double aRadius =
-      0.5 * (2 - aCircNum) * theSensCyl->BottomRadius() + 0.5 * aCircNum * theSensCyl->TopRadius();
-    const gp_XYZ aVec(0, 0, aHeight * 0.5 * aCircNum);
-
-    if (aCircNum != 1)
+    for (int aCircNum = 0; aCircNum < 3; aCircNum++)
     {
-      aVertLine1->Append(gp_Pnt(gp_XYZ(aRadius, 0, 0) + aVec).Transformed(aTrsf));
-      aVertLine2->Append(gp_Pnt(gp_XYZ(-aRadius, 0, 0) + aVec).Transformed(aTrsf));
-    }
+      double aRadius = 0.5 * (2 - aCircNum) * theSensCyl->BottomRadius()
+                       + 0.5 * aCircNum * theSensCyl->TopRadius();
+      const gp_XYZ aVec(0, 0, aHeight * 0.5 * aCircNum);
 
-    if (aRadius > Precision::Confusion())
-    {
-      addCircle(theSeqLines, aRadius, aTrsf, aVec.Z());
+      if (aCircNum != 1)
+      {
+        aVertLine1->Append(gp_Pnt(gp_XYZ(aRadius, 0, 0) + aVec).Transformed(aTrsf));
+        aVertLine2->Append(gp_Pnt(gp_XYZ(-aRadius, 0, 0) + aVec).Transformed(aTrsf));
+      }
+
+      if (aRadius > Precision::Confusion())
+      {
+        addCircle(theSeqLines, aRadius, aTrsf, aVec.Z());
+      }
     }
+    theSeqLines.Append(aVertLine1);
+    theSeqLines.Append(aVertLine2);
   }
-  theSeqLines.Append(aVertLine1);
-  theSeqLines.Append(aVertLine2);
-}
 } // namespace
 
 //=================================================================================================

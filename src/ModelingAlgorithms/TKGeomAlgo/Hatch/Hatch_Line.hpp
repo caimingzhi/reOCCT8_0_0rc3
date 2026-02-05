@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -41,4 +40,3 @@ private:
   Hatch_LineForm                        myForm;
   NCollection_Sequence<Hatch_Parameter> myInters;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Bnd_Box.hpp>
 #include <gp_Pnt.hpp>
@@ -84,4 +83,3 @@ private:
   double                                   Bsup;
   occ::handle<NCollection_HArray1<double>> myParams;
 };
-

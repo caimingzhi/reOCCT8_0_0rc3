@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -43,4 +42,3 @@ private:
   TopAbs_State             myState;
   TopoDS_Shape             myNullShape;
 };
-

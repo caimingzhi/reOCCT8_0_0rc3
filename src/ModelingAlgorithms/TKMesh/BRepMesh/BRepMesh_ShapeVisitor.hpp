@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_ShapeVisitor.hpp>
 #include <IMeshData_Model.hpp>
 #include <Standard_Transient.hpp>
@@ -41,4 +40,3 @@ private:
   occ::handle<IMeshData_Model>  myModel;
   IMeshData::DMapOfShapeInteger myDEdgeMap;
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1995-05-22
-// Created by: Laurent BOURESCHE
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ChFiKPart_ComputeData_Fcts.hpp>
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
@@ -85,11 +69,13 @@ void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
     ProjLib_ProjectedCurve           Projc(HSg, HCg);
     switch (Projc.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         Pcurv = new Geom2d_Line(Projc.Line());
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         occ::handle<Geom2d_BezierCurve> BezProjc = Projc.Bezier();
         NCollection_Array1<gp_Pnt2d>    TP(1, BezProjc->NbPoles());
         if (BezProjc->IsRational())
@@ -106,7 +92,8 @@ void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
         }
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         occ::handle<Geom2d_BSplineCurve> BspProjc = Projc.BSpline();
         NCollection_Array1<gp_Pnt2d>     TP(1, BspProjc->NbPoles());
         NCollection_Array1<double>       TK(1, BspProjc->NbKnots());

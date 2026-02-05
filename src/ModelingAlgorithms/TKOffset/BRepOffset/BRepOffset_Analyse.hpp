@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -167,4 +166,3 @@ private: //! @name Fields
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myGenerated; //!< Binding between edge and face generated from the edge
   // clang-format on
 };
-

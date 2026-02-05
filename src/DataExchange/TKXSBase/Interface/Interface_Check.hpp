@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_HAsciiString.hpp>
@@ -246,4 +245,3 @@ private:
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> theinfoo;
   occ::handle<Standard_Transient>                                           theent;
 };
-

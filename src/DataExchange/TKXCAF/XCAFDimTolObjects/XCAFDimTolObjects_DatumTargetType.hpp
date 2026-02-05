@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines types of dimension
 enum XCAFDimTolObjects_DatumTargetType
 {
@@ -10,4 +9,3 @@ enum XCAFDimTolObjects_DatumTargetType
   XCAFDimTolObjects_DatumTargetType_Circle,
   XCAFDimTolObjects_DatumTargetType_Area
 };
-

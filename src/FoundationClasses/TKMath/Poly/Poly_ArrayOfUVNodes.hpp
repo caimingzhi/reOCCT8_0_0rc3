@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_AliasedArray.hpp>
 #include <gp_Pnt2d.hpp>
 #include <NCollection_Vec2.hpp>
@@ -127,4 +126,3 @@ inline void Poly_ArrayOfUVNodes::SetValue(int theIndex, const gp_Pnt2d& theValue
     aVec2.SetValues((float)theValue.X(), (float)theValue.Y());
   }
 }
-

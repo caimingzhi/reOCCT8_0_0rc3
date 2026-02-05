@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOMString.hpp>
 
 typedef LDOMString XmlObjMgt_DOMString;
@@ -11,4 +10,3 @@ typedef LDOMString XmlObjMgt_DOMString;
     static const XmlObjMgt_DOMString aString(String);                                              \
     return aString;                                                                                \
   }
-

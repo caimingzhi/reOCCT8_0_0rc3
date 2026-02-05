@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_Texture.hpp>
 #include <Quantity_ColorRGBA.hpp>
 
@@ -30,4 +29,3 @@ public:
   {
   }
 };
-

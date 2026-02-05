@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -65,4 +64,3 @@ public:
   Standard_EXPORT occ::handle<StepAP214_AutoDesignDocumentReference> AutoDesignDocumentReference()
     const;
 };
-

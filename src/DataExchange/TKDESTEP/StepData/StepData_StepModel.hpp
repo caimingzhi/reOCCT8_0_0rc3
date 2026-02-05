@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Interface_EntityList.hpp>
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
@@ -120,4 +119,3 @@ private:
   bool                                  myReadUnitIsInitialized  = false;
   mutable bool                          myWriteUnitIsInitialized = false;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Pnt.hpp>
@@ -260,4 +259,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Geom_Curve>>>   myResult3dCurve;
   occ::handle<NCollection_HArray1<occ::handle<Geom2d_Curve>>> myResult2dCurve;
 };
-

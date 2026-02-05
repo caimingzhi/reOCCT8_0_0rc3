@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -55,4 +54,3 @@ public:
                                         NCollection_Array1<double>& T,
                                         const GeomAbs_Shape         S);
 };
-

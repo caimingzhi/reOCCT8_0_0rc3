@@ -27,204 +27,204 @@ IMPLEMENT_STANDARD_RTTIEXT(BSplSLib_Cache, Standard_Transient)
 namespace
 {
 
-//! Converts handle of array of double into the pointer to double
-double* ConvertArray(const occ::handle<NCollection_HArray2<double>>& theHArray)
-{
-  const NCollection_Array2<double>& anArray = theHArray->Array2();
-  return (double*)&(anArray(anArray.LowerRow(), anArray.LowerCol()));
-}
+  //! Converts handle of array of double into the pointer to double
+  double* ConvertArray(const occ::handle<NCollection_HArray2<double>>& theHArray)
+  {
+    const NCollection_Array2<double>& anArray = theHArray->Array2();
+    return (double*)&(anArray(anArray.LowerRow(), anArray.LowerCol()));
+  }
 
-//==================================================================================================
+  //==================================================================================================
 
-//! Computes local UV parameters for D0 evaluation (no derivative scaling needed).
-//! BSplSLib uses different convention for span parameters than BSplCLib
-//! (Start is in the middle of the span and length is half-span).
-std::pair<double, double> toLocalParamsD0(double                      theU,
+  //! Computes local UV parameters for D0 evaluation (no derivative scaling needed).
+  //! BSplSLib uses different convention for span parameters than BSplCLib
+  //! (Start is in the middle of the span and length is half-span).
+  std::pair<double, double> toLocalParamsD0(double                      theU,
+                                            double                      theV,
+                                            const BSplCLib_CacheParams& theParamsU,
+                                            const BSplCLib_CacheParams& theParamsV)
+  {
+    const double aNewU        = theParamsU.PeriodicNormalization(theU);
+    const double aNewV        = theParamsV.PeriodicNormalization(theV);
+    const double aSpanLengthU = 0.5 * theParamsU.SpanLength;
+    const double aSpanStartU  = theParamsU.SpanStart + aSpanLengthU;
+    const double aSpanLengthV = 0.5 * theParamsV.SpanLength;
+    const double aSpanStartV  = theParamsV.SpanStart + aSpanLengthV;
+    return {(aNewU - aSpanStartU) / aSpanLengthU, (aNewV - aSpanStartV) / aSpanLengthV};
+  }
+
+  //! Computes local UV parameters and inverse span lengths for derivative evaluation.
+  //! The same inverse values are used for both parameter transformation and derivative scaling
+  //! to maintain numerical consistency with the original implementation.
+  std::pair<double, double> toLocalParams(double                      theU,
                                           double                      theV,
                                           const BSplCLib_CacheParams& theParamsU,
-                                          const BSplCLib_CacheParams& theParamsV)
-{
-  const double aNewU        = theParamsU.PeriodicNormalization(theU);
-  const double aNewV        = theParamsV.PeriodicNormalization(theV);
-  const double aSpanLengthU = 0.5 * theParamsU.SpanLength;
-  const double aSpanStartU  = theParamsU.SpanStart + aSpanLengthU;
-  const double aSpanLengthV = 0.5 * theParamsV.SpanLength;
-  const double aSpanStartV  = theParamsV.SpanStart + aSpanLengthV;
-  return {(aNewU - aSpanStartU) / aSpanLengthU, (aNewV - aSpanStartV) / aSpanLengthV};
-}
+                                          const BSplCLib_CacheParams& theParamsV,
+                                          double&                     theInvU,
+                                          double&                     theInvV)
+  {
+    const double aNewU        = theParamsU.PeriodicNormalization(theU);
+    const double aNewV        = theParamsV.PeriodicNormalization(theV);
+    const double aSpanLengthU = 0.5 * theParamsU.SpanLength;
+    const double aSpanStartU  = theParamsU.SpanStart + aSpanLengthU;
+    const double aSpanLengthV = 0.5 * theParamsV.SpanLength;
+    const double aSpanStartV  = theParamsV.SpanStart + aSpanLengthV;
+    // Compute inverses once and reuse for both parameter transformation and derivative scaling
+    // to maintain numerical consistency with the original implementation
+    theInvU = 1.0 / aSpanLengthU;
+    theInvV = 1.0 / aSpanLengthV;
+    return {(aNewU - aSpanStartU) * theInvU, (aNewV - aSpanStartV) * theInvV};
+  }
 
-//! Computes local UV parameters and inverse span lengths for derivative evaluation.
-//! The same inverse values are used for both parameter transformation and derivative scaling
-//! to maintain numerical consistency with the original implementation.
-std::pair<double, double> toLocalParams(double                      theU,
-                                        double                      theV,
-                                        const BSplCLib_CacheParams& theParamsU,
-                                        const BSplCLib_CacheParams& theParamsV,
-                                        double&                     theInvU,
-                                        double&                     theInvV)
-{
-  const double aNewU        = theParamsU.PeriodicNormalization(theU);
-  const double aNewV        = theParamsV.PeriodicNormalization(theV);
-  const double aSpanLengthU = 0.5 * theParamsU.SpanLength;
-  const double aSpanStartU  = theParamsU.SpanStart + aSpanLengthU;
-  const double aSpanLengthV = 0.5 * theParamsV.SpanLength;
-  const double aSpanStartV  = theParamsV.SpanStart + aSpanLengthV;
-  // Compute inverses once and reuse for both parameter transformation and derivative scaling
-  // to maintain numerical consistency with the original implementation
-  theInvU = 1.0 / aSpanLengthU;
-  theInvV = 1.0 / aSpanLengthV;
-  return {(aNewU - aSpanStartU) * theInvU, (aNewV - aSpanStartV) * theInvV};
-}
+  //==================================================================================================
 
-//==================================================================================================
+  //! Evaluates the polynomials and their derivatives.
+  //! @param[in] thePolesWeights handle to the array of poles and weights
+  //! @param[in] theParamsU parameters for U direction
+  //! @param[in] theParamsV parameters for V direction
+  //! @param[in] theIsRational flag indicating if the surface is rational
+  //! @param[in] theLocalU local U parameter
+  //! @param[in] theLocalV local V parameter
+  //! @param[in] theUDerivMax maximum U derivative
+  //! @param[in] theVDerivMax maximum V derivative
+  //! @param[out] theResultArray array to store the results
+  void EvaluatePolynomials(const occ::handle<NCollection_HArray2<double>>& thePolesWeights,
+                           const BSplCLib_CacheParams&                     theParamsU,
+                           const BSplCLib_CacheParams&                     theParamsV,
+                           const bool                                      theIsRational,
+                           double                                          theLocalU,
+                           double                                          theLocalV,
+                           int                                             theUDerivMax,
+                           int                                             theVDerivMax,
+                           double*                                         theResultArray)
+  {
+    double* const aPolesArray = ConvertArray(thePolesWeights);
+    const int     aDimension  = theIsRational ? 4 : 3;
+    const int     aCacheCols  = thePolesWeights->RowLength();
 
-//! Evaluates the polynomials and their derivatives.
-//! @param[in] thePolesWeights handle to the array of poles and weights
-//! @param[in] theParamsU parameters for U direction
-//! @param[in] theParamsV parameters for V direction
-//! @param[in] theIsRational flag indicating if the surface is rational
-//! @param[in] theLocalU local U parameter
-//! @param[in] theLocalV local V parameter
-//! @param[in] theUDerivMax maximum U derivative
-//! @param[in] theVDerivMax maximum V derivative
-//! @param[out] theResultArray array to store the results
-void EvaluatePolynomials(const occ::handle<NCollection_HArray2<double>>& thePolesWeights,
-                         const BSplCLib_CacheParams&                     theParamsU,
-                         const BSplCLib_CacheParams&                     theParamsV,
-                         const bool                                      theIsRational,
-                         double                                          theLocalU,
-                         double                                          theLocalV,
-                         int                                             theUDerivMax,
-                         int                                             theVDerivMax,
-                         double*                                         theResultArray)
-{
-  double* const aPolesArray = ConvertArray(thePolesWeights);
-  const int     aDimension  = theIsRational ? 4 : 3;
-  const int     aCacheCols  = thePolesWeights->RowLength();
+    const bool isMaxU = (theParamsU.Degree > theParamsV.Degree);
+    const auto [aMinParam, aMaxParam] =
+      isMaxU ? std::make_pair(theLocalV, theLocalU) : std::make_pair(theLocalU, theLocalV);
 
-  const bool isMaxU = (theParamsU.Degree > theParamsV.Degree);
-  const auto [aMinParam, aMaxParam] =
-    isMaxU ? std::make_pair(theLocalV, theLocalU) : std::make_pair(theLocalU, theLocalV);
+    // Determine derivatives to calculate along each direction
+    const int aMaxDeriv = isMaxU ? theUDerivMax : theVDerivMax;
+    const int aMinDeriv = isMaxU ? theVDerivMax : theUDerivMax;
 
-  // Determine derivatives to calculate along each direction
-  const int aMaxDeriv = isMaxU ? theUDerivMax : theVDerivMax;
-  const int aMinDeriv = isMaxU ? theVDerivMax : theUDerivMax;
+    // Stride between rows in the result array (corresponds to one step in MaxParam direction)
+    // For full grid (required by RationalDerivative), stride is (aMinDeriv + 1) points.
+    const int aRowStride = (aMinDeriv + 1) * aDimension;
 
-  // Stride between rows in the result array (corresponds to one step in MaxParam direction)
-  // For full grid (required by RationalDerivative), stride is (aMinDeriv + 1) points.
-  const int aRowStride = (aMinDeriv + 1) * aDimension;
-
-  // clang-format off
+    // clang-format off
   // Transient coefficients array size:
   // (aMaxDeriv + 1) * CacheCols  for the first evaluation (along max degree parameter)
   // (aMinDeriv + 1) * Dimension for the second evaluation (along min degree parameter)
   NCollection_LocalArray<double> aTransientCoeffs(std::max((aMaxDeriv + 1) * aCacheCols, (aMinDeriv + 1) * aDimension));
-  // clang-format on
+    // clang-format on
 
-  // Calculate intermediate values and derivatives of bivariate polynomial along variable with
-  // maximal degree
-  PLib::EvalPolynomial(aMaxParam,
-                       aMaxDeriv,
-                       isMaxU ? theParamsU.Degree : theParamsV.Degree,
-                       aCacheCols,
-                       aPolesArray[0],
-                       aTransientCoeffs[0]);
+    // Calculate intermediate values and derivatives of bivariate polynomial along variable with
+    // maximal degree
+    PLib::EvalPolynomial(aMaxParam,
+                         aMaxDeriv,
+                         isMaxU ? theParamsU.Degree : theParamsV.Degree,
+                         aCacheCols,
+                         aPolesArray[0],
+                         aTransientCoeffs[0]);
 
-  // Block 0: Evaluate derivatives along variable with minimal degree for D0_max
-  // Produces (0,0), (0,1)...(0, aMinDeriv)
-  // Writes to offset 0
-  PLib::EvalPolynomial(aMinParam,
-                       aMinDeriv,
-                       isMaxU ? theParamsV.Degree : theParamsU.Degree,
-                       aDimension,
-                       aTransientCoeffs[0],
-                       theResultArray[0]);
-
-  if (aMaxDeriv > 0)
-  {
-    // Block 1: Evaluate derivatives along variable with minimal degree for D1_max
-    // Writes to offset aRowStride (start of second row)
-    // If Rational, we need full row (up to aMinDeriv).
-    // If Not Rational, we can optimize: we strictly need (1,0) and (1,1).
-    // D1Local calls with (1,1) -> aMinDeriv=1. We need up to 1.
-    // D2Local calls with (2,2) -> aMinDeriv=2. We need up to 1 for mixed D2.
-    // So usually min(aMinDeriv, 1) is sufficient for non-rational.
-    const int aDeriv = theIsRational ? aMinDeriv : std::min(aMinDeriv, 1);
-
+    // Block 0: Evaluate derivatives along variable with minimal degree for D0_max
+    // Produces (0,0), (0,1)...(0, aMinDeriv)
+    // Writes to offset 0
     PLib::EvalPolynomial(aMinParam,
-                         aDeriv,
+                         aMinDeriv,
                          isMaxU ? theParamsV.Degree : theParamsU.Degree,
                          aDimension,
-                         aTransientCoeffs[aCacheCols],
-                         theResultArray[aRowStride]);
+                         aTransientCoeffs[0],
+                         theResultArray[0]);
 
-    if (aMaxDeriv > 1)
+    if (aMaxDeriv > 0)
     {
-      // Block 2: Evaluate derivatives along variable with minimal degree for D2_max
-      // Writes to offset 2 * aRowStride (start of third row)
-      // If Rational, full row.
-      // If Not Rational, we only need (2,0) for standard D2.
-      const int aDeriv2 = theIsRational ? aMinDeriv : 0;
+      // Block 1: Evaluate derivatives along variable with minimal degree for D1_max
+      // Writes to offset aRowStride (start of second row)
+      // If Rational, we need full row (up to aMinDeriv).
+      // If Not Rational, we can optimize: we strictly need (1,0) and (1,1).
+      // D1Local calls with (1,1) -> aMinDeriv=1. We need up to 1.
+      // D2Local calls with (2,2) -> aMinDeriv=2. We need up to 1 for mixed D2.
+      // So usually min(aMinDeriv, 1) is sufficient for non-rational.
+      const int aDeriv = theIsRational ? aMinDeriv : std::min(aMinDeriv, 1);
 
-      if (aDeriv2 == 0)
+      PLib::EvalPolynomial(aMinParam,
+                           aDeriv,
+                           isMaxU ? theParamsV.Degree : theParamsU.Degree,
+                           aDimension,
+                           aTransientCoeffs[aCacheCols],
+                           theResultArray[aRowStride]);
+
+      if (aMaxDeriv > 1)
       {
-        PLib::NoDerivativeEvalPolynomial(aMinParam,
-                                         isMaxU ? theParamsV.Degree : theParamsU.Degree,
-                                         aDimension,
-                                         (isMaxU ? theParamsV.Degree : theParamsU.Degree)
-                                           * aDimension,
-                                         aTransientCoeffs[aCacheCols << 1],
-                                         theResultArray[aRowStride << 1]);
+        // Block 2: Evaluate derivatives along variable with minimal degree for D2_max
+        // Writes to offset 2 * aRowStride (start of third row)
+        // If Rational, full row.
+        // If Not Rational, we only need (2,0) for standard D2.
+        const int aDeriv2 = theIsRational ? aMinDeriv : 0;
+
+        if (aDeriv2 == 0)
+        {
+          PLib::NoDerivativeEvalPolynomial(aMinParam,
+                                           isMaxU ? theParamsV.Degree : theParamsU.Degree,
+                                           aDimension,
+                                           (isMaxU ? theParamsV.Degree : theParamsU.Degree)
+                                             * aDimension,
+                                           aTransientCoeffs[aCacheCols << 1],
+                                           theResultArray[aRowStride << 1]);
+        }
+        else
+        {
+          PLib::EvalPolynomial(aMinParam,
+                               aDeriv2,
+                               isMaxU ? theParamsV.Degree : theParamsU.Degree,
+                               aDimension,
+                               aTransientCoeffs[aCacheCols << 1],
+                               theResultArray[aRowStride << 1]);
+        }
+      }
+    }
+
+    if (theIsRational)
+    {
+      // RationalDerivative is NOT safe for in-place operation because it reads 4-component data
+      // and writes 3-component data to potentially overlapping memory locations.
+      // We need a separate temporary storage for the output.
+      const int                      aResultSize = (theUDerivMax + 1) * (theVDerivMax + 1) * 3;
+      NCollection_LocalArray<double> aTempStorage(aResultSize);
+
+      if (isMaxU)
+      {
+        BSplSLib::RationalDerivative(theUDerivMax,
+                                     theVDerivMax,
+                                     theUDerivMax,
+                                     theVDerivMax,
+                                     theResultArray[0],
+                                     aTempStorage[0]);
       }
       else
       {
-        PLib::EvalPolynomial(aMinParam,
-                             aDeriv2,
-                             isMaxU ? theParamsV.Degree : theParamsU.Degree,
-                             aDimension,
-                             aTransientCoeffs[aCacheCols << 1],
-                             theResultArray[aRowStride << 1]);
+        // If V is max degree, our result array is V-major (transposed relative to what
+        // RationalDerivative expects) We swap U/V arguments to trick RationalDerivative into
+        // processing it correctly.
+        BSplSLib::RationalDerivative(theVDerivMax,
+                                     theUDerivMax,
+                                     theVDerivMax,
+                                     theUDerivMax,
+                                     theResultArray[0],
+                                     aTempStorage[0]);
+      }
+
+      // Copy results back to the output array
+      for (int i = 0; i < aResultSize; ++i)
+      {
+        theResultArray[i] = aTempStorage[i];
       }
     }
   }
-
-  if (theIsRational)
-  {
-    // RationalDerivative is NOT safe for in-place operation because it reads 4-component data
-    // and writes 3-component data to potentially overlapping memory locations.
-    // We need a separate temporary storage for the output.
-    const int                      aResultSize = (theUDerivMax + 1) * (theVDerivMax + 1) * 3;
-    NCollection_LocalArray<double> aTempStorage(aResultSize);
-
-    if (isMaxU)
-    {
-      BSplSLib::RationalDerivative(theUDerivMax,
-                                   theVDerivMax,
-                                   theUDerivMax,
-                                   theVDerivMax,
-                                   theResultArray[0],
-                                   aTempStorage[0]);
-    }
-    else
-    {
-      // If V is max degree, our result array is V-major (transposed relative to what
-      // RationalDerivative expects) We swap U/V arguments to trick RationalDerivative into
-      // processing it correctly.
-      BSplSLib::RationalDerivative(theVDerivMax,
-                                   theUDerivMax,
-                                   theVDerivMax,
-                                   theUDerivMax,
-                                   theResultArray[0],
-                                   aTempStorage[0]);
-    }
-
-    // Copy results back to the output array
-    for (int i = 0; i < aResultSize; ++i)
-    {
-      theResultArray[i] = aTempStorage[i];
-    }
-  }
-}
 } // namespace
 
 //==================================================================================================

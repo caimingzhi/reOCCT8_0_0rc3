@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_IntegerVector.hpp>
 #include <math_Matrix.hpp>
 #include <math_Vector.hpp>
@@ -190,4 +189,3 @@ inline Standard_OStream& operator<<(Standard_OStream& theStream, const math_Func
   theF.Dump(theStream);
   return theStream;
 }
-

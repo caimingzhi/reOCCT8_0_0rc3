@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_Signature.hpp>
@@ -31,4 +30,3 @@ public:
 private:
   bool thenopk;
 };
-

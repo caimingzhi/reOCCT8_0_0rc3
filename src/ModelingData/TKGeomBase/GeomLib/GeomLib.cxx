@@ -1,46 +1,3 @@
-// Created on: 1993-07-07
-// Created by: Jean Claude VAUTHIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Version:
-// pmn 24/09/96 Ajout du prolongement de courbe.
-//              jct 15/04/97 Ajout du prolongement de surface.
-//              jct 24/04/97 simplification ou suppression de calculs
-//                           inutiles dans ExtendSurfByLength
-//                           correction de Tbord et Continuity=0 accepte
-//                           correction du calcul de lambda et appel a
-//                           TangExtendToConstraint avec lambmin au lieu de 1.
-//                           correction du passage Sr rat --> BSp nD
-//              xab 26/06/97 treatement partiel anulation des derivees
-//                           partiels du denonimateur des Surfaces BSplines Rationnelles
-//                           dans le cas de valeurs proportionnelles des denominateurs
-//                           en umin umax et/ou vmin vmax.
-//              pmn 4/07/97  Gestion de la continuite dans BuildCurve3d (PRO9097)
-//              xab 10/07/97 on revient en arriere sur l'ajout du 26/06/97
-//              pmn 26/09/97 Ajout des parametres d'approx dans BuildCurve3d
-//              xab 29/09/97 on reintegre l'ajout du 26/06/97
-//              pmn 31/10/97 Ajoute AdjustExtremity
-//              jct 26/11/98 blindage dans ExtendSurf qd NTgte = 0 (CTS21288)
-//              jct 19/01/99 traitement de la periodicite dans ExtendSurf
-// Design:
-// Warning:      None
-// References:   None
-// Language:     C++2.0
-// Purpose:
-// Declarations:
-
 #include <GeomLib.hpp>
 
 #include <Adaptor3d_Curve.hpp>
@@ -1438,7 +1395,8 @@ static bool ExtendKPart(occ::handle<Geom_RectangularTrimmedSurface>& Surface,
   {
     switch (Type)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         if (After)
           Ul += Length;
         else
@@ -1457,7 +1415,8 @@ static bool ExtendKPart(occ::handle<Geom_RectangularTrimmedSurface>& Surface,
     {
       case GeomAbs_Plane:
       case GeomAbs_Cylinder:
-      case GeomAbs_SurfaceOfExtrusion: {
+      case GeomAbs_SurfaceOfExtrusion:
+      {
         if (After)
           Vl += Length;
         else
@@ -2662,10 +2621,12 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
   double Tol2 = Tol * Tol;
   switch (aSType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       return;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       if (Precision::IsInfinite(u1) || Precision::IsInfinite(u2))
       {
         // not closed
@@ -2673,7 +2634,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       }
     }
       [[fallthrough]];
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       if (Precision::IsInfinite(v1))
         v1 = 0.;
       gp_Pnt p1 = aGAS.Value(u1, v1);
@@ -2681,7 +2643,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       // find v with maximal distance from axis
       if (!(Precision::IsInfinite(v1) || Precision::IsInfinite(v2)))
       {
@@ -2703,7 +2666,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       // find v with maximal distance from axis
       if (v1 * v2 <= 0.)
       {
@@ -2721,7 +2685,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       double ures = aGAS.UResolution(Tol);
       double vres = aGAS.VResolution(Tol);
       //
@@ -2729,13 +2694,15 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isVClosed = (v2 - v1) >= aGAS.VPeriod() - vres;
       return;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       occ::handle<Geom_BSplineSurface> aBSpl = aGAS.BSpline();
       isUClosed                              = GeomLib::IsBSplUClosed(aBSpl, u1, u2, Tol);
       isVClosed                              = GeomLib::IsBSplVClosed(aBSpl, v1, v2, Tol);
       return;
     }
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       occ::handle<Geom_BezierSurface> aBz = aGAS.Bezier();
       isUClosed                           = GeomLib::IsBzUClosed(aBz, u1, u2, Tol);
       isVClosed                           = GeomLib::IsBzVClosed(aBz, v1, v2, Tol);
@@ -2743,7 +2710,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
     }
     case GeomAbs_SurfaceOfRevolution:
     case GeomAbs_OffsetSurface:
-    case GeomAbs_OtherSurface: {
+    case GeomAbs_OtherSurface:
+    {
       int nbp = 23;
       if (Precision::IsInfinite(v1))
       {
@@ -2811,7 +2779,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       }
       return;
     }
-    default: {
+    default:
+    {
       return;
     }
   }

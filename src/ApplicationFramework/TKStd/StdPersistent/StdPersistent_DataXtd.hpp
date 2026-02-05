@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdLPersistent_Void.hpp>
 #include <StdObject_gp_Vectors.hpp>
 
@@ -88,4 +87,3 @@ inline const char* StdObjMgt_Attribute<TDataXtd_Position>::Simple<gp_Pnt>::PName
 {
   return "PDataXtd_Position";
 }
-

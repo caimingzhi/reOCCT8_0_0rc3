@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -84,4 +83,3 @@ public:
   //! Returns the default precision.
   Standard_EXPORT static double Precision();
 };
-

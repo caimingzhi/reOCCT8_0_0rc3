@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_Shape.hpp>
 #include <gp_Pnt2d.hpp>
 #include <Graphic3d_NameOfTexture2D.hpp>
@@ -191,4 +190,3 @@ protected: //! @name texture mapping properties
 public:
   DEFINE_STANDARD_RTTIEXT(AIS_TexturedShape, AIS_Shape)
 };
-

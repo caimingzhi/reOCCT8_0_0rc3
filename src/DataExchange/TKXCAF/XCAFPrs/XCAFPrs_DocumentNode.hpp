@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XCAFPrs_Style.hpp>
 
 #include <TDF_ChildIterator.hpp>
@@ -30,13 +29,12 @@ public: // Methods for hash map
 
 namespace std
 {
-template <>
-struct hash<XCAFPrs_DocumentNode>
-{
-  size_t operator()(const XCAFPrs_DocumentNode& theDocumentNode) const
+  template <>
+  struct hash<XCAFPrs_DocumentNode>
   {
-    return std::hash<TCollection_AsciiString>{}(theDocumentNode.Id);
-  }
-};
+    size_t operator()(const XCAFPrs_DocumentNode& theDocumentNode) const
+    {
+      return std::hash<TCollection_AsciiString>{}(theDocumentNode.Id);
+    }
+  };
 } // namespace std
-

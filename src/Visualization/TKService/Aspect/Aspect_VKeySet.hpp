@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_VKey.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -145,4 +144,3 @@ private:
   mutable std::shared_mutex    myLock;      //!< mutex for thread-safe updates
   Aspect_VKeyFlags             myModifiers; //!< active modifiers
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -81,4 +80,3 @@ inline Standard_OStream& operator<<(Standard_OStream& o, const math_Gauss& mG)
   mG.Dump(o);
   return o;
 }
-

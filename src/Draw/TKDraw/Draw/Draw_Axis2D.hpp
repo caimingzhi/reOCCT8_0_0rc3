@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax22d.hpp>
@@ -29,4 +28,3 @@ private:
   Draw_Color myColor;
   int        mySize;
 };
-

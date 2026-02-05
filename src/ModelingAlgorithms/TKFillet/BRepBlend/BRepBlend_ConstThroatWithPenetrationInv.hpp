@@ -1,7 +1,5 @@
 #pragma once
 
-
 #include <BlendFunc_ConstThroatWithPenetrationInv.hpp>
 
 typedef BlendFunc_ConstThroatWithPenetrationInv BRepBlend_ConstThroatWithPenetrationInv;
-

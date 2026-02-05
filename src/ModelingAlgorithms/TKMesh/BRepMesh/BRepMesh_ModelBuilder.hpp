@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_ModelBuilder.hpp>
 #include <Standard_Type.hpp>
 #include <TopoDS_Shape.hpp>
@@ -29,4 +28,3 @@ protected:
     const TopoDS_Shape&          theShape,
     const IMeshTools_Parameters& theParameters) override;
 };
-

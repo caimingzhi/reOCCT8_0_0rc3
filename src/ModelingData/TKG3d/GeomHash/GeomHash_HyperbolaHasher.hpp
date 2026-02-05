@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_Hyperbola.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -36,4 +35,3 @@ struct GeomHash_HyperbolaHasher
            && std::abs(theHyperbola1->MinorRadius() - theHyperbola2->MinorRadius()) <= aTolerance;
   }
 };
-

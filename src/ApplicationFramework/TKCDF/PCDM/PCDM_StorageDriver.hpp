@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -75,4 +74,3 @@ private:
   bool                       myIsError;
   PCDM_StoreStatus           myStoreStatus;
 };
-

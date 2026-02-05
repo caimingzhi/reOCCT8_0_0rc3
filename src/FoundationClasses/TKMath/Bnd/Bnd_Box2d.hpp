@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Lin2d.hpp>
 #include <gp_Pnt2d.hpp>
 #include <Standard.hpp>
@@ -270,4 +269,3 @@ private:
   double Gap;
   int    Flags;
 };
-

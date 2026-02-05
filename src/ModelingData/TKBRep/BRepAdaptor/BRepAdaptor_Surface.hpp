@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_TransformedSurface.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <GeomAbs_SurfaceType.hpp>
@@ -66,4 +65,3 @@ public:
 private:
   TopoDS_Face myFace;
 };
-

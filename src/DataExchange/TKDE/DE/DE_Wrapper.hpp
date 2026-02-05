@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <DE_Provider.hpp>
 #include <Message_ProgressRange.hpp>
@@ -374,4 +373,3 @@ private:
     NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<DE_ConfigurationNode>>>
     myConfiguration; //!< Internal map of formats
 };
-

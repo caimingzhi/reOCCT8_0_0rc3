@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Interface_Graph.hpp>
 #include <NCollection_Allocator.hpp>
 #include <NCollection_DataMap.hpp>
@@ -203,9 +202,8 @@ bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::hasAllReplacers
   }
   return std::all_of(theSharings->cbegin(),
                      theSharings->cend(),
-                     [this](const occ::handle<Standard_Transient>& theSharing) {
-                       return myReplacerMap.IsBound(theSharing->DynamicType());
-                     });
+                     [this](const occ::handle<Standard_Transient>& theSharing)
+                     { return myReplacerMap.IsBound(theSharing->DynamicType()); });
 }
 
 //==================================================================================================
@@ -231,4 +229,3 @@ bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::replaceInSharin
   }
   return isAllReplaced;
 }
-

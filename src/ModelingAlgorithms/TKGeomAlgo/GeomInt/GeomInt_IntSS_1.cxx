@@ -1,19 +1,3 @@
-// Created on: 1995-01-27
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <algorithm>
 #include <GeomInt_IntSS.hpp>
 
@@ -312,7 +296,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
       // ########################################
     case IntPatch_Lin:
     case IntPatch_Parabola:
-    case IntPatch_Hyperbola: {
+    case IntPatch_Hyperbola:
+    {
       if (typl == IntPatch_Lin)
       {
         newc = new Geom_Line(occ::down_cast<IntPatch_GLine>(L)->Line());
@@ -423,7 +408,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
       //  Circle and Ellipse
       // ########################################
     case IntPatch_Circle:
-    case IntPatch_Ellipse: {
+    case IntPatch_Ellipse:
+    {
 
       if (typl == IntPatch_Circle)
       {
@@ -600,7 +586,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
     // ########################################
     //  Walking
     // ########################################
-    case IntPatch_Walking: {
+    case IntPatch_Walking:
+    {
       occ::handle<IntPatch_WLine> WL = occ::down_cast<IntPatch_WLine>(L);
 
 #ifdef GEOMINT_INTSS_DEBUG
@@ -986,7 +973,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
     }
     break;
 
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> RL = occ::down_cast<IntPatch_RLine>(L);
       occ::handle<Geom_Curve>     aC3d;
       occ::handle<Geom2d_Curve>   aC2d1, aC2d2;

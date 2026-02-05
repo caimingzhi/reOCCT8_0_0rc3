@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class IntSurf_Transition;
@@ -41,4 +40,3 @@ public:
                                         const occ::handle<Adaptor3d_Surface>& theSecondSurf,
                                         double                                theArrOfPeriod[4]);
 };
-

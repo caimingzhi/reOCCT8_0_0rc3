@@ -1,18 +1,3 @@
-// Created on: 2012-04-09
-// Created by: Sergey ANIKIN
-// Copyright (c) 2012-2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGlTest.hpp>
 
 #include <Draw.hpp>
@@ -60,146 +45,150 @@ static occ::handle<OpenGl_Caps> getDefaultCaps()
 namespace
 {
 
-//=======================================================================
-// function : VUserDraw
-// purpose  : Checks availability and operation of UserDraw feature
-//=======================================================================
-class VUserDrawObj : public AIS_InteractiveObject
-{
-public:
-  // CASCADE RTTI
-  DEFINE_STANDARD_RTTI_INLINE(VUserDrawObj, AIS_InteractiveObject);
-
-  VUserDrawObj()
+  //=======================================================================
+  // function : VUserDraw
+  // purpose  : Checks availability and operation of UserDraw feature
+  //=======================================================================
+  class VUserDrawObj : public AIS_InteractiveObject
   {
-    myCoords[0] = -10.;
-    myCoords[1] = -20.;
-    myCoords[2] = -30.;
-    myCoords[3] = 10.;
-    myCoords[4] = 20.;
-    myCoords[5] = 30.;
-  }
+  public:
+    // CASCADE RTTI
+    DEFINE_STANDARD_RTTI_INLINE(VUserDrawObj, AIS_InteractiveObject);
 
-public:
-  class Element : public OpenGl_Element
-  {
+    VUserDrawObj()
+    {
+      myCoords[0] = -10.;
+      myCoords[1] = -20.;
+      myCoords[2] = -30.;
+      myCoords[3] = 10.;
+      myCoords[4] = 20.;
+      myCoords[5] = 30.;
+    }
+
+  public:
+    class Element : public OpenGl_Element
+    {
+    private:
+      occ::handle<VUserDrawObj> myIObj;
+
+    public:
+      Element(const occ::handle<VUserDrawObj>& theIObj)
+          : myIObj(theIObj)
+      {
+      }
+
+      ~Element() override = default;
+
+      void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const override
+      {
+        if (!myIObj.IsNull())
+          myIObj->Render(theWorkspace);
+      }
+
+      void Release(OpenGl_Context*) override
+      {
+        //
+      }
+
+    public:
+      DEFINE_STANDARD_ALLOC
+    };
+
   private:
-    occ::handle<VUserDrawObj> myIObj;
+    // Virtual methods implementation
+    void Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
+                 const occ::handle<Prs3d_Presentation>&         thePrs,
+                 const int                                      theMode) override;
 
-  public:
-    Element(const occ::handle<VUserDrawObj>& theIObj)
-        : myIObj(theIObj)
-    {
-    }
+    void ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
+                          const int                               theMode) override;
 
-    ~Element() override = default;
+    // Called by VUserDrawElement
+    void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const;
 
-    void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const override
-    {
-      if (!myIObj.IsNull())
-        myIObj->Render(theWorkspace);
-    }
-
-    void Release(OpenGl_Context*) override
-    {
-      //
-    }
-
-  public:
-    DEFINE_STANDARD_ALLOC
+  private:
+    GLfloat myCoords[6];
+    friend class Element;
   };
 
-private:
-  // Virtual methods implementation
-  void Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
-               const occ::handle<Prs3d_Presentation>&         thePrs,
-               const int                                      theMode) override;
-
-  void ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
-                        const int                               theMode) override;
-
-  // Called by VUserDrawElement
-  void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const;
-
-private:
-  GLfloat myCoords[6];
-  friend class Element;
-};
-
-void VUserDrawObj::Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
-                           const occ::handle<Prs3d_Presentation>&         thePrs,
-                           const int                                      theMode)
-{
-  if (theMode != 0)
+  void VUserDrawObj::Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
+                             const occ::handle<Prs3d_Presentation>&         thePrs,
+                             const int                                      theMode)
   {
-    return;
+    if (theMode != 0)
+    {
+      return;
+    }
+    thePrs->Clear();
+
+    NCollection_Vec4<float>   aBndMin(myCoords[0], myCoords[1], myCoords[2], 1.0f);
+    NCollection_Vec4<float>   aBndMax(myCoords[3], myCoords[4], myCoords[5], 1.0f);
+    occ::handle<OpenGl_Group> aGroup = occ::down_cast<OpenGl_Group>(thePrs->NewGroup());
+    aGroup->SetMinMaxValues(aBndMin.x(),
+                            aBndMin.y(),
+                            aBndMin.z(),
+                            aBndMax.x(),
+                            aBndMax.y(),
+                            aBndMax.z());
+    aGroup->SetGroupPrimitivesAspect(myDrawer->LineAspect()->Aspect());
+    VUserDrawObj::Element* anElem = new VUserDrawObj::Element(this);
+    aGroup->AddElement(anElem);
+
+    // invalidate bounding box of the scene
+    thePrsMgr->StructureManager()->Update();
   }
-  thePrs->Clear();
 
-  NCollection_Vec4<float>   aBndMin(myCoords[0], myCoords[1], myCoords[2], 1.0f);
-  NCollection_Vec4<float>   aBndMax(myCoords[3], myCoords[4], myCoords[5], 1.0f);
-  occ::handle<OpenGl_Group> aGroup = occ::down_cast<OpenGl_Group>(thePrs->NewGroup());
-  aGroup
-    ->SetMinMaxValues(aBndMin.x(), aBndMin.y(), aBndMin.z(), aBndMax.x(), aBndMax.y(), aBndMax.z());
-  aGroup->SetGroupPrimitivesAspect(myDrawer->LineAspect()->Aspect());
-  VUserDrawObj::Element* anElem = new VUserDrawObj::Element(this);
-  aGroup->AddElement(anElem);
-
-  // invalidate bounding box of the scene
-  thePrsMgr->StructureManager()->Update();
-}
-
-void VUserDrawObj::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
-                                    const int                               theMode)
-{
-  if (theMode != 0)
+  void VUserDrawObj::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
+                                      const int                               theMode)
   {
-    return;
+    if (theMode != 0)
+    {
+      return;
+    }
+    occ::handle<SelectMgr_EntityOwner>       anEntityOwner = new SelectMgr_EntityOwner(this);
+    occ::handle<NCollection_HArray1<gp_Pnt>> aPnts         = new NCollection_HArray1<gp_Pnt>(1, 5);
+    aPnts->SetValue(1, gp_Pnt(myCoords[0], myCoords[1], myCoords[2]));
+    aPnts->SetValue(2, gp_Pnt(myCoords[3], myCoords[4], myCoords[2]));
+    aPnts->SetValue(3, gp_Pnt(myCoords[3], myCoords[4], myCoords[5]));
+    aPnts->SetValue(4, gp_Pnt(myCoords[0], myCoords[1], myCoords[5]));
+    aPnts->SetValue(5, gp_Pnt(myCoords[0], myCoords[1], myCoords[2]));
+    occ::handle<Select3D_SensitiveCurve> aSensitive =
+      new Select3D_SensitiveCurve(anEntityOwner, aPnts);
+    theSelection->Add(aSensitive);
   }
-  occ::handle<SelectMgr_EntityOwner>       anEntityOwner = new SelectMgr_EntityOwner(this);
-  occ::handle<NCollection_HArray1<gp_Pnt>> aPnts         = new NCollection_HArray1<gp_Pnt>(1, 5);
-  aPnts->SetValue(1, gp_Pnt(myCoords[0], myCoords[1], myCoords[2]));
-  aPnts->SetValue(2, gp_Pnt(myCoords[3], myCoords[4], myCoords[2]));
-  aPnts->SetValue(3, gp_Pnt(myCoords[3], myCoords[4], myCoords[5]));
-  aPnts->SetValue(4, gp_Pnt(myCoords[0], myCoords[1], myCoords[5]));
-  aPnts->SetValue(5, gp_Pnt(myCoords[0], myCoords[1], myCoords[2]));
-  occ::handle<Select3D_SensitiveCurve> aSensitive =
-    new Select3D_SensitiveCurve(anEntityOwner, aPnts);
-  theSelection->Add(aSensitive);
-}
 
-void VUserDrawObj::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
-{
-  const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
+  void VUserDrawObj::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
+  {
+    const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
-  // To test linking against OpenGl_Workspace and all aspect classes
-  const OpenGl_Aspects* aMA = theWorkspace->Aspects();
-  aMA->Aspect()->MarkerType();
-  NCollection_Vec4<float> aColor = theWorkspace->InteriorColor();
+    // To test linking against OpenGl_Workspace and all aspect classes
+    const OpenGl_Aspects* aMA = theWorkspace->Aspects();
+    aMA->Aspect()->MarkerType();
+    NCollection_Vec4<float> aColor = theWorkspace->InteriorColor();
 
-  aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
-                                         Aspect_TOL_SOLID,
-                                         Graphic3d_TypeOfShadingModel_Unlit,
-                                         Graphic3d_AlphaMode_Opaque,
-                                         false,
-                                         occ::handle<OpenGl_ShaderProgram>());
-  aCtx->SetColor4fv(aColor);
+    aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
+                                           Aspect_TOL_SOLID,
+                                           Graphic3d_TypeOfShadingModel_Unlit,
+                                           Graphic3d_AlphaMode_Opaque,
+                                           false,
+                                           occ::handle<OpenGl_ShaderProgram>());
+    aCtx->SetColor4fv(aColor);
 
-  const NCollection_Vec3<float> aVertArray[4] = {
-    NCollection_Vec3<float>(myCoords[0], myCoords[1], myCoords[2]),
-    NCollection_Vec3<float>(myCoords[3], myCoords[4], myCoords[2]),
-    NCollection_Vec3<float>(myCoords[3], myCoords[4], myCoords[5]),
-    NCollection_Vec3<float>(myCoords[0], myCoords[1], myCoords[5]),
-  };
-  occ::handle<OpenGl_VertexBuffer> aVertBuffer = new OpenGl_VertexBuffer();
-  aVertBuffer->Init(aCtx, 3, 4, aVertArray[0].GetData());
+    const NCollection_Vec3<float> aVertArray[4] = {
+      NCollection_Vec3<float>(myCoords[0], myCoords[1], myCoords[2]),
+      NCollection_Vec3<float>(myCoords[3], myCoords[4], myCoords[2]),
+      NCollection_Vec3<float>(myCoords[3], myCoords[4], myCoords[5]),
+      NCollection_Vec3<float>(myCoords[0], myCoords[1], myCoords[5]),
+    };
+    occ::handle<OpenGl_VertexBuffer> aVertBuffer = new OpenGl_VertexBuffer();
+    aVertBuffer->Init(aCtx, 3, 4, aVertArray[0].GetData());
 
-  // Finally draw something to make sure UserDraw really works
-  aVertBuffer->BindAttribute(aCtx, Graphic3d_TOA_POS);
-  aCtx->core11fwd->glDrawArrays(GL_LINE_LOOP, 0, aVertBuffer->GetElemsNb());
-  aVertBuffer->UnbindAttribute(aCtx, Graphic3d_TOA_POS);
-  aVertBuffer->Release(aCtx.get());
-}
+    // Finally draw something to make sure UserDraw really works
+    aVertBuffer->BindAttribute(aCtx, Graphic3d_TOA_POS);
+    aCtx->core11fwd->glDrawArrays(GL_LINE_LOOP, 0, aVertBuffer->GetElemsNb());
+    aVertBuffer->UnbindAttribute(aCtx, Graphic3d_TOA_POS);
+    aVertBuffer->Release(aCtx.get());
+  }
 
 } // end of anonymous namespace
 

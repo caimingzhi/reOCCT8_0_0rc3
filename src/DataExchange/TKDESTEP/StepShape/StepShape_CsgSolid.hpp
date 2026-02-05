@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_CsgSelect.hpp>
@@ -26,4 +25,3 @@ public:
 private:
   StepShape_CsgSelect treeRootExpression;
 };
-

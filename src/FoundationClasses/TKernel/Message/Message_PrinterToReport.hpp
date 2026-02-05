@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Printer.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -53,4 +52,3 @@ private:
   mutable TCollection_AsciiString myName;
   occ::handle<Message_Report>     myReport; //!< the report for sending alerts
 };
-

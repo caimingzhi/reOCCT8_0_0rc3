@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Trsf.hpp>
 #include <Standard.hpp>
 #include <Standard_Integer.hpp>
@@ -188,4 +187,3 @@ public:
 private:
   gp_Trsf gpTrsf;
 };
-

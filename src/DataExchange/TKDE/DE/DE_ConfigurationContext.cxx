@@ -34,115 +34,115 @@ enum DE_ConfigurationContext_KindOfLine
 
 namespace
 {
-//=================================================================================================
+  //=================================================================================================
 
-static bool GetLine(OSD_File& theFile, TCollection_AsciiString& theLine)
-{
-  TCollection_AsciiString aBuffer;
-  int                     aBufSize = 10;
-  int                     aLen;
-  theLine.Clear();
-  do
+  static bool GetLine(OSD_File& theFile, TCollection_AsciiString& theLine)
   {
-    theFile.ReadLine(aBuffer, aBufSize, aLen);
-    theLine += aBuffer;
-    if (theFile.IsAtEnd())
+    TCollection_AsciiString aBuffer;
+    int                     aBufSize = 10;
+    int                     aLen;
+    theLine.Clear();
+    do
     {
-      if (!theLine.Length())
+      theFile.ReadLine(aBuffer, aBufSize, aLen);
+      theLine += aBuffer;
+      if (theFile.IsAtEnd())
       {
-        return false;
+        if (!theLine.Length())
+        {
+          return false;
+        }
+        else
+        {
+          theLine += "\n";
+        }
       }
-      else
+    } while (theLine.Value(theLine.Length()) != '\n');
+    return true;
+  }
+
+  //=================================================================================================
+
+  static DE_ConfigurationContext_KindOfLine WhatKindOfLine(const TCollection_AsciiString& theLine,
+                                                           TCollection_AsciiString&       theToken1,
+                                                           TCollection_AsciiString&       theToken2)
+  {
+    static const TCollection_AsciiString aWhiteSpace = " \t\r\n";
+    int                                  aPos1 = 0, aPos2 = 0, aPos = 0;
+    TCollection_AsciiString              aLine(theLine);
+    aLine.LeftAdjust();
+    aLine.RightAdjust();
+    if (!aLine.EndsWith(':')
+        && (!aLine.EndsWith(' ') || !aLine.EndsWith('\t') || !aLine.EndsWith('\n')))
+    {
+      aLine.InsertAfter(aLine.Length(), " ");
+    }
+
+    if (aLine.Value(1) == '!')
+    {
+      return DE_ConfigurationContext_KindOfLine_Comment;
+    }
+    aPos1 = aLine.FirstLocationNotInSet(aWhiteSpace, 1, aLine.Length());
+    if (aLine.Value(aPos1) == '\n')
+    {
+      return DE_ConfigurationContext_KindOfLine_Empty;
+    }
+
+    aPos2 = aLine.Location(1, ':', aPos1, aLine.Length());
+    if (aPos2 == 0 || aPos1 == aPos2)
+    {
+      return DE_ConfigurationContext_KindOfLine_Error;
+    }
+
+    for (aPos = aPos2 - 1; aLine.Value(aPos) == '\t' || aLine.Value(aPos) == ' '; aPos--)
+      ;
+
+    theToken1 = aLine.SubString(aPos1, aPos);
+    if (aPos2 != aLine.Length())
+    {
+      aPos2++;
+    }
+    aPos = aLine.FirstLocationNotInSet(aWhiteSpace, aPos2, aLine.Length());
+    if (aPos != 0)
+    {
+      if (aLine.Value(aPos) == '\\')
       {
-        theLine += "\n";
+        switch (aLine.Value(aPos + 1))
+        {
+          case '\\':
+          case ' ':
+          case '\t':
+            aPos++;
+            break;
+        }
       }
     }
-  } while (theLine.Value(theLine.Length()) != '\n');
-  return true;
-}
-
-//=================================================================================================
-
-static DE_ConfigurationContext_KindOfLine WhatKindOfLine(const TCollection_AsciiString& theLine,
-                                                         TCollection_AsciiString&       theToken1,
-                                                         TCollection_AsciiString&       theToken2)
-{
-  static const TCollection_AsciiString aWhiteSpace = " \t\r\n";
-  int                                  aPos1 = 0, aPos2 = 0, aPos = 0;
-  TCollection_AsciiString              aLine(theLine);
-  aLine.LeftAdjust();
-  aLine.RightAdjust();
-  if (!aLine.EndsWith(':')
-      && (!aLine.EndsWith(' ') || !aLine.EndsWith('\t') || !aLine.EndsWith('\n')))
-  {
-    aLine.InsertAfter(aLine.Length(), " ");
-  }
-
-  if (aLine.Value(1) == '!')
-  {
-    return DE_ConfigurationContext_KindOfLine_Comment;
-  }
-  aPos1 = aLine.FirstLocationNotInSet(aWhiteSpace, 1, aLine.Length());
-  if (aLine.Value(aPos1) == '\n')
-  {
-    return DE_ConfigurationContext_KindOfLine_Empty;
-  }
-
-  aPos2 = aLine.Location(1, ':', aPos1, aLine.Length());
-  if (aPos2 == 0 || aPos1 == aPos2)
-  {
-    return DE_ConfigurationContext_KindOfLine_Error;
-  }
-
-  for (aPos = aPos2 - 1; aLine.Value(aPos) == '\t' || aLine.Value(aPos) == ' '; aPos--)
-    ;
-
-  theToken1 = aLine.SubString(aPos1, aPos);
-  if (aPos2 != aLine.Length())
-  {
-    aPos2++;
-  }
-  aPos = aLine.FirstLocationNotInSet(aWhiteSpace, aPos2, aLine.Length());
-  if (aPos != 0)
-  {
-    if (aLine.Value(aPos) == '\\')
+    if (aPos == aLine.Length() || aPos == 0)
     {
-      switch (aLine.Value(aPos + 1))
-      {
-        case '\\':
-        case ' ':
-        case '\t':
-          aPos++;
-          break;
-      }
+      theToken2.Clear();
     }
+    else
+    {
+      aLine.Remove(1, aPos - 1);
+      aLine.Remove(aLine.Length());
+      theToken2 = aLine;
+    }
+    return DE_ConfigurationContext_KindOfLine_Resource;
   }
-  if (aPos == aLine.Length() || aPos == 0)
-  {
-    theToken2.Clear();
-  }
-  else
-  {
-    aLine.Remove(1, aPos - 1);
-    aLine.Remove(aLine.Length());
-    theToken2 = aLine;
-  }
-  return DE_ConfigurationContext_KindOfLine_Resource;
-}
 
-//=================================================================================================
+  //=================================================================================================
 
-static TCollection_AsciiString MakeName(const TCollection_AsciiString& theScope,
-                                        const TCollection_AsciiString& theParam)
-{
-  TCollection_AsciiString aStr(theScope);
-  if (!aStr.IsEmpty())
+  static TCollection_AsciiString MakeName(const TCollection_AsciiString& theScope,
+                                          const TCollection_AsciiString& theParam)
   {
-    aStr += '.';
+    TCollection_AsciiString aStr(theScope);
+    if (!aStr.IsEmpty())
+    {
+      aStr += '.';
+    }
+    aStr += theParam;
+    return aStr;
   }
-  aStr += theParam;
-  return aStr;
-}
 } // namespace
 
 //=================================================================================================

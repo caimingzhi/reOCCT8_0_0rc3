@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_List.hpp>
 #include <NCollection_Vector.hpp>
@@ -49,4 +48,3 @@ private:
   VectorOfPoint         myPoints;
   gp_XYZ                myCurrent;
 };
-

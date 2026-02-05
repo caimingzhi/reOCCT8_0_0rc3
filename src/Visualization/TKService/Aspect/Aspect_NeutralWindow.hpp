@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Window.hpp>
 
 //! Defines a platform-neutral window.
@@ -97,4 +96,3 @@ protected:
   int             myHeight;
   mutable bool    myIsMapped;
 };
-

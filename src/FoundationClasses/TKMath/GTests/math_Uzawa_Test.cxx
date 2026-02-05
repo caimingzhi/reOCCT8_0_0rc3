@@ -20,7 +20,7 @@
 
 namespace
 {
-const double TOLERANCE = 1.0e-6;
+  const double TOLERANCE = 1.0e-6;
 }
 
 TEST(math_Uzawa, SimpleEqualityConstraints)

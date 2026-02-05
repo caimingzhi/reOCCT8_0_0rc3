@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Diagnostic info categories bit flags.
 enum Graphic3d_DiagnosticInfo
 {
@@ -22,4 +21,3 @@ enum Graphic3d_DiagnosticInfo
     Graphic3d_DiagnosticInfo_Basic
     | Graphic3d_DiagnosticInfo_Extensions //!< complete information, including extension list
 };
-

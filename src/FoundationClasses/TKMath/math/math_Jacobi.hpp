@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -55,6 +54,7 @@ private:
   math_Vector EigenValues;
   math_Matrix EigenVectors;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -109,5 +109,3 @@ inline void math_Jacobi::Vector(const int Num, math_Vector& V) const
   StdFail_NotDone_Raise_if(!Done, " ");
   V = EigenVectors.Col(Num);
 }
-
-

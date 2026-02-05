@@ -1,19 +1,3 @@
-// Created on: 1995-04-26
-// Created by: Flore Lantheaume
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_TopolTool.hpp>
 #include <BRepBlend_Chamfer.hpp>
 #include <BRepBlend_ChamfInv.hpp>
@@ -655,7 +639,8 @@ void ChFi3d_ChBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
   GeomAbs_SurfaceType                                  typ = AS.GetType();
   switch (typ)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       v1                       = p1f.Y();
       v2                       = p2f.Y();
       u1                       = std::max(p1f.X(), p2f.X());
@@ -668,7 +653,8 @@ void ChFi3d_ChBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       sec2.Set(ElSLib::PlaneUIso(Pl.Position(), u2), v1, v2);
     }
     break;
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       v1          = p1f.Y();
       v2          = p2f.Y();
       u1          = std::max(p1f.X(), p2f.X());

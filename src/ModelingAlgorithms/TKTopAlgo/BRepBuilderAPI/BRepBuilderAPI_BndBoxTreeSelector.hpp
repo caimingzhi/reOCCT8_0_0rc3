@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_List.hpp>
 #include <Bnd_Box.hpp>
@@ -51,4 +50,3 @@ private:
   NCollection_List<int> myResInd;
   Bnd_Box               myBox;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Wire.hpp>
 #include <TopoDS_Edge.hpp>
 #include <gp_Pln.hpp>
@@ -124,4 +123,3 @@ private:
   TopoDS_Edge shrinke1;
   TopoDS_Edge shrinke2;
 };
-

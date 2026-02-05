@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -13,4 +12,3 @@ public:
   //! Loads all Draw commands of XSDRAWGLTF. Used for plugin.
   Standard_EXPORT static void Factory(Draw_Interpretor& theDI);
 };
-

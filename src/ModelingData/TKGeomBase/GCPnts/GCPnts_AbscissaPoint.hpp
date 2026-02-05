@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <CPnts_AbscissaPoint.hpp>
 
 class Adaptor3d_Curve;
@@ -158,4 +157,3 @@ private:
 private:
   CPnts_AbscissaPoint myComputer;
 };
-

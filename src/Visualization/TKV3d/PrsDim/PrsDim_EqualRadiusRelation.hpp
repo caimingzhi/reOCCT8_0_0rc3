@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 
 class Geom_Plane;
@@ -32,4 +31,3 @@ private:
   gp_Pnt myFirstPoint;
   gp_Pnt mySecondPoint;
 };
-

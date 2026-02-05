@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_BoundBuffer.hpp>
 // Copyright (c) 2018 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Bitmask for primitive array creation.
 typedef int Graphic3d_ArrayFlags;
@@ -35,7 +33,6 @@ enum
   Graphic3d_ArrayFlags_IndexesMutable =
     0x80, //!< mutable index array, which can be invalidated during lifetime without re-creation
 };
-
 
 #include <Graphic3d_Buffer.hpp>
 #include <Graphic3d_IndexBuffer.hpp>
@@ -937,4 +934,3 @@ private: //! @name private fields
   size_t                             myColStride;
   Graphic3d_TypeOfPrimitiveArray     myType;
 };
-

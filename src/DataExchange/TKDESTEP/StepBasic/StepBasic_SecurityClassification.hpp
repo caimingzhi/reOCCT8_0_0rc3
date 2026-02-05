@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -40,4 +39,3 @@ private:
   occ::handle<TCollection_HAsciiString>              purpose;
   occ::handle<StepBasic_SecurityClassificationLevel> securityLevel;
 };
-

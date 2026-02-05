@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -95,4 +94,3 @@ private:
   BRepAlgo_Image                                                           myImageVV;
   double                                                                   myTolConf;
 };
-

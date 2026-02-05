@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_AsciiString.hpp>
@@ -65,4 +64,3 @@ private:
   occ::handle<TCollection_HAsciiString>                     theDescription;
   occ::handle<TCollection_HAsciiString>                     theAnalysisType;
 };
-

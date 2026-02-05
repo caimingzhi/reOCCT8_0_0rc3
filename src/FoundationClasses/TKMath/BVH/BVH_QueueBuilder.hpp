@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Builder.hpp>
 #include <BVH_BuildThread.hpp>
 #include <NCollection_Vector.hpp>
@@ -251,4 +250,3 @@ void BVH_QueueBuilder<T, N>::Build(BVH_Set<T, N>*       theSet,
     aThread.execute();
   }
 }
-

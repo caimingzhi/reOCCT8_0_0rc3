@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_Provider.hpp>
 
 //! The class to transfer PLY files.
@@ -80,4 +79,3 @@ public:
   //! @return provider's vendor name
   Standard_EXPORT TCollection_AsciiString GetVendor() const override;
 };
-

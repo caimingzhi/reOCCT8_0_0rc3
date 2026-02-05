@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <TDF_Attribute.hpp>
 
@@ -67,4 +66,3 @@ public:
   //! Returns all the derived registered attributes list.
   Standard_EXPORT static void Attributes(NCollection_List<occ::handle<TDF_Attribute>>& theList);
 };
-

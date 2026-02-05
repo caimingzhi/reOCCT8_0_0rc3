@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <StepKinematics_KinematicPair.hpp>
 

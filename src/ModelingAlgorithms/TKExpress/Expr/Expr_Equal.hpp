@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Expr_SingleRelation.hpp>
@@ -35,4 +34,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Expr_Equal, Expr_SingleRelation)
 };
-

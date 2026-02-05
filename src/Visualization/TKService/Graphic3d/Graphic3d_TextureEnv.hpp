@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Graphic3d_NameOfTextureEnv.hpp>
@@ -37,4 +36,3 @@ public:
 private:
   Graphic3d_NameOfTextureEnv myName;
 };
-

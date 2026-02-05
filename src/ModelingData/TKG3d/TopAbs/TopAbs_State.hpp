@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies the position of a vertex or a set of
 //! vertices relative to a region of a shape.
 //! The figure shown above illustrates the states of
@@ -13,4 +12,3 @@ enum TopAbs_State
   TopAbs_ON,
   TopAbs_UNKNOWN
 };
-

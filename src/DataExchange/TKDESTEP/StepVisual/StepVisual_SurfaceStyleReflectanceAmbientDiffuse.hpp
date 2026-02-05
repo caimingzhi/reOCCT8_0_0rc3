@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepVisual_SurfaceStyleReflectanceAmbient.hpp>
 
 //! Representation of STEP entity SurfaceStyleReflectanceAmbientDiffuse

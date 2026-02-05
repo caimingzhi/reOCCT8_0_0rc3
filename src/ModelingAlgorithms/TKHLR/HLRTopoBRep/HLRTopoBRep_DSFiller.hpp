@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -59,4 +58,3 @@ private:
   //! structure.
   Standard_EXPORT static void ProcessEdges(HLRTopoBRep_Data& DS);
 };
-

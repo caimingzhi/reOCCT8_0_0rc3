@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -95,4 +94,3 @@ public:
                                          const double           Tol,
                                          Bnd_Box&               B);
 };
-

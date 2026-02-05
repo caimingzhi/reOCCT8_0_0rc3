@@ -34,109 +34,109 @@ IMPLEMENT_STANDARD_RTTIEXT(DESTEP_Provider, DE_Provider)
 
 namespace
 {
-//! Helper function to validate configuration node
-bool validateNode(const occ::handle<DE_ConfigurationNode>& theNode,
-                  const TCollection_AsciiString&           theContext)
-{
-  return DE_ValidationUtils::ValidateConfigurationNode(theNode,
-                                                       STANDARD_TYPE(DESTEP_ConfigurationNode),
-                                                       theContext);
-}
-
-//! Configures STEPCAFControl_Reader with specified parameters and optional document setup.
-//! @param[in,out] theReader STEP CAF reader to configure
-//! @param[in] theParams Parameters containing read settings
-//! @param[in] theWS Work session to initialize reader with (optional, if provided reader will
-//! be initialized)
-//! @param[in] theDocument Target document for length unit setup (optional)
-//! @param[in] theLengthUnit Length unit for document setup (used only if theDocument is provided)
-//! @param[in] theShapeFixParams Shape fix parameters (optional, uses default if not provided)
-//! @note Sets up colors, names, layers, properties, metadata, and shape fix parameters
-void configureSTEPCAFReader(STEPCAFControl_Reader&               theReader,
-                            const DESTEP_Parameters&             theParams,
-                            occ::handle<XSControl_WorkSession>&  theWS,
-                            const occ::handle<TDocStd_Document>& theDocument,
-                            double                               theLengthUnit,
-                            const DE_ShapeFixParameters&         theShapeFixParams)
-{
-  theReader.Init(theWS);
-
-  theReader.SetColorMode(theParams.ReadColor);
-  theReader.SetNameMode(theParams.ReadName);
-  theReader.SetLayerMode(theParams.ReadLayer);
-  theReader.SetPropsMode(theParams.ReadProps);
-  theReader.SetMetaMode(theParams.ReadMetadata);
-  theReader.SetProductMetaMode(theParams.ReadProductMetadata);
-
-  theReader.SetShapeFixParameters(theShapeFixParams);
-
-  XCAFDoc_DocumentTool::SetLengthUnit(theDocument,
-                                      theLengthUnit,
-                                      UnitsMethods_LengthUnit_Millimeter);
-}
-
-//! Configures STEPCAFControl_Writer with full setup.
-//! @param[in,out] theWriter STEP CAF writer to configure
-//! @param[in] theParams Parameters containing write settings
-//! @param[in,out] theWS Work session to initialize writer with
-//! @param[in] theDocument Source document for length unit extraction
-//! @param[in] theLengthUnit Length unit for document setup
-//! @param[in] theShapeFixParams Shape fix parameters
-//! @note Sets up all write parameters including colors, names, layers, props, materials
-void configureSTEPCAFWriter(STEPCAFControl_Writer&               theWriter,
-                            const DESTEP_Parameters&             theParams,
-                            occ::handle<XSControl_WorkSession>&  theWS,
-                            const occ::handle<TDocStd_Document>& theDocument,
-                            double                               theLengthUnit,
-                            const DE_ShapeFixParameters&         theShapeFixParams)
-{
-  theWriter.Init(theWS);
-
-  theWriter.SetColorMode(theParams.WriteColor);
-  theWriter.SetNameMode(theParams.WriteName);
-  theWriter.SetLayerMode(theParams.WriteLayer);
-  theWriter.SetPropsMode(theParams.WriteProps);
-  theWriter.SetMaterialMode(theParams.WriteMaterial);
-  theWriter.SetVisualMaterialMode(theParams.WriteVisMaterial);
-  theWriter.SetCleanDuplicates(theParams.CleanDuplicates);
-
-  theWriter.SetShapeFixParameters(theShapeFixParams);
-
-  occ::handle<StepData_StepModel> aModel =
-    occ::down_cast<StepData_StepModel>(theWriter.Writer().WS()->Model());
-
-  double aScaleFactorMM = 1.;
-  if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
-                                          aScaleFactorMM,
-                                          UnitsMethods_LengthUnit_Millimeter))
+  //! Helper function to validate configuration node
+  bool validateNode(const occ::handle<DE_ConfigurationNode>& theNode,
+                    const TCollection_AsciiString&           theContext)
   {
-    aModel->SetLocalLengthUnit(aScaleFactorMM);
-  }
-  else
-  {
-    aModel->SetLocalLengthUnit(theLengthUnit);
-    Message::SendWarning()
-      << "Warning in the DESTEP_Provider during writing"
-      << "\t: The document has no information on Units. Using global parameter as initial Unit.";
-  }
-}
-
-//! Checks if output stream is in writable state.
-//! @param[in] theStream Output stream to check
-//! @param[in] theKey Stream identifier for error reporting
-//! @return true if stream is writable, false otherwise
-bool checkStreamWritability(Standard_OStream& theStream, const TCollection_AsciiString& theKey)
-{
-  if (!theStream.good())
-  {
-    TCollection_AsciiString aKeyInfo = theKey.IsEmpty() ? "<empty key>" : theKey;
-    Message::SendFail() << "Error: Output stream '" << aKeyInfo
-                        << "' is not in good state for writing";
-    return false;
+    return DE_ValidationUtils::ValidateConfigurationNode(theNode,
+                                                         STANDARD_TYPE(DESTEP_ConfigurationNode),
+                                                         theContext);
   }
 
-  return true;
-}
+  //! Configures STEPCAFControl_Reader with specified parameters and optional document setup.
+  //! @param[in,out] theReader STEP CAF reader to configure
+  //! @param[in] theParams Parameters containing read settings
+  //! @param[in] theWS Work session to initialize reader with (optional, if provided reader will
+  //! be initialized)
+  //! @param[in] theDocument Target document for length unit setup (optional)
+  //! @param[in] theLengthUnit Length unit for document setup (used only if theDocument is provided)
+  //! @param[in] theShapeFixParams Shape fix parameters (optional, uses default if not provided)
+  //! @note Sets up colors, names, layers, properties, metadata, and shape fix parameters
+  void configureSTEPCAFReader(STEPCAFControl_Reader&               theReader,
+                              const DESTEP_Parameters&             theParams,
+                              occ::handle<XSControl_WorkSession>&  theWS,
+                              const occ::handle<TDocStd_Document>& theDocument,
+                              double                               theLengthUnit,
+                              const DE_ShapeFixParameters&         theShapeFixParams)
+  {
+    theReader.Init(theWS);
+
+    theReader.SetColorMode(theParams.ReadColor);
+    theReader.SetNameMode(theParams.ReadName);
+    theReader.SetLayerMode(theParams.ReadLayer);
+    theReader.SetPropsMode(theParams.ReadProps);
+    theReader.SetMetaMode(theParams.ReadMetadata);
+    theReader.SetProductMetaMode(theParams.ReadProductMetadata);
+
+    theReader.SetShapeFixParameters(theShapeFixParams);
+
+    XCAFDoc_DocumentTool::SetLengthUnit(theDocument,
+                                        theLengthUnit,
+                                        UnitsMethods_LengthUnit_Millimeter);
+  }
+
+  //! Configures STEPCAFControl_Writer with full setup.
+  //! @param[in,out] theWriter STEP CAF writer to configure
+  //! @param[in] theParams Parameters containing write settings
+  //! @param[in,out] theWS Work session to initialize writer with
+  //! @param[in] theDocument Source document for length unit extraction
+  //! @param[in] theLengthUnit Length unit for document setup
+  //! @param[in] theShapeFixParams Shape fix parameters
+  //! @note Sets up all write parameters including colors, names, layers, props, materials
+  void configureSTEPCAFWriter(STEPCAFControl_Writer&               theWriter,
+                              const DESTEP_Parameters&             theParams,
+                              occ::handle<XSControl_WorkSession>&  theWS,
+                              const occ::handle<TDocStd_Document>& theDocument,
+                              double                               theLengthUnit,
+                              const DE_ShapeFixParameters&         theShapeFixParams)
+  {
+    theWriter.Init(theWS);
+
+    theWriter.SetColorMode(theParams.WriteColor);
+    theWriter.SetNameMode(theParams.WriteName);
+    theWriter.SetLayerMode(theParams.WriteLayer);
+    theWriter.SetPropsMode(theParams.WriteProps);
+    theWriter.SetMaterialMode(theParams.WriteMaterial);
+    theWriter.SetVisualMaterialMode(theParams.WriteVisMaterial);
+    theWriter.SetCleanDuplicates(theParams.CleanDuplicates);
+
+    theWriter.SetShapeFixParameters(theShapeFixParams);
+
+    occ::handle<StepData_StepModel> aModel =
+      occ::down_cast<StepData_StepModel>(theWriter.Writer().WS()->Model());
+
+    double aScaleFactorMM = 1.;
+    if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument,
+                                            aScaleFactorMM,
+                                            UnitsMethods_LengthUnit_Millimeter))
+    {
+      aModel->SetLocalLengthUnit(aScaleFactorMM);
+    }
+    else
+    {
+      aModel->SetLocalLengthUnit(theLengthUnit);
+      Message::SendWarning()
+        << "Warning in the DESTEP_Provider during writing"
+        << "\t: The document has no information on Units. Using global parameter as initial Unit.";
+    }
+  }
+
+  //! Checks if output stream is in writable state.
+  //! @param[in] theStream Output stream to check
+  //! @param[in] theKey Stream identifier for error reporting
+  //! @return true if stream is writable, false otherwise
+  bool checkStreamWritability(Standard_OStream& theStream, const TCollection_AsciiString& theKey)
+  {
+    if (!theStream.good())
+    {
+      TCollection_AsciiString aKeyInfo = theKey.IsEmpty() ? "<empty key>" : theKey;
+      Message::SendFail() << "Error: Output stream '" << aKeyInfo
+                          << "' is not in good state for writing";
+      return false;
+    }
+
+    return true;
+  }
 
 } // namespace
 
@@ -240,16 +240,19 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
   IFSelect_ReturnStatus aStatus = aWriter.Write(thePath.ToCString());
   switch (aStatus)
   {
-    case IFSelect_RetVoid: {
+    case IFSelect_RetVoid:
+    {
       Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
                           << "\t: No file written";
       return false;
       ;
     }
-    case IFSelect_RetDone: {
+    case IFSelect_RetDone:
+    {
       break;
     }
-    default: {
+    default:
+    {
       Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
                           << "\t: Error on writing file";
       return false;

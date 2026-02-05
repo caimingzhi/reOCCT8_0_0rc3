@@ -707,22 +707,26 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
     gp_Pnt aPLoc;
     switch (aCT)
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_Circle:
+      {
         aDir  = myCurve.Circle().Axis().Direction();
         aPLoc = myCurve.Circle().Location();
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_Ellipse:
+      {
         aDir  = myCurve.Ellipse().Axis().Direction();
         aPLoc = myCurve.Ellipse().Location();
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_Hyperbola:
+      {
         aDir  = myCurve.Hyperbola().Axis().Direction();
         aPLoc = myCurve.Hyperbola().Location();
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_Parabola:
+      {
         aDir  = myCurve.Parabola().Axis().Direction();
         aPLoc = myCurve.Parabola().Location();
         break;

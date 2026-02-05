@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedStructuredItem.hpp>
@@ -62,4 +61,3 @@ private:
   occ::handle<NCollection_HArray1<int>>   myLineStrip;
   bool                                    myHasGeometricLink; //!< flag "is GeometricLink defined"
 };
-

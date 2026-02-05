@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESDimen_GeneralNote.hpp>
@@ -82,4 +81,3 @@ private:
   occ::handle<IGESBasic_HArray1OfHArray1OfXYZ>                         theTransParam;
   occ::handle<IGESBasic_HArray1OfHArray1OfXYZ>                         theRotParam;
 };
-

@@ -24,62 +24,62 @@
 
 namespace
 {
-//! Return merged style for the child node.
-static XCAFPrs_Style mergedStyle(const occ::handle<XCAFDoc_ColorTool>&       theColorTool,
-                                 const occ::handle<XCAFDoc_VisMaterialTool>& theVisMatTool,
-                                 const XCAFPrs_Style&                        theParenStyle,
-                                 const TDF_Label&                            theLabel,
-                                 const TDF_Label&                            theRefLabel)
-{
-  if (theColorTool.IsNull())
+  //! Return merged style for the child node.
+  static XCAFPrs_Style mergedStyle(const occ::handle<XCAFDoc_ColorTool>&       theColorTool,
+                                   const occ::handle<XCAFDoc_VisMaterialTool>& theVisMatTool,
+                                   const XCAFPrs_Style&                        theParenStyle,
+                                   const TDF_Label&                            theLabel,
+                                   const TDF_Label&                            theRefLabel)
   {
-    return theParenStyle;
-  }
+    if (theColorTool.IsNull())
+    {
+      return theParenStyle;
+    }
 
-  XCAFPrs_Style aStyle = theParenStyle;
-  if (occ::handle<XCAFDoc_VisMaterial> aVisMat = theVisMatTool->GetShapeMaterial(theRefLabel))
-  {
-    aStyle.SetMaterial(aVisMat);
-  }
-  Quantity_ColorRGBA aColor;
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorGen, aColor))
-  {
-    aStyle.SetColorCurv(aColor.GetRGB());
-    aStyle.SetColorSurf(aColor);
-  }
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorSurf, aColor))
-  {
-    aStyle.SetColorSurf(aColor);
-  }
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorCurv, aColor))
-  {
-    aStyle.SetColorCurv(aColor.GetRGB());
-  }
-
-  if (theLabel != theRefLabel)
-  {
-    // override Reference style with Instance style when defined (bad model?)
-    if (occ::handle<XCAFDoc_VisMaterial> aVisMat = theVisMatTool->GetShapeMaterial(theLabel))
+    XCAFPrs_Style aStyle = theParenStyle;
+    if (occ::handle<XCAFDoc_VisMaterial> aVisMat = theVisMatTool->GetShapeMaterial(theRefLabel))
     {
       aStyle.SetMaterial(aVisMat);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorGen, aColor))
+    Quantity_ColorRGBA aColor;
+    if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorGen, aColor))
     {
       aStyle.SetColorCurv(aColor.GetRGB());
       aStyle.SetColorSurf(aColor);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorSurf, aColor))
+    if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorSurf, aColor))
     {
       aStyle.SetColorSurf(aColor);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorCurv, aColor))
+    if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorCurv, aColor))
     {
       aStyle.SetColorCurv(aColor.GetRGB());
     }
-  }
 
-  return aStyle;
-}
+    if (theLabel != theRefLabel)
+    {
+      // override Reference style with Instance style when defined (bad model?)
+      if (occ::handle<XCAFDoc_VisMaterial> aVisMat = theVisMatTool->GetShapeMaterial(theLabel))
+      {
+        aStyle.SetMaterial(aVisMat);
+      }
+      if (theColorTool->GetColor(theLabel, XCAFDoc_ColorGen, aColor))
+      {
+        aStyle.SetColorCurv(aColor.GetRGB());
+        aStyle.SetColorSurf(aColor);
+      }
+      if (theColorTool->GetColor(theLabel, XCAFDoc_ColorSurf, aColor))
+      {
+        aStyle.SetColorSurf(aColor);
+      }
+      if (theColorTool->GetColor(theLabel, XCAFDoc_ColorCurv, aColor))
+      {
+        aStyle.SetColorCurv(aColor.GetRGB());
+      }
+    }
+
+    return aStyle;
+  }
 } // namespace
 
 //=================================================================================================

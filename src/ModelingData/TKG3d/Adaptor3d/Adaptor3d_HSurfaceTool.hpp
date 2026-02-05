@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Adaptor3d_Curve.hpp>
 #include <Geom_BezierSurface.hpp>
@@ -275,4 +274,3 @@ public:
                                         const double v1,
                                         const double v2);
 };
-

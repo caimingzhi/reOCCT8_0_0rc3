@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Assert.hpp>
 #include <iterator>
 
@@ -231,4 +230,3 @@ private:
   size_t          myIndex;
   BaseIndexedMap* myIndexedMap;
 };
-

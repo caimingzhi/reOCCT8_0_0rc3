@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Extrema_GenLocateExtPC.hpp>
 #include <Extrema_POnCurv2d.hpp>
@@ -15,4 +14,3 @@ using Geom2dInt_TheLocateExtPCOfTheProjPCurOfGInter =
                          Extrema_POnCurv2d,
                          gp_Pnt2d,
                          Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter>;
-

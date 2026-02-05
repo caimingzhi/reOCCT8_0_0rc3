@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
 //! Contains segments array definition.
@@ -54,4 +53,3 @@ public:
   {
   }
 };
-

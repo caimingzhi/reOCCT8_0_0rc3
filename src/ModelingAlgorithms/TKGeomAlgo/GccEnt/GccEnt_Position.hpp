@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Qualifies the position of a solution of a construction
 //! algorithm with respect to one of its arguments. This is one of the following:
 //! -   GccEnt_unqualified: the position of the solution
@@ -23,4 +22,3 @@ enum GccEnt_Position
   GccEnt_outside,
   GccEnt_noqualifier
 };
-

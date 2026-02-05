@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP203_DateTimeItem.hpp>
@@ -36,4 +35,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP203_DateTimeItem>> theItems;
 };
-

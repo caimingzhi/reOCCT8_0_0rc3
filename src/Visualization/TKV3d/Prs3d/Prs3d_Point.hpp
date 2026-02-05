@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPoints.hpp>
 #include <Graphic3d_Group.hpp>
 #include <Prs3d_Drawer.hpp>
@@ -46,4 +45,3 @@ public:
            <= theDistance;
   }
 };
-

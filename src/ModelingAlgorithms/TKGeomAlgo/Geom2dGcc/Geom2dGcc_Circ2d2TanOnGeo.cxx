@@ -1,29 +1,3 @@
-// Created on: 1991-12-13
-// Created by: Remi GILET
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//=========================================================================
-//   Creation d un cercle tangent a deux elements : Droite.               +
-//                                                  Cercle.               +
-//                                                  Point.                +
-//                                                  Courbes.              +
-//                        centre sur un troisieme : Droite.               +
-//                                                  Cercle.               +
-//                                                  Courbes.              +
-//=========================================================================
-
 #include <Adaptor2d_OffsetCurve.hpp>
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dBisec.hpp>
@@ -113,7 +87,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
       GccInt_IType              type = Sol->ArcType();
       switch (type)
       {
-        case GccInt_Cir: {
+        case GccInt_Cir:
+        {
           gp_Circ2d       Circ(Sol->Circle());
           IntRes2d_Domain D1(ElCLib::Value(0., Circ),
                              0.,
@@ -125,7 +100,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Circ, D1, Cu2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Ell: {
+        case GccInt_Ell:
+        {
           gp_Elips2d      Elips(Sol->Ellipse());
           IntRes2d_Domain D1(ElCLib::Value(0., Elips),
                              0.,
@@ -137,7 +113,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Elips, D1, Cu2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Hpr: {
+        case GccInt_Hpr:
+        {
           gp_Hypr2d       Hypr(Sol->Hyperbola());
           IntRes2d_Domain D1(ElCLib::Value(-4., Hypr),
                              -4.,
@@ -148,13 +125,15 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Hypr, D1, Cu2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Lin: {
+        case GccInt_Lin:
+        {
           gp_Lin2d        Line(Sol->Line());
           IntRes2d_Domain D1;
           Intp.Perform(Line, D1, Cu2, D2, Tol1, Tol2);
         }
         break;
-        default: {
+        default:
+        {
           throw Standard_ConstructionError();
         }
       }
@@ -381,13 +360,15 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
       GccInt_IType              type = Sol->ArcType();
       switch (type)
       {
-        case GccInt_Lin: {
+        case GccInt_Lin:
+        {
           gp_Lin2d        Line(Sol->Line());
           IntRes2d_Domain D1;
           Intp.Perform(Line, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Par: {
+        case GccInt_Par:
+        {
           gp_Parab2d      Parab(Sol->Parabola());
           IntRes2d_Domain D1(ElCLib::Value(-40, Parab),
                              -40,
@@ -398,7 +379,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Parab, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        default: {
+        default:
+        {
           throw Standard_ConstructionError();
         }
       }
@@ -770,7 +752,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
       GccInt_IType              type = Sol->ArcType();
       switch (type)
       {
-        case GccInt_Cir: {
+        case GccInt_Cir:
+        {
           gp_Circ2d       Circ(Sol->Circle());
           IntRes2d_Domain D1(ElCLib::Value(0., Circ),
                              0.,
@@ -782,13 +765,15 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Circ, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Lin: {
+        case GccInt_Lin:
+        {
           gp_Lin2d        Line(Sol->Line());
           IntRes2d_Domain D1;
           Intp.Perform(Line, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Ell: {
+        case GccInt_Ell:
+        {
           gp_Elips2d      Elips(Sol->Ellipse());
           IntRes2d_Domain D1(ElCLib::Value(0., Elips),
                              0.,
@@ -800,7 +785,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Elips, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        case GccInt_Hpr: {
+        case GccInt_Hpr:
+        {
           gp_Hypr2d       Hypr(Sol->Hyperbola());
           IntRes2d_Domain D1(ElCLib::Value(-4., Hypr),
                              -4.,
@@ -811,7 +797,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           Intp.Perform(Hypr, D1, C2, D2, Tol1, Tol2);
         }
         break;
-        default: {
+        default:
+        {
           throw Standard_ConstructionError();
         }
       }
@@ -961,13 +948,15 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
     GccInt_IType              type = Sol->ArcType();
     switch (type)
     {
-      case GccInt_Lin: {
+      case GccInt_Lin:
+      {
         gp_Lin2d        Line(Sol->Line());
         IntRes2d_Domain D1;
         Intp.Perform(Line, D1, C2, D2, Tol1, Tol2);
       }
       break;
-      case GccInt_Par: {
+      case GccInt_Par:
+      {
         gp_Parab2d      Parab(Sol->Parabola());
         IntRes2d_Domain D1(ElCLib::Value(-40, Parab),
                            -40,
@@ -978,7 +967,8 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
         Intp.Perform(Parab, D1, C2, D2, Tol1, Tol2);
       }
       break;
-      default: {
+      default:
+      {
         throw Standard_ConstructionError();
       }
     }

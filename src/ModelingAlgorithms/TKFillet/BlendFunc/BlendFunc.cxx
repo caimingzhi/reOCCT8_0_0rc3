@@ -1,23 +1,3 @@
-// Created on: 1995-10-04
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// 09/09/1996 PMN Ajout des methodes GetCircle et GetTolerance.
-// 30/12/1996 PMN Ajout de GetMinimalWeight
-// 23/09/1997 PMN Supprimme GetCircle et GetTol (passe dans GeomFill)
-
 #include <BlendFunc.hpp>
 
 #include <Adaptor3d_Surface.hpp>
@@ -46,7 +26,8 @@ void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
 {
   switch (SShape)
   {
-    case BlendFunc_Rational: {
+    case BlendFunc_Rational:
+    {
       int NbSpan = (int)(std::ceil(3. * std::abs(MaxAng) / 2. / M_PI));
       NbPoles    = 2 * NbSpan + 1;
       NbKnots    = NbSpan + 1;
@@ -64,21 +45,24 @@ void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
       }
     }
     break;
-    case BlendFunc_QuasiAngular: {
+    case BlendFunc_QuasiAngular:
+    {
       NbPoles = 7;
       NbKnots = 2;
       Degree  = 6;
       TConv   = Convert_QuasiAngular;
     }
     break;
-    case BlendFunc_Polynomial: {
+    case BlendFunc_Polynomial:
+    {
       NbPoles = 8;
       NbKnots = 2;
       Degree  = 7;
       TConv   = Convert_Polynomial;
     }
     break;
-    case BlendFunc_Linear: {
+    case BlendFunc_Linear:
+    {
       NbPoles = 2;
       NbKnots = 2;
       Degree  = 1;
@@ -103,12 +87,14 @@ void BlendFunc::GetMinimalWeights(const BlendFunc_SectionShape       SShape,
   switch (SShape)
   {
     case BlendFunc_Polynomial:
-    case BlendFunc_Linear: {
+    case BlendFunc_Linear:
+    {
       Weights.Init(1);
     }
     break;
     case BlendFunc_Rational:
-    case BlendFunc_QuasiAngular: {
+    case BlendFunc_QuasiAngular:
+    {
       gp_Ax2                         popAx2(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
       gp_Circ                        C(popAx2, 1);
       occ::handle<Geom_TrimmedCurve> Sect1 = new Geom_TrimmedCurve(new Geom_Circle(C), 0., MaxAng);

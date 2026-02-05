@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <BRepExtrema_SolutionElem.hpp>
 #include <Extrema_ExtFlag.hpp>
@@ -117,4 +116,3 @@ private:                                                         //! @name Field
   Extrema_ExtFlag myFlag;  //!< Extrema flag indicating what solutions to look for
   Extrema_ExtAlgo myAlgo;  //!< Extrema algo to be used to look for solutions
 };
-

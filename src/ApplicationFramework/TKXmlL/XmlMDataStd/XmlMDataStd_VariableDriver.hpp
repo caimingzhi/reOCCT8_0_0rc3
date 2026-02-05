@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -31,4 +30,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(XmlMDataStd_VariableDriver, XmlMDF_ADriver)
 };
-

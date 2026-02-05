@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <Standard_NoSuchObject.hpp>
@@ -14,4 +13,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(Resource_NoSuchResource, Standard_NoSuchObject)
-

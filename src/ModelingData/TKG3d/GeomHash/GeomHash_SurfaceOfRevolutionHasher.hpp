@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_SurfaceOfRevolution.hpp>
 #include <GeomHash_PointHasher.hpp>
@@ -41,4 +40,3 @@ struct GeomHash_SurfaceOfRevolutionHasher
            && aDirHasher(anAxis1.Direction(), anAxis2.Direction());
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -364,4 +363,3 @@ private:
   Interface_EntityList                  theAssocs;
   Interface_EntityList                  theProps;
 };
-

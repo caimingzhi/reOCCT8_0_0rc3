@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -62,4 +61,3 @@ protected:
   TopoDS_Edge                            myEdge;
   TopoDS_Face                            myFace;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <memory>
 #include <string>
 
@@ -28,4 +27,3 @@ protected:
 typedef OSD_StreamBuffer<std::istream>  OSD_IStreamBuffer;
 typedef OSD_StreamBuffer<std::ostream>  OSD_OStreamBuffer;
 typedef OSD_StreamBuffer<std::iostream> OSD_IOStreamBuffer;
-

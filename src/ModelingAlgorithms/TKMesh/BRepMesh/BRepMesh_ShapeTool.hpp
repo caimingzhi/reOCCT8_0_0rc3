@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <IMeshData_Types.hpp>
 #include <Poly_Triangulation.hpp>
@@ -121,4 +120,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_ShapeTool, Standard_Transient)
 };
-

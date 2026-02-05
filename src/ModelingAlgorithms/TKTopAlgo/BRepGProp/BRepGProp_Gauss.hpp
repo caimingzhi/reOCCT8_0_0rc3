@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Handle.hpp>
 #include <NCollection_Array1.hpp>
 
@@ -247,4 +246,3 @@ private:                      //! @name private fields
   BRepGProp_GaussFunc add;    //!< Pointer on the add function
   BRepGProp_GaussFunc mult;   //!< Pointer on the mult function
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 
 // Macro to overload placement new and delete operators for NCollection allocators.
@@ -24,4 +23,3 @@
       theAllocator->Free(theAddress);                                                              \
     }
 #endif
-

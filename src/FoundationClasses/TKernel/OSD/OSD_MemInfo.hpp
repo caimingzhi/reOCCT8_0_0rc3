@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 
 //! This class provide information about memory utilized by current process.
@@ -108,4 +107,3 @@ private:
   size_t myCounters[MemCounter_NB];       //!< Counters' values, in bytes
   bool   myActiveCounters[MemCounter_NB]; //!< container of active state for a counter
 };
-

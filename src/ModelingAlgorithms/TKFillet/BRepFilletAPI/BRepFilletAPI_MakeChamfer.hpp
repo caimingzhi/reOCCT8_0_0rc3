@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -279,4 +278,3 @@ private:
   ChFi3d_ChBuilder                                       myBuilder;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> myMap;
 };
-

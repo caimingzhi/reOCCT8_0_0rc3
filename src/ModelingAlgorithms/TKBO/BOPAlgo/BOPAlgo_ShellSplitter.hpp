@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -48,4 +47,3 @@ protected:
   NCollection_List<TopoDS_Shape>            myShells;
   NCollection_List<BOPTools_ConnexityBlock> myLCB;
 };
-

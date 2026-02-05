@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopOpeBRepDS_Interference.hpp>
@@ -22,4 +21,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TopOpeBRepDS_SolidSurfaceInterference, TopOpeBRepDS_Interference)
 };
-

@@ -19,107 +19,107 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-7;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-7;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-//! Parabola: f(x) = (x - 3)^2 + 1
-//! Minimum at x = 3, f(3) = 1
-class ParabolaFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Parabola: f(x) = (x - 3)^2 + 1
+  //! Minimum at x = 3, f(3) = 1
+  class ParabolaFunc
   {
-    theF = (theX - 3.0) * (theX - 3.0) + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = (theX - 3.0) * (theX - 3.0) + 1.0;
+      return true;
+    }
+  };
 
-//! Parabola with negative minimum: f(x) = x^2 - 4x + 3
-//! Minimum at x = 2, f(2) = -1
-class ParabolaFunc2
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Parabola with negative minimum: f(x) = x^2 - 4x + 3
+  //! Minimum at x = 2, f(2) = -1
+  class ParabolaFunc2
   {
-    theF = theX * theX - 4.0 * theX + 3.0;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX - 4.0 * theX + 3.0;
+      return true;
+    }
+  };
 
-//! Cosine function: f(x) = cos(x)
-//! Local minimum at x = PI
-class CosFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Cosine function: f(x) = cos(x)
+  //! Local minimum at x = PI
+  class CosFunc
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-//! Quartic: f(x) = x^4 - 2x^2
-//! Local minima at x = -1 and x = 1
-class QuarticFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Quartic: f(x) = x^4 - 2x^2
+  //! Local minima at x = -1 and x = 1
+  class QuarticFunc
   {
-    const double aX2 = theX * theX;
-    theF             = aX2 * aX2 - 2.0 * aX2;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      const double aX2 = theX * theX;
+      theF             = aX2 * aX2 - 2.0 * aX2;
+      return true;
+    }
+  };
 
-//! Exponential: f(x) = e^x + e^(-x)
-//! Minimum at x = 0, f(0) = 2
-class CoshLikeFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Exponential: f(x) = e^x + e^(-x)
+  //! Minimum at x = 0, f(0) = 2
+  class CoshLikeFunc
   {
-    theF = std::exp(theX) + std::exp(-theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX) + std::exp(-theX);
+      return true;
+    }
+  };
 
-//! Rosenbrock-like 1D: f(x) = (1 - x)^2 + 100*(x^2 - x)^2
-//! Minimum at x = 1
-class Rosenbrock1DFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Rosenbrock-like 1D: f(x) = (1 - x)^2 + 100*(x^2 - x)^2
+  //! Minimum at x = 1
+  class Rosenbrock1DFunc
   {
-    const double a = 1.0 - theX;
-    const double b = theX * theX - theX;
-    theF           = a * a + 100.0 * b * b;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      const double a = 1.0 - theX;
+      const double b = theX * theX - theX;
+      theF           = a * a + 100.0 * b * b;
+      return true;
+    }
+  };
 
-//! Absolute value shifted: f(x) = |x - 2| + 1
-//! Minimum at x = 2, f(2) = 1 (non-smooth)
-class AbsShiftedFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Absolute value shifted: f(x) = |x - 2| + 1
+  //! Minimum at x = 2, f(2) = 1 (non-smooth)
+  class AbsShiftedFunc
   {
-    theF = std::abs(theX - 2.0) + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::abs(theX - 2.0) + 1.0;
+      return true;
+    }
+  };
 
-//! Sinusoidal with noise: f(x) = sin(x) + 0.5*sin(3x)
-//! Multiple local minima
-class SinWithHarmonicFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Sinusoidal with noise: f(x) = sin(x) + 0.5*sin(3x)
+  //! Multiple local minima
+  class SinWithHarmonicFunc
   {
-    theF = std::sin(theX) + 0.5 * std::sin(3.0 * theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(theX) + 0.5 * std::sin(3.0 * theX);
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

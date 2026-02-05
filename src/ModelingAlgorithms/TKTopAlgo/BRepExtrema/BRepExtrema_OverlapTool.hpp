@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepExtrema_TriangleSet.hpp>
 #include <BRepExtrema_ElementFilter.hpp>
 #include <NCollection_DataMap.hpp>
@@ -111,4 +110,3 @@ private:
 
   double myTolerance;
 };
-

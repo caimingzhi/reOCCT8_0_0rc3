@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -105,4 +104,3 @@ private:
   NCollection_Sequence<int>                               theinditem;
   NCollection_Sequence<int>                               theindfin;
 };
-

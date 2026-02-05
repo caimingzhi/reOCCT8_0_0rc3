@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_HVertex.hpp>
 #include <BRepAdaptor_Curve2d.hpp>
 #include <Standard.hpp>
@@ -38,6 +37,7 @@ private:
   TopoDS_Vertex                    myVtx;
   occ::handle<BRepAdaptor_Curve2d> myCurve;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -61,5 +61,3 @@ inline TopoDS_Vertex& BRepTopAdaptor_HVertex::ChangeVertex()
 {
   return myVtx;
 }
-
-

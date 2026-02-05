@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressScope.hpp>
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -23,7 +22,7 @@
 // commercial license or contractual agreement.
 
 #ifndef _RWGltf_DracoParameters_HeaderFile
-#define _RWGltf_DracoParameters_HeaderFile
+  #define _RWGltf_DracoParameters_HeaderFile
 
 //! Draco compression parameters
 struct RWGltf_DracoParameters
@@ -70,7 +69,6 @@ struct RWGltf_DracoParameters
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <NCollection_List.hpp>
 #include <NCollection_Shared.hpp>
 #include <RWGltf_GltfAccessor.hpp>
@@ -96,7 +94,6 @@ public:
   {
   }
 };
-
 
 #include <RWGltf_WriterTrsfFormat.hpp>
 #include <RWMesh_CoordinateSystemConverter.hpp>
@@ -614,4 +611,3 @@ protected:
                                             // clang-format on
   RWGltf_DracoParameters myDracoParameters; //!< Draco parameters
 };
-

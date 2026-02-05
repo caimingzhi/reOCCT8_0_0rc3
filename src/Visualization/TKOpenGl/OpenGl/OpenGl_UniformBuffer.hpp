@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Buffer.hpp>
 
 //! Uniform buffer object.
@@ -18,4 +17,3 @@ public:
   using OpenGl_Buffer::BindBufferRange;
   using OpenGl_Buffer::UnbindBufferBase;
 };
-

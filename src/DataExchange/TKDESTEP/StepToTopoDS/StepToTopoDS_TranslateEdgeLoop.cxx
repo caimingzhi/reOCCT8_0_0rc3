@@ -1,27 +1,3 @@
-// Created on: 1995-03-29
-// Created by: Frederic MAUPAS
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// gka 21.08.98 PRO7656
-// gka 15.12.98 UKI60591 #1274560
-// pdn 18.12.98 to keep pcurves
-//: o0 abv 16.02.99: POLYLINE allowed as 3d curve of edge
-//:    abv 07.04.99: S4136: improve tolerance management and dealing with pcurves
-//    rln 02.06.99 removing #include <StepToTopoDS_DegeneratedTool.hxx>
-//    smh 31.01.01 BUC60810 : IsNull protection
-
 #include <BRep_Builder.hpp>
 #include <BRep_TEdge.hpp>
 #include <BRep_Tool.hpp>

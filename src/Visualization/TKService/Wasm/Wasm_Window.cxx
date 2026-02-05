@@ -1,17 +1,3 @@
-// Created by: Kirill Gavrilov
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Wasm_Window.hpp>
 
 #include <Aspect_ScrollDelta.hpp>
@@ -189,30 +175,36 @@ bool Wasm_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
     case EMSCRIPTEN_EVENT_CLICK:
     case EMSCRIPTEN_EVENT_DBLCLICK:
     case EMSCRIPTEN_EVENT_MOUSEENTER:
-    case EMSCRIPTEN_EVENT_MOUSELEAVE: {
+    case EMSCRIPTEN_EVENT_MOUSELEAVE:
+    {
       return ProcessMouseEvent(theListener, theEventType, (const EmscriptenMouseEvent*)theEvent);
     }
     case EMSCRIPTEN_EVENT_TOUCHSTART:
     case EMSCRIPTEN_EVENT_TOUCHMOVE:
     case EMSCRIPTEN_EVENT_TOUCHEND:
-    case EMSCRIPTEN_EVENT_TOUCHCANCEL: {
+    case EMSCRIPTEN_EVENT_TOUCHCANCEL:
+    {
       return ProcessTouchEvent(theListener, theEventType, (const EmscriptenTouchEvent*)theEvent);
     }
-    case EMSCRIPTEN_EVENT_WHEEL: {
+    case EMSCRIPTEN_EVENT_WHEEL:
+    {
       return ProcessWheelEvent(theListener, theEventType, (const EmscriptenWheelEvent*)theEvent);
     }
     case EMSCRIPTEN_EVENT_KEYDOWN:
     case EMSCRIPTEN_EVENT_KEYUP:
-    case EMSCRIPTEN_EVENT_KEYPRESS: {
+    case EMSCRIPTEN_EVENT_KEYPRESS:
+    {
       return ProcessKeyEvent(theListener, theEventType, (const EmscriptenKeyboardEvent*)theEvent);
     }
     case EMSCRIPTEN_EVENT_RESIZE:
-    case EMSCRIPTEN_EVENT_CANVASRESIZED: {
+    case EMSCRIPTEN_EVENT_CANVASRESIZED:
+    {
       return ProcessUiEvent(theListener, theEventType, (const EmscriptenUiEvent*)theEvent);
     }
     case EMSCRIPTEN_EVENT_FOCUS:
     case EMSCRIPTEN_EVENT_FOCUSIN:
-    case EMSCRIPTEN_EVENT_FOCUSOUT: {
+    case EMSCRIPTEN_EVENT_FOCUSOUT:
+    {
       return ProcessFocusEvent(theListener, theEventType, (const EmscriptenFocusEvent*)theEvent);
     }
   }
@@ -263,7 +255,8 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
   }
   switch (theEventType)
   {
-    case EMSCRIPTEN_EVENT_MOUSEMOVE: {
+    case EMSCRIPTEN_EVENT_MOUSEMOVE:
+    {
       if ((aNewPos2i.x() < 0 || aNewPos2i.x() > mySize.x() || aNewPos2i.y() < 0
            || aNewPos2i.y() > mySize.y())
           && aButtonsOld == Aspect_VKeyMouse_NONE)
@@ -277,7 +270,8 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
       break;
     }
     case EMSCRIPTEN_EVENT_MOUSEDOWN:
-    case EMSCRIPTEN_EVENT_MOUSEUP: {
+    case EMSCRIPTEN_EVENT_MOUSEUP:
+    {
       if (theEventType == EMSCRIPTEN_EVENT_MOUSEDOWN)
       {
         if (aNewPos2i.x() < 0 || aNewPos2i.x() > mySize.x() || aNewPos2i.y() < 0
@@ -293,7 +287,8 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
       break;
     }
     case EMSCRIPTEN_EVENT_CLICK:
-    case EMSCRIPTEN_EVENT_DBLCLICK: {
+    case EMSCRIPTEN_EVENT_DBLCLICK:
+    {
       if (aNewPos2i.x() < 0 || aNewPos2i.x() > mySize.x() || aNewPos2i.y() < 0
           || aNewPos2i.y() > mySize.y())
       {
@@ -301,10 +296,12 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
       }
       break;
     }
-    case EMSCRIPTEN_EVENT_MOUSEENTER: {
+    case EMSCRIPTEN_EVENT_MOUSEENTER:
+    {
       break;
     }
-    case EMSCRIPTEN_EVENT_MOUSELEAVE: {
+    case EMSCRIPTEN_EVENT_MOUSELEAVE:
+    {
       // there is no SetCapture() support, so that mouse unclick events outside canvas will not
       // arrive, so we have to forget current state...
       if (theListener.UpdateMouseButtons(aNewPos2i, Aspect_VKeyMouse_NONE, aFlags, isEmulated))
@@ -348,15 +345,18 @@ bool Wasm_Window::ProcessWheelEvent(Aspect_WindowInputListener& theListener,
   double aDelta = 0.0;
   switch (theEvent->deltaMode)
   {
-    case DOM_DELTA_PIXEL: {
+    case DOM_DELTA_PIXEL:
+    {
       aDelta = theEvent->deltaY / (5.0 * DevicePixelRatio());
       break;
     }
-    case DOM_DELTA_LINE: {
+    case DOM_DELTA_LINE:
+    {
       aDelta = theEvent->deltaY * 8.0;
       break;
     }
-    case DOM_DELTA_PAGE: {
+    case DOM_DELTA_PAGE:
+    {
       aDelta = theEvent->deltaY >= 0.0 ? 24.0 : -24.0;
       break;
     }
@@ -406,7 +406,8 @@ bool Wasm_Window::ProcessTouchEvent(Aspect_WindowInputListener& theListener,
       NCollection_Vec2<int>(aNewPos2d + NCollection_Vec2<double>(0.5));
     switch (theEventType)
     {
-      case EMSCRIPTEN_EVENT_TOUCHSTART: {
+      case EMSCRIPTEN_EVENT_TOUCHSTART:
+      {
         if (aNewPos2i.x() >= 0 && aNewPos2i.x() < mySize.x() && aNewPos2i.y() >= 0
             && aNewPos2i.y() < mySize.y())
         {
@@ -415,7 +416,8 @@ bool Wasm_Window::ProcessTouchEvent(Aspect_WindowInputListener& theListener,
         }
         break;
       }
-      case EMSCRIPTEN_EVENT_TOUCHMOVE: {
+      case EMSCRIPTEN_EVENT_TOUCHMOVE:
+      {
         const int anOldIndex = theListener.TouchPoints().FindIndex(aTouchId);
         if (anOldIndex != 0)
         {
@@ -425,7 +427,8 @@ bool Wasm_Window::ProcessTouchEvent(Aspect_WindowInputListener& theListener,
         break;
       }
       case EMSCRIPTEN_EVENT_TOUCHEND:
-      case EMSCRIPTEN_EVENT_TOUCHCANCEL: {
+      case EMSCRIPTEN_EVENT_TOUCHCANCEL:
+      {
         if (theListener.RemoveTouchPoint(aTouchId))
         {
           hasUpdates = true;
@@ -467,7 +470,8 @@ bool Wasm_Window::ProcessKeyEvent(Aspect_WindowInputListener&    theListener,
 
   switch (theEventType)
   {
-    case EMSCRIPTEN_EVENT_KEYDOWN: {
+    case EMSCRIPTEN_EVENT_KEYDOWN:
+    {
       if (theEvent->repeat == EM_TRUE)
       {
         return false;
@@ -477,7 +481,8 @@ bool Wasm_Window::ProcessKeyEvent(Aspect_WindowInputListener&    theListener,
       theListener.ProcessInput();
       return false;
     }
-    case EMSCRIPTEN_EVENT_KEYUP: {
+    case EMSCRIPTEN_EVENT_KEYUP:
+    {
       theListener.KeyUp(aVKey, aTimeStamp);
       theListener.ProcessInput();
       return false;

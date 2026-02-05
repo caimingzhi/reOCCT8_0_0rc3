@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOMBasicString.hpp>
 
 class LDOM_MemManager;
@@ -83,4 +82,3 @@ private:
   // ---------- PRIVATE FIELDS -------------
   const LDOM_MemManager* myPtrDoc;
 };
-

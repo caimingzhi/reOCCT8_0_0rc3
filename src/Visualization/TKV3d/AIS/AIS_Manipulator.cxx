@@ -1,18 +1,3 @@
-// Created on: 2015-12-23
-// Created by: Anastasia BORISOVA
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Manipulator.hpp>
 
 #include <AIS_DisplayMode.hpp>
@@ -46,87 +31,87 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_Manipulator, AIS_InteractiveObject)
 
 namespace
 {
-//! Return Ax1 for specified direction of Ax2.
-static gp_Ax1 getAx1FromAx2Dir(const gp_Ax2& theAx2, int theIndex)
-{
-  switch (theIndex)
+  //! Return Ax1 for specified direction of Ax2.
+  static gp_Ax1 getAx1FromAx2Dir(const gp_Ax2& theAx2, int theIndex)
   {
-    case 0:
-      return gp_Ax1(theAx2.Location(), theAx2.XDirection());
-    case 1:
-      return gp_Ax1(theAx2.Location(), theAx2.YDirection());
-    case 2:
-      return theAx2.Axis();
-  }
-  throw Standard_ProgramError("AIS_Manipulator - Invalid axis index");
-}
-
-//! Auxiliary tool for filtering picking ray.
-class ManipSensRotation
-{
-public:
-  //! Main constructor.
-  ManipSensRotation(const gp_Dir& thePlaneNormal)
-      : myPlaneNormal(thePlaneNormal),
-        myAngleTol(10.0 * M_PI / 180.0)
-  {
-  }
-
-  //! Checks if picking ray can be used for detection.
-  bool isValidRay(const SelectBasics_SelectingVolumeManager& theMgr) const
-  {
-    if (theMgr.GetActiveSelectionType() != SelectMgr_SelectionType_Point)
+    switch (theIndex)
     {
-      return false;
+      case 0:
+        return gp_Ax1(theAx2.Location(), theAx2.XDirection());
+      case 1:
+        return gp_Ax1(theAx2.Location(), theAx2.YDirection());
+      case 2:
+        return theAx2.Axis();
+    }
+    throw Standard_ProgramError("AIS_Manipulator - Invalid axis index");
+  }
+
+  //! Auxiliary tool for filtering picking ray.
+  class ManipSensRotation
+  {
+  public:
+    //! Main constructor.
+    ManipSensRotation(const gp_Dir& thePlaneNormal)
+        : myPlaneNormal(thePlaneNormal),
+          myAngleTol(10.0 * M_PI / 180.0)
+    {
     }
 
-    const gp_Dir aRay = theMgr.GetViewRayDirection();
-    return !aRay.IsNormal(myPlaneNormal, myAngleTol);
-  }
+    //! Checks if picking ray can be used for detection.
+    bool isValidRay(const SelectBasics_SelectingVolumeManager& theMgr) const
+    {
+      if (theMgr.GetActiveSelectionType() != SelectMgr_SelectionType_Point)
+      {
+        return false;
+      }
 
-private:
-  gp_Dir myPlaneNormal;
-  double myAngleTol;
-};
+      const gp_Dir aRay = theMgr.GetViewRayDirection();
+      return !aRay.IsNormal(myPlaneNormal, myAngleTol);
+    }
 
-//! Sensitive circle with filtering picking ray.
-class ManipSensCircle : public Select3D_SensitiveCircle, public ManipSensRotation
-{
-public:
-  //! Main constructor.
-  ManipSensCircle(const occ::handle<SelectMgr_EntityOwner>& theOwnerId, const gp_Circ& theCircle)
-      : Select3D_SensitiveCircle(theOwnerId, theCircle, false),
-        ManipSensRotation(theCircle.Position().Direction())
+  private:
+    gp_Dir myPlaneNormal;
+    double myAngleTol;
+  };
+
+  //! Sensitive circle with filtering picking ray.
+  class ManipSensCircle : public Select3D_SensitiveCircle, public ManipSensRotation
   {
-  }
+  public:
+    //! Main constructor.
+    ManipSensCircle(const occ::handle<SelectMgr_EntityOwner>& theOwnerId, const gp_Circ& theCircle)
+        : Select3D_SensitiveCircle(theOwnerId, theCircle, false),
+          ManipSensRotation(theCircle.Position().Direction())
+    {
+    }
 
-  //! Checks whether the circle overlaps current selecting volume
-  bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
-               SelectBasics_PickResult&             thePickResult) override
-  {
-    return isValidRay(theMgr) && Select3D_SensitiveCircle::Matches(theMgr, thePickResult);
-  }
-};
+    //! Checks whether the circle overlaps current selecting volume
+    bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
+                 SelectBasics_PickResult&             thePickResult) override
+    {
+      return isValidRay(theMgr) && Select3D_SensitiveCircle::Matches(theMgr, thePickResult);
+    }
+  };
 
-//! Sensitive triangulation with filtering picking ray.
-class ManipSensTriangulation : public Select3D_SensitiveTriangulation, public ManipSensRotation
-{
-public:
-  ManipSensTriangulation(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
-                         const occ::handle<Poly_Triangulation>&    theTrg,
-                         const gp_Dir&                             thePlaneNormal)
-      : Select3D_SensitiveTriangulation(theOwnerId, theTrg, TopLoc_Location(), true),
-        ManipSensRotation(thePlaneNormal)
+  //! Sensitive triangulation with filtering picking ray.
+  class ManipSensTriangulation : public Select3D_SensitiveTriangulation, public ManipSensRotation
   {
-  }
+  public:
+    ManipSensTriangulation(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
+                           const occ::handle<Poly_Triangulation>&    theTrg,
+                           const gp_Dir&                             thePlaneNormal)
+        : Select3D_SensitiveTriangulation(theOwnerId, theTrg, TopLoc_Location(), true),
+          ManipSensRotation(thePlaneNormal)
+    {
+    }
 
-  //! Checks whether the circle overlaps current selecting volume
-  bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
-               SelectBasics_PickResult&             thePickResult) override
-  {
-    return isValidRay(theMgr) && Select3D_SensitiveTriangulation::Matches(theMgr, thePickResult);
-  }
-};
+    //! Checks whether the circle overlaps current selecting volume
+    bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
+                 SelectBasics_PickResult&             thePickResult) override
+    {
+      return isValidRay(theMgr) && Select3D_SensitiveTriangulation::Matches(theMgr, thePickResult);
+    }
+  };
 } // namespace
 
 //=================================================================================================
@@ -539,7 +524,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
   switch (myCurrentMode)
   {
     case AIS_MM_Translation:
-    case AIS_MM_Scaling: {
+    case AIS_MM_Scaling:
+    {
       const gp_Lin aLine(myStartPosition.Location(), myAxes[myCurrentIndex].Position().Direction());
       Extrema_ExtElC anExtrema(anInputLine, aLine, Precision::Angular());
       if (!anExtrema.IsDone() || anExtrema.IsParallel() || anExtrema.NbExt() != 1)
@@ -582,7 +568,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       }
       return true;
     }
-    case AIS_MM_Rotation: {
+    case AIS_MM_Rotation:
+    {
       const gp_Pnt        aPosLoc   = myStartPosition.Location();
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
@@ -665,7 +652,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       myPrevState = anAngle;
       return true;
     }
-    case AIS_MM_TranslationPlane: {
+    case AIS_MM_TranslationPlane:
+    {
       const gp_Pnt        aPosLoc   = myStartPosition.Location();
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
@@ -695,7 +683,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       theTrsf *= aNewTrsf;
       return true;
     }
-    case AIS_MM_None: {
+    case AIS_MM_None:
+    {
       return false;
     }
   }
@@ -713,7 +702,8 @@ bool AIS_Manipulator::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
 {
   switch (theAction)
   {
-    case AIS_DragAction_Start: {
+    case AIS_DragAction_Start:
+    {
       if (HasActiveMode())
       {
         StartTransform(theDragFrom.x(), theDragFrom.y(), theView);
@@ -721,18 +711,22 @@ bool AIS_Manipulator::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
       }
       break;
     }
-    case AIS_DragAction_Confirmed: {
+    case AIS_DragAction_Confirmed:
+    {
       return true;
     }
-    case AIS_DragAction_Update: {
+    case AIS_DragAction_Update:
+    {
       Transform(theDragTo.x(), theDragTo.y(), theView);
       return true;
     }
-    case AIS_DragAction_Abort: {
+    case AIS_DragAction_Abort:
+    {
       StopTransform(false);
       return true;
     }
-    case AIS_DragAction_Stop: {
+    case AIS_DragAction_Stop:
+    {
       StopTransform(true);
       if (mySkinMode == ManipulatorSkin_Flat)
       {
@@ -1444,7 +1438,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
 
   switch (aMode)
   {
-    case AIS_MM_Translation: {
+    case AIS_MM_Translation:
+    {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasTranslation())
@@ -1477,7 +1472,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_Rotation: {
+    case AIS_MM_Rotation:
+    {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasRotation())
@@ -1509,7 +1505,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_Scaling: {
+    case AIS_MM_Scaling:
+    {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasScaling())
@@ -1539,7 +1536,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_TranslationPlane: {
+    case AIS_MM_TranslationPlane:
+    {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasDragging())
@@ -1582,7 +1580,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    default: {
+    default:
+    {
       anOwner = new SelectMgr_EntityOwner(this, 5);
       break;
     }

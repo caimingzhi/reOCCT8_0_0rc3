@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <AdvApp2Var_Data_f2c.hpp>
 #include <AdvApp2Var_EvaluatorFunc2Var.hpp>
@@ -185,4 +184,3 @@ public:
                                       integer*    ncoefu,
                                       integer*    ncoefv);
 };
-

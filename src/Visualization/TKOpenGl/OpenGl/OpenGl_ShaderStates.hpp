@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_RenderTransparentMethod.hpp>
 #include <Graphic3d_LightSet.hpp>
 #include <OpenGl_Element.hpp>
@@ -200,4 +199,3 @@ private:
   // clang-format on
   float myDepthFactor; //!< factor of depth influence to coverage
 };
-

@@ -19,229 +19,229 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_FrameStats, Standard_Transient)
 
 namespace
 {
-//! Format counter.
-static std::ostream& formatCounter(std::ostream& theStream,
+  //! Format counter.
+  static std::ostream& formatCounter(std::ostream& theStream,
+                                     int           theWidth,
+                                     const char*   thePrefix,
+                                     size_t        theValue,
+                                     const char*   thePostfix = nullptr)
+  {
+    if (thePrefix != nullptr)
+    {
+      theStream << thePrefix;
+    }
+    theStream << std::setfill(' ') << std::setw(theWidth);
+    if (theValue >= 1000000000)
+    {
+      double aValM = double(theValue) / 1000000000.0;
+      theStream << std::fixed << std::setprecision(1) << aValM << "G";
+    }
+    else if (theValue >= 1000000)
+    {
+      double aValM = double(theValue) / 1000000.0;
+      theStream << std::fixed << std::setprecision(1) << aValM << "M";
+    }
+    else if (theValue >= 1000)
+    {
+      double aValK = double(theValue) / 1000.0;
+      theStream << std::fixed << std::setprecision(1) << aValK << "k";
+    }
+    else
+    {
+      theStream << theValue;
+      if (thePostfix == nullptr)
+      {
+        theStream << " ";
+      }
+    }
+    if (thePostfix != nullptr)
+    {
+      theStream << thePostfix;
+    }
+    return theStream;
+  }
+
+  //! Format a pair of counters.
+  static std::ostream& formatCounterPair(std::ostream& theStream,
+                                         int           theWidth,
+                                         const char*   thePrefix,
+                                         size_t        theValue,
+                                         size_t        theImmValue,
+                                         bool          theToShowImmediate)
+  {
+    formatCounter(theStream, theWidth, thePrefix, theValue, nullptr);
+    if (theToShowImmediate)
+    {
+      formatCounter(theStream, 1, "(", theImmValue, ")");
+    }
+    theStream << "\n";
+    return theStream;
+  }
+
+  //! Format memory counter.
+  static std::ostream& formatBytes(std::ostream& theStream,
                                    int           theWidth,
                                    const char*   thePrefix,
                                    size_t        theValue,
                                    const char*   thePostfix = nullptr)
-{
-  if (thePrefix != nullptr)
   {
-    theStream << thePrefix;
-  }
-  theStream << std::setfill(' ') << std::setw(theWidth);
-  if (theValue >= 1000000000)
-  {
-    double aValM = double(theValue) / 1000000000.0;
-    theStream << std::fixed << std::setprecision(1) << aValM << "G";
-  }
-  else if (theValue >= 1000000)
-  {
-    double aValM = double(theValue) / 1000000.0;
-    theStream << std::fixed << std::setprecision(1) << aValM << "M";
-  }
-  else if (theValue >= 1000)
-  {
-    double aValK = double(theValue) / 1000.0;
-    theStream << std::fixed << std::setprecision(1) << aValK << "k";
-  }
-  else
-  {
-    theStream << theValue;
-    if (thePostfix == nullptr)
+    if (thePrefix != nullptr)
     {
-      theStream << " ";
+      theStream << thePrefix;
     }
-  }
-  if (thePostfix != nullptr)
-  {
-    theStream << thePostfix;
-  }
-  return theStream;
-}
-
-//! Format a pair of counters.
-static std::ostream& formatCounterPair(std::ostream& theStream,
-                                       int           theWidth,
-                                       const char*   thePrefix,
-                                       size_t        theValue,
-                                       size_t        theImmValue,
-                                       bool          theToShowImmediate)
-{
-  formatCounter(theStream, theWidth, thePrefix, theValue, nullptr);
-  if (theToShowImmediate)
-  {
-    formatCounter(theStream, 1, "(", theImmValue, ")");
-  }
-  theStream << "\n";
-  return theStream;
-}
-
-//! Format memory counter.
-static std::ostream& formatBytes(std::ostream& theStream,
-                                 int           theWidth,
-                                 const char*   thePrefix,
-                                 size_t        theValue,
-                                 const char*   thePostfix = nullptr)
-{
-  if (thePrefix != nullptr)
-  {
-    theStream << thePrefix;
-  }
-  theStream << std::setfill(' ') << std::setw(theWidth);
-  if (theValue >= 1024 * 1024 * 1024)
-  {
-    double aValM = double(theValue) / (1024.0 * 1024.0 * 1024.0);
-    theStream << std::fixed << std::setprecision(1) << aValM << " GiB";
-  }
-  else if (theValue >= 1024 * 1024)
-  {
-    double aValM = double(theValue) / (1024.0 * 1024.0);
-    theStream << std::fixed << std::setprecision(1) << aValM << " MiB";
-  }
-  else if (theValue >= 1024)
-  {
-    double aValK = double(theValue) / 1024.0;
-    theStream << std::fixed << std::setprecision(1) << aValK << " KiB";
-  }
-  else
-  {
-    theStream << theValue << " B";
-  }
-  if (thePostfix != nullptr)
-  {
-    theStream << thePostfix;
-  }
-  return theStream;
-}
-
-namespace
-{
-constexpr double THE_SECONDS_IN_HOUR   = 3600.0;
-constexpr double THE_SECONDS_IN_MINUTE = 60.0;
-constexpr double THE_SECOND_IN_HOUR    = 1.0 / THE_SECONDS_IN_HOUR;
-constexpr double THE_SECOND_IN_MINUTE  = 1.0 / THE_SECONDS_IN_MINUTE;
-} // namespace
-
-//! Format time.
-static std::ostream& formatTime(std::ostream& theStream,
-                                int           theWidth,
-                                const char*   thePrefix,
-                                double        theSeconds,
-                                const char*   thePostfix = nullptr)
-{
-  if (thePrefix != nullptr)
-  {
-    theStream << thePrefix;
+    theStream << std::setfill(' ') << std::setw(theWidth);
+    if (theValue >= 1024 * 1024 * 1024)
+    {
+      double aValM = double(theValue) / (1024.0 * 1024.0 * 1024.0);
+      theStream << std::fixed << std::setprecision(1) << aValM << " GiB";
+    }
+    else if (theValue >= 1024 * 1024)
+    {
+      double aValM = double(theValue) / (1024.0 * 1024.0);
+      theStream << std::fixed << std::setprecision(1) << aValM << " MiB";
+    }
+    else if (theValue >= 1024)
+    {
+      double aValK = double(theValue) / 1024.0;
+      theStream << std::fixed << std::setprecision(1) << aValK << " KiB";
+    }
+    else
+    {
+      theStream << theValue << " B";
+    }
+    if (thePostfix != nullptr)
+    {
+      theStream << thePostfix;
+    }
+    return theStream;
   }
 
-  double       aSecIn = theSeconds;
-  unsigned int aHours = (unsigned int)(aSecIn * THE_SECOND_IN_HOUR);
-  aSecIn -= double(aHours) * THE_SECONDS_IN_HOUR;
-  unsigned int aMinutes = (unsigned int)(aSecIn * THE_SECOND_IN_MINUTE);
-  aSecIn -= double(aMinutes) * THE_SECONDS_IN_MINUTE;
-  unsigned int aSeconds = (unsigned int)aSecIn;
-  aSecIn -= double(aSeconds);
-  double aMilliSeconds = 1000.0 * aSecIn;
+  namespace
+  {
+    constexpr double THE_SECONDS_IN_HOUR   = 3600.0;
+    constexpr double THE_SECONDS_IN_MINUTE = 60.0;
+    constexpr double THE_SECOND_IN_HOUR    = 1.0 / THE_SECONDS_IN_HOUR;
+    constexpr double THE_SECOND_IN_MINUTE  = 1.0 / THE_SECONDS_IN_MINUTE;
+  } // namespace
 
-  char aBuffer[64];
-  theStream << std::setfill(' ') << std::setw(theWidth);
-  if (aHours > 0)
+  //! Format time.
+  static std::ostream& formatTime(std::ostream& theStream,
+                                  int           theWidth,
+                                  const char*   thePrefix,
+                                  double        theSeconds,
+                                  const char*   thePostfix = nullptr)
   {
-    Sprintf(aBuffer, "%02u:%02u:%02u", aHours, aMinutes, aSeconds);
-    theStream << aBuffer;
-  }
-  else if (aMinutes > 0)
-  {
-    Sprintf(aBuffer, "%02u:%02u", aMinutes, aSeconds);
-    theStream << aBuffer;
-  }
-  else if (aSeconds > 0)
-  {
-    Sprintf(aBuffer, "%2u s", aSeconds);
-    theStream << aBuffer;
-  }
-  else
-  {
-    theStream << std::fixed << std::setprecision(1) << aMilliSeconds << " ms";
-  }
+    if (thePrefix != nullptr)
+    {
+      theStream << thePrefix;
+    }
 
-  if (thePostfix != nullptr)
-  {
-    theStream << thePostfix;
-  }
-  return theStream;
-}
+    double       aSecIn = theSeconds;
+    unsigned int aHours = (unsigned int)(aSecIn * THE_SECOND_IN_HOUR);
+    aSecIn -= double(aHours) * THE_SECONDS_IN_HOUR;
+    unsigned int aMinutes = (unsigned int)(aSecIn * THE_SECOND_IN_MINUTE);
+    aSecIn -= double(aMinutes) * THE_SECONDS_IN_MINUTE;
+    unsigned int aSeconds = (unsigned int)aSecIn;
+    aSecIn -= double(aSeconds);
+    double aMilliSeconds = 1000.0 * aSecIn;
 
-//! Add key-value pair to the dictionary.
-static void addInfo(
-  NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
-  const TCollection_AsciiString&                                                theKey,
-  const char*                                                                   theValue)
-{
-  TCollection_AsciiString aValue(theValue != nullptr ? theValue : "");
-  theDict.ChangeFromIndex(theDict.Add(theKey, aValue)) = aValue;
-}
+    char aBuffer[64];
+    theStream << std::setfill(' ') << std::setw(theWidth);
+    if (aHours > 0)
+    {
+      Sprintf(aBuffer, "%02u:%02u:%02u", aHours, aMinutes, aSeconds);
+      theStream << aBuffer;
+    }
+    else if (aMinutes > 0)
+    {
+      Sprintf(aBuffer, "%02u:%02u", aMinutes, aSeconds);
+      theStream << aBuffer;
+    }
+    else if (aSeconds > 0)
+    {
+      Sprintf(aBuffer, "%2u s", aSeconds);
+      theStream << aBuffer;
+    }
+    else
+    {
+      theStream << std::fixed << std::setprecision(1) << aMilliSeconds << " ms";
+    }
 
-//! Add key-value pair to the dictionary.
-static void addInfo(
-  NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
-  const TCollection_AsciiString&                                                theKey,
-  const double                                                                  theValue)
-{
-  char aTmp[50];
-  Sprintf(aTmp, "%.1g", theValue);
-  addInfo(theDict, theKey, aTmp);
-}
-
-//! Add key-value pair to the dictionary.
-static void addInfo(
-  NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
-  const TCollection_AsciiString&                                                theKey,
-  const size_t                                                                  theValue)
-{
-  char aTmp[50];
-  Sprintf(aTmp, "%zu", theValue);
-  addInfo(theDict, theKey, aTmp);
-}
-
-//! Format time.
-static void addTimeInfo(
-  NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
-  const TCollection_AsciiString&                                                theKey,
-  double                                                                        theSeconds)
-{
-  double       aSecIn = theSeconds;
-  unsigned int aHours = (unsigned int)(aSecIn * THE_SECOND_IN_HOUR);
-  aSecIn -= double(aHours) * THE_SECONDS_IN_HOUR;
-  unsigned int aMinutes = (unsigned int)(aSecIn * THE_SECOND_IN_MINUTE);
-  aSecIn -= double(aMinutes) * THE_SECONDS_IN_MINUTE;
-  unsigned int aSeconds = (unsigned int)aSecIn;
-  aSecIn -= double(aSeconds);
-  double aMilliSeconds = 1000.0 * aSecIn;
-
-  char aBuffer[64];
-  if (aHours > 0)
-  {
-    Sprintf(aBuffer, "%02u:%02u:%02u", aHours, aMinutes, aSeconds);
-  }
-  else if (aMinutes > 0)
-  {
-    Sprintf(aBuffer, "%02u:%02u", aMinutes, aSeconds);
-  }
-  else if (aSeconds > 0)
-  {
-    Sprintf(aBuffer, "%2u", aSeconds);
-  }
-  else
-  {
-    addInfo(theDict, theKey, aMilliSeconds);
-    return;
+    if (thePostfix != nullptr)
+    {
+      theStream << thePostfix;
+    }
+    return theStream;
   }
 
-  addInfo(theDict, theKey, aBuffer);
-}
+  //! Add key-value pair to the dictionary.
+  static void addInfo(
+    NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
+    const TCollection_AsciiString&                                                theKey,
+    const char*                                                                   theValue)
+  {
+    TCollection_AsciiString aValue(theValue != nullptr ? theValue : "");
+    theDict.ChangeFromIndex(theDict.Add(theKey, aValue)) = aValue;
+  }
+
+  //! Add key-value pair to the dictionary.
+  static void addInfo(
+    NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
+    const TCollection_AsciiString&                                                theKey,
+    const double                                                                  theValue)
+  {
+    char aTmp[50];
+    Sprintf(aTmp, "%.1g", theValue);
+    addInfo(theDict, theKey, aTmp);
+  }
+
+  //! Add key-value pair to the dictionary.
+  static void addInfo(
+    NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
+    const TCollection_AsciiString&                                                theKey,
+    const size_t                                                                  theValue)
+  {
+    char aTmp[50];
+    Sprintf(aTmp, "%zu", theValue);
+    addInfo(theDict, theKey, aTmp);
+  }
+
+  //! Format time.
+  static void addTimeInfo(
+    NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
+    const TCollection_AsciiString&                                                theKey,
+    double                                                                        theSeconds)
+  {
+    double       aSecIn = theSeconds;
+    unsigned int aHours = (unsigned int)(aSecIn * THE_SECOND_IN_HOUR);
+    aSecIn -= double(aHours) * THE_SECONDS_IN_HOUR;
+    unsigned int aMinutes = (unsigned int)(aSecIn * THE_SECOND_IN_MINUTE);
+    aSecIn -= double(aMinutes) * THE_SECONDS_IN_MINUTE;
+    unsigned int aSeconds = (unsigned int)aSecIn;
+    aSecIn -= double(aSeconds);
+    double aMilliSeconds = 1000.0 * aSecIn;
+
+    char aBuffer[64];
+    if (aHours > 0)
+    {
+      Sprintf(aBuffer, "%02u:%02u:%02u", aHours, aMinutes, aSeconds);
+    }
+    else if (aMinutes > 0)
+    {
+      Sprintf(aBuffer, "%02u:%02u", aMinutes, aSeconds);
+    }
+    else if (aSeconds > 0)
+    {
+      Sprintf(aBuffer, "%2u", aSeconds);
+    }
+    else
+    {
+      addInfo(theDict, theKey, aMilliSeconds);
+      return;
+    }
+
+    addInfo(theDict, theKey, aBuffer);
+  }
 } // namespace
 
 //=================================================================================================

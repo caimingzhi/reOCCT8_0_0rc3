@@ -1,19 +1,3 @@
-// Created on: 1994-03-10
-// Created by: Yves FRICAUD
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Bisector.hpp>
 #include <Bisector_BisecPC.hpp>
 #include <ElCLib.hpp>
@@ -373,15 +357,18 @@ void Bisector_BisecPC::Values(const double U,
 
   switch (N)
   {
-    case 0: {
+    case 0:
+    {
       curve->D1(UOnCurve, PC, Tu);
       break;
     }
-    case 1: {
+    case 1:
+    {
       curve->D2(UOnCurve, PC, Tu, Tuu);
       break;
     }
-    case 2: {
+    case 2:
+    {
       curve->D3(UOnCurve, PC, Tu, Tuu, T3u);
       break;
     }
@@ -589,7 +576,8 @@ gp_Vec2d Bisector_BisecPC::DN(const double U, const int N) const
       return V2;
     case 3:
       return V3;
-    default: {
+    default:
+    {
       throw Standard_NotImplemented();
     }
   }

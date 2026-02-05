@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum PrsDim_KindOfRelation
 {
   PrsDim_KOR_NONE = 0,
@@ -15,4 +14,3 @@ enum PrsDim_KindOfRelation
   PrsDim_KOR_TANGENT,
   PrsDim_KOR_SYMMETRIC
 };
-

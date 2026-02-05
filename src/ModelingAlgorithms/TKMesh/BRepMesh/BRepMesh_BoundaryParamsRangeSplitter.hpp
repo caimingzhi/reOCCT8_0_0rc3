@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_NURBSRangeSplitter.hpp>
 
 //! Auxiliary class extending UV range splitter in order to generate
@@ -26,4 +25,3 @@ protected:
   //! Initializes U and V parameters lists using CN continuity intervals.
   bool initParameters() const override { return true; }
 };
-

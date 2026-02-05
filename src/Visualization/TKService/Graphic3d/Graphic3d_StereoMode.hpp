@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! This enumeration defines the list of stereoscopic output modes.
 enum Graphic3d_StereoMode
 {
@@ -19,4 +18,3 @@ enum
 {
   Graphic3d_StereoMode_NB = Graphic3d_StereoMode_OpenVR + 1
 };
-

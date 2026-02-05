@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax3.hpp>
 #include <gp_Lin.hpp>
@@ -343,4 +342,3 @@ inline double gp_Pln::Distance(const gp_Pln& theOther) const noexcept
   }
   return aD;
 }
-

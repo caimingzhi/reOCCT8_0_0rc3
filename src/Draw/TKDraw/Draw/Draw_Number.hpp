@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Drawable3D.hpp>
 
 //! To store numbers in variables.
@@ -36,4 +35,3 @@ public:
 private:
   double myValue;
 };
-

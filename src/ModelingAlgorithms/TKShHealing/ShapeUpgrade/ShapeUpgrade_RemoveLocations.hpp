@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -56,6 +55,7 @@ private:
   TopoDS_Shape                                                             myShape;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myMapNewShapes;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -104,5 +104,3 @@ inline TopoDS_Shape ShapeUpgrade_RemoveLocations::ModifiedShape(
     aShape = myMapNewShapes.Find(theInitShape);
   return aShape;
 }
-
-

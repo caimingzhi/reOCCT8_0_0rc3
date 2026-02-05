@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Element.hpp>
 
 #include <OpenGl_TextBuilder.hpp>
@@ -160,4 +159,3 @@ protected:
 public:
   DEFINE_STANDARD_ALLOC
 };
-

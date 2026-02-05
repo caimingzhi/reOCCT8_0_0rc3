@@ -53,22 +53,26 @@ bool IntImp_ZerParFunc::Value(const math_Vector& X, math_Vector& F)
 
   switch (chxIso)
   {
-    case IntImp_UIsoparametricOnCaro1: {
+    case IntImp_UIsoparametricOnCaro1:
+    {
       pntsol1 = ThePSurfaceTool::Value(SURF1, paramConst, X(1));
       pntsol2 = ThePSurfaceTool::Value(SURF2, X(2), X(3));
     }
     break;
-    case IntImp_VIsoparametricOnCaro1: {
+    case IntImp_VIsoparametricOnCaro1:
+    {
       pntsol1 = ThePSurfaceTool::Value(SURF1, X(1), paramConst);
       pntsol2 = ThePSurfaceTool::Value(SURF2, X(2), X(3));
     }
     break;
-    case IntImp_UIsoparametricOnCaro2: {
+    case IntImp_UIsoparametricOnCaro2:
+    {
       pntsol1 = ThePSurfaceTool::Value(SURF1, X(1), X(2));
       pntsol2 = ThePSurfaceTool::Value(SURF2, paramConst, X(3));
     }
     break;
-    case IntImp_VIsoparametricOnCaro2: {
+    case IntImp_VIsoparametricOnCaro2:
+    {
       pntsol1 = ThePSurfaceTool::Value(SURF1, X(1), X(2));
       pntsol2 = ThePSurfaceTool::Value(SURF2, X(3), paramConst);
     }
@@ -86,7 +90,8 @@ bool IntImp_ZerParFunc::Derivatives(const math_Vector& X, math_Matrix& D)
 
   switch (chxIso)
   {
-    case IntImp_UIsoparametricOnCaro1: {
+    case IntImp_UIsoparametricOnCaro1:
+    {
       ThePSurfaceTool::D1(SURF1, paramConst, X(1), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(2), X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[1].X();
@@ -100,7 +105,8 @@ bool IntImp_ZerParFunc::Derivatives(const math_Vector& X, math_Matrix& D)
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_VIsoparametricOnCaro1: {
+    case IntImp_VIsoparametricOnCaro1:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), paramConst, pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(2), X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -114,7 +120,8 @@ bool IntImp_ZerParFunc::Derivatives(const math_Vector& X, math_Matrix& D)
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_UIsoparametricOnCaro2: {
+    case IntImp_UIsoparametricOnCaro2:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), X(2), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, paramConst, X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -128,7 +135,8 @@ bool IntImp_ZerParFunc::Derivatives(const math_Vector& X, math_Matrix& D)
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_VIsoparametricOnCaro2: {
+    case IntImp_VIsoparametricOnCaro2:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), X(2), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(3), paramConst, pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -151,7 +159,8 @@ bool IntImp_ZerParFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix
 
   switch (chxIso)
   {
-    case IntImp_UIsoparametricOnCaro1: {
+    case IntImp_UIsoparametricOnCaro1:
+    {
       ThePSurfaceTool::D1(SURF1, paramConst, X(1), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(2), X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[1].X();
@@ -165,7 +174,8 @@ bool IntImp_ZerParFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_VIsoparametricOnCaro1: {
+    case IntImp_VIsoparametricOnCaro1:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), paramConst, pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(2), X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -179,7 +189,8 @@ bool IntImp_ZerParFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_UIsoparametricOnCaro2: {
+    case IntImp_UIsoparametricOnCaro2:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), X(2), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, paramConst, X(3), pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -193,7 +204,8 @@ bool IntImp_ZerParFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix
       D(3, 3) = -dpuv[3].Z();
     }
     break;
-    case IntImp_VIsoparametricOnCaro2: {
+    case IntImp_VIsoparametricOnCaro2:
+    {
       ThePSurfaceTool::D1(SURF1, X(1), X(2), pntsol1, dpuv[0], dpuv[1]);
       ThePSurfaceTool::D1(SURF2, X(3), paramConst, pntsol2, dpuv[2], dpuv[3]);
       D(1, 1) = dpuv[0].X();
@@ -225,7 +237,8 @@ void IntImp_ZerParFunc::ComputeParameters(const IntImp_ConstIsoparametric   Choi
   chxIso = ChoixIso;
   switch (chxIso)
   {
-    case IntImp_UIsoparametricOnCaro1: {
+    case IntImp_UIsoparametricOnCaro1:
+    {
       paramConst = Param(1);
       UVap(1)    = Param(2);
       UVap(2)    = Param(3);
@@ -244,7 +257,8 @@ void IntImp_ZerParFunc::ComputeParameters(const IntImp_ConstIsoparametric   Choi
       Tolerance(3) = vres2;
     }
     break;
-    case IntImp_VIsoparametricOnCaro1: {
+    case IntImp_VIsoparametricOnCaro1:
+    {
       paramConst = Param(2);
       UVap(1)    = Param(1);
       UVap(2)    = Param(3);
@@ -262,7 +276,8 @@ void IntImp_ZerParFunc::ComputeParameters(const IntImp_ConstIsoparametric   Choi
       Tolerance(3) = vres2;
     }
     break;
-    case IntImp_UIsoparametricOnCaro2: {
+    case IntImp_UIsoparametricOnCaro2:
+    {
       paramConst = Param(3);
       UVap(1)    = Param(1);
       UVap(2)    = Param(2);
@@ -281,7 +296,8 @@ void IntImp_ZerParFunc::ComputeParameters(const IntImp_ConstIsoparametric   Choi
       Tolerance(3) = vres2;
     }
     break;
-    case IntImp_VIsoparametricOnCaro2: {
+    case IntImp_VIsoparametricOnCaro2:
+    {
       paramConst = Param(4);
       UVap(1)    = Param(1);
       UVap(2)    = Param(2);
@@ -319,28 +335,32 @@ bool IntImp_ZerParFunc::IsTangent(const math_Vector&          UVap,
 {
   switch (chxIso)
   {
-    case IntImp_UIsoparametricOnCaro1: {
+    case IntImp_UIsoparametricOnCaro1:
+    {
       Param(1) = paramConst;
       Param(2) = UVap(1);
       Param(3) = UVap(2);
       Param(4) = UVap(3);
     }
     break;
-    case IntImp_VIsoparametricOnCaro1: {
+    case IntImp_VIsoparametricOnCaro1:
+    {
       Param(2) = paramConst;
       Param(1) = UVap(1);
       Param(3) = UVap(2);
       Param(4) = UVap(3);
     }
     break;
-    case IntImp_UIsoparametricOnCaro2: {
+    case IntImp_UIsoparametricOnCaro2:
+    {
       Param(3) = paramConst;
       Param(1) = UVap(1);
       Param(2) = UVap(2);
       Param(4) = UVap(3);
     }
     break;
-    case IntImp_VIsoparametricOnCaro2: {
+    case IntImp_VIsoparametricOnCaro2:
+    {
       Param(4) = paramConst;
       Param(1) = UVap(1);
       Param(2) = UVap(2);

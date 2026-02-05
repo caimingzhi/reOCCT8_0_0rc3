@@ -193,12 +193,14 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueue)
 
   for (int t = 0; t < aThreadCount; ++t)
   {
-    aThreads.emplace_back([&aQueue, t, aItemsPerThread = aItemsPerThread]() {
-      for (int i = 0; i < aItemsPerThread; ++i)
+    aThreads.emplace_back(
+      [&aQueue, t, aItemsPerThread = aItemsPerThread]()
       {
-        aQueue.Enqueue(t * aItemsPerThread + i);
-      }
-    });
+        for (int i = 0; i < aItemsPerThread; ++i)
+        {
+          aQueue.Enqueue(t * aItemsPerThread + i);
+        }
+      });
   }
 
   for (auto& aThread : aThreads)
@@ -225,16 +227,18 @@ TEST(BVH_BuildQueueTest, ConcurrentFetch)
 
   for (int t = 0; t < aThreadCount; ++t)
   {
-    aThreads.emplace_back([&aQueue, t, &aFetchedCounts]() {
-      bool wasBusy = false;
-      while (true)
+    aThreads.emplace_back(
+      [&aQueue, t, &aFetchedCounts]()
       {
-        int aItem = aQueue.Fetch(wasBusy);
-        if (aItem == -1)
-          break;
-        aFetchedCounts[t]++;
-      }
-    });
+        bool wasBusy = false;
+        while (true)
+        {
+          int aItem = aQueue.Fetch(wasBusy);
+          if (aItem == -1)
+            break;
+          aFetchedCounts[t]++;
+        }
+      });
   }
 
   for (auto& aThread : aThreads)
@@ -266,28 +270,32 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueueAndFetch)
   // Producer threads
   for (int t = 0; t < aProducerCount; ++t)
   {
-    aThreads.emplace_back([&aQueue, t, aItemsPerProducer = aItemsPerProducer]() {
-      for (int i = 0; i < aItemsPerProducer; ++i)
+    aThreads.emplace_back(
+      [&aQueue, t, aItemsPerProducer = aItemsPerProducer]()
       {
-        aQueue.Enqueue(t * aItemsPerProducer + i);
-      }
-    });
+        for (int i = 0; i < aItemsPerProducer; ++i)
+        {
+          aQueue.Enqueue(t * aItemsPerProducer + i);
+        }
+      });
   }
 
   // Consumer threads
   for (int t = 0; t < aConsumerCount; ++t)
   {
-    aThreads.emplace_back([&aQueue, &aFetchedCount, &aDone]() {
-      bool wasBusy = false;
-      while (!aDone.load() || aQueue.Size() > 0)
+    aThreads.emplace_back(
+      [&aQueue, &aFetchedCount, &aDone]()
       {
-        int aItem = aQueue.Fetch(wasBusy);
-        if (aItem != -1)
+        bool wasBusy = false;
+        while (!aDone.load() || aQueue.Size() > 0)
         {
-          aFetchedCount.fetch_add(1);
+          int aItem = aQueue.Fetch(wasBusy);
+          if (aItem != -1)
+          {
+            aFetchedCount.fetch_add(1);
+          }
         }
-      }
-    });
+      });
   }
 
   // Wait for producers to finish

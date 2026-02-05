@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <TColStd_HPackedMapOfInteger.hpp>
@@ -133,4 +132,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(Image_Diff, Standard_Transient) // Type definition
 };
-

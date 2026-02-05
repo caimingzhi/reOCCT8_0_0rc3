@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -54,4 +53,3 @@ private:
   mutable TCollection_AsciiString theLastValue;
   mutable std::mutex              myMutex;
 };
-

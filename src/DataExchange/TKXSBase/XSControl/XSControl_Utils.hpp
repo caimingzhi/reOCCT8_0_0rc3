@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -189,4 +188,3 @@ public:
   Standard_EXPORT int SeqIntValue(const occ::handle<NCollection_HSequence<int>>& list,
                                   const int                                      num) const;
 };
-

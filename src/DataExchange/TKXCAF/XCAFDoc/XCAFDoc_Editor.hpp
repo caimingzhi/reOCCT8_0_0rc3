@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_Name.hpp>
 #include <TDF_Label.hpp>
 #include <NCollection_DataMap.hpp>
@@ -131,4 +130,3 @@ public:
                                               const double     theScaleFactor,
                                               const bool       theForceIfNotRoot = false);
 };
-

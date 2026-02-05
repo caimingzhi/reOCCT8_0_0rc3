@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_Timer.hpp>
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
@@ -46,4 +45,3 @@ protected:
   double    myTimerFrom;
   double    myTimerSpeed;
 };
-

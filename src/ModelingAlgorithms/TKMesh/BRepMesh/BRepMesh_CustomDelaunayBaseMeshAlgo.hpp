@@ -1,6 +1,5 @@
 #pragma once
 
-
 class BRepMesh_DataStructureOfDelaun;
 class BRepMesh_Delaun;
 
@@ -28,4 +27,3 @@ protected:
     BaseAlgo::postProcessMesh(theMesher, theRange);
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Error codes returned by the ErrorStatus
 //! function on a Storage_Data set of data during a
 //! storage or retrieval operation :
@@ -39,4 +38,3 @@ enum Storage_Error
   Storage_VSExtCharParityError,
   Storage_VSWrongFileDriver
 };
-

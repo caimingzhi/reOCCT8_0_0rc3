@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRepTools_History.hpp>
@@ -38,4 +37,3 @@ public:
 private:
   occ::handle<BRepTools_History> myHistory; //!< Tool for tracking History of shape's modification
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_CylindricalSurface.hpp>
 #include <GeomGridEval.hpp>
 #include <gp_Pnt2d.hpp>
@@ -171,4 +170,3 @@ private:
 
   occ::handle<Geom_CylindricalSurface> myGeom;
 };
-

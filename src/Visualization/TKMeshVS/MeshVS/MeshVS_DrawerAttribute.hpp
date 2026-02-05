@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Is it allowed to draw beam and face's edge overlapping with this beam.
 //! Is mesh drawn with reflective material
 //! Is colored mesh data representation drawn with reflective material
@@ -59,4 +58,3 @@ enum MeshVS_DrawerAttribute
   MeshVS_DA_SupressBackFaces,
   MeshVS_DA_User
 };
-

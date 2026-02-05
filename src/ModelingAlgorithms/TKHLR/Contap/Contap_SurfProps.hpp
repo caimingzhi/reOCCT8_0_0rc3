@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class gp_Pnt;
@@ -41,4 +40,3 @@ public:
                                         gp_Vec&                               Dnu,
                                         gp_Vec&                               Dnv);
 };
-

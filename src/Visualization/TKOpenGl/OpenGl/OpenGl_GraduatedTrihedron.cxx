@@ -1,18 +1,3 @@
-// Created on: 2011-09-20
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_GraduatedTrihedron.hpp>
 
 #include <Graphic3d_ArrayOfPolylines.hpp>
@@ -29,9 +14,9 @@
 
 namespace
 {
-static float                             THE_LABEL_HEIGHT = 16;
-static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH = Graphic3d_HTA_LEFT;
-static Graphic3d_VerticalTextAlignment   THE_LABEL_VALIGH = Graphic3d_VTA_BOTTOM;
+  static float                             THE_LABEL_HEIGHT = 16;
+  static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH = Graphic3d_HTA_LEFT;
+  static Graphic3d_VerticalTextAlignment   THE_LABEL_VALIGH = Graphic3d_VTA_BOTTOM;
 } // namespace
 
 //=================================================================================================
@@ -284,7 +269,8 @@ char16_t OpenGl_GraduatedTrihedron::getGridAxes(const float theCorners[8],
       return OYO_XYO | OYZ_XYZ | XOO_XYO | XOZ_XYZ | XOO_XOZ | XYO_XYZ | OYO_OYZ;
     }
     case 7: // (1,1,1)
-    default: {
+    default:
+    {
       theGridAxes.Origin  = NCollection_Vec3<float>(myMax.x(), myMax.y(), myMax.z());
       theGridAxes.Axes[0] = NCollection_Vec3<float>(-1, 0, 0);
       theGridAxes.Axes[1] = NCollection_Vec3<float>(0, -1, 0);

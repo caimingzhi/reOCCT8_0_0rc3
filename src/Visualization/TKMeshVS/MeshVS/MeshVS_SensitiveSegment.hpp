@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveSegment.hpp>
 
 //! This class provides custom sensitive face, which will be selected if it center is in rectangle.
@@ -13,4 +12,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(MeshVS_SensitiveSegment, Select3D_SensitiveSegment)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDocStd_Application.hpp>
@@ -18,4 +17,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(AppStdL_Application, TDocStd_Application)
 };
-

@@ -1,12 +1,12 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 
 #include <StepData_SelectType.hpp>
 #include <Standard_Integer.hpp>
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -20,7 +20,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 enum StepElement_EnumeratedCurveElementFreedom
 {
   StepElement_XTranslation,
@@ -32,7 +31,6 @@ enum StepElement_EnumeratedCurveElementFreedom
   StepElement_Warp,
   StepElement_None
 };
-
 
 class Standard_Transient;
 class StepData_SelectMember;
@@ -74,4 +72,3 @@ public:
   //! Returns Value as ApplicationDefinedDegreeOfFreedom (or Null if another type)
   Standard_EXPORT occ::handle<TCollection_HAsciiString> ApplicationDefinedDegreeOfFreedom() const;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2016-08-22
-// Copyright (c) 2016 OPEN CASCADE SAS
-// Created by: Oleg AGASHIN
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_MeshTool.hpp>
 #include <BRepMesh_SelectorOfDataStructureOfDelaun.hpp>
 #include <stack>
@@ -28,20 +13,20 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_MeshTool, Standard_Transient)
 
 namespace
 {
-//! Returns index of triangle node opposite to the given link.
-int findApexIndex(const int (&aNodes)[3], const BRepMesh_Edge& theLink)
-{
-  int i = 0;
-  for (; i < 3; ++i)
+  //! Returns index of triangle node opposite to the given link.
+  int findApexIndex(const int (&aNodes)[3], const BRepMesh_Edge& theLink)
   {
-    if (aNodes[i] != theLink.FirstNode() && aNodes[i] != theLink.LastNode())
+    int i = 0;
+    for (; i < 3; ++i)
     {
-      break;
+      if (aNodes[i] != theLink.FirstNode() && aNodes[i] != theLink.LastNode())
+      {
+        break;
+      }
     }
-  }
 
-  return i;
-}
+    return i;
+  }
 } // namespace
 
 //=================================================================================================
@@ -144,8 +129,8 @@ void BRepMesh_MeshTool::CleanFrontierLinks()
     {
       const int                aPriorElemId = aPair.Index(aElemIt);
       const BRepMesh_Triangle& aElement     = myStructure->GetElement(aPriorElemId);
-      const int (&e)[3]                     = aElement.myEdges;
-      const bool (&o)[3]                    = aElement.myOrientations;
+      const int(&e)[3]                      = aElement.myEdges;
+      const bool(&o)[3]                     = aElement.myOrientations;
 
       for (int n = 0; n < 3 && !isTriangleFound; ++n)
       {
@@ -184,8 +169,8 @@ void BRepMesh_MeshTool::EraseTriangle(const int                       theTriangl
                                       IMeshData::MapOfIntegerInteger& theLoopEdges)
 {
   const BRepMesh_Triangle& aElement = myStructure->GetElement(theTriangleIndex);
-  const int (&e)[3]                 = aElement.myEdges;
-  const bool (&o)[3]                = aElement.myOrientations;
+  const int(&e)[3]                  = aElement.myEdges;
+  const bool(&o)[3]                 = aElement.myOrientations;
 
   myStructure->RemoveElement(theTriangleIndex);
 
@@ -250,7 +235,7 @@ void BRepMesh_MeshTool::collectTrianglesOnFreeLinksAroundNodesOf(
         theTriangles.Add(aIndex);
 
         const BRepMesh_Triangle& aElement = myStructure->GetElement(aIndex);
-        const int (&aEdges)[3]            = aElement.myEdges;
+        const int(&aEdges)[3]             = aElement.myEdges;
 
         for (int i = 0; i < 3; ++i)
         {

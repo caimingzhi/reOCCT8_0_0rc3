@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <FSD_File.hpp>
 #include <Storage_BaseDriver.hpp>
 #include <Storage_Error.hpp>
@@ -65,4 +64,3 @@ protected:
   //! read from the first none space character position to the end of line.
   Standard_EXPORT void ReadString(TCollection_AsciiString& buffer) override;
 };
-

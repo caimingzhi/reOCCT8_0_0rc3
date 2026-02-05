@@ -37,38 +37,38 @@
 
 namespace
 {
-const double THE_TOLERANCE = 1e-10;
+  const double THE_TOLERANCE = 1e-10;
 
-//! Helper function to create uniform parameters
-NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
-{
-  NCollection_Array1<double> aParams(1, theNbPoints);
-  const double               aStep = (theLast - theFirst) / (theNbPoints - 1);
-  for (int i = 1; i <= theNbPoints; ++i)
+  //! Helper function to create uniform parameters
+  NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
   {
-    aParams.SetValue(i, theFirst + (i - 1) * aStep);
+    NCollection_Array1<double> aParams(1, theNbPoints);
+    const double               aStep = (theLast - theFirst) / (theNbPoints - 1);
+    for (int i = 1; i <= theNbPoints; ++i)
+    {
+      aParams.SetValue(i, theFirst + (i - 1) * aStep);
+    }
+    return aParams;
   }
-  return aParams;
-}
 
-//! Helper function to create a simple B-spline curve
-occ::handle<Geom_BSplineCurve> CreateSimpleBSpline()
-{
-  NCollection_Array1<gp_Pnt> aPoles(1, 4);
-  aPoles.SetValue(1, gp_Pnt(0, 0, 0));
-  aPoles.SetValue(2, gp_Pnt(1, 2, 0));
-  aPoles.SetValue(3, gp_Pnt(3, 2, 0));
-  aPoles.SetValue(4, gp_Pnt(4, 0, 0));
+  //! Helper function to create a simple B-spline curve
+  occ::handle<Geom_BSplineCurve> CreateSimpleBSpline()
+  {
+    NCollection_Array1<gp_Pnt> aPoles(1, 4);
+    aPoles.SetValue(1, gp_Pnt(0, 0, 0));
+    aPoles.SetValue(2, gp_Pnt(1, 2, 0));
+    aPoles.SetValue(3, gp_Pnt(3, 2, 0));
+    aPoles.SetValue(4, gp_Pnt(4, 0, 0));
 
-  NCollection_Array1<double> aKnots(1, 2);
-  NCollection_Array1<int>    aMults(1, 2);
-  aKnots.SetValue(1, 0.0);
-  aKnots.SetValue(2, 1.0);
-  aMults.SetValue(1, 4);
-  aMults.SetValue(2, 4);
+    NCollection_Array1<double> aKnots(1, 2);
+    NCollection_Array1<int>    aMults(1, 2);
+    aKnots.SetValue(1, 0.0);
+    aKnots.SetValue(2, 1.0);
+    aMults.SetValue(1, 4);
+    aMults.SetValue(2, 4);
 
-  return new Geom_BSplineCurve(aPoles, aKnots, aMults, 3);
-}
+    return new Geom_BSplineCurve(aPoles, aKnots, aMults, 3);
+  }
 } // namespace
 
 //==================================================================================================

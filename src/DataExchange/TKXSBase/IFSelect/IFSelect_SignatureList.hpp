@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -129,4 +128,3 @@ private:
   NCollection_IndexedDataMap<TCollection_AsciiString, int>                             thedicount;
   NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> thediclist;
 };
-

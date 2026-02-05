@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -143,27 +142,33 @@ public:
 
     switch (type)
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_Circle:
+      {
         myExtPElC.Perform(theP, TheCurveTool::Circle(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_Ellipse:
+      {
         myExtPElC.Perform(theP, TheCurveTool::Ellipse(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_Parabola:
+      {
         myExtPElC.Perform(theP, TheCurveTool::Parabola(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_Hyperbola:
+      {
         myExtPElC.Perform(theP, TheCurveTool::Hyperbola(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         myExtPElC.Perform(theP, TheCurveTool::Line(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         myintuinf = myuinf;
         myintusup = myusup;
         mysample  = (TheCurveTool::Bezier(aCurve))->NbPoles() * 2;
@@ -171,7 +176,8 @@ public:
         IntervalPerform(theP);
         return;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         const int aFirstIdx = TheCurveTool::BSpline(aCurve)->FirstUKnotIndex(),
                   aLastIdx  = TheCurveTool::BSpline(aCurve)->LastUKnotIndex();
         NCollection_Array1<double> aKnots(aFirstIdx, aLastIdx);
@@ -371,7 +377,8 @@ public:
         mydone = true;
         break;
       }
-      default: {
+      default:
+      {
         constexpr int                            aMaxSample   = 17;
         bool                                     IntExtIsDone = false;
         bool                                     IntIsNotValid;
@@ -431,7 +438,7 @@ public:
           if (i != 1)
           {
             TheCurveTool::D1(aCurve, myintuinf, PP, V1);
-            s1 = (TheVector(theP, PP)) * V1;
+            s1 = (TheVector(theP, PP))*V1;
             if (s1 * s2 < 0.0)
             {
               mySqDist.Append(PP.SquareDistance(theP));
@@ -442,7 +449,7 @@ public:
           if (i != n)
           {
             TheCurveTool::D1(aCurve, myintusup, PP, V1);
-            s2 = (TheVector(theP, PP)) * V1;
+            s2 = (TheVector(theP, PP))*V1;
           }
 
           IntervalPerform(theP);
@@ -636,4 +643,3 @@ private:
   NCollection_Sequence<bool>   myismin;
   NCollection_Sequence<double> mySqDist;
 };
-

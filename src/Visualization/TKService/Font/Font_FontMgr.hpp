@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Transient.hpp>
 #include <NCollection_List.hpp>
@@ -275,4 +274,3 @@ private:
   bool myToTraceAliases;
   bool myToPrintErrors;
 };
-

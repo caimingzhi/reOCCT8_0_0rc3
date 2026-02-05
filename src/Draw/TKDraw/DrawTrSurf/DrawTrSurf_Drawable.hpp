@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Drawable3D.hpp>
 #include <GeomAbs_IsoType.hpp>
 
@@ -59,4 +58,3 @@ private:
   int    myDiscret;
   double myDeflection;
 };
-

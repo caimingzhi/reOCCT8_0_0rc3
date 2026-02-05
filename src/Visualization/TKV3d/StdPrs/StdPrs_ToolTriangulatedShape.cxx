@@ -1,19 +1,3 @@
-// Created on: 1993-10-27
-// Created by: Jean-LOuis FRENKEL
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <StdPrs_ToolTriangulatedShape.hpp>
 
 #include <BRepBndLib.hpp>
@@ -57,7 +41,8 @@ bool StdPrs_ToolTriangulatedShape::IsClosed(const TopoDS_Shape& theShape)
   {
     case TopAbs_COMPOUND:
     case TopAbs_COMPSOLID:
-    default: {
+    default:
+    {
       // check that compound consists of closed solids
       for (TopoDS_Iterator anIter(theShape); anIter.More(); anIter.Next())
       {
@@ -69,7 +54,8 @@ bool StdPrs_ToolTriangulatedShape::IsClosed(const TopoDS_Shape& theShape)
       }
       return true;
     }
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       // Check for non-manifold topology first of all:
       // have to use BRep_Tool::IsClosed() because it checks the face connectivity
       // inside the shape
@@ -98,13 +84,15 @@ bool StdPrs_ToolTriangulatedShape::IsClosed(const TopoDS_Shape& theShape)
       return true;
     }
     case TopAbs_SHELL:
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       // free faces / shell are not allowed
       return false;
     }
     case TopAbs_WIRE:
     case TopAbs_EDGE:
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       // ignore
       return true;
     }

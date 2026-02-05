@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -125,4 +124,3 @@ private:
   double                                   theUmax;
   gp_XYZ                                   theNorm;
 };
-

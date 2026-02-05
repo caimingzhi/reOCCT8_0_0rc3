@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_CurveType.hpp>
 #include <Geom_Curve.hpp>
@@ -128,4 +127,3 @@ private:
   EvaluatorVariant  myEvaluator;
   GeomAbs_CurveType myCurveType;
 };
-

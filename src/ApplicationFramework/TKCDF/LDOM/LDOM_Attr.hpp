@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Node.hpp>
 
 class LDOM_BasicAttribute;
@@ -52,4 +51,3 @@ protected:
 private:
   // ---------- PRIVATE FIELDS ----------
 };
-

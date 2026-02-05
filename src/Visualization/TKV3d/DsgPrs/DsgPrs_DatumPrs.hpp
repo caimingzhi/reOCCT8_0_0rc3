@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Drawer.hpp>
 #include <Prs3d_Presentation.hpp>
 #include <Prs3d_Root.hpp>

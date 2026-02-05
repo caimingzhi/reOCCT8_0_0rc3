@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define DISCRETPLUGIN(name)                                                                        \
   extern "C"                                                                                       \
   {                                                                                                \
@@ -17,4 +16,3 @@
   {                                                                                                \
     return name::Discret(theShape, theLinDeflection, theAngDeflection, theAlgo);                   \
   }
-

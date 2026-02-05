@@ -1,24 +1,9 @@
 #pragma once
 
-// Created on: 2016-06-20
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifndef _BVH_QuadTree_Header
-#define _BVH_QuadTree_Header
+  #define _BVH_QuadTree_Header
 
-#include <BVH_Tree.hpp>
+  #include <BVH_Tree.hpp>
 
 //! Specialization of quad BVH (QBVH) tree.
 template <class T, int N>
@@ -41,7 +26,6 @@ public: //! @name general methods
 };
 
 #endif // _BVH_QuadTree_Header
-
 
 #include <deque>
 #include <tuple>
@@ -178,47 +162,47 @@ public: //! @name methods specific to binary BVH
 
 namespace BVH
 {
-//! Internal function for recursive calculation of
-//! surface area heuristic (SAH) of the given tree.
-template <class T, int N>
-void EstimateSAH(const BVH_Tree<T, N, BVH_BinaryTree>* theTree,
-                 const int                             theNode,
-                 T                                     theProb,
-                 T&                                    theSAH)
-{
-  BVH_Box<T, N> aBox(theTree->MinPoint(theNode), theTree->MaxPoint(theNode));
-
-  if (theTree->IsOuter(theNode))
+  //! Internal function for recursive calculation of
+  //! surface area heuristic (SAH) of the given tree.
+  template <class T, int N>
+  void EstimateSAH(const BVH_Tree<T, N, BVH_BinaryTree>* theTree,
+                   const int                             theNode,
+                   T                                     theProb,
+                   T&                                    theSAH)
   {
-    theSAH += theProb * (theTree->EndPrimitive(theNode) - theTree->BegPrimitive(theNode) + 1);
-  }
-  else
-  {
-    theSAH += theProb * static_cast<T>(2.0);
+    BVH_Box<T, N> aBox(theTree->MinPoint(theNode), theTree->MaxPoint(theNode));
 
-    BVH_Box<T, N> aLftBox(theTree->MinPoint(theTree->template Child<0>(theNode)),
-                          theTree->MaxPoint(theTree->template Child<0>(theNode)));
-
-    if (theProb > 0.0)
+    if (theTree->IsOuter(theNode))
     {
-      EstimateSAH(theTree,
-                  theTree->template Child<0>(theNode),
-                  theProb * aLftBox.Area() / aBox.Area(),
-                  theSAH);
+      theSAH += theProb * (theTree->EndPrimitive(theNode) - theTree->BegPrimitive(theNode) + 1);
     }
-
-    BVH_Box<T, N> aRghBox(theTree->MinPoint(theTree->template Child<1>(theNode)),
-                          theTree->MaxPoint(theTree->template Child<1>(theNode)));
-
-    if (theProb > 0.0)
+    else
     {
-      EstimateSAH(theTree,
-                  theTree->template Child<1>(theNode),
-                  theProb * aRghBox.Area() / aBox.Area(),
-                  theSAH);
+      theSAH += theProb * static_cast<T>(2.0);
+
+      BVH_Box<T, N> aLftBox(theTree->MinPoint(theTree->template Child<0>(theNode)),
+                            theTree->MaxPoint(theTree->template Child<0>(theNode)));
+
+      if (theProb > 0.0)
+      {
+        EstimateSAH(theTree,
+                    theTree->template Child<0>(theNode),
+                    theProb * aLftBox.Area() / aBox.Area(),
+                    theSAH);
+      }
+
+      BVH_Box<T, N> aRghBox(theTree->MinPoint(theTree->template Child<1>(theNode)),
+                            theTree->MaxPoint(theTree->template Child<1>(theNode)));
+
+      if (theProb > 0.0)
+      {
+        EstimateSAH(theTree,
+                    theTree->template Child<1>(theNode),
+                    theProb * aRghBox.Area() / aBox.Area(),
+                    theSAH);
+      }
     }
   }
-}
 } // namespace BVH
 
 //=================================================================================================
@@ -309,4 +293,3 @@ BVH_Tree<T, N, BVH_QuadTree>* BVH_Tree<T, N, BVH_BinaryTree>::CollapseToQuadTree
 
   return aQBVH;
 }
-

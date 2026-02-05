@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Elips.hpp>
 #include <PrsDim_Relation.hpp>
 #include <PrsDim_KindOfSurface.hpp>
@@ -47,4 +46,3 @@ private:
 
   Standard_EXPORT void ComputeEdgeGeometry();
 };
-

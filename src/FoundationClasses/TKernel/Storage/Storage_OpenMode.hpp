@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Specifies opening modes for a file:
 //! -   Storage_VSNone : no mode is specified
 //! -   Storage_VSRead : the file is open for  reading operations
@@ -14,4 +13,3 @@ enum Storage_OpenMode
   Storage_VSWrite,
   Storage_VSReadWrite
 };
-

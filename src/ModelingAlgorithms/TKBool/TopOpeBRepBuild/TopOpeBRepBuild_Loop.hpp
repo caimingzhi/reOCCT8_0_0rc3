@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Boolean.hpp>
@@ -34,4 +33,3 @@ protected:
   TopoDS_Shape                  myShape;
   TopOpeBRepBuild_BlockIterator myBlockIterator;
 };
-

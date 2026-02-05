@@ -20,13 +20,13 @@
 
 namespace
 {
-//! Returns initial number of buckets for the map.
-static int initialNbBuckets(int theNbFacets)
-{
-  return theNbFacets > 0
-           ? theNbFacets * 2 // consider ratio 1:2 (NbTriangles:MergedNodes) as expected
-           : 995329;         // default initial value for mesh of unknown size
-}
+  //! Returns initial number of buckets for the map.
+  static int initialNbBuckets(int theNbFacets)
+  {
+    return theNbFacets > 0
+             ? theNbFacets * 2 // consider ratio 1:2 (NbTriangles:MergedNodes) as expected
+             : 995329;         // default initial value for mesh of unknown size
+  }
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_MergeNodesTool, Standard_Transient)

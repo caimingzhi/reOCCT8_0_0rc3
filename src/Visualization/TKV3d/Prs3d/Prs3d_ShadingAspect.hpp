@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_TypeOfFacingModel.hpp>
 #include <Graphic3d_AspectFillArea3d.hpp>
 #include <Graphic3d_MaterialAspect.hpp>
@@ -61,4 +60,3 @@ public:
 protected:
   occ::handle<Graphic3d_AspectFillArea3d> myAspect;
 };
-

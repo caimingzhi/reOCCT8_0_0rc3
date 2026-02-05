@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Lets you choose the manner in which you want to analyze an
 //! IGES or STEP file. Your analysis can be either message-oriented or
 //! entity-oriented. The specific values are as follows:
@@ -40,4 +39,3 @@ enum IFSelect_PrintCount
   IFSelect_Mapping,
   IFSelect_ResultCount
 };
-

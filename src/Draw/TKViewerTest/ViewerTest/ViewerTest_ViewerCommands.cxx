@@ -1,19 +1,3 @@
-// Created on: 1998-09-01
-// Created by: Robert COUBLANC
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #if defined(_WIN32)
   #include <windows.h>
 #endif
@@ -166,32 +150,33 @@ static TCollection_AsciiString getModuleCanvasId()
 
 namespace
 {
-static occ::handle<ViewerTest_Window>& VT_GetWindow()
-{
-  static occ::handle<ViewerTest_Window> aWindow;
-  return aWindow;
-}
+  static occ::handle<ViewerTest_Window>& VT_GetWindow()
+  {
+    static occ::handle<ViewerTest_Window> aWindow;
+    return aWindow;
+  }
 
-static occ::handle<Aspect_DisplayConnection>& GetDisplayConnection()
-{
-  static occ::handle<Aspect_DisplayConnection> aDisplayConnection;
-  return aDisplayConnection;
-}
+  static occ::handle<Aspect_DisplayConnection>& GetDisplayConnection()
+  {
+    static occ::handle<Aspect_DisplayConnection> aDisplayConnection;
+    return aDisplayConnection;
+  }
 
-using ViewerTest_ViewerCommandsViewMap =
-  NCollection_DoubleMap<TCollection_AsciiString, occ::handle<V3d_View>>;
-using ViewerTest_ViewerCommandsInteractiveContextMap =
-  NCollection_DoubleMap<TCollection_AsciiString, occ::handle<AIS_InteractiveContext>>;
-using ViewerTest_ViewerCommandsGraphicDriverMap =
-  NCollection_DoubleMap<TCollection_AsciiString, occ::handle<Graphic3d_GraphicDriver>>;
+  using ViewerTest_ViewerCommandsViewMap =
+    NCollection_DoubleMap<TCollection_AsciiString, occ::handle<V3d_View>>;
+  using ViewerTest_ViewerCommandsInteractiveContextMap =
+    NCollection_DoubleMap<TCollection_AsciiString, occ::handle<AIS_InteractiveContext>>;
+  using ViewerTest_ViewerCommandsGraphicDriverMap =
+    NCollection_DoubleMap<TCollection_AsciiString, occ::handle<Graphic3d_GraphicDriver>>;
 
-static void SetDisplayConnection(const occ::handle<Aspect_DisplayConnection>& theDisplayConnection)
-{
-  GetDisplayConnection() = theDisplayConnection;
-}
+  static void SetDisplayConnection(
+    const occ::handle<Aspect_DisplayConnection>& theDisplayConnection)
+  {
+    GetDisplayConnection() = theDisplayConnection;
+  }
 
-static ViewerTest_ViewerCommandsInteractiveContextMap ViewerTest_myContexts;
-static ViewerTest_ViewerCommandsGraphicDriverMap      ViewerTest_myDrivers;
+  static ViewerTest_ViewerCommandsInteractiveContextMap ViewerTest_myContexts;
+  static ViewerTest_ViewerCommandsGraphicDriverMap      ViewerTest_myDrivers;
 } // namespace
 
 ViewerTest_ViewerCommandsViewMap ViewerTest_myViews;
@@ -2233,12 +2218,14 @@ static LRESULT WINAPI AdvViewerWindowProc(HWND   theWinHandle,
 
   switch (theMsg)
   {
-    case WM_CLOSE: {
+    case WM_CLOSE:
+    {
       // Delete view from map of views
       ViewerTest::RemoveView(FindViewIdByWindowHandle(theWinHandle));
       return 0;
     }
-    case WM_ACTIVATE: {
+    case WM_ACTIVATE:
+    {
       if (LOWORD(wParam) == WA_CLICKACTIVE || LOWORD(wParam) == WA_ACTIVE
           || ViewerTest::CurrentView().IsNull())
       {
@@ -2250,7 +2237,8 @@ static LRESULT WINAPI AdvViewerWindowProc(HWND   theWinHandle,
       }
       return 0;
     }
-    default: {
+    default:
+    {
       const occ::handle<V3d_View>& aView = ViewerTest::CurrentView();
       if (!aView.IsNull() && !VT_GetWindow().IsNull())
       {
@@ -2323,7 +2311,8 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
   // Handle event for the chosen display connection
   switch (aReport.type)
   {
-    case ClientMessage: {
+    case ClientMessage:
+    {
       if ((Atom)aReport.xclient.data.l[0]
           == GetDisplayConnection()->GetAtom(Aspect_XA_DELETE_WINDOW))
       {
@@ -2333,7 +2322,8 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
       }
       break;
     }
-    case FocusIn: {
+    case FocusIn:
+    {
       // Activate inactive view
       Window aWindow = !VT_GetWindow().IsNull() ? VT_GetWindow()->XWindow() : 0;
       if (aWindow != aReport.xfocus.window)
@@ -2342,7 +2332,8 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
       }
       break;
     }
-    default: {
+    default:
+    {
       const occ::handle<V3d_View>& aView = ViewerTest::CurrentView();
       if (!aView.IsNull() && !VT_GetWindow().IsNull())
       {
@@ -5719,7 +5710,8 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     switch (aBufferType)
     {
       default:
-      case Graphic3d_BT_RGB: {
+      case Graphic3d_BT_RGB:
+      {
         if (toShowHls)
         {
           theDI << aColor.GetRGB().Hue() << " " << aColor.GetRGB().Light() << " "
@@ -5738,7 +5730,8 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         }
         break;
       }
-      case Graphic3d_BT_RGBA: {
+      case Graphic3d_BT_RGBA:
+      {
         const NCollection_Vec4<float> aVec4 =
           toShow_sRGB
             ? Quantity_ColorRGBA::Convert_LinearRGB_To_sRGB((NCollection_Vec4<float>)aColor)
@@ -5746,7 +5739,8 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         theDI << aVec4.r() << " " << aVec4.g() << " " << aVec4.b() << " " << aVec4.a();
         break;
       }
-      case Graphic3d_BT_Depth: {
+      case Graphic3d_BT_Depth:
+      {
         theDI << aColor.GetRGB().Red();
         break;
       }
@@ -5824,7 +5818,8 @@ public:
   {
     switch (theMode)
     {
-      case 0: {
+      case 0:
+      {
         occ::handle<Graphic3d_Group> aGroup = thePrs->NewGroup();
         aGroup->AddPrimitiveArray(myTris);
         aGroup->SetGroupPrimitivesAspect(myDrawer->ShadingAspect()->Aspect());
@@ -5832,7 +5827,8 @@ public:
         aGroup->SetGroupPrimitivesAspect(myDrawer->LineAspect()->Aspect());
         return;
       }
-      case 1: {
+      case 1:
+      {
         Prs3d_Text::Draw(thePrs->NewGroup(),
                          myDrawer->TextAspect(),
                          myLabel,
@@ -6536,244 +6532,244 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
 
 namespace
 {
-//! Global map storing all animations registered in ViewerTest.
-static NCollection_DataMap<TCollection_AsciiString, occ::handle<AIS_Animation>>
-  ViewerTest_AnimationTimelineMap;
+  //! Global map storing all animations registered in ViewerTest.
+  static NCollection_DataMap<TCollection_AsciiString, occ::handle<AIS_Animation>>
+    ViewerTest_AnimationTimelineMap;
 
-//! The animation calling the Draw Harness command.
-class ViewerTest_AnimationProc : public AIS_Animation
-{
-  DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationProc, AIS_Animation)
-public:
-  //! Main constructor.
-  ViewerTest_AnimationProc(const TCollection_AsciiString& theAnimationName,
-                           Draw_Interpretor*              theDI,
-                           const TCollection_AsciiString& theCommand)
-      : AIS_Animation(theAnimationName),
-        myDrawInter(theDI),
-        myCommand(theCommand)
+  //! The animation calling the Draw Harness command.
+  class ViewerTest_AnimationProc : public AIS_Animation
   {
-    //
-  }
-
-protected:
-  //! Evaluate the command.
-  void update(const AIS_AnimationProgress& theProgress) override
-  {
-    TCollection_AsciiString aCmd = myCommand;
-    replace(aCmd, "%pts", TCollection_AsciiString(theProgress.Pts));
-    replace(aCmd, "%localpts", TCollection_AsciiString(theProgress.LocalPts));
-    replace(aCmd, "%ptslocal", TCollection_AsciiString(theProgress.LocalPts));
-    replace(aCmd, "%normalized", TCollection_AsciiString(theProgress.LocalNormalized));
-    replace(aCmd, "%localnormalized", TCollection_AsciiString(theProgress.LocalNormalized));
-    myDrawInter->Eval(aCmd.ToCString());
-  }
-
-  //! Find the keyword in the command and replace it with value.
-  //! @return the position of the keyword to pass value
-  void replace(TCollection_AsciiString&       theCmd,
-               const TCollection_AsciiString& theKey,
-               const TCollection_AsciiString& theVal)
-  {
-    TCollection_AsciiString aCmd(theCmd);
-    aCmd.LowerCase();
-    const int aPos = aCmd.Search(theKey);
-    if (aPos == -1)
+    DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationProc, AIS_Animation)
+  public:
+    //! Main constructor.
+    ViewerTest_AnimationProc(const TCollection_AsciiString& theAnimationName,
+                             Draw_Interpretor*              theDI,
+                             const TCollection_AsciiString& theCommand)
+        : AIS_Animation(theAnimationName),
+          myDrawInter(theDI),
+          myCommand(theCommand)
     {
-      return;
+      //
     }
 
-    TCollection_AsciiString aPart1, aPart2;
-    int                     aPart1To = aPos - 1;
-    if (aPart1To >= 1 && aPart1To <= theCmd.Length())
+  protected:
+    //! Evaluate the command.
+    void update(const AIS_AnimationProgress& theProgress) override
     {
-      aPart1 = theCmd.SubString(1, aPart1To);
+      TCollection_AsciiString aCmd = myCommand;
+      replace(aCmd, "%pts", TCollection_AsciiString(theProgress.Pts));
+      replace(aCmd, "%localpts", TCollection_AsciiString(theProgress.LocalPts));
+      replace(aCmd, "%ptslocal", TCollection_AsciiString(theProgress.LocalPts));
+      replace(aCmd, "%normalized", TCollection_AsciiString(theProgress.LocalNormalized));
+      replace(aCmd, "%localnormalized", TCollection_AsciiString(theProgress.LocalNormalized));
+      myDrawInter->Eval(aCmd.ToCString());
     }
 
-    int aPart2From = aPos + theKey.Length();
-    if (aPart2From >= 1 && aPart2From <= theCmd.Length())
+    //! Find the keyword in the command and replace it with value.
+    //! @return the position of the keyword to pass value
+    void replace(TCollection_AsciiString&       theCmd,
+                 const TCollection_AsciiString& theKey,
+                 const TCollection_AsciiString& theVal)
     {
-      aPart2 = theCmd.SubString(aPart2From, theCmd.Length());
+      TCollection_AsciiString aCmd(theCmd);
+      aCmd.LowerCase();
+      const int aPos = aCmd.Search(theKey);
+      if (aPos == -1)
+      {
+        return;
+      }
+
+      TCollection_AsciiString aPart1, aPart2;
+      int                     aPart1To = aPos - 1;
+      if (aPart1To >= 1 && aPart1To <= theCmd.Length())
+      {
+        aPart1 = theCmd.SubString(1, aPart1To);
+      }
+
+      int aPart2From = aPos + theKey.Length();
+      if (aPart2From >= 1 && aPart2From <= theCmd.Length())
+      {
+        aPart2 = theCmd.SubString(aPart2From, theCmd.Length());
+      }
+
+      theCmd = aPart1 + theVal + aPart2;
     }
 
-    theCmd = aPart1 + theVal + aPart2;
-  }
+  protected:
+    Draw_Interpretor*       myDrawInter;
+    TCollection_AsciiString myCommand;
+  };
 
-protected:
-  Draw_Interpretor*       myDrawInter;
-  TCollection_AsciiString myCommand;
-};
-
-//! Auxiliary animation holder.
-class ViewerTest_AnimationHolder : public AIS_AnimationCamera
-{
-  DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationHolder, AIS_AnimationCamera)
-public:
-  ViewerTest_AnimationHolder(const occ::handle<AIS_Animation>& theAnim,
-                             const occ::handle<V3d_View>&      theView,
-                             const bool                        theIsFreeView)
-      : AIS_AnimationCamera("ViewerTest_AnimationHolder", occ::handle<V3d_View>())
+  //! Auxiliary animation holder.
+  class ViewerTest_AnimationHolder : public AIS_AnimationCamera
   {
-    if (theAnim->Timer().IsNull())
+    DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationHolder, AIS_AnimationCamera)
+  public:
+    ViewerTest_AnimationHolder(const occ::handle<AIS_Animation>& theAnim,
+                               const occ::handle<V3d_View>&      theView,
+                               const bool                        theIsFreeView)
+        : AIS_AnimationCamera("ViewerTest_AnimationHolder", occ::handle<V3d_View>())
     {
-      theAnim->SetTimer(new Media_Timer());
+      if (theAnim->Timer().IsNull())
+      {
+        theAnim->SetTimer(new Media_Timer());
+      }
+      myTimer = theAnim->Timer();
+      myView  = theView;
+      if (theIsFreeView)
+      {
+        myCamStart = new Graphic3d_Camera(theView->Camera());
+      }
+      Add(theAnim);
     }
-    myTimer = theAnim->Timer();
-    myView  = theView;
-    if (theIsFreeView)
-    {
-      myCamStart = new Graphic3d_Camera(theView->Camera());
-    }
-    Add(theAnim);
-  }
 
-  //! Start playback.
-  void StartTimer(const double theStartPts,
-                  const double thePlaySpeed,
-                  const bool   theToUpdate,
-                  const bool   theToStopTimer) override
-  {
-    base_type::StartTimer(theStartPts, thePlaySpeed, theToUpdate, theToStopTimer);
-    if (theToStopTimer)
+    //! Start playback.
+    void StartTimer(const double theStartPts,
+                    const double thePlaySpeed,
+                    const bool   theToUpdate,
+                    const bool   theToStopTimer) override
     {
+      base_type::StartTimer(theStartPts, thePlaySpeed, theToUpdate, theToStopTimer);
+      if (theToStopTimer)
+      {
+        abortPlayback();
+      }
+    }
+
+    //! Pause animation.
+    void Pause() override
+    {
+      myState = AnimationState_Paused;
+      // default implementation would stop all children,
+      // but we want to keep wrapped animation paused
+      myAnimations.First()->Pause();
       abortPlayback();
     }
-  }
 
-  //! Pause animation.
-  void Pause() override
-  {
-    myState = AnimationState_Paused;
-    // default implementation would stop all children,
-    // but we want to keep wrapped animation paused
-    myAnimations.First()->Pause();
-    abortPlayback();
-  }
-
-  //! Stop animation.
-  void Stop() override
-  {
-    base_type::Stop();
-    abortPlayback();
-  }
-
-  //! Process one step of the animation according to the input time progress, including all
-  //! children.
-  void updateWithChildren(const AIS_AnimationProgress& thePosition) override
-  {
-    occ::handle<V3d_View> aView = myView;
-    if (!aView.IsNull() && !myCamStart.IsNull())
+    //! Stop animation.
+    void Stop() override
     {
-      myCamStart->Copy(aView->Camera());
+      base_type::Stop();
+      abortPlayback();
     }
-    base_type::updateWithChildren(thePosition);
-    if (!aView.IsNull() && !myCamStart.IsNull())
+
+    //! Process one step of the animation according to the input time progress, including all
+    //! children.
+    void updateWithChildren(const AIS_AnimationProgress& thePosition) override
     {
-      aView->Camera()->Copy(myCamStart);
+      occ::handle<V3d_View> aView = myView;
+      if (!aView.IsNull() && !myCamStart.IsNull())
+      {
+        myCamStart->Copy(aView->Camera());
+      }
+      base_type::updateWithChildren(thePosition);
+      if (!aView.IsNull() && !myCamStart.IsNull())
+      {
+        aView->Camera()->Copy(myCamStart);
+      }
     }
-  }
 
-private:
-  void abortPlayback()
-  {
-    if (!myView.IsNull())
+  private:
+    void abortPlayback()
     {
-      myView.Nullify();
+      if (!myView.IsNull())
+      {
+        myView.Nullify();
+      }
     }
-  }
-};
+  };
 
-//! Replace the animation with the new one.
-static void replaceAnimation(const occ::handle<AIS_Animation>& theParentAnimation,
-                             occ::handle<AIS_Animation>&       theAnimation,
-                             const occ::handle<AIS_Animation>& theAnimationNew)
-{
-  theAnimationNew->CopyFrom(theAnimation);
-  if (!theParentAnimation.IsNull())
+  //! Replace the animation with the new one.
+  static void replaceAnimation(const occ::handle<AIS_Animation>& theParentAnimation,
+                               occ::handle<AIS_Animation>&       theAnimation,
+                               const occ::handle<AIS_Animation>& theAnimationNew)
   {
-    theParentAnimation->Replace(theAnimation, theAnimationNew);
-  }
-  else
-  {
-    ViewerTest_AnimationTimelineMap.UnBind(theAnimationNew->Name());
-    ViewerTest_AnimationTimelineMap.Bind(theAnimationNew->Name(), theAnimationNew);
-  }
-  theAnimation = theAnimationNew;
-}
-
-//! Parse the point.
-static bool parseXYZ(const char** theArgVec, gp_XYZ& thePnt)
-{
-  const TCollection_AsciiString anXYZ[3] = {theArgVec[0], theArgVec[1], theArgVec[2]};
-  if (!anXYZ[0].IsRealValue(true) || !anXYZ[1].IsRealValue(true) || !anXYZ[2].IsRealValue(true))
-  {
-    return false;
+    theAnimationNew->CopyFrom(theAnimation);
+    if (!theParentAnimation.IsNull())
+    {
+      theParentAnimation->Replace(theAnimation, theAnimationNew);
+    }
+    else
+    {
+      ViewerTest_AnimationTimelineMap.UnBind(theAnimationNew->Name());
+      ViewerTest_AnimationTimelineMap.Bind(theAnimationNew->Name(), theAnimationNew);
+    }
+    theAnimation = theAnimationNew;
   }
 
-  thePnt.SetCoord(anXYZ[0].RealValue(), anXYZ[1].RealValue(), anXYZ[2].RealValue());
-  return true;
-}
-
-//! Parse the quaternion.
-static bool parseQuaternion(const char** theArgVec, gp_Quaternion& theQRot)
-{
-  const TCollection_AsciiString anXYZW[4] = {theArgVec[0],
-                                             theArgVec[1],
-                                             theArgVec[2],
-                                             theArgVec[3]};
-  if (!anXYZW[0].IsRealValue(true) || !anXYZW[1].IsRealValue(true) || !anXYZW[2].IsRealValue(true)
-      || !anXYZW[3].IsRealValue(true))
+  //! Parse the point.
+  static bool parseXYZ(const char** theArgVec, gp_XYZ& thePnt)
   {
-    return false;
-  }
-
-  theQRot.Set(anXYZW[0].RealValue(),
-              anXYZW[1].RealValue(),
-              anXYZW[2].RealValue(),
-              anXYZW[3].RealValue());
-  return true;
-}
-
-//! Auxiliary class for flipping image upside-down.
-class ImageFlipper
-{
-public:
-  //! Empty constructor.
-  ImageFlipper()
-      : myTmp(NCollection_BaseAllocator::CommonBaseAllocator())
-  {
-  }
-
-  //! Perform flipping.
-  bool FlipY(Image_PixMap& theImage)
-  {
-    if (theImage.IsEmpty() || theImage.SizeX() == 0 || theImage.SizeY() == 0)
+    const TCollection_AsciiString anXYZ[3] = {theArgVec[0], theArgVec[1], theArgVec[2]};
+    if (!anXYZ[0].IsRealValue(true) || !anXYZ[1].IsRealValue(true) || !anXYZ[2].IsRealValue(true))
     {
       return false;
     }
 
-    const size_t aRowSize = theImage.SizeRowBytes();
-    if (myTmp.Size() < aRowSize && !myTmp.Allocate(aRowSize))
-    {
-      return false;
-    }
-
-    // for odd height middle row should be left as is
-    size_t aNbRowsHalf = theImage.SizeY() / 2;
-    for (size_t aRowT = 0, aRowB = theImage.SizeY() - 1; aRowT < aNbRowsHalf; ++aRowT, --aRowB)
-    {
-      uint8_t* aTop = theImage.ChangeRow(aRowT);
-      uint8_t* aBot = theImage.ChangeRow(aRowB);
-      memcpy(myTmp.ChangeData(), aTop, aRowSize);
-      memcpy(aTop, aBot, aRowSize);
-      memcpy(aBot, myTmp.Data(), aRowSize);
-    }
+    thePnt.SetCoord(anXYZ[0].RealValue(), anXYZ[1].RealValue(), anXYZ[2].RealValue());
     return true;
   }
 
-private:
-  NCollection_Buffer myTmp;
-};
+  //! Parse the quaternion.
+  static bool parseQuaternion(const char** theArgVec, gp_Quaternion& theQRot)
+  {
+    const TCollection_AsciiString anXYZW[4] = {theArgVec[0],
+                                               theArgVec[1],
+                                               theArgVec[2],
+                                               theArgVec[3]};
+    if (!anXYZW[0].IsRealValue(true) || !anXYZW[1].IsRealValue(true) || !anXYZW[2].IsRealValue(true)
+        || !anXYZW[3].IsRealValue(true))
+    {
+      return false;
+    }
+
+    theQRot.Set(anXYZW[0].RealValue(),
+                anXYZW[1].RealValue(),
+                anXYZW[2].RealValue(),
+                anXYZW[3].RealValue());
+    return true;
+  }
+
+  //! Auxiliary class for flipping image upside-down.
+  class ImageFlipper
+  {
+  public:
+    //! Empty constructor.
+    ImageFlipper()
+        : myTmp(NCollection_BaseAllocator::CommonBaseAllocator())
+    {
+    }
+
+    //! Perform flipping.
+    bool FlipY(Image_PixMap& theImage)
+    {
+      if (theImage.IsEmpty() || theImage.SizeX() == 0 || theImage.SizeY() == 0)
+      {
+        return false;
+      }
+
+      const size_t aRowSize = theImage.SizeRowBytes();
+      if (myTmp.Size() < aRowSize && !myTmp.Allocate(aRowSize))
+      {
+        return false;
+      }
+
+      // for odd height middle row should be left as is
+      size_t aNbRowsHalf = theImage.SizeY() / 2;
+      for (size_t aRowT = 0, aRowB = theImage.SizeY() - 1; aRowT < aNbRowsHalf; ++aRowT, --aRowB)
+      {
+        uint8_t* aTop = theImage.ChangeRow(aRowT);
+        uint8_t* aBot = theImage.ChangeRow(aRowB);
+        memcpy(myTmp.ChangeData(), aTop, aRowSize);
+        memcpy(aTop, aBot, aRowSize);
+        memcpy(aBot, myTmp.Data(), aRowSize);
+      }
+      return true;
+    }
+
+  private:
+    NCollection_Buffer myTmp;
+  };
 
 } // namespace
 
@@ -8113,37 +8109,38 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
 
 namespace
 {
-typedef NCollection_DataMap<TCollection_AsciiString, occ::handle<Graphic3d_ClipPlane>> MapOfPlanes;
+  typedef NCollection_DataMap<TCollection_AsciiString, occ::handle<Graphic3d_ClipPlane>>
+    MapOfPlanes;
 
-//! Remove registered clipping plane from all views and objects.
-static void removePlane(MapOfPlanes& theRegPlanes, const TCollection_AsciiString& theName)
-{
-  occ::handle<Graphic3d_ClipPlane> aClipPlane;
-  if (!theRegPlanes.Find(theName, aClipPlane))
+  //! Remove registered clipping plane from all views and objects.
+  static void removePlane(MapOfPlanes& theRegPlanes, const TCollection_AsciiString& theName)
   {
-    Message::SendWarning("Warning: no such plane");
-    return;
-  }
+    occ::handle<Graphic3d_ClipPlane> aClipPlane;
+    if (!theRegPlanes.Find(theName, aClipPlane))
+    {
+      Message::SendWarning("Warning: no such plane");
+      return;
+    }
 
-  theRegPlanes.UnBind(theName);
-  for (NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>::Iterator
-         anIObjIt(GetMapOfAIS());
-       anIObjIt.More();
-       anIObjIt.Next())
-  {
-    const occ::handle<AIS_InteractiveObject>& aPrs = anIObjIt.Key1();
-    aPrs->RemoveClipPlane(aClipPlane);
-  }
+    theRegPlanes.UnBind(theName);
+    for (NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>,
+                               TCollection_AsciiString>::Iterator anIObjIt(GetMapOfAIS());
+         anIObjIt.More();
+         anIObjIt.Next())
+    {
+      const occ::handle<AIS_InteractiveObject>& aPrs = anIObjIt.Key1();
+      aPrs->RemoveClipPlane(aClipPlane);
+    }
 
-  for (ViewerTest_ViewerCommandsViewMap::Iterator aViewIt(ViewerTest_myViews); aViewIt.More();
-       aViewIt.Next())
-  {
-    const occ::handle<V3d_View>& aView = aViewIt.Key2();
-    aView->RemoveClipPlane(aClipPlane);
-  }
+    for (ViewerTest_ViewerCommandsViewMap::Iterator aViewIt(ViewerTest_myViews); aViewIt.More();
+         aViewIt.Next())
+    {
+      const occ::handle<V3d_View>& aView = aViewIt.Key2();
+      aView->RemoveClipPlane(aClipPlane);
+    }
 
-  ViewerTest::RedrawAllViews();
-}
+    ViewerTest::RedrawAllViews();
+  }
 } // namespace
 
 //=================================================================================================
@@ -9296,11 +9293,13 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
       TCollection_AsciiString aMode;
       switch (aView->RenderingParams().StereoMode)
       {
-        case Graphic3d_StereoMode_QuadBuffer: {
+        case Graphic3d_StereoMode_QuadBuffer:
+        {
           aMode = "quadBuffer";
           break;
         }
-        case Graphic3d_StereoMode_RowInterlaced: {
+        case Graphic3d_StereoMode_RowInterlaced:
+        {
           aMode = "rowInterlaced";
           if (aView->RenderingParams().ToSmoothInterlacing)
           {
@@ -9308,7 +9307,8 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
           }
           break;
         }
-        case Graphic3d_StereoMode_ColumnInterlaced: {
+        case Graphic3d_StereoMode_ColumnInterlaced:
+        {
           aMode = "columnInterlaced";
           if (aView->RenderingParams().ToSmoothInterlacing)
           {
@@ -9316,7 +9316,8 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
           }
           break;
         }
-        case Graphic3d_StereoMode_ChessBoard: {
+        case Graphic3d_StereoMode_ChessBoard:
+        {
           aMode = "chessBoard";
           if (aView->RenderingParams().ToSmoothInterlacing)
           {
@@ -9324,23 +9325,28 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
           }
           break;
         }
-        case Graphic3d_StereoMode_SideBySide: {
+        case Graphic3d_StereoMode_SideBySide:
+        {
           aMode = "sideBySide";
           break;
         }
-        case Graphic3d_StereoMode_OverUnder: {
+        case Graphic3d_StereoMode_OverUnder:
+        {
           aMode = "overUnder";
           break;
         }
-        case Graphic3d_StereoMode_SoftPageFlip: {
+        case Graphic3d_StereoMode_SoftPageFlip:
+        {
           aMode = "softPageFlip";
           break;
         }
-        case Graphic3d_StereoMode_OpenVR: {
+        case Graphic3d_StereoMode_OpenVR:
+        {
           aMode = "openVR";
           break;
         }
-        case Graphic3d_StereoMode_Anaglyph: {
+        case Graphic3d_StereoMode_Anaglyph:
+        {
           aMode = "anaglyph";
           switch (aView->RenderingParams().AnaglyphFilter)
           {
@@ -9665,12 +9671,14 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
             << " [" << aLight->GetId() << "] " << (aLight->IsEnabled() ? "ON" : "OFF") << "\n";
       switch (aLight->Type())
       {
-        case Graphic3d_TypeOfLightSource_Ambient: {
+        case Graphic3d_TypeOfLightSource_Ambient:
+        {
           theDi << "  Type:       Ambient\n"
                 << "  Intensity:  " << aLight->Intensity() << "\n";
           break;
         }
-        case Graphic3d_TypeOfLightSource_Directional: {
+        case Graphic3d_TypeOfLightSource_Directional:
+        {
           theDi << "  Type:       Directional\n"
                 << "  Intensity:  " << aLight->Intensity() << "\n"
                 << "  Headlight:  " << (aLight->Headlight() ? "TRUE" : "FALSE") << "\n"
@@ -9680,7 +9688,8 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
                 << aLight->PackedDirection().y() << " " << aLight->PackedDirection().z() << "\n";
           break;
         }
-        case Graphic3d_TypeOfLightSource_Positional: {
+        case Graphic3d_TypeOfLightSource_Positional:
+        {
           theDi << "  Type:       Positional\n"
                 << "  Intensity:  " << aLight->Intensity() << "\n"
                 << "  Headlight:  " << (aLight->Headlight() ? "TRUE" : "FALSE") << "\n"
@@ -9693,7 +9702,8 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
                 << "  Range:      " << aLight->Range() << "\n";
           break;
         }
-        case Graphic3d_TypeOfLightSource_Spot: {
+        case Graphic3d_TypeOfLightSource_Spot:
+        {
           theDi << "  Type:       Spot\n"
                 << "  Intensity:  " << aLight->Intensity() << "\n"
                 << "  Headlight:  " << (aLight->Headlight() ? "TRUE" : "FALSE") << "\n"
@@ -9709,7 +9719,8 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
                 << "  Range:      " << aLight->Range() << "\n";
           break;
         }
-        default: {
+        default:
+        {
           theDi << "  Type:       UNKNOWN\n";
           break;
         }
@@ -9756,19 +9767,23 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
       }
       switch (aType)
       {
-        case Graphic3d_TypeOfLightSource_Ambient: {
+        case Graphic3d_TypeOfLightSource_Ambient:
+        {
           aLightNew = new V3d_AmbientLight();
           break;
         }
-        case Graphic3d_TypeOfLightSource_Directional: {
+        case Graphic3d_TypeOfLightSource_Directional:
+        {
           aLightNew = new V3d_DirectionalLight();
           break;
         }
-        case Graphic3d_TypeOfLightSource_Spot: {
+        case Graphic3d_TypeOfLightSource_Spot:
+        {
           aLightNew = new V3d_SpotLight(gp_Pnt(0.0, 0.0, 0.0));
           break;
         }
-        case Graphic3d_TypeOfLightSource_Positional: {
+        case Graphic3d_TypeOfLightSource_Positional:
+        {
           aLightNew = new V3d_PositionalLight(gp_Pnt(0.0, 0.0, 0.0));
           break;
         }
@@ -12032,28 +12047,28 @@ static int VXRotate(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-//! Structure for setting AIS_Manipulator::SetPart() property.
-struct ManipAxisModeOnOff
-{
-  int                 Axis;
-  AIS_ManipulatorMode Mode;
-  bool                ToEnable;
-
-  ManipAxisModeOnOff()
-      : Axis(-1),
-        Mode(AIS_MM_None),
-        ToEnable(false)
+  //! Structure for setting AIS_Manipulator::SetPart() property.
+  struct ManipAxisModeOnOff
   {
-  }
-};
+    int                 Axis;
+    AIS_ManipulatorMode Mode;
+    bool                ToEnable;
 
-enum ManipAjustPosition
-{
-  ManipAjustPosition_Off,
-  ManipAjustPosition_Center,
-  ManipAjustPosition_Location,
-  ManipAjustPosition_ShapeLocation,
-};
+    ManipAxisModeOnOff()
+        : Axis(-1),
+          Mode(AIS_MM_None),
+          ToEnable(false)
+    {
+    }
+  };
+
+  enum ManipAjustPosition
+  {
+    ManipAjustPosition_Off,
+    ManipAjustPosition_Center,
+    ManipAjustPosition_Location,
+    ManipAjustPosition_ShapeLocation,
+  };
 } // namespace
 
 //=================================================================================================
@@ -12475,14 +12490,17 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     const gp_Trsf aBaseTrsf = aManipulator->Object()->LocalTransformation();
     switch (anAttachPos)
     {
-      case ManipAjustPosition_Off: {
+      case ManipAjustPosition_Off:
+      {
         break;
       }
-      case ManipAjustPosition_Location: {
+      case ManipAjustPosition_Location:
+      {
         aPosition = gp::XOY().Transformed(aBaseTrsf);
         break;
       }
-      case ManipAjustPosition_ShapeLocation: {
+      case ManipAjustPosition_ShapeLocation:
+      {
         if (occ::handle<AIS_Shape> aShapePrs = occ::down_cast<AIS_Shape>(aManipulator->Object()))
         {
           aPosition = gp::XOY().Transformed(aBaseTrsf * aShapePrs->Shape().Location());
@@ -12494,7 +12512,8 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
         }
         break;
       }
-      case ManipAjustPosition_Center: {
+      case ManipAjustPosition_Center:
+      {
         Bnd_Box aBox;
         for (NCollection_HSequence<occ::handle<AIS_InteractiveObject>>::Iterator anObjIter(
                *aManipulator->Objects());
@@ -13640,9 +13659,8 @@ void ViewerTest::ViewerCommands(Draw_Interpretor& theCommands)
   const char* aGroup    = "AIS Viewer";
   const char* aFileName = __FILE__;
   auto        addCmd =
-    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp) {
-      theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup);
-    };
+    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
+  { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
   addCmd("vdriver", VDriver, /* [vdriver] */ R"(
 vdriver [-list] [-default DriverName] [-load DriverName]

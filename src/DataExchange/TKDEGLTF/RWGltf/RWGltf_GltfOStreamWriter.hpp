@@ -1,6 +1,5 @@
 #pragma once
 
-
 // disable warnings, occurs in rapidjson
 #include <Standard_WarningsDisable.hpp>
 #include <rapidjson/prettywriter.h>
@@ -17,4 +16,3 @@ public:
   {
   }
 };
-

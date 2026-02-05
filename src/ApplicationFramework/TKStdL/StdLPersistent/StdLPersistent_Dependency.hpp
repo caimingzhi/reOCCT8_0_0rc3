@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HString.hpp>
 #include <StdLPersistent_HArray1.hpp>
@@ -56,4 +55,3 @@ inline const char* StdLPersistent_Dependency::instance<TDataStd_Relation>::PName
 {
   return "PDataStd_Relation";
 }
-

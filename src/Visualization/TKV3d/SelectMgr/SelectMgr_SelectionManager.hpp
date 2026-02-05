@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_ViewerSelector.hpp>
 #include <SelectMgr_TypeOfUpdate.hpp>
 
@@ -119,4 +118,3 @@ private:
   occ::handle<SelectMgr_ViewerSelector>                    mySelector;
   NCollection_Map<occ::handle<SelectMgr_SelectableObject>> myGlobal;
 };
-

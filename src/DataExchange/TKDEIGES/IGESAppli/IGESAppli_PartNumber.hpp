@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -55,4 +54,3 @@ private:
   occ::handle<TCollection_HAsciiString> theVendorNumber;
   occ::handle<TCollection_HAsciiString> theInternalNumber;
 };
-

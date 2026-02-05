@@ -22,132 +22,132 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-2;
+  constexpr double THE_TOLERANCE = 1.0e-2;
 
-// ============================================================================
-// Test function classes
-// ============================================================================
+  // ============================================================================
+  // Test function classes
+  // ============================================================================
 
-//! Sphere function: f(x) = sum(x_i^2)
-struct SphereFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Sphere function: f(x) = sum(x_i^2)
+  struct SphereFunc
   {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i);
+      }
+      return true;
     }
-    return true;
-  }
-};
+  };
 
-//! Rastrigin function - highly multimodal
-struct RastriginFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Rastrigin function - highly multimodal
+  struct RastriginFunc
   {
-    const int    aN  = theX.Length();
-    const double aPI = M_PI;
-    theF             = 10.0 * aN;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i) - 10.0 * std::cos(2.0 * aPI * theX(i));
+      const int    aN  = theX.Length();
+      const double aPI = M_PI;
+      theF             = 10.0 * aN;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i) - 10.0 * std::cos(2.0 * aPI * theX(i));
+      }
+      return true;
     }
-    return true;
-  }
-};
+  };
 
-//! Rosenbrock function
-struct RosenbrockFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Rosenbrock function
+  struct RosenbrockFunc
   {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aY - aX * aX;
-    const double aT2 = 1.0 - aX;
-    theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-};
-
-//! Booth function
-struct BoothFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-};
-
-//! Himmelblau function - has 4 identical local minima
-//! f(x,y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
-struct HimmelblauFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX * aX + aY - 11.0;
-    const double aT2 = aX + aY * aY - 7.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-};
-
-//! Goldstein-Price function - complex multimodal
-struct GoldsteinPriceFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX = theX(1);
-    const double aY = theX(2);
-
-    const double aA =
-      1.0
-      + (aX + aY + 1.0) * (aX + aY + 1.0)
-          * (19.0 - 14.0 * aX + 3.0 * aX * aX - 14.0 * aY + 6.0 * aX * aY + 3.0 * aY * aY);
-
-    const double aB =
-      30.0
-      + (2.0 * aX - 3.0 * aY) * (2.0 * aX - 3.0 * aY)
-          * (18.0 - 32.0 * aX + 12.0 * aX * aX + 48.0 * aY - 36.0 * aX * aY + 27.0 * aY * aY);
-
-    theF = aA * aB;
-    return true;
-  }
-};
-
-// Old API adapter
-class SphereFuncOld : public math_MultipleVarFunction
-{
-private:
-  int myN;
-
-public:
-  SphereFuncOld(int theN)
-      : myN(theN)
-  {
-  }
-
-  int NbVariables() const override { return myN; }
-
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aY - aX * aX;
+      const double aT2 = 1.0 - aX;
+      theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
+      return true;
     }
-    return true;
-  }
-};
+  };
+
+  //! Booth function
+  struct BoothFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
+  };
+
+  //! Himmelblau function - has 4 identical local minima
+  //! f(x,y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
+  struct HimmelblauFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX * aX + aY - 11.0;
+      const double aT2 = aX + aY * aY - 7.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
+  };
+
+  //! Goldstein-Price function - complex multimodal
+  struct GoldsteinPriceFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX = theX(1);
+      const double aY = theX(2);
+
+      const double aA =
+        1.0
+        + (aX + aY + 1.0) * (aX + aY + 1.0)
+            * (19.0 - 14.0 * aX + 3.0 * aX * aX - 14.0 * aY + 6.0 * aX * aY + 3.0 * aY * aY);
+
+      const double aB =
+        30.0
+        + (2.0 * aX - 3.0 * aY) * (2.0 * aX - 3.0 * aY)
+            * (18.0 - 32.0 * aX + 12.0 * aX * aX + 48.0 * aY - 36.0 * aX * aY + 27.0 * aY * aY);
+
+      theF = aA * aB;
+      return true;
+    }
+  };
+
+  // Old API adapter
+  class SphereFuncOld : public math_MultipleVarFunction
+  {
+  private:
+    int myN;
+
+  public:
+    SphereFuncOld(int theN)
+        : myN(theN)
+    {
+    }
+
+    int NbVariables() const override { return myN; }
+
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i);
+      }
+      return true;
+    }
+  };
 
 } // namespace
 

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -42,4 +41,3 @@ private:
   int                                   theType;
   occ::handle<TCollection_HAsciiString> theName;
 };
-

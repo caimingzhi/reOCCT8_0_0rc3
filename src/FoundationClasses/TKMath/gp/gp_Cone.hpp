@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax3.hpp>
 #include <gp_Pnt.hpp>
@@ -295,4 +294,3 @@ inline gp_Cone gp_Cone::Transformed(const gp_Trsf& theT) const
   }
   return aC;
 }
-

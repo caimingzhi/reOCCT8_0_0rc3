@@ -1,17 +1,3 @@
-// Created by: Eugeny MALTCHIKOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Bnd_Box.hpp>
 #include <BndLib_Add3dCurve.hpp>
 #include <Standard_Integer.hpp>
@@ -1474,7 +1460,8 @@ double ResolutionCoeff(const BRepAdaptor_Curve& theBAC, const IntTools_Range& th
     case GeomAbs_Ellipse:
       aResCoeff = 1. / occ::down_cast<Geom_Ellipse>(aCurve)->MajorRadius();
       break;
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const occ::handle<Geom_OffsetCurve>& anOffsetCurve = occ::down_cast<Geom_OffsetCurve>(aCurve);
       const occ::handle<Geom_Curve>&       aBasisCurve   = anOffsetCurve->BasisCurve();
       GeomAdaptor_Curve                    aGBasisCurve(aBasisCurve);
@@ -1497,7 +1484,8 @@ double ResolutionCoeff(const BRepAdaptor_Curve& theBAC, const IntTools_Range& th
       [[fallthrough]];
     case GeomAbs_Hyperbola:
     case GeomAbs_Parabola:
-    case GeomAbs_OtherCurve: {
+    case GeomAbs_OtherCurve:
+    {
       double k, kMin, aDist, aDt, aT1, aT2, aT;
       int    aNbP, i;
       gp_Pnt aP1, aP2;
@@ -1546,7 +1534,8 @@ double Resolution(const occ::handle<Geom_Curve>& theCurve,
     case GeomAbs_Line:
       aRes = theR3D;
       break;
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       double aDt = theResCoeff * theR3D;
       aRes       = (aDt <= 1.) ? 2 * std::asin(aDt) : 2 * M_PI;
       break;
@@ -1557,7 +1546,8 @@ double Resolution(const occ::handle<Geom_Curve>& theCurve,
     case GeomAbs_BSplineCurve:
       occ::down_cast<Geom_BSplineCurve>(theCurve)->Resolution(theR3D, aRes);
       break;
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const occ::handle<Geom_Curve>& aBasisCurve =
         occ::down_cast<Geom_OffsetCurve>(theCurve)->BasisCurve();
       const GeomAbs_CurveType aBCType = GeomAdaptor_Curve(aBasisCurve).GetType();

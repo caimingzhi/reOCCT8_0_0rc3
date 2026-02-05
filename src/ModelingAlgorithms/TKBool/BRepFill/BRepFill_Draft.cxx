@@ -1,19 +1,3 @@
-// Created on: 1998-06-08
-// Created by: Stephanie HUMEAU
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepFill_Draft.hpp>
 
 #include <BndLib_Add3dCurve.hpp>
@@ -200,16 +184,19 @@ BRepFill_Draft::BRepFill_Draft(const TopoDS_Shape& S, const gp_Dir& Dir, const d
 
   switch (S.ShapeType())
   {
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       myWire = TopoDS::Wire(S);
       break;
     }
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       TopoDS_Iterator Exp(S);
       myWire = TopoDS::Wire(Exp.Value());
       break;
     }
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       NCollection_List<TopoDS_Shape> List;
       NCollection_IndexedDataMap<TopoDS_Shape,
                                  NCollection_List<TopoDS_Shape>,
@@ -547,21 +534,25 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
 
   switch (StopShape.ShapeType())
   {
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       TopoDS_Iterator It(StopShape);
       return Fuse(It.Value(), KeepOutSide);
     }
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       Sol2 = TopoDS::Solid(StopShape);
       break;
     }
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       B.MakeSolid(Sol2);
       B.Add(Sol2, StopShape); // shell => solid (for fusion)
       break;
     }
 
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       TopoDS_Shell S;
       B.MakeShell(S);
       B.Add(S, StopShape);
@@ -571,7 +562,8 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
       break;
     }
 
-    default: {
+    default:
+    {
       return false; // Impossible to do
     }
   }

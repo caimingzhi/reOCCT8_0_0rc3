@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef OCCT_DEBUG
 
   #include <Standard_Type.hpp>
@@ -31,4 +30,3 @@ private:
 };
 
 #endif /* OCCT_DEBUG */
-

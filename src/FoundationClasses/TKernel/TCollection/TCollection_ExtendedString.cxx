@@ -24,67 +24,68 @@
 
 namespace
 {
-static char16_t THE_DEFAULT_EXT_CHAR_STRING[1] = {0};
+  static char16_t THE_DEFAULT_EXT_CHAR_STRING[1] = {0};
 
-//! Calculate padded allocation size for ExtendedString (2-byte characters)
-//! Guarantees at least +1 character space for null terminator, aligned to 4-byte boundary
-inline size_t calculatePaddedSize(const int theLength)
-{
-  return (((theLength + 1) * sizeof(char16_t)) + 3) & ~0x3;
-}
+  //! Calculate padded allocation size for ExtendedString (2-byte characters)
+  //! Guarantees at least +1 character space for null terminator, aligned to 4-byte boundary
+  inline size_t calculatePaddedSize(const int theLength)
+  {
+    return (((theLength + 1) * sizeof(char16_t)) + 3) & ~0x3;
+  }
 
-//! Returns the number of 16-bit code units in Unicode string
-template <typename T>
-static int nbSymbols(const T* theUtfString)
-{
-  int aNbCodeUnits = 0;
-  for (NCollection_UtfIterator<T> anIter(theUtfString); *anIter != 0; ++anIter)
+  //! Returns the number of 16-bit code units in Unicode string
+  template <typename T>
+  static int nbSymbols(const T* theUtfString)
   {
-    aNbCodeUnits += anIter.AdvanceCodeUnitsUtf16();
+    int aNbCodeUnits = 0;
+    for (NCollection_UtfIterator<T> anIter(theUtfString); *anIter != 0; ++anIter)
+    {
+      aNbCodeUnits += anIter.AdvanceCodeUnitsUtf16();
+    }
+    return aNbCodeUnits;
   }
-  return aNbCodeUnits;
-}
 
-//! Convert from wchar_t* to extended string.
-//! Default implementation when size of wchar_t and extended char is different (e.g. Linux / UNIX).
-template <size_t CharSize>
-inline char16_t* Standard_UNUSED fromWideString(const wchar_t* theUtfString, int& theLength)
-{
-  theLength = nbSymbols(theUtfString);
-  if (theLength == 0)
+  //! Convert from wchar_t* to extended string.
+  //! Default implementation when size of wchar_t and extended char is different (e.g. Linux /
+  //! UNIX).
+  template <size_t CharSize>
+  inline char16_t* Standard_UNUSED fromWideString(const wchar_t* theUtfString, int& theLength)
   {
-    return THE_DEFAULT_EXT_CHAR_STRING;
+    theLength = nbSymbols(theUtfString);
+    if (theLength == 0)
+    {
+      return THE_DEFAULT_EXT_CHAR_STRING;
+    }
+    const size_t aRoundSize = calculatePaddedSize(theLength);
+    char16_t* aString = static_cast<Standard_PExtCharacter>(Standard::AllocateOptimal(aRoundSize));
+    NCollection_UtfIterator<wchar_t> anIterRead(theUtfString);
+    for (char16_t* anIterWrite = aString; *anIterRead != 0; ++anIterRead)
+    {
+      anIterWrite = anIterRead.GetUtf(anIterWrite);
+    }
+    aString[theLength] = 0;
+    return aString;
   }
-  const size_t aRoundSize = calculatePaddedSize(theLength);
-  char16_t*    aString = static_cast<Standard_PExtCharacter>(Standard::AllocateOptimal(aRoundSize));
-  NCollection_UtfIterator<wchar_t> anIterRead(theUtfString);
-  for (char16_t* anIterWrite = aString; *anIterRead != 0; ++anIterRead)
-  {
-    anIterWrite = anIterRead.GetUtf(anIterWrite);
-  }
-  aString[theLength] = 0;
-  return aString;
-}
 
-//! Use memcpy() conversion when size is the same (e.g. on Windows).
-template <>
-inline char16_t* Standard_UNUSED fromWideString<sizeof(char16_t)>(const wchar_t* theUtfString,
-                                                                  int&           theLength)
-{
-  for (theLength = 0; theUtfString[theLength] != 0; ++theLength)
+  //! Use memcpy() conversion when size is the same (e.g. on Windows).
+  template <>
+  inline char16_t* Standard_UNUSED fromWideString<sizeof(char16_t)>(const wchar_t* theUtfString,
+                                                                    int&           theLength)
   {
+    for (theLength = 0; theUtfString[theLength] != 0; ++theLength)
+    {
+    }
+    if (theLength == 0)
+    {
+      return THE_DEFAULT_EXT_CHAR_STRING;
+    }
+    const size_t aRoundSize = calculatePaddedSize(theLength);
+    char16_t* aString = static_cast<Standard_PExtCharacter>(Standard::AllocateOptimal(aRoundSize));
+    const int aSize   = theLength * sizeof(char16_t);
+    memcpy(aString, theUtfString, aSize);
+    aString[theLength] = 0;
+    return aString;
   }
-  if (theLength == 0)
-  {
-    return THE_DEFAULT_EXT_CHAR_STRING;
-  }
-  const size_t aRoundSize = calculatePaddedSize(theLength);
-  char16_t*    aString = static_cast<Standard_PExtCharacter>(Standard::AllocateOptimal(aRoundSize));
-  const int    aSize   = theLength * sizeof(char16_t);
-  memcpy(aString, theUtfString, aSize);
-  aString[theLength] = 0;
-  return aString;
-}
 
 } // namespace
 
@@ -189,7 +190,8 @@ TCollection_ExtendedString::TCollection_ExtendedString(const int length, const c
 
 TCollection_ExtendedString::TCollection_ExtendedString(const int aValue)
 {
-  union {
+  union
+  {
     int  bid;
     char t[13];
   } CHN{};
@@ -204,7 +206,8 @@ TCollection_ExtendedString::TCollection_ExtendedString(const int aValue)
 
 TCollection_ExtendedString::TCollection_ExtendedString(const double aValue)
 {
-  union {
+  union
+  {
     int  bid;
     char t[50];
   } CHN{};

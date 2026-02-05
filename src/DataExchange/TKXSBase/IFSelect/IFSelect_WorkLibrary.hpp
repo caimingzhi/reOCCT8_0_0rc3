@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -127,4 +126,3 @@ private:
   int                                                                     thelevdef;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> thelevhlp;
 };
-

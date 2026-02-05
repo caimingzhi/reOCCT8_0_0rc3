@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -76,4 +75,3 @@ private:
   occ::handle<Adaptor3d_Curve> myC3d;
   occ::handle<Law_Function>    myPar;
 };
-

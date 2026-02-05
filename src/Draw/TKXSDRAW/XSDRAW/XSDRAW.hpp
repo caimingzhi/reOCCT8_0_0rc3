@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Handle.hpp>
 
@@ -226,4 +225,3 @@ public:
   //! Loads all Draw commands of XSDRAW. Used for plugin.
   Standard_EXPORT static void Factory(Draw_Interpretor& theDI);
 };
-

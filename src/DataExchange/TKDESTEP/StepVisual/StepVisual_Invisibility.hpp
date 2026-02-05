@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_InvisibleItem.hpp>
@@ -34,4 +33,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepVisual_InvisibleItem>> invisibleItems;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <BRepMesh_DataStructureOfDelaun.hpp>
 #include <BRepMesh_Triangle.hpp>
@@ -77,4 +76,3 @@ private:
   IMeshData::MapOfInteger                     myElements;
   IMeshData::MapOfInteger                     myFrontier;
 };
-

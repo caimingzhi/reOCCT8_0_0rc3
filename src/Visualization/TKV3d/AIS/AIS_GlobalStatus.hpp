@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Prs3d_Drawer.hpp>
@@ -68,4 +67,3 @@ private:
   bool                      myIsHilit;
   bool                      mySubInt;
 };
-

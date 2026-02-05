@@ -1,19 +1,3 @@
-// Created on: 1998-11-12
-// Created by: Robert COUBLANC
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ViewerTest.hpp>
 
 #include <AIS_PlaneTrihedron.hpp>
@@ -161,464 +145,466 @@ extern occ::handle<AIS_InteractiveContext>& TheAISContext();
 
 namespace
 {
-static bool convertToColor(
-  const occ::handle<NCollection_HSequence<TCollection_AsciiString>>& theColorValues,
-  Quantity_Color&                                                    theColor)
-{
-  const char* anArgs[3] = {theColorValues->Size() >= 1 ? theColorValues->Value(1).ToCString() : "",
-                           theColorValues->Size() >= 2 ? theColorValues->Value(2).ToCString() : "",
-                           theColorValues->Size() >= 3 ? theColorValues->Value(3).ToCString() : ""};
-  return Draw::ParseColor(theColorValues->Size(), anArgs, theColor) != 0;
-}
-
-static bool convertToDatumPart(const TCollection_AsciiString& theValue,
-                               Prs3d_DatumParts&              theDatumPart)
-{
-  TCollection_AsciiString aValue = theValue;
-  aValue.LowerCase();
-  if (aValue == "origin")
-    theDatumPart = Prs3d_DatumParts_Origin;
-  else if (aValue == "xaxis")
-    theDatumPart = Prs3d_DatumParts_XAxis;
-  else if (aValue == "yaxis")
-    theDatumPart = Prs3d_DatumParts_YAxis;
-  else if (aValue == "zaxis")
-    theDatumPart = Prs3d_DatumParts_ZAxis;
-  else if (aValue == "xarrow")
-    theDatumPart = Prs3d_DatumParts_XArrow;
-  else if (aValue == "yarrow")
-    theDatumPart = Prs3d_DatumParts_YArrow;
-  else if (aValue == "zarrow")
-    theDatumPart = Prs3d_DatumParts_ZArrow;
-  else if (aValue == "xoyaxis")
-    theDatumPart = Prs3d_DatumParts_XOYAxis;
-  else if (aValue == "yozaxis")
-    theDatumPart = Prs3d_DatumParts_YOZAxis;
-  else if (aValue == "xozaxis")
-    theDatumPart = Prs3d_DatumParts_XOZAxis;
-  else if (aValue == "whole")
-    theDatumPart = Prs3d_DatumParts_None;
-  else
+  static bool convertToColor(
+    const occ::handle<NCollection_HSequence<TCollection_AsciiString>>& theColorValues,
+    Quantity_Color&                                                    theColor)
   {
-    return false;
+    const char* anArgs[3] = {
+      theColorValues->Size() >= 1 ? theColorValues->Value(1).ToCString() : "",
+      theColorValues->Size() >= 2 ? theColorValues->Value(2).ToCString() : "",
+      theColorValues->Size() >= 3 ? theColorValues->Value(3).ToCString() : ""};
+    return Draw::ParseColor(theColorValues->Size(), anArgs, theColor) != 0;
   }
-  return true;
-}
 
-static void convertToDatumParts(const TCollection_AsciiString&      theValue,
-                                NCollection_List<Prs3d_DatumParts>& theParts)
-{
-  TCollection_AsciiString aValue    = theValue;
-  const int               aSplitPos = theValue.Search("|");
-  Prs3d_DatumParts        aPart     = Prs3d_DatumParts_None;
-  if (aSplitPos > 0)
+  static bool convertToDatumPart(const TCollection_AsciiString& theValue,
+                                 Prs3d_DatumParts&              theDatumPart)
   {
-    convertToDatumParts(theValue.SubString(aSplitPos + 1, theValue.Length()), theParts);
-    if (aSplitPos == 1) // first symbol
+    TCollection_AsciiString aValue = theValue;
+    aValue.LowerCase();
+    if (aValue == "origin")
+      theDatumPart = Prs3d_DatumParts_Origin;
+    else if (aValue == "xaxis")
+      theDatumPart = Prs3d_DatumParts_XAxis;
+    else if (aValue == "yaxis")
+      theDatumPart = Prs3d_DatumParts_YAxis;
+    else if (aValue == "zaxis")
+      theDatumPart = Prs3d_DatumParts_ZAxis;
+    else if (aValue == "xarrow")
+      theDatumPart = Prs3d_DatumParts_XArrow;
+    else if (aValue == "yarrow")
+      theDatumPart = Prs3d_DatumParts_YArrow;
+    else if (aValue == "zarrow")
+      theDatumPart = Prs3d_DatumParts_ZArrow;
+    else if (aValue == "xoyaxis")
+      theDatumPart = Prs3d_DatumParts_XOYAxis;
+    else if (aValue == "yozaxis")
+      theDatumPart = Prs3d_DatumParts_YOZAxis;
+    else if (aValue == "xozaxis")
+      theDatumPart = Prs3d_DatumParts_XOZAxis;
+    else if (aValue == "whole")
+      theDatumPart = Prs3d_DatumParts_None;
+    else
     {
-      return;
-    }
-    aValue = theValue.SubString(1, aSplitPos - 1);
-  }
-  if (convertToDatumPart(aValue, aPart))
-  {
-    theParts.Append(aPart);
-  }
-}
-
-static bool convertToDatumAttribute(const TCollection_AsciiString& theValue,
-                                    Prs3d_DatumAttribute&          theAttribute)
-{
-  TCollection_AsciiString aValue = theValue;
-  aValue.LowerCase();
-  if (aValue == "xaxislength")
-    theAttribute = Prs3d_DatumAttribute_XAxisLength;
-  else if (aValue == "yaxislength")
-    theAttribute = Prs3d_DatumAttribute_YAxisLength;
-  else if (aValue == "zaxislength")
-    theAttribute = Prs3d_DatumAttribute_ZAxisLength;
-  else if (aValue == "tuberadiuspercent")
-    theAttribute = Prs3d_DatumAttribute_ShadingTubeRadiusPercent;
-  else if (aValue == "coneradiuspercent")
-    theAttribute = Prs3d_DatumAttribute_ShadingConeRadiusPercent;
-  else if (aValue == "conelengthpercent")
-    theAttribute = Prs3d_DatumAttribute_ShadingConeLengthPercent;
-  else if (aValue == "originradiuspercent")
-    theAttribute = Prs3d_DatumAttribute_ShadingOriginRadiusPercent;
-  else if (aValue == "shadingnumberoffacettes")
-    theAttribute = Prs3d_DatumAttribute_ShadingNumberOfFacettes;
-  else
-    return false;
-  return true;
-}
-
-static void convertToDatumAttributes(const TCollection_AsciiString&          theValue,
-                                     NCollection_List<Prs3d_DatumAttribute>& theAttributes)
-{
-  TCollection_AsciiString aValue      = theValue;
-  const int               aSplitPos   = theValue.Search("|");
-  Prs3d_DatumAttribute    anAttribute = Prs3d_DatumAttribute_XAxisLength;
-  if (aSplitPos > 0)
-  {
-    convertToDatumAttributes(theValue.SubString(aSplitPos + 1, theValue.Length()), theAttributes);
-    if (aSplitPos == 1) // first symbol
-    {
-      return;
-    }
-    aValue = theValue.SubString(1, aSplitPos - 1);
-  }
-  if (convertToDatumAttribute(aValue, anAttribute))
-  {
-    theAttributes.Append(anAttribute);
-  }
-}
-
-static bool convertToDatumAxes(const TCollection_AsciiString& theValue,
-                               Prs3d_DatumAxes&               theDatumAxes)
-{
-  TCollection_AsciiString aValue = theValue;
-  aValue.LowerCase();
-  if (aValue == "x")
-    theDatumAxes = Prs3d_DatumAxes_XAxis;
-  else if (aValue == "y")
-    theDatumAxes = Prs3d_DatumAxes_YAxis;
-  else if (aValue == "z")
-    theDatumAxes = Prs3d_DatumAxes_ZAxis;
-  else if (aValue == "xy")
-    theDatumAxes = Prs3d_DatumAxes_XYAxes;
-  else if (aValue == "zy")
-    theDatumAxes = Prs3d_DatumAxes_YZAxes;
-  else if (aValue == "xz")
-    theDatumAxes = Prs3d_DatumAxes_XZAxes;
-  else if (aValue == "xyz")
-    theDatumAxes = Prs3d_DatumAxes_XYZAxes;
-  else
-  {
-    return false;
-  }
-  return true;
-}
-
-static bool setTrihedronParams(int                               theArgsNb,
-                               const char**                      theArgVec,
-                               const occ::handle<AIS_Trihedron>& theTrihedron)
-{
-  NCollection_DataMap<TCollection_AsciiString,
-                      occ::handle<NCollection_HSequence<TCollection_AsciiString>>>
-                          aMapOfArgs;
-  TCollection_AsciiString aParseKey;
-  for (int anArgIt = 1; anArgIt < theArgsNb; ++anArgIt)
-  {
-    TCollection_AsciiString anArg(theArgVec[anArgIt]);
-    if (anArg.Value(1) == '-' && !anArg.IsRealValue(true))
-    {
-      aParseKey = anArg;
-      aParseKey.Remove(1);
-      aParseKey.LowerCase();
-      std::string aKey = aParseKey.ToCString();
-      aMapOfArgs.Bind(aParseKey, new NCollection_HSequence<TCollection_AsciiString>());
-      continue;
-    }
-
-    if (aParseKey.IsEmpty())
-    {
-      continue;
-    }
-
-    aMapOfArgs(aParseKey)->Append(anArg);
-  }
-
-  // Check parameters
-  if ((aMapOfArgs.IsBound("xaxis") && !aMapOfArgs.IsBound("zaxis"))
-      || (!aMapOfArgs.IsBound("xaxis") && aMapOfArgs.IsBound("zaxis")))
-  {
-    Message::SendFail("Syntax error: -xaxis and -zaxis parameters are to set together");
-    return false;
-  }
-
-  occ::handle<NCollection_HSequence<TCollection_AsciiString>> aValues;
-  occ::handle<Geom_Axis2Placement> aComponent = theTrihedron->Component();
-  if (aMapOfArgs.Find("origin", aValues))
-  {
-    aComponent->SetLocation(gp_Pnt(aValues->Value(1).RealValue(),
-                                   aValues->Value(2).RealValue(),
-                                   aValues->Value(3).RealValue()));
-  }
-  occ::handle<NCollection_HSequence<TCollection_AsciiString>> aXValues, aZValues;
-  if (aMapOfArgs.Find("xaxis", aXValues) && aMapOfArgs.Find("zaxis", aZValues))
-  {
-    gp_Dir aXDir(aXValues->Value(1).RealValue(),
-                 aXValues->Value(2).RealValue(),
-                 aXValues->Value(3).RealValue());
-
-    gp_Dir aZDir(aZValues->Value(1).RealValue(),
-                 aZValues->Value(2).RealValue(),
-                 aZValues->Value(3).RealValue());
-
-    if (!aZDir.IsNormal(aXDir, M_PI / 180.0))
-    {
-      Message::SendFail("Syntax error - parameters 'xaxis' and 'zaxis' are not applied as VectorX "
-                        "is not normal to VectorZ");
       return false;
     }
-
-    aComponent->SetAx2(gp_Ax2(aComponent->Location(), aZDir, aXDir));
+    return true;
   }
 
-  if (aMapOfArgs.Find("dispmode", aValues))
+  static void convertToDatumParts(const TCollection_AsciiString&      theValue,
+                                  NCollection_List<Prs3d_DatumParts>& theParts)
   {
-    TCollection_AsciiString aValue(aValues->Value(1));
-    bool                    isWireframe = true;
-    if (aValue.IsEqual("sh") || aValue.IsEqual("shading"))
-      isWireframe = false;
-    theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DM_WireFrame : Prs3d_DM_Shaded);
-  }
-
-  if (aMapOfArgs.Find("hidelabels", aValues))
-  {
-    bool toHideLabels = true;
-    if (aValues->Size() == 1)
+    TCollection_AsciiString aValue    = theValue;
+    const int               aSplitPos = theValue.Search("|");
+    Prs3d_DatumParts        aPart     = Prs3d_DatumParts_None;
+    if (aSplitPos > 0)
     {
-      Draw::ParseOnOff(aValues->First().ToCString(), toHideLabels);
-    }
-    else if (aValues->Size() != 0)
-    {
-      Message::SendFail("Syntax error: -hidelabels expects parameter 'on' or 'off' after");
-      return false;
-    }
-
-    if (!theTrihedron->Attributes()->HasOwnDatumAspect())
-    {
-      theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
-    }
-    theTrihedron->Attributes()->DatumAspect()->SetDrawLabels(!toHideLabels);
-  }
-
-  if (aMapOfArgs.Find("hidearrows", aValues))
-  {
-    bool toHideArrows = true;
-    if (aValues->Size() == 1)
-    {
-      Draw::ParseOnOff(aValues->First().ToCString(), toHideArrows);
-    }
-    else if (aValues->Size() != 0)
-    {
-      Message::SendFail("Syntax error: -hidearrows expects parameter 'on' or 'off' after");
-      return false;
-    }
-
-    if (!theTrihedron->Attributes()->HasOwnDatumAspect())
-    {
-      theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
-    }
-    theTrihedron->Attributes()->DatumAspect()->SetDrawArrows(!toHideArrows);
-  }
-
-  if (aMapOfArgs.Find("color", aValues))
-  {
-    NCollection_List<Prs3d_DatumParts> aParts;
-    if (aValues->Size() < 2)
-    {
-      Message::SendFail("Syntax error: -color wrong parameters");
-      return false;
-    }
-
-    convertToDatumParts(aValues->Value(1), aParts);
-    aValues->Remove(1); // datum part is processed
-    Quantity_Color aColor;
-    if (!convertToColor(aValues, aColor))
-    {
-      Message::SendFail("Syntax error: -color wrong parameters");
-      return false;
-    }
-
-    for (NCollection_List<Prs3d_DatumParts>::Iterator anIterator(aParts); anIterator.More();
-         anIterator.Next())
-    {
-      Prs3d_DatumParts aDatumPart = anIterator.Value();
-      if (aDatumPart == Prs3d_DatumParts_None)
+      convertToDatumParts(theValue.SubString(aSplitPos + 1, theValue.Length()), theParts);
+      if (aSplitPos == 1) // first symbol
       {
-        theTrihedron->SetColor(aColor);
+        return;
+      }
+      aValue = theValue.SubString(1, aSplitPos - 1);
+    }
+    if (convertToDatumPart(aValue, aPart))
+    {
+      theParts.Append(aPart);
+    }
+  }
+
+  static bool convertToDatumAttribute(const TCollection_AsciiString& theValue,
+                                      Prs3d_DatumAttribute&          theAttribute)
+  {
+    TCollection_AsciiString aValue = theValue;
+    aValue.LowerCase();
+    if (aValue == "xaxislength")
+      theAttribute = Prs3d_DatumAttribute_XAxisLength;
+    else if (aValue == "yaxislength")
+      theAttribute = Prs3d_DatumAttribute_YAxisLength;
+    else if (aValue == "zaxislength")
+      theAttribute = Prs3d_DatumAttribute_ZAxisLength;
+    else if (aValue == "tuberadiuspercent")
+      theAttribute = Prs3d_DatumAttribute_ShadingTubeRadiusPercent;
+    else if (aValue == "coneradiuspercent")
+      theAttribute = Prs3d_DatumAttribute_ShadingConeRadiusPercent;
+    else if (aValue == "conelengthpercent")
+      theAttribute = Prs3d_DatumAttribute_ShadingConeLengthPercent;
+    else if (aValue == "originradiuspercent")
+      theAttribute = Prs3d_DatumAttribute_ShadingOriginRadiusPercent;
+    else if (aValue == "shadingnumberoffacettes")
+      theAttribute = Prs3d_DatumAttribute_ShadingNumberOfFacettes;
+    else
+      return false;
+    return true;
+  }
+
+  static void convertToDatumAttributes(const TCollection_AsciiString&          theValue,
+                                       NCollection_List<Prs3d_DatumAttribute>& theAttributes)
+  {
+    TCollection_AsciiString aValue      = theValue;
+    const int               aSplitPos   = theValue.Search("|");
+    Prs3d_DatumAttribute    anAttribute = Prs3d_DatumAttribute_XAxisLength;
+    if (aSplitPos > 0)
+    {
+      convertToDatumAttributes(theValue.SubString(aSplitPos + 1, theValue.Length()), theAttributes);
+      if (aSplitPos == 1) // first symbol
+      {
+        return;
+      }
+      aValue = theValue.SubString(1, aSplitPos - 1);
+    }
+    if (convertToDatumAttribute(aValue, anAttribute))
+    {
+      theAttributes.Append(anAttribute);
+    }
+  }
+
+  static bool convertToDatumAxes(const TCollection_AsciiString& theValue,
+                                 Prs3d_DatumAxes&               theDatumAxes)
+  {
+    TCollection_AsciiString aValue = theValue;
+    aValue.LowerCase();
+    if (aValue == "x")
+      theDatumAxes = Prs3d_DatumAxes_XAxis;
+    else if (aValue == "y")
+      theDatumAxes = Prs3d_DatumAxes_YAxis;
+    else if (aValue == "z")
+      theDatumAxes = Prs3d_DatumAxes_ZAxis;
+    else if (aValue == "xy")
+      theDatumAxes = Prs3d_DatumAxes_XYAxes;
+    else if (aValue == "zy")
+      theDatumAxes = Prs3d_DatumAxes_YZAxes;
+    else if (aValue == "xz")
+      theDatumAxes = Prs3d_DatumAxes_XZAxes;
+    else if (aValue == "xyz")
+      theDatumAxes = Prs3d_DatumAxes_XYZAxes;
+    else
+    {
+      return false;
+    }
+    return true;
+  }
+
+  static bool setTrihedronParams(int                               theArgsNb,
+                                 const char**                      theArgVec,
+                                 const occ::handle<AIS_Trihedron>& theTrihedron)
+  {
+    NCollection_DataMap<TCollection_AsciiString,
+                        occ::handle<NCollection_HSequence<TCollection_AsciiString>>>
+                            aMapOfArgs;
+    TCollection_AsciiString aParseKey;
+    for (int anArgIt = 1; anArgIt < theArgsNb; ++anArgIt)
+    {
+      TCollection_AsciiString anArg(theArgVec[anArgIt]);
+      if (anArg.Value(1) == '-' && !anArg.IsRealValue(true))
+      {
+        aParseKey = anArg;
+        aParseKey.Remove(1);
+        aParseKey.LowerCase();
+        std::string aKey = aParseKey.ToCString();
+        aMapOfArgs.Bind(aParseKey, new NCollection_HSequence<TCollection_AsciiString>());
+        continue;
+      }
+
+      if (aParseKey.IsEmpty())
+      {
+        continue;
+      }
+
+      aMapOfArgs(aParseKey)->Append(anArg);
+    }
+
+    // Check parameters
+    if ((aMapOfArgs.IsBound("xaxis") && !aMapOfArgs.IsBound("zaxis"))
+        || (!aMapOfArgs.IsBound("xaxis") && aMapOfArgs.IsBound("zaxis")))
+    {
+      Message::SendFail("Syntax error: -xaxis and -zaxis parameters are to set together");
+      return false;
+    }
+
+    occ::handle<NCollection_HSequence<TCollection_AsciiString>> aValues;
+    occ::handle<Geom_Axis2Placement> aComponent = theTrihedron->Component();
+    if (aMapOfArgs.Find("origin", aValues))
+    {
+      aComponent->SetLocation(gp_Pnt(aValues->Value(1).RealValue(),
+                                     aValues->Value(2).RealValue(),
+                                     aValues->Value(3).RealValue()));
+    }
+    occ::handle<NCollection_HSequence<TCollection_AsciiString>> aXValues, aZValues;
+    if (aMapOfArgs.Find("xaxis", aXValues) && aMapOfArgs.Find("zaxis", aZValues))
+    {
+      gp_Dir aXDir(aXValues->Value(1).RealValue(),
+                   aXValues->Value(2).RealValue(),
+                   aXValues->Value(3).RealValue());
+
+      gp_Dir aZDir(aZValues->Value(1).RealValue(),
+                   aZValues->Value(2).RealValue(),
+                   aZValues->Value(3).RealValue());
+
+      if (!aZDir.IsNormal(aXDir, M_PI / 180.0))
+      {
+        Message::SendFail(
+          "Syntax error - parameters 'xaxis' and 'zaxis' are not applied as VectorX "
+          "is not normal to VectorZ");
+        return false;
+      }
+
+      aComponent->SetAx2(gp_Ax2(aComponent->Location(), aZDir, aXDir));
+    }
+
+    if (aMapOfArgs.Find("dispmode", aValues))
+    {
+      TCollection_AsciiString aValue(aValues->Value(1));
+      bool                    isWireframe = true;
+      if (aValue.IsEqual("sh") || aValue.IsEqual("shading"))
+        isWireframe = false;
+      theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DM_WireFrame : Prs3d_DM_Shaded);
+    }
+
+    if (aMapOfArgs.Find("hidelabels", aValues))
+    {
+      bool toHideLabels = true;
+      if (aValues->Size() == 1)
+      {
+        Draw::ParseOnOff(aValues->First().ToCString(), toHideLabels);
+      }
+      else if (aValues->Size() != 0)
+      {
+        Message::SendFail("Syntax error: -hidelabels expects parameter 'on' or 'off' after");
+        return false;
+      }
+
+      if (!theTrihedron->Attributes()->HasOwnDatumAspect())
+      {
+        theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
+      }
+      theTrihedron->Attributes()->DatumAspect()->SetDrawLabels(!toHideLabels);
+    }
+
+    if (aMapOfArgs.Find("hidearrows", aValues))
+    {
+      bool toHideArrows = true;
+      if (aValues->Size() == 1)
+      {
+        Draw::ParseOnOff(aValues->First().ToCString(), toHideArrows);
+      }
+      else if (aValues->Size() != 0)
+      {
+        Message::SendFail("Syntax error: -hidearrows expects parameter 'on' or 'off' after");
+        return false;
+      }
+
+      if (!theTrihedron->Attributes()->HasOwnDatumAspect())
+      {
+        theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
+      }
+      theTrihedron->Attributes()->DatumAspect()->SetDrawArrows(!toHideArrows);
+    }
+
+    if (aMapOfArgs.Find("color", aValues))
+    {
+      NCollection_List<Prs3d_DatumParts> aParts;
+      if (aValues->Size() < 2)
+      {
+        Message::SendFail("Syntax error: -color wrong parameters");
+        return false;
+      }
+
+      convertToDatumParts(aValues->Value(1), aParts);
+      aValues->Remove(1); // datum part is processed
+      Quantity_Color aColor;
+      if (!convertToColor(aValues, aColor))
+      {
+        Message::SendFail("Syntax error: -color wrong parameters");
+        return false;
+      }
+
+      for (NCollection_List<Prs3d_DatumParts>::Iterator anIterator(aParts); anIterator.More();
+           anIterator.Next())
+      {
+        Prs3d_DatumParts aDatumPart = anIterator.Value();
+        if (aDatumPart == Prs3d_DatumParts_None)
+        {
+          theTrihedron->SetColor(aColor);
+        }
+        else
+        {
+          theTrihedron->SetDatumPartColor(aDatumPart, aColor);
+        }
+      }
+    }
+
+    if (aMapOfArgs.Find("textcolor", aValues))
+    {
+      Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
+      if (!aValues->IsEmpty() && convertToDatumPart(aValues->First(), aDatumPart)
+          && aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)
+      {
+        aValues->Remove(1); // datum part is processed
+      }
+
+      Quantity_Color aColor;
+      if (!convertToColor(aValues, aColor))
+      {
+        Message::SendFail("Syntax error: -textcolor wrong parameters");
+        return false;
+      }
+
+      if (aDatumPart != Prs3d_DatumParts_None)
+      {
+        theTrihedron->SetTextColor(aDatumPart, aColor);
       }
       else
       {
-        theTrihedron->SetDatumPartColor(aDatumPart, aColor);
+        theTrihedron->SetTextColor(aColor);
       }
     }
-  }
 
-  if (aMapOfArgs.Find("textcolor", aValues))
-  {
-    Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
-    if (!aValues->IsEmpty() && convertToDatumPart(aValues->First(), aDatumPart)
-        && aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)
+    if (aMapOfArgs.Find("arrowcolor", aValues))
     {
-      aValues->Remove(1); // datum part is processed
-    }
+      Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
+      if (!aValues->IsEmpty() && convertToDatumPart(aValues->First(), aDatumPart)
+          && ((aDatumPart >= Prs3d_DatumParts_XArrow && aDatumPart <= Prs3d_DatumParts_ZArrow)
+              || (aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)))
+      {
+        aValues->Remove(1); // datum part is processed
+      }
 
-    Quantity_Color aColor;
-    if (!convertToColor(aValues, aColor))
-    {
-      Message::SendFail("Syntax error: -textcolor wrong parameters");
-      return false;
-    }
+      Quantity_Color aColor;
+      if (!convertToColor(aValues, aColor))
+      {
+        Message::SendFail("Syntax error: -arrowcolor wrong parameters");
+        return false;
+      }
 
-    if (aDatumPart != Prs3d_DatumParts_None)
-    {
-      theTrihedron->SetTextColor(aDatumPart, aColor);
-    }
-    else
-    {
-      theTrihedron->SetTextColor(aColor);
-    }
-  }
-
-  if (aMapOfArgs.Find("arrowcolor", aValues))
-  {
-    Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
-    if (!aValues->IsEmpty() && convertToDatumPart(aValues->First(), aDatumPart)
-        && ((aDatumPart >= Prs3d_DatumParts_XArrow && aDatumPart <= Prs3d_DatumParts_ZArrow)
-            || (aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)))
-    {
-      aValues->Remove(1); // datum part is processed
+      if (aDatumPart != Prs3d_DatumParts_None)
+      {
+        Prs3d_DatumParts anArrowPart = Prs3d_DatumAspect::ArrowPartForAxis(aDatumPart);
+        theTrihedron->SetArrowColor(anArrowPart, aColor);
+      }
+      else
+      {
+        theTrihedron->SetArrowColor(aColor);
+      }
     }
 
-    Quantity_Color aColor;
-    if (!convertToColor(aValues, aColor))
+    if (aMapOfArgs.Find("attribute", aValues))
     {
-      Message::SendFail("Syntax error: -arrowcolor wrong parameters");
-      return false;
+      NCollection_List<Prs3d_DatumAttribute> anAttributes;
+      if (aValues->Size() != 2)
+      {
+        Message::SendFail("Syntax error: -attribute wrong parameters");
+        return false;
+      }
+
+      convertToDatumAttributes(aValues->Value(1), anAttributes);
+      if (!theTrihedron->Attributes()->HasOwnDatumAspect())
+        theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
+      for (NCollection_List<Prs3d_DatumAttribute>::Iterator anIterator(anAttributes);
+           anIterator.More();
+           anIterator.Next())
+      {
+        theTrihedron->Attributes()->DatumAspect()->SetAttribute(anIterator.Value(),
+                                                                aValues->Value(2).RealValue());
+      }
     }
 
-    if (aDatumPart != Prs3d_DatumParts_None)
+    if (aMapOfArgs.Find("priority", aValues))
     {
-      Prs3d_DatumParts anArrowPart = Prs3d_DatumAspect::ArrowPartForAxis(aDatumPart);
-      theTrihedron->SetArrowColor(anArrowPart, aColor);
-    }
-    else
-    {
-      theTrihedron->SetArrowColor(aColor);
-    }
-  }
-
-  if (aMapOfArgs.Find("attribute", aValues))
-  {
-    NCollection_List<Prs3d_DatumAttribute> anAttributes;
-    if (aValues->Size() != 2)
-    {
-      Message::SendFail("Syntax error: -attribute wrong parameters");
-      return false;
+      Prs3d_DatumParts aDatumPart;
+      if (aValues->Size() < 2 || !convertToDatumPart(aValues->Value(1), aDatumPart))
+      {
+        Message::SendFail("Syntax error: -priority wrong parameters");
+        return false;
+      }
+      theTrihedron->SetSelectionPriority(aDatumPart, aValues->Value(2).IntegerValue());
     }
 
-    convertToDatumAttributes(aValues->Value(1), anAttributes);
-    if (!theTrihedron->Attributes()->HasOwnDatumAspect())
-      theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
-    for (NCollection_List<Prs3d_DatumAttribute>::Iterator anIterator(anAttributes);
-         anIterator.More();
-         anIterator.Next())
+    if (aMapOfArgs.Find("labels", aValues) || aMapOfArgs.Find("label", aValues))
     {
-      theTrihedron->Attributes()->DatumAspect()->SetAttribute(anIterator.Value(),
-                                                              aValues->Value(2).RealValue());
+      Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
+      if (aValues->Size() >= 2 && convertToDatumPart(aValues->Value(1), aDatumPart)
+          && aDatumPart >= Prs3d_DatumParts_XAxis
+          && aDatumPart <= Prs3d_DatumParts_ZAxis) // labels are set to axes only
+      {
+        theTrihedron->SetLabel(aDatumPart, aValues->Value(2));
+      }
+      else
+      {
+        Message::SendFail("Syntax error: -labels wrong parameters");
+        return false;
+      }
     }
-  }
 
-  if (aMapOfArgs.Find("priority", aValues))
-  {
-    Prs3d_DatumParts aDatumPart;
-    if (aValues->Size() < 2 || !convertToDatumPart(aValues->Value(1), aDatumPart))
+    if (aMapOfArgs.Find("drawaxes", aValues))
     {
-      Message::SendFail("Syntax error: -priority wrong parameters");
-      return false;
+      Prs3d_DatumAxes aDatumAxes = Prs3d_DatumAxes_XAxis;
+      if (aValues->Size() < 1 || !convertToDatumAxes(aValues->Value(1), aDatumAxes))
+      {
+        Message::SendFail("Syntax error: -drawaxes wrong parameters");
+        return false;
+      }
+      if (!theTrihedron->Attributes()->HasOwnDatumAspect())
+        theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
+      theTrihedron->Attributes()->DatumAspect()->SetDrawDatumAxes(aDatumAxes);
     }
-    theTrihedron->SetSelectionPriority(aDatumPart, aValues->Value(2).IntegerValue());
-  }
-
-  if (aMapOfArgs.Find("labels", aValues) || aMapOfArgs.Find("label", aValues))
-  {
-    Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
-    if (aValues->Size() >= 2 && convertToDatumPart(aValues->Value(1), aDatumPart)
-        && aDatumPart >= Prs3d_DatumParts_XAxis
-        && aDatumPart <= Prs3d_DatumParts_ZAxis) // labels are set to axes only
-    {
-      theTrihedron->SetLabel(aDatumPart, aValues->Value(2));
-    }
-    else
-    {
-      Message::SendFail("Syntax error: -labels wrong parameters");
-      return false;
-    }
-  }
-
-  if (aMapOfArgs.Find("drawaxes", aValues))
-  {
-    Prs3d_DatumAxes aDatumAxes = Prs3d_DatumAxes_XAxis;
-    if (aValues->Size() < 1 || !convertToDatumAxes(aValues->Value(1), aDatumAxes))
-    {
-      Message::SendFail("Syntax error: -drawaxes wrong parameters");
-      return false;
-    }
-    if (!theTrihedron->Attributes()->HasOwnDatumAspect())
-      theTrihedron->Attributes()->SetDatumAspect(new Prs3d_DatumAspect());
-    theTrihedron->Attributes()->DatumAspect()->SetDrawDatumAxes(aDatumAxes);
-  }
-  return true;
-}
-
-//! Auxiliary function to parse font aspect style argument
-static bool parseFontStyle(const TCollection_AsciiString& theArg, Font_FontAspect& theAspect)
-{
-  if (theArg == "regular" || *theArg.ToCString() == 'r')
-  {
-    theAspect = Font_FA_Regular;
     return true;
   }
-  else if (theArg == "bolditalic" || theArg == "bold-italic" || theArg == "italic-bold"
-           || theArg == "italicbold")
-  {
-    theAspect = Font_FA_BoldItalic;
-    return true;
-  }
-  else if (theArg == "bold" || *theArg.ToCString() == 'b')
-  {
-    theAspect = Font_FA_Bold;
-    return true;
-  }
-  else if (theArg == "italic" || *theArg.ToCString() == 'i')
-  {
-    theAspect = Font_FA_Italic;
-    return true;
-  }
-  return false;
-}
 
-//! Auxiliary function to parse font strict level argument
-static int parseFontStrictLevel(const int         theArgNb,
-                                const char**      theArgVec,
-                                Font_StrictLevel& theLevel)
-{
-  if (theArgNb >= 1)
+  //! Auxiliary function to parse font aspect style argument
+  static bool parseFontStyle(const TCollection_AsciiString& theArg, Font_FontAspect& theAspect)
   {
-    TCollection_AsciiString anArg(theArgVec[0]);
-    anArg.LowerCase();
-    if (anArg == "any")
+    if (theArg == "regular" || *theArg.ToCString() == 'r')
     {
-      theLevel = Font_StrictLevel_Any;
-      return 1;
+      theAspect = Font_FA_Regular;
+      return true;
     }
-    else if (anArg == "aliases")
+    else if (theArg == "bolditalic" || theArg == "bold-italic" || theArg == "italic-bold"
+             || theArg == "italicbold")
     {
-      theLevel = Font_StrictLevel_Aliases;
-      return 1;
+      theAspect = Font_FA_BoldItalic;
+      return true;
     }
-    else if (anArg == "strict")
+    else if (theArg == "bold" || *theArg.ToCString() == 'b')
     {
-      theLevel = Font_StrictLevel_Strict;
-      return 1;
+      theAspect = Font_FA_Bold;
+      return true;
     }
+    else if (theArg == "italic" || *theArg.ToCString() == 'i')
+    {
+      theAspect = Font_FA_Italic;
+      return true;
+    }
+    return false;
   }
-  theLevel = Font_StrictLevel_Strict;
-  return 0;
-}
+
+  //! Auxiliary function to parse font strict level argument
+  static int parseFontStrictLevel(const int         theArgNb,
+                                  const char**      theArgVec,
+                                  Font_StrictLevel& theLevel)
+  {
+    if (theArgNb >= 1)
+    {
+      TCollection_AsciiString anArg(theArgVec[0]);
+      anArg.LowerCase();
+      if (anArg == "any")
+      {
+        theLevel = Font_StrictLevel_Any;
+        return 1;
+      }
+      else if (anArg == "aliases")
+      {
+        theLevel = Font_StrictLevel_Aliases;
+        return 1;
+      }
+      else if (anArg == "strict")
+      {
+        theLevel = Font_StrictLevel_Strict;
+        return 1;
+      }
+    }
+    theLevel = Font_StrictLevel_Strict;
+    return 0;
+  }
 } // namespace
 
 //==============================================================================
@@ -760,20 +746,24 @@ static int VSize(Draw_Interpretor& di, int argc, const char** argv)
   double                  aSize = 0.0;
   switch (argc)
   {
-    case 1: {
+    case 1:
+    {
       aSize = 100;
       break;
     }
-    case 2: {
+    case 2:
+    {
       aSize = Draw::Atof(argv[1]);
       break;
     }
-    case 3: {
+    case 3:
+    {
       aName = argv[1];
       aSize = Draw::Atof(argv[2]);
       break;
     }
-    default: {
+    default:
+    {
       di << "Syntax error";
       return 1;
     }
@@ -1135,7 +1125,8 @@ static int VPointBuilder(Draw_Interpretor&, int theArgNb, const char** theArgVec
     }
     switch (!aShapeA.IsNull() ? aShapeA.ShapeType() : TopAbs_SHAPE)
     {
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         aPnt = BRep_Tool::Pnt(TopoDS::Vertex(aShapeA));
         break;
       }
@@ -1149,7 +1140,8 @@ static int VPointBuilder(Draw_Interpretor&, int theArgNb, const char** theArgVec
         aPnt           = (A.XYZ() + B.XYZ()) / 2;
         break;
       }
-      default: {
+      default:
+      {
         Message::SendFail() << "Error: Wrong number of selected shapes.\n"
                             << "\tYou should select one edge or vertex.";
         return 1;
@@ -3885,34 +3877,34 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-//! Auxiliary function for parsing translation vector - either 2D or 3D.
-static int parseTranslationVec(int theArgNb, const char** theArgVec, gp_Vec& theVec)
-{
-  if (theArgNb < 2)
+  //! Auxiliary function for parsing translation vector - either 2D or 3D.
+  static int parseTranslationVec(int theArgNb, const char** theArgVec, gp_Vec& theVec)
   {
-    return 0;
-  }
-
-  TCollection_AsciiString anX(theArgVec[0]);
-  TCollection_AsciiString anY(theArgVec[1]);
-  if (!anX.IsRealValue(true) || !anY.IsRealValue(true))
-  {
-    return 0;
-  }
-
-  theVec.SetX(anX.RealValue());
-  theVec.SetY(anY.RealValue());
-  if (theArgNb >= 3)
-  {
-    TCollection_AsciiString anZ(theArgVec[2]);
-    if (anZ.IsRealValue(true))
+    if (theArgNb < 2)
     {
-      theVec.SetZ(anZ.RealValue());
-      return 3;
+      return 0;
     }
+
+    TCollection_AsciiString anX(theArgVec[0]);
+    TCollection_AsciiString anY(theArgVec[1]);
+    if (!anX.IsRealValue(true) || !anY.IsRealValue(true))
+    {
+      return 0;
+    }
+
+    theVec.SetX(anX.RealValue());
+    theVec.SetY(anY.RealValue());
+    if (theArgNb >= 3)
+    {
+      TCollection_AsciiString anZ(theArgVec[2]);
+      if (anZ.IsRealValue(true))
+      {
+        theVec.SetZ(anZ.RealValue());
+        return 3;
+      }
+    }
+    return 2;
   }
-  return 2;
-}
 } // namespace
 
 //=======================================================================
@@ -6749,9 +6741,8 @@ void ViewerTest::ObjectCommands(Draw_Interpretor& theCommands)
   const char* aGroup    = "AIS Viewer";
   const char* aFileName = __FILE__;
   auto        addCmd =
-    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp) {
-      theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup);
-    };
+    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
+  { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
   addCmd("vtrihedron", VTrihedron, /* [vtrihedron] */ R"(
 vtrihedron name

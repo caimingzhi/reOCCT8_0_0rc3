@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_XRSession.hpp>
 
 //! OpenVR wrapper implementing Aspect_XRSession interface.
@@ -131,4 +130,3 @@ protected:
   VRContext*              myContext;
   TCollection_AsciiString myActionsManifest;
 };
-

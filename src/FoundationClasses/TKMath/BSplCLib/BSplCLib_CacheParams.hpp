@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BSplCLib.hpp>
 
 #include <algorithm>
@@ -106,4 +105,3 @@ struct BSplCLib_CacheParams
   BSplCLib_CacheParams(const BSplCLib_CacheParams&)            = delete;
   BSplCLib_CacheParams& operator=(const BSplCLib_CacheParams&) = delete;
 };
-

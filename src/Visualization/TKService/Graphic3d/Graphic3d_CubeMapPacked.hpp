@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CubeMap.hpp>
 #include <NCollection_Array1.hpp>
 #include <OSD_Path.hpp>
@@ -56,4 +55,3 @@ protected:
   Graphic3d_CubeMapOrder myOrder;       //!< order mapping tile grit to cubemap sides
   unsigned int           myTileNumberX; //!< width of tile grid
 };
-

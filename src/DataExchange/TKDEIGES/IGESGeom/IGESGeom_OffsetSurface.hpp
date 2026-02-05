@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -52,4 +51,3 @@ private:
   double                           theDistance;
   occ::handle<IGESData_IGESEntity> theSurface;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepKinematics_ActuatedDirection
 {
   StepKinematics_adBidirectional,

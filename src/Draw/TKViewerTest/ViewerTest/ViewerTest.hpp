@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_TypeOfLine.hpp>
 #include <Aspect_TypeOfMarker.hpp>
 #include <Aspect_TypeOfTriedronPosition.hpp>
@@ -280,4 +279,3 @@ private:
   //! returns WNT_WClass handle.
   static const occ::handle<WNT_WClass>& WClass();
 };
-

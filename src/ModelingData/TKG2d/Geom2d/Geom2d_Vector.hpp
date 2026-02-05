@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Vec2d.hpp>
@@ -59,4 +58,3 @@ public:
 protected:
   gp_Vec2d gpVec2d;
 };
-

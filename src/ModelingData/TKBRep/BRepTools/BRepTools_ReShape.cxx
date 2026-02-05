@@ -35,25 +35,25 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepTools_ReShape, Standard_Transient)
 namespace
 {
 
-//! Adds the shape to the map.
-//! If the shape is a wire, shell or solid then
-//! adds the sub-shapes of the shape instead.
-//! Returns 'true' if the sub-shapes were added.
-template <typename TMap>
-void Add(TMap& theMap, const TopoDS_Shape& theShape)
-{
-  const TopAbs_ShapeEnum aType = theShape.ShapeType();
-  if (aType != TopAbs_WIRE && aType != TopAbs_SHELL && aType != TopAbs_COMPSOLID)
+  //! Adds the shape to the map.
+  //! If the shape is a wire, shell or solid then
+  //! adds the sub-shapes of the shape instead.
+  //! Returns 'true' if the sub-shapes were added.
+  template <typename TMap>
+  void Add(TMap& theMap, const TopoDS_Shape& theShape)
   {
-    theMap.Add(theShape);
-    return;
-  }
+    const TopAbs_ShapeEnum aType = theShape.ShapeType();
+    if (aType != TopAbs_WIRE && aType != TopAbs_SHELL && aType != TopAbs_COMPSOLID)
+    {
+      theMap.Add(theShape);
+      return;
+    }
 
-  for (TopoDS_Iterator aIt(theShape); aIt.More(); aIt.Next())
-  {
-    theMap.Add(aIt.Value());
+    for (TopoDS_Iterator aIt(theShape); aIt.More(); aIt.Next())
+    {
+      theMap.Add(aIt.Value());
+    }
   }
-}
 
 } // namespace
 

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef OCCT_DEBUG
 
   #include <TopAbs_ShapeEnum.hpp>

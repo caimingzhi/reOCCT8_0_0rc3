@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapePersistent_TopoDS.hpp>
 #include <ShapePersistent_Geom2d.hpp>
 #include <ShapePersistent_Poly.hpp>
@@ -604,4 +603,3 @@ public:
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
-

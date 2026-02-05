@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Vec.hpp>
 #include <IntImp_ConstIsoparametric.hpp>
 
@@ -10,4 +9,3 @@ Standard_EXPORT bool IntImp_ComputeTangence(const gp_Vec              DPuv[],
                                             const double              EpsUV[],
                                             double                    Tgduv[],
                                             IntImp_ConstIsoparametric TabIso[]);
-

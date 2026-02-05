@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Interior types for primitive faces.
 enum Aspect_InteriorStyle
 {
@@ -13,4 +12,3 @@ enum Aspect_InteriorStyle
   // obsolete aliases
   Aspect_IS_HOLLOW = Aspect_IS_EMPTY, //!< transparent surface interior
 };
-

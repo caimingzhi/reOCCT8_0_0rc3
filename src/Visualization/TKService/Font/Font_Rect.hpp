@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 #include <Standard_Dump.hpp>
 
@@ -65,4 +64,3 @@ struct Font_Rect
     OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, Bottom)
   }
 };
-

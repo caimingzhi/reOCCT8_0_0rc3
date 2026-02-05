@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntImp_ConstIsoparametric
 {
   IntImp_UIsoparametricOnCaro1,
@@ -8,4 +7,3 @@ enum IntImp_ConstIsoparametric
   IntImp_UIsoparametricOnCaro2,
   IntImp_VIsoparametricOnCaro2
 };
-

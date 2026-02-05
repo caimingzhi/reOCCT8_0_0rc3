@@ -30,33 +30,33 @@
 
 namespace
 {
-static char THE_DEFAULT_CHAR_STRING[1] = {'\0'};
+  static char THE_DEFAULT_CHAR_STRING[1] = {'\0'};
 
-//! Calculate padded allocation size: minimum +1 byte guaranteed, up to +4 bytes
-//! This provides automatic space for null terminator and some extra buffer, aligned to 4-byte
-//! boundary
-inline size_t calculatePaddedSize(const int theLength)
-{
-  return (theLength + 4) & ~0x3; // Always guarantees at least +1 byte, up to +4 bytes
-}
+  //! Calculate padded allocation size: minimum +1 byte guaranteed, up to +4 bytes
+  //! This provides automatic space for null terminator and some extra buffer, aligned to 4-byte
+  //! boundary
+  inline size_t calculatePaddedSize(const int theLength)
+  {
+    return (theLength + 4) & ~0x3; // Always guarantees at least +1 byte, up to +4 bytes
+  }
 
-//! Helper structure to hold formatted integer string with its length
-struct FormattedInteger
-{
-  char Buffer[16]; // Enough for 32-bit int + sign + null terminator
-  int  Length;
+  //! Helper structure to hold formatted integer string with its length
+  struct FormattedInteger
+  {
+    char Buffer[16]; // Enough for 32-bit int + sign + null terminator
+    int  Length;
 
-  FormattedInteger(const int theValue) { Length = Sprintf(Buffer, "%d", theValue); }
-};
+    FormattedInteger(const int theValue) { Length = Sprintf(Buffer, "%d", theValue); }
+  };
 
-//! Helper structure to hold formatted real number string with its length
-struct FormattedReal
-{
-  char Buffer[64]; // Enough for double in %g format + null terminator
-  int  Length;
+  //! Helper structure to hold formatted real number string with its length
+  struct FormattedReal
+  {
+    char Buffer[64]; // Enough for double in %g format + null terminator
+    int  Length;
 
-  FormattedReal(const double theValue) { Length = Sprintf(Buffer, "%g", theValue); }
-};
+    FormattedReal(const double theValue) { Length = Sprintf(Buffer, "%g", theValue); }
+  };
 } // namespace
 
 //=================================================================================================

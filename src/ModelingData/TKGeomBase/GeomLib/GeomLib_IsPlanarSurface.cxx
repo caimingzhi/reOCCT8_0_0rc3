@@ -1,19 +1,3 @@
-// Created on: 1998-11-23
-// Created by: Philippe MANGIN
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Geom_BezierCurve.hpp>
 #include <Geom_BezierSurface.hpp>
 #include <Geom_BSplineCurve.hpp>
@@ -90,30 +74,36 @@ static bool Controle(const occ::handle<Geom_Curve>& C, const gp_Pln& Plan, const
 
   switch (Type)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       Nb = 2;
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       Nb = 3;
       break;
     }
 
     case GeomAbs_Ellipse:
     case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       Nb = 5;
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Nb = AC.NbPoles();
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Nb = AC.NbPoles();
       break;
     }
-    default: {
+    default:
+    {
       Nb = 8 + 3 * AC.NbIntervals(GeomAbs_CN);
     }
   }
@@ -143,7 +133,8 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
 
   switch (Type)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       IsPlan = true;
       myPlan = AS.Plane();
       break;
@@ -151,12 +142,14 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
     case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       IsPlan = false;
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       bool   Essai = true;
       gp_Pnt P;
       gp_Vec DU, DV, Dn;
@@ -197,7 +190,8 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
 
       break;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       bool   Essai = false;
       double Umin, Umax, Vmin, Vmax;
       double norm;
@@ -235,7 +229,8 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
       break;
     }
 
-    default: {
+    default:
+    {
       int NbU, NbV, ii, jj, kk;
       NbU = 8 + 3 * AS.NbUIntervals(GeomAbs_CN);
       NbV = 8 + 3 * AS.NbVIntervals(GeomAbs_CN);

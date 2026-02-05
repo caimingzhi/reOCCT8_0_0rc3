@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
@@ -48,4 +47,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ViewAffinity, Standard_Transient)
 };
-

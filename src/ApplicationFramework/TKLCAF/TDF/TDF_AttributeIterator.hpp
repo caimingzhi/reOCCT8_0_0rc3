@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_Label.hpp>
 #include <TDF_LabelNodePtr.hpp>
 
@@ -62,4 +61,3 @@ inline occ::handle<TDF_Attribute> TDF_AttributeIterator::Value() const
 {
   return myValue;
 }
-

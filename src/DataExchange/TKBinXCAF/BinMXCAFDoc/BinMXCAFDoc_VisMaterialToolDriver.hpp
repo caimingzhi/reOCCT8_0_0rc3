@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMDF_ADriver.hpp>
 
 //! Binary persistence driver for XCAFDoc_VisMaterialTool attribute.
@@ -26,4 +25,3 @@ public:
     BinObjMgt_Persistent&                                    theTarget,
     NCollection_IndexedMap<occ::handle<Standard_Transient>>& theRelocTable) const override;
 };
-

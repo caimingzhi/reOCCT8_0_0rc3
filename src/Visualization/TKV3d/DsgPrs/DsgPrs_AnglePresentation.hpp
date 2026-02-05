@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -121,4 +120,3 @@ public:
                                   const gp_Ax1&                          theAxe,
                                   const DsgPrs_ArrowSide                 ArrowSide);
 };
-

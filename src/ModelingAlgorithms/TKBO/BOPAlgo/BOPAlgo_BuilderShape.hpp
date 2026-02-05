@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -132,4 +131,3 @@ protected:              //! @name Fields
   bool                           myFillHistory; //!< Controls the history filling
   occ::handle<BRepTools_History> myHistory;     //!< History tool
 };
-

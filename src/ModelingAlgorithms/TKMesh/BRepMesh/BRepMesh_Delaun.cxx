@@ -1,19 +1,3 @@
-// Created on: 1993-05-12
-// Created by: Didier PIFFAULT
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_Delaun.hpp>
 
 #include <gp_XY.hpp>
@@ -45,101 +29,102 @@ const double Precision2 = Precision * Precision;
 
 namespace
 {
-//! Sort two points in projection on vector (1,1)
-struct ComparatorOfVertexOfDelaun
-{
-  bool operator()(const BRepMesh_Vertex& theLeft, const BRepMesh_Vertex& theRight)
+  //! Sort two points in projection on vector (1,1)
+  struct ComparatorOfVertexOfDelaun
   {
-    return theLeft.Coord().X() + theLeft.Coord().Y() < theRight.Coord().X() + theRight.Coord().Y();
-  }
-};
+    bool operator()(const BRepMesh_Vertex& theLeft, const BRepMesh_Vertex& theRight)
+    {
+      return theLeft.Coord().X() + theLeft.Coord().Y()
+             < theRight.Coord().X() + theRight.Coord().Y();
+    }
+  };
 
-//! Sort two points in projection on vector (1,1)
-struct ComparatorOfIndexedVertexOfDelaun
-{
-public:
-  ComparatorOfIndexedVertexOfDelaun(const occ::handle<BRepMesh_DataStructureOfDelaun>& theDS)
-      : myStructure(theDS)
-  {
-  }
-
-  bool operator()(int theLeft, int theRight)
-  {
-    const BRepMesh_Vertex& aLeft  = myStructure->GetNode(theLeft);
-    const BRepMesh_Vertex& aRight = myStructure->GetNode(theRight);
-    return ComparatorOfVertexOfDelaun()(aLeft, aRight);
-  }
-
-private:
-  occ::handle<BRepMesh_DataStructureOfDelaun> myStructure;
-};
-
-void UpdateBndBox(const gp_XY& thePnt1, const gp_XY& thePnt2, Bnd_B2d& theBox)
-{
-  theBox.Add(thePnt1);
-  theBox.Add(thePnt2);
-  theBox.Enlarge(Precision);
-}
-
-// Class representing a stack of frames. Each frame is a range of elements to be processed.
-// The stack allows to process elements in depth-first order meaning that when new elements
-// are added to the stack, they will be processed before the remaining elements of the
-// current frame.
-// Frames are processed in LIFO order while elements inside a frame are processed in FIFO order.
-class StackOfFrames
-{
-private:
-  // A frame is a range of elements to be processed.
-  class Frame
+  //! Sort two points in projection on vector (1,1)
+  struct ComparatorOfIndexedVertexOfDelaun
   {
   public:
-    // Construct a frame for the given range of elements.
-    // Note that the range is [theFrameStart, theFrameEnd).
-    Frame(const int theFrameStart, const int theFrameEnd)
-        : CurrentElement(theFrameStart),
-          FrameEnd(theFrameEnd)
+    ComparatorOfIndexedVertexOfDelaun(const occ::handle<BRepMesh_DataStructureOfDelaun>& theDS)
+        : myStructure(theDS)
     {
     }
 
-    // Return the index of the current element and advance to the next one.
-    inline int Advance() { return CurrentElement++; }
-
-    // Check if all elements in the frame have been processed.
-    inline bool IsEmpty() const { return CurrentElement == FrameEnd; }
+    bool operator()(int theLeft, int theRight)
+    {
+      const BRepMesh_Vertex& aLeft  = myStructure->GetNode(theLeft);
+      const BRepMesh_Vertex& aRight = myStructure->GetNode(theRight);
+      return ComparatorOfVertexOfDelaun()(aLeft, aRight);
+    }
 
   private:
-    int CurrentElement; // Index of the current element of the frame.
-    int FrameEnd;       // Index of the last element + 1 of the frame.
+    occ::handle<BRepMesh_DataStructureOfDelaun> myStructure;
   };
 
-public:
-  // Adds a new frame for the given range of elements.
-  // Note that the range is [theFrameStart, theFrameEnd).
-  inline void PushFrame(const int theFrameStart, const int theFrameEnd)
+  void UpdateBndBox(const gp_XY& thePnt1, const gp_XY& thePnt2, Bnd_B2d& theBox)
   {
-    myFrames.emplace_back(theFrameStart, theFrameEnd);
+    theBox.Add(thePnt1);
+    theBox.Add(thePnt2);
+    theBox.Enlarge(Precision);
   }
 
-  // Returns the index of the current element of the top frame
-  // and advances to the next element. If all elements of the top
-  // frame have been processed, the frame is removed from the stack.
-  // Precondition: the stack is not empty.
-  inline int PopElement()
+  // Class representing a stack of frames. Each frame is a range of elements to be processed.
+  // The stack allows to process elements in depth-first order meaning that when new elements
+  // are added to the stack, they will be processed before the remaining elements of the
+  // current frame.
+  // Frames are processed in LIFO order while elements inside a frame are processed in FIFO order.
+  class StackOfFrames
   {
-    Frame&    aFrame = myFrames.back();
-    const int anElem = aFrame.Advance();
-    if (aFrame.IsEmpty())
-      myFrames.pop_back();
+  private:
+    // A frame is a range of elements to be processed.
+    class Frame
+    {
+    public:
+      // Construct a frame for the given range of elements.
+      // Note that the range is [theFrameStart, theFrameEnd).
+      Frame(const int theFrameStart, const int theFrameEnd)
+          : CurrentElement(theFrameStart),
+            FrameEnd(theFrameEnd)
+      {
+      }
 
-    return anElem;
-  }
+      // Return the index of the current element and advance to the next one.
+      inline int Advance() { return CurrentElement++; }
 
-  // Check if the stack is empty.
-  inline bool IsEmpty() const { return myFrames.empty(); }
+      // Check if all elements in the frame have been processed.
+      inline bool IsEmpty() const { return CurrentElement == FrameEnd; }
 
-private:
-  std::vector<Frame, NCollection_Allocator<Frame>> myFrames; // Container of frames.
-};
+    private:
+      int CurrentElement; // Index of the current element of the frame.
+      int FrameEnd;       // Index of the last element + 1 of the frame.
+    };
+
+  public:
+    // Adds a new frame for the given range of elements.
+    // Note that the range is [theFrameStart, theFrameEnd).
+    inline void PushFrame(const int theFrameStart, const int theFrameEnd)
+    {
+      myFrames.emplace_back(theFrameStart, theFrameEnd);
+    }
+
+    // Returns the index of the current element of the top frame
+    // and advances to the next element. If all elements of the top
+    // frame have been processed, the frame is removed from the stack.
+    // Precondition: the stack is not empty.
+    inline int PopElement()
+    {
+      Frame&    aFrame = myFrames.back();
+      const int anElem = aFrame.Advance();
+      if (aFrame.IsEmpty())
+        myFrames.pop_back();
+
+      return anElem;
+    }
+
+    // Check if the stack is empty.
+    inline bool IsEmpty() const { return myFrames.empty(); }
+
+  private:
+    std::vector<Frame, NCollection_Allocator<Frame>> myFrames; // Container of frames.
+  };
 } // anonymous namespace
 
 //=================================================================================================
@@ -387,8 +372,8 @@ void BRepMesh_Delaun::deleteTriangle(const int                       theIndex,
   }
 
   const BRepMesh_Triangle& aElement = GetTriangle(theIndex);
-  const int (&e)[3]                 = aElement.myEdges;
-  const bool (&o)[3]                = aElement.myOrientations;
+  const int(&e)[3]                  = aElement.myEdges;
+  const bool(&o)[3]                 = aElement.myOrientations;
 
   myMeshData->RemoveElement(theIndex);
 
@@ -414,7 +399,7 @@ void BRepMesh_Delaun::compute(IMeshData::VectorOfInteger& theVertexIndexes)
     new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE);
 
   IMeshData::MapOfIntegerInteger aLoopEdges(10, aAllocator);
-  const int (&e)[3] = mySupTrian.myEdges;
+  const int(&e)[3] = mySupTrian.myEdges;
 
   aLoopEdges.Bind(e[0], true);
   aLoopEdges.Bind(e[1], true);
@@ -656,7 +641,7 @@ void BRepMesh_Delaun::createTrianglesOnNewVertices(IMeshData::VectorOfInteger&  
         for (; aCircleIt1.More(); aCircleIt1.Next())
         {
           const BRepMesh_Triangle& aElement = GetTriangle(aCircleIt1.Value());
-          const int (&e)[3]                 = aElement.myEdges;
+          const int(&e)[3]                  = aElement.myEdges;
 
           if (aLoopEdges.IsBound(e[0]) || aLoopEdges.IsBound(e[1]) || aLoopEdges.IsBound(e[2]))
           {
@@ -696,8 +681,8 @@ void BRepMesh_Delaun::insertInternalEdges()
     for (int aTriangleIt = 1; aTriangleIt <= aPair.Extent(); ++aTriangleIt)
     {
       const BRepMesh_Triangle& aElement = GetTriangle(aPair.Index(aTriangleIt));
-      const int (&e)[3]                 = aElement.myEdges;
-      const bool (&o)[3]                = aElement.myOrientations;
+      const int(&e)[3]                  = aElement.myEdges;
+      const bool(&o)[3]                 = aElement.myOrientations;
 
       for (int i = 0; i < 3; ++i)
       {
@@ -746,7 +731,7 @@ bool BRepMesh_Delaun::isBoundToFrontier(const int theRefNodeId, const int theRef
         continue;
 
       const BRepMesh_Triangle& aElement = GetTriangle(aTriId);
-      const int (&anEdges)[3]           = aElement.myEdges;
+      const int(&anEdges)[3]            = aElement.myEdges;
 
       for (int anEdgeIt = 0; anEdgeIt < 3; ++anEdgeIt)
       {
@@ -809,7 +794,7 @@ void BRepMesh_Delaun::cleanupMesh()
 
       // Check that the connected triangle is not surrounded by another triangles
       const BRepMesh_Triangle& aElement = GetTriangle(aTriId);
-      const int (&anEdges)[3]           = aElement.myEdges;
+      const int(&anEdges)[3]            = aElement.myEdges;
 
       bool isCanNotBeRemoved = true;
       for (int aCurEdgeIdx = 0; aCurEdgeIdx < 3; ++aCurEdgeIdx)
@@ -923,8 +908,8 @@ void BRepMesh_Delaun::frontierAdjust()
           continue;
 
         const BRepMesh_Triangle& aElement = GetTriangle(aPriorElemId);
-        const int (&e)[3]                 = aElement.myEdges;
-        const bool (&o)[3]                = aElement.myOrientations;
+        const int(&e)[3]                  = aElement.myEdges;
+        const bool(&o)[3]                 = aElement.myOrientations;
 
         bool isTriangleFound = false;
         for (int n = 0; n < 3; ++n)
@@ -1349,8 +1334,8 @@ void BRepMesh_Delaun::cleanupPolygon(const IMeshData::SequenceOfInteger& thePoly
         continue;
 
       const BRepMesh_Triangle& aElement = GetTriangle(anElemId);
-      const int (&anEdges)[3]           = aElement.myEdges;
-      const bool (&anEdgesOri)[3]       = aElement.myOrientations;
+      const int(&anEdges)[3]            = aElement.myEdges;
+      const bool(&anEdgesOri)[3]        = aElement.myOrientations;
 
       int isTriangleFound = false;
       for (int anEdgeIt = 0; anEdgeIt < 3; ++anEdgeIt)
@@ -2425,7 +2410,7 @@ bool BRepMesh_Delaun::Contains(const int              theTriangleId,
   int p[3];
 
   const BRepMesh_Triangle& aElement = GetTriangle(theTriangleId);
-  const int (&e)[3]                 = aElement.myEdges;
+  const int(&e)[3]                  = aElement.myEdges;
 
   const BRepMesh_Edge* anEdges[3] = {&GetEdge(e[0]), &GetEdge(e[1]), &GetEdge(e[2])};
 

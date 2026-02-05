@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -74,6 +73,7 @@ private:
   IntSurf_Situation situat;
   bool              oppos;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -148,5 +148,3 @@ inline bool IntSurf_Transition::IsOpposite() const
   }
   return oppos;
 }
-
-

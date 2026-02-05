@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -231,4 +230,3 @@ protected:
   double dim;
   gp_Mat inertia;
 };
-

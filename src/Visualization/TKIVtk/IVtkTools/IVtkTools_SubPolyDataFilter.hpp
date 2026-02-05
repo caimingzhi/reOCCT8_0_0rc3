@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtkTools.hpp>
 
 #include <Standard_WarningsDisable.hpp>
@@ -61,4 +60,3 @@ protected:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

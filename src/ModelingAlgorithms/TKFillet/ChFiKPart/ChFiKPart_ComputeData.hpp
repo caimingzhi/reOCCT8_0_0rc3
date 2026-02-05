@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <TopAbs_Orientation.hpp>
 
@@ -75,4 +74,3 @@ public:
                                             const TopAbs_Orientation              OS2,
                                             const double                          Radius);
 };
-

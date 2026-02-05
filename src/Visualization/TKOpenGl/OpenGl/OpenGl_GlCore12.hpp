@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlCore11.hpp>
 
 //! OpenGL 1.2 core based on 1.1 version.
@@ -20,4 +19,3 @@ public: //! @name OpenGL 1.2 additives to 1.1
   using theBaseClass_t::glTexSubImage3D;
 #endif
 };
-

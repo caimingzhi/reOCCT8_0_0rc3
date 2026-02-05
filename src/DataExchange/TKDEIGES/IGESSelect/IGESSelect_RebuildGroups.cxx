@@ -121,7 +121,8 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
     }
     switch (casenum)
     {
-      case 1: {
+      case 1:
+      {
         occ::handle<IGESBasic_Group> g = new IGESBasic_Group;
         g->Init(tab);
         target->AddEntity(g);
@@ -129,19 +130,22 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
         //  Q : faut-il transferer le nom silyena un ?
       }
       break;
-      case 2: {
+      case 2:
+      {
         occ::handle<IGESBasic_GroupWithoutBackP> g = new IGESBasic_GroupWithoutBackP;
         g->Init(tab);
         target->AddEntity(g);
       }
       break;
-      case 3: {
+      case 3:
+      {
         occ::handle<IGESBasic_OrderedGroup> g = new IGESBasic_OrderedGroup;
         g->Init(tab);
         target->AddEntity(g);
       }
       break;
-      case 4: {
+      case 4:
+      {
         occ::handle<IGESBasic_OrderedGroupWithoutBackP> g = new IGESBasic_OrderedGroupWithoutBackP;
         g->Init(tab);
         target->AddEntity(g);

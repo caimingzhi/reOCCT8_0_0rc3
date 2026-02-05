@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 #include <Standard_Integer.hpp>
@@ -19,7 +18,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <Standard_Type.hpp>
 
 struct Standard_UUID
@@ -29,7 +27,6 @@ struct Standard_UUID
   uint16_t Data3;
   uint8_t  Data4[8];
 };
-
 
 #include <Standard_PCharacter.hpp>
 #include <Standard_PExtCharacter.hpp>
@@ -226,37 +223,36 @@ private:
 
 namespace std
 {
-template <>
-struct hash<Standard_GUID>
-{
-  size_t operator()(const Standard_GUID& theGUID) const noexcept
+  template <>
+  struct hash<Standard_GUID>
   {
-    struct GUID
+    size_t operator()(const Standard_GUID& theGUID) const noexcept
     {
-      int      my32b;
-      char16_t my16b1;
-      char16_t my16b2;
-      char16_t my16b3;
-      uint8_t  my8b1;
-      uint8_t  my8b2;
-      uint8_t  my8b3;
-      uint8_t  my8b4;
-      uint8_t  my8b5;
-      uint8_t  my8b6;
-    };
+      struct GUID
+      {
+        int      my32b;
+        char16_t my16b1;
+        char16_t my16b2;
+        char16_t my16b3;
+        uint8_t  my8b1;
+        uint8_t  my8b2;
+        uint8_t  my8b3;
+        uint8_t  my8b4;
+        uint8_t  my8b5;
+        uint8_t  my8b6;
+      };
 
-    GUID aGUID{theGUID.my32b,
-               theGUID.my16b1,
-               theGUID.my16b2,
-               theGUID.my16b3,
-               theGUID.my8b1,
-               theGUID.my8b2,
-               theGUID.my8b3,
-               theGUID.my8b4,
-               theGUID.my8b5,
-               theGUID.my8b6};
-    return opencascade::hashBytes(&aGUID, sizeof(GUID));
-  }
-};
+      GUID aGUID{theGUID.my32b,
+                 theGUID.my16b1,
+                 theGUID.my16b2,
+                 theGUID.my16b3,
+                 theGUID.my8b1,
+                 theGUID.my8b2,
+                 theGUID.my8b3,
+                 theGUID.my8b4,
+                 theGUID.my8b5,
+                 theGUID.my8b6};
+      return opencascade::hashBytes(&aGUID, sizeof(GUID));
+    }
+  };
 } // namespace std
-

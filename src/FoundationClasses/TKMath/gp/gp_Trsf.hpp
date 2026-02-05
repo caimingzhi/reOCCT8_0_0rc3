@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_TrsfForm.hpp>
 #include <gp_Mat.hpp>
 #include <gp_XYZ.hpp>
@@ -465,4 +464,3 @@ inline constexpr gp_Mat gp_Trsf::VectorialPart() const noexcept
   }
   return M;
 }
-

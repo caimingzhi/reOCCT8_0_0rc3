@@ -1,18 +1,3 @@
-// Created on: 2002-05-21
-// Created by: QA Admin
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <QABugs.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -1805,29 +1790,34 @@ static int OCC24826(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     const ParallelTest_SaxpyBatch aFunctor2(aX, anY2, 1e-6);
     switch (aMode)
     {
-      case 0: {
+      case 0:
+      {
         aModeDesc = "OSD_Parallel::For()";
         OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
-      case 1: {
+      case 1:
+      {
         aModeDesc = "OSD_ThreadPool::Launcher";
         OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
-      case 2: {
+      case 2:
+      {
         aModeDesc = "OSD_Parallel::Batched()";
         OSD_Parallel::For(aFunctor2.Begin(), aFunctor2.End(), aFunctor2);
         break;
       }
-      case 3: {
+      case 3:
+      {
         aModeDesc = "OSD_ThreadPool::Launcher, Batched";
         OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor2.Begin(), aFunctor2.End(), aFunctor2);
         break;
       }
-      case 4: {
+      case 4:
+      {
 #ifdef HAVE_TBB
         aModeDesc = "tbb::parallel_for";
         tbb::parallel_for(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
@@ -1965,18 +1955,21 @@ static int OCC29935(Draw_Interpretor&, int theArgc, const char** theArgv)
     ParallelTest_MatMult aFunctor1(aMat1, aMat2, aMatRes, aSize);
     switch (aMode)
     {
-      case 0: {
+      case 0:
+      {
         aModeDesc = "OSD_Parallel::For()";
         OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
-      case 1: {
+      case 1:
+      {
         aModeDesc = "OSD_ThreadPool::Launcher";
         OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
-      case 2: {
+      case 2:
+      {
 #ifdef HAVE_TBB
         aModeDesc = "tbb::parallel_for";
         tbb::parallel_for(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);

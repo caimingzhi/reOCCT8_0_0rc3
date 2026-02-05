@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -80,4 +79,3 @@ private:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>        myedstoconnect;
   NCollection_List<TopoDS_Shape>                                mylFinBlock;
 };
-

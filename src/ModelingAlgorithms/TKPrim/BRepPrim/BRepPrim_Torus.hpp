@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -40,4 +39,3 @@ private:
   double myMajor; //!< distance from the center of the pipe to the center of the torus
   double myMinor; //!< radius of the pipe
 };
-

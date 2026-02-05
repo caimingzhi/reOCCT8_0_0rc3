@@ -1,26 +1,3 @@
-// Created on: 1991-08-26
-// Created by: JCV
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified RLE Aug 93 - Complete rewrite
-// xab  21-Mar-95  implemented cache mechanism
-// pmn  25-09-96   Interpolation
-// jct  25-09-96 : Correction de l'alloc de LocalArray dans RationalDerivative.
-// pmn  07-10-96 : Correction de DN dans le cas rationnal.
-// pmn  06-02-97 : Correction des poids dans RationalDerivative. (PRO700)
-
 #include <BSplCLib.hpp>
 #include <BSplSLib.hpp>
 #include <gp_Pnt.hpp>
@@ -46,31 +23,31 @@ static constexpr double BSplSLib_zero[3] = {0.0, 0.0, 0.0};
 
 namespace
 {
-//! Maximum supported degree for B-spline surfaces.
-static constexpr int THE_MAX_DEGREE = BSplCLib::MaxDegree();
+  //! Maximum supported degree for B-spline surfaces.
+  static constexpr int THE_MAX_DEGREE = BSplCLib::MaxDegree();
 
-//! Validates that the given degrees do not exceed the maximum supported degree.
-//! @param theUDegree degree in U direction
-//! @param theVDegree degree in V direction
-//! @throws Standard_OutOfRange if either degree exceeds MaxDegree()
-void validateBSplineDegree([[maybe_unused]] int theUDegree, [[maybe_unused]] int theVDegree)
-{
-  Standard_OutOfRange_Raise_if(theUDegree > THE_MAX_DEGREE || theVDegree > THE_MAX_DEGREE,
-                               "BSplSLib: bspline degree is greater than maximum supported");
-}
+  //! Validates that the given degrees do not exceed the maximum supported degree.
+  //! @param theUDegree degree in U direction
+  //! @param theVDegree degree in V direction
+  //! @throws Standard_OutOfRange if either degree exceeds MaxDegree()
+  void validateBSplineDegree([[maybe_unused]] int theUDegree, [[maybe_unused]] int theVDegree)
+  {
+    Standard_OutOfRange_Raise_if(theUDegree > THE_MAX_DEGREE || theVDegree > THE_MAX_DEGREE,
+                                 "BSplSLib: bspline degree is greater than maximum supported");
+  }
 
-//=======================================================================
-// struct : BSplSLib_DataContainer
-// purpose: Auxiliary structure providing buffers for poles and knots used in
-//         evaluation of bspline (allocated in the stack)
-//=======================================================================
-struct BSplSLib_DataContainer
-{
-  double poles[4 * (THE_MAX_DEGREE + 1) * (THE_MAX_DEGREE + 1)];
-  double knots1[2 * THE_MAX_DEGREE];
-  double knots2[2 * THE_MAX_DEGREE];
-  double ders[48];
-};
+  //=======================================================================
+  // struct : BSplSLib_DataContainer
+  // purpose: Auxiliary structure providing buffers for poles and knots used in
+  //         evaluation of bspline (allocated in the stack)
+  //=======================================================================
+  struct BSplSLib_DataContainer
+  {
+    double poles[4 * (THE_MAX_DEGREE + 1) * (THE_MAX_DEGREE + 1)];
+    double knots1[2 * THE_MAX_DEGREE];
+    double knots2[2 * THE_MAX_DEGREE];
+    double ders[48];
+  };
 } // namespace
 
 //**************************************************************************

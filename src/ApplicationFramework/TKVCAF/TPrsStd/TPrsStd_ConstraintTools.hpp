@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -118,4 +117,3 @@ private:
                                                TopoDS_Shape&                           aShape4,
                                                occ::handle<Geom_Geometry>&             aGeom);
 };
-

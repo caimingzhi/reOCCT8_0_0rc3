@@ -20,45 +20,45 @@ IMPLEMENT_STANDARD_RTTIEXT(RWMesh_TriangulationReader, Standard_Transient)
 
 namespace
 {
-//! Forms string with loading statistic.
-static TCollection_AsciiString loadingStatistic(const TCollection_AsciiString& thePrefix,
-                                                const int                      theExpectedNodesNb,
-                                                const int                      theLoadedNodesNb,
-                                                const int theExpectedTrianglesNb,
-                                                const int theDegeneratedTrianglesNb,
-                                                const int theLoadedTrianglesNb)
-{
-  TCollection_AsciiString aNodesInfo;
-  if (theExpectedNodesNb != theLoadedNodesNb)
+  //! Forms string with loading statistic.
+  static TCollection_AsciiString loadingStatistic(const TCollection_AsciiString& thePrefix,
+                                                  const int                      theExpectedNodesNb,
+                                                  const int                      theLoadedNodesNb,
+                                                  const int theExpectedTrianglesNb,
+                                                  const int theDegeneratedTrianglesNb,
+                                                  const int theLoadedTrianglesNb)
   {
-    aNodesInfo = TCollection_AsciiString("Nodes: ") + theExpectedNodesNb + " expected / ";
-    aNodesInfo += TCollection_AsciiString(theLoadedNodesNb) + " loaded.";
-  }
-  TCollection_AsciiString aTrianglesInfo;
-  if (theExpectedTrianglesNb != theLoadedTrianglesNb)
-  {
-    if (!aNodesInfo.IsEmpty())
+    TCollection_AsciiString aNodesInfo;
+    if (theExpectedNodesNb != theLoadedNodesNb)
     {
-      aNodesInfo += " ";
+      aNodesInfo = TCollection_AsciiString("Nodes: ") + theExpectedNodesNb + " expected / ";
+      aNodesInfo += TCollection_AsciiString(theLoadedNodesNb) + " loaded.";
     }
-    aTrianglesInfo =
-      TCollection_AsciiString("Triangles: ") + theExpectedTrianglesNb + " expected / ";
-    if (theDegeneratedTrianglesNb != 0)
+    TCollection_AsciiString aTrianglesInfo;
+    if (theExpectedTrianglesNb != theLoadedTrianglesNb)
     {
-      aTrianglesInfo +=
-        TCollection_AsciiString(theDegeneratedTrianglesNb) + " skipped degenerated / ";
+      if (!aNodesInfo.IsEmpty())
+      {
+        aNodesInfo += " ";
+      }
+      aTrianglesInfo =
+        TCollection_AsciiString("Triangles: ") + theExpectedTrianglesNb + " expected / ";
+      if (theDegeneratedTrianglesNb != 0)
+      {
+        aTrianglesInfo +=
+          TCollection_AsciiString(theDegeneratedTrianglesNb) + " skipped degenerated / ";
+      }
+      aTrianglesInfo += TCollection_AsciiString(theLoadedTrianglesNb) + " loaded.";
     }
-    aTrianglesInfo += TCollection_AsciiString(theLoadedTrianglesNb) + " loaded.";
+    if (aNodesInfo.IsEmpty() && aTrianglesInfo.IsEmpty())
+    {
+      return TCollection_AsciiString();
+    }
+    return thePrefix
+           + ("Disconformity of the expected number of nodes/triangles for deferred mesh to the "
+              "loaded amount. ")
+           + aNodesInfo + aTrianglesInfo;
   }
-  if (aNodesInfo.IsEmpty() && aTrianglesInfo.IsEmpty())
-  {
-    return TCollection_AsciiString();
-  }
-  return thePrefix
-         + ("Disconformity of the expected number of nodes/triangles for deferred mesh to the "
-            "loaded amount. ")
-         + aNodesInfo + aTrianglesInfo;
-}
 } // namespace
 
 //=================================================================================================

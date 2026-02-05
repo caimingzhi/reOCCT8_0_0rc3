@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinTools_FormatVersion.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -110,4 +109,3 @@ public:
                                    const char*                  theFile,
                                    const Message_ProgressRange& theRange = Message_ProgressRange());
 };
-

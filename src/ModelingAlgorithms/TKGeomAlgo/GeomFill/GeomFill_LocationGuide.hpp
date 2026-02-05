@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -201,4 +200,3 @@ private:
   math_Vector                              R;
   GeomFill_PipeError                       myStatus;
 };
-

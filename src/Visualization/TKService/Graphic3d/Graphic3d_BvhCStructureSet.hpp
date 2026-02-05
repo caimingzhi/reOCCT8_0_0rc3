@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet3d.hpp>
 #include <Graphic3d_BndBox3d.hpp>
 #include <NCollection_IndexedMap.hpp>
@@ -55,4 +54,3 @@ private:
   NCollection_IndexedMap<const Graphic3d_CStructure*> myStructs;    //!< Indexed map of structures.
   // clang-format on
 };
-

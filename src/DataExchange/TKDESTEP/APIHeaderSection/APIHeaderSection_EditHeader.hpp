@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_Editor.hpp>
@@ -35,4 +34,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(APIHeaderSection_EditHeader, IFSelect_Editor)
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2017-06-13
-// Created by: Alexander MALYSHEV
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <RWStl.hpp>
 
 #include <Message_ProgressScope.hpp>
@@ -29,116 +14,118 @@
 namespace
 {
 
-static const int THE_STL_SIZEOF_FACET = 50;
-// clang-format off
+  static const int THE_STL_SIZEOF_FACET = 50;
+  // clang-format off
   static const int IND_THRESHOLD = 1000; // increment the indicator every 1k triangles
-// clang-format on
-static const size_t THE_BUFFER_SIZE = 1024; // The length of buffer to read (in bytes)
+  // clang-format on
+  static const size_t THE_BUFFER_SIZE = 1024; // The length of buffer to read (in bytes)
 
-//! Writing a Little Endian 32 bits integer
-inline static void convertInteger(const int theValue, char* theResult)
-{
-  union {
-    int  i;
-    char c[4];
-  } anUnion;
-
-  anUnion.i = theValue;
-
-  theResult[0] = anUnion.c[0];
-  theResult[1] = anUnion.c[1];
-  theResult[2] = anUnion.c[2];
-  theResult[3] = anUnion.c[3];
-}
-
-//! Writing a Little Endian 32 bits float
-inline static void convertDouble(const double theValue, char* theResult)
-{
-  union {
-    float i;
-    char  c[4];
-  } anUnion;
-
-  anUnion.i = (float)theValue;
-
-  theResult[0] = anUnion.c[0];
-  theResult[1] = anUnion.c[1];
-  theResult[2] = anUnion.c[2];
-  theResult[3] = anUnion.c[3];
-}
-
-class Reader : public RWStl_Reader
-{
-public:
-  //! Add new node
-  int AddNode(const gp_XYZ& thePnt) override
+  //! Writing a Little Endian 32 bits integer
+  inline static void convertInteger(const int theValue, char* theResult)
   {
-    myNodes.Append(thePnt);
-    return myNodes.Size();
-  }
-
-  //! Add new triangle
-  void AddTriangle(int theNode1, int theNode2, int theNode3) override
-  {
-    myTriangles.Append(Poly_Triangle(theNode1, theNode2, theNode3));
-  }
-
-  //! Creates Poly_Triangulation from collected data
-  occ::handle<Poly_Triangulation> GetTriangulation()
-  {
-    if (myTriangles.IsEmpty())
-      return occ::handle<Poly_Triangulation>();
-
-    occ::handle<Poly_Triangulation> aPoly =
-      new Poly_Triangulation(myNodes.Length(), myTriangles.Length(), false);
-    for (int aNodeIter = 0; aNodeIter < myNodes.Size(); ++aNodeIter)
+    union
     {
-      aPoly->SetNode(aNodeIter + 1, myNodes[aNodeIter]);
+      int  i;
+      char c[4];
+    } anUnion;
+
+    anUnion.i = theValue;
+
+    theResult[0] = anUnion.c[0];
+    theResult[1] = anUnion.c[1];
+    theResult[2] = anUnion.c[2];
+    theResult[3] = anUnion.c[3];
+  }
+
+  //! Writing a Little Endian 32 bits float
+  inline static void convertDouble(const double theValue, char* theResult)
+  {
+    union
+    {
+      float i;
+      char  c[4];
+    } anUnion;
+
+    anUnion.i = (float)theValue;
+
+    theResult[0] = anUnion.c[0];
+    theResult[1] = anUnion.c[1];
+    theResult[2] = anUnion.c[2];
+    theResult[3] = anUnion.c[3];
+  }
+
+  class Reader : public RWStl_Reader
+  {
+  public:
+    //! Add new node
+    int AddNode(const gp_XYZ& thePnt) override
+    {
+      myNodes.Append(thePnt);
+      return myNodes.Size();
     }
 
-    for (int aTriIter = 0; aTriIter < myTriangles.Size(); ++aTriIter)
+    //! Add new triangle
+    void AddTriangle(int theNode1, int theNode2, int theNode3) override
     {
-      aPoly->SetTriangle(aTriIter + 1, myTriangles[aTriIter]);
+      myTriangles.Append(Poly_Triangle(theNode1, theNode2, theNode3));
     }
 
-    return aPoly;
-  }
-
-protected:
-  void Clear()
-  {
-    myNodes.Clear();
-    myTriangles.Clear();
-  }
-
-private:
-  NCollection_Vector<gp_XYZ>        myNodes;
-  NCollection_Vector<Poly_Triangle> myTriangles;
-};
-
-class MultiDomainReader : public Reader
-{
-public:
-  //! Add new solid
-  //! Add triangulation to triangulation list for multi-domain case
-  void AddSolid() override
-  {
-    if (occ::handle<Poly_Triangulation> aCurrentTri = GetTriangulation())
+    //! Creates Poly_Triangulation from collected data
+    occ::handle<Poly_Triangulation> GetTriangulation()
     {
-      myTriangulationList.Append(aCurrentTri);
+      if (myTriangles.IsEmpty())
+        return occ::handle<Poly_Triangulation>();
+
+      occ::handle<Poly_Triangulation> aPoly =
+        new Poly_Triangulation(myNodes.Length(), myTriangles.Length(), false);
+      for (int aNodeIter = 0; aNodeIter < myNodes.Size(); ++aNodeIter)
+      {
+        aPoly->SetNode(aNodeIter + 1, myNodes[aNodeIter]);
+      }
+
+      for (int aTriIter = 0; aTriIter < myTriangles.Size(); ++aTriIter)
+      {
+        aPoly->SetTriangle(aTriIter + 1, myTriangles[aTriIter]);
+      }
+
+      return aPoly;
     }
-    Clear();
-  }
 
-  //! Returns triangulation list for multi-domain case
-  NCollection_Sequence<occ::handle<Poly_Triangulation>>& ChangeTriangulationList()
+  protected:
+    void Clear()
+    {
+      myNodes.Clear();
+      myTriangles.Clear();
+    }
+
+  private:
+    NCollection_Vector<gp_XYZ>        myNodes;
+    NCollection_Vector<Poly_Triangle> myTriangles;
+  };
+
+  class MultiDomainReader : public Reader
   {
-    return myTriangulationList;
-  }
+  public:
+    //! Add new solid
+    //! Add triangulation to triangulation list for multi-domain case
+    void AddSolid() override
+    {
+      if (occ::handle<Poly_Triangulation> aCurrentTri = GetTriangulation())
+      {
+        myTriangulationList.Append(aCurrentTri);
+      }
+      Clear();
+    }
 
-private:
-  NCollection_Sequence<occ::handle<Poly_Triangulation>> myTriangulationList;
-};
+    //! Returns triangulation list for multi-domain case
+    NCollection_Sequence<occ::handle<Poly_Triangulation>>& ChangeTriangulationList()
+    {
+      return myTriangulationList;
+    }
+
+  private:
+    NCollection_Sequence<occ::handle<Poly_Triangulation>> myTriangulationList;
+  };
 
 } // namespace
 

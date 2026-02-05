@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlLDrivers_DocumentRetrievalDriver.hpp>
 #include <XmlMDF_ADriverTable.hpp>
 
@@ -27,5 +26,5 @@ public:
 // Definition of HANDLE object using Standard_DefineHandle.hpp
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

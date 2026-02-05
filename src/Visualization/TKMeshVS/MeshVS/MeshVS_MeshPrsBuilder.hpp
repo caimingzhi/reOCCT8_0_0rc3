@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <MeshVS_PrsBuilder.hpp>
 #include <MeshVS_DisplayModeFlags.hpp>
 #include <MeshVS_BuilderPriority.hpp>
@@ -122,4 +121,3 @@ protected:
                                               double&                           yG,
                                               double&                           zG);
 };
-

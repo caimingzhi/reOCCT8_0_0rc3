@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BSplCLib_CacheParams.hpp>
 
 //! \brief A cache class for Bezier and B-spline curves.
@@ -179,4 +178,3 @@ private:
                                            //!< For non-rational curves: no weight
   // clang-format on
 };
-

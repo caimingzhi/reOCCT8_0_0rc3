@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ShaderObject.hpp>
 #include <OpenGl_GlCore20.hpp>
 #include <OpenGl_Resource.hpp>
@@ -86,4 +85,3 @@ protected:
   GLenum        myType;     //!< Type of OpenGL shader object
   GLuint        myShaderID; //!< Handle of OpenGL shader object
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRAlgo_EdgesBlock.hpp>
 
 #include <Standard.hpp>
@@ -47,4 +46,3 @@ private:
   NCollection_Array1<occ::handle<Standard_Transient>> myWires;
   HLRAlgo_EdgesBlock::MinMaxIndices                   myMinMax;
 };
-

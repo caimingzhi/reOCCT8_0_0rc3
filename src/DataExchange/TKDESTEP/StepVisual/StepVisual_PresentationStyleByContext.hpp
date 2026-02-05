@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_StyleContextSelect.hpp>
@@ -30,4 +29,3 @@ public:
 private:
   StepVisual_StyleContextSelect styleContext;
 };
-

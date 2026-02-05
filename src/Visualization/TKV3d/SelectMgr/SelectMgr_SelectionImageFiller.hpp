@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 #include <math_BullardGenerator.hpp>
 #include <NCollection_Map.hpp>
@@ -62,4 +61,3 @@ protected:
   math_BullardGenerator           myBullardGenerator;
   NCollection_Map<Quantity_Color> myUniqueColors;
 };
-

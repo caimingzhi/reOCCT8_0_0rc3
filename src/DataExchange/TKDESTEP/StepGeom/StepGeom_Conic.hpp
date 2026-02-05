@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_Axis2Placement.hpp>
@@ -26,4 +25,3 @@ public:
 private:
   StepGeom_Axis2Placement position;
 };
-

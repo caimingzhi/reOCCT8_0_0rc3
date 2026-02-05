@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <Standard_Type.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -47,4 +46,3 @@ protected:
 protected:
   TCollection_AsciiString myName;
 };
-

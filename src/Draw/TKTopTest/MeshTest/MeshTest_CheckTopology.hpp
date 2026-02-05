@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 #include <Standard_Integer.hpp>
@@ -105,4 +104,3 @@ private:
   NCollection_Sequence<int> mySmallTrianglesFaces;
   NCollection_Sequence<int> mySmallTrianglesTriangles;
 };
-

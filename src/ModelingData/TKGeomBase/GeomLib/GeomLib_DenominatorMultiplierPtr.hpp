@@ -1,6 +1,4 @@
 #pragma once
 
-
 class GeomLib_DenominatorMultiplier;
 typedef GeomLib_DenominatorMultiplier* GeomLib_DenominatorMultiplierPtr;
-

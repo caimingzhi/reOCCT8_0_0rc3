@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Extrema_ExtCS.hpp>
 #include <NCollection_Sequence.hpp>
 #include <Extrema_POnSurf.hpp>
@@ -60,4 +59,3 @@ private:
   NCollection_Sequence<Extrema_POnCurv> myPointsOnC;
   occ::handle<BRepAdaptor_Surface>      myHS;
 };
-

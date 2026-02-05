@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -49,4 +48,3 @@ public:
     const TopoDS_Shape&           E,
     const TopoDS_Shape&           F);
 };
-

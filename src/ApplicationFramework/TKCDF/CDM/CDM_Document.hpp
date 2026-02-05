@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -366,4 +365,3 @@ private:
   bool                                             myDescriptionWasFound;
   occ::handle<CDM_Application>                     myApplication;
 };
-

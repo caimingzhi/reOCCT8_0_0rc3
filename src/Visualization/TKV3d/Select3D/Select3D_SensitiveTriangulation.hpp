@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -141,4 +140,3 @@ protected:
   // clang-format on
   gp_GTrsf myInvInitLocation;
 };
-

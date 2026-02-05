@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -30,4 +29,3 @@ public:
 protected:
   BinMXCAFDoc_NoteDriver(const occ::handle<Message_Messenger>& theMsgDriver, const char* theName);
 };
-

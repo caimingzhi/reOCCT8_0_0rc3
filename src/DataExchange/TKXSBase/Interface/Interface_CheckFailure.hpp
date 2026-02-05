@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <Interface_InterfaceError.hpp>
@@ -14,4 +13,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(Interface_CheckFailure, Interface_InterfaceError)
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Select3D_SensitiveEntity.hpp>
@@ -36,4 +35,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(MeshVS_DummySensitiveEntity, Select3D_SensitiveEntity)
 };
-

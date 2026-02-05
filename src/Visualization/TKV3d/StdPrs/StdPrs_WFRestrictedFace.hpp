@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <Prs3d_Drawer.hpp>
 #include <Prs3d_Root.hpp>
@@ -75,4 +74,3 @@ public:
                                       const occ::handle<BRepAdaptor_Surface>& theFace,
                                       const occ::handle<Prs3d_Drawer>&        theDrawer);
 };
-

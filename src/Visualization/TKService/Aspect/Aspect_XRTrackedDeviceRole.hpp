@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Predefined tracked devices.
 enum Aspect_XRTrackedDeviceRole
 {
@@ -14,4 +13,3 @@ enum
 {
   Aspect_XRTrackedDeviceRole_NB = Aspect_XRTrackedDeviceRole_Other + 1
 };
-

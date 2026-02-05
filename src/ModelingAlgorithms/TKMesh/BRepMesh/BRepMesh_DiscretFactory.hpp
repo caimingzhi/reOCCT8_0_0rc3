@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Macro.hpp>
@@ -17,7 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 class TopoDS_Shape;
 class BRepMesh_DiscretRoot;
 
@@ -26,7 +24,6 @@ typedef int (*BRepMesh_PluginEntryType)(const TopoDS_Shape&    theShape,
                                         const double           theLinDeflection,
                                         const double           theAngDeflection,
                                         BRepMesh_DiscretRoot*& theMeshAlgoInstance);
-
 
 #include <BRepMesh_FactoryError.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -108,4 +105,3 @@ protected:
   TCollection_AsciiString                                    myFunctionName;
   NCollection_DataMap<TCollection_AsciiString, OSD_Function> myFactoryMethods;
 };
-

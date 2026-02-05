@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax22d.hpp>
 #include <gp_Ax2d.hpp>
 #include <gp_Pnt2d.hpp>
@@ -319,4 +318,3 @@ inline gp_Parab2d gp_Parab2d::Transformed(const gp_Trsf2d& theT) const
   aPrb.pos.Transform(theT);
   return aPrb;
 }
-

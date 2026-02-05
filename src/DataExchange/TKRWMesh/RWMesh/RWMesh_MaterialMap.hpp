@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DoubleMap.hpp>
 #include <NCollection_Map.hpp>
 #include <XCAFPrs_Style.hpp>
@@ -81,4 +80,3 @@ protected:
   bool myIsFailed;                                            //!< flag indicating failure
   bool myMatNameAsKey; //!< flag indicating usage of material name as key
 };
-

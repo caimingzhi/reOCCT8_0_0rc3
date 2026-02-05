@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -48,4 +47,3 @@ private:
   occ::handle<StepBasic_ProductDefinitionFormation> formation;
   occ::handle<StepBasic_ProductDefinitionContext>   frameOfReference;
 };
-

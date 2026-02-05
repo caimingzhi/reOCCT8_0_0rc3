@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Blend_Status
 {
   Blend_StepTooLarge,
@@ -12,4 +11,3 @@ enum Blend_Status
   Blend_OnRst12,
   Blend_OK
 };
-

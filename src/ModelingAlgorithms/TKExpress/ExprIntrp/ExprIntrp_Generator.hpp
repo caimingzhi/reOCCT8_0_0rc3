@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Expr_NamedFunction.hpp>
@@ -46,4 +45,3 @@ private:
   NCollection_Sequence<occ::handle<Expr_NamedFunction>>   myFunctions;
   NCollection_Sequence<occ::handle<Expr_NamedExpression>> myNamed;
 };
-

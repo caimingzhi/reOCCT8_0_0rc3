@@ -27,56 +27,56 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-9;
+  constexpr double THE_TOLERANCE = 1.0e-9;
 
-//! Helper to sort roots for comparison.
-std::vector<double> SortRoots(const std::vector<double>& theRoots)
-{
-  std::vector<double> aSorted = theRoots;
-  std::sort(aSorted.begin(), aSorted.end());
-  return aSorted;
-}
-
-//! Extract roots from old API result.
-std::vector<double> GetOldRoots(const math_DirectPolynomialRoots& theSolver)
-{
-  std::vector<double> aRoots;
-  if (theSolver.IsDone())
+  //! Helper to sort roots for comparison.
+  std::vector<double> SortRoots(const std::vector<double>& theRoots)
   {
-    for (int i = 1; i <= theSolver.NbSolutions(); ++i)
+    std::vector<double> aSorted = theRoots;
+    std::sort(aSorted.begin(), aSorted.end());
+    return aSorted;
+  }
+
+  //! Extract roots from old API result.
+  std::vector<double> GetOldRoots(const math_DirectPolynomialRoots& theSolver)
+  {
+    std::vector<double> aRoots;
+    if (theSolver.IsDone())
     {
-      aRoots.push_back(theSolver.Value(i));
+      for (int i = 1; i <= theSolver.NbSolutions(); ++i)
+      {
+        aRoots.push_back(theSolver.Value(i));
+      }
+    }
+    return SortRoots(aRoots);
+  }
+
+  //! Extract roots from new API result.
+  std::vector<double> GetNewRoots(const MathUtils::PolyResult& theResult)
+  {
+    std::vector<double> aRoots;
+    if (theResult.IsDone())
+    {
+      for (size_t i = 0; i < theResult.NbRoots; ++i)
+      {
+        aRoots.push_back(theResult.Roots[i]);
+      }
+    }
+    return SortRoots(aRoots);
+  }
+
+  //! Compare two root sets within tolerance.
+  void CompareRoots(const std::vector<double>& theOld,
+                    const std::vector<double>& theNew,
+                    double                     theTolerance = THE_TOLERANCE)
+  {
+    ASSERT_EQ(theOld.size(), theNew.size()) << "Different number of roots";
+    for (size_t i = 0; i < theOld.size(); ++i)
+    {
+      EXPECT_NEAR(theOld[i], theNew[i], theTolerance)
+        << "Root " << i << " differs: old=" << theOld[i] << " new=" << theNew[i];
     }
   }
-  return SortRoots(aRoots);
-}
-
-//! Extract roots from new API result.
-std::vector<double> GetNewRoots(const MathUtils::PolyResult& theResult)
-{
-  std::vector<double> aRoots;
-  if (theResult.IsDone())
-  {
-    for (size_t i = 0; i < theResult.NbRoots; ++i)
-    {
-      aRoots.push_back(theResult.Roots[i]);
-    }
-  }
-  return SortRoots(aRoots);
-}
-
-//! Compare two root sets within tolerance.
-void CompareRoots(const std::vector<double>& theOld,
-                  const std::vector<double>& theNew,
-                  double                     theTolerance = THE_TOLERANCE)
-{
-  ASSERT_EQ(theOld.size(), theNew.size()) << "Different number of roots";
-  for (size_t i = 0; i < theOld.size(); ++i)
-  {
-    EXPECT_NEAR(theOld[i], theNew[i], theTolerance)
-      << "Root " << i << " differs: old=" << theOld[i] << " new=" << theNew[i];
-  }
-}
 } // namespace
 
 // ============================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdLPersistent_HArray1.hpp>
 
 class TDF_Data;
@@ -40,4 +39,3 @@ private:
   Handle(StdLPersistent_HArray1::Integer)    myLabels;
   Handle(StdLPersistent_HArray1::Persistent) myAttributes;
 };
-

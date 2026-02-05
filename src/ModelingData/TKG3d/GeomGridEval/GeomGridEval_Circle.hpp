@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Circle.hpp>
 #include <GeomGridEval.hpp>
 #include <NCollection_Array1.hpp>
@@ -85,4 +84,3 @@ public:
 private:
   occ::handle<Geom_Circle> myGeom;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 // Copyright (c) 1998-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
@@ -15,7 +14,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Standard_Integer.hpp>
 #include <Standard_Persistent.hpp>
@@ -114,7 +112,6 @@ public:
   void Next();
 };
 
-
 #include <Standard_Integer.hpp>
 #include <Standard_Persistent.hpp>
 #include <NCollection_Array1.hpp>
@@ -148,4 +145,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Standard_Persistent>>>               myReadArray;
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Storage_TypedCallBack>> myTypeBinding;
 };
-

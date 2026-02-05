@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies a type of parameterization of a circle or ellipse represented as a BSpline curve.
 //! For a circle with a center C and a radius R (for example a Geom2d_Circle or a Geom_Circle),
 //! the natural parameterization is angular. It uses the angle Theta made by the vector CM with
@@ -71,4 +70,3 @@ enum Convert_ParameterisationType
   Convert_RationalC1,
   Convert_Polynomial
 };
-

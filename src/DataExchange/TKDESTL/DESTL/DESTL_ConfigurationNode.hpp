@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 
 //! The purpose of this class is to configure the transfer process for STL format
@@ -84,4 +83,3 @@ public:
 
   } InternalParameters;
 };
-

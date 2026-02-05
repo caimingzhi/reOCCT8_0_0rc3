@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <CDF_Application.hpp>
@@ -314,4 +313,3 @@ protected:
   occ::handle<Resource_Manager> myResources;
   bool                          myIsDriverLoaded;
 };
-

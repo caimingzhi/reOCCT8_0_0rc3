@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -38,4 +37,3 @@ private:
   occ::handle<TCollection_HAsciiString> description;
   bool                                  hasDescription;
 };
-

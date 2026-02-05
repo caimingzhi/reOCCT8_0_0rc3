@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <Standard_Transient.hpp>
 #include <IMeshData_Types.hpp>
@@ -49,4 +48,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_Deflection, Standard_Transient)
 };
-

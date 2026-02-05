@@ -1,21 +1,3 @@
-// Created by: CKY / Contract Toubro-Larsen
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//--------------------------------------------------------------------
-//--------------------------------------------------------------------
-
 #include <IGESData_DirChecker.hpp>
 #include <IGESData_Dump.hpp>
 #include <IGESData_IGESDumper.hpp>
@@ -62,19 +44,22 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
     Message_Msg Msg169("XSTEP_169");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_ReferenceError:
+      {
         Message_Msg Msg216("IGES_216");
         Msg169.Arg(Msg216.Value());
         PR.SendFail(Msg169);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_EntityError:
+      {
         Message_Msg Msg217("IGES_217");
         Msg169.Arg(Msg217.Value());
         PR.SendFail(Msg169);
         break;
       }
-      default: {
+      default:
+      {
       }
     }
   }
@@ -116,25 +101,29 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
     Message_Msg Msg172("XSTEP_172");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_ReferenceError:
+      {
         Message_Msg Msg216("IGES_216");
         Msg172.Arg(Msg216.Value());
         PR.SendFail(Msg172);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_EntityError:
+      {
         Message_Msg Msg217("IGES_217");
         Msg172.Arg(Msg217.Value());
         PR.SendFail(Msg172);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_TypeError:
+      {
         Message_Msg Msg218("IGES_218");
         Msg172.Arg(Msg218.Value());
         PR.SendFail(Msg172);
         break;
       }
-      default: {
+      default:
+      {
       }
     }
   } // szv#4:S4163:12Mar99 `st=` not needed
@@ -159,25 +148,29 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
         Message_Msg Msg173("XSTEP_173");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_ReferenceError:
+          {
             Message_Msg Msg216("IGES_216");
             Msg173.Arg(Msg216.Value());
             PR.SendFail(Msg173);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_EntityError:
+          {
             Message_Msg Msg217("IGES_217");
             Msg173.Arg(Msg217.Value());
             PR.SendFail(Msg173);
             break;
           }
-          case IGESData_TypeError: {
+          case IGESData_TypeError:
+          {
             Message_Msg Msg218("IGES_218");
             Msg173.Arg(Msg218.Value());
             PR.SendFail(Msg173);
             break;
           }
-          default: {
+          default:
+          {
           }
         }
       }

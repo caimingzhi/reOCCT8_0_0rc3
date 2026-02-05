@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfTriangles.hpp>
 #include <Poly_Triangulation.hpp>
 
@@ -78,4 +77,3 @@ protected:
   int mySlicesNb; //!< number of slices within U parameter
   int myStacksNb; //!< number of stacks within V parameter
 };
-

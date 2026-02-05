@@ -1,19 +1,3 @@
-// Created on: 1997-05-15
-// Created by: Robert COUBLANC
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Select3D_SensitiveTriangulation.hpp>
 
 #include <Poly.hpp>
@@ -29,24 +13,24 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveTriangulation, Select3D_SensitiveSe
 
 namespace
 {
-static int NbOfFreeEdges(const occ::handle<Poly_Triangulation>& theTriangulation)
-{
-  int          aNbFree = 0;
-  Poly_Connect aPoly(theTriangulation);
-  int          aTriangleNodes[3];
-  for (int aTrgIdx = 1; aTrgIdx <= theTriangulation->NbTriangles(); aTrgIdx++)
+  static int NbOfFreeEdges(const occ::handle<Poly_Triangulation>& theTriangulation)
   {
-    aPoly.Triangles(aTrgIdx, aTriangleNodes[0], aTriangleNodes[1], aTriangleNodes[2]);
-    for (int aNodeIdx = 0; aNodeIdx < 3; ++aNodeIdx)
+    int          aNbFree = 0;
+    Poly_Connect aPoly(theTriangulation);
+    int          aTriangleNodes[3];
+    for (int aTrgIdx = 1; aTrgIdx <= theTriangulation->NbTriangles(); aTrgIdx++)
     {
-      if (aTriangleNodes[aNodeIdx] == 0)
+      aPoly.Triangles(aTrgIdx, aTriangleNodes[0], aTriangleNodes[1], aTriangleNodes[2]);
+      for (int aNodeIdx = 0; aNodeIdx < 3; ++aNodeIdx)
       {
-        ++aNbFree;
+        if (aTriangleNodes[aNodeIdx] == 0)
+        {
+          ++aNbFree;
+        }
       }
     }
+    return aNbFree;
   }
-  return aNbFree;
-}
 } // namespace
 
 //=================================================================================================

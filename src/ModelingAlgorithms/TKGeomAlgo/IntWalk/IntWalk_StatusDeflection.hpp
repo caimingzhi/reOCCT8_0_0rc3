@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntWalk_StatusDeflection
 {
   IntWalk_PasTropGrand,
@@ -10,4 +9,3 @@ enum IntWalk_StatusDeflection
   IntWalk_ArretSurPoint,
   IntWalk_OK
 };
-

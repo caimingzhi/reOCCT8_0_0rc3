@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax2.hpp>
@@ -99,4 +98,3 @@ private:
   occ::handle<GeomFill_Frenet>               myFrenet;
   bool                                       myUseFrenet;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Root.hpp>
 #include <Prs3d_Drawer.hpp>
 #include <gp_Pnt.hpp>
@@ -136,4 +135,3 @@ public:
                                     const double           theDeflection,
                                     const double           theAngle);
 };
-

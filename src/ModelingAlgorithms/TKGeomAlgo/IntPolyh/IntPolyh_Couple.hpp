@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -83,19 +82,18 @@ private:
 
 namespace std
 {
-template <>
-struct hash<IntPolyh_Couple>
-{
-  size_t operator()(const IntPolyh_Couple& theCouple) const noexcept
+  template <>
+  struct hash<IntPolyh_Couple>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2]{theCouple.FirstValue(), theCouple.SecondValue()};
-    if (aCombination[0] > aCombination[1])
+    size_t operator()(const IntPolyh_Couple& theCouple) const noexcept
     {
-      std::swap(aCombination[0], aCombination[1]);
+      // Combine two int values into a single hash value.
+      int aCombination[2]{theCouple.FirstValue(), theCouple.SecondValue()};
+      if (aCombination[0] > aCombination[1])
+      {
+        std::swap(aCombination[0], aCombination[1]);
+      }
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+  };
 } // namespace std
-

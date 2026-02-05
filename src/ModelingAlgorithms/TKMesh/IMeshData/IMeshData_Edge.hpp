@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Edge.hpp>
 #include <IMeshData_Curve.hpp>
 #include <IMeshData_PCurve.hpp>
@@ -104,4 +103,3 @@ private:
   double                  myAngDeflection;
   IMeshData::ICurveHandle myCurve;
 };
-

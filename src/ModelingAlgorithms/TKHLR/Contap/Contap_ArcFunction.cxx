@@ -1,19 +1,3 @@
-// Created on: 1993-06-03
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Contap_ArcFunction.hpp>
 #include <Contap_HContTool.hpp>
 #include <Contap_HCurve2dTool.hpp>
@@ -63,20 +47,24 @@ bool Contap_ArcFunction::Value(const double U, double& F)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_ContourStd:
+    {
       F = (norm.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_ContourPrs:
+    {
       F = (norm.Dot(gp_Vec(myEye, solpt))) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_DraftStd:
+    {
       F = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
     }
     break;
     case Contap_DraftPrs:
-    default: {
+    default:
+    {
     }
   }
   return true;
@@ -95,14 +83,16 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_ContourStd:
+    {
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
       dfu = (dnu.Dot(myDir)) / myMean;
       dfv = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_ContourPrs:
+    {
       gp_Vec Ep(myEye, solpt);
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(Ep))/myMean;
@@ -110,7 +100,8 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
       dfv = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_DraftStd:
+    {
       /*
       gp_Vec norm(d1u.Crossed(d1v).Normalized());
       gp_Vec dnorm(d2u.Crossed(d1v) + d1u.Crossed(d2uv));
@@ -124,7 +115,8 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
     }
     break;
     case Contap_DraftPrs:
-    default: {
+    default:
+    {
     }
   }
   D = d2d.X() * dfu + d2d.Y() * dfv;
@@ -145,7 +137,8 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_ContourStd:
+    {
       F = (norm.Dot(myDir)) / myMean;
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
@@ -153,7 +146,8 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
       dfv = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_ContourPrs:
+    {
       gp_Vec Ep(myEye, solpt);
       F = (norm.Dot(Ep)) / myMean;
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
@@ -162,7 +156,8 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
       dfv = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_DraftStd:
+    {
       F = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
       norm.Normalize();
       /*
@@ -176,7 +171,8 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
     }
     break;
     case Contap_DraftPrs:
-    default: {
+    default:
+    {
     }
   }
 

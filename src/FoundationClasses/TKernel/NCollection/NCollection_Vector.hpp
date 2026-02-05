@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <NCollection_Allocator.hpp>
 #include <NCollection_BasePointerVector.hpp>
 #include <Standard_DimensionMismatch.hpp>
@@ -418,8 +417,6 @@ protected:
   size_t         myUsedSize;
 };
 
-
-
 //! Class NCollection_Vector (dynamic array of objects)
 //!
 //! This class is similar to NCollection_Vector though the indices always start
@@ -443,4 +440,3 @@ protected:
 //! to enlarge the vector during the iteration.
 template <class TheItemType>
 using NCollection_Vector = NCollection_DynamicArray<TheItemType>;
-

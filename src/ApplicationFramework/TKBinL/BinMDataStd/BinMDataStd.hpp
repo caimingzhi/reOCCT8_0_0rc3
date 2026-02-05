@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_GUID.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -47,4 +46,3 @@ public:
       anAtt->SetID(T::GetID());
   }
 };
-

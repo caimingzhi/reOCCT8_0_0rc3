@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -137,4 +136,3 @@ private:
   double                    myTolCurv;
   bool                      hasPnt2dOnSurf;
 };
-

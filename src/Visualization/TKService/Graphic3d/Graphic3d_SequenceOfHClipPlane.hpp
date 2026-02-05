@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ClipPlane.hpp>
 
 //! Class defines a Clipping Volume as a logical OR (disjunction) operation between
@@ -92,4 +91,3 @@ protected:
   NCollection_Sequence<occ::handle<Graphic3d_ClipPlane>> myItems;
   bool                                                   myToOverrideGlobal;
 };
-

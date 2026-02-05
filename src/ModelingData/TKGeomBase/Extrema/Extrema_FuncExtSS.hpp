@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -70,4 +69,3 @@ private:
   bool                                  myS1init;
   bool                                  myS2init;
 };
-

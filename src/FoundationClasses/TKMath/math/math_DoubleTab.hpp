@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -177,4 +176,3 @@ private:
   std::array<double, THE_BUFFER_SIZE> myBuffer;
   NCollection_Array2<double>          myArray;
 };
-

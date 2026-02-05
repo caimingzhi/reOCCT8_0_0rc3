@@ -1,28 +1,3 @@
-// Created on: 1995-04-25
-// Created by: Marie Jose MARTZ
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// modification on 25/03/96 mjm
-// implement ShapeCustom::DirectModification for indirect surfaces (out of norm IGES)
-//: l4 abv 12 Jan 99: CTS22022-2: correct writing reversed shells
-//: n3 abv 8 Feb 99: PRO17820: BRepTools::OuterWire() -> ShapeAnalysis::OuterWire
-// szv#4 S4163
-// S4181 pdn 20.04.99 implementing of writing IGES elementary surfaces.
-//       abv 31.01.00 inheriting from BRepToIGES_BREntity to remove code duplication
-// eap: Tue Aug 29 11:02:56 2000: Shape Processing moved to upper levels
-
 #include <BRep_Tool.hpp>
 #include <BRepLib.hpp>
 #include <BRepToIGES_BRWire.hpp>

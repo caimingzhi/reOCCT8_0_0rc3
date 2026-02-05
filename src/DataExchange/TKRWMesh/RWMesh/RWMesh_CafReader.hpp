@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 #include <OSD_OpenFile.hpp>
 #include <RWMesh_CoordinateSystemConverter.hpp>
@@ -327,4 +326,3 @@ protected:
   int myMemoryLimitMiB; //!< memory usage limit
   int myExtraStatus;    //!< extra status bitmask
 };
-

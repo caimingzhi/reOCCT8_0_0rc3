@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_ExternallyDefinedItem.hpp>
@@ -15,4 +14,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_ExternallyDefinedCurveFont, StepBasic_ExternallyDefinedItem)
 };
-

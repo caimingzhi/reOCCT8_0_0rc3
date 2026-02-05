@@ -179,7 +179,8 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
   char                    mess[50];
   switch (thetype)
   {
-    case MoniTool_ValueInteger: {
+    case MoniTool_ValueInteger:
+    {
       def.AssignCat("Integer");
       int ilim;
       if (IntegerLimit(false, ilim))
@@ -194,7 +195,8 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueReal: {
+    case MoniTool_ValueReal:
+    {
       def.AssignCat("Real");
       double rlim;
       if (RealLimit(false, rlim))
@@ -214,7 +216,8 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueEnum: {
+    case MoniTool_ValueEnum:
+    {
       def.AssignCat("Enum");
       int  startcase = 0, endcase = 0;
       bool match = false;
@@ -246,7 +249,8 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueIdent: {
+    case MoniTool_ValueIdent:
+    {
       def.AssignCat("Object(Entity)");
       if (!theotyp.IsNull())
       {
@@ -255,7 +259,8 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueText: {
+    case MoniTool_ValueText:
+    {
       def.AssignCat("Text");
       if (themaxlen > 0)
       {
@@ -734,7 +739,8 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
     return true;
   switch (thetype)
   {
-    case MoniTool_ValueInteger: {
+    case MoniTool_ValueInteger:
+    {
       if (!val->IsIntegerValue())
         return false;
       int ival, ilim;
@@ -747,7 +753,8 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
           return false;
       return true;
     }
-    case MoniTool_ValueReal: {
+    case MoniTool_ValueReal:
+    {
       if (!val->IsRealValue())
         return false;
       double rval, rlim;
@@ -760,7 +767,8 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
           return false;
       return true;
     }
-    case MoniTool_ValueEnum: {
+    case MoniTool_ValueEnum:
+    {
       //  We accept both forms : Enum preferably, otherwise Integer
       int  startcase, endcase; // unused ival;
       bool match;
@@ -777,7 +785,8 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
       //      if (ival >= startcase && ival <= endcase) return true;
       return false;
     }
-    case MoniTool_ValueText: {
+    case MoniTool_ValueText:
+    {
       if (themaxlen > 0 && val->Length() > themaxlen)
         return false;
       break;

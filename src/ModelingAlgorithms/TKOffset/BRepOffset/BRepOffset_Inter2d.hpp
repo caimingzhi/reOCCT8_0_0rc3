@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <TopoDS_Shape.hpp>
@@ -101,4 +100,3 @@ public:
                                          TopoDS_Edge&       NE,
                                          const double       theOffset);
 };
-

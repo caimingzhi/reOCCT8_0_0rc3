@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -95,4 +94,3 @@ private:
   occ::handle<Transfer_Binder>                                        thebinder;
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> thesubs;
 };
-

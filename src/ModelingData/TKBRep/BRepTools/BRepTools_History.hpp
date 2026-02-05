@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Handle.hpp>
 #include <TopExp.hpp>
 #include <TopoDS_Shape.hpp>
@@ -257,4 +256,3 @@ private:
   static const char* myMsgModifiedAndRemoved;
   static const char* myMsgGeneratedAndModified;
 };
-

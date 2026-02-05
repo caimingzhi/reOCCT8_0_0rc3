@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -174,4 +173,3 @@ public:
   //! The same as for Curve3d.
   Standard_EXPORT static bool IsPeriodic(const occ::handle<Geom2d_Curve>& curve);
 };
-

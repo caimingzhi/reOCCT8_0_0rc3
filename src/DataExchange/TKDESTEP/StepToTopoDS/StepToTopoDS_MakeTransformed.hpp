@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -62,4 +61,3 @@ public:
 private:
   gp_Trsf theTrsf;
 };
-

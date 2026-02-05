@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -51,4 +50,3 @@ public:
   //! returns Value as a RightCircularCylinder (Null if another type)
   Standard_EXPORT occ::handle<StepShape_RightCircularCylinder> RightCircularCylinder() const;
 };
-

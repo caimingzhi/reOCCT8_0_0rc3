@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -122,4 +121,3 @@ protected:
 private:
   const PLib_JacobiPolynomial myJacobi;
 };
-

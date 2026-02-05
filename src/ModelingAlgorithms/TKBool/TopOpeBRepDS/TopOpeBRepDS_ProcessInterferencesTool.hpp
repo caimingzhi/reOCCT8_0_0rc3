@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_EXPORT.hpp>
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeCPVInterference(
   const TopOpeBRepDS_Transition& T, // transition

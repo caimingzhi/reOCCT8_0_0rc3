@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -150,6 +149,7 @@ public:
 
 public:
   Standard_DEPRECATED("ModifyOffsetSurfaceMode() should be used instead")
+
   bool& ModifyOffestSurfaceMode() { return myOffsetSurfaceMode; }
 
 private:
@@ -199,4 +199,3 @@ private:
   occ::handle<NCollection_HSequence<TopoDS_Shape>> myOffsetCurveSec;
   occ::handle<NCollection_HSequence<TopoDS_Shape>> myTrimmed2dSec;
 };
-

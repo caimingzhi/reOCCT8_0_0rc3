@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <IMeshTools_MeshAlgoFactory.hpp>
 
@@ -22,4 +21,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_DelabellaMeshAlgoFactory, IMeshTools_MeshAlgoFactory)
 };
-

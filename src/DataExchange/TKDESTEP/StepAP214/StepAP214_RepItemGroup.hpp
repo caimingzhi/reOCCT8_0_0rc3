@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -35,4 +34,3 @@ public:
 private:
   occ::handle<StepRepr_RepresentationItem> theRepresentationItem;
 };
-

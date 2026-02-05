@@ -112,22 +112,26 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
       //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
       //  S = Pl;
       //} break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }
       break;
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         occ::handle<Geom_SphericalSurface> Sp = new Geom_SphericalSurface(AS.Sphere());
         S                                     = Sp;
       }
       break;
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         occ::handle<Geom_ConicalSurface> Co = new Geom_ConicalSurface(AS.Cone());
         S                                   = Co;
       }
       break;
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         occ::handle<Geom_ToroidalSurface> To = new Geom_ToroidalSurface(AS.Torus());
         S                                    = To;
       }
@@ -154,7 +158,8 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
       //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
       //  S = Pl;
       //} break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }

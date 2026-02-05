@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_CartesianPointHasher.hpp>
 #include <StepTidy_DirectionHasher.hpp>
 
@@ -69,4 +68,3 @@ struct StepTidy_Axis2Placement3dHasher
     return isSameLocation && isSameAxis && isSameRefDirection;
   }
 };
-

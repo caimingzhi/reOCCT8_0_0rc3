@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Texture.hpp>
 #include <OpenGl_VertexBuffer.hpp>
 
@@ -210,4 +209,3 @@ private:
   bool    myCanRenderFloat;      //!< indicates whether driver supports rendering into floating point texture or not
   // clang-format on
 };
-

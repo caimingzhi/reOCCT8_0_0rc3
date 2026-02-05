@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -175,6 +174,7 @@ private:
   gp_Pnt pnts[4];
   double paramonc[4];
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -264,5 +264,3 @@ inline double IntAna_IntConicQuad::ParamOnConic(const int i) const
   }
   return (paramonc[i - 1]);
 }
-
-

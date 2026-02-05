@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <Storage_Error.hpp>
 class StdStorage_Data;
@@ -53,4 +52,3 @@ public:
   Standard_EXPORT static Storage_Error Write(const occ::handle<Storage_BaseDriver>& theDriver,
                                              const occ::handle<StdStorage_Data>&    theData);
 };
-

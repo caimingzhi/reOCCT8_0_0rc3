@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message.hpp>
 #include <Message_AlertExtended.hpp>
 #include <Message_Gravity.hpp>
@@ -66,4 +65,3 @@ private:
 //! Creates a new level instance of Sentry. This row should be inserted before messages using in the
 //! method.
 #define OCCT_ADD_MESSAGE_LEVEL_SENTRY(theMessage) Message_Level aLevel(theMessage);
-

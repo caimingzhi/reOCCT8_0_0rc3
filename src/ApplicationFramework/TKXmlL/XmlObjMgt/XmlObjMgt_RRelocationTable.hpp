@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
 #include <NCollection_DataMap.hpp>
@@ -27,4 +26,3 @@ public:
 private:
   occ::handle<Storage_HeaderData> myHeaderData;
 };
-

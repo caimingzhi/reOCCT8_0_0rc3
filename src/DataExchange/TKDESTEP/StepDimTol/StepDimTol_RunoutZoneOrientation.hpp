@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard.hpp>
 #include <StepBasic_PlaneAngleMeasureWithUnit.hpp>

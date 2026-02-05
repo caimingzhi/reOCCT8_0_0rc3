@@ -1,17 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BOPAlgo_ArgumentAnalyzer.hpp>
 #include <BOPAlgo_CheckerSI.hpp>
 #include <BOPAlgo_CheckResult.hpp>
@@ -662,14 +648,16 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
 
         switch (aResult.GetCheckStatus())
         {
-          case BOPAlgo_BadType: {
+          case BOPAlgo_BadType:
+          {
             if (!aSS1.IsNull())
               S1_BadType++;
             if (!aSS2.IsNull())
               S2_BadType++;
           }
           break;
-          case BOPAlgo_SelfIntersect: {
+          case BOPAlgo_SelfIntersect:
+          {
             if (!aSS1.IsNull())
             {
               S1_SelfInt++;
@@ -684,7 +672,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_TooSmallEdge: {
+          case BOPAlgo_TooSmallEdge:
+          {
             if (!aSS1.IsNull())
             {
               S1_SmalE++;
@@ -699,7 +688,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_NonRecoverableFace: {
+          case BOPAlgo_NonRecoverableFace:
+          {
             if (!aSS1.IsNull())
             {
               S1_BadF++;
@@ -714,7 +704,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfVertex: {
+          case BOPAlgo_IncompatibilityOfVertex:
+          {
             if (!aSS1.IsNull())
             {
               S1_BadV++;
@@ -733,7 +724,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfEdge: {
+          case BOPAlgo_IncompatibilityOfEdge:
+          {
             if (!aSS1.IsNull())
             {
               S1_BadE++;
@@ -752,11 +744,13 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfFace: {
+          case BOPAlgo_IncompatibilityOfFace:
+          {
             // not yet implemented
           }
           break;
-          case BOPAlgo_GeomAbs_C0: {
+          case BOPAlgo_GeomAbs_C0:
+          {
             if (!aSS1.IsNull())
             {
               S1_C0++;
@@ -775,7 +769,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_InvalidCurveOnSurface: {
+          case BOPAlgo_InvalidCurveOnSurface:
+          {
             if (!aSS1.IsNull())
             {
               S1_COnS++;
@@ -812,7 +807,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_OperationAborted: {
+          case BOPAlgo_OperationAborted:
+          {
             if (!aSS1.IsNull())
               S1_OpAb++;
             if (!aSS2.IsNull())
@@ -820,7 +816,8 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
           }
           break;
           case BOPAlgo_CheckUnknown:
-          default: {
+          default:
+          {
             hasUnknown = true;
           }
           break;

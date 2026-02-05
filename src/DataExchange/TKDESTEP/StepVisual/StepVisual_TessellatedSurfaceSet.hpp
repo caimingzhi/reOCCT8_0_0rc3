@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedItem.hpp>
@@ -52,4 +51,3 @@ private:
   int                                      myPnmax;
   occ::handle<NCollection_HArray2<double>> myNormals;
 };
-

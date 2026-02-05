@@ -1,22 +1,3 @@
-// Created by: CKY / Contract Toubro-Larsen
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//--------------------------------------------------------------------
-//--------------------------------------------------------------------
-// pdn 20.04.99 STC22655 avoid of exceptions on empty loops
-
 #include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
 #include <IGESBasic_HArray1OfHArray1OfInteger.hpp>
 #include <IGESData_DirChecker.hpp>
@@ -102,19 +83,22 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
         Message_Msg Msg193("XSTEP_193");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_ReferenceError:
+          {
             Message_Msg Msg216("IGES_216");
             Msg193.Arg(Msg216.Value());
             PR.SendFail(Msg193);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_EntityError:
+          {
             Message_Msg Msg217("IGES_217");
             Msg193.Arg(Msg217.Value());
             PR.SendFail(Msg193);
             break;
           }
-          default: {
+          default:
+          {
           }
         }
       }
@@ -171,19 +155,22 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
             Message_Msg Msg194("XSTEP_194");
             switch (aStatus)
             {
-              case IGESData_ReferenceError: {
+              case IGESData_ReferenceError:
+              {
                 Message_Msg Msg216("IGES_216");
                 Msg194.Arg(Msg216.Value());
                 PR.SendFail(Msg194);
                 break;
               }
-              case IGESData_EntityError: {
+              case IGESData_EntityError:
+              {
                 Message_Msg Msg217("IGES_217");
                 Msg194.Arg(Msg217.Value());
                 PR.SendFail(Msg194);
                 break;
               }
-              default: {
+              default:
+              {
               }
             }
           }

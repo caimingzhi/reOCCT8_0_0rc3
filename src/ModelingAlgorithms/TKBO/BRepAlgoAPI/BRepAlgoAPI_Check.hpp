@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -143,4 +142,3 @@ protected: //! @name Fields
   // Results
   NCollection_List<BOPAlgo_CheckResult> myFaultyShapes; //!< Found faulty shapes
 };
-

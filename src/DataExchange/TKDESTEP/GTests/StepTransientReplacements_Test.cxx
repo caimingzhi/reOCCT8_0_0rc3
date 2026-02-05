@@ -43,44 +43,44 @@
 namespace
 {
 
-// Create a MeasureWithUnit
-occ::handle<StepBasic_MeasureWithUnit> CreateMeasureWithUnit(const double theValue)
-{
-  occ::handle<StepBasic_MeasureWithUnit> aMeasure = new StepBasic_MeasureWithUnit();
+  // Create a MeasureWithUnit
+  occ::handle<StepBasic_MeasureWithUnit> CreateMeasureWithUnit(const double theValue)
+  {
+    occ::handle<StepBasic_MeasureWithUnit> aMeasure = new StepBasic_MeasureWithUnit();
 
-  // Set value component
-  occ::handle<StepBasic_MeasureValueMember> aValueMember = new StepBasic_MeasureValueMember();
-  aValueMember->SetName("POSITIVE_LENGTH_MEASURE");
-  aValueMember->SetReal(theValue);
-  aMeasure->SetValueComponentMember(aValueMember);
+    // Set value component
+    occ::handle<StepBasic_MeasureValueMember> aValueMember = new StepBasic_MeasureValueMember();
+    aValueMember->SetName("POSITIVE_LENGTH_MEASURE");
+    aValueMember->SetReal(theValue);
+    aMeasure->SetValueComponentMember(aValueMember);
 
-  // Create a dummy SiUnit for unit component
-  occ::handle<StepBasic_SiUnit> aSiUnit = new StepBasic_SiUnit();
-  aSiUnit->Init(false,
-                StepBasic_SiPrefix::StepBasic_spMilli,
-                StepBasic_SiUnitName::StepBasic_sunMetre);
-  StepBasic_Unit aUnit;
-  aUnit.SetValue(aSiUnit);
-  aMeasure->SetUnitComponent(aUnit);
+    // Create a dummy SiUnit for unit component
+    occ::handle<StepBasic_SiUnit> aSiUnit = new StepBasic_SiUnit();
+    aSiUnit->Init(false,
+                  StepBasic_SiPrefix::StepBasic_spMilli,
+                  StepBasic_SiUnitName::StepBasic_sunMetre);
+    StepBasic_Unit aUnit;
+    aUnit.SetValue(aSiUnit);
+    aMeasure->SetUnitComponent(aUnit);
 
-  return aMeasure;
-}
+    return aMeasure;
+  }
 
-// Create a ReprItemAndMeasureWithUnit
-occ::handle<StepRepr_ReprItemAndMeasureWithUnit> CreateReprItemAndMeasureWithUnit(
-  const double theValue)
-{
-  occ::handle<StepRepr_ReprItemAndMeasureWithUnit> aReprMeasure =
-    new StepRepr_ReprItemAndMeasureWithUnit();
-  occ::handle<StepBasic_MeasureWithUnit> aMeasure = CreateMeasureWithUnit(theValue);
-  aReprMeasure->SetMeasureWithUnit(aMeasure);
+  // Create a ReprItemAndMeasureWithUnit
+  occ::handle<StepRepr_ReprItemAndMeasureWithUnit> CreateReprItemAndMeasureWithUnit(
+    const double theValue)
+  {
+    occ::handle<StepRepr_ReprItemAndMeasureWithUnit> aReprMeasure =
+      new StepRepr_ReprItemAndMeasureWithUnit();
+    occ::handle<StepBasic_MeasureWithUnit> aMeasure = CreateMeasureWithUnit(theValue);
+    aReprMeasure->SetMeasureWithUnit(aMeasure);
 
-  // Set other required fields
-  occ::handle<TCollection_HAsciiString> aName = new TCollection_HAsciiString("TestReprItem");
-  aReprMeasure->SetName(aName);
+    // Set other required fields
+    occ::handle<TCollection_HAsciiString> aName = new TCollection_HAsciiString("TestReprItem");
+    aReprMeasure->SetName(aName);
 
-  return aReprMeasure;
-}
+    return aReprMeasure;
+  }
 } // namespace
 
 // Test fixture for all transient replacement tests
@@ -336,8 +336,8 @@ TEST_F(StepTransientReplacements, GetMeasureWithUnit_ExtractsCorrectly)
   // We recreate the function here for testing
 
   auto GetMeasureWithUnit =
-    [](
-      const occ::handle<Standard_Transient>& theMeasure) -> occ::handle<StepBasic_MeasureWithUnit> {
+    [](const occ::handle<Standard_Transient>& theMeasure) -> occ::handle<StepBasic_MeasureWithUnit>
+  {
     if (theMeasure.IsNull())
     {
       return nullptr;

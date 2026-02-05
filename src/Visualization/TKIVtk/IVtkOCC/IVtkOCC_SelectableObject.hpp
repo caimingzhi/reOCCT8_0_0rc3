@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box.hpp>
 #include <IVtkOCC_Shape.hpp>
 #include <Prs3d_Drawer.hpp>
@@ -57,4 +56,3 @@ private:
   IVtkOCC_Shape::Handle myShape;
   Bnd_Box               myBndBox;
 };
-

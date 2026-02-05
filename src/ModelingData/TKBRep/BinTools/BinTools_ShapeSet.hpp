@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinTools_ShapeSetBase.hpp>
 
 #include <TopTools_ShapeMapHasher.hpp>
@@ -179,4 +178,3 @@ private:
   // clang-format on
   NCollection_IndexedMap<occ::handle<Poly_PolygonOnTriangulation>> myNodes;
 };
-

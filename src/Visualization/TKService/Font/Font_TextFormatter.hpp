@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Font_Rect.hpp>
 #include <Graphic3d_HorizontalTextAlignment.hpp>
 #include <Graphic3d_VerticalTextAlignment.hpp>
@@ -144,6 +143,7 @@ public:
   Standard_EXPORT void Format();
 
   Standard_DEPRECATED("BottomLeft should be used instead")
+
   const NCollection_Vec2<float>& TopLeft(const int theIndex) const { return BottomLeft(theIndex); }
 
   //! Returns specific glyph rectangle.
@@ -224,7 +224,8 @@ public:
       case Graphic3d_HTA_RIGHT:
         theBndBox.Right = -myBndWidth;
         break;
-      case Graphic3d_HTA_CENTER: {
+      case Graphic3d_HTA_CENTER:
+      {
         theBndBox.Left  = -0.5f * myBndWidth;
         theBndBox.Right = 0.5f * myBndWidth;
         break;
@@ -298,4 +299,3 @@ protected: //! @name temporary variables for formatting routines
   float                   myBndWidth;
   NCollection_Vec2<float> myMoveVec; //!< local variable
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum HLRAlgo_PolyMask
 {
   HLRAlgo_PolyMask_EMskOutLin1 = 1,
@@ -17,4 +16,3 @@ enum HLRAlgo_PolyMask
   HLRAlgo_PolyMask_FMskOrBack  = 2048,
   HLRAlgo_PolyMask_FMskFrBack  = 4096
 };
-

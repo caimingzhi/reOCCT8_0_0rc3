@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -53,4 +52,3 @@ public:
                                           const double                          TolPoles = 0.000001,
                                           const double TolKnots = 0.000001);
 };
-

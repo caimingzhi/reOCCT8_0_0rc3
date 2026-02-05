@@ -1,8 +1,8 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_PCharacter.hpp>
+
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -16,7 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Mode of operation for OSD::SetSignal() function
 enum OSD_SignalMode
 {
@@ -26,8 +25,6 @@ enum OSD_SignalMode
                                //!< particular signal type
   OSD_SignalMode_Unset         //!< Unset signal handler to system default
 };
-
-
 
 //! Set of Operating System Dependent (OSD) tools.
 class OSD
@@ -150,4 +147,3 @@ public:
   //! Sets a length of stack trace to be put into exception redirected from signal.
   Standard_EXPORT static void SetSignalStackTraceLength(int theLength);
 };
-

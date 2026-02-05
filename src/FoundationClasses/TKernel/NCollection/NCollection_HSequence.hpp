@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
@@ -55,4 +54,3 @@ public:
 
   DEFINE_STANDARD_RTTI_INLINE(NCollection_HSequence, Standard_Transient)
 };
-

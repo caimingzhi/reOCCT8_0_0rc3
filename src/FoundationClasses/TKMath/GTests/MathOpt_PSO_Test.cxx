@@ -22,123 +22,123 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-3;
+  constexpr double THE_TOLERANCE = 1.0e-3;
 
-// ============================================================================
-// Test function classes for new API
-// ============================================================================
+  // ============================================================================
+  // Test function classes for new API
+  // ============================================================================
 
-//! Sphere function: f(x) = sum(x_i^2)
-//! Global minimum at origin with f = 0
-struct SphereFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Sphere function: f(x) = sum(x_i^2)
+  //! Global minimum at origin with f = 0
+  struct SphereFunc
   {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i);
+      }
+      return true;
     }
-    return true;
-  }
-};
+  };
 
-//! Rastrigin function: f(x) = 10n + sum(x_i^2 - 10*cos(2*pi*x_i))
-//! Global minimum at origin with f = 0
-//! Highly multimodal function
-struct RastriginFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Rastrigin function: f(x) = 10n + sum(x_i^2 - 10*cos(2*pi*x_i))
+  //! Global minimum at origin with f = 0
+  //! Highly multimodal function
+  struct RastriginFunc
   {
-    const int    aN  = theX.Length();
-    const double aPI = M_PI;
-    theF             = 10.0 * aN;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i) - 10.0 * std::cos(2.0 * aPI * theX(i));
+      const int    aN  = theX.Length();
+      const double aPI = M_PI;
+      theF             = 10.0 * aN;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i) - 10.0 * std::cos(2.0 * aPI * theX(i));
+      }
+      return true;
     }
-    return true;
-  }
-};
+  };
 
-//! Ackley function - multimodal with global minimum at origin
-struct AckleyFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Ackley function - multimodal with global minimum at origin
+  struct AckleyFunc
   {
-    const int    aN    = theX.Length();
-    const double aPI   = M_PI;
-    double       aSum1 = 0.0;
-    double       aSum2 = 0.0;
-
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      aSum1 += theX(i) * theX(i);
-      aSum2 += std::cos(2.0 * aPI * theX(i));
+      const int    aN    = theX.Length();
+      const double aPI   = M_PI;
+      double       aSum1 = 0.0;
+      double       aSum2 = 0.0;
+
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        aSum1 += theX(i) * theX(i);
+        aSum2 += std::cos(2.0 * aPI * theX(i));
+      }
+
+      theF = -20.0 * std::exp(-0.2 * std::sqrt(aSum1 / aN)) - std::exp(aSum2 / aN) + 20.0 + M_E;
+      return true;
     }
+  };
 
-    theF = -20.0 * std::exp(-0.2 * std::sqrt(aSum1 / aN)) - std::exp(aSum2 / aN) + 20.0 + M_E;
-    return true;
-  }
-};
-
-//! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-//! Minimum at (1, 1) with f = 0
-struct RosenbrockFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
+  //! Minimum at (1, 1) with f = 0
+  struct RosenbrockFunc
   {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aY - aX * aX;
-    const double aT2 = 1.0 - aX;
-    theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-};
-
-//! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-//! Minimum at (1, 3) with f = 0
-struct BoothFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-};
-
-// ============================================================================
-// Old API adapter
-// ============================================================================
-
-class SphereFuncOld : public math_MultipleVarFunction
-{
-private:
-  int myN;
-
-public:
-  SphereFuncOld(int theN)
-      : myN(theN)
-  {
-  }
-
-  int NbVariables() const override { return myN; }
-
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aY - aX * aX;
+      const double aT2 = 1.0 - aX;
+      theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
+      return true;
     }
-    return true;
-  }
-};
+  };
+
+  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
+  //! Minimum at (1, 3) with f = 0
+  struct BoothFunc
+  {
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
+  };
+
+  // ============================================================================
+  // Old API adapter
+  // ============================================================================
+
+  class SphereFuncOld : public math_MultipleVarFunction
+  {
+  private:
+    int myN;
+
+  public:
+    SphereFuncOld(int theN)
+        : myN(theN)
+    {
+    }
+
+    int NbVariables() const override { return myN; }
+
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i);
+      }
+      return true;
+    }
+  };
 
 } // namespace
 

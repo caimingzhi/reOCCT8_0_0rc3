@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining font search restrictions.
 enum Font_StrictLevel
 {
@@ -9,4 +8,3 @@ enum Font_StrictLevel
                             //!< fallback)
   Font_StrictLevel_Any,     //!< search for any font, including global fallback
 };
-

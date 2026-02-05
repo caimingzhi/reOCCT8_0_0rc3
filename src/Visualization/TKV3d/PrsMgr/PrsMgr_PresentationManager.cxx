@@ -678,30 +678,30 @@ void PrsMgr_PresentationManager::Color(const occ::handle<PrsMgr_PresentableObjec
 
 namespace
 {
-//! Internal function that scans thePrsList for shadow presentations
-//! and applies transformation theTrsf to them in case if parent ID
-//! of shadow presentation is equal to theRefId
-static void updatePrsTransformation(
-  const NCollection_List<occ::handle<Prs3d_Presentation>>& thePrsList,
-  const int                                                theRefId,
-  const occ::handle<TopLoc_Datum3D>&                       theTrsf)
-{
-  for (NCollection_List<occ::handle<Prs3d_Presentation>>::Iterator anIter(thePrsList);
-       anIter.More();
-       anIter.Next())
+  //! Internal function that scans thePrsList for shadow presentations
+  //! and applies transformation theTrsf to them in case if parent ID
+  //! of shadow presentation is equal to theRefId
+  static void updatePrsTransformation(
+    const NCollection_List<occ::handle<Prs3d_Presentation>>& thePrsList,
+    const int                                                theRefId,
+    const occ::handle<TopLoc_Datum3D>&                       theTrsf)
   {
-    const occ::handle<Prs3d_Presentation>& aPrs = anIter.Value();
-    if (aPrs.IsNull())
-      continue;
+    for (NCollection_List<occ::handle<Prs3d_Presentation>>::Iterator anIter(thePrsList);
+         anIter.More();
+         anIter.Next())
+    {
+      const occ::handle<Prs3d_Presentation>& aPrs = anIter.Value();
+      if (aPrs.IsNull())
+        continue;
 
-    occ::handle<Prs3d_PresentationShadow> aShadowPrs =
-      occ::down_cast<Prs3d_PresentationShadow>(aPrs);
-    if (aShadowPrs.IsNull() || aShadowPrs->ParentId() != theRefId)
-      continue;
+      occ::handle<Prs3d_PresentationShadow> aShadowPrs =
+        occ::down_cast<Prs3d_PresentationShadow>(aPrs);
+      if (aShadowPrs.IsNull() || aShadowPrs->ParentId() != theRefId)
+        continue;
 
-    aShadowPrs->CStructure()->SetTransformation(theTrsf);
+      aShadowPrs->CStructure()->SetTransformation(theTrsf);
+    }
   }
-}
 } // namespace
 
 //=================================================================================================

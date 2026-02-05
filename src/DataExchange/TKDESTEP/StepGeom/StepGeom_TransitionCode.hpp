@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepGeom_TransitionCode
 {
   StepGeom_tcDiscontinuous,
@@ -8,4 +7,3 @@ enum StepGeom_TransitionCode
   StepGeom_tcContSameGradient,
   StepGeom_tcContSameGradientSameCurvature
 };
-

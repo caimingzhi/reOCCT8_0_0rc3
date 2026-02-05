@@ -1,6 +1,5 @@
 #pragma once
 
-
 // required for correct APIENTRY definition
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
   #define WIN32_LEAN_AND_MEAN
@@ -51,4 +50,3 @@
 #else
   #include <GL/gl.h>
 #endif
-

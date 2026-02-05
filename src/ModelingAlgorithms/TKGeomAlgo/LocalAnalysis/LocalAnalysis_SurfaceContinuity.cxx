@@ -1,19 +1,3 @@
-// Created on: 1996-09-09
-// Created by: Herve LOUESSARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Geom2d_Curve.hpp>
 #include <Geom_Surface.hpp>
 #include <GeomLProp_SLProps.hpp>
@@ -281,33 +265,39 @@ void LocalAnalysis_SurfaceContinuity::ComputeAnalysis(GeomLProp_SLProps&  Surf1,
   myTypeCont = Order;
   switch (Order)
   {
-    case GeomAbs_C0: {
+    case GeomAbs_C0:
+    {
       SurfC0(Surf1, Surf2);
     }
     break;
-    case GeomAbs_C1: {
+    case GeomAbs_C1:
+    {
       SurfC0(Surf1, Surf2);
       SurfC1(Surf1, Surf2);
     }
     break;
-    case GeomAbs_C2: {
+    case GeomAbs_C2:
+    {
       SurfC0(Surf1, Surf2);
       SurfC1(Surf1, Surf2);
       SurfC2(Surf1, Surf2);
     }
     break;
-    case GeomAbs_G1: {
+    case GeomAbs_G1:
+    {
       SurfC0(Surf1, Surf2);
       SurfG1(Surf1, Surf2);
     }
     break;
-    case GeomAbs_G2: {
+    case GeomAbs_G2:
+    {
       SurfC0(Surf1, Surf2);
       SurfG1(Surf1, Surf2);
       SurfG2(Surf1, Surf2);
     }
     break;
-    default: {
+    default:
+    {
     }
   }
 }
@@ -359,20 +349,23 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
   myIsDone   = true;
   switch (Ordre)
   {
-    case GeomAbs_C0: {
+    case GeomAbs_C0:
+    {
       GeomLProp_SLProps Surfa1(Surf1, u1, v1, 0, myepsnul);
       GeomLProp_SLProps Surfa2(Surf2, u2, v2, 0, myepsnul);
       SurfC0(Surfa1, Surfa2);
     }
     break;
-    case GeomAbs_C1: {
+    case GeomAbs_C1:
+    {
       GeomLProp_SLProps Surfa1(Surf1, u1, v1, 1, myepsnul);
       GeomLProp_SLProps Surfa2(Surf2, u2, v2, 1, myepsnul);
       SurfC0(Surfa1, Surfa2);
       SurfC1(Surfa1, Surfa2);
     }
     break;
-    case GeomAbs_C2: {
+    case GeomAbs_C2:
+    {
       GeomLProp_SLProps Surfa1(Surf1, u1, v1, 2, myepsnul);
       GeomLProp_SLProps Surfa2(Surf2, u2, v2, 2, myepsnul);
       SurfC0(Surfa1, Surfa2);
@@ -380,14 +373,16 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
       SurfC2(Surfa1, Surfa2);
     }
     break;
-    case GeomAbs_G1: {
+    case GeomAbs_G1:
+    {
       GeomLProp_SLProps Surfa1(Surf1, u1, v1, 1, myepsnul);
       GeomLProp_SLProps Surfa2(Surf2, u2, v2, 1, myepsnul);
       SurfC0(Surfa1, Surfa2);
       SurfG1(Surfa1, Surfa2);
     }
     break;
-    case GeomAbs_G2: {
+    case GeomAbs_G2:
+    {
       GeomLProp_SLProps Surfa1(Surf1, u1, v1, 2, myepsnul);
       GeomLProp_SLProps Surfa2(Surf2, u2, v2, 2, myepsnul);
       SurfC0(Surfa1, Surfa2);
@@ -395,7 +390,8 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
       SurfG2(Surfa1, Surfa2);
     }
     break;
-    default: {
+    default:
+    {
     }
   }
 }
@@ -463,20 +459,23 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
     pt2.Coord(u2, v2);
     switch (Ordre)
     {
-      case GeomAbs_C0: {
+      case GeomAbs_C0:
+      {
         GeomLProp_SLProps Surfa1(Surf1, u1, v1, 0, myepsnul);
         GeomLProp_SLProps Surfa2(Surf2, u2, v2, 0, myepsnul);
         SurfC0(Surfa1, Surfa2);
       }
       break;
-      case GeomAbs_C1: {
+      case GeomAbs_C1:
+      {
         GeomLProp_SLProps Surfa1(Surf1, u1, v1, 1, myepsnul);
         GeomLProp_SLProps Surfa2(Surf2, u2, v2, 1, myepsnul);
         SurfC0(Surfa1, Surfa2);
         SurfC1(Surfa1, Surfa2);
       }
       break;
-      case GeomAbs_C2: {
+      case GeomAbs_C2:
+      {
         GeomLProp_SLProps Surfa1(Surf1, u1, v1, 2, myepsnul);
         GeomLProp_SLProps Surfa2(Surf2, u2, v2, 2, myepsnul);
         SurfC0(Surfa1, Surfa2);
@@ -484,14 +483,16 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
         SurfC2(Surfa1, Surfa2);
       }
       break;
-      case GeomAbs_G1: {
+      case GeomAbs_G1:
+      {
         GeomLProp_SLProps Surfa1(Surf1, u1, v1, 1, myepsnul);
         GeomLProp_SLProps Surfa2(Surf2, u2, v2, 1, myepsnul);
         SurfC0(Surfa1, Surfa2);
         SurfG1(Surfa1, Surfa2);
       }
       break;
-      case GeomAbs_G2: {
+      case GeomAbs_G2:
+      {
         GeomLProp_SLProps Surfa1(Surf1, u1, v1, 2, myepsnul);
         GeomLProp_SLProps Surfa2(Surf2, u2, v2, 2, myepsnul);
         SurfC0(Surfa1, Surfa2);
@@ -499,7 +500,8 @@ LocalAnalysis_SurfaceContinuity::LocalAnalysis_SurfaceContinuity(
         SurfG2(Surfa1, Surfa2);
       }
       break;
-      default: {
+      default:
+      {
       }
     }
   }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -53,4 +52,3 @@ public:
   //! commands relatives to Naming
   Standard_EXPORT static void SelectionCommands(Draw_Interpretor& DI);
 };
-

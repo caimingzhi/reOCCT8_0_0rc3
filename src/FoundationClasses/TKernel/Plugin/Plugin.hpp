@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -14,4 +13,3 @@ public:
   Standard_EXPORT static occ::handle<Standard_Transient> Load(const Standard_GUID& aGUID,
                                                               const bool theVerbose = true);
 };
-

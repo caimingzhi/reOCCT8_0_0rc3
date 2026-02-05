@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
 
@@ -19,4 +18,3 @@ public:
 
   ~IVtk_Interface() override = default;
 };
-

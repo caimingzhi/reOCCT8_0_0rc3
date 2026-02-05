@@ -1,18 +1,3 @@
-// Created on: 2007-07-17
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2007-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <VrmlData_Material.hpp>
 #include <Precision.hpp>
 #include <VrmlData_InBuffer.hpp>
@@ -28,98 +13,98 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Material, VrmlData_Node)
 
 namespace
 {
-static const double THE_MAT_PREC = 0.001 * Precision::Confusion();
+  static const double THE_MAT_PREC = 0.001 * Precision::Confusion();
 
-//=================================================================================================
+  //=================================================================================================
 
-static bool isValidValue(double theVal)
-{
-  return theVal >= -THE_MAT_PREC && theVal <= 1.0 + THE_MAT_PREC;
-}
-
-//=================================================================================================
-
-static bool isValidColor(const gp_XYZ& theVec3)
-{
-  return isValidValue(theVec3.X()) && isValidValue(theVec3.Y()) && isValidValue(theVec3.Z());
-}
-
-//=================================================================================================
-
-static bool parseColor(VrmlData_ErrorStatus& theStatus,
-                       VrmlData_InBuffer&    theBuffer,
-                       gp_XYZ&               theColor,
-                       const VrmlData_Scene& theScene)
-{
-  if (!VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer)))
+  static bool isValidValue(double theVal)
   {
-    return false;
+    return theVal >= -THE_MAT_PREC && theVal <= 1.0 + THE_MAT_PREC;
   }
 
-  bool isArray = *theBuffer.LinePtr == '[';
-  if (isArray)
+  //=================================================================================================
+
+  static bool isValidColor(const gp_XYZ& theVec3)
   {
-    ++theBuffer.LinePtr;
+    return isValidValue(theVec3.X()) && isValidValue(theVec3.Y()) && isValidValue(theVec3.Z());
   }
-  theStatus = theScene.ReadXYZ(theBuffer, theColor, false, false);
-  if (isArray)
+
+  //=================================================================================================
+
+  static bool parseColor(VrmlData_ErrorStatus& theStatus,
+                         VrmlData_InBuffer&    theBuffer,
+                         gp_XYZ&               theColor,
+                         const VrmlData_Scene& theScene)
   {
-    if (VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer))
-        && *theBuffer.LinePtr == ']')
+    if (!VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer)))
+    {
+      return false;
+    }
+
+    bool isArray = *theBuffer.LinePtr == '[';
+    if (isArray)
     {
       ++theBuffer.LinePtr;
     }
-    else
+    theStatus = theScene.ReadXYZ(theBuffer, theColor, false, false);
+    if (isArray)
     {
-      theStatus = VrmlData_VrmlFormatError;
+      if (VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer))
+          && *theBuffer.LinePtr == ']')
+      {
+        ++theBuffer.LinePtr;
+      }
+      else
+      {
+        theStatus = VrmlData_VrmlFormatError;
+      }
     }
-  }
-  if (!isValidColor(theColor))
-  {
-    theStatus = VrmlData_IrrelevantNumber;
-    return false;
-  }
-  return true;
-}
-
-//=================================================================================================
-
-static bool parseScalar(VrmlData_ErrorStatus& theStatus,
-                        VrmlData_InBuffer&    theBuffer,
-                        double&               theValue,
-                        const VrmlData_Scene& theScene)
-{
-  if (!VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer)))
-  {
-    return false;
+    if (!isValidColor(theColor))
+    {
+      theStatus = VrmlData_IrrelevantNumber;
+      return false;
+    }
+    return true;
   }
 
-  bool isArray = *theBuffer.LinePtr == '[';
-  if (isArray)
-  {
-    ++theBuffer.LinePtr;
-  }
+  //=================================================================================================
 
-  theStatus = theScene.ReadReal(theBuffer, theValue, false, false);
-  if (isArray)
+  static bool parseScalar(VrmlData_ErrorStatus& theStatus,
+                          VrmlData_InBuffer&    theBuffer,
+                          double&               theValue,
+                          const VrmlData_Scene& theScene)
   {
-    if (VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer))
-        && *theBuffer.LinePtr == ']')
+    if (!VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer)))
+    {
+      return false;
+    }
+
+    bool isArray = *theBuffer.LinePtr == '[';
+    if (isArray)
     {
       ++theBuffer.LinePtr;
     }
-    else
+
+    theStatus = theScene.ReadReal(theBuffer, theValue, false, false);
+    if (isArray)
     {
-      theStatus = VrmlData_VrmlFormatError;
+      if (VrmlData_Node::OK(theStatus, VrmlData_Scene::ReadLine(theBuffer))
+          && *theBuffer.LinePtr == ']')
+      {
+        ++theBuffer.LinePtr;
+      }
+      else
+      {
+        theStatus = VrmlData_VrmlFormatError;
+      }
     }
+    if (!isValidValue(theValue))
+    {
+      theStatus = VrmlData_IrrelevantNumber;
+      return false;
+    }
+    return true;
   }
-  if (!isValidValue(theValue))
-  {
-    theStatus = VrmlData_IrrelevantNumber;
-    return false;
-  }
-  return true;
-}
 } // namespace
 
 //=======================================================================

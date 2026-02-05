@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Quantity_Color.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -28,4 +27,3 @@ struct RWObj_Material
   {
   }
 };
-

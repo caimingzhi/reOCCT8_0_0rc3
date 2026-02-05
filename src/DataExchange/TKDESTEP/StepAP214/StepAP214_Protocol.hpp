@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepData_Protocol.hpp>
@@ -31,4 +30,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepAP214_Protocol, StepData_Protocol)
 };
-

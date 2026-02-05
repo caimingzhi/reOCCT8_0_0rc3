@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <gp_Ax22d.hpp>
 #include <gp_Ax2d.hpp>
@@ -431,4 +430,3 @@ inline gp_Elips2d gp_Elips2d::Transformed(const gp_Trsf2d& theT) const
   anE.pos.Transform(theT);
   return anE;
 }
-

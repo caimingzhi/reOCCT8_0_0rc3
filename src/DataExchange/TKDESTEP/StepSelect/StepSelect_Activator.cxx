@@ -56,7 +56,8 @@ IFSelect_ReturnStatus StepSelect_Activator::Do(const int                        
   switch (number)
   {
 
-    case 1: { //        ****    StepSchema
+    case 1:
+    { //        ****    StepSchema
       if (argc < 2)
       {
         std::cout << "Identify an entity" << std::endl;
@@ -94,7 +95,8 @@ IFSelect_ReturnStatus StepSelect_Activator::Do(const int                        
       return IFSelect_RetVoid;
     }
 
-    case 40: { //        ****    FloatFormat
+    case 40:
+    { //        ****    FloatFormat
       char prem = ' ';
       if (argc < 2)
         prem = '?';

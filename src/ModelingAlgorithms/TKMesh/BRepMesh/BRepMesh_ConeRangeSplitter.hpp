@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_DefaultRangeSplitter.hpp>
 
 //! Auxiliary class extending default range splitter in
@@ -24,4 +23,3 @@ public:
   Standard_EXPORT Handle(IMeshData::ListOfPnt2d) GenerateSurfaceNodes(
     const IMeshTools_Parameters& theParameters) const override;
 };
-

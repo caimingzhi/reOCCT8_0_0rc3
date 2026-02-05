@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_Wrapper.hpp>
 
 #include <mutex>
@@ -94,4 +93,3 @@ private:
       static DE_MultiPluginHolder<theNodeType, ##__VA_ARGS__> aMultiHolder;                        \
     }
 #endif
-

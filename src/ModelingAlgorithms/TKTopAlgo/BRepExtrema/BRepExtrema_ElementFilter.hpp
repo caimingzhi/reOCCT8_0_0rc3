@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 //! Filtering tool used to detect if two given mesh elements
@@ -25,4 +24,3 @@ struct BRepExtrema_ElementFilter
     return DoCheck;
   }
 };
-

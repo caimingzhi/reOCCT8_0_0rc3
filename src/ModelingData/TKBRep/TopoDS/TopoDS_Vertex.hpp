@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Describes a vertex which
@@ -22,13 +21,12 @@ public:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Vertex>
-{
-  size_t operator()(const TopoDS_Vertex& theShape) const
+  template <>
+  struct hash<TopoDS_Vertex>
   {
-    return std::hash<TopoDS_Shape>{}(theShape);
-  }
-};
+    size_t operator()(const TopoDS_Vertex& theShape) const
+    {
+      return std::hash<TopoDS_Shape>{}(theShape);
+    }
+  };
 } // namespace std
-

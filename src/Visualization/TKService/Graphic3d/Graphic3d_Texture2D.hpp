@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_NameOfTexture2D.hpp>
 #include <Graphic3d_TextureMap.hpp>
 
@@ -50,4 +49,3 @@ protected:
 protected:
   Graphic3d_NameOfTexture2D myName;
 };
-

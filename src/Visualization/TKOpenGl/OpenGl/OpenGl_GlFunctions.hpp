@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <Standard_TypeDef.hpp>
 // Copyright (c) 2021 OPEN CASCADE SAS
@@ -15,7 +14,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 // required for correct APIENTRY definition
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
@@ -379,8 +377,6 @@ typedef double GLclampd;
 
 // OpenGL ES 3.0+ or OES_texture_half_float
 #define GL_HALF_FLOAT_OES 0x8D61
-
-
 
 #if !defined(HAVE_EGL)
   #if defined(__ANDROID__) || defined(__QNX__) || defined(__EMSCRIPTEN__) || defined(HAVE_GLES2)   \
@@ -1590,7 +1586,7 @@ public: //! @name wgl extensions
   typedef BOOL(WINAPI* wglSwapIntervalEXT_t)(int theInterval);
   wglSwapIntervalEXT_t wglSwapIntervalEXT;
 
-    // WGL_ARB_pixel_format
+  // WGL_ARB_pixel_format
 
   #ifndef WGL_NUMBER_PIXEL_FORMATS_ARB
     #define WGL_NUMBER_PIXEL_FORMATS_ARB 0x2000
@@ -1648,13 +1644,13 @@ public: //! @name wgl extensions
 
   #endif // WGL_NUMBER_PIXEL_FORMATS_ARB
 
-    // WGL_ARB_multisample
-    #define WGL_SAMPLES_ARB 0x2042
+  // WGL_ARB_multisample
+  #define WGL_SAMPLES_ARB 0x2042
 
-    // WGL_ARB_create_context_robustness
-    #define WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB 0x8256
-    #define WGL_NO_RESET_NOTIFICATION_ARB 0x8261
-    #define WGL_LOSE_CONTEXT_ON_RESET_ARB 0x8252
+  // WGL_ARB_create_context_robustness
+  #define WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB 0x8256
+  #define WGL_NO_RESET_NOTIFICATION_ARB 0x8261
+  #define WGL_LOSE_CONTEXT_ON_RESET_ARB 0x8252
 
   typedef BOOL(WINAPI* wglChoosePixelFormatARB_t)(HDC           theDevCtx,
                                                   const int*    theIntAttribs,
@@ -1664,7 +1660,7 @@ public: //! @name wgl extensions
                                                   unsigned int* theNumFormatsOut);
   wglChoosePixelFormatARB_t wglChoosePixelFormatARB;
 
-    // WGL_ARB_create_context_profile
+  // WGL_ARB_create_context_profile
 
   #ifndef WGL_CONTEXT_MAJOR_VERSION_ARB
     #define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
@@ -1721,17 +1717,17 @@ public: //! @name wgl extensions
     #define WGL_ACCESS_WRITE_DISCARD_NV 0x0002
   #endif
 
-    // WGL_AMD_gpu_association
+  // WGL_AMD_gpu_association
 
-    #define WGL_GPU_RENDERER_STRING_AMD 0x1F01
-    #define WGL_GPU_OPENGL_VERSION_STRING_AMD 0x1F02
-    #define WGL_GPU_FASTEST_TARGET_GPUS_AMD 0x21A2
-    #define WGL_GPU_RAM_AMD 0x21A3
-    #define WGL_GPU_CLOCK_AMD 0x21A4
-    #define WGL_GPU_NUM_PIPES_AMD 0x21A5
-    #define WGL_GPU_NUM_SIMD_AMD 0x21A6
-    #define WGL_GPU_NUM_RB_AMD 0x21A7
-    #define WGL_GPU_NUM_SPI_AMD 0x21A8
+  #define WGL_GPU_RENDERER_STRING_AMD 0x1F01
+  #define WGL_GPU_OPENGL_VERSION_STRING_AMD 0x1F02
+  #define WGL_GPU_FASTEST_TARGET_GPUS_AMD 0x21A2
+  #define WGL_GPU_RAM_AMD 0x21A3
+  #define WGL_GPU_CLOCK_AMD 0x21A4
+  #define WGL_GPU_NUM_PIPES_AMD 0x21A5
+  #define WGL_GPU_NUM_SIMD_AMD 0x21A6
+  #define WGL_GPU_NUM_RB_AMD 0x21A7
+  #define WGL_GPU_NUM_SPI_AMD 0x21A8
 
   typedef UINT(WINAPI* wglGetGPUIDsAMD_t)(UINT theMaxCount, UINT* theIds);
   typedef INT(WINAPI* wglGetGPUInfoAMD_t)(UINT   theId,
@@ -1758,7 +1754,7 @@ public: //! @name glX extensions
   typedef int (*glXSwapIntervalSGI_t)(int theInterval);
   glXSwapIntervalSGI_t glXSwapIntervalSGI;
 
-    // GLX_MESA_query_renderer
+  // GLX_MESA_query_renderer
   #ifndef GLX_RENDERER_VENDOR_ID_MESA
     // for glXQueryRendererIntegerMESA() and glXQueryCurrentRendererIntegerMESA()
     #define GLX_RENDERER_VENDOR_ID_MESA 0x8183
@@ -1794,4 +1790,3 @@ public: //! @name glX extensions
   glXQueryCurrentRendererStringMESA_t  glXQueryCurrentRendererStringMESA;
 #endif
 };
-

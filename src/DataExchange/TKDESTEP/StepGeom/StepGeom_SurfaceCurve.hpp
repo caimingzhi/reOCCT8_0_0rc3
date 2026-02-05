@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_PcurveOrSurface.hpp>
@@ -51,4 +50,3 @@ private:
   occ::handle<NCollection_HArray1<StepGeom_PcurveOrSurface>> associatedGeometry;
   StepGeom_PreferredSurfaceCurveRepresentation               masterRepresentation;
 };
-

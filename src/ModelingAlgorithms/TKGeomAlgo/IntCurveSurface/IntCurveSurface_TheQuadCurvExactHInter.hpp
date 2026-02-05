@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <NCollection_Sequence.hpp>
@@ -37,4 +36,3 @@ private:
   int                          nbintv;
   NCollection_Sequence<double> intv;
 };
-

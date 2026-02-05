@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -34,4 +33,3 @@ private:
   double semiAxis;
   double semiImagAxis;
 };
-

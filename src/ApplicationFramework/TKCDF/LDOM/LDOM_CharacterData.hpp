@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Node.hpp>
 
 class LDOM_BasicText;
@@ -54,4 +53,3 @@ private:
   // ------------ PRIVATE FIELDS -----------
   int myLength;
 };
-

@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <Graphic3d_BndBox3d.hpp>
+
 // Author: Kirill Gavrilov
 // Copyright (c) 2016-2019 OPEN CASCADE SAS
 //
@@ -16,7 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Low-level glTF enumeration defining Accessor component type.
 enum RWGltf_GltfAccessorCompType
 {
@@ -28,7 +27,6 @@ enum RWGltf_GltfAccessorCompType
   RWGltf_GltfAccessorCompType_UInt32  = 5125, //!< GL_UNSIGNED_INT
   RWGltf_GltfAccessorCompType_Float32 = 5126, //!< GL_FLOAT
 };
-
 
 #include <RWGltf_GltfAccessorLayout.hpp>
 #include <Standard_TypeDef.hpp>
@@ -60,4 +58,3 @@ public:
   {
   }
 };
-

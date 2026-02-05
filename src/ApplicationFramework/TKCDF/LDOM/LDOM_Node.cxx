@@ -1,18 +1,3 @@
-// Created on: 2001-06-27
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2001-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <LDOM_BasicAttribute.hpp>
 #include <LDOM_BasicElement.hpp>
 #include <LDOM_BasicText.hpp>
@@ -100,11 +85,13 @@ LDOMString LDOM_Node::getNodeName() const
 {
   switch (getNodeType())
   {
-    case ELEMENT_NODE: {
+    case ELEMENT_NODE:
+    {
       const LDOM_BasicElement& anElement = *(const LDOM_BasicElement*)myOrigin;
       return LDOMString::CreateDirectString(anElement.GetTagName(), myDocument->Self());
     }
-    case ATTRIBUTE_NODE: {
+    case ATTRIBUTE_NODE:
+    {
       const LDOM_BasicAttribute& anAttr = *(const LDOM_BasicAttribute*)myOrigin;
       return LDOMString::CreateDirectString(anAttr.GetName(), myDocument->Self());
     }
@@ -119,13 +106,15 @@ LDOMString LDOM_Node::getNodeValue() const
 {
   switch (getNodeType())
   {
-    case ATTRIBUTE_NODE: {
+    case ATTRIBUTE_NODE:
+    {
       const LDOM_BasicAttribute& anAttr = *(const LDOM_BasicAttribute*)myOrigin;
       return LDOMString(anAttr.GetValue(), myDocument->Self());
     }
     case TEXT_NODE:
     case CDATA_SECTION_NODE:
-    case COMMENT_NODE: {
+    case COMMENT_NODE:
+    {
       const LDOM_BasicText& aText = *(const LDOM_BasicText*)myOrigin;
       return LDOMString(aText.GetData(), myDocument->Self());
     }
@@ -237,14 +226,16 @@ void LDOM_Node::SetValueClear() const
   LDOMBasicString* aValue = nullptr;
   switch (getNodeType())
   {
-    case ATTRIBUTE_NODE: {
+    case ATTRIBUTE_NODE:
+    {
       const LDOM_BasicAttribute& anAttr = *(const LDOM_BasicAttribute*)myOrigin;
       aValue                            = (LDOMBasicString*)&anAttr.GetValue();
       break;
     }
     case TEXT_NODE:
     case CDATA_SECTION_NODE:
-    case COMMENT_NODE: {
+    case COMMENT_NODE:
+    {
       const LDOM_BasicText& aText = *(const LDOM_BasicText*)myOrigin;
       aValue                      = (LDOMBasicString*)&aText.GetData();
       break;

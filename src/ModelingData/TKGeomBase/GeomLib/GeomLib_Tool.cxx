@@ -1,18 +1,3 @@
-// Created on: 2003-03-18
-// Created by: Oleg FEDYAEV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomLib_Tool.hpp>
 
 #include <ElCLib.hpp>
@@ -185,108 +170,108 @@ bool GeomLib_Tool::Parameter(const occ::handle<Geom2d_Curve>& Curve,
 
 namespace
 {
-//! Target function to compute deviation of the source 2D-curve.
-//! It is one-variate function. Its parameter is a parameter
-//! on the curve. Deviation is a maximal distance between
-//! any point in the curve and the given line.
-class FuncSolveDeviation : public math_MultipleVarFunction
-{
-public:
-  //! Constructor. Initializes the curve and the line
-  //! going through two given points.
-  FuncSolveDeviation(const Geom2dAdaptor_Curve& theCurve, const gp_XY& thePf, const gp_XY& thePl)
-      : myCurve(theCurve),
-        myPRef(thePf)
+  //! Target function to compute deviation of the source 2D-curve.
+  //! It is one-variate function. Its parameter is a parameter
+  //! on the curve. Deviation is a maximal distance between
+  //! any point in the curve and the given line.
+  class FuncSolveDeviation : public math_MultipleVarFunction
   {
-    myDirRef  = thePl - thePf;
-    mySqMod   = myDirRef.SquareModulus();
-    myIsValid = (mySqMod > Precision::SquarePConfusion());
-  }
-
-  //! Compute additional parameters depending on the argument
-  //! of *this
-  void UpdateFields(const double theParam)
-  {
-    myCurve.D0(theParam, myPointOnCurve);
-    const gp_XY aVt = myPointOnCurve.XY() - myPRef;
-    myVecCurvLine   = aVt.Dot(myDirRef) * myDirRef / mySqMod - aVt;
-  }
-
-  //! Returns value of *this (square deviation) and its 1st and 2nd derivative.
-  void ValueAndDerives(const double theParam, double& theVal, double& theD1, double& theD2)
-  {
-    gp_Vec2d aD1;
-    gp_Vec2d aD2;
-    myCurve.D2(theParam, myPointOnCurve, aD1, aD2);
-
-    const gp_XY aVt = myPointOnCurve.XY() - myPRef;
-    theVal          = aVt.Crossed(myDirRef);
-    theD1           = aD1.Crossed(myDirRef);
-    theD2           = 2.0 * (theD1 * theD1 + theVal * aD2.Crossed(myDirRef));
-    theD1 *= 2.0 * theVal;
-    theVal *= theVal / mySqMod;
-  }
-
-  //! Returns TRUE if the function has been initializes correctly.
-  bool IsValid() const { return myIsValid; }
-
-  //! Returns number of variables
-  int NbVariables() const override { return 1; }
-
-  //! Returns last computed Point in the given curve.
-  //! Its value will be recomputed after calling UpdateFields(...) method,
-  //! which sets this point correspond to the input parameter.
-  const gp_Pnt2d& PointOnCurve() const { return myPointOnCurve; }
-
-  //! Returns last computed vector directed from some point on the curve
-  //! to the given line. This vector is correspond to the found deviation.
-  //! Its value will be recomputed after calling UpdateFields(...) method,
-  //! which set this vector correspond to the input parameter.
-  const gp_Vec2d& VecCurveLine() const { return myVecCurvLine; }
-
-  //! Returns the given line
-  void GetLine(gp_Lin2d* const theLine) const
-  {
-    if (theLine == nullptr)
+  public:
+    //! Constructor. Initializes the curve and the line
+    //! going through two given points.
+    FuncSolveDeviation(const Geom2dAdaptor_Curve& theCurve, const gp_XY& thePf, const gp_XY& thePl)
+        : myCurve(theCurve),
+          myPRef(thePf)
     {
-      return;
+      myDirRef  = thePl - thePf;
+      mySqMod   = myDirRef.SquareModulus();
+      myIsValid = (mySqMod > Precision::SquarePConfusion());
     }
-    theLine->SetDirection(myDirRef);
-    theLine->SetLocation(myPRef);
-  }
 
-  //! Returns value of *this (square deviation)
-  bool Value(const math_Vector& thePrm, double& theVal) override
-  {
-    double aD1;
-    double aD2;
-    ValueAndDerives(thePrm.Value(thePrm.Lower()), theVal, aD1, aD2);
-    theVal = -theVal;
-    return true;
-  }
+    //! Compute additional parameters depending on the argument
+    //! of *this
+    void UpdateFields(const double theParam)
+    {
+      myCurve.D0(theParam, myPointOnCurve);
+      const gp_XY aVt = myPointOnCurve.XY() - myPRef;
+      myVecCurvLine   = aVt.Dot(myDirRef) * myDirRef / mySqMod - aVt;
+    }
 
-  //! Always returns 0. It is used for compatibility with the parent class.
-  int GetStateNumber() override { return 0; }
+    //! Returns value of *this (square deviation) and its 1st and 2nd derivative.
+    void ValueAndDerives(const double theParam, double& theVal, double& theD1, double& theD2)
+    {
+      gp_Vec2d aD1;
+      gp_Vec2d aD2;
+      myCurve.D2(theParam, myPointOnCurve, aD1, aD2);
 
-private:
-  //! The curve
-  Geom2dAdaptor_Curve myCurve;
+      const gp_XY aVt = myPointOnCurve.XY() - myPRef;
+      theVal          = aVt.Crossed(myDirRef);
+      theD1           = aD1.Crossed(myDirRef);
+      theD2           = 2.0 * (theD1 * theD1 + theVal * aD2.Crossed(myDirRef));
+      theD1 *= 2.0 * theVal;
+      theVal *= theVal / mySqMod;
+    }
 
-  //! Square modulus of myDirRef (it is constant)
-  double mySqMod;
+    //! Returns TRUE if the function has been initializes correctly.
+    bool IsValid() const { return myIsValid; }
 
-  //! TRUE if *this is initialized correctly
-  bool myIsValid;
+    //! Returns number of variables
+    int NbVariables() const override { return 1; }
 
-  //! Sets the given line
-  gp_XY myPRef, myDirRef;
+    //! Returns last computed Point in the given curve.
+    //! Its value will be recomputed after calling UpdateFields(...) method,
+    //! which sets this point correspond to the input parameter.
+    const gp_Pnt2d& PointOnCurve() const { return myPointOnCurve; }
 
-  //! Last computed point in the curve
-  gp_Pnt2d myPointOnCurve;
+    //! Returns last computed vector directed from some point on the curve
+    //! to the given line. This vector is correspond to the found deviation.
+    //! Its value will be recomputed after calling UpdateFields(...) method,
+    //! which set this vector correspond to the input parameter.
+    const gp_Vec2d& VecCurveLine() const { return myVecCurvLine; }
 
-  //! Always directed from myPointOnCurve to the line
-  gp_Vec2d myVecCurvLine;
-};
+    //! Returns the given line
+    void GetLine(gp_Lin2d* const theLine) const
+    {
+      if (theLine == nullptr)
+      {
+        return;
+      }
+      theLine->SetDirection(myDirRef);
+      theLine->SetLocation(myPRef);
+    }
+
+    //! Returns value of *this (square deviation)
+    bool Value(const math_Vector& thePrm, double& theVal) override
+    {
+      double aD1;
+      double aD2;
+      ValueAndDerives(thePrm.Value(thePrm.Lower()), theVal, aD1, aD2);
+      theVal = -theVal;
+      return true;
+    }
+
+    //! Always returns 0. It is used for compatibility with the parent class.
+    int GetStateNumber() override { return 0; }
+
+  private:
+    //! The curve
+    Geom2dAdaptor_Curve myCurve;
+
+    //! Square modulus of myDirRef (it is constant)
+    double mySqMod;
+
+    //! TRUE if *this is initialized correctly
+    bool myIsValid;
+
+    //! Sets the given line
+    gp_XY myPRef, myDirRef;
+
+    //! Last computed point in the curve
+    gp_Pnt2d myPointOnCurve;
+
+    //! Always directed from myPointOnCurve to the line
+    gp_Vec2d myVecCurvLine;
+  };
 } // namespace
 
 //=======================================================================

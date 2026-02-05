@@ -1,23 +1,3 @@
-// Created on: 1993-04-29
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// 20/02/97 : PMN -> Positionement local sur BSpline (PRO6902)
-// 10/07/97 : PMN -> Pas de calcul de resolution dans Nb(Intervals)(PRO9248)
-// 20/10/97 : RBV -> traitement des offset curves
-
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
@@ -611,7 +591,8 @@ void GeomAdaptor_Curve::D0(const double U, gp_Pnt& P) const
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       auto& aCache = std::get<BezierData>(myCurveData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U))
         RebuildCache(U);
@@ -619,7 +600,8 @@ void GeomAdaptor_Curve::D0(const double U, gp_Pnt& P) const
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int   aStart = 0, aFinish = 0;
       auto& aBSplData = std::get<BSplineData>(myCurveData);
       if (IsBoundary(U, aStart, aFinish))
@@ -636,7 +618,8 @@ void GeomAdaptor_Curve::D0(const double U, gp_Pnt& P) const
       break;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const auto& anOffsetData = std::get<OffsetData>(myCurveData);
       if (!Geom_OffsetCurveUtils::EvaluateD0(U,
                                              anOffsetData.BasisAdaptor.get(),
@@ -660,7 +643,8 @@ void GeomAdaptor_Curve::D1(const double U, gp_Pnt& P, gp_Vec& V) const
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       auto& aCache = std::get<BezierData>(myCurveData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U))
         RebuildCache(U);
@@ -668,7 +652,8 @@ void GeomAdaptor_Curve::D1(const double U, gp_Pnt& P, gp_Vec& V) const
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int   aStart = 0, aFinish = 0;
       auto& aBSplData = std::get<BSplineData>(myCurveData);
       if (IsBoundary(U, aStart, aFinish))
@@ -685,7 +670,8 @@ void GeomAdaptor_Curve::D1(const double U, gp_Pnt& P, gp_Vec& V) const
       break;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const auto& anOffsetData = std::get<OffsetData>(myCurveData);
       if (!Geom_OffsetCurveUtils::EvaluateD1(U,
                                              anOffsetData.BasisAdaptor.get(),
@@ -710,7 +696,8 @@ void GeomAdaptor_Curve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) co
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       auto& aCache = std::get<BezierData>(myCurveData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U))
         RebuildCache(U);
@@ -718,7 +705,8 @@ void GeomAdaptor_Curve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) co
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int   aStart = 0, aFinish = 0;
       auto& aBSplData = std::get<BSplineData>(myCurveData);
       if (IsBoundary(U, aStart, aFinish))
@@ -735,7 +723,8 @@ void GeomAdaptor_Curve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) co
       break;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const auto& anOffsetData = std::get<OffsetData>(myCurveData);
       if (!Geom_OffsetCurveUtils::EvaluateD2(U,
                                              anOffsetData.BasisAdaptor.get(),
@@ -761,7 +750,8 @@ void GeomAdaptor_Curve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       auto& aCache = std::get<BezierData>(myCurveData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U))
         RebuildCache(U);
@@ -769,7 +759,8 @@ void GeomAdaptor_Curve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int   aStart = 0, aFinish = 0;
       auto& aBSplData = std::get<BSplineData>(myCurveData);
       if (IsBoundary(U, aStart, aFinish))
@@ -786,7 +777,8 @@ void GeomAdaptor_Curve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp
       break;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const auto& anOffsetData = std::get<OffsetData>(myCurveData);
       if (!Geom_OffsetCurveUtils::EvaluateD3(U,
                                              anOffsetData.BasisAdaptor.get(),
@@ -816,7 +808,8 @@ gp_Vec GeomAdaptor_Curve::DN(const double U, const int N) const
     case GeomAbs_BezierCurve:
       return myCurve->DN(U, N);
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int aStart = 0, aFinish = 0;
       if (IsBoundary(U, aStart, aFinish))
       {
@@ -826,7 +819,8 @@ gp_Vec GeomAdaptor_Curve::DN(const double U, const int N) const
         return myCurve->DN(U, N);
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_OffsetCurve:
+    {
       const auto& anOffsetData = std::get<OffsetData>(myCurveData);
       gp_Vec      aDN;
       if (!Geom_OffsetCurveUtils::EvaluateDN(U,
@@ -855,22 +849,26 @@ double GeomAdaptor_Curve::Resolution(const double R3D) const
   {
     case GeomAbs_Line:
       return R3D;
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       double R = occ::down_cast<Geom_Circle>(myCurve)->Circ().Radius();
       if (R > R3D / 2.)
         return 2 * std::asin(R3D / (2 * R));
       else
         return 2 * M_PI;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       return R3D / occ::down_cast<Geom_Ellipse>(myCurve)->MajorRadius();
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       double res;
       occ::down_cast<Geom_BezierCurve>(myCurve)->Resolution(R3D, res);
       return res;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       double res;
       std::get<BSplineData>(myCurveData).Curve->Resolution(R3D, res);
       return res;

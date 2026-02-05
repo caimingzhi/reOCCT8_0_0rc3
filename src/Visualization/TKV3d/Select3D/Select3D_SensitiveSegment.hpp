@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 #include <SelectMgr_SelectingVolumeManager.hpp>
 
@@ -62,4 +61,3 @@ private:
   gp_Pnt myStart; //!< Start point
   gp_Pnt myEnd;   //!< End point
 };
-

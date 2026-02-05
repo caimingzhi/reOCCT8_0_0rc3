@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Printer.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -31,4 +30,3 @@ private:
   void* myEventSource;
 #endif
 };
-

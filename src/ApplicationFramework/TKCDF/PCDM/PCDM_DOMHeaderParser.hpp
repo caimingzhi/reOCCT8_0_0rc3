@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOMParser.hpp>
 
 //  Block of comments describing class PCDM_DOMHeaderParser
@@ -36,4 +35,3 @@ private:
   LDOMString   myStartElementName;
   LDOMString   myEndElementName;
 };
-

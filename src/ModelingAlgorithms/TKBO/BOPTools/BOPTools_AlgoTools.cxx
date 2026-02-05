@@ -1,20 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-// Copyright (c) 2007-2010 CEA/DEN, EDF R&D, OPEN CASCADE
-// Copyright (c) 2003-2007 OPEN CASCADE, EADS/CCR, LIP6, CEA/DEN, CEDRAT,
-//                         EDF R&D, LEG, PRINCIPIA R&D, BUREAU VERITAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BOPTools_AlgoTools.hpp>
 #include <BOPAlgo_Alerts.hpp>
 #include <BOPTools_AlgoTools2D.hpp>
@@ -629,13 +612,15 @@ TopAbs_State BOPTools_AlgoTools::ComputeStateByOnePoint(
     case TopAbs_EDGE:
       aState = ComputeState(TopoDS::Edge(theS), theRef, theTol, theContext);
       break;
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aBounds;
       TopExp::MapShapes(theRef, TopAbs_EDGE, aBounds);
       aState = ComputeState(TopoDS::Face(theS), theRef, theTol, aBounds, theContext);
       break;
     }
-    default: {
+    default:
+    {
       TopoDS_Iterator it(theS);
       if (it.More())
         ComputeStateByOnePoint(it.Value(), theRef, theTol, theContext);
@@ -1237,14 +1222,16 @@ bool BOPTools_AlgoTools::IsSplitToReverse(const TopoDS_Shape&                  t
   aType = theSp.ShapeType();
   switch (aType)
   {
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       const TopoDS_Edge& aESp = (*(TopoDS_Edge*)(&theSp));
       const TopoDS_Edge& aESr = (*(TopoDS_Edge*)(&theSr));
       bRet = BOPTools_AlgoTools::IsSplitToReverse(aESp, aESr, theContext, theError);
     }
     break;
       //
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       const TopoDS_Face& aFSp = (*(TopoDS_Face*)(&theSp));
       const TopoDS_Face& aFSr = (*(TopoDS_Face*)(&theSr));
       bRet = BOPTools_AlgoTools::IsSplitToReverse(aFSp, aFSr, theContext, theError);
@@ -1553,21 +1540,24 @@ void BOPTools_AlgoTools::MakeContainer(const TopAbs_ShapeEnum theType, TopoDS_Sh
   //
   switch (theType)
   {
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       TopoDS_Compound aC;
       aBB.MakeCompound(aC);
       theC = aC;
     }
     break;
       //
-    case TopAbs_COMPSOLID: {
+    case TopAbs_COMPSOLID:
+    {
       TopoDS_CompSolid aCS;
       aBB.MakeCompSolid(aCS);
       theC = aCS;
     }
     break;
       //
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       TopoDS_Solid aSolid;
       aBB.MakeSolid(aSolid);
       theC = aSolid;
@@ -1575,14 +1565,16 @@ void BOPTools_AlgoTools::MakeContainer(const TopAbs_ShapeEnum theType, TopoDS_Sh
     break;
       //
       //
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       TopoDS_Shell aShell;
       aBB.MakeShell(aShell);
       theC = aShell;
     }
     break;
       //
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       TopoDS_Wire aWire;
       aBB.MakeWire(aWire);
       theC = aWire;
@@ -2220,21 +2212,25 @@ double MinStep3D(const TopoDS_Edge&                              theE1,
     GeomAbs_SurfaceType        aSType = aBAS.GetType();
     switch (aSType)
     {
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         aR = aBAS.Cylinder().Radius();
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         gp_Lin aL(aBAS.Cone().Axis());
         aR = aL.Distance(aP);
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         aDtMin = std::max(aDtMin, 5.e-4);
         aR     = aBAS.Sphere().Radius();
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         aR = aBAS.Torus().MajorRadius();
         break;
       }

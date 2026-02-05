@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GProp_GProps.hpp>
 #include <TopAbs_Orientation.hpp>
 #include <gp_Pnt.hpp>
@@ -66,4 +65,3 @@ public:
 private:                        //! @name private fields
   BRepGProp_MeshObjType myType; //!< Type of geometric object
 };
-

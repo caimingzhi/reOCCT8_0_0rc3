@@ -58,7 +58,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDraw_CircArraySubfigure, anent, ent);
       if (anent.IsNull())
         return;
@@ -66,7 +67,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDraw_ConnectPoint, anent, ent);
       if (anent.IsNull())
         return;
@@ -74,7 +76,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDraw_Drawing, anent, ent);
       if (anent.IsNull())
         return;
@@ -82,7 +85,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDraw_DrawingWithRotation, anent, ent);
       if (anent.IsNull())
         return;
@@ -90,7 +94,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDraw_LabelDisplay, anent, ent);
       if (anent.IsNull())
         return;
@@ -98,7 +103,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDraw_NetworkSubfigure, anent, ent);
       if (anent.IsNull())
         return;
@@ -106,7 +112,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDraw_NetworkSubfigureDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -114,7 +121,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDraw_PerspectiveView, anent, ent);
       if (anent.IsNull())
         return;
@@ -122,7 +130,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDraw_Planar, anent, ent);
       if (anent.IsNull())
         return;
@@ -130,7 +139,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDraw_RectArraySubfigure, anent, ent);
       if (anent.IsNull())
         return;
@@ -138,7 +148,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDraw_SegmentedViewsVisible, anent, ent);
       if (anent.IsNull())
         return;
@@ -146,7 +157,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDraw_View, anent, ent);
       if (anent.IsNull())
         return;
@@ -154,7 +166,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDraw_ViewsVisible, anent, ent);
       if (anent.IsNull())
         return;
@@ -162,7 +175,8 @@ void IGESDraw_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDraw_ViewsVisibleWithAttr, anent, ent);
       if (anent.IsNull())
         return;
@@ -181,35 +195,40 @@ bool IGESDraw_SpecificModule::OwnCorrect(const int                              
   //   Applies only on some types
   switch (CN)
   {
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDraw_Drawing, anent, ent);
       if (anent.IsNull())
         break;
       IGESDraw_ToolDrawing tool;
       return tool.OwnCorrect(anent);
     }
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDraw_DrawingWithRotation, anent, ent);
       if (anent.IsNull())
         break;
       IGESDraw_ToolDrawingWithRotation tool;
       return tool.OwnCorrect(anent);
     }
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDraw_Planar, anent, ent);
       if (anent.IsNull())
         break;
       IGESDraw_ToolPlanar tool;
       return tool.OwnCorrect(anent);
     }
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDraw_ViewsVisible, anent, ent);
       if (anent.IsNull())
         break;
       IGESDraw_ToolViewsVisible tool;
       return tool.OwnCorrect(anent);
     }
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDraw_ViewsVisibleWithAttr, anent, ent);
       if (anent.IsNull())
         break;

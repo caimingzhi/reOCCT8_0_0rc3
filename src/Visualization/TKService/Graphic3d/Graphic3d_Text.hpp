@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2.hpp>
 
 #include <Font_TextFormatter.hpp>
@@ -113,4 +112,3 @@ protected:
   bool myHasPlane;     //!< Check if text have orientation in 3D space.
   bool myHasOwnAnchor; //!< flag if text uses position as point of attach
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -194,26 +193,26 @@ private:
 
 namespace std
 {
-template <>
-struct hash<occ::handle<TCollection_HExtendedString>>
-{
-  size_t operator()(const occ::handle<TCollection_HExtendedString>& theString) const
+  template <>
+  struct hash<occ::handle<TCollection_HExtendedString>>
   {
-    if (theString.IsNull())
-      return 0;
-    return std::hash<TCollection_ExtendedString>{}(theString->String());
-  }
-};
+    size_t operator()(const occ::handle<TCollection_HExtendedString>& theString) const
+    {
+      if (theString.IsNull())
+        return 0;
+      return std::hash<TCollection_ExtendedString>{}(theString->String());
+    }
+  };
 
-template <>
-struct equal_to<occ::handle<TCollection_HExtendedString>>
-{
-  bool operator()(const occ::handle<TCollection_HExtendedString>& theString1,
-                  const occ::handle<TCollection_HExtendedString>& theString2) const
+  template <>
+  struct equal_to<occ::handle<TCollection_HExtendedString>>
   {
-    return theString1 == theString2
-           || (!theString1.IsNull() && !theString2.IsNull()
-               && theString1->String() == theString2->String());
-  }
-};
+    bool operator()(const occ::handle<TCollection_HExtendedString>& theString1,
+                    const occ::handle<TCollection_HExtendedString>& theString2) const
+    {
+      return theString1 == theString2
+             || (!theString1.IsNull() && !theString2.IsNull()
+                 && theString1->String() == theString2->String());
+    }
+  };
 } // namespace std

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum TopOpeBRep_P2Dstatus
 {
   TopOpeBRep_P2DUNK,
@@ -9,4 +8,3 @@ enum TopOpeBRep_P2Dstatus
   TopOpeBRep_P2DSGL,
   TopOpeBRep_P2DNEW
 };
-

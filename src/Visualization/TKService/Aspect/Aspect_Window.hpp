@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Background.hpp>
 #include <Aspect_GradientBackground.hpp>
 #include <Aspect_FBConfig.hpp>
@@ -157,4 +156,3 @@ protected:
   Aspect_FillMethod                     MyBackgroundFillMethod;
   bool                                  MyIsVirtual;
 };
-

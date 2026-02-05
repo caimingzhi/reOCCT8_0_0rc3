@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AppCont_Function.hpp>
 #include <AppParCurves_MultiCurve.hpp>
 #include <math_Matrix.hpp>
@@ -50,4 +49,3 @@ private:
   int                                 myDegre;
   int                                 myNbdiscret, myNbP, myNbP2d;
 };
-

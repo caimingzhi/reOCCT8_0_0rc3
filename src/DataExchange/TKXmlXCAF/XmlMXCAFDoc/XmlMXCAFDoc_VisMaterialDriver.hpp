@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <XmlMDF_ADriver.hpp>
@@ -29,4 +28,3 @@ public:
                              XmlObjMgt_Persistent&             theTarget,
                              XmlObjMgt_SRelocationTable&       theRelocTable) const override;
 };
-

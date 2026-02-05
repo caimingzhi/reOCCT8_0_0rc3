@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtkTools.hpp>
 #include <IVtk_Types.hpp>
 #include <IVtkOCC_ShapePickerAlgo.hpp>
@@ -160,4 +159,3 @@ private:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <GeomFill_TrihedronLaw.hpp>
@@ -75,4 +74,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(GeomFill_Darboux, GeomFill_TrihedronLaw)
 };
-

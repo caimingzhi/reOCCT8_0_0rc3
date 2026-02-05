@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Type of the texture file format.
 enum Graphic3d_TypeOfTexture
 {
@@ -26,4 +25,3 @@ enum Graphic3d_TypeOfTexture
   Graphic3d_TOT_2D      = Graphic3d_TypeOfTexture_2D,
   Graphic3d_TOT_CUBEMAP = Graphic3d_TypeOfTexture_CUBEMAP
 };
-

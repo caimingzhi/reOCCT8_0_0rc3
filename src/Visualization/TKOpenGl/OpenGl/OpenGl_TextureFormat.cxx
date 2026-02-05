@@ -194,7 +194,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
     theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES && theCtx->core11ffp == nullptr;
   switch (theFormat)
   {
-    case Image_Format_GrayF: {
+    case Image_Format_GrayF:
+    {
       aFormat.SetNbComponents(1);
       if (useRedRedAlpha)
       {
@@ -211,7 +212,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_AlphaF: {
+    case Image_Format_AlphaF:
+    {
       aFormat.SetNbComponents(1);
       if (useRedRedAlpha)
       {
@@ -227,7 +229,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_RGF: {
+    case Image_Format_RGF:
+    {
       if (!theCtx->arbTexRG)
       {
         return OpenGl_TextureFormat();
@@ -238,14 +241,16 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_RGBAF: {
+    case Image_Format_RGBAF:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theCtx->arbTexFloat ? GL_RGBA32F : GL_RGBA8);
       aFormat.SetPixelFormat(GL_RGBA);
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_BGRAF: {
+    case Image_Format_BGRAF:
+    {
       if (!theCtx->IsGlGreaterEqual(1, 2) && !theCtx->extBgra)
       {
         return OpenGl_TextureFormat();
@@ -256,14 +261,16 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_RGBF: {
+    case Image_Format_RGBF:
+    {
       aFormat.SetNbComponents(3);
       aFormat.SetInternalFormat(theCtx->arbTexFloat ? GL_RGB32F : GL_RGB8);
       aFormat.SetPixelFormat(GL_RGB);
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_BGRF: {
+    case Image_Format_BGRF:
+    {
       if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return OpenGl_TextureFormat();
@@ -275,7 +282,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
-    case Image_Format_GrayF_half: {
+    case Image_Format_GrayF_half:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(GL_R16F);
       aFormat.SetPixelFormat(GL_RED);
@@ -287,7 +295,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_RGF_half: {
+    case Image_Format_RGF_half:
+    {
       aFormat.SetNbComponents(2);
       aFormat.SetInternalFormat(GL_RG16F);
       aFormat.SetPixelFormat(GL_RG);
@@ -299,7 +308,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_RGBAF_half: {
+    case Image_Format_RGBAF_half:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(GL_RGBA16F);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -311,7 +321,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_RGBA: {
+    case Image_Format_RGBA:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(GL_RGBA8);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -327,7 +338,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_BGRA: {
+    case Image_Format_BGRA:
+    {
       if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
       {
         if (!theCtx->IsGlGreaterEqual(1, 2) && !theCtx->extBgra)
@@ -358,7 +370,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
-    case Image_Format_RGB32: {
+    case Image_Format_RGB32:
+    {
       if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
       {
         // ask driver to convert data to RGB8 to save memory
@@ -389,7 +402,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_BGR32: {
+    case Image_Format_BGR32:
+    {
       if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
       {
         if (!theCtx->IsGlGreaterEqual(1, 2) && !theCtx->extBgra)
@@ -420,7 +434,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
-    case Image_Format_RGB: {
+    case Image_Format_RGB:
+    {
       aFormat.SetNbComponents(3);
       aFormat.SetInternalFormat(GL_RGB8);
       aFormat.SetPixelFormat(GL_RGB);
@@ -436,7 +451,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_BGR: {
+    case Image_Format_BGR:
+    {
       if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         return OpenGl_TextureFormat();
@@ -456,7 +472,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       return aFormat;
     }
-    case Image_Format_Gray: {
+    case Image_Format_Gray:
+    {
       aFormat.SetNbComponents(1);
       if (useRedRedAlpha)
       {
@@ -473,7 +490,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
-    case Image_Format_Alpha: {
+    case Image_Format_Alpha:
+    {
       aFormat.SetNbComponents(1);
       if (useRedRedAlpha)
       {
@@ -489,7 +507,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
-    case Image_Format_Gray16: {
+    case Image_Format_Gray16:
+    {
       if (!theCtx->extTexR16)
       {
         return OpenGl_TextureFormat();
@@ -509,7 +528,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_SHORT);
       return aFormat;
     }
-    case Image_Format_UNKNOWN: {
+    case Image_Format_UNKNOWN:
+    {
       return OpenGl_TextureFormat();
     }
   }
@@ -525,7 +545,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
   OpenGl_TextureFormat aFormat;
   switch (theSizedFormat)
   {
-    case GL_RGBA32F: {
+    case GL_RGBA32F:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -533,7 +554,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_RGBAF);
       return aFormat;
     }
-    case GL_R32F: {
+    case GL_R32F:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RED);
@@ -541,7 +563,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_GrayF);
       return aFormat;
     }
-    case GL_RG32F: {
+    case GL_RG32F:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RG);
@@ -549,7 +572,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_RGF);
       return aFormat;
     }
-    case GL_RGBA16F: {
+    case GL_RGBA16F:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -563,7 +587,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       }
       return aFormat;
     }
-    case GL_R16F: {
+    case GL_R16F:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RED);
@@ -577,7 +602,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       }
       return aFormat;
     }
-    case GL_RG16F: {
+    case GL_RG16F:
+    {
       aFormat.SetNbComponents(2);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RG);
@@ -594,7 +620,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
     case GL_SRGB8_ALPHA8:
     case GL_SRGB_ALPHA_EXT:
     case GL_RGBA8:
-    case GL_RGBA: {
+    case GL_RGBA:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -620,7 +647,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
     case GL_SRGB8:
     case GL_SRGB_EXT:
     case GL_RGB8:
-    case GL_RGB: {
+    case GL_RGB:
+    {
       aFormat.SetNbComponents(3);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RGB);
@@ -643,7 +671,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       }
       return aFormat;
     }
-    case GL_RGB10_A2: {
+    case GL_RGB10_A2:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RGBA);
@@ -652,14 +681,16 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       return aFormat;
     }
     // integer types
-    case GL_R32I: {
+    case GL_R32I:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RED_INTEGER);
       aFormat.SetDataType(GL_INT);
       return aFormat;
     }
-    case GL_RG32I: {
+    case GL_RG32I:
+    {
       aFormat.SetNbComponents(2);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_RG_INTEGER);
@@ -667,35 +698,40 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       return aFormat;
     }
     // depth formats
-    case GL_DEPTH24_STENCIL8: {
+    case GL_DEPTH24_STENCIL8:
+    {
       aFormat.SetNbComponents(2);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_DEPTH_STENCIL);
       aFormat.SetDataType(GL_UNSIGNED_INT_24_8);
       return aFormat;
     }
-    case GL_DEPTH32F_STENCIL8: {
+    case GL_DEPTH32F_STENCIL8:
+    {
       aFormat.SetNbComponents(2);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_DEPTH_STENCIL);
       aFormat.SetDataType(GL_FLOAT_32_UNSIGNED_INT_24_8_REV);
       return aFormat;
     }
-    case GL_DEPTH_COMPONENT16: {
+    case GL_DEPTH_COMPONENT16:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_DEPTH_COMPONENT);
       aFormat.SetDataType(GL_UNSIGNED_SHORT);
       return aFormat;
     }
-    case GL_DEPTH_COMPONENT24: {
+    case GL_DEPTH_COMPONENT24:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_DEPTH_COMPONENT);
       aFormat.SetDataType(GL_UNSIGNED_INT);
       return aFormat;
     }
-    case GL_DEPTH_COMPONENT32F: {
+    case GL_DEPTH_COMPONENT32F:
+    {
       aFormat.SetNbComponents(1);
       aFormat.SetInternalFormat(theSizedFormat);
       aFormat.SetPixelFormat(GL_DEPTH_COMPONENT);
@@ -721,10 +757,12 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindCompressedFormat(
 
   switch (theFormat)
   {
-    case Image_CompressedFormat_UNKNOWN: {
+    case Image_CompressedFormat_UNKNOWN:
+    {
       return aFormat;
     }
-    case Image_CompressedFormat_RGB_S3TC_DXT1: {
+    case Image_CompressedFormat_RGB_S3TC_DXT1:
+    {
       aFormat.SetNbComponents(3);
       aFormat.SetPixelFormat(GL_RGB);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
@@ -735,7 +773,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindCompressedFormat(
       }
       return aFormat;
     }
-    case Image_CompressedFormat_RGBA_S3TC_DXT1: {
+    case Image_CompressedFormat_RGBA_S3TC_DXT1:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetPixelFormat(GL_RGBA);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
@@ -746,7 +785,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindCompressedFormat(
       }
       return aFormat;
     }
-    case Image_CompressedFormat_RGBA_S3TC_DXT3: {
+    case Image_CompressedFormat_RGBA_S3TC_DXT3:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetPixelFormat(GL_RGBA);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
@@ -757,7 +797,8 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindCompressedFormat(
       }
       return aFormat;
     }
-    case Image_CompressedFormat_RGBA_S3TC_DXT5: {
+    case Image_CompressedFormat_RGBA_S3TC_DXT5:
+    {
       aFormat.SetNbComponents(4);
       aFormat.SetPixelFormat(GL_RGBA);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Surface.hpp>
 #include <GeomInt_LineConstructor.hpp>
 #include <IntPatch_Line.hpp>
@@ -31,4 +30,3 @@ public:
     const GeomInt_LineConstructor&                    theLConstructor,
     NCollection_Sequence<occ::handle<IntPatch_Line>>& theNewLines);
 };
-

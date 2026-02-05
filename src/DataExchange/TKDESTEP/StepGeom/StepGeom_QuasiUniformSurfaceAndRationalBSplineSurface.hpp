@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -74,4 +73,3 @@ private:
   occ::handle<StepGeom_QuasiUniformSurface>    quasiUniformSurface;
   occ::handle<StepGeom_RationalBSplineSurface> rationalBSplineSurface;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines the three filling styles used in this package
 //! -   GeomFill_Stretch - the style with the flattest patches
 //! -   GeomFill_Coons - a rounded style of patch with
@@ -12,4 +11,3 @@ enum GeomFill_FillingStyle
   GeomFill_CoonsStyle,
   GeomFill_CurvedStyle
 };
-

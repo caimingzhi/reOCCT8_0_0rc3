@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Interface_ParamType
 {
   Interface_ParamMisc,
@@ -15,4 +14,3 @@ enum Interface_ParamType
   Interface_ParamHexa,
   Interface_ParamBinary
 };
-

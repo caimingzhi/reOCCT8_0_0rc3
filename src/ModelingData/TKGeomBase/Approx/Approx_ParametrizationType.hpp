@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Approx_ParametrizationType
 {
   Approx_ChordLength,  //!< parameters of points are proportionate to distances between them
@@ -8,4 +7,3 @@ enum Approx_ParametrizationType
                        //!< between them
   Approx_IsoParametric //!< parameters of points are distributed uniformly
 };
-

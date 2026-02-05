@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Boolean.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -478,4 +477,3 @@ private:
   size_t        myExtent;           //!< extent of this map (number of unpacked integer keys)
   // clang-format on
 };
-

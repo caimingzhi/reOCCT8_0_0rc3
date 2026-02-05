@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -138,4 +137,3 @@ private:
   occ::handle<ShapeAnalysis_TransferParameters> myTransferParamTool;
   occ::handle<ShapeUpgrade_FixSmallCurves>      myFixSmallCurveTool;
 };
-

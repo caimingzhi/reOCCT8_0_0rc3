@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -183,4 +182,3 @@ private:
   bool                            myIsInverted;
   bool                            myIsVerified;
 };
-

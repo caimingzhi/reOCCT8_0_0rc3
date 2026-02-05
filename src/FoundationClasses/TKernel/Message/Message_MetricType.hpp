@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Specifies kind of report information to collect
 enum Message_MetricType
 {
@@ -18,4 +17,3 @@ enum Message_MetricType
   Message_MetricType_MemSwapUsagePeak,     //!< OSD_MemInfo::MemSwapUsagePeak
   Message_MetricType_MemHeapUsage          //!< OSD_MemInfo::MemHeapUsage
 };
-

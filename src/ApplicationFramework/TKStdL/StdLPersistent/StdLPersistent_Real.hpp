@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 
 #include <TDataStd_Real.hpp>
@@ -43,4 +42,3 @@ private:
   double myValue;
   int    myDimension;
 };
-

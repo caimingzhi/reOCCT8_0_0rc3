@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_SStream.hpp>
 #include <Standard_RangeError.hpp>
 
@@ -24,4 +23,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(Standard_OutOfRange, Standard_RangeError)
-

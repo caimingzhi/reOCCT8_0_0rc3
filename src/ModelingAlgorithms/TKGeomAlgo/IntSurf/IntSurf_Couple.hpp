@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -26,6 +25,7 @@ private:
   int firstInteger;
   int secondInteger;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -61,5 +61,3 @@ inline int IntSurf_Couple::Second() const
 {
   return secondInteger;
 }
-
-

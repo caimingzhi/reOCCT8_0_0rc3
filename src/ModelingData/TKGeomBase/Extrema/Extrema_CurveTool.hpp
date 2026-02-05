@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Geom_BezierCurve.hpp>
 #include <Geom_BSplineCurve.hpp>
@@ -124,4 +123,3 @@ public:
     return theC.BSpline();
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -67,4 +66,3 @@ private:
   occ::handle<StepBasic_ProductDefinitionFormation> theRelatingProductDefinitionFormation;
   occ::handle<StepBasic_ProductDefinitionFormation> theRelatedProductDefinitionFormation;
 };
-

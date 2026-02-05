@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_DegreeOfFreedom.hpp>
@@ -32,4 +31,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepFEA_DegreeOfFreedom>> theFreedoms;
 };
-

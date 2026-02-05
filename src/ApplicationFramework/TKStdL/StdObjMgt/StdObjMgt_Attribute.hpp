@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Persistent.hpp>
 #include <StdObjMgt_ReadData.hpp>
 #include <StdObjMgt_WriteData.hpp>
@@ -99,4 +98,3 @@ public:
     return new container<Persistent>;
   }
 };
-

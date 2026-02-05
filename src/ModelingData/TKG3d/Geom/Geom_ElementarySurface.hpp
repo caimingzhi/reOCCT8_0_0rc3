@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax3.hpp>
 #include <Geom_Surface.hpp>
 
@@ -106,4 +105,3 @@ public:
 protected:
   gp_Ax3 pos;
 };
-

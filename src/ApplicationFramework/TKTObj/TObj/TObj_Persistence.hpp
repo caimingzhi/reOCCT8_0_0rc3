@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_HExtendedString.hpp>
@@ -103,7 +102,6 @@ private:
     return new name((const TObj_Persistence*)0, aLabel);                                           \
   }
 
-
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -76,4 +75,3 @@ private:
   NCollection_Sequence<NCollection_List<occ::handle<NCollection_HArray1<double>>>> G;
   NCollection_Sequence<double>                                                     C;
 };
-

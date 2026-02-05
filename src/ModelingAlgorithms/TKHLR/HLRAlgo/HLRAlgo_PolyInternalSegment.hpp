@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -13,4 +12,3 @@ struct HLRAlgo_PolyInternalSegment
 
   int LstSg1, LstSg2, NxtSg1, NxtSg2, Conex1, Conex2;
 };
-

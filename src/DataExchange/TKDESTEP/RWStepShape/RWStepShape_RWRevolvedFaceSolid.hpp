@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -30,4 +29,3 @@ public:
   Standard_HIDDEN void Share(const occ::handle<StepShape_RevolvedFaceSolid>& ent,
                              Interface_EntityIterator&                       iter) const;
 };
-

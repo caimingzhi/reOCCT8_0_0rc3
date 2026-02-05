@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Assert.hpp>
 #include <iterator>
 
@@ -182,4 +181,3 @@ private:
   //! NCollection iterator
   BaseIterator myIterator;
 };
-

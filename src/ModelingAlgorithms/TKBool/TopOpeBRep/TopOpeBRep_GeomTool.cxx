@@ -1,19 +1,3 @@
-// Created on: 1993-06-24
-// Created by: Jean Yves LEBEY
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Tool.hpp>
 #include <Geom2d_Curve.hpp>
 #include <Geom_Curve.hpp>
@@ -50,7 +34,8 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
   switch (typeline)
   {
 
-    case TopOpeBRep_WALKING: {
+    case TopOpeBRep_WALKING:
+    {
       // make BSplines of degree 1
       C3D = MakeBSpline1fromWALKING3d(L);
       PC1 = MakeBSpline1fromWALKING2d(L, 1);
@@ -64,12 +49,14 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
     }
     case TopOpeBRep_LINE:
     case TopOpeBRep_CIRCLE:
-    case TopOpeBRep_ELLIPSE: {
+    case TopOpeBRep_ELLIPSE:
+    {
       C3D = L.Curve();
       break;
     }
     case TopOpeBRep_PARABOLA:
-    case TopOpeBRep_HYPERBOLA: {
+    case TopOpeBRep_HYPERBOLA:
+    {
       C3D = L.Curve(min, max); // Trimmed
       break;
     }

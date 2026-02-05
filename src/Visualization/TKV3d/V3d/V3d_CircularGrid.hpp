@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax3.hpp>
@@ -66,4 +65,3 @@ private:
   double                           myRadius;
   double                           myOffSet;
 };
-

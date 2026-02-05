@@ -1,18 +1,3 @@
-// Created on: 2022-06-30
-// Created by: Alexander MALYSHEV
-// Copyright (c) 2022-2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepBuilderAPI_MakeShapeOnMesh.hpp>
 
 #include <BRep_Builder.hpp>
@@ -26,47 +11,47 @@
 
 namespace
 {
-//! Structure representing mesh edge.
-struct Edge
-{
-  //! Constructor. Sets edge nodes.
-  Edge(const int TheIdx1, const int TheIdx2)
-      : Idx1(std::min(TheIdx1, TheIdx2)),
-        Idx2(std::max(TheIdx1, TheIdx2))
+  //! Structure representing mesh edge.
+  struct Edge
   {
-  }
+    //! Constructor. Sets edge nodes.
+    Edge(const int TheIdx1, const int TheIdx2)
+        : Idx1(std::min(TheIdx1, TheIdx2)),
+          Idx2(std::max(TheIdx1, TheIdx2))
+    {
+    }
 
-  //! Comparison operator.
-  bool operator<(const Edge& other) const
-  {
-    return Idx1 < other.Idx1 || (Idx1 == other.Idx1 && Idx2 < other.Idx2);
-  }
+    //! Comparison operator.
+    bool operator<(const Edge& other) const
+    {
+      return Idx1 < other.Idx1 || (Idx1 == other.Idx1 && Idx2 < other.Idx2);
+    }
 
-  bool operator==(const Edge& theOther) const
-  {
-    return theOther.Idx1 == Idx1 && theOther.Idx2 == Idx2;
-  }
+    bool operator==(const Edge& theOther) const
+    {
+      return theOther.Idx1 == Idx1 && theOther.Idx2 == Idx2;
+    }
 
-  //! First index. It is lower or equal than the second.
-  int Idx1;
+    //! First index. It is lower or equal than the second.
+    int Idx1;
 
-  //! Second index.
-  int Idx2;
-};
+    //! Second index.
+    int Idx2;
+  };
 } // namespace
 
 namespace std
 {
-template <>
-struct hash<Edge>
-{
-  size_t operator()(const Edge& theEdge) const noexcept
+  template <>
+  struct hash<Edge>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2]{theEdge.Idx1, theEdge.Idx2};
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+    size_t operator()(const Edge& theEdge) const noexcept
+    {
+      // Combine two int values into a single hash value.
+      int aCombination[2]{theEdge.Idx1, theEdge.Idx2};
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
+    }
+  };
 } // namespace std
 
 //=================================================================================================

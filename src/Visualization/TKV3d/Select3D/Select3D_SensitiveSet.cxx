@@ -1,18 +1,3 @@
-// Created on: 2014-05-29
-// Created by: Varvara POSKONINA
-// Copyright (c) 2005-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Select3D_SensitiveSet.hpp>
 
 #include <BVH_LinearBuilder.hpp>
@@ -21,10 +6,10 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSet, Select3D_SensitiveEntity)
 
 namespace
 {
-//! Default BVH tree builder for sensitive set (optimal for large set of small primitives - for not
-//! too long construction time).
-static occ::handle<Select3D_BVHBuilder3d> THE_SENS_SET_BUILDER =
-  new BVH_LinearBuilder<double, 3>(BVH_Constants_LeafNodeSizeSmall, BVH_Constants_MaxTreeDepth);
+  //! Default BVH tree builder for sensitive set (optimal for large set of small primitives - for
+  //! not too long construction time).
+  static occ::handle<Select3D_BVHBuilder3d> THE_SENS_SET_BUILDER =
+    new BVH_LinearBuilder<double, 3>(BVH_Constants_LeafNodeSizeSmall, BVH_Constants_MaxTreeDepth);
 } // namespace
 
 //=================================================================================================
@@ -66,20 +51,20 @@ void Select3D_SensitiveSet::BVH()
 
 namespace
 {
-//! This structure describes the node in BVH
-struct NodeInStack
-{
-  NodeInStack(int theId = 0, bool theIsFullInside = false)
-      : Id(theId),
-        IsFullInside(theIsFullInside)
+  //! This structure describes the node in BVH
+  struct NodeInStack
   {
-  }
+    NodeInStack(int theId = 0, bool theIsFullInside = false)
+        : Id(theId),
+          IsFullInside(theIsFullInside)
+    {
+    }
 
-  int Id;           //!< node identifier
-                    // clang-format off
+    int Id;           //!< node identifier
+                      // clang-format off
     bool IsFullInside; //!< if the node is completely inside the current selection volume
-                    // clang-format on
-};
+                      // clang-format on
+  };
 } // namespace
 
 //=================================================================================================

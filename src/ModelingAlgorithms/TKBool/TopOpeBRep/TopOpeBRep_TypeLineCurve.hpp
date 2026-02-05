@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum TopOpeBRep_TypeLineCurve
 {
   TopOpeBRep_ANALYTIC,
@@ -13,4 +12,3 @@ enum TopOpeBRep_TypeLineCurve
   TopOpeBRep_HYPERBOLA,
   TopOpeBRep_OTHERTYPE
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1997-03-03
-// Created by: Jean-Pierre COMBE
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <PrsDim_SymmetricRelation.hpp>
 
 #include <PrsDim.hpp>
@@ -65,17 +49,20 @@ void PrsDim_SymmetricRelation::Compute(const occ::handle<PrsMgr_PresentationMana
 {
   switch (myFShape.ShapeType())
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       // symmetry case between two faces
       ComputeTwoFacesSymmetric(aprs);
     }
     break;
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       // symmetry case between two edges
       ComputeTwoEdgesSymmetric(aprs);
     }
     break;
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       // symmetry case between two vertices
       ComputeTwoVerticesSymmetric(aprs);
     }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_QueueBuilder.hpp>
 
 #include <algorithm>
@@ -114,76 +113,76 @@ void BVH_BinnedBuilder<T, N, Bins>::getSubVolumes(BVH_Set<T, N>*  theSet,
 
 namespace BVH
 {
-template <class T, int N>
-int SplitPrimitives(BVH_Set<T, N>*       theSet,
-                    const BVH_Box<T, N>& theBox,
-                    const int            theBeg,
-                    const int            theEnd,
-                    const int            theBin,
-                    const int            theAxis,
-                    const int            theBins)
-{
-  const T aMin = BVH::VecComp<T, N>::Get(theBox.CornerMin(), theAxis);
-  const T aMax = BVH::VecComp<T, N>::Get(theBox.CornerMax(), theAxis);
-
-  const T anInverseStep = static_cast<T>(theBins) / (aMax - aMin);
-
-  int aLftIdx(theBeg);
-  int aRghIdx(theEnd);
-
-  do
+  template <class T, int N>
+  int SplitPrimitives(BVH_Set<T, N>*       theSet,
+                      const BVH_Box<T, N>& theBox,
+                      const int            theBeg,
+                      const int            theEnd,
+                      const int            theBin,
+                      const int            theAxis,
+                      const int            theBins)
   {
-    while (BVH::IntFloor<T>((theSet->Center(aLftIdx, theAxis) - aMin) * anInverseStep) <= theBin
-           && aLftIdx < theEnd)
-    {
-      ++aLftIdx;
-    }
-    while (BVH::IntFloor<T>((theSet->Center(aRghIdx, theAxis) - aMin) * anInverseStep) > theBin
-           && aRghIdx > theBeg)
-    {
-      --aRghIdx;
-    }
+    const T aMin = BVH::VecComp<T, N>::Get(theBox.CornerMin(), theAxis);
+    const T aMax = BVH::VecComp<T, N>::Get(theBox.CornerMax(), theAxis);
 
-    if (aLftIdx <= aRghIdx)
+    const T anInverseStep = static_cast<T>(theBins) / (aMax - aMin);
+
+    int aLftIdx(theBeg);
+    int aRghIdx(theEnd);
+
+    do
     {
-      if (aLftIdx != aRghIdx)
+      while (BVH::IntFloor<T>((theSet->Center(aLftIdx, theAxis) - aMin) * anInverseStep) <= theBin
+             && aLftIdx < theEnd)
       {
-        theSet->Swap(aLftIdx, aRghIdx);
+        ++aLftIdx;
+      }
+      while (BVH::IntFloor<T>((theSet->Center(aRghIdx, theAxis) - aMin) * anInverseStep) > theBin
+             && aRghIdx > theBeg)
+      {
+        --aRghIdx;
       }
 
-      ++aLftIdx;
-      --aRghIdx;
-    }
-  } while (aLftIdx <= aRghIdx);
+      if (aLftIdx <= aRghIdx)
+      {
+        if (aLftIdx != aRghIdx)
+        {
+          theSet->Swap(aLftIdx, aRghIdx);
+        }
 
-  return aLftIdx;
-}
+        ++aLftIdx;
+        --aRghIdx;
+      }
+    } while (aLftIdx <= aRghIdx);
 
-template <class T, int N>
-struct BVH_AxisSelector
-{
-  typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
-
-  static int MainAxis(const BVH_VecNt& theSize)
-  {
-    if (theSize.y() > theSize.x())
-    {
-      return theSize.y() > theSize.z() ? 1 : 2;
-    }
-    else
-    {
-      return theSize.z() > theSize.x() ? 2 : 0;
-    }
+    return aLftIdx;
   }
-};
 
-template <class T>
-struct BVH_AxisSelector<T, 2>
-{
-  typedef typename BVH::VectorType<T, 2>::Type BVH_VecNt;
+  template <class T, int N>
+  struct BVH_AxisSelector
+  {
+    typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
-  static int MainAxis(const BVH_VecNt& theSize) { return theSize.x() > theSize.y() ? 0 : 1; }
-};
+    static int MainAxis(const BVH_VecNt& theSize)
+    {
+      if (theSize.y() > theSize.x())
+      {
+        return theSize.y() > theSize.z() ? 1 : 2;
+      }
+      else
+      {
+        return theSize.z() > theSize.x() ? 2 : 0;
+      }
+    }
+  };
+
+  template <class T>
+  struct BVH_AxisSelector<T, 2>
+  {
+    typedef typename BVH::VectorType<T, 2>::Type BVH_VecNt;
+
+    static int MainAxis(const BVH_VecNt& theSize) { return theSize.x() > theSize.y() ? 0 : 1; }
+  };
 } // namespace BVH
 
 //=================================================================================================
@@ -310,4 +309,3 @@ typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::b
                                                          Range(aNodeBegPrimitive, aMiddle - 1),
                                                          Range(aMiddle, aNodeEndPrimitive));
 }
-

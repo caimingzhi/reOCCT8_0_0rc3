@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -101,4 +100,3 @@ public:
                                NCollection_Array1<double>&   DWeigths,
                                NCollection_Array1<double>&   D2Weigths) override;
 };
-

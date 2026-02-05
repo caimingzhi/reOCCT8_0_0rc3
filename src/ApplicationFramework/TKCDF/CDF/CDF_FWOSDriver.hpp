@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <CDF_MetaDataDriver.hpp>
@@ -60,4 +59,3 @@ private:
 private:
   NCollection_DataMap<TCollection_ExtendedString, occ::handle<CDM_MetaData>>* myLookUpTable;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_OccAllocator.hpp>
 #include <NCollection_Allocator.hpp>

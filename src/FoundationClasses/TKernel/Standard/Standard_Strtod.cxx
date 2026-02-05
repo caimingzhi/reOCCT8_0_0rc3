@@ -915,7 +915,8 @@ static int pfivebits[25] = {3,  5,  7,  10, 12, 14, 17, 19, 21, 24, 26, 28, 31,
   #endif /*}*/
 #endif   /*}} NO_LONG_LONG */
 
-                                              typedef union {
+                                              typedef union
+{
   double d;
   ULong  L[2];
 #ifdef USE_BF96

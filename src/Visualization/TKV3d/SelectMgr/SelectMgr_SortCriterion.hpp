@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec3.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Precision.hpp>
@@ -121,4 +120,3 @@ public:
     return Depth < theOther.Depth;
   }
 };
-

@@ -27,31 +27,31 @@
 namespace
 {
 
-static constexpr int month_table[12] = {31,  // January
-                                        28,  // February
-                                        31,  // March
-                                        30,  // April
-                                        31,  // May
-                                        30,  // June
-                                        31,  // July
-                                        31,  // August
-                                        30,  // September
-                                        31,  // October
-                                        30,  // November
-                                        31}; // December
+  static constexpr int month_table[12] = {31,  // January
+                                          28,  // February
+                                          31,  // March
+                                          30,  // April
+                                          31,  // May
+                                          30,  // June
+                                          31,  // July
+                                          31,  // August
+                                          30,  // September
+                                          31,  // October
+                                          30,  // November
+                                          31}; // December
 
-static constexpr int SecondsByYear     = 365 * SECONDS_PER_DAY; // Normal Year
-static constexpr int SecondsByLeapYear = 366 * SECONDS_PER_DAY; // Leap Year
+  static constexpr int SecondsByYear     = 365 * SECONDS_PER_DAY; // Normal Year
+  static constexpr int SecondsByLeapYear = 366 * SECONDS_PER_DAY; // Leap Year
 
-// Returns the number of days in a month for a given year (handles leap years)
-constexpr int getDaysInMonth(const int theMonth, const int theYear) noexcept
-{
-  if (theMonth == 2)
+  // Returns the number of days in a month for a given year (handles leap years)
+  constexpr int getDaysInMonth(const int theMonth, const int theYear) noexcept
   {
-    return Quantity_Date::IsLeap(theYear) ? 29 : 28;
+    if (theMonth == 2)
+    {
+      return Quantity_Date::IsLeap(theYear) ? 29 : 28;
+    }
+    return month_table[theMonth - 1];
   }
-  return month_table[theMonth - 1];
-}
 } // anonymous namespace
 
 // -----------------------------------------

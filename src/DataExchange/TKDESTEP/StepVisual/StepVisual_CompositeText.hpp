@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_TextOrCharacter.hpp>
@@ -37,4 +36,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepVisual_TextOrCharacter>> collectedText;
 };
-

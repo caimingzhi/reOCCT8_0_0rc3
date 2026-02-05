@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec3.hpp>
 #include <Standard_TypeDef.hpp>
 #include <RWObj_Material.hpp>
@@ -36,4 +35,3 @@ private:
   NCollection_DataMap<TCollection_AsciiString, RWObj_Material>* myMaterials;
   int                                                           myNbLines;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 
 //! A framework to define selection by a sensitive box.
@@ -67,4 +66,3 @@ private:
   Select3D_BndBox3d myBox;      //!< 3d coordinates of box corners
   gp_Pnt            myCenter3d; //!< 3d coordinate of box's center
 };
-

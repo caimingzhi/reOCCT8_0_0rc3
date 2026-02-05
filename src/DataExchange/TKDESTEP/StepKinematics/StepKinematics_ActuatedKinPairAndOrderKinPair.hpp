@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Transient.hpp>
 #include <NCollection_Array1.hpp>

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <DrawFairCurve_Batten.hpp>
@@ -26,4 +25,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(DrawFairCurve_MinimalVariation, DrawFairCurve_Batten)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_Map.hpp>
@@ -132,4 +131,3 @@ protected:
   //! just by keeping the depth of iteration.
   int myCurrentDepth;
 };
-

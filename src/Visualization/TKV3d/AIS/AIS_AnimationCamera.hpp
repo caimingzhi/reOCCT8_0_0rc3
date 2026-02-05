@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_Animation.hpp>
 
 class Graphic3d_Camera;
@@ -45,4 +44,3 @@ protected:
   occ::handle<Graphic3d_Camera> myCamStart; //!< starting camera position
   occ::handle<Graphic3d_Camera> myCamEnd;   //!< end camera position
 };
-

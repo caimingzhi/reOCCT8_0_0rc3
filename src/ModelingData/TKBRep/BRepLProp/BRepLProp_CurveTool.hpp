@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -52,4 +51,3 @@ public:
   //! FirstParameter must be less than LastParamenter.
   Standard_EXPORT static double LastParameter(const BRepAdaptor_Curve& C);
 };
-

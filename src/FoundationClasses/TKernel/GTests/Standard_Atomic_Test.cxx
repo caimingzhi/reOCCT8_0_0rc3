@@ -19,27 +19,27 @@
 
 namespace
 {
-class IncrementerDecrementer
-{
-public:
-  IncrementerDecrementer(std::atomic<int>* theVal, bool thePositive)
-      : myVal(theVal),
-        myPositive(thePositive)
+  class IncrementerDecrementer
   {
-  }
+  public:
+    IncrementerDecrementer(std::atomic<int>* theVal, bool thePositive)
+        : myVal(theVal),
+          myPositive(thePositive)
+    {
+    }
 
-  void operator()(const size_t) const
-  {
-    if (myPositive)
-      ++(*myVal);
-    else
-      --(*myVal);
-  }
+    void operator()(const size_t) const
+    {
+      if (myPositive)
+        ++(*myVal);
+      else
+        --(*myVal);
+    }
 
-private:
-  std::atomic<int>* myVal;
-  bool              myPositive;
-};
+  private:
+    std::atomic<int>* myVal;
+    bool              myPositive;
+  };
 } // namespace
 
 TEST(Standard_AtomicTest, OCC22980_AtomicOperations)

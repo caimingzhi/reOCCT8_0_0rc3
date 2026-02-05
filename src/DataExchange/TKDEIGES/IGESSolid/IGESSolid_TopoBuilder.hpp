@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -183,4 +182,3 @@ private:
   occ::handle<IGESSolid_VertexList>                                   thevertl;
   occ::handle<NCollection_HSequence<gp_XYZ>>                          thepoint;
 };
-

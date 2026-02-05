@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GraphicDriverFactory.hpp>
 
 //! This class for creation of D3DHost_GraphicDriver.
@@ -15,4 +14,3 @@ public:
   Standard_EXPORT virtual occ::handle<Graphic3d_GraphicDriver> CreateDriver(
     const occ::handle<Aspect_DisplayConnection>& theDisp) override;
 };
-

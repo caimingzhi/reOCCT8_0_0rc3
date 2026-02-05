@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedEdge.hpp>
@@ -85,4 +84,3 @@ private:
   occ::handle<NCollection_HArray1<int>>   myLineStripFace1;
   occ::handle<NCollection_HArray1<int>>   myLineStripFace2;
 };
-

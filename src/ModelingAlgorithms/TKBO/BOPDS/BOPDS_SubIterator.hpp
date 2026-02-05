@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -87,4 +86,3 @@ protected:
   NCollection_List<int>*                   mySubSet1;
   NCollection_List<int>*                   mySubSet2;
 };
-

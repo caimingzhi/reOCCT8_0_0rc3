@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Texture.hpp>
 
 /**

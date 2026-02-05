@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines the type of evolution in old shape - new shape pairs.
 //! The definitions - in the form of the terms of
 //! the enumeration - are needed by the
@@ -42,4 +41,3 @@ enum TNaming_Evolution
   TNaming_REPLACE,
   TNaming_SELECTED
 };
-

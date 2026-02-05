@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_UncertaintyMeasureWithUnit.hpp>
@@ -42,4 +41,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_UncertaintyMeasureWithUnit>>> uncertainty;
 };
-

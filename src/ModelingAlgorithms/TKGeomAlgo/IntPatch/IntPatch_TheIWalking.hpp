@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <IntSurf_PathPoint.hpp>
 #include <NCollection_Sequence.hpp>
@@ -265,4 +264,3 @@ private:
 #undef Handle_IntWalk_TheIWLine
 #undef IntWalk_IWalking
 #undef IntWalk_IWalking_hxx
-

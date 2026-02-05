@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! The Enumeration describes possible values for length units
 enum UnitsMethods_LengthUnit
 {
@@ -16,4 +15,3 @@ enum UnitsMethods_LengthUnit
   UnitsMethods_LengthUnit_Centimeter = 10, // 10.
   UnitsMethods_LengthUnit_Microinch  = 11  // 0.0000254
 };
-

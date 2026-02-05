@@ -344,7 +344,8 @@ void IFSelect_WorkSession::ClearData(const int mode)
 {
   switch (mode)
   {
-    case 1: {
+    case 1:
+    {
       theloaded.Clear();
       if (!myModel.IsNull())
       {
@@ -356,17 +357,20 @@ void IFSelect_WorkSession::ClearData(const int mode)
       thecheckrun.Clear();
       break;
     }
-    case 2: {
+    case 2:
+    {
       thegraph.Nullify();
       thecheckdone = false;
       thecheckana.Clear();
       break;
     }
-    case 3: {
+    case 3:
+    {
       thecheckdone = false;
       break;
     }
-    case 4: {
+    case 4:
+    {
       //  UPDATE of SelectPointed  I.E.  clear their content
       //  AS WELL AS editors (in fact, the EditForm)
       //  Counters  I.E.  we erase their content (to reevaluate)

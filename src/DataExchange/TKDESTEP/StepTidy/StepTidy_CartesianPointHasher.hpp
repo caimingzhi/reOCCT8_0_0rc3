@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <StepGeom_CartesianPoint.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -58,4 +57,3 @@ struct StepTidy_CartesianPointHasher
     return true;
   }
 };
-

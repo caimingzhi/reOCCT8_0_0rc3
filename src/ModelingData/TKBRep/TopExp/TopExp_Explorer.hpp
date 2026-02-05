@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vector.hpp>
 #include <TopAbs.hpp>
 #include <TopoDS_Iterator.hpp>
@@ -129,4 +128,3 @@ private:
   TopAbs_ShapeEnum                    toAvoid;
   bool                                hasMore;
 };
-

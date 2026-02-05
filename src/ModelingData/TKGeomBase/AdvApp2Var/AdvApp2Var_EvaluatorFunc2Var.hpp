@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <stddef.h>
 
 #include <stdlib.h>
@@ -76,4 +75,3 @@ private:
   //! Assignment operator is declared private to forbid copying
   void operator=(const AdvApp2Var_EvaluatorFunc2Var&) {}
 };
-

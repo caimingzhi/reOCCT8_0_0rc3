@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Quantity_ColorRGBA.hpp>
@@ -75,4 +74,3 @@ public:
 private:
   Quantity_ColorRGBA myColor;
 };
-

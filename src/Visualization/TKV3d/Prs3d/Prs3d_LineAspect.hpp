@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_AspectLine3d.hpp>
 #include <Prs3d_BasicAspect.hpp>
 #include <Quantity_Color.hpp>
@@ -56,4 +55,3 @@ public:
 protected:
   occ::handle<Graphic3d_AspectLine3d> myAspect;
 };
-

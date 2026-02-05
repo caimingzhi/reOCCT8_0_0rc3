@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Boolean.hpp>
@@ -88,4 +87,3 @@ private:
   occ::handle<TColStd_HPackedMapOfInteger> myMap;
   bool                                     myIsDelta;
 };
-

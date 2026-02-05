@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -97,4 +96,3 @@ private:
   NCollection_Map<int>      myNext;
   TFunction_ExecutionStatus myStatus;
 };
-

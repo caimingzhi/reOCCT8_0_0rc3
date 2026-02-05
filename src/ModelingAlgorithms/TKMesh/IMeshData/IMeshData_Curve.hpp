@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_ParametersList.hpp>
 #include <Standard_Type.hpp>
 
@@ -34,4 +33,3 @@ protected:
   //! Constructor.
   IMeshData_Curve() {}
 };
-

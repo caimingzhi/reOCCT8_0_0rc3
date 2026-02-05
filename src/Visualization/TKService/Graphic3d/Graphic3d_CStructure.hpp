@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_DisplayPriority.hpp>
 #include <Graphic3d_PresentationAttributes.hpp>
 #include <Graphic3d_Group.hpp>
@@ -249,4 +248,3 @@ public:
   unsigned IsMutable : 1;
   unsigned Is2dText : 1;
 };
-

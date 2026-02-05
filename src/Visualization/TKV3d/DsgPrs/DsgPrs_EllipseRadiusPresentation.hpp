@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -60,4 +59,3 @@ public:
                                   const bool                             IsMaxRadius,
                                   const DsgPrs_ArrowSide                 ArrowSide);
 };
-

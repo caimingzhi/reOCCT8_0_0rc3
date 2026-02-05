@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -43,4 +42,3 @@ private:
   occ::handle<StepBasic_Document>       theRelating;
   occ::handle<StepBasic_Document>       theRelated;
 };
-

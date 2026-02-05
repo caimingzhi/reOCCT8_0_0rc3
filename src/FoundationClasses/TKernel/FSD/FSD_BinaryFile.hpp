@@ -14,11 +14,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <stdio.h>
 
 typedef FILE* FSD_BStream;
-
 
 #include <FSD_FileHeader.hpp>
 #include <Storage_BaseDriver.hpp>
@@ -364,4 +362,3 @@ private:
   FSD_BStream    myStream;
   FSD_FileHeader myHeader{};
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XYZ.hpp>
 #include <TopLoc_Datum3D.hpp>
 #include <Graphic3d_LightSet.hpp>
@@ -203,4 +202,3 @@ protected:
   bool            myToRenderInDepthPrepass;//!< option to render layer within depth pre-pass
   // clang-format on
 };
-

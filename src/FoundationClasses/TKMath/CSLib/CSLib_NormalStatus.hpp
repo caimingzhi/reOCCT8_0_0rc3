@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Status of surface normal computation.
 //!
 //! Describes the result of attempting to compute the normal N to a surface,
@@ -17,4 +16,3 @@ enum CSLib_NormalStatus
   CSLib_D1NvNuRatioIsNull,   //!< DN/dv is negligible compared to DN/du.
   CSLib_D1NuIsParallelD1Nv   //!< DN/du and DN/dv are parallel.
 };
-

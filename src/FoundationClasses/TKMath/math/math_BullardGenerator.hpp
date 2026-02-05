@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Real.hpp>
 
 //! Fast random number generator (the algorithm proposed by Ian C. Bullard).
@@ -39,4 +38,3 @@ private:
   unsigned int myStateHi;
   unsigned int myStateLo;
 };
-

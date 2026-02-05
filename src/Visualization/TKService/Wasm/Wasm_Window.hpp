@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Window.hpp>
 
 #include <Aspect_VKey.hpp>
@@ -182,4 +181,3 @@ protected:
   bool                    myToScaleBacking;
   mutable bool            myIsMapped;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <OSD_Signal.hpp>
@@ -14,4 +13,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(OSD_SIGSEGV, OSD_Signal)
-

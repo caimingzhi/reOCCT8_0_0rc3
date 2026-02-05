@@ -1,19 +1,3 @@
-// Created on: 1995-06-16
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Draw_Interpretor.hpp>
 #include <Draw_Appli.hpp>
 #include <DrawTrSurf.hpp>
@@ -384,44 +368,54 @@ static void reportOffsetState(Draw_Interpretor& theCommands, const BRepOffset_Er
 {
   switch (theErrorCode)
   {
-    case BRepOffset_NoError: {
+    case BRepOffset_NoError:
+    {
       theCommands << "OK. Offset performed successfully.";
       break;
     }
-    case BRepOffset_BadNormalsOnGeometry: {
+    case BRepOffset_BadNormalsOnGeometry:
+    {
       theCommands << "ERROR. Degenerated normal on input data.";
       break;
     }
-    case BRepOffset_C0Geometry: {
+    case BRepOffset_C0Geometry:
+    {
       theCommands << "ERROR. C0 continuity of input data.";
       break;
     }
-    case BRepOffset_NullOffset: {
+    case BRepOffset_NullOffset:
+    {
       theCommands << "ERROR. Null offset of all faces.";
       break;
     }
-    case BRepOffset_NotConnectedShell: {
+    case BRepOffset_NotConnectedShell:
+    {
       theCommands
         << "ERROR. Incorrect set of faces to remove, the remaining shell is not connected.";
       break;
     }
-    case BRepOffset_CannotTrimEdges: {
+    case BRepOffset_CannotTrimEdges:
+    {
       theCommands << "ERROR. Can not trim edges.";
       break;
     }
-    case BRepOffset_CannotFuseVertices: {
+    case BRepOffset_CannotFuseVertices:
+    {
       theCommands << "ERROR. Can not fuse vertices.";
       break;
     }
-    case BRepOffset_CannotExtentEdge: {
+    case BRepOffset_CannotExtentEdge:
+    {
       theCommands << "ERROR. Can not extent edge.";
       break;
     }
-    case BRepOffset_MixedConnectivity: {
+    case BRepOffset_MixedConnectivity:
+    {
       theCommands << "ERROR. Mixed connectivity of faces.";
       break;
     }
-    default: {
+    default:
+    {
       theCommands << "ERROR. offsetperform operation not done.";
       break;
     }
@@ -2242,7 +2236,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       TopoDS_Shape Funtil = DBRep::Get(a[3], TopAbs_SHAPE);
       switch (Kas)
       {
-        case 1: {
+        case 1:
+        {
           if (Funtil.IsNull())
           {
             getPrism().PerformUntilEnd();
@@ -2253,7 +2248,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           }
         }
         break;
-        case 2: {
+        case 2:
+        {
           if (!Funtil.IsNull())
           {
             getRevol().Perform(Funtil);
@@ -2264,7 +2260,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           }
         }
         break;
-        case 3: {
+        case 3:
+        {
           if (!Funtil.IsNull())
           {
             getPipe().Perform(Funtil);
@@ -2276,7 +2273,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           }
         }
         break;
-        case 4: {
+        case 4:
+        {
           if (!Funtil.IsNull())
           {
             getDPrism().Perform(Funtil);
@@ -2287,12 +2285,14 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           }
         }
         break;
-        case 5: {
+        case 5:
+        {
           theCommands << "invalid command for lf";
           return 1;
         }
         break;
-        case 6: {
+        case 6:
+        {
           theCommands << "invalid command for rf";
           return 1;
         }
@@ -2311,7 +2311,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       }
       switch (Kas)
       {
-        case 1: {
+        case 1:
+        {
           if (Ffrom.IsNull())
           {
             getPrism().PerformFromEnd(Funtil);
@@ -2322,7 +2323,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           }
         }
         break;
-        case 2: {
+        case 2:
+        {
           if (Ffrom.IsNull())
           {
             return 1;
@@ -2330,7 +2332,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           getRevol().Perform(Ffrom, Funtil);
         }
         break;
-        case 3: {
+        case 3:
+        {
           if (Ffrom.IsNull())
           {
             return 1;
@@ -2338,7 +2341,8 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
           getPipe().Perform(Ffrom, Funtil);
         }
         break;
-        case 4: {
+        case 4:
+        {
           if (Ffrom.IsNull())
           {
             getDPrism().PerformFromEnd(Funtil);

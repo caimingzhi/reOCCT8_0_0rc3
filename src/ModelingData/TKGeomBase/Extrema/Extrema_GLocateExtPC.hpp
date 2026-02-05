@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -116,7 +115,8 @@ public:
     {
       case GeomAbs_OtherCurve:
       case GeomAbs_OffsetCurve:
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         // Search for extremum is done interval by continuous C2 interval
         int                        n = TheCurveTool::NbIntervals(*myC, GeomAbs_C2);
         NCollection_Array1<double> theInter(1, n + 1);
@@ -257,13 +257,15 @@ public:
 
       break;
 
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         myLocExtPC.Perform(theP, theU0);
         myDone = myLocExtPC.IsDone();
       }
 
       break;
-      default: {
+      default:
+      {
         myExtremPC.Perform(theP);
         numberext = 0;
         if (myExtremPC.IsDone())
@@ -379,4 +381,3 @@ private:
   GeomAbs_CurveType type;
   int               numberext;
 };
-

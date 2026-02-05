@@ -31,28 +31,28 @@ IMPLEMENT_STANDARD_RTTIEXT(RWObj_CafWriter, Standard_Transient)
 
 namespace
 {
-//! Trivial cast.
-inline NCollection_Vec3<float> objXyzToVec(const gp_XYZ& thePnt)
-{
-  return NCollection_Vec3<float>((float)thePnt.X(), (float)thePnt.Y(), (float)thePnt.Z());
-}
-
-//! Trivial cast.
-inline NCollection_Vec2<float> objXyToVec(const gp_XY& thePnt)
-{
-  return NCollection_Vec2<float>((float)thePnt.X(), (float)thePnt.Y());
-}
-
-//! Read name attribute.
-static TCollection_AsciiString readNameAttribute(const TDF_Label& theRefLabel)
-{
-  occ::handle<TDataStd_Name> aNodeName;
-  if (!theRefLabel.FindAttribute(TDataStd_Name::GetID(), aNodeName))
+  //! Trivial cast.
+  inline NCollection_Vec3<float> objXyzToVec(const gp_XYZ& thePnt)
   {
-    return TCollection_AsciiString();
+    return NCollection_Vec3<float>((float)thePnt.X(), (float)thePnt.Y(), (float)thePnt.Z());
   }
-  return TCollection_AsciiString(aNodeName->Get());
-}
+
+  //! Trivial cast.
+  inline NCollection_Vec2<float> objXyToVec(const gp_XY& thePnt)
+  {
+    return NCollection_Vec2<float>((float)thePnt.X(), (float)thePnt.Y());
+  }
+
+  //! Read name attribute.
+  static TCollection_AsciiString readNameAttribute(const TDF_Label& theRefLabel)
+  {
+    occ::handle<TDataStd_Name> aNodeName;
+    if (!theRefLabel.FindAttribute(TDataStd_Name::GetID(), aNodeName))
+    {
+      return TCollection_AsciiString();
+    }
+    return TCollection_AsciiString(aNodeName->Get());
+  }
 } // namespace
 
 //=================================================================================================

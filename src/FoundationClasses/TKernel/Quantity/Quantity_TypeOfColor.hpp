@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies color definition systems.
 enum Quantity_TypeOfColor
 {
@@ -50,4 +49,3 @@ enum Quantity_TypeOfColor
   //! to fit the color into the RGB range.
   Quantity_TOC_CIELch
 };
-

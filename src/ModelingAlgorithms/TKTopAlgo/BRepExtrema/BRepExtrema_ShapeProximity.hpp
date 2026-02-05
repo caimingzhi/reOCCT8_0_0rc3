@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <Precision.hpp>
 #include <TColStd_PackedMapOfInteger.hpp>
@@ -154,4 +153,3 @@ private:
   //! the minimal thickness of a shell containing both faces.
   BRepExtrema_ProximityValueTool myProxValTool;
 };
-

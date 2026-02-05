@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -143,4 +142,3 @@ private:
   bool              myIsMin[4];
   Extrema_POnCurv2d myPoint[4];
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_TriangularFrustum.hpp>
 #include <gp_Pnt2d.hpp>
 #include <NCollection_Array1.hpp>
@@ -194,4 +193,3 @@ private:
   bool              myToAllowOverlap;    //!< flag to detect only fully included sensitives or not
   // clang-format on
 };
-

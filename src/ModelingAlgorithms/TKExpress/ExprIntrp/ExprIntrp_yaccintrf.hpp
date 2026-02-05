@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -29,4 +28,3 @@ const TCollection_AsciiString& ExprIntrp_GetResult();
 int                            ExprIntrp_GetDegree();
 
 #endif
-

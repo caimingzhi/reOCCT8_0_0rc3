@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -128,4 +127,3 @@ private:
                                  NCollection_Array1<TCollection_AsciiString>&       theNameUnits,
                                  NCollection_Array1<double>&                        theFactorUnits);
 };
-

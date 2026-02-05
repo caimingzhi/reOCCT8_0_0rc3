@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Gravity.hpp>
 #include <Message_ProgressScope.hpp>
 #include <RWGltf_GltfPrimArrayData.hpp>
@@ -511,4 +510,3 @@ protected:
   GltfElementMap myGltfRoots[RWGltf_GltfRootElement_NB]; //!< glTF format root elements
 #endif
 };
-

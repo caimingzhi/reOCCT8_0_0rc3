@@ -1,18 +1,3 @@
-// Created on: 2012-02-02
-// Created by: Anton POLETAEV
-// Copyright (c) 2012-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_GlCore15.hpp>
 
 #include <BVH_LinearBuilder.hpp>
@@ -28,132 +13,139 @@
 
 namespace
 {
-//! Auxiliary class extending sequence iterator with index.
-class OpenGl_IndexedLayerIterator : public NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator
-{
-public:
-  //! Main constructor.
-  OpenGl_IndexedLayerIterator(const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq)
-      : NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator(theSeq),
-        myIndex(1)
+  //! Auxiliary class extending sequence iterator with index.
+  class OpenGl_IndexedLayerIterator
+      : public NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator
   {
-  }
-
-  //! Return index of current position.
-  int Index() const { return myIndex; }
-
-  //! Move to the next position.
-  void Next()
-  {
-    NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator::Next();
-    ++myIndex;
-  }
-
-private:
-  int myIndex;
-};
-
-//! Iterator through layers with filter.
-class OpenGl_FilteredIndexedLayerIterator
-{
-public:
-  //! Main constructor.
-  OpenGl_FilteredIndexedLayerIterator(const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq,
-                                      bool               theToDrawImmediate,
-                                      OpenGl_LayerFilter theFilterMode,
-                                      Graphic3d_ZLayerId theLayersToProcess)
-      : myIter(theSeq),
-        myFilterMode(theFilterMode),
-        myToDrawImmediate(theToDrawImmediate),
-        myLayersToProcess(theLayersToProcess)
-  {
-    next();
-  }
-
-  //! Return true if iterator points to the valid value.
-  bool More() const { return myIter.More(); }
-
-  //! Return layer at current position.
-  const OpenGl_Layer& Value() const { return *myIter.Value(); }
-
-  //! Return index of current position.
-  int Index() const { return myIter.Index(); }
-
-  //! Go to the next item.
-  void Next()
-  {
-    myIter.Next();
-    next();
-  }
-
-private:
-  //! Look for the nearest item passing filters.
-  void next()
-  {
-    for (; myIter.More(); myIter.Next())
+  public:
+    //! Main constructor.
+    OpenGl_IndexedLayerIterator(const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq)
+        : NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator(theSeq),
+          myIndex(1)
     {
-      const occ::handle<Graphic3d_Layer>& aLayer = myIter.Value();
-      if (aLayer->IsImmediate() != myToDrawImmediate)
-      {
-        continue;
-      }
+    }
 
-      switch (myFilterMode)
+    //! Return index of current position.
+    int Index() const { return myIndex; }
+
+    //! Move to the next position.
+    void Next()
+    {
+      NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator::Next();
+      ++myIndex;
+    }
+
+  private:
+    int myIndex;
+  };
+
+  //! Iterator through layers with filter.
+  class OpenGl_FilteredIndexedLayerIterator
+  {
+  public:
+    //! Main constructor.
+    OpenGl_FilteredIndexedLayerIterator(
+      const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq,
+      bool                                                  theToDrawImmediate,
+      OpenGl_LayerFilter                                    theFilterMode,
+      Graphic3d_ZLayerId                                    theLayersToProcess)
+        : myIter(theSeq),
+          myFilterMode(theFilterMode),
+          myToDrawImmediate(theToDrawImmediate),
+          myLayersToProcess(theLayersToProcess)
+    {
+      next();
+    }
+
+    //! Return true if iterator points to the valid value.
+    bool More() const { return myIter.More(); }
+
+    //! Return layer at current position.
+    const OpenGl_Layer& Value() const { return *myIter.Value(); }
+
+    //! Return index of current position.
+    int Index() const { return myIter.Index(); }
+
+    //! Go to the next item.
+    void Next()
+    {
+      myIter.Next();
+      next();
+    }
+
+  private:
+    //! Look for the nearest item passing filters.
+    void next()
+    {
+      for (; myIter.More(); myIter.Next())
       {
-        case OpenGl_LF_All: {
-          if (aLayer->LayerId() >= myLayersToProcess)
-          {
-            return;
-          }
-          break;
+        const occ::handle<Graphic3d_Layer>& aLayer = myIter.Value();
+        if (aLayer->IsImmediate() != myToDrawImmediate)
+        {
+          continue;
         }
-        case OpenGl_LF_Upper: {
-          if (aLayer->LayerId() != Graphic3d_ZLayerId_BotOSD
-              && (!aLayer->LayerSettings().IsRaytracable() || aLayer->IsImmediate()))
+
+        switch (myFilterMode)
+        {
+          case OpenGl_LF_All:
           {
-            return;
+            if (aLayer->LayerId() >= myLayersToProcess)
+            {
+              return;
+            }
+            break;
           }
-          break;
-        }
-        case OpenGl_LF_Bottom: {
-          if (aLayer->LayerId() == Graphic3d_ZLayerId_BotOSD
-              && !aLayer->LayerSettings().IsRaytracable())
+          case OpenGl_LF_Upper:
           {
-            return;
+            if (aLayer->LayerId() != Graphic3d_ZLayerId_BotOSD
+                && (!aLayer->LayerSettings().IsRaytracable() || aLayer->IsImmediate()))
+            {
+              return;
+            }
+            break;
           }
-          break;
-        }
-        case OpenGl_LF_Single: {
-          if (aLayer->LayerId() == myLayersToProcess)
+          case OpenGl_LF_Bottom:
           {
-            return;
+            if (aLayer->LayerId() == Graphic3d_ZLayerId_BotOSD
+                && !aLayer->LayerSettings().IsRaytracable())
+            {
+              return;
+            }
+            break;
           }
-          break;
-        }
-        case OpenGl_LF_RayTracable: {
-          if (aLayer->LayerSettings().IsRaytracable() && !aLayer->IsImmediate())
+          case OpenGl_LF_Single:
           {
-            return;
+            if (aLayer->LayerId() == myLayersToProcess)
+            {
+              return;
+            }
+            break;
           }
-          break;
+          case OpenGl_LF_RayTracable:
+          {
+            if (aLayer->LayerSettings().IsRaytracable() && !aLayer->IsImmediate())
+            {
+              return;
+            }
+            break;
+          }
         }
       }
     }
-  }
 
-private:
-  OpenGl_IndexedLayerIterator myIter;
-  OpenGl_LayerFilter          myFilterMode;
-  bool                        myToDrawImmediate;
-  Graphic3d_ZLayerId          myLayersToProcess;
-};
+  private:
+    OpenGl_IndexedLayerIterator myIter;
+    OpenGl_LayerFilter          myFilterMode;
+    bool                        myToDrawImmediate;
+    Graphic3d_ZLayerId          myLayersToProcess;
+  };
 
-constexpr int   THE_DRAW_BUFFERS0[]   = {GL_COLOR_ATTACHMENT0};
-constexpr int   THE_DRAW_BUFFERS01[]  = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT0 + 1};
-constexpr int   THE_DRAW_BUFFERS012[] = {GL_COLOR_ATTACHMENT0,
-                                         GL_COLOR_ATTACHMENT0 + 1,
-                                         GL_COLOR_ATTACHMENT0 + 2};
-constexpr float THE_DEPTH_CLEAR_VALUE = -1e15f;
+  constexpr int   THE_DRAW_BUFFERS0[]   = {GL_COLOR_ATTACHMENT0};
+  constexpr int   THE_DRAW_BUFFERS01[]  = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT0 + 1};
+  constexpr int   THE_DRAW_BUFFERS012[] = {GL_COLOR_ATTACHMENT0,
+                                           GL_COLOR_ATTACHMENT0 + 1,
+                                           GL_COLOR_ATTACHMENT0 + 2};
+  constexpr float THE_DEPTH_CLEAR_VALUE = -1e15f;
 } // namespace
 
 struct OpenGl_GlobalLayerSettings
@@ -963,11 +955,13 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
 
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RTM_BLEND_UNORDERED:
+    {
       aCtx->core11fwd->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RTM_BLEND_OIT:
+    {
       const float aDepthFactor = aView->RenderingParams().OitDepthFactor;
       aManager->SetWeighedOitState(aDepthFactor);
 
@@ -982,7 +976,8 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->core15fwd->glBlendFuncSeparate(GL_ONE, GL_ONE, GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RTM_DEPTH_PEELING_OIT:
+    {
       static const float THE_MIN_DEPTH = 0.0f;
       static const float THE_MAX_DEPTH = 1.0f;
 
@@ -1043,10 +1038,12 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
 
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RTM_BLEND_UNORDERED:
+    {
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RTM_BLEND_OIT:
+    {
       // revert state of rendering
       aManager->ResetOitState();
       theOitAccumFbo->UnbindBuffer(aCtx);
@@ -1059,7 +1056,8 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->SetColorMask(true); // update writes into alpha component
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RTM_DEPTH_PEELING_OIT:
+    {
       // Dual Depth Peeling Ping-Pong
       const int            aNbPasses  = aView->RenderingParams().NbOitDepthPeelingLayers;
       OpenGl_VertexBuffer* aQuadVerts = aView->initBlitQuad(false);
@@ -1168,10 +1166,12 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   theWorkspace->SetRenderFilter(aPrevFilter | OpenGl_RenderFilter_OpaqueOnly);
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RTM_BLEND_UNORDERED:
+    {
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RTM_BLEND_OIT:
+    {
       // draw full screen quad with special shader to compose the buffers
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitCompositingProgram(isMSAA))
@@ -1215,7 +1215,8 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       }
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RTM_DEPTH_PEELING_OIT:
+    {
       // compose depth peeling results into destination FBO
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitDepthPeelingFlushProgram(isMSAA))

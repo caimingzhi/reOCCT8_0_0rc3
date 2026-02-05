@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_MarkerShape.hpp>
 #include <Draw_Color.hpp>
 #include <DrawTrSurf_Curve.hpp>
@@ -87,4 +86,3 @@ private:
   int              knotsDim;
   Draw_Color       polesLook;
 };
-

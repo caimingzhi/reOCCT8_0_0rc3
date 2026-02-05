@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_Path.hpp>
 #include <Poly_Triangulation.hpp>
 #include <Standard_Macro.hpp>
@@ -110,4 +109,3 @@ public:
     const double                 theMergeAngle = M_PI / 2.0,
     const Message_ProgressRange& theProgress   = Message_ProgressRange());
 };
-

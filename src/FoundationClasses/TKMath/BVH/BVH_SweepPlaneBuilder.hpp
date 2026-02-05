@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_QueueBuilder.hpp>
 #include <BVH_QuickSorter.hpp>
 #include <NCollection_Array1.hpp>
@@ -121,4 +120,3 @@ protected:
                                                            Range(aMiddle, aNodeEndPrimitive));
   }
 };
-

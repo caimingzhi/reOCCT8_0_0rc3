@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XCAFDoc_NoteComment.hpp>
 
 //! A comment note attribute.
@@ -34,4 +33,3 @@ public:
   // Overrides TDF_Attribute virtuals
   Standard_EXPORT const Standard_GUID& ID() const override;
 };
-

@@ -1,18 +1,3 @@
-// Created by: NW,JPB,CAL
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Quantity_Color.hpp>
 
 #include <Quantity_ColorRGBA.hpp>
@@ -23,111 +8,111 @@
 
 namespace
 {
-static constexpr float  RGBHLS_H_UNDEFINED = -1.0f;
-static constexpr double DEG_TO_RAD         = M_PI / 180.0;
-static constexpr double RAD_TO_DEG         = 180.0 / M_PI;
-static constexpr double POW_25_7           = 6103515625.0;         // 25^7 used in CIEDE2000
-static constexpr double CIELAB_EPSILON     = 0.008856451679035631; // (6/29)^3
-static constexpr double CIELAB_KAPPA       = 7.787037037037037;    // (1/3) * (29/6)^2
-static constexpr double CIELAB_OFFSET      = 16.0 / 116.0;
-static constexpr double CIELAB_L_COEFF     = 116.0;
-static constexpr double CIELAB_A_COEFF     = 500.0;
-static constexpr double CIELAB_B_COEFF     = 200.0;
-static constexpr double CIELAB_L_OFFSET    = 16.0;
-// D65 / 2 deg (CIE 1931) standard illuminant reference white point
-static constexpr double D65_REF_X = 95.047;
-static constexpr double D65_REF_Y = 100.000;
-static constexpr double D65_REF_Z = 108.883;
-// sRGB to XYZ conversion matrix (D65 illuminant, 2 deg observer)
-static constexpr double RGB_TO_XYZ_R_X = 0.4124564;
-static constexpr double RGB_TO_XYZ_R_Y = 0.2126729;
-static constexpr double RGB_TO_XYZ_R_Z = 0.0193339;
-static constexpr double RGB_TO_XYZ_G_X = 0.3575761;
-static constexpr double RGB_TO_XYZ_G_Y = 0.7151522;
-static constexpr double RGB_TO_XYZ_G_Z = 0.1191920;
-static constexpr double RGB_TO_XYZ_B_X = 0.1804375;
-static constexpr double RGB_TO_XYZ_B_Y = 0.0721750;
-static constexpr double RGB_TO_XYZ_B_Z = 0.9503041;
-// XYZ to sRGB conversion matrix (D65 illuminant, 2 deg observer)
-static constexpr double XYZ_TO_RGB_X_R = 3.2404542;
-static constexpr double XYZ_TO_RGB_X_G = -0.9692660;
-static constexpr double XYZ_TO_RGB_X_B = 0.0556434;
-static constexpr double XYZ_TO_RGB_Y_R = -1.5371385;
-static constexpr double XYZ_TO_RGB_Y_G = 1.8760108;
-static constexpr double XYZ_TO_RGB_Y_B = -0.2040259;
-static constexpr double XYZ_TO_RGB_Z_R = -0.4985314;
-static constexpr double XYZ_TO_RGB_Z_G = 0.0415560;
-static constexpr double XYZ_TO_RGB_Z_B = 1.0572252;
+  static constexpr float  RGBHLS_H_UNDEFINED = -1.0f;
+  static constexpr double DEG_TO_RAD         = M_PI / 180.0;
+  static constexpr double RAD_TO_DEG         = 180.0 / M_PI;
+  static constexpr double POW_25_7           = 6103515625.0;         // 25^7 used in CIEDE2000
+  static constexpr double CIELAB_EPSILON     = 0.008856451679035631; // (6/29)^3
+  static constexpr double CIELAB_KAPPA       = 7.787037037037037;    // (1/3) * (29/6)^2
+  static constexpr double CIELAB_OFFSET      = 16.0 / 116.0;
+  static constexpr double CIELAB_L_COEFF     = 116.0;
+  static constexpr double CIELAB_A_COEFF     = 500.0;
+  static constexpr double CIELAB_B_COEFF     = 200.0;
+  static constexpr double CIELAB_L_OFFSET    = 16.0;
+  // D65 / 2 deg (CIE 1931) standard illuminant reference white point
+  static constexpr double D65_REF_X = 95.047;
+  static constexpr double D65_REF_Y = 100.000;
+  static constexpr double D65_REF_Z = 108.883;
+  // sRGB to XYZ conversion matrix (D65 illuminant, 2 deg observer)
+  static constexpr double RGB_TO_XYZ_R_X = 0.4124564;
+  static constexpr double RGB_TO_XYZ_R_Y = 0.2126729;
+  static constexpr double RGB_TO_XYZ_R_Z = 0.0193339;
+  static constexpr double RGB_TO_XYZ_G_X = 0.3575761;
+  static constexpr double RGB_TO_XYZ_G_Y = 0.7151522;
+  static constexpr double RGB_TO_XYZ_G_Z = 0.1191920;
+  static constexpr double RGB_TO_XYZ_B_X = 0.1804375;
+  static constexpr double RGB_TO_XYZ_B_Y = 0.0721750;
+  static constexpr double RGB_TO_XYZ_B_Z = 0.9503041;
+  // XYZ to sRGB conversion matrix (D65 illuminant, 2 deg observer)
+  static constexpr double XYZ_TO_RGB_X_R = 3.2404542;
+  static constexpr double XYZ_TO_RGB_X_G = -0.9692660;
+  static constexpr double XYZ_TO_RGB_X_B = 0.0556434;
+  static constexpr double XYZ_TO_RGB_Y_R = -1.5371385;
+  static constexpr double XYZ_TO_RGB_Y_G = 1.8760108;
+  static constexpr double XYZ_TO_RGB_Y_B = -0.2040259;
+  static constexpr double XYZ_TO_RGB_Z_R = -0.4985314;
+  static constexpr double XYZ_TO_RGB_Z_G = 0.0415560;
+  static constexpr double XYZ_TO_RGB_Z_B = 1.0572252;
 } // namespace
 
 namespace
 {
-// Returns a reference to the epsilon value.
-inline double& getEpsilonRef() noexcept
-{
-  static double theEpsilon = 0.0001;
-  return theEpsilon;
-}
-
-// Validate RGB values are in range [0, 1].
-inline void validateRgbRange(double theR, double theG, double theB)
-{
-  if (theR < 0.0 || theR > 1.0 || theG < 0.0 || theG > 1.0 || theB < 0.0 || theB > 1.0)
+  // Returns a reference to the epsilon value.
+  inline double& getEpsilonRef() noexcept
   {
-    throw Standard_OutOfRange("Color out");
+    static double theEpsilon = 0.0001;
+    return theEpsilon;
   }
-}
 
-// Validate HLS values are in valid ranges.
-inline void validateHlsRange(double theH, double theL, double theS)
-{
-  if ((theH < 0.0 && theH != RGBHLS_H_UNDEFINED && theS != 0.0) || (theH > 360.0) || theL < 0.0
-      || theL > 1.0 || theS < 0.0 || theS > 1.0)
+  // Validate RGB values are in range [0, 1].
+  inline void validateRgbRange(double theR, double theG, double theB)
   {
-    throw Standard_OutOfRange("Color out");
+    if (theR < 0.0 || theR > 1.0 || theG < 0.0 || theG > 1.0 || theB < 0.0 || theB > 1.0)
+    {
+      throw Standard_OutOfRange("Color out");
+    }
   }
-}
 
-// Validate CIELab color values are in valid ranges.
-inline void validateLabRange(double theL, double thea, double theb)
-{
-  if (theL < 0. || theL > 100. || thea < -100. || thea > 100. || theb < -110. || theb > 100.)
+  // Validate HLS values are in valid ranges.
+  inline void validateHlsRange(double theH, double theL, double theS)
   {
-    throw Standard_OutOfRange("Color out");
+    if ((theH < 0.0 && theH != RGBHLS_H_UNDEFINED && theS != 0.0) || (theH > 360.0) || theL < 0.0
+        || theL > 1.0 || theS < 0.0 || theS > 1.0)
+    {
+      throw Standard_OutOfRange("Color out");
+    }
   }
-}
 
-// Validate CIELch color values are in valid ranges.
-inline void validateLchRange(double theL, double thec, double theh)
-{
-  if (theL < 0. || theL > 100. || thec < 0. || thec > 135. || theh < 0.0 || theh > 360.)
+  // Validate CIELab color values are in valid ranges.
+  inline void validateLabRange(double theL, double thea, double theb)
   {
-    throw Standard_OutOfRange("Color out");
+    if (theL < 0. || theL > 100. || thea < -100. || thea > 100. || theb < -110. || theb > 100.)
+    {
+      throw Standard_OutOfRange("Color out");
+    }
   }
-}
+
+  // Validate CIELch color values are in valid ranges.
+  inline void validateLchRange(double theL, double thec, double theh)
+  {
+    if (theL < 0. || theL > 100. || thec < 0. || thec > 135. || theh < 0.0 || theh > 360.)
+    {
+      throw Standard_OutOfRange("Color out");
+    }
+  }
 } // anonymous namespace
 
 namespace
 {
-//! Raw color for defining list of standard color
-struct Quantity_StandardColor
-{
-  const char*             StringName;
-  NCollection_Vec3<float> sRgbValues;
-  NCollection_Vec3<float> RgbValues;
-  Quantity_NameOfColor    EnumName;
-
-  constexpr Quantity_StandardColor(Quantity_NameOfColor           theName,
-                                   const char*                    theStringName,
-                                   const NCollection_Vec3<float>& thesRGB,
-                                   const NCollection_Vec3<float>& theRGB) noexcept
-      : StringName(theStringName),
-        sRgbValues(thesRGB),
-        RgbValues(theRGB),
-        EnumName(theName)
+  //! Raw color for defining list of standard color
+  struct Quantity_StandardColor
   {
-  }
-};
+    const char*             StringName;
+    NCollection_Vec3<float> sRgbValues;
+    NCollection_Vec3<float> RgbValues;
+    Quantity_NameOfColor    EnumName;
+
+    constexpr Quantity_StandardColor(Quantity_NameOfColor           theName,
+                                     const char*                    theStringName,
+                                     const NCollection_Vec3<float>& thesRGB,
+                                     const NCollection_Vec3<float>& theRGB) noexcept
+        : StringName(theStringName),
+          sRgbValues(thesRGB),
+          RgbValues(theRGB),
+          EnumName(theName)
+    {
+    }
+  };
 } // namespace
 
 // Note that HTML/hex sRGB representation is ignored
@@ -336,31 +321,36 @@ void Quantity_Color::SetValues(const double               theC1,
 {
   switch (theType)
   {
-    case Quantity_TOC_RGB: {
+    case Quantity_TOC_RGB:
+    {
       validateRgbRange(theC1, theC2, theC3);
       myRgb.SetValues(float(theC1), float(theC2), float(theC3));
       break;
     }
-    case Quantity_TOC_sRGB: {
+    case Quantity_TOC_sRGB:
+    {
       validateRgbRange(theC1, theC2, theC3);
       myRgb.SetValues((float)Convert_sRGB_To_LinearRGB(theC1),
                       (float)Convert_sRGB_To_LinearRGB(theC2),
                       (float)Convert_sRGB_To_LinearRGB(theC3));
       break;
     }
-    case Quantity_TOC_HLS: {
+    case Quantity_TOC_HLS:
+    {
       validateHlsRange(theC1, theC2, theC3);
       myRgb =
         Convert_HLS_To_LinearRGB(NCollection_Vec3<float>(float(theC1), float(theC2), float(theC3)));
       break;
     }
-    case Quantity_TOC_CIELab: {
+    case Quantity_TOC_CIELab:
+    {
       validateLabRange(theC1, theC2, theC3);
       myRgb =
         Convert_Lab_To_LinearRGB(NCollection_Vec3<float>(float(theC1), float(theC2), float(theC3)));
       break;
     }
-    case Quantity_TOC_CIELch: {
+    case Quantity_TOC_CIELch:
+    {
       validateLchRange(theC1, theC2, theC3);
       myRgb = Convert_Lab_To_LinearRGB(
         Convert_Lch_To_Lab(NCollection_Vec3<float>(float(theC1), float(theC2), float(theC3))));
@@ -485,33 +475,38 @@ void Quantity_Color::Values(double&                    theR1,
 {
   switch (theType)
   {
-    case Quantity_TOC_RGB: {
+    case Quantity_TOC_RGB:
+    {
       theR1 = myRgb.r();
       theR2 = myRgb.g();
       theR3 = myRgb.b();
       break;
     }
-    case Quantity_TOC_sRGB: {
+    case Quantity_TOC_sRGB:
+    {
       theR1 = Convert_LinearRGB_To_sRGB((double)myRgb.r());
       theR2 = Convert_LinearRGB_To_sRGB((double)myRgb.g());
       theR3 = Convert_LinearRGB_To_sRGB((double)myRgb.b());
       break;
     }
-    case Quantity_TOC_HLS: {
+    case Quantity_TOC_HLS:
+    {
       const NCollection_Vec3<float> aHls = Convert_LinearRGB_To_HLS(myRgb);
       theR1                              = aHls[0];
       theR2                              = aHls[1];
       theR3                              = aHls[2];
       break;
     }
-    case Quantity_TOC_CIELab: {
+    case Quantity_TOC_CIELab:
+    {
       const NCollection_Vec3<float> aLab = Convert_LinearRGB_To_Lab(myRgb);
       theR1                              = aLab[0];
       theR2                              = aLab[1];
       theR3                              = aLab[2];
       break;
     }
-    case Quantity_TOC_CIELch: {
+    case Quantity_TOC_CIELch:
+    {
       const NCollection_Vec3<float> aLch = Convert_Lab_To_Lch(Convert_LinearRGB_To_Lab(myRgb));
       theR1                              = aLch[0];
       theR2                              = aLch[1];

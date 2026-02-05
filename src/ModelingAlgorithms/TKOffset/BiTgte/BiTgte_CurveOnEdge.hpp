@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -143,4 +142,3 @@ private:
   GeomAbs_CurveType       myType;
   gp_Circ                 myCirc;
 };
-

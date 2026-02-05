@@ -1,18 +1,3 @@
-// Created on: 2012-02-03
-//
-// Copyright (c) 2012-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifdef _WIN32
   #include <windows.h>
   #include <WNT_WClass.hpp>
@@ -95,19 +80,19 @@
 //================================================================
 namespace
 {
-struct VtkPointerHasher
-{
-  std::size_t operator()(const vtkSmartPointer<vtkActor>& thePointer) const
+  struct VtkPointerHasher
   {
-    return std::hash<vtkActor*>{}(thePointer.Get());
-  }
+    std::size_t operator()(const vtkSmartPointer<vtkActor>& thePointer) const
+    {
+      return std::hash<vtkActor*>{}(thePointer.Get());
+    }
 
-  bool operator()(const vtkSmartPointer<vtkActor>& thePointer1,
-                  const vtkSmartPointer<vtkActor>& thePointer2) const
-  {
-    return thePointer1 == thePointer2;
-  }
-};
+    bool operator()(const vtkSmartPointer<vtkActor>& thePointer1,
+                    const vtkSmartPointer<vtkActor>& thePointer2) const
+    {
+      return thePointer1 == thePointer2;
+    }
+  };
 } // namespace
 
 typedef NCollection_DoubleMap<TopoDS_Shape, TCollection_AsciiString> DoubleMapOfShapesAndNames;
@@ -916,15 +901,18 @@ static int VtkSetDisplayMode(Draw_Interpretor& theDI, int theArgNum, const char*
       }
       switch (aShadingModel)
       {
-        case Graphic3d_TOSM_FACET: {
+        case Graphic3d_TOSM_FACET:
+        {
           anActor->GetProperty()->SetInterpolationToFlat();
           break;
         }
-        case Graphic3d_TOSM_VERTEX: {
+        case Graphic3d_TOSM_VERTEX:
+        {
           anActor->GetProperty()->SetInterpolationToGouraud();
           break;
         }
-        case Graphic3d_TOSM_FRAGMENT: {
+        case Graphic3d_TOSM_FRAGMENT:
+        {
           anActor->GetProperty()->SetInterpolationToPhong();
           break;
         }

@@ -280,7 +280,8 @@ double StepData_StepModel::WriteLengthUnit() const
       case UnitsMethods_LengthUnit_Microinch:
         myWriteUnit = 0.0000254;
         break;
-      default: {
+      default:
+      {
         myWriteUnitIsInitialized = false;
         GlobalCheck()->AddWarning("Incorrect write.step.unit parameter, use default value");
       }

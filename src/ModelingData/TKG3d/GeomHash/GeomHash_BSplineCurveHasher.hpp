@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_BSplineCurve.hpp>
 #include <GeomHash_PointHasher.hpp>
@@ -81,4 +80,3 @@ struct GeomHash_BSplineCurveHasher
     return true;
   }
 };
-

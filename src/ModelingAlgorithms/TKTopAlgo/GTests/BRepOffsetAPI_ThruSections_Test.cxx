@@ -87,37 +87,37 @@ TEST(BRepOffsetAPI_ThruSections_Test, OCC10006_LoftAndFusion)
 
 namespace
 {
-//! Helper function to create a B-spline curve from poles and knot sequence.
-//! @param thePoles Array of 3D pole coordinates (x1,y1,z1, x2,y2,z2, ...)
-//! @param theKnots Knot sequence for cubic B-spline
-//! @return Handle to the created B-spline curve
-occ::handle<Geom_BSplineCurve> createBSplineCurve(const std::vector<double>& thePoles,
-                                                  const std::vector<double>& theKnots)
-{
-  const int aKnotSeqSize = static_cast<int>(theKnots.size());
-  const int aDegree      = 3; // cubic spline
-  const int aNbPoles     = aKnotSeqSize - aDegree - 1;
-
-  NCollection_Array1<gp_Pnt> aPoles(1, aNbPoles);
-  int                        anIdx = 0;
-  for (int i = 1; i <= aNbPoles; ++i)
+  //! Helper function to create a B-spline curve from poles and knot sequence.
+  //! @param thePoles Array of 3D pole coordinates (x1,y1,z1, x2,y2,z2, ...)
+  //! @param theKnots Knot sequence for cubic B-spline
+  //! @return Handle to the created B-spline curve
+  occ::handle<Geom_BSplineCurve> createBSplineCurve(const std::vector<double>& thePoles,
+                                                    const std::vector<double>& theKnots)
   {
-    aPoles(i) = gp_Pnt(thePoles[anIdx], thePoles[anIdx + 1], thePoles[anIdx + 2]);
-    anIdx += 3;
+    const int aKnotSeqSize = static_cast<int>(theKnots.size());
+    const int aDegree      = 3; // cubic spline
+    const int aNbPoles     = aKnotSeqSize - aDegree - 1;
+
+    NCollection_Array1<gp_Pnt> aPoles(1, aNbPoles);
+    int                        anIdx = 0;
+    for (int i = 1; i <= aNbPoles; ++i)
+    {
+      aPoles(i) = gp_Pnt(thePoles[anIdx], thePoles[anIdx + 1], thePoles[anIdx + 2]);
+      anIdx += 3;
+    }
+
+    NCollection_Array1<double> aKnotSeq(1, aKnotSeqSize);
+    for (int i = 1; i <= aKnotSeqSize; ++i)
+    {
+      aKnotSeq(i) = theKnots[i - 1];
+    }
+
+    NCollection_Array1<double> aKnots(1, BSplCLib::KnotsLength(aKnotSeq, false));
+    NCollection_Array1<int>    aMults(1, aKnots.Upper());
+    BSplCLib::Knots(aKnotSeq, aKnots, aMults);
+
+    return new Geom_BSplineCurve(aPoles, aKnots, aMults, aDegree, false);
   }
-
-  NCollection_Array1<double> aKnotSeq(1, aKnotSeqSize);
-  for (int i = 1; i <= aKnotSeqSize; ++i)
-  {
-    aKnotSeq(i) = theKnots[i - 1];
-  }
-
-  NCollection_Array1<double> aKnots(1, BSplCLib::KnotsLength(aKnotSeq, false));
-  NCollection_Array1<int>    aMults(1, aKnots.Upper());
-  BSplCLib::Knots(aKnotSeq, aKnots, aMults);
-
-  return new Geom_BSplineCurve(aPoles, aKnots, aMults, aDegree, false);
-}
 } // namespace
 
 // Test case: ThruSections with B-spline profiles having different numbers of poles.

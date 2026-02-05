@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -56,4 +55,3 @@ private:
   occ::handle<IGESDimen_LeaderArrow> theLeader;
   occ::handle<IGESData_IGESEntity>   theGeom;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -121,4 +120,3 @@ private:
   bool                                     myIsDelta;
   Standard_GUID                            myID;
 };
-

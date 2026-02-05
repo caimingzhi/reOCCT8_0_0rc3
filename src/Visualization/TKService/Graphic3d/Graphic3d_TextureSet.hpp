@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureMap.hpp>
 #include <NCollection_Array1.hpp>
 
@@ -80,4 +79,3 @@ public:
 protected:
   NCollection_Array1<occ::handle<Graphic3d_TextureMap>> myTextures;
 };
-

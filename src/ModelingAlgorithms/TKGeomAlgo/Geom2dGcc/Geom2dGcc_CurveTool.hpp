@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -42,4 +41,3 @@ public:
                                  gp_Vec2d&                  N,
                                  gp_Vec2d&                  dN);
 };
-

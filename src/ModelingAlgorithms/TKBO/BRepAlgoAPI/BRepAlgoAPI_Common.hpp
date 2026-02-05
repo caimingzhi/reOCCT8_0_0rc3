@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -45,4 +44,3 @@ public:
     const BOPAlgo_PaveFiller&    PF,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 };
-

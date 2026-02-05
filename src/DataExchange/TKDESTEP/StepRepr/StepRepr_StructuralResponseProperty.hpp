@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_PropertyDefinition.hpp>
@@ -15,4 +14,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_StructuralResponseProperty, StepRepr_PropertyDefinition)
 };
-

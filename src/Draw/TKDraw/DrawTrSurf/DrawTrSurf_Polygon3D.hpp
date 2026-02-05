@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Drawable3D.hpp>
 #include <Draw_Interpretor.hpp>
 
@@ -40,4 +39,3 @@ private:
   occ::handle<Poly_Polygon3D> myPolygon3D;
   bool                        myNodes;
 };
-

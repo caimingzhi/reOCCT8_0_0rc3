@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepClass3d_Intersector3d.hpp>
 #include <Standard.hpp>
 #include <Standard_Boolean.hpp>
@@ -57,4 +56,3 @@ private:
   bool                      hasIntersect;
   BRepClass3d_Intersector3d myIntersector;
 };
-

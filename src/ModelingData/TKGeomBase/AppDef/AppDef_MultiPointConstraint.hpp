@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -179,4 +178,3 @@ private:
   occ::handle<NCollection_HArray1<gp_Vec2d>> tabTang2d;
   occ::handle<NCollection_HArray1<gp_Vec2d>> tabCurv2d;
 };
-

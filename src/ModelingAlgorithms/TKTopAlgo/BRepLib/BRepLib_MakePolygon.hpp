@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -85,4 +84,3 @@ private:
   TopoDS_Vertex myLastVertex;
   TopoDS_Edge   myEdge;
 };
-

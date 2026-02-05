@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Geometry.hpp>
 #include <gp_XYZ.hpp>
 

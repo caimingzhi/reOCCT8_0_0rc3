@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Dimension.hpp>
 #include <Geom_Plane.hpp>
 #include <gp_Pnt.hpp>
@@ -223,4 +222,3 @@ protected:
   gp_Dir       myDirection;
   bool         myHasCustomDirection;
 };
-

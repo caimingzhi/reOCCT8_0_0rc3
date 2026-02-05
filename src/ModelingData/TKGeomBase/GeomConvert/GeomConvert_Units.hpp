@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 class Geom2d_Curve;
 class Geom_Surface;
@@ -29,4 +28,3 @@ public:
   Standard_EXPORT static occ::handle<Geom2d_Curve> MirrorPCurve(
     const occ::handle<Geom2d_Curve>& theCurve);
 };
-

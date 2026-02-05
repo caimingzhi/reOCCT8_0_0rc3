@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef OCCT_NO_PLUGINS
   #define DPLUGIN(name)
 #else
@@ -10,4 +9,3 @@
       name::Factory(theDI);                                                                        \
     }
 #endif
-

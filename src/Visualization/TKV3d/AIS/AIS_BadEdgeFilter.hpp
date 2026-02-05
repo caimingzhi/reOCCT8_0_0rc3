@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -40,4 +39,3 @@ private:
   NCollection_DataMap<int, NCollection_List<TopoDS_Shape>> myBadEdges;
   int                                                      myContour;
 };
-

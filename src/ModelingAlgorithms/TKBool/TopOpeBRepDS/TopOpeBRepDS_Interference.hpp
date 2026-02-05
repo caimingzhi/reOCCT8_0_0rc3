@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -85,4 +84,3 @@ private:
   TopOpeBRepDS_Kind       mySupportType;
   TopOpeBRepDS_Kind       myGeometryType;
 };
-

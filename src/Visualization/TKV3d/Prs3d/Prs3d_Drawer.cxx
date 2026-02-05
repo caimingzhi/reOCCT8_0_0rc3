@@ -29,15 +29,15 @@ IMPLEMENT_STANDARD_RTTIEXT(Prs3d_Drawer, Graphic3d_PresentationAttributes)
 
 namespace
 {
-static const Quantity_NameOfColor THE_DEF_COLOR_FreeBoundary   = Quantity_NOC_GREEN;
-static const Quantity_NameOfColor THE_DEF_COLOR_UnFreeBoundary = Quantity_NOC_YELLOW;
-static const Quantity_NameOfColor THE_DEF_COLOR_FaceBoundary   = Quantity_NOC_BLACK;
-static const Quantity_NameOfColor THE_DEF_COLOR_Wire           = Quantity_NOC_RED;
-static const Quantity_NameOfColor THE_DEF_COLOR_Line           = Quantity_NOC_YELLOW;
-static const Quantity_NameOfColor THE_DEF_COLOR_SeenLine       = Quantity_NOC_YELLOW;
-static const Quantity_NameOfColor THE_DEF_COLOR_HiddenLine     = Quantity_NOC_YELLOW;
-static const Quantity_NameOfColor THE_DEF_COLOR_Vector         = Quantity_NOC_SKYBLUE;
-static const Quantity_NameOfColor THE_DEF_COLOR_Section        = Quantity_NOC_ORANGE;
+  static const Quantity_NameOfColor THE_DEF_COLOR_FreeBoundary   = Quantity_NOC_GREEN;
+  static const Quantity_NameOfColor THE_DEF_COLOR_UnFreeBoundary = Quantity_NOC_YELLOW;
+  static const Quantity_NameOfColor THE_DEF_COLOR_FaceBoundary   = Quantity_NOC_BLACK;
+  static const Quantity_NameOfColor THE_DEF_COLOR_Wire           = Quantity_NOC_RED;
+  static const Quantity_NameOfColor THE_DEF_COLOR_Line           = Quantity_NOC_YELLOW;
+  static const Quantity_NameOfColor THE_DEF_COLOR_SeenLine       = Quantity_NOC_YELLOW;
+  static const Quantity_NameOfColor THE_DEF_COLOR_HiddenLine     = Quantity_NOC_YELLOW;
+  static const Quantity_NameOfColor THE_DEF_COLOR_Vector         = Quantity_NOC_SKYBLUE;
+  static const Quantity_NameOfColor THE_DEF_COLOR_Section        = Quantity_NOC_ORANGE;
 } // namespace
 
 //=================================================================================================
@@ -756,7 +756,8 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
   bool isUpdateNeeded = false;
   switch (theAspect)
   {
-    case Graphic3d_ASPECT_LINE: {
+    case Graphic3d_ASPECT_LINE:
+    {
       if (theToOverrideDefaults)
       {
         isUpdateNeeded = SetOwnLineAspects() || isUpdateNeeded;
@@ -789,7 +790,8 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myArrowAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_TEXT: {
+    case Graphic3d_ASPECT_TEXT:
+    {
       if (theToOverrideDefaults && myTextAspect.IsNull())
       {
         isUpdateNeeded = true;
@@ -804,7 +806,8 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myTextAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_MARKER: {
+    case Graphic3d_ASPECT_MARKER:
+    {
       if (theToOverrideDefaults && SetupOwnPointAspect())
       {
         isUpdateNeeded = true;
@@ -813,7 +816,8 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myPointAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_FILL_AREA: {
+    case Graphic3d_ASPECT_FILL_AREA:
+    {
       if (theToOverrideDefaults && SetupOwnShadingAspect())
       {
         isUpdateNeeded = true;

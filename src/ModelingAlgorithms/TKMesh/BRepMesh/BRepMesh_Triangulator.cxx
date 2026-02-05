@@ -27,31 +27,31 @@
 
 namespace
 {
-//=================================================================================================
+  //=================================================================================================
 
-inline int wireNodesNb(const NCollection_List<NCollection_Sequence<int>>& theWires)
-{
-  int                                                   nbNodes = 0;
-  NCollection_List<NCollection_Sequence<int>>::Iterator itW(theWires);
-  for (int i = 1; itW.More(); itW.Next(), i++)
+  inline int wireNodesNb(const NCollection_List<NCollection_Sequence<int>>& theWires)
   {
-    nbNodes += itW.Value().Length();
+    int                                                   nbNodes = 0;
+    NCollection_List<NCollection_Sequence<int>>::Iterator itW(theWires);
+    for (int i = 1; itW.More(); itW.Next(), i++)
+    {
+      nbNodes += itW.Value().Length();
+    }
+
+    return nbNodes;
   }
 
-  return nbNodes;
-}
+  //=================================================================================================
 
-//=================================================================================================
-
-inline void appendTriangle(const int                        theNode1,
-                           const int                        theNode2,
-                           const int                        theNode3,
-                           const NCollection_Sequence<int>& theW,
-                           NCollection_List<Poly_Triangle>& thePolyTriangles)
-{
-  const Poly_Triangle aT1(theW(theNode1) + 1, theW(theNode2) + 1, theW(theNode3) + 1);
-  thePolyTriangles.Append(aT1);
-}
+  inline void appendTriangle(const int                        theNode1,
+                             const int                        theNode2,
+                             const int                        theNode3,
+                             const NCollection_Sequence<int>& theW,
+                             NCollection_List<Poly_Triangle>& thePolyTriangles)
+  {
+    const Poly_Triangle aT1(theW(theNode1) + 1, theW(theNode2) + 1, theW(theNode3) + 1);
+    thePolyTriangles.Append(aT1);
+  }
 } // namespace
 
 //=================================================================================================

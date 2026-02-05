@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Status.hpp>
 
 //! Extension interface class providing status functionality.
@@ -35,4 +34,3 @@ protected:
 private:
   int myStatus;
 };
-

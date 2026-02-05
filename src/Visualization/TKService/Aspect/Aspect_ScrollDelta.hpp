@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_VKeyFlags.hpp>
 #include <NCollection_Vec2.hpp>
 
@@ -44,4 +43,3 @@ struct Aspect_ScrollDelta
   {
   }
 };
-

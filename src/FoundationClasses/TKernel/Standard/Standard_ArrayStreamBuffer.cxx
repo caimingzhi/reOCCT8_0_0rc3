@@ -91,7 +91,8 @@ Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
 {
   switch (theWay)
   {
-    case std::ios_base::beg: {
+    case std::ios_base::beg:
+    {
       myCurrent = myBegin + theOff;
       if (myCurrent >= myEnd)
       {
@@ -99,7 +100,8 @@ Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
       }
       break;
     }
-    case std::ios_base::cur: {
+    case std::ios_base::cur:
+    {
       myCurrent += theOff;
       if (myCurrent >= myEnd)
       {
@@ -107,7 +109,8 @@ Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
       }
       break;
     }
-    case std::ios_base::end: {
+    case std::ios_base::end:
+    {
       myCurrent = myEnd - theOff;
       if (myCurrent < myBegin)
       {
@@ -115,7 +118,8 @@ Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
       }
       break;
     }
-    default: {
+    default:
+    {
       break;
     }
   }

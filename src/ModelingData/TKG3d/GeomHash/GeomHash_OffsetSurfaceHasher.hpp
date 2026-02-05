@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_OffsetSurface.hpp>
 #include <GeomHash_SurfaceHasher.hpp>
@@ -35,4 +34,3 @@ struct GeomHash_OffsetSurfaceHasher
            && std::abs(theSurface1->Offset() - theSurface2->Offset()) <= aTolerance;
   }
 };
-

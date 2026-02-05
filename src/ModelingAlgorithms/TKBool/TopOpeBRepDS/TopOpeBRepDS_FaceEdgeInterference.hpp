@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopOpeBRepDS_ShapeShapeInterference.hpp>
@@ -24,4 +23,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TopOpeBRepDS_FaceEdgeInterference, TopOpeBRepDS_ShapeShapeInterference)
 };
-

@@ -1,17 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <BOPTools_AlgoTools.hpp>
 #include <BOPTools_Parallel.hpp>
@@ -539,15 +525,15 @@ static double MapEdgeLength(const TopoDS_Edge&                         theEdge,
 //=======================================================================
 namespace
 {
-struct EdgeData
-{
-  const TopoDS_Edge*  Edge;       // Edge
-  double              VParameter; // Parameter of the vertex on the edge
-  bool                IsClosed;   // Closed flag of the edge
-  Geom2dAdaptor_Curve GAdaptor;   // 2D adaptor for PCurve of the edge on the face
-  double              First;      // First parameter in the range
-  double              Last;       // Last parameter in the rage
-};
+  struct EdgeData
+  {
+    const TopoDS_Edge*  Edge;       // Edge
+    double              VParameter; // Parameter of the vertex on the edge
+    bool                IsClosed;   // Closed flag of the edge
+    Geom2dAdaptor_Curve GAdaptor;   // 2D adaptor for PCurve of the edge on the face
+    double              First;      // First parameter in the range
+    double              Last;       // Last parameter in the rage
+  };
 } // namespace
 
 //=======================================================================

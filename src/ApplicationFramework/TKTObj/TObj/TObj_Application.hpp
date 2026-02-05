@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDocStd_Application.hpp>
 #include <Message_Gravity.hpp>
 #include <Message_Messenger.hpp>

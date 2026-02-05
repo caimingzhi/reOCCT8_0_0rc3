@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_AspectLine3d.hpp>
 #include <Prs3d_BasicAspect.hpp>
 
@@ -58,4 +57,3 @@ protected:
   double                              myLength;
   bool                                myIsZoomable;
 };
-

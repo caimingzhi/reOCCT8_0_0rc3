@@ -398,7 +398,8 @@ void OSD_Error::Perror()
           break;
       }
       break;
-    case ENOSPC: {
+    case ENOSPC:
+    {
       switch (myCode)
       {
         case OSD_WDirectory:
@@ -452,7 +453,8 @@ void OSD_Error::Perror()
       buffer += "Reconfigure Kernel with greater values";
       extCode = ERR_TOOBIG;
       break;
-    default: {
+    default:
+    {
       char buf[255];
       //
       Sprintf(buf, "%sUnknowm error #%d", buffer.ToCString(), myErrno);

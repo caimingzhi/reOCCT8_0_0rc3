@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlCore44.hpp>
 
 //! OpenGL 4.5 definition.
@@ -121,4 +120,3 @@ public: //! @name OpenGL 4.5 additives to 4.4
   using theBaseClass_t::glVertexArrayVertexBuffer;
   using theBaseClass_t::glVertexArrayVertexBuffers;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMDF_ADriver.hpp>
 #include <Standard_Boolean.hpp>
 #include <BinObjMgt_RRelocationTable.hpp>
@@ -41,4 +40,3 @@ public:
     BinObjMgt_Persistent&                                    theTarget,
     NCollection_IndexedMap<occ::handle<Standard_Transient>>& theRelocTable) const override;
 };
-

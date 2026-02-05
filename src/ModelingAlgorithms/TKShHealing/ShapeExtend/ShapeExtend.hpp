@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -38,4 +37,3 @@ public:
   //! Tells if a bit flag contains bit corresponding to enumerated status
   Standard_EXPORT static bool DecodeStatus(const int flag, const ShapeExtend_Status status);
 };
-

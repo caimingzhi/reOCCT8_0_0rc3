@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -144,4 +143,3 @@ private:
   occ::handle<NCollection_HArray1<double>> mySnglLen;
   bool                                     isSngl;
 };
-

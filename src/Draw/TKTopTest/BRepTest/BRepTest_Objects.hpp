@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_History.hpp>
 
 //! Provides the access to the useful tools common for the algorithms.
@@ -36,4 +35,3 @@ public:
   //! Returns the flag controlling the history collection
   Standard_EXPORT static bool IsHistoryNeeded();
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_Interface.hpp>
 #include <IVtk_Types.hpp>
 
@@ -25,4 +24,3 @@ public:
 private:
   IVtk_IdType myId;
 };
-

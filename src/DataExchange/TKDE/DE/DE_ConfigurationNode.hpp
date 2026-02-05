@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_List.hpp>
 
@@ -158,4 +157,3 @@ private:
   bool myIsEnabled; //!< Flag to use a current provider for Read or Write process via DE_Wrapper
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -88,4 +87,3 @@ private:
   NCollection_DataMap<int, TopOpeBRepDS_CheckStatus> myMapPointStatus;
   NCollection_DataMap<int, TopOpeBRepDS_CheckStatus> myMapShapeStatus;
 };
-

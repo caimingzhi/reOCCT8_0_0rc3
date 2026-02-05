@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Types of standard textures.
 enum Graphic3d_NameOfTexture2D
 {
@@ -28,4 +27,3 @@ enum Graphic3d_NameOfTexture2D
   Graphic3d_NOT_2D_CHESS,
   Graphic3d_NOT_2D_UNKNOWN
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2015-04-26
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepExtrema_SelfIntersection.hpp>
 
 #include <Precision.hpp>
@@ -65,55 +50,55 @@ bool BRepExtrema_SelfIntersection::LoadShape(const TopoDS_Shape& theShape)
 
 namespace
 {
-// =======================================================================
-// function : ccw
-// purpose  : Check if triple is in counterclockwise order
-// =======================================================================
-bool ccw(const BVH_Vec3d& theVertex0,
-         const BVH_Vec3d& theVertex1,
-         const BVH_Vec3d& theVertex2,
-         const int        theX,
-         const int        theY)
-{
-  const double aSum =
-    (theVertex1[theX] - theVertex0[theX]) * (theVertex1[theY] + theVertex0[theY])
-    + (theVertex2[theX] - theVertex1[theX]) * (theVertex2[theY] + theVertex1[theY])
-    + (theVertex0[theX] - theVertex2[theX]) * (theVertex0[theY] + theVertex2[theY]);
-
-  return aSum < 0.0;
-}
-
-// =======================================================================
-// function : rayInsideAngle
-// purpose  : Check the given ray is inside the angle
-// =======================================================================
-bool rayInsideAngle(const BVH_Vec3d& theDirec,
-                    const BVH_Vec3d& theEdge0,
-                    const BVH_Vec3d& theEdge1,
-                    const int        theX,
-                    const int        theY)
-{
-  const bool aCCW = ccw(ZERO_VEC, theEdge0, theEdge1, theX, theY);
-
-  return ccw(ZERO_VEC, theEdge0, theDirec, theX, theY) == aCCW
-         && ccw(ZERO_VEC, theDirec, theEdge1, theX, theY) == aCCW;
-}
-
-//=================================================================================================
-
-void getProjectionAxes(const BVH_Vec3d& theNorm, int& theAxisX, int& theAxisY)
-{
-  if (fabs(theNorm[0]) > fabs(theNorm[1]))
+  // =======================================================================
+  // function : ccw
+  // purpose  : Check if triple is in counterclockwise order
+  // =======================================================================
+  bool ccw(const BVH_Vec3d& theVertex0,
+           const BVH_Vec3d& theVertex1,
+           const BVH_Vec3d& theVertex2,
+           const int        theX,
+           const int        theY)
   {
-    theAxisX = fabs(theNorm[0]) > fabs(theNorm[2]) ? 1 : 0;
-    theAxisY = fabs(theNorm[0]) > fabs(theNorm[2]) ? 2 : 1;
+    const double aSum =
+      (theVertex1[theX] - theVertex0[theX]) * (theVertex1[theY] + theVertex0[theY])
+      + (theVertex2[theX] - theVertex1[theX]) * (theVertex2[theY] + theVertex1[theY])
+      + (theVertex0[theX] - theVertex2[theX]) * (theVertex0[theY] + theVertex2[theY]);
+
+    return aSum < 0.0;
   }
-  else
+
+  // =======================================================================
+  // function : rayInsideAngle
+  // purpose  : Check the given ray is inside the angle
+  // =======================================================================
+  bool rayInsideAngle(const BVH_Vec3d& theDirec,
+                      const BVH_Vec3d& theEdge0,
+                      const BVH_Vec3d& theEdge1,
+                      const int        theX,
+                      const int        theY)
   {
-    theAxisX = fabs(theNorm[1]) > fabs(theNorm[2]) ? 0 : 0;
-    theAxisY = fabs(theNorm[1]) > fabs(theNorm[2]) ? 2 : 1;
+    const bool aCCW = ccw(ZERO_VEC, theEdge0, theEdge1, theX, theY);
+
+    return ccw(ZERO_VEC, theEdge0, theDirec, theX, theY) == aCCW
+           && ccw(ZERO_VEC, theDirec, theEdge1, theX, theY) == aCCW;
   }
-}
+
+  //=================================================================================================
+
+  void getProjectionAxes(const BVH_Vec3d& theNorm, int& theAxisX, int& theAxisY)
+  {
+    if (fabs(theNorm[0]) > fabs(theNorm[1]))
+    {
+      theAxisX = fabs(theNorm[0]) > fabs(theNorm[2]) ? 1 : 0;
+      theAxisY = fabs(theNorm[0]) > fabs(theNorm[2]) ? 2 : 1;
+    }
+    else
+    {
+      theAxisX = fabs(theNorm[1]) > fabs(theNorm[2]) ? 0 : 0;
+      theAxisY = fabs(theNorm[1]) > fabs(theNorm[2]) ? 2 : 1;
+    }
+  }
 } // namespace
 
 //=================================================================================================

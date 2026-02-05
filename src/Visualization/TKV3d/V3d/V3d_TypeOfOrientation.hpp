@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Determines the type of orientation as a combination of standard DX/DY/DZ directions.
 //! This enumeration defines a model orientation looking towards the user's eye, which is an
 //! opposition to Camera main direction. For example, V3d_Xneg defines +X Camera main direction.
@@ -63,4 +62,3 @@ enum V3d_TypeOfOrientation
   V3d_TypeOfOrientation_Yup_Left     = V3d_Xpos,         //!< +Y-up -Z-forward Left   (-Z+Y) view
   V3d_TypeOfOrientation_Yup_Right    = V3d_Xneg,         //!< +Y-up -Z-forward Right  (+Z+Y) view
 };
-

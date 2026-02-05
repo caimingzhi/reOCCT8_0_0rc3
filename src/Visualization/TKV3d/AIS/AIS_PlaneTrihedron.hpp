@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -84,4 +83,3 @@ private:
   TCollection_AsciiString            myXLabel;
   TCollection_AsciiString            myYLabel;
 };
-

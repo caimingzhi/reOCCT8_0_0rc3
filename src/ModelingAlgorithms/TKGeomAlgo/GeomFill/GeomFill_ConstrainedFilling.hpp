@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -175,4 +174,3 @@ private:
   occ::handle<NCollection_HArray2<gp_Pnt>> S1;
   occ::handle<Geom_BSplineSurface>         surf;
 };
-

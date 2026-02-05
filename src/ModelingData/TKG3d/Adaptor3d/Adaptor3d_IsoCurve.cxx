@@ -370,7 +370,8 @@ gp_Pnt Adaptor3d_IsoCurve::Value(const double T) const
     case GeomAbs_IsoV:
       return mySurface->Value(T, myParameter);
 
-    case GeomAbs_NoneIso: {
+    case GeomAbs_NoneIso:
+    {
       throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
       break;
     }
@@ -497,7 +498,8 @@ gp_Vec Adaptor3d_IsoCurve::DN(const double T, const int N) const
       return mySurface->DN(myParameter, T, 0, N);
     case GeomAbs_IsoV:
       return mySurface->DN(T, myParameter, N, 0);
-    case GeomAbs_NoneIso: {
+    case GeomAbs_NoneIso:
+    {
       throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
       break;
     }
@@ -527,7 +529,8 @@ GeomAbs_CurveType Adaptor3d_IsoCurve::GetType() const
       return GeomAbs_Line;
 
     case GeomAbs_Cylinder:
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -536,7 +539,8 @@ GeomAbs_CurveType Adaptor3d_IsoCurve::GetType() const
         case GeomAbs_IsoV:
           return GeomAbs_Circle;
 
-        case GeomAbs_NoneIso: {
+        case GeomAbs_NoneIso:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
         }
       }
@@ -553,7 +557,8 @@ GeomAbs_CurveType Adaptor3d_IsoCurve::GetType() const
     case GeomAbs_BSplineSurface:
       return GeomAbs_BSplineCurve;
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -569,7 +574,8 @@ GeomAbs_CurveType Adaptor3d_IsoCurve::GetType() const
       break;
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -621,93 +627,110 @@ gp_Circ Adaptor3d_IsoCurve::Circle() const
   switch (mySurface->GetType())
   {
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Cylinder cyl = mySurface->Cylinder();
 
       switch (myIso)
       {
 
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:UIso");
         }
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           return ElSLib::CylinderVIso(cyl.Position(), cyl.Radius(), myParameter);
         }
-        case GeomAbs_NoneIso: {
+        case GeomAbs_NoneIso:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
         }
       }
       break;
     }
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       gp_Cone cone = mySurface->Cone();
 
       switch (myIso)
       {
 
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:UIso");
         }
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           return ElSLib::ConeVIso(cone.Position(), cone.RefRadius(), cone.SemiAngle(), myParameter);
         }
-        case GeomAbs_NoneIso: {
+        case GeomAbs_NoneIso:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
         }
       }
       break;
     }
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       gp_Sphere sph = mySurface->Sphere();
 
       switch (myIso)
       {
 
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           return ElSLib::SphereUIso(sph.Position(), sph.Radius(), myParameter);
         }
 
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           return ElSLib::SphereVIso(sph.Position(), sph.Radius(), myParameter);
         }
 
-        case GeomAbs_NoneIso: {
+        case GeomAbs_NoneIso:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
         }
       }
       break;
     }
 
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Torus tor = mySurface->Torus();
 
       switch (myIso)
       {
 
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           return ElSLib::TorusUIso(tor.Position(),
                                    tor.MajorRadius(),
                                    tor.MinorRadius(),
                                    myParameter);
         }
 
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           return ElSLib::TorusVIso(tor.Position(),
                                    tor.MajorRadius(),
                                    tor.MinorRadius(),
                                    myParameter);
         }
 
-        case GeomAbs_NoneIso: {
+        case GeomAbs_NoneIso:
+        {
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
         }
       }
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       if (myIso == GeomAbs_IsoV)
       {
         const gp_Pnt aVal0 = Value(0.0);
@@ -732,11 +755,13 @@ gp_Circ Adaptor3d_IsoCurve::Circle() const
       }
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       return mySurface->BasisCurve()->Circle().Translated(myParameter
                                                           * gp_Vec(mySurface->Direction()));
     }
-    default: {
+    default:
+    {
       throw Standard_NoSuchObject("Adaptor3d_IsoCurve:Circle");
     }
   }
@@ -751,11 +776,13 @@ gp_Elips Adaptor3d_IsoCurve::Ellipse() const
   switch (mySurface->GetType())
   {
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       return mySurface->BasisCurve()->Ellipse().Translated(myParameter
                                                            * gp_Vec(mySurface->Direction()));
     }
-    default: {
+    default:
+    {
       throw Standard_NoSuchObject("Adaptor3d_IsoCurve:Ellipse");
     }
   }
@@ -784,7 +811,8 @@ int Adaptor3d_IsoCurve::Degree() const
   switch (type)
   {
     case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -800,7 +828,8 @@ int Adaptor3d_IsoCurve::Degree() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -811,7 +840,8 @@ int Adaptor3d_IsoCurve::Degree() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoV:
@@ -838,7 +868,8 @@ bool Adaptor3d_IsoCurve::IsRational() const
   switch (type)
   {
     case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -854,7 +885,8 @@ bool Adaptor3d_IsoCurve::IsRational() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -865,7 +897,8 @@ bool Adaptor3d_IsoCurve::IsRational() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoV:
@@ -906,10 +939,12 @@ int Adaptor3d_IsoCurve::NbPoles() const
           throw Standard_NoSuchObject("Adaptor3d_IsoCurve:NoneIso");
       }
       break;
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       switch (myIso)
       {
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           nb_poles = mySurface->BasisCurve()->NbPoles();
         }
         break;
@@ -918,10 +953,12 @@ int Adaptor3d_IsoCurve::NbPoles() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       switch (myIso)
       {
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           nb_poles = mySurface->BasisCurve()->NbPoles();
         }
         break;
@@ -946,7 +983,8 @@ int Adaptor3d_IsoCurve::NbKnots() const
   GeomAbs_SurfaceType type     = mySurface->GetType();
   switch (type)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       switch (myIso)
       {
         case GeomAbs_IsoU:
@@ -962,10 +1000,12 @@ int Adaptor3d_IsoCurve::NbKnots() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       switch (myIso)
       {
-        case GeomAbs_IsoU: {
+        case GeomAbs_IsoU:
+        {
           nb_knots = mySurface->BasisCurve()->NbKnots();
           break;
         }
@@ -974,10 +1014,12 @@ int Adaptor3d_IsoCurve::NbKnots() const
       }
     }
     break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       switch (myIso)
       {
-        case GeomAbs_IsoV: {
+        case GeomAbs_IsoV:
+        {
           nb_knots = mySurface->BasisCurve()->NbKnots();
           break;
         }

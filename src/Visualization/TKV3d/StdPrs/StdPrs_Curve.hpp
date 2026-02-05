@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Root.hpp>
 #include <Prs3d_Drawer.hpp>
 #include <gp_Pnt.hpp>
@@ -117,4 +116,3 @@ public:
                                     const double           aDeflection,
                                     const int              aNbPoints);
 };
-

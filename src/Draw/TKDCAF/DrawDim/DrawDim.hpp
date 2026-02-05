@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -55,4 +54,3 @@ public:
   //! false if <f> is not a planar face
   Standard_EXPORT static bool Pln(const TopoDS_Face& f, gp_Pln& p);
 };
-

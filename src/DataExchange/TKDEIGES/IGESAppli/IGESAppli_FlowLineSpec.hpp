@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_HAsciiString.hpp>
@@ -41,4 +40,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> theNameAndModifiers;
 };
-

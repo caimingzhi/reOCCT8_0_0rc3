@@ -1,27 +1,10 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 
 #include <Standard_ShortReal.hpp>
-// Created on: 1991-12-13
-// Created by: Christophe MARION
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 enum Intrv_Position
 {
@@ -39,8 +22,6 @@ enum Intrv_Position
   Intrv_JustAfter,
   Intrv_After
 };
-
-
 
 //! **-----------****             Other
 //! ***---*                                   IsBefore
@@ -200,38 +181,6 @@ private:
   float  myTolStart;
   float  myTolEnd;
 };
-// Created on: 1991-12-13
-// Created by: Christophe MARION
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//                   **-----------****             Other
-//     ***-----*                                   IsBefore
-//     ***------------*                            IsJustBefore
-//     ***-----------------*                       IsOverlappingAtStart
-//     ***--------------------------*              IsJustEnclosingAtEnd
-//     ***-------------------------------------*   IsEnclosing
-//                  ***----*                       IsJustOverlappingAtStart
-//                  ***-------------*              IsSimilar
-//                  ***------------------------*   IsJustEnclosingAtStart
-//                         ***-*                   IsInside
-//                         ***------*              IsJustOverlappingAtEnd
-//                         ***-----------------*   IsOverlappingAtEnd
-//                                  ***--------*   IsJustAfter
-//                                       ***---*   IsAfter
-
-//=================================================================================================
 
 inline double Intrv_Interval::Start() const
 {
@@ -525,5 +474,3 @@ inline bool Intrv_Interval::IsSimilar(const Intrv_Interval& Other) const
   b2 = AreFused(myEnd, myTolEnd, Other.myEnd, Other.myTolEnd);
   return b1 && b2;
 }
-
-

@@ -1,18 +1,3 @@
-// Created on: 2013-07-12
-// Created by: Anton POLETAEV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_ClipPlane.hpp>
 
 #include <Graphic3d_AspectFillArea3d.hpp>
@@ -24,20 +9,20 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ClipPlane, Standard_Transient)
 
 namespace
 {
-static std::atomic<int> THE_CLIP_PLANE_COUNTER(0);
+  static std::atomic<int> THE_CLIP_PLANE_COUNTER(0);
 
-static occ::handle<Graphic3d_AspectFillArea3d> defaultAspect()
-{
-  Graphic3d_MaterialAspect                aMaterial(Graphic3d_NameOfMaterial_DEFAULT);
-  occ::handle<Graphic3d_AspectFillArea3d> anAspect = new Graphic3d_AspectFillArea3d();
-  anAspect->SetDistinguishOff();
-  anAspect->SetFrontMaterial(aMaterial);
-  anAspect->SetHatchStyle(Aspect_HS_HORIZONTAL);
-  anAspect->SetInteriorStyle(Aspect_IS_SOLID);
-  anAspect->SetInteriorColor(Quantity_NOC_GRAY20);
-  anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
-  return anAspect;
-}
+  static occ::handle<Graphic3d_AspectFillArea3d> defaultAspect()
+  {
+    Graphic3d_MaterialAspect                aMaterial(Graphic3d_NameOfMaterial_DEFAULT);
+    occ::handle<Graphic3d_AspectFillArea3d> anAspect = new Graphic3d_AspectFillArea3d();
+    anAspect->SetDistinguishOff();
+    anAspect->SetFrontMaterial(aMaterial);
+    anAspect->SetHatchStyle(Aspect_HS_HORIZONTAL);
+    anAspect->SetInteriorStyle(Aspect_IS_SOLID);
+    anAspect->SetInteriorColor(Quantity_NOC_GRAY20);
+    anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
+    return anAspect;
+  }
 } // namespace
 
 //=================================================================================================

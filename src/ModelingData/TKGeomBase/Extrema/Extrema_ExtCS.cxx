@@ -1,21 +1,3 @@
-// Created on: 1995-07-18
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134
-
 #include <Adaptor3d_Surface.hpp>
 #include <Bnd_Box.hpp>
 #include <BndLib_AddSurface.hpp>
@@ -126,7 +108,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   switch (myCtype)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
 
       switch (myStype)
       {
@@ -149,7 +132,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
         case GeomAbs_SurfaceOfRevolution:
         case GeomAbs_SurfaceOfExtrusion:
         case GeomAbs_OffsetSurface:
-        case GeomAbs_OtherSurface: {
+        case GeomAbs_OtherSurface:
+        {
           double cfirst = myucinf, clast = myucsup;
           double ufirst = myS->FirstUParameter(), ulast = myS->LastUParameter(),
                  vfirst = myS->FirstVParameter(), vlast = myS->LastVParameter();
@@ -255,7 +239,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       break;
     }
       //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 Begin
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       if (myStype == GeomAbs_Cylinder)
       {
         myExtElCS.Perform(C.Circle(), myS->Cylinder());
@@ -273,7 +258,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       }
     }
       [[fallthrough]];
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       if (myCtype == GeomAbs_Hyperbola && myStype == GeomAbs_Plane)
       {
         //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 End
@@ -282,7 +268,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       }
     }
       [[fallthrough]];
-    default: {
+    default:
+    {
       isComputeAnalytic = false;
       break;
     }
@@ -327,27 +314,32 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
             aPOnC[i] = C.Value(aT[i]);
             switch (myStype)
             {
-              case GeomAbs_Plane: {
+              case GeomAbs_Plane:
+              {
                 ElSLib::Parameters(myS->Plane(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Plane());
                 break;
               }
-              case GeomAbs_Sphere: {
+              case GeomAbs_Sphere:
+              {
                 ElSLib::Parameters(myS->Sphere(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Sphere());
                 break;
               }
-              case GeomAbs_Cylinder: {
+              case GeomAbs_Cylinder:
+              {
                 ElSLib::Parameters(myS->Cylinder(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Cylinder());
                 break;
               }
-              case GeomAbs_Torus: {
+              case GeomAbs_Torus:
+              {
                 ElSLib::Parameters(myS->Torus(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Torus());
                 break;
               }
-              case GeomAbs_Cone: {
+              case GeomAbs_Cone:
+              {
                 ElSLib::Parameters(myS->Cone(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Cone());
                 break;

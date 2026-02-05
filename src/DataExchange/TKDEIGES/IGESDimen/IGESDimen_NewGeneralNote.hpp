@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -264,4 +263,3 @@ private:
   occ::handle<NCollection_HArray1<gp_XYZ>>                                theStartPoints;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> theTexts;
 };
-

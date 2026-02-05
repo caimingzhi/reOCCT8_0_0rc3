@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Dir.hpp>
 #include <IntImp_ConstIsoparametric.hpp>
@@ -270,6 +269,7 @@ private:
   int                       STATIC_BLOCAGE_SUR_PAS_TROP_GRAND;
   int                       STATIC_PRECEDENT_INFLEXION;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -369,5 +369,3 @@ inline void IntWalk_PWalking::AddAPoint(const IntSurf_PntOn2S& POn2S)
   line->Add(POn2S);
   myTangentIdx = std::max(myTangentIdx, 1);
 }
-
-

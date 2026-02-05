@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <TopoDS_Shape.hpp>
 #include <Standard_Transient.hpp>
@@ -42,4 +41,3 @@ protected:
   TopoDS_Shape myShape;
   bool         myIsDone;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Bnd_Box.hpp>
 #include <IntPolyh_ArrayOfPoints.hpp>
@@ -240,4 +239,3 @@ private:
 
   bool myEnlargeZone;
 };
-

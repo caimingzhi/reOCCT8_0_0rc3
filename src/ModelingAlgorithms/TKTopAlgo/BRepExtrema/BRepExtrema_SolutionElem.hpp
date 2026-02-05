@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <BRepExtrema_SupportType.hpp>
 #include <TopoDS_Vertex.hpp>
@@ -127,4 +126,3 @@ private:
   double                  myPar1;
   double                  myPar2;
 };
-

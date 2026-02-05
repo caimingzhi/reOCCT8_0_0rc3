@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_Circle.hpp>
 #include <Geom2dHash_AxisPlacement.hpp>
@@ -34,4 +33,3 @@ struct Geom2dHash_CircleHasher
            && std::abs(theCircle1->Radius() - theCircle2->Radius()) <= aTolerance;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_DefaultRangeSplitter.hpp>
 
 //! Auxiliary class extending default range splitter in
@@ -32,4 +31,3 @@ protected:
 private:
   double myDu;
 };
-

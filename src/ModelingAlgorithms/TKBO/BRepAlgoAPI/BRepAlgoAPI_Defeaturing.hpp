@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -171,4 +170,3 @@ protected:                                        //! @name Fields
                                                   //! shapes modifications or not (true by default)
   BOPAlgo_RemoveFeatures myFeatureRemovalTool;    //!< Tool for the features removal
 };
-

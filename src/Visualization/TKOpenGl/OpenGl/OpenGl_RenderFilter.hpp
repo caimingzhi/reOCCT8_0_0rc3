@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Filter for rendering elements.
 enum OpenGl_RenderFilter
 {
@@ -19,4 +18,3 @@ enum OpenGl_RenderFilter
   OpenGl_RenderFilter_SkipTrsfPersistence =
     0x010, //!< render only normal 3D objects without transformation persistence
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -245,4 +244,3 @@ protected:
   NCollection_Array2<bool>         myBuiltShapes;
   NCollection_Array2<bool>         myUsedShapes;
 };
-

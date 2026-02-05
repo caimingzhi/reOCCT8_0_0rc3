@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom2d_BSplineCurve.hpp>
 #include <GeomAdaptor_Curve.hpp>
 #include <GeomAdaptor_Surface.hpp>
@@ -25,4 +24,3 @@ Standard_EXPORT int ChFiKPart_IndexCurveInDS(const occ::handle<Geom_Curve>& C,
 
 Standard_EXPORT int ChFiKPart_IndexSurfaceInDS(const occ::handle<Geom_Surface>& S,
                                                TopOpeBRepDS_DataStructure&      DStr);
-

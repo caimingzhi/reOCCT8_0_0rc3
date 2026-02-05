@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -36,4 +35,3 @@ private:
   occ::handle<Geom2d_BSplineCurve> myCurveUV2;
   occ::handle<IntSurf_LineOn2S>    myLineOn2S;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -39,4 +38,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Geom2d_Point, Geom2d_Geometry)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntRes2d_TypeTrans
 {
   IntRes2d_In,
@@ -8,4 +7,3 @@ enum IntRes2d_TypeTrans
   IntRes2d_Touch,
   IntRes2d_Undecided
 };
-

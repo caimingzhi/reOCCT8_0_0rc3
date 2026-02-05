@@ -1,22 +1,3 @@
-// Created on: 1993-02-02
-// Created by: Laurent BUCHARD
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// modified by Edward AGAPOV (eap) Tue Jan 22 12:29:55 2002
-// modified by Oleg FEDYAED  (ofv) Fri Nov 29 16:08:02 2002
-
 #include <Adaptor3d_Surface.hpp>
 #include <Adaptor3d_TopolTool.hpp>
 #include <gp_Dir.hpp>
@@ -1496,14 +1477,16 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
       Poly1.Parameters(Adr1, u1, v1);
       break;
     }
-    case Intf_EDGE: {
+    case Intf_EDGE:
+    {
       Poly1.Parameters(Adr1, u1, v1);
       Poly1.Parameters(Adr2, u, v);
       u1 += Param * (u - u1);
       v1 += Param * (v - v1);
       break;
     }
-    case Intf_FACE: {
+    case Intf_FACE:
+    {
       double ua, va, ub, vb, uc, vc, ca, cb, cc, cabc;
       Poly1.Triangle(Adr1, Pt1, Pt2, Pt3);
       gp_Pnt PA(Poly1.Point(Pt1));
@@ -1526,7 +1509,8 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
       v1 = ca * va + cb * vb + cc * vc;
       break;
     }
-    default: {
+    default:
+    {
       //-- std::cout<<" Default dans SectionPointToParameters "<<std::endl;
       break;
     }
@@ -1540,14 +1524,16 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
       Poly2.Parameters(Adr1, u2, v2);
       break;
     }
-    case Intf_EDGE: {
+    case Intf_EDGE:
+    {
       Poly2.Parameters(Adr1, u2, v2);
       Poly2.Parameters(Adr2, u, v);
       u2 += Param * (u - u2);
       v2 += Param * (v - v2);
       break;
     }
-    case Intf_FACE: {
+    case Intf_FACE:
+    {
       double ua, va, ub, vb, uc, vc, ca, cb, cc, cabc;
       Poly2.Triangle(Adr1, Pt1, Pt2, Pt3);
       gp_Pnt PA(Poly2.Point(Pt1));
@@ -1570,7 +1556,8 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
       v2 = ca * va + cb * vb + cc * vc;
       break;
     }
-    default: {
+    default:
+    {
       //-- std::cout<<" Default dans SectionPointToParameters "<<std::endl;
       break;
     }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <GeomFill_TrihedronLaw.hpp>
@@ -26,4 +25,3 @@ protected:
   occ::handle<Adaptor3d_Curve> myTrimG;
   gp_Pnt                       myCurPointOnGuide;
 };
-

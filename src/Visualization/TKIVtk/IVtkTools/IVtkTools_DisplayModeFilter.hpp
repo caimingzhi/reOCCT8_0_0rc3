@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtkTools.hpp>
 #include <IVtkTools_SubPolyDataFilter.hpp>
 #include <NCollection_DataMap.hpp>
@@ -72,4 +71,3 @@ protected:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

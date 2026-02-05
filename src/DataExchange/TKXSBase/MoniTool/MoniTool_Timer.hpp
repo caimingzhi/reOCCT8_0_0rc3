@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -106,6 +105,7 @@ private:
   occ::handle<MoniTool_Timer> myPrev;
   occ::handle<MoniTool_Timer> myNext;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -218,4 +218,3 @@ inline void MoniTool_Timer::Stop(const char* name)
 }
 
 class MoniTool_Timer;
-

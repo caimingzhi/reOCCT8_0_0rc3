@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_SphericalSurface.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -33,4 +32,3 @@ struct GeomHash_SphericalSurfaceHasher
            && std::abs(theSphere1->Radius() - theSphere2->Radius()) <= aTolerance;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -48,4 +47,3 @@ protected:
   //! <maychangegraph>
   Standard_EXPORT IGESSelect_ModelModifier(const bool maychangegraph);
 };
-

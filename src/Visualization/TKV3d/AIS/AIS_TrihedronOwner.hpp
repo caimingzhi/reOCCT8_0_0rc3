@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_EntityOwner.hpp>
 #include <SelectMgr_SelectableObject.hpp>
 #include <Prs3d_DatumParts.hpp>
@@ -36,4 +35,3 @@ public:
 protected:
   Prs3d_DatumParts myDatumPart; //!< part of datum selected
 };
-

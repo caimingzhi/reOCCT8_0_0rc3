@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 
 class QABugs_PresentableObject : public AIS_InteractiveObject
@@ -18,4 +17,3 @@ protected:
                                const occ::handle<Prs3d_Presentation>&         thePrs,
                                const int                                      theMode) override;
 };
-

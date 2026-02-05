@@ -14,7 +14,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Sides of cubemap in order of OpenGL rules
 enum Graphic3d_CubeMapSide
 {
@@ -25,7 +24,6 @@ enum Graphic3d_CubeMapSide
   Graphic3d_CMS_POS_Z, //!< Z axis positive direction side
   Graphic3d_CMS_NEG_Z, //!< Z axis negative direction side
 };
-
 
 #include <Standard_Macro.hpp>
 
@@ -162,4 +160,3 @@ private:
   //! Deleted 'operator='
   Graphic3d_ValidatedCubeMapOrder& operator=(const Graphic3d_ValidatedCubeMapOrder&) = delete;
 };
-

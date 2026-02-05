@@ -1,19 +1,3 @@
-// Created on: 1991-03-08
-// Created by: Christophe MARION
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Bnd_Box.hpp>
 
 #include <gp_Dir.hpp>
@@ -29,94 +13,94 @@
 
 namespace
 {
-// Precision constant for infinite bounds
-constexpr double THE_BND_PRECISION_INFINITE = 1e+100;
+  // Precision constant for infinite bounds
+  constexpr double THE_BND_PRECISION_INFINITE = 1e+100;
 
-// Precomputed unit direction vectors for bounding box transformations
-constexpr gp_Dir THE_DIR_XMIN{gp_Dir::D::NX};
-constexpr gp_Dir THE_DIR_XMAX{gp_Dir::D::X};
-constexpr gp_Dir THE_DIR_YMIN{gp_Dir::D::NY};
-constexpr gp_Dir THE_DIR_YMAX{gp_Dir::D::Y};
-constexpr gp_Dir THE_DIR_ZMIN{gp_Dir::D::NZ};
-constexpr gp_Dir THE_DIR_ZMAX{gp_Dir::D::Z};
+  // Precomputed unit direction vectors for bounding box transformations
+  constexpr gp_Dir THE_DIR_XMIN{gp_Dir::D::NX};
+  constexpr gp_Dir THE_DIR_XMAX{gp_Dir::D::X};
+  constexpr gp_Dir THE_DIR_YMIN{gp_Dir::D::NY};
+  constexpr gp_Dir THE_DIR_YMAX{gp_Dir::D::Y};
+  constexpr gp_Dir THE_DIR_ZMIN{gp_Dir::D::NZ};
+  constexpr gp_Dir THE_DIR_ZMAX{gp_Dir::D::Z};
 
-// Computes minimum squared distance between two 1D intervals
-inline double DistMini2Box(const double theR1Min,
-                           const double theR1Max,
-                           const double theR2Min,
-                           const double theR2Max) noexcept
-{
-  const double aR1 = Square(theR1Min - theR2Max);
-  const double aR2 = Square(theR1Max - theR2Min);
-  return std::min(aR1, aR2);
-}
-
-// Computes squared distance in one dimension, returns 0 if intervals overlap
-inline double DistanceInDimension(const double theMin1,
-                                  const double theMax1,
-                                  const double theMin2,
-                                  const double theMax2) noexcept
-{
-  // Check if intervals overlap
-  if ((theMin1 <= theMin2 && theMin2 <= theMax1) || (theMin2 <= theMin1 && theMin1 <= theMax2))
-    return 0.0;
-  return DistMini2Box(theMin1, theMax1, theMin2, theMax2);
-}
-
-// Tests if a 2D segment is outside a 2D box
-bool IsSegmentOut(const double theX1,
-                  const double theY1,
-                  const double theX2,
-                  const double theY2,
-                  const double theXs1,
-                  const double theYs1,
-                  const double theXs2,
-                  const double theYs2) noexcept
-{
-  constexpr double anEps  = RealSmall();
-  const double     aXsMin = std::min(theXs1, theXs2);
-  const double     aXsMax = std::max(theXs1, theXs2);
-  const double     aYsMin = std::min(theYs1, theYs2);
-  const double     aYsMax = std::max(theYs1, theYs2);
-
-  if (aYsMax - aYsMin < anEps && (theY1 - theYs1 < anEps && theYs1 - theY2 < anEps)
-      && ((aXsMin - theX1 < anEps && theX1 - aXsMax < anEps)
-          || (aXsMin - theX2 < anEps && theX2 - aXsMax < anEps)
-          || (theX1 - theXs1 < anEps && theXs1 - theX2 < anEps)))
-    return false;
-  if (aXsMax - aXsMin < anEps && (theX1 - theXs1 < anEps && theXs1 - theX2 < anEps)
-      && ((aYsMin - theY1 < anEps && theY1 - aYsMax < anEps)
-          || (aYsMin - theY2 < anEps && theY2 - aYsMax < anEps)
-          || (theY1 - theYs1 < anEps && theYs1 - theY2 < anEps)))
-    return false;
-
-  if ((theXs1 < theX1 && theXs2 < theX1) || (theXs1 > theX2 && theXs2 > theX2)
-      || (theYs1 < theY1 && theYs2 < theY1) || (theYs1 > theY2 && theYs2 > theY2))
-    return true;
-
-  if (std::abs(theXs2 - theXs1) > anEps)
+  // Computes minimum squared distance between two 1D intervals
+  inline double DistMini2Box(const double theR1Min,
+                             const double theR1Max,
+                             const double theR2Min,
+                             const double theR2Max) noexcept
   {
-    const double aYa =
-      (std::min(theX1, theX2) - theXs1) * (theYs2 - theYs1) / (theXs2 - theXs1) + theYs1;
-    const double aYb =
-      (std::max(theX1, theX2) - theXs1) * (theYs2 - theYs1) / (theXs2 - theXs1) + theYs1;
-    if ((aYa < theY1 && aYb < theY1) || (aYa > theY2 && aYb > theY2))
-      return true;
+    const double aR1 = Square(theR1Min - theR2Max);
+    const double aR2 = Square(theR1Max - theR2Min);
+    return std::min(aR1, aR2);
   }
-  else if (std::abs(theYs2 - theYs1) > anEps)
-  {
-    const double aXa =
-      (std::min(theY1, theY2) - theYs1) * (theXs2 - theXs1) / (theYs2 - theYs1) + theXs1;
-    const double aXb =
-      (std::max(theY1, theY2) - theYs1) * (theXs2 - theXs1) / (theYs2 - theYs1) + theXs1;
-    if ((aXa < theX1 && aXb < theX1) || (aXa > theX2 && aXb > theX2))
-      return true;
-  }
-  else
-    return true;
 
-  return false;
-}
+  // Computes squared distance in one dimension, returns 0 if intervals overlap
+  inline double DistanceInDimension(const double theMin1,
+                                    const double theMax1,
+                                    const double theMin2,
+                                    const double theMax2) noexcept
+  {
+    // Check if intervals overlap
+    if ((theMin1 <= theMin2 && theMin2 <= theMax1) || (theMin2 <= theMin1 && theMin1 <= theMax2))
+      return 0.0;
+    return DistMini2Box(theMin1, theMax1, theMin2, theMax2);
+  }
+
+  // Tests if a 2D segment is outside a 2D box
+  bool IsSegmentOut(const double theX1,
+                    const double theY1,
+                    const double theX2,
+                    const double theY2,
+                    const double theXs1,
+                    const double theYs1,
+                    const double theXs2,
+                    const double theYs2) noexcept
+  {
+    constexpr double anEps  = RealSmall();
+    const double     aXsMin = std::min(theXs1, theXs2);
+    const double     aXsMax = std::max(theXs1, theXs2);
+    const double     aYsMin = std::min(theYs1, theYs2);
+    const double     aYsMax = std::max(theYs1, theYs2);
+
+    if (aYsMax - aYsMin < anEps && (theY1 - theYs1 < anEps && theYs1 - theY2 < anEps)
+        && ((aXsMin - theX1 < anEps && theX1 - aXsMax < anEps)
+            || (aXsMin - theX2 < anEps && theX2 - aXsMax < anEps)
+            || (theX1 - theXs1 < anEps && theXs1 - theX2 < anEps)))
+      return false;
+    if (aXsMax - aXsMin < anEps && (theX1 - theXs1 < anEps && theXs1 - theX2 < anEps)
+        && ((aYsMin - theY1 < anEps && theY1 - aYsMax < anEps)
+            || (aYsMin - theY2 < anEps && theY2 - aYsMax < anEps)
+            || (theY1 - theYs1 < anEps && theYs1 - theY2 < anEps)))
+      return false;
+
+    if ((theXs1 < theX1 && theXs2 < theX1) || (theXs1 > theX2 && theXs2 > theX2)
+        || (theYs1 < theY1 && theYs2 < theY1) || (theYs1 > theY2 && theYs2 > theY2))
+      return true;
+
+    if (std::abs(theXs2 - theXs1) > anEps)
+    {
+      const double aYa =
+        (std::min(theX1, theX2) - theXs1) * (theYs2 - theYs1) / (theXs2 - theXs1) + theYs1;
+      const double aYb =
+        (std::max(theX1, theX2) - theXs1) * (theYs2 - theYs1) / (theXs2 - theXs1) + theYs1;
+      if ((aYa < theY1 && aYb < theY1) || (aYa > theY2 && aYb > theY2))
+        return true;
+    }
+    else if (std::abs(theYs2 - theYs1) > anEps)
+    {
+      const double aXa =
+        (std::min(theY1, theY2) - theYs1) * (theXs2 - theXs1) / (theYs2 - theYs1) + theXs1;
+      const double aXb =
+        (std::max(theY1, theY2) - theYs1) * (theXs2 - theXs1) / (theYs2 - theYs1) + theXs1;
+      if ((aXa < theX1 && aXb < theX1) || (aXa > theX2 && aXb > theX2))
+        return true;
+    }
+    else
+      return true;
+
+    return false;
+  }
 } // anonymous namespace
 
 //=================================================================================================

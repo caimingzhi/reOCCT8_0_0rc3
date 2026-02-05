@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -35,4 +34,3 @@ private:
   occ::handle<StepShape_SolidModel>                       parentSolid;
   occ::handle<StepGeom_CartesianTransformationOperator3d> transformation;
 };
-

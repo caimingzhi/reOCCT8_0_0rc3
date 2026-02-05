@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopExp_Explorer.hpp>
 #include <TopAbs.hpp>
 
@@ -68,4 +67,3 @@ public:
 private:
   int myIndex;
 };
-

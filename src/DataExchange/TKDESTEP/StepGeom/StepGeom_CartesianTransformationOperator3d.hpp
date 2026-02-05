@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -42,4 +41,3 @@ private:
   occ::handle<StepGeom_Direction> axis3;
   bool                            hasAxis3;
 };
-

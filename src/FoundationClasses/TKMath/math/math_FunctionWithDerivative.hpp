@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -35,4 +34,3 @@ public:
   Standard_EXPORT virtual bool Values(const double X, double& F, double& D) = 0;
   Standard_EXPORT ~math_FunctionWithDerivative() override;
 };
-

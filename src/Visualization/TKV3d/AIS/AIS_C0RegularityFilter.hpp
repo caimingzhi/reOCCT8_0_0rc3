@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -26,4 +25,3 @@ public:
 private:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> myMapOfEdges;
 };
-

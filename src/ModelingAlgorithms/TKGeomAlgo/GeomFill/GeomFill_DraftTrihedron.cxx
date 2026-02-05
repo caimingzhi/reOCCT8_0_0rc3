@@ -1,19 +1,3 @@
-// Created on: 1998-04-15
-// Created by: Stephanie HUMEAU
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomFill_DraftTrihedron.hpp>
 
 #include <Adaptor3d_Curve.hpp>
@@ -333,23 +317,28 @@ bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
 
   switch (TheType)
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       TheAxe = myCurve->Circle().Axis();
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       TheAxe = myCurve->Ellipse().Axis();
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       TheAxe = myCurve->Hyperbola().Axis();
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       TheAxe = myCurve->Parabola().Axis();
       break;
     }
-    case GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    case GeomAbs_Line:
+    { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsParallel(B, Precision::Angular());

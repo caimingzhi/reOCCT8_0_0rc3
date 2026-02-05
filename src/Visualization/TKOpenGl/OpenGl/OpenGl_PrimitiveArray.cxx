@@ -1,18 +1,3 @@
-// Created on: 2011-07-13
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_PrimitiveArray.hpp>
 
 #include <OpenGl_PointSprite.hpp>
@@ -25,36 +10,36 @@
 
 namespace
 {
-//! Convert data type to GL info
-inline GLenum toGlDataType(const Graphic3d_TypeOfData theType, GLint& theNbComp)
-{
-  switch (theType)
+  //! Convert data type to GL info
+  inline GLenum toGlDataType(const Graphic3d_TypeOfData theType, GLint& theNbComp)
   {
-    case Graphic3d_TOD_USHORT:
-      theNbComp = 1;
-      return GL_UNSIGNED_SHORT;
-    case Graphic3d_TOD_UINT:
-      theNbComp = 1;
-      return GL_UNSIGNED_INT;
-    case Graphic3d_TOD_VEC2:
-      theNbComp = 2;
-      return GL_FLOAT;
-    case Graphic3d_TOD_VEC3:
-      theNbComp = 3;
-      return GL_FLOAT;
-    case Graphic3d_TOD_VEC4:
-      theNbComp = 4;
-      return GL_FLOAT;
-    case Graphic3d_TOD_VEC4UB:
-      theNbComp = 4;
-      return GL_UNSIGNED_BYTE;
-    case Graphic3d_TOD_FLOAT:
-      theNbComp = 1;
-      return GL_FLOAT;
+    switch (theType)
+    {
+      case Graphic3d_TOD_USHORT:
+        theNbComp = 1;
+        return GL_UNSIGNED_SHORT;
+      case Graphic3d_TOD_UINT:
+        theNbComp = 1;
+        return GL_UNSIGNED_INT;
+      case Graphic3d_TOD_VEC2:
+        theNbComp = 2;
+        return GL_FLOAT;
+      case Graphic3d_TOD_VEC3:
+        theNbComp = 3;
+        return GL_FLOAT;
+      case Graphic3d_TOD_VEC4:
+        theNbComp = 4;
+        return GL_FLOAT;
+      case Graphic3d_TOD_VEC4UB:
+        theNbComp = 4;
+        return GL_UNSIGNED_BYTE;
+      case Graphic3d_TOD_FLOAT:
+        theNbComp = 1;
+        return GL_FLOAT;
+    }
+    theNbComp = 0;
+    return GL_NONE;
   }
-  theNbComp = 0;
-  return GL_NONE;
-}
 
 } // namespace
 
@@ -272,7 +257,8 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
   bool isOk    = false;
   switch (myIndices->Stride)
   {
-    case 2: {
+    case 2:
+    {
       isOk = myVboIndices->Init(theCtx,
                                 1,
                                 aNbIndexes,
@@ -281,7 +267,8 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
       myIndices->Validate();
       break;
     }
-    case 4: {
+    case 4:
+    {
       isOk = myVboIndices->Init(theCtx,
                                 1,
                                 aNbIndexes,
@@ -290,7 +277,8 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
       myIndices->Validate();
       break;
     }
-    default: {
+    default:
+    {
       clearMemoryGL(theCtx);
       return false;
     }
@@ -379,15 +367,18 @@ bool OpenGl_PrimitiveArray::buildVBO(const occ::handle<OpenGl_Context>& theCtx,
     occ::handle<OpenGl_IndexBufferCompat> aVboIndices = new OpenGl_IndexBufferCompat();
     switch (myIndices->Stride)
     {
-      case 2: {
+      case 2:
+      {
         aVboIndices->initLink(myIndices, 1, myIndices->NbElements, GL_UNSIGNED_SHORT);
         break;
       }
-      case 4: {
+      case 4:
+      {
         aVboIndices->initLink(myIndices, 1, myIndices->NbElements, GL_UNSIGNED_INT);
         break;
       }
-      default: {
+      default:
+      {
         return false;
       }
     }
@@ -820,48 +811,59 @@ void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStat
   const int aNbBounds = !myBounds.IsNull() ? myBounds->NbBounds : 1;
   switch (myDrawMode)
   {
-    case GL_POINTS: {
+    case GL_POINTS:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbPointsNotCulled] += aNbIndices;
       break;
     }
-    case GL_LINES: {
+    case GL_LINES:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 2;
       break;
     }
-    case GL_LINE_STRIP: {
+    case GL_LINE_STRIP:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - aNbBounds;
       break;
     }
-    case GL_LINES_ADJACENCY: {
+    case GL_LINES_ADJACENCY:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 4;
       break;
     }
-    case GL_LINE_STRIP_ADJACENCY: {
+    case GL_LINE_STRIP_ADJACENCY:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - 4 * aNbBounds;
       break;
     }
-    case GL_TRIANGLES: {
+    case GL_TRIANGLES:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 3;
       break;
     }
     case GL_TRIANGLE_STRIP:
-    case GL_TRIANGLE_FAN: {
+    case GL_TRIANGLE_FAN:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 2 * aNbBounds;
       break;
     }
-    case GL_TRIANGLES_ADJACENCY: {
+    case GL_TRIANGLES_ADJACENCY:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 6;
       break;
     }
-    case GL_TRIANGLE_STRIP_ADJACENCY: {
+    case GL_TRIANGLE_STRIP_ADJACENCY:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 4 * aNbBounds;
       break;
     }
-    case GL_QUADS: {
+    case GL_QUADS:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 2;
       break;
     }
-    case GL_QUAD_STRIP: {
+    case GL_QUAD_STRIP:
+    {
       theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
         (aNbIndices / 2 - aNbBounds) * 2;
       break;
@@ -961,7 +963,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     const bool hasVertNorm    = !myVboAttribs.IsNull() && myVboAttribs->HasNormalAttribute();
     switch (myDrawMode)
     {
-      case GL_POINTS: {
+      case GL_POINTS:
+      {
         aShadingModel =
           aCtx->ShaderManager()->ChooseMarkerShadingModel(anAspectFace->ShadingModel(),
                                                           hasVertNorm);
@@ -973,7 +976,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
         break;
       }
       case GL_LINES:
-      case GL_LINE_STRIP: {
+      case GL_LINE_STRIP:
+      {
         aShadingModel =
           aCtx->ShaderManager()->ChooseLineShadingModel(anAspectFace->ShadingModel(), hasVertNorm);
         aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
@@ -984,7 +988,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
                                                anAspectFace->ShaderProgramRes(aCtx));
         break;
       }
-      default: {
+      default:
+      {
         aShadingModel =
           aCtx->ShaderManager()->ChooseFaceShadingModel(anAspectFace->ShadingModel(), hasVertNorm);
         aCtx->ShaderManager()->BindFaceProgram(

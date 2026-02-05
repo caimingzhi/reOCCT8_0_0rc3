@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <BSplSLib_Cache.hpp>
@@ -383,4 +382,3 @@ protected:
   GeomAbs_SurfaceType       mySurfaceType;
   SurfaceDataVariant        mySurfaceData; ///< Surface-specific evaluation data
 };
-

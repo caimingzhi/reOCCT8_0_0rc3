@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -74,4 +73,3 @@ private:
   TDF_Label                                         myContextLabel;
   TopAbs_Orientation                                myOrientation;
 };
-

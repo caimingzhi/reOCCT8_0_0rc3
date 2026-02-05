@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -51,4 +50,3 @@ public:
   //! as the sphere in the U and V parametric directions.
   Standard_EXPORT Convert_SphereToBSplineSurface(const gp_Sphere& Sph);
 };
-

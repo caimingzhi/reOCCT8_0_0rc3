@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlFunctions.hpp>
 
 //! FBO is available on OpenGL 2.0+ hardware
@@ -39,4 +38,3 @@ struct OpenGl_ArbFBOBlit : protected OpenGl_GlFunctions
 
   using OpenGl_GlFunctions::glBlitFramebuffer;
 };
-

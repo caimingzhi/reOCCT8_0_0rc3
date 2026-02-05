@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -54,4 +53,3 @@ private:
   occ::handle<IGESData_IGESEntity>                                 theSurface;
   occ::handle<NCollection_HArray1<occ::handle<IGESGeom_Boundary>>> theBoundaries;
 };
-

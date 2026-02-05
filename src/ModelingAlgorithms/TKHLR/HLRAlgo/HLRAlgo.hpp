@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRAlgo_WiresBlock.hpp>
 
 //! In order to have the precision required in
@@ -67,4 +66,3 @@ public:
                                         HLRAlgo_EdgesBlock::MinMaxIndices& OMin,
                                         HLRAlgo_EdgesBlock::MinMaxIndices& OMax);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdFail_NotDone.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -160,4 +159,3 @@ private:
   int                                      myNbPoints;
   occ::handle<NCollection_HArray1<double>> myParams;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -91,4 +90,3 @@ private:
   occ::handle<StepData_ESDescr>                                     thebase;
   occ::handle<StepData_ESDescr>                                     thesuper;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_Context.hpp>
 #include <Standard_Type.hpp>
 #include <Message_ProgressRange.hpp>
@@ -47,4 +46,3 @@ public:
 private:
   occ::handle<IMeshTools_Context> myContext;
 };
-

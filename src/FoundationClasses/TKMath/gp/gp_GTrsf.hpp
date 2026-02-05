@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax2.hpp>
 #include <gp_Mat.hpp>
@@ -412,4 +411,3 @@ inline gp_Trsf gp_GTrsf::Trsf() const
   aT.loc    = loc;
   return aT;
 }
-

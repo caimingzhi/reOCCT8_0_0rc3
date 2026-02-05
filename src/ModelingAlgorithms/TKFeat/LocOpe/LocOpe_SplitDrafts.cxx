@@ -1,19 +1,3 @@
-// Created on: 1996-10-02
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <LocOpe_SplitDrafts.hpp>
 
 #include <BRep_Builder.hpp>
@@ -548,7 +532,8 @@ void LocOpe_SplitDrafts::Perform(const TopoDS_Face& F,
       TopoDS_Edge               Ebind;
       switch (Choice)
       {
-        case 1: {
+        case 1:
+        {
           for (exp2.Init(Res, TopAbs_EDGE); exp2.More(); exp2.Next())
           {
             if (exp2.Current().IsSame(edg1) || exp2.Current().IsSame(edg2))
@@ -589,14 +574,16 @@ void LocOpe_SplitDrafts::Perform(const TopoDS_Face& F,
           }
         }
         break;
-        case 2: {
+        case 2:
+        {
           gp_Lin theLine(NormalFg);
           theLine.Translate(NormalFg.Location(), BRep_Tool::Pnt(vtx));
           Newc   = new Geom_Line(theLine);
           knownp = 0.;
         }
         break;
-        case 3: {
+        case 3:
+        {
           const TopoDS_Face&        F1    = TopoDS::Face(MapEV.FindFromKey(edg1));
           const TopoDS_Face&        F2    = TopoDS::Face(MapEV.FindFromKey(edg2));
           occ::handle<Geom_Surface> S1    = BRep_Tool::Surface(F1);

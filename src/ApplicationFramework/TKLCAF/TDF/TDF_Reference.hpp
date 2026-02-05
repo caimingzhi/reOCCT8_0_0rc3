@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -48,4 +47,3 @@ public:
 private:
   TDF_Label myOrigin;
 };
-

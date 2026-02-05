@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <MeshVS_DataSource.hpp>
 #include <MeshVS_Mesh.hpp>
 #include <MeshVS_MeshSelectionMethod.hpp>
@@ -80,4 +79,3 @@ private:
   gp_Pnt            myCOG;                      //!< center of gravity
   Select3D_BndBox3d myBndBox;                   //!< bounding box
 };
-

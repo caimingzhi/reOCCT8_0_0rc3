@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -504,4 +503,3 @@ protected: //! @name Fields
   occ::handle<BRepTools_History> myHistory;      //!< Final history of shapes modifications
                                                  //! (to include the history of shape repetition)
 };
-

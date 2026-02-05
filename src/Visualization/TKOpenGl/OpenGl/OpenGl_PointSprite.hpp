@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Texture.hpp>
 
 //! Point sprite resource. On modern hardware it will be texture with extra parameters.
@@ -40,4 +39,3 @@ protected:
   GLuint myBitmapList; //!< if of display list to draw sprite using glBitmap (for backward compatibility)
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Poly_Triangulation.hpp>
 #include <NCollection_Array1.hpp>
 
@@ -92,4 +91,3 @@ protected:
   int                                     myNbDefTriangles;
   mutable int                             myStatisticOfDegeneratedTriNb;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectBasics_SelectingVolumeManager.hpp>
 
 #include <SelectMgr_BaseIntersector.hpp>
@@ -294,4 +293,3 @@ private:
   bool                       myToAllowOverlap;                  //!< Defines if partially overlapped entities will me detected or not
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XYZ.hpp>
 #include <Poly_CoherentTriPtr.hpp>
 #include <Precision.hpp>
@@ -141,4 +140,3 @@ private:
   int                  myIndex;
   float                myNormal[3];
 };
-

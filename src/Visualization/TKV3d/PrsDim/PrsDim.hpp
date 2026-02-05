@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_KindOfSurface.hpp>
 #include <gp_Elips.hpp>
 #include <gp_Pnt.hpp>
@@ -247,4 +246,3 @@ public:
     const Aspect_TypeOfMarker              aProjTOM = Aspect_TOM_PLUS,
     const Aspect_TypeOfLine                aCallTOL = Aspect_TOL_DOT);
 };
-

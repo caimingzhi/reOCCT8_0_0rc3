@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -132,4 +131,3 @@ private:
   bool                          myHasTexCoords;
   bool                          myHasSurfId;
 };
-

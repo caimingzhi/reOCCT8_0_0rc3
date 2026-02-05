@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Nature of the reflection of a material.
 enum Graphic3d_TypeOfReflection
 {
@@ -14,4 +13,3 @@ enum
 {
   Graphic3d_TypeOfReflection_NB = 4
 };
-

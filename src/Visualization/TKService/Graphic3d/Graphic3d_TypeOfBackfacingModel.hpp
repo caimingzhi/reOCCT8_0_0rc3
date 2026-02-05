@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Modes of display of back faces in the view.
 enum Graphic3d_TypeOfBackfacingModel
 {
@@ -18,4 +17,3 @@ enum Graphic3d_TypeOfBackfacingModel
   V3d_TOBM_ALWAYS_DISPLAYED = Graphic3d_TypeOfBackfacingModel_DoubleSided,
   V3d_TOBM_NEVER_DISPLAYED  = Graphic3d_TypeOfBackfacingModel_BackCulled
 };
-

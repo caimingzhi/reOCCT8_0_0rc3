@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -43,6 +42,7 @@ private:
   FairCurve_BattenLaw MyLaw;
   double              MyHeight;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -60,5 +60,3 @@ inline void FairCurve_DistributionOfTension::SetLengthSliding(const double Lengt
 {
   MyLengthSliding = LengthSliding;
 }
-
-

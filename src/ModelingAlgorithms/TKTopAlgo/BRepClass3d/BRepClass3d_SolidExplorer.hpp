@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <BRepClass3d_BndBoxTree.hpp>
 #include <TopoDS_Shape.hpp>
@@ -186,4 +185,3 @@ private:
   NCollection_UBTree<int, Bnd_Box>                                  myTree;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>     myMapEV;
 };
-

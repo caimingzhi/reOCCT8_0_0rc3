@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Type of output selection image.
 enum StdSelect_TypeOfSelectionImage
 {
@@ -14,4 +13,3 @@ enum StdSelect_TypeOfSelectionImage
   StdSelect_TypeOfSelectionImage_ColoredSelectionMode,    //!< color of selection mode
   StdSelect_TypeOfSelectionImage_SurfaceNormal            //!< normal direction values
 };
-

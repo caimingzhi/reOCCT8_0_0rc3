@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_BaseAnimationObject.hpp>
 #include <gp_TrsfNLerp.hpp>
 
@@ -31,4 +30,3 @@ protected:
 private:
   NCollection_Lerp<gp_Trsf> myTrsfLerp; //!< interpolation tool
 };
-

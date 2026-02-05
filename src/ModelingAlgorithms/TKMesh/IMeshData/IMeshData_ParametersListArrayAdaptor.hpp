@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 
 //! Auxiliary tool representing adaptor interface for child classes of
@@ -36,4 +35,3 @@ private:
 
   const ParametersListPtrType myParameters;
 };
-

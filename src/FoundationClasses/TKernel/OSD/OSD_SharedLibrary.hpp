@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -78,4 +77,3 @@ private:
   void*               myHandle;
   Standard_PCharacter myName;
 };
-

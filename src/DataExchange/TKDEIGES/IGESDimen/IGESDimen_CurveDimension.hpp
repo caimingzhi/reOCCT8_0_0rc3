@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_IGESEntity.hpp>
@@ -80,4 +79,3 @@ private:
   occ::handle<IGESDimen_WitnessLine> theFirstWitnessLine;
   occ::handle<IGESDimen_WitnessLine> theSecondWitnessLine;
 };
-

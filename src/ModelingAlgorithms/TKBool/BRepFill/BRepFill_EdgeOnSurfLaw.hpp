@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRepFill_LocationLaw.hpp>
@@ -24,4 +23,3 @@ public:
 private:
   bool hasresult;
 };
-

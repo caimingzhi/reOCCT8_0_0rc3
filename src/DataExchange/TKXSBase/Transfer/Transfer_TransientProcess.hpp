@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -105,4 +104,3 @@ private:
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> thectx;
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>           thetrroots;
 };
-

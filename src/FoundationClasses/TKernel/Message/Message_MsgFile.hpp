@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -85,4 +84,3 @@ public:
   //! customized by defining message with key Message_Msg_BadKeyword.
   Standard_EXPORT static const TCollection_ExtendedString& Msg(const TCollection_AsciiString& key);
 };
-

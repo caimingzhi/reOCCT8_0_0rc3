@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Drawer.hpp>
 #include <DsgPrs_ArrowSide.hpp>
 #include <Prs3d_Presentation.hpp>
@@ -49,4 +48,3 @@ public:
                                   const gp_Pnt&                          OffsetPoint,
                                   const DsgPrs_ArrowSide                 ArrowSide);
 };
-

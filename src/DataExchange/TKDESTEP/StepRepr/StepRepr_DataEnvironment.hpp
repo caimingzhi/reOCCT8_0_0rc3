@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_PropertyDefinitionRepresentation.hpp>
@@ -54,4 +53,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_PropertyDefinitionRepresentation>>>
     theElements;
 };
-

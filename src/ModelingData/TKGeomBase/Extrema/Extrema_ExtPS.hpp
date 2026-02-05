@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -139,4 +138,3 @@ private:
   occ::handle<Extrema_ExtPExtS>         myExtPExtS;
   occ::handle<Extrema_ExtPRevS>         myExtPRevS;
 };
-

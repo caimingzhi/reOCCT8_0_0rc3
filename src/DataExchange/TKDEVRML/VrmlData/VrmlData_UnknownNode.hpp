@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Node.hpp>
 #include <TCollection_AsciiString.hpp>
 

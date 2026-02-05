@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <BRepCheck_Result.hpp>
 #include <BRepCheck_Status.hpp>
@@ -52,4 +51,3 @@ private:
   bool                                  myGctrl;
   bool                                  myIsExactMethod;
 };
-

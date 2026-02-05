@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepGeom_BSplineSurfaceForm
 {
   StepGeom_bssfPlaneSurf,
@@ -15,4 +14,3 @@ enum StepGeom_BSplineSurfaceForm
   StepGeom_bssfSurfOfLinearExtrusion,
   StepGeom_bssfUnspecified
 };
-

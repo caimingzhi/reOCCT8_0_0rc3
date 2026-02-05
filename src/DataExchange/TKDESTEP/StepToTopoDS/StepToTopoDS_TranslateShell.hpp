@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -44,4 +43,3 @@ private:
   StepToTopoDS_TranslateShellError myError;
   TopoDS_Shape                     myResult;
 };
-

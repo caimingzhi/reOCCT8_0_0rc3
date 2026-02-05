@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Edge.hpp>
 #include <NCollection_IncAllocator.hpp>
 #include <IMeshData_Types.hpp>
@@ -45,4 +44,3 @@ private:
   IMeshData::VectorOfIPCurveHandles       myPCurves;
   IMeshData::DMapOfIFacePtrsListOfInteger myPCurvesMap;
 };
-

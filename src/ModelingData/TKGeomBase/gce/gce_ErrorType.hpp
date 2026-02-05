@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Indicates the outcome of a construction, i.e.
 //! whether it is successful or not, as explained below.
 //! gce_Done: Construction was successful.
@@ -36,4 +35,3 @@ enum gce_ErrorType
   gce_NullVector,
   gce_BadEquation
 };
-

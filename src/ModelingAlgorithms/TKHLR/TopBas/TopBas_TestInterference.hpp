@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -138,4 +137,3 @@ inline TopAbs_Orientation TopBas_TestInterference::BoundaryTransition() const
 {
   return myBTransition;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -38,4 +37,3 @@ public:
 
   Standard_EXPORT void Perform(const gp_Lin& C, const double U1, const double U2);
 };
-

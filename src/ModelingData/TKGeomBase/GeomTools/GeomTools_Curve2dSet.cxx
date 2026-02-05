@@ -1,19 +1,3 @@
-// Created on: 1993-07-19
-// Created by: Remi LEQUETTE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Geom2d_BezierCurve.hpp>
 #include <Geom2d_BSplineCurve.hpp>
 #include <Geom2d_Circle.hpp>
@@ -683,70 +667,80 @@ occ::handle<Geom2d_Curve> GeomTools_Curve2dSet::ReadCurve2d(Standard_IStream& IS
     switch (ctype)
     {
 
-      case LINE: {
+      case LINE:
+      {
         occ::handle<Geom2d_Line> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case CIRCLE: {
+      case CIRCLE:
+      {
         occ::handle<Geom2d_Circle> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case ELLIPSE: {
+      case ELLIPSE:
+      {
         occ::handle<Geom2d_Ellipse> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case PARABOLA: {
+      case PARABOLA:
+      {
         occ::handle<Geom2d_Parabola> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case HYPERBOLA: {
+      case HYPERBOLA:
+      {
         occ::handle<Geom2d_Hyperbola> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case BEZIER: {
+      case BEZIER:
+      {
         occ::handle<Geom2d_BezierCurve> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case BSPLINE: {
+      case BSPLINE:
+      {
         occ::handle<Geom2d_BSplineCurve> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case TRIMMED: {
+      case TRIMMED:
+      {
         occ::handle<Geom2d_TrimmedCurve> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      case OFFSET: {
+      case OFFSET:
+      {
         occ::handle<Geom2d_OffsetCurve> CC;
         IS >> CC;
         C = CC;
       }
       break;
 
-      default: {
+      default:
+      {
         occ::handle<Geom2d_Curve> CC;
         GeomTools::GetUndefinedTypeHandler()->ReadCurve2d(ctype, IS, CC);
         C = CC;

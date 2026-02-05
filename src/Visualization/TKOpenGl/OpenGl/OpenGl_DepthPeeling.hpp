@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_FrameBuffer.hpp>
 #include <OpenGl_NamedResource.hpp>
 
@@ -49,4 +48,3 @@ private:
   occ::handle<OpenGl_FrameBuffer> myFrontBackColorFbosOit[2]; //!< front color + back color
   occ::handle<OpenGl_FrameBuffer> myBlendBackFboOit;
 };
-

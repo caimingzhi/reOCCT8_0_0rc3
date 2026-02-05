@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <AdvApp2Var_Data_f2c.hpp>
 
@@ -286,4 +285,3 @@ public:
 
   Standard_EXPORT static doublereal mzsnorm_(integer* ndimen, doublereal* vecteu);
 };
-

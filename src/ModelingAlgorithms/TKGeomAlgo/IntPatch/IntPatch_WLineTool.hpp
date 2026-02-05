@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IntPatch_Line.hpp>
 #include <NCollection_Sequence.hpp>
 #include <IntPatch_WLine.hpp>
@@ -72,4 +71,3 @@ public:
   //! Max angle to concatenate two WLines to avoid result with C0-continuity
   static const double myMaxConcatAngle;
 };
-

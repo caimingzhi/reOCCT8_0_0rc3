@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -49,4 +48,3 @@ public:
                                               const double             HighParameter,
                                               const double             Tol);
 };
-

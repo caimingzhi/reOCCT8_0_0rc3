@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -60,4 +59,3 @@ protected:
   //! Filling steps for all other operations
   Standard_EXPORT void fillPISteps(BOPAlgo_PISteps& theSteps) const override;
 };
-

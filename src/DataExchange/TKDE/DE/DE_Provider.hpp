@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 #include <NCollection_List.hpp>
 #include <Standard_IStream.hpp>
@@ -278,4 +277,3 @@ public:
 private:
   occ::handle<DE_ConfigurationNode> myNode; //!< Internal configuration for the own format
 };
-

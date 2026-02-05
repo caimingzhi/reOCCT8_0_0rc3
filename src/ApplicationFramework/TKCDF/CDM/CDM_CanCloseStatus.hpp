@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum CDM_CanCloseStatus
 {
   CDM_CCS_OK,
@@ -9,4 +8,3 @@ enum CDM_CanCloseStatus
   CDM_CCS_ModifiedReferenced,
   CDM_CCS_ReferenceRejection
 };
-

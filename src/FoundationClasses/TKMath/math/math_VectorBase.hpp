@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 #include <gp_XY.hpp>
 #include <gp_XYZ.hpp>
@@ -315,6 +314,7 @@ private:
   std::array<TheItemType, THE_BUFFER_SIZE> myBuffer;
   NCollection_Array1<TheItemType>          Array;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2023 OPEN CASCADE SAS
 //
@@ -936,5 +936,3 @@ void math_VectorBase<TheItemType>::Resize(const int theSize)
     Array.Resize(theLower, theUpper, true);
   }
 }
-
-

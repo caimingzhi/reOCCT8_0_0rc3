@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsMgr_PresentableObject.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_Shared.hpp>
@@ -198,4 +197,3 @@ protected:
   int  myGlobalSelMode;                                                //!< global selection mode
   bool myAutoHilight; //!< auto-highlighting flag defining
 };
-

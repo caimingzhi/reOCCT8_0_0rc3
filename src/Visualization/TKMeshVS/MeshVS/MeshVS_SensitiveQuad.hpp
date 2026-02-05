@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_EntityOwner.hpp>
 
 #include <gp_Pnt.hpp>
@@ -43,4 +42,3 @@ public:
 private:
   gp_Pnt myVertices[4]; //!< 3d coordinates of quad's corners
 };
-

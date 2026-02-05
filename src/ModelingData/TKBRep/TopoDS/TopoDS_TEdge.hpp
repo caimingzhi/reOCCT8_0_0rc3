@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopAbs_ShapeEnum.hpp>
@@ -20,4 +19,3 @@ protected:
   //! Construct an edge.
   TopoDS_TEdge() {}
 };
-

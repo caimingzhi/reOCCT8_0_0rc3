@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 //  Class LDOM_CharReference: treatment of character reference and internal
@@ -43,4 +42,3 @@ private:
 
   static int myTab[256];
 };
-

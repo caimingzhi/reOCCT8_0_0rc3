@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_OStream.hpp>
 #include <Standard_Type.hpp>
@@ -15,4 +14,3 @@ class Prs3d_BasicAspect : public Standard_Transient
   //! Dumps the content of me into the stream
   virtual void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const = 0;
 };
-

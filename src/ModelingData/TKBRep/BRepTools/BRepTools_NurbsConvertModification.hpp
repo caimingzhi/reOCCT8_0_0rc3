@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -131,4 +130,3 @@ private:
                                  myMap;
   NCollection_List<TopoDS_Shape> myUpdatedEdges;
 };
-

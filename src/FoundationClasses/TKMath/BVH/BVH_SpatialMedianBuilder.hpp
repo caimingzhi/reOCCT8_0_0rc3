@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_BinnedBuilder.hpp>
 #include <BVH_Box.hpp>
 
@@ -20,4 +19,3 @@ public:
   //! Releases resources of spatial median split builder.
   ~BVH_SpatialMedianBuilder() override = default;
 };
-

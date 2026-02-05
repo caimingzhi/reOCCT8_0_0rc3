@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -127,4 +126,3 @@ public:
 protected:
   NCollection_Array1<double> mySteps;
 };
-

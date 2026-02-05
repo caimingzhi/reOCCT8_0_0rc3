@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_TrimmedCurve.hpp>
 #include <Geom2dHash_CurveHasher.hpp>
@@ -37,4 +36,3 @@ struct Geom2dHash_TrimmedCurveHasher
            && std::abs(theCurve1->LastParameter() - theCurve2->LastParameter()) <= aTolerance;
   }
 };
-

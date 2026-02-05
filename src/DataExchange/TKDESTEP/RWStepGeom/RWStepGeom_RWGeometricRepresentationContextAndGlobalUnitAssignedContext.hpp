@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -36,4 +35,3 @@ public:
     const occ::handle<StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext>& ent,
     Interface_EntityIterator& iter) const;
 };
-

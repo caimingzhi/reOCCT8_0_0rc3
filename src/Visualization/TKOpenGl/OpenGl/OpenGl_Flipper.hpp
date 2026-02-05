@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Element.hpp>
 #include <OpenGl_Vec.hpp>
 
@@ -41,4 +40,3 @@ protected:
   NCollection_Vec4<float> myReferenceZ;
   bool                    myIsEnabled;
 };
-

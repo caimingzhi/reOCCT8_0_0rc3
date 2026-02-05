@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopAbs_ShapeEnum.hpp>
 #include <SelectMgr_Filter.hpp>
 
@@ -24,4 +23,3 @@ public:
 private:
   TopAbs_ShapeEnum myType;
 };
-

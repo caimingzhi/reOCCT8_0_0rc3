@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <cmath> // std::sqrt()
 
 #include <Standard_Dump.hpp>
@@ -269,4 +268,3 @@ public:
 private:
   Element_t v[2];
 };
-

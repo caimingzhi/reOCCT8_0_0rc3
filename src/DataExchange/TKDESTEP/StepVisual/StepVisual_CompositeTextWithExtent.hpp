@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_CompositeText.hpp>
@@ -31,4 +30,3 @@ public:
 private:
   occ::handle<StepVisual_PlanarExtent> extent;
 };
-

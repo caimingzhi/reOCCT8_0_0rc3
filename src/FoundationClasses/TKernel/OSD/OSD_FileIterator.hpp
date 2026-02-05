@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_File.hpp>
 #include <OSD_Error.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -71,4 +70,3 @@ private:
   int   myInit;
 #endif
 };
-

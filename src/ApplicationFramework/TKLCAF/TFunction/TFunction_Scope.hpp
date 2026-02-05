@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -91,4 +90,3 @@ private:
   NCollection_DoubleMap<int, TDF_Label> myFunctions;
   int                                   myFreeID;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef OCCT_NO_PLUGINS
   #define PLUGIN(name)
 #else
@@ -12,4 +11,3 @@
       return const_cast<Standard_Transient*>(name::Factory(aGUID).get());                          \
     }
 #endif
-

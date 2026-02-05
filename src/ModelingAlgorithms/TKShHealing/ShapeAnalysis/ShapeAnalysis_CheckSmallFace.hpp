@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -196,6 +195,7 @@ private:
   int          myStatusPinEdges;
   double       myPrecision;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -260,5 +260,3 @@ inline bool ShapeAnalysis_CheckSmallFace::StatusSplitVert(const ShapeExtend_Stat
 {
   return ShapeExtend::DecodeStatus(myStatusSplitVert, status);
 }
-
-

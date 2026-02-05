@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines the fill methods to write gradient background in a window.
 enum Aspect_GradientFillMethod
 {
@@ -29,4 +28,3 @@ enum Aspect_GradientFillMethod
   Aspect_GFM_CORNER3 = Aspect_GradientFillMethod_Corner3,
   Aspect_GFM_CORNER4 = Aspect_GradientFillMethod_Corner4
 };
-

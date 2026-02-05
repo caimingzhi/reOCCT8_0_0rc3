@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <NCollection_DefineAlloc.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -29,4 +28,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ShaderAttribute, Standard_Transient)
 };
-

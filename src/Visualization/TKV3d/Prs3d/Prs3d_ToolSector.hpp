@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_ToolQuadric.hpp>
 
 //! Standard presentation algorithm that outputs graphical primitives for disk surface.
@@ -37,4 +36,3 @@ protected:
 protected:
   double myRadius; //!< sector radius
 };
-

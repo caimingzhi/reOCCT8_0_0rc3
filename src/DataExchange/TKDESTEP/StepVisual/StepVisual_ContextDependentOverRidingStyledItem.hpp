@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_StyleContextSelect.hpp>
@@ -44,4 +43,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepVisual_StyleContextSelect>> styleContext;
 };
-

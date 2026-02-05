@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Level.hpp>
 #include <Message_Alert.hpp>
 #include <NCollection_List.hpp>
@@ -174,4 +173,3 @@ protected:
   int  myLimit;               //!< Maximum number of collected alerts on the top level
   bool myIsActiveInMessenger; //! state whether the report is activated in messenger
 };
-

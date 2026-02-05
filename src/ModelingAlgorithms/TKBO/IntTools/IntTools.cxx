@@ -1,18 +1,3 @@
-// Created on: 2000-08-01
-// Created by: Peter KURNEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <IntTools.hpp>
 
 #include <BRep_Tool.hpp>
@@ -202,11 +187,11 @@ void IntTools::RemoveIdenticalRoots(NCollection_Sequence<IntTools_Root>& aSR, co
 
 namespace
 {
-// Auxiliary: comparator function for sorting roots
-bool IntTools_RootComparator(const IntTools_Root& theLeft, const IntTools_Root& theRight)
-{
-  return theLeft.Root() < theRight.Root();
-}
+  // Auxiliary: comparator function for sorting roots
+  bool IntTools_RootComparator(const IntTools_Root& theLeft, const IntTools_Root& theRight)
+  {
+    return theLeft.Root() < theRight.Root();
+  }
 } // namespace
 
 //=================================================================================================
@@ -331,34 +316,40 @@ int IntTools::Parameter(const gp_Pnt& aP, const occ::handle<Geom_Curve>& aCurve,
   switch (aCurveType)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Lin aLin = aGAC.Line();
       aParameter  = ElCLib::Parameter(aLin, aP);
       return 0;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       gp_Circ aCircle = aGAC.Circle();
       aParameter      = ElCLib::Parameter(aCircle, aP);
       return 0;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       gp_Elips aElips = aGAC.Ellipse();
       aParameter      = ElCLib::Parameter(aElips, aP);
       return 0;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       gp_Hypr aHypr = aGAC.Hyperbola();
       aParameter    = ElCLib::Parameter(aHypr, aP);
       return 0;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       gp_Parab aParab = aGAC.Parabola();
       aParameter      = ElCLib::Parameter(aParab, aP);
       return 0;
     }
 
     case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       GeomAPI_ProjectPointOnCurve aProjector;
 
       aProjector.Init(aP, aCurve, aFirst, aLast);

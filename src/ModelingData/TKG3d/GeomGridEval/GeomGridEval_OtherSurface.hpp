@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Geom_Surface.hpp>
 #include <GeomGridEval.hpp>
@@ -168,4 +167,3 @@ private:
   //! Surface source: either adaptor pointer or geometry handle.
   std::variant<const Adaptor3d_Surface*, occ::handle<Geom_Surface>> mySurface;
 };
-

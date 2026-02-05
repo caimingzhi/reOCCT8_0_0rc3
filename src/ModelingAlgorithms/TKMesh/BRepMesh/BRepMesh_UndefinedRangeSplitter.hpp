@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_NURBSRangeSplitter.hpp>
 
 //! Auxiliary class provides safe value for surfaces that looks like NURBS
@@ -20,4 +19,3 @@ protected:
                                              const bool                            isU,
                                              const GeomAbs_Shape theContinuity) const override;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2013-11-11
-// Created by: Anastasia BORISOVA
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <PrsDim_Dimension.hpp>
 
 #include <PrsDim.hpp>
@@ -68,12 +53,12 @@ IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Dimension, AIS_InteractiveObject)
 
 namespace
 {
-// default text margin and resolution
-constexpr double THE_3D_TEXT_MARGIN = 0.1;
+  // default text margin and resolution
+  constexpr double THE_3D_TEXT_MARGIN = 0.1;
 
-// default selection priorities
-constexpr int THE_NEUTRAL_SEL_PRIORITY = 5;
-constexpr int THE_LOCAL_SEL_PRIORITY   = 6;
+  // default selection priorities
+  constexpr int THE_NEUTRAL_SEL_PRIORITY = 5;
+  constexpr int THE_LOCAL_SEL_PRIORITY   = 6;
 } // namespace
 
 //=================================================================================================
@@ -706,7 +691,8 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
     // ------------------------------------------------------------------------ //
     //                                CENTER                                    //
     // -------------------------------------------------------------------------//
-    case LabelPosition_HCenter: {
+    case LabelPosition_HCenter:
+    {
       // add label on dimension or extension line to presentation
       gp_Pnt aTextPos = IsTextPositionCustom()
                           ? myFixedTextPosition
@@ -833,7 +819,8 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
       //                                LEFT                                      //
       // -------------------------------------------------------------------------//
 
-    case LabelPosition_Left: {
+    case LabelPosition_Left:
+    {
       // add label on dimension or extension line to presentation
       {
         // Left extension with the text
@@ -902,7 +889,8 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
       //                                RIGHT                                     //
       // -------------------------------------------------------------------------//
 
-    case LabelPosition_Right: {
+    case LabelPosition_Right:
+    {
       // add label on dimension or extension line to presentation
 
       // Right extension with text
@@ -1073,11 +1061,13 @@ bool PrsDim_Dimension::CircleFromEdge(const TopoDS_Edge& theEdge,
   BRepAdaptor_Curve anAdaptedCurve(theEdge);
   switch (anAdaptedCurve.GetType())
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       theCircle = anAdaptedCurve.Circle();
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       gp_Elips anEll = anAdaptedCurve.Ellipse();
       if ((anEll.MinorRadius() - anEll.MajorRadius()) >= Precision::Confusion())
       {
@@ -1119,7 +1109,8 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
   // Discover circular geometry
   switch (theShape.ShapeType())
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       PrsDim::GetPlaneFromFace(TopoDS::Face(theShape), aPln, aBasisSurf, aSurfType, anOffset);
 
       if (aSurfType == PrsDim_KOS_Plane)
@@ -1204,7 +1195,8 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
       }
       break;
     }
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       TopoDS_Edge     anEdge;
       TopExp_Explorer anIt(theShape, TopAbs_EDGE);
       if (anIt.More())
@@ -1217,7 +1209,8 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
       }
       break;
     }
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       TopoDS_Edge anEdge = TopoDS::Edge(theShape);
       if (!PrsDim_Dimension::CircleFromEdge(anEdge, theCircle, aFirstPoint, aLastPoint))
       {
@@ -1467,7 +1460,8 @@ gp_Pnt PrsDim_Dimension::GetTextPositionForLinear(const gp_Pnt& theFirstPoint,
   // Get text position.
   switch (aLabelPosition & LabelPosition_HMask)
   {
-    case LabelPosition_Left: {
+    case LabelPosition_Left:
+    {
       gp_Dir aTargetPointsDir = gce_MakeDir(theFirstPoint, theSecondPoint);
       double anExtensionSize  = aDimensionAspect->ExtensionSize();
 
@@ -1478,7 +1472,8 @@ gp_Pnt PrsDim_Dimension::GetTextPositionForLinear(const gp_Pnt& theFirstPoint,
       aTextPosition         = aLineEndPoint.Translated(anExtensionVec);
     }
     break;
-    case LabelPosition_Right: {
+    case LabelPosition_Right:
+    {
       gp_Dir aTargetPointsDir = gce_MakeDir(theFirstPoint, theSecondPoint);
       double anExtensionSize  = aDimensionAspect->ExtensionSize();
 
@@ -1489,7 +1484,8 @@ gp_Pnt PrsDim_Dimension::GetTextPositionForLinear(const gp_Pnt& theFirstPoint,
       aTextPosition         = aLineBegPoint.Translated(anExtensionVec);
     }
     break;
-    case LabelPosition_HCenter: {
+    case LabelPosition_HCenter:
+    {
       aTextPosition = (aLineBegPoint.XYZ() + aLineEndPoint.XYZ()) * 0.5;
     }
     break;
@@ -1634,7 +1630,8 @@ void PrsDim_Dimension::FitTextAlignmentForLinear(
     case Prs3d_DAO_Internal:
       theIsArrowsExternal = false;
       break;
-    case Prs3d_DAO_Fit: {
+    case Prs3d_DAO_Fit:
+    {
       // Add margin to ensure a small tail between text and arrow
       double anArrowMargin = aDimensionAspect->IsText3d()
                                ? aDimensionAspect->TextAspect()->Height() * THE_3D_TEXT_MARGIN
@@ -1661,7 +1658,8 @@ void PrsDim_Dimension::FitTextAlignmentForLinear(
     case Prs3d_DTHP_Center:
       theLabelPosition |= LabelPosition_HCenter;
       break;
-    case Prs3d_DTHP_Fit: {
+    case Prs3d_DTHP_Fit:
+    {
       double aDimensionWidth = aLineBegPoint.Distance(aLineEndPoint);
       double anArrowsWidth   = theIsOneSide ? anArrowLength : 2.0 * anArrowLength;
       double aContentWidth   = theIsArrowsExternal ? aLabelWidth : aLabelWidth + anArrowsWidth;

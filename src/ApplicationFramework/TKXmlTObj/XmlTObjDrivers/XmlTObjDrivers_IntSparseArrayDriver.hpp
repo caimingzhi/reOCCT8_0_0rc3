@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMDF_ADriver.hpp>
 
 class XmlTObjDrivers_IntSparseArrayDriver : public XmlMDF_ADriver
@@ -34,5 +33,5 @@ public:
 // Define handle class
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

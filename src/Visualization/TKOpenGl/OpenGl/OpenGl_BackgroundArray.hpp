@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_GradientFillMethod.hpp>
 #include <Aspect_FillMethod.hpp>
 #include <Graphic3d_Camera.hpp>
@@ -90,4 +89,3 @@ protected:
   mutable bool          myToUpdate;       //!< Shows if array parameters were changed and data (myAttribs storage) is to be updated
   // clang-format on
 };
-

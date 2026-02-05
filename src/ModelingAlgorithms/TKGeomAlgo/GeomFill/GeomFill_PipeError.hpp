@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum GeomFill_PipeError
 {
   GeomFill_PipeOk,
@@ -8,4 +7,3 @@ enum GeomFill_PipeError
   GeomFill_PlaneNotIntersectGuide,
   GeomFill_ImpossibleContact
 };
-

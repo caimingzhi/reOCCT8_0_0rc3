@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines the type of Resize Window method applied
 //! by the user.
 enum Aspect_TypeOfResize
@@ -16,4 +15,3 @@ enum Aspect_TypeOfResize
   Aspect_TOR_BOTTOM_AND_LEFT_BORDER,
   Aspect_TOR_LEFT_AND_TOP_BORDER
 };
-

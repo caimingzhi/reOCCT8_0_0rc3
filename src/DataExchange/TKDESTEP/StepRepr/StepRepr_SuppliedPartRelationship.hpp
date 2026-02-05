@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_ProductDefinitionRelationship.hpp>
@@ -14,4 +13,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(StepRepr_SuppliedPartRelationship,
                           StepBasic_ProductDefinitionRelationship)
 };
-

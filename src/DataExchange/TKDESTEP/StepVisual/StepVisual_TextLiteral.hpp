@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_Axis2Placement.hpp>
@@ -52,4 +51,3 @@ private:
   StepVisual_TextPath                   path;
   StepVisual_FontSelect                 font;
 };
-

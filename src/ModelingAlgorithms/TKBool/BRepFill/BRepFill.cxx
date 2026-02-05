@@ -1,39 +1,3 @@
-// Created on: 1994-03-03
-// Created by: Joelle CHAUVET
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified:	Mon Jan 12 10:50:10 1998
-//              automatic management of origin and orientation
-//              with method Organize
-// Modified:	Mon Feb 23 09:28:46 1998
-//              method Organize with option of projection for closed wires
-//              new method SameNumber with option to report cuts
-//              + utilities ComputeACR and InsertACR
-//              + processing of the case of last point section
-// Modified:	Thu Apr 30 15:24:17 1998
-//              separation closed / open sections + debug
-//              Organize becomes ComputeOrigin and SearchOrigin
-// Modified:	Tue Jul 21 16:48:35 1998
-//              limited case for Pnext of a twist (BUC60281)
-// Modified:	Thu Jul 23 11:38:36 1998
-//              calculate the angle of rotation in SearchOrigin
-// Modified:	Fri Jul 31 15:14:19 1998
-//              IntersectOnWire + MapVLV
-// Modified:	Mon Oct 12 09:42:33 1998
-//              number of edges in EdgesFromVertex (CTS21570)
-
 #include <BRepFill.hpp>
 
 #include <BRep_Builder.hpp>

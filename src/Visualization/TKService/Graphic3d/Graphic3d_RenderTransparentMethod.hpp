@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumerates transparency rendering methods supported by rasterization mode.
 enum Graphic3d_RenderTransparentMethod
 {
@@ -10,4 +9,3 @@ enum Graphic3d_RenderTransparentMethod
                            //!< factor
   Graphic3d_RTM_DEPTH_PEELING_OIT //!< Depth Peeling with specified number of depth layers
 };
-

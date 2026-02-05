@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -109,4 +108,3 @@ private:
   TCollection_AsciiString thegroup;
   TCollection_AsciiString thefile;
 };
-

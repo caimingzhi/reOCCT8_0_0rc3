@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_SignType.hpp>
@@ -21,4 +20,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IFSelect_SignAncestor, IFSelect_SignType)
 };
-

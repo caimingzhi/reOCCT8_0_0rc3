@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Storage_OpenMode.hpp>
 #include <Storage_Data.hpp>
 #include <Storage_Position.hpp>
@@ -243,4 +242,3 @@ private:
   Storage_OpenMode        myOpenMode;
   TCollection_AsciiString myName;
 };
-

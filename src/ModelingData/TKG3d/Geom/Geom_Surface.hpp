@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Curve.hpp>
 
 class gp_Trsf;
@@ -256,4 +255,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Geom_Surface, Geom_Geometry)
 };
-

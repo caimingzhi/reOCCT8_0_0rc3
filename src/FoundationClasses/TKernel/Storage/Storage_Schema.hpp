@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Storage_BaseDriver.hpp>
 #include <Storage_InternalData.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -173,4 +172,3 @@ private:
   TCollection_AsciiString       myName;
   TCollection_AsciiString       myVersion;
 };
-

@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <NCollection_Vec2.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -77,7 +76,6 @@ struct Graphic3d_BufferRange
     Length           = aLast - aStart + 1;
   }
 };
-
 
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
@@ -388,4 +386,3 @@ public:
   // clang-format on
   int NbAttributes; //!< number of vertex attributes
 };
-

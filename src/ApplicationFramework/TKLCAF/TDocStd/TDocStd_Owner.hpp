@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -62,4 +61,3 @@ private:
   //! It keeps pointer to the document to avoid handles cyclic dependency
   TDocStd_Document* myDocument;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Storage_BaseDriver.hpp>
 #include <PCDM_TypeOfFileDriver.hpp>
 
@@ -19,4 +18,3 @@ public:
 
   DEFINE_STANDARD_ALLOC
 };
-

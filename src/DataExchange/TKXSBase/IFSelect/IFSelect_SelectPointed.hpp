@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -111,4 +110,3 @@ private:
   bool                                                  theset;
   NCollection_Sequence<occ::handle<Standard_Transient>> theitems;
 };
-

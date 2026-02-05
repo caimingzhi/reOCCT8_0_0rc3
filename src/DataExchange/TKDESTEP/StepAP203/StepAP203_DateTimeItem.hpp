@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -68,4 +67,3 @@ public:
   //! Returns Value as Certification (or Null if another type)
   Standard_EXPORT occ::handle<StepBasic_Certification> Certification() const;
 };
-

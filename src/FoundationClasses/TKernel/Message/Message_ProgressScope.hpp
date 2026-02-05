@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Assert.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -576,4 +575,3 @@ inline double Message_ProgressScope::Value() const
   // to avoid rounding errors
   return std::ceil(myMax * aVal / (myIsInfinite ? aDist : myPortion) - Precision::Confusion());
 }
-

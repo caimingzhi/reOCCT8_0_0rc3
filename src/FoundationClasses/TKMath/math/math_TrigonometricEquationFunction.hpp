@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_FunctionWithDerivative.hpp>
 
 //! This is function, which corresponds trigonometric equation
@@ -61,4 +60,3 @@ public:
     return true;
   }
 };
-

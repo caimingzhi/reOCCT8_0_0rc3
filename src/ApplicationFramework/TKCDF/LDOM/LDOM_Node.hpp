@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOMString.hpp>
 #include <LDOM_MemManager.hpp>
 
@@ -114,4 +113,3 @@ protected:
 
   friend char* db_pretty_print(const LDOM_Node*, int, char*);
 };
-

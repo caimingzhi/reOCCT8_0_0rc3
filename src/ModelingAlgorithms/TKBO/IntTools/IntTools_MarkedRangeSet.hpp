@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 #include <NCollection_Sequence.hpp>
 #include <Standard_Integer.hpp>
@@ -113,4 +112,3 @@ private:
   NCollection_Sequence<int>    myFlags;
   NCollection_Sequence<int>    myFoundIndices;
 };
-

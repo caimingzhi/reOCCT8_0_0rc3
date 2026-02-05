@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Curve.hpp>
 #include <Geom_BezierCurve.hpp>
@@ -37,4 +36,3 @@ struct GCPnts_TCurveTypes<Adaptor2d_Curve2d>
   typedef GCPnts_DistFunction2d   DistFunction;
   typedef GCPnts_DistFunction2dMV DistFunctionMV;
 };
-

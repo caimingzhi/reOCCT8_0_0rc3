@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <Quantity_Color.hpp>
 #include <NCollection_DataMap.hpp>
@@ -85,4 +84,3 @@ private:
   NCollection_DataMap<int, Quantity_Color>   myElemColorMap1;
   NCollection_DataMap<int, MeshVS_TwoColors> myElemColorMap2;
 };
-

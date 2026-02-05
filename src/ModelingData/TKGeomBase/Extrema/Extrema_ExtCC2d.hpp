@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -123,4 +122,3 @@ private:
   double                                  mydist21;
   double                                  mydist22;
 };
-

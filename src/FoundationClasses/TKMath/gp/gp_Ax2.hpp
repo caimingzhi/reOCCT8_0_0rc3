@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Dir.hpp>
 #include <Precision.hpp>
@@ -591,4 +590,3 @@ inline bool gp_Ax2::IsCoplanar(const gp_Ax1& theA,
   }
   return D1 <= theLinearTolerance && axis.IsNormal(theA, theAngularTolerance);
 }
-

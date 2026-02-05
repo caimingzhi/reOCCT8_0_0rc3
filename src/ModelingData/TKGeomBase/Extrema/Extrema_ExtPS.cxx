@@ -265,7 +265,8 @@ void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
       myExtPElS.Perform(thePoint, myS->Torus(), Precision::Confusion());
       break;
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       if (myExtPExtS.IsNull())
       {
         occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion> aS(
@@ -292,7 +293,8 @@ void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
       return;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       if (myExtPRevS.IsNull())
       {
         occ::handle<GeomAdaptor_SurfaceOfRevolution> aS(new GeomAdaptor_SurfaceOfRevolution(
@@ -318,7 +320,8 @@ void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
       return;
     }
 
-    default: {
+    default:
+    {
       myExtPS.Perform(thePoint);
       myDone = myExtPS.IsDone();
       if (myDone)

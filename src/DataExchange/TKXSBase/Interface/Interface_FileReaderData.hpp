@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -186,4 +185,3 @@ private:
   NCollection_Array1<int>                             thenumpar;
   NCollection_Array1<occ::handle<Standard_Transient>> theents;
 };
-

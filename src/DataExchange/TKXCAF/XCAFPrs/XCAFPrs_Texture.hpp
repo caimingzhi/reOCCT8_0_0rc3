@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Texture2D.hpp>
 #include <Graphic3d_TextureUnit.hpp>
 #include <Image_Texture.hpp>
@@ -28,4 +27,3 @@ public:
 protected:
   occ::handle<Image_Texture> myImageSource;
 };
-

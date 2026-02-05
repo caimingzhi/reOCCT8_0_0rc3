@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_ToolQuadric.hpp>
 
 //! Standard presentation algorithm that outputs graphical primitives for cylindrical surface.
@@ -47,4 +46,3 @@ protected:
   double myTopRadius;    //!< cylinder top radius
   double myHeight;       //!< cylinder height
 };
-

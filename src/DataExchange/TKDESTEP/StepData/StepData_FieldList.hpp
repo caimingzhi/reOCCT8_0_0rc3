@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -35,4 +34,3 @@ public:
   //! Fills an iterator with the entities shared by <me>
   Standard_EXPORT void FillShared(Interface_EntityIterator& iter) const;
 };
-

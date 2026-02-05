@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax3.hpp>
 #include <Standard_ConstructionError.hpp>
@@ -302,4 +301,3 @@ inline gp_Torus gp_Torus::Transformed(const gp_Trsf& theT) const
   }
   return aC;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <TCollection_ExtendedString.hpp>
 #include <TDF_DerivedAttribute.hpp>
@@ -64,4 +63,3 @@ private:
   TCollection_ExtendedString myUserName;  ///< Name of the user, who created the note.
   TCollection_ExtendedString myTimeStamp; ///< Timestamp, when the note was created.
 };
-

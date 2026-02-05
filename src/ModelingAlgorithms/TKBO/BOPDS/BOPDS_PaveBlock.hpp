@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Bnd_Box.hpp>
@@ -178,4 +177,3 @@ protected:
   NCollection_Map<int>                   myMFence;
   bool                                   myIsSplittable;
 };
-

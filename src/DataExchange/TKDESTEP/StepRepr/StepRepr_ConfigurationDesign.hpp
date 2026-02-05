@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_ConfigurationDesignItem.hpp>
@@ -38,4 +37,3 @@ private:
   occ::handle<StepRepr_ConfigurationItem> theConfiguration;
   StepRepr_ConfigurationDesignItem        theDesign;
 };
-

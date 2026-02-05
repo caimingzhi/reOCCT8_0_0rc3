@@ -94,7 +94,8 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
     OCC_CATCH_SIGNALS
     switch (aShapeType)
     {
-      case TopAbs_VERTEX: {
+      case TopAbs_VERTEX:
+      {
         TopoDS_Vertex& aV = TopoDS::Vertex(aResult);
         // Read the point geometry
         theStream >> aTol;
@@ -112,27 +113,31 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
           occ::handle<BRep_PointRepresentation> aPR;
           switch (aPrsType)
           {
-            case 1: {
+            case 1:
+            {
               occ::handle<Geom_Curve> aCurve = ReadCurve(theStream);
               if (!aCurve.IsNull())
                 aPR = new BRep_PointOnCurve(aParam, aCurve, anEmptyLoc);
               break;
             }
-            case 2: {
+            case 2:
+            {
               occ::handle<Geom2d_Curve> aCurve2d = ReadCurve2d(theStream);
               occ::handle<Geom_Surface> aSurface = ReadSurface(theStream);
               if (!aCurve2d.IsNull() && aSurface.IsNull())
                 aPR = new BRep_PointOnCurveOnSurface(aParam, aCurve2d, aSurface, anEmptyLoc);
               break;
             }
-            case 3: {
+            case 3:
+            {
               double                    aParam2  = theStream.ReadReal();
               occ::handle<Geom_Surface> aSurface = ReadSurface(theStream);
               if (!aSurface.IsNull())
                 aPR = new BRep_PointOnSurface(aParam, aParam2, aSurface, anEmptyLoc);
               break;
             }
-            default: {
+            default:
+            {
               Standard_SStream aMsg;
               aMsg << "BinTools_ShapeReader::Read: UnExpected BRep_PointRepresentation = "
                    << aPrsType << std::endl;
@@ -148,7 +153,8 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
         }
         break;
       }
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         TopoDS_Edge& aE = TopoDS::Edge(aResult);
         aBuilder.MakeEdge(aE);
         // Read the curve geometry
@@ -242,7 +248,8 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
               // range
               break;
             }
-            default: {
+            default:
+            {
               Standard_SStream aMsg;
               aMsg << "Unexpected Curve Representation =" << aPrsType << std::endl;
               throw Standard_Failure(aMsg.str().c_str());
@@ -254,7 +261,8 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
       case TopAbs_WIRE:
         aBuilder.MakeWire(TopoDS::Wire(aResult));
         break;
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         TopoDS_Face& aF = TopoDS::Face(aResult);
         aBuilder.MakeFace(aF);
         bool aNatRes = theStream.ReadBool();
@@ -279,7 +287,8 @@ TopoDS_Shape BinTools_ShapeReader::ReadShape(BinTools_IStream& theStream)
       case TopAbs_COMPOUND:
         aBuilder.MakeCompound(TopoDS::Compound(aResult));
         break;
-      default: {
+      default:
+      {
         Standard_SStream aMsg;
         aMsg << "Unexpected topology type = " << aShapeType << std::endl;
         throw Standard_Failure(aMsg.str().c_str());

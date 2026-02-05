@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -199,4 +198,3 @@ private:
   occ::handle<Standard_Transient>               theobjrec;
   NCollection_Sequence<TCollection_AsciiString> thecomlist;
 };
-

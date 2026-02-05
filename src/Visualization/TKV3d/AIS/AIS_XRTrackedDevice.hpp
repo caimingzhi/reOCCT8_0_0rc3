@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Aspect_XRTrackedDeviceRole.hpp>
 
@@ -73,4 +72,3 @@ private:
   Aspect_XRTrackedDeviceRole              myRole;
   bool                                    myToShowAxes;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Graphic3d_Camera.hpp>
 #include <NCollection_Vec2.hpp>
@@ -728,4 +727,3 @@ protected:
   //! Checks if picking ray can be used for detection.
   Standard_EXPORT bool isValidRay(const SelectBasics_SelectingVolumeManager& theMgr) const;
 };
-

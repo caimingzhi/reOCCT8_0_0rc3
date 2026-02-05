@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -85,4 +84,3 @@ private:
   gp_GTrsf               myGTrsf;
   BRepBuilderAPI_Collect myHist;
 };
-

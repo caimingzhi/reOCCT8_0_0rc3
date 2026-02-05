@@ -22,103 +22,103 @@
 
 namespace
 {
-// Minimal value of interval's range for computation | minimal value of "dim" | ...
-static const double EPS_PARAM          = 1.e-12;
-static const double EPS_DIM            = 1.e-30;
-static const double ERROR_ALGEBR_RATIO = 2.0 / 3.0;
+  // Minimal value of interval's range for computation | minimal value of "dim" | ...
+  static const double EPS_PARAM          = 1.e-12;
+  static const double EPS_DIM            = 1.e-30;
+  static const double ERROR_ALGEBR_RATIO = 2.0 / 3.0;
 
-// Maximum of GaussPoints on a subinterval and maximum of subintervals
-static const int GPM        = math::GaussPointsMax();
-static const int SUBS_POWER = 32;
-static const int SM         = SUBS_POWER * GPM + 1;
+  // Maximum of GaussPoints on a subinterval and maximum of subintervals
+  static const int GPM        = math::GaussPointsMax();
+  static const int SUBS_POWER = 32;
+  static const int SM         = SUBS_POWER * GPM + 1;
 
-// Auxiliary inner functions to perform arithmetic operations.
-static double Add(const double theA, const double theB)
-{
-  return theA + theB;
-}
-
-static double AddInf(const double theA, const double theB)
-{
-  if (Precision::IsPositiveInfinite(theA))
+  // Auxiliary inner functions to perform arithmetic operations.
+  static double Add(const double theA, const double theB)
   {
-    if (Precision::IsNegativeInfinite(theB))
-      return 0.0;
-    else
-      return Precision::Infinite();
+    return theA + theB;
   }
 
-  if (Precision::IsPositiveInfinite(theB))
-  {
-    if (Precision::IsNegativeInfinite(theA))
-      return 0.0;
-    else
-      return Precision::Infinite();
-  }
-
-  if (Precision::IsNegativeInfinite(theA))
-  {
-    if (Precision::IsPositiveInfinite(theB))
-      return 0.0;
-    else
-      return -Precision::Infinite();
-  }
-
-  if (Precision::IsNegativeInfinite(theB))
+  static double AddInf(const double theA, const double theB)
   {
     if (Precision::IsPositiveInfinite(theA))
+    {
+      if (Precision::IsNegativeInfinite(theB))
+        return 0.0;
+      else
+        return Precision::Infinite();
+    }
+
+    if (Precision::IsPositiveInfinite(theB))
+    {
+      if (Precision::IsNegativeInfinite(theA))
+        return 0.0;
+      else
+        return Precision::Infinite();
+    }
+
+    if (Precision::IsNegativeInfinite(theA))
+    {
+      if (Precision::IsPositiveInfinite(theB))
+        return 0.0;
+      else
+        return -Precision::Infinite();
+    }
+
+    if (Precision::IsNegativeInfinite(theB))
+    {
+      if (Precision::IsPositiveInfinite(theA))
+        return 0.0;
+      else
+        return -Precision::Infinite();
+    }
+
+    return theA + theB;
+  }
+
+  static double Mult(const double theA, const double theB)
+  {
+    return theA * theB;
+  }
+
+  static double MultInf(const double theA, const double theB)
+  {
+    if ((theA == 0.0) || (theB == 0.0)) // strictly zerro (without any tolerances)
       return 0.0;
-    else
-      return -Precision::Infinite();
+
+    if (Precision::IsPositiveInfinite(theA))
+    {
+      if (theB < 0.0)
+        return -Precision::Infinite();
+      else
+        return Precision::Infinite();
+    }
+
+    if (Precision::IsPositiveInfinite(theB))
+    {
+      if (theA < 0.0)
+        return -Precision::Infinite();
+      else
+        return Precision::Infinite();
+    }
+
+    if (Precision::IsNegativeInfinite(theA))
+    {
+      if (theB < 0.0)
+        return +Precision::Infinite();
+      else
+        return -Precision::Infinite();
+    }
+
+    if (Precision::IsNegativeInfinite(theB))
+    {
+      if (theA < 0.0)
+        return +Precision::Infinite();
+      else
+        return -Precision::Infinite();
+    }
+
+    return theA * theB;
   }
-
-  return theA + theB;
-}
-
-static double Mult(const double theA, const double theB)
-{
-  return theA * theB;
-}
-
-static double MultInf(const double theA, const double theB)
-{
-  if ((theA == 0.0) || (theB == 0.0)) // strictly zerro (without any tolerances)
-    return 0.0;
-
-  if (Precision::IsPositiveInfinite(theA))
-  {
-    if (theB < 0.0)
-      return -Precision::Infinite();
-    else
-      return Precision::Infinite();
-  }
-
-  if (Precision::IsPositiveInfinite(theB))
-  {
-    if (theA < 0.0)
-      return -Precision::Infinite();
-    else
-      return Precision::Infinite();
-  }
-
-  if (Precision::IsNegativeInfinite(theA))
-  {
-    if (theB < 0.0)
-      return +Precision::Infinite();
-    else
-      return -Precision::Infinite();
-  }
-
-  if (Precision::IsNegativeInfinite(theB))
-  {
-    if (theA < 0.0)
-      return +Precision::Infinite();
-    else
-      return -Precision::Infinite();
-  }
-
-  return theA * theB;
-}
 } // namespace
 
 //=================================================================================================

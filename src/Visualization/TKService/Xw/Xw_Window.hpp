@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Window.hpp>
 
 #include <Aspect_VKey.hpp>
@@ -105,4 +104,3 @@ protected:
   bool myIsOwnWin; //!< flag to indicate own window handle (to be deallocated on destruction)
   // clang-format on
 };
-

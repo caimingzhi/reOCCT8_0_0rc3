@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureUnit.hpp>
 #include <OpenGl_Buffer.hpp>
 
@@ -88,4 +87,3 @@ protected:
   unsigned int myTextureId; //!< texture id
   unsigned int myTexFormat; //!< internal texture format
 };
-

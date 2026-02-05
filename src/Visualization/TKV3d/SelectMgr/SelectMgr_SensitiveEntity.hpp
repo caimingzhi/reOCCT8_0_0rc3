@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
@@ -40,4 +39,3 @@ private:
   occ::handle<Select3D_SensitiveEntity> mySensitive;            //!< Related SelectBasics entity
   mutable bool                          myIsActiveForSelection; //!< Selection activity status
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1998-08-06
-// Created by: Administrateur Atelier MDL
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifdef _WIN32
 
   #include <windows.h>
@@ -37,7 +21,8 @@ LRESULT APIENTRY WndProc(HWND hWndFrame, UINT wMsg, WPARAM wParam, LPARAM lParam
 {
   switch (wMsg)
   {
-    case WM_CREATE: {
+    case WM_CREATE:
+    {
       CreateProc(hWndFrame);
       HWND hWndClient            = (HWND)GetWindowLongPtrW(hWndFrame, CLIENTWND);
       Draw_Window::hWndClientMDI = hWndClient;
@@ -47,11 +32,13 @@ LRESULT APIENTRY WndProc(HWND hWndFrame, UINT wMsg, WPARAM wParam, LPARAM lParam
       }
       return 0;
     }
-    case WM_COMMAND: {
+    case WM_COMMAND:
+    {
       CmdProc(hWndFrame, LOWORD(wParam), wParam, lParam);
       return 0;
     }
-    case WM_DESTROY: {
+    case WM_DESTROY:
+    {
       Draw_Interprete("exit");
       DestroyProc(hWndFrame);
       return 0;
@@ -89,7 +76,8 @@ LRESULT APIENTRY CmdProc(HWND hWndFrame, UINT wMsg, WPARAM /*wParam*/, LPARAM /*
   HWND hWndClient = (HWND)GetWindowLongPtrW(hWndFrame, CLIENTWND);
   switch (wMsg)
   {
-    case IDM_WINDOW_NEXT: {
+    case IDM_WINDOW_NEXT:
+    {
       if (hWndClient != NULL)
       {
         HWND hWndActive = (HWND)SendMessageW(hWndClient, WM_MDIGETACTIVE, 0, 0l);
@@ -97,28 +85,32 @@ LRESULT APIENTRY CmdProc(HWND hWndFrame, UINT wMsg, WPARAM /*wParam*/, LPARAM /*
       }
       break;
     }
-    case IDM_WINDOW_CASCADE: {
+    case IDM_WINDOW_CASCADE:
+    {
       if (hWndClient != NULL)
       {
         SendMessageW(hWndClient, WM_MDICASCADE, 0, 0l);
       }
       break;
     }
-    case IDM_WINDOW_TILEHOR: {
+    case IDM_WINDOW_TILEHOR:
+    {
       if (hWndClient != NULL)
       {
         SendMessageW(hWndClient, WM_MDITILE, MDITILE_HORIZONTAL, 0l);
       }
       break;
     }
-    case IDM_WINDOW_TILEVERT: {
+    case IDM_WINDOW_TILEVERT:
+    {
       if (hWndClient != NULL)
       {
         SendMessageW(hWndClient, WM_MDITILE, MDITILE_VERTICAL, 0l);
       }
       break;
     }
-    case IDM_FILE_EXIT: {
+    case IDM_FILE_EXIT:
+    {
       Draw_Interprete("exit");
       DestroyProc(hWndFrame);
       break;

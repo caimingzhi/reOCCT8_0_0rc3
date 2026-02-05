@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_BasicNode.hpp>
 #include <LDOMBasicString.hpp>
 
@@ -59,4 +58,3 @@ private:
 
   LDOMBasicString myValue;
 };
-

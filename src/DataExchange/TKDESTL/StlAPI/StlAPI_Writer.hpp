@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressScope.hpp>
 #include <Message_ProgressIndicator.hpp>
 
@@ -38,4 +37,3 @@ public:
 private:
   bool myASCIIMode;
 };
-

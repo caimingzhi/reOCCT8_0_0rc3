@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -177,4 +176,3 @@ private:
   TopTools_LocationSet                                          myLocations;
   int                                                           myFormatNb;
 };
-

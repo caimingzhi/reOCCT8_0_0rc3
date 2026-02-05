@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -32,4 +31,3 @@ public:
   //! returns Value as a RepresentationItem (Null if another type)
   Standard_EXPORT occ::handle<StepRepr_RepresentationItem> RepresentationItem() const;
 };
-

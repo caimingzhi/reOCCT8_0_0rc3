@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -121,4 +120,3 @@ private:
   double                           myError2dU;
   double                           myError2dV;
 };
-

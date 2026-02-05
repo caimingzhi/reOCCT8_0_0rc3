@@ -1,6 +1,5 @@
 #pragma once
 
-
 //  Macros to help static Handles not to be "constructed" before main run
 //  In order to avoid it, the Handle to be statically reserved is encapsulated
 //  in a structure itself designated through a Null Pointer :
@@ -97,4 +96,3 @@
     var##_s->H = value;                                                                            \
   }                                                                                                \
   Handle(type)& var = var##_s->H;
-

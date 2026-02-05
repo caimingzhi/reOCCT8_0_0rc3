@@ -125,17 +125,20 @@ bool Aspect_VKeySet::HoldDuration(Aspect_VKey theKey,
   std::lock_guard<std::shared_mutex> aLock(myLock);
   switch (myKeys[theKey].KStatus)
   {
-    case KeyStatus_Free: {
+    case KeyStatus_Free:
+    {
       theDuration = 0.0;
       return false;
     }
-    case KeyStatus_Released: {
+    case KeyStatus_Released:
+    {
       myKeys[theKey].KStatus = KeyStatus_Free;
       theDuration            = myKeys[theKey].TimeUp - myKeys[theKey].TimeDown;
       thePressure            = myKeys[theKey].Pressure;
       return true;
     }
-    case KeyStatus_Pressed: {
+    case KeyStatus_Pressed:
+    {
       theDuration = theTime - myKeys[theKey].TimeDown;
       thePressure = myKeys[theKey].Pressure;
       return true;

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -74,4 +73,3 @@ public:
     NCollection_Array1<double>& Resultat2,
     const double                EpsNul) const;
 };
-

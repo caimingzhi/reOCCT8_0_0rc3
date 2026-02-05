@@ -19,70 +19,70 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitivePoly, Select3D_SensitiveSet)
 
 namespace
 {
-static int GetCircleNbPoints(const gp_Circ& theCircle,
-                             const int      theNbPnts,
-                             const double   theU1,
-                             const double   theU2,
-                             const bool     theIsFilled)
-{
-  // Check if number of points is invalid.
-  // In this case myPolyg raises Standard_ConstructionError
-  // exception (see constructor below).
-  if (theNbPnts <= 0)
+  static int GetCircleNbPoints(const gp_Circ& theCircle,
+                               const int      theNbPnts,
+                               const double   theU1,
+                               const double   theU2,
+                               const bool     theIsFilled)
   {
-    return 0;
+    // Check if number of points is invalid.
+    // In this case myPolyg raises Standard_ConstructionError
+    // exception (see constructor below).
+    if (theNbPnts <= 0)
+    {
+      return 0;
+    }
+
+    if (theCircle.Radius() > Precision::Confusion())
+    {
+      const bool isSector =
+        theIsFilled && std::abs(std::abs(theU2 - theU1) - 2.0 * M_PI) > gp::Resolution();
+      return 2 * theNbPnts + 1 + (isSector ? 2 : 0);
+    }
+
+    // The radius is too small and circle degenerates into point
+    return 1;
   }
 
-  if (theCircle.Radius() > Precision::Confusion())
+  //! Definition of circle polyline
+  static void initCircle(Select3D_PointData& thePolygon,
+                         const gp_Circ&      theCircle,
+                         const double        theU1,
+                         const double        theU2,
+                         const bool          theIsFilled,
+                         const int           theNbPnts)
   {
-    const bool isSector =
-      theIsFilled && std::abs(std::abs(theU2 - theU1) - 2.0 * M_PI) > gp::Resolution();
-    return 2 * theNbPnts + 1 + (isSector ? 2 : 0);
-  }
+    const double aStep   = (theU2 - theU1) / theNbPnts;
+    const double aRadius = theCircle.Radius();
+    int          aPntIdx = 0;
+    double       aCurU   = theU1;
+    gp_Pnt       aP1;
+    gp_Vec       aV1;
 
-  // The radius is too small and circle degenerates into point
-  return 1;
-}
+    const bool isSector = std::abs(theU2 - theU1 - 2.0 * M_PI) > gp::Resolution();
 
-//! Definition of circle polyline
-static void initCircle(Select3D_PointData& thePolygon,
-                       const gp_Circ&      theCircle,
-                       const double        theU1,
-                       const double        theU2,
-                       const bool          theIsFilled,
-                       const int           theNbPnts)
-{
-  const double aStep   = (theU2 - theU1) / theNbPnts;
-  const double aRadius = theCircle.Radius();
-  int          aPntIdx = 0;
-  double       aCurU   = theU1;
-  gp_Pnt       aP1;
-  gp_Vec       aV1;
+    if (isSector && theIsFilled)
+    {
+      thePolygon.SetPnt(aPntIdx++, theCircle.Location());
+    }
 
-  const bool isSector = std::abs(theU2 - theU1 - 2.0 * M_PI) > gp::Resolution();
+    for (int anIndex = 1; anIndex <= theNbPnts; ++anIndex, aCurU += aStep)
+    {
+      ElCLib::CircleD1(aCurU, theCircle.Position(), theCircle.Radius(), aP1, aV1);
+      thePolygon.SetPnt(aPntIdx++, aP1);
 
-  if (isSector && theIsFilled)
-  {
-    thePolygon.SetPnt(aPntIdx++, theCircle.Location());
-  }
-
-  for (int anIndex = 1; anIndex <= theNbPnts; ++anIndex, aCurU += aStep)
-  {
-    ElCLib::CircleD1(aCurU, theCircle.Position(), theCircle.Radius(), aP1, aV1);
+      aV1.Normalize();
+      const gp_Pnt aP2 = aP1.XYZ() + aV1.XYZ() * std::tan(aStep * 0.5) * aRadius;
+      thePolygon.SetPnt(aPntIdx++, aP2);
+    }
+    aP1 = ElCLib::CircleValue(theU2, theCircle.Position(), theCircle.Radius());
     thePolygon.SetPnt(aPntIdx++, aP1);
 
-    aV1.Normalize();
-    const gp_Pnt aP2 = aP1.XYZ() + aV1.XYZ() * std::tan(aStep * 0.5) * aRadius;
-    thePolygon.SetPnt(aPntIdx++, aP2);
+    if (isSector && theIsFilled)
+    {
+      thePolygon.SetPnt(aPntIdx++, theCircle.Location());
+    }
   }
-  aP1 = ElCLib::CircleValue(theU2, theCircle.Position(), theCircle.Radius());
-  thePolygon.SetPnt(aPntIdx++, aP1);
-
-  if (isSector && theIsFilled)
-  {
-    thePolygon.SetPnt(aPntIdx++, theCircle.Location());
-  }
-}
 } // namespace
 
 //=================================================================================================

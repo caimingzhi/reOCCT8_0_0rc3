@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_Modification.hpp>
 
 //! Tool class implementing necessary functionality for copying geometry and triangulation.
@@ -109,4 +108,3 @@ private:
   bool myCopyGeom;
   bool myCopyMesh;
 };
-

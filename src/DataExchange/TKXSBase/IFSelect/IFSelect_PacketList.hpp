@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Interface_IntList.hpp>
@@ -88,4 +87,3 @@ private:
   bool                                  thebegin;
   TCollection_AsciiString               thename;
 };
-

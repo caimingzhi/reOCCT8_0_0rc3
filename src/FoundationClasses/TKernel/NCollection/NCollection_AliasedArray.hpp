@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DimensionMismatch.hpp>
 #include <Standard_OutOfMemory.hpp>
 #include <Standard_OutOfRange.hpp>
@@ -351,4 +350,3 @@ protected:
   int      mySize;      //!< number of elements
   bool     myDeletable; //!< flag showing who allocated the array
 };
-

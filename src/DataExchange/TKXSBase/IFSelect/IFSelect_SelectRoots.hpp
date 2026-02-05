@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -42,4 +41,3 @@ protected:
   //! Returns True, because RootResult assures uniqueness
   Standard_EXPORT bool HasUniqueResult() const override;
 };
-

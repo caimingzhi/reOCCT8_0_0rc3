@@ -21,14 +21,14 @@
 // Constant litterales
 namespace TextValue
 {
-static char SubList[]  = "/* (SUB) */";
-static char Scope[]    = "SCOPE";
-static char Nil[]      = " ";
-static char Sub1[]     = "$1"; /* optimisation ... */
-static char Sub2[]     = "$2";
-static char ArgType1[] = "(IF#TnEHBx"; /* types arguments (2 1es lettres) */
-static char ArgType2[] = ")nlIxdnxix";
-static char IdZero[]   = "#0";
+  static char SubList[]  = "/* (SUB) */";
+  static char Scope[]    = "SCOPE";
+  static char Nil[]      = " ";
+  static char Sub1[]     = "$1"; /* optimisation ... */
+  static char Sub2[]     = "$2";
+  static char ArgType1[] = "(IF#TnEHBx"; /* types arguments (2 1es lettres) */
+  static char ArgType2[] = ")nlIxdnxix";
+  static char IdZero[]   = "#0";
 } // namespace TextValue
 
 class StepFile_ReadData::Argument
@@ -228,7 +228,8 @@ void StepFile_ReadData::RecordListStart()
       case 2:
         aSubRec->myIdent = TextValue::Sub2;
         break;
-      default: {
+      default:
+      {
         char aBufSub[10];
         if (myNumSub > 9)
           Sprintf(aBufSub, "$%d", myNumSub);

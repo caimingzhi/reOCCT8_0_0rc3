@@ -45,7 +45,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -53,7 +54,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -61,7 +63,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         return;
@@ -69,7 +72,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         return;
@@ -77,7 +81,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -85,7 +90,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         return;
@@ -93,7 +99,8 @@ void IGESDefs_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         return;

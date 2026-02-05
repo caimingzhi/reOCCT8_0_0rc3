@@ -34,12 +34,12 @@
 
 namespace
 {
-// Singleton to ensure DEGLTF plugin is registered only once
-void DEGLTFSingleton()
-{
-  static DE_PluginHolder<DEGLTF_ConfigurationNode> aHolder;
-  (void)aHolder;
-}
+  // Singleton to ensure DEGLTF plugin is registered only once
+  void DEGLTFSingleton()
+  {
+    static DE_PluginHolder<DEGLTF_ConfigurationNode> aHolder;
+    (void)aHolder;
+  }
 } // namespace
 
 //=============================================================================

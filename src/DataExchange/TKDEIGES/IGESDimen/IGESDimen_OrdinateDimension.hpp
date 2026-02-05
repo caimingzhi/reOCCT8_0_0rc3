@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -49,4 +48,3 @@ private:
   occ::handle<IGESDimen_WitnessLine> theWitnessLine;
   occ::handle<IGESDimen_LeaderArrow> theLeader;
 };
-

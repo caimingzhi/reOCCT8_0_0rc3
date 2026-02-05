@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -105,4 +104,3 @@ public:
                                                  const int                  theNbIters = 10,
                                                  double* const thePrmOnCurve           = nullptr);
 };
-

@@ -20,146 +20,146 @@
 
 namespace
 {
-// Test function with multiple roots: f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3)
-class CubicFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double X, double& F) override
+  // Test function with multiple roots: f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3)
+  class CubicFunction : public math_FunctionWithDerivative
   {
-    F = X * X * X - 6.0 * X * X + 11.0 * X - 6.0;
-    return true;
-  }
+  public:
+    bool Value(const double X, double& F) override
+    {
+      F = X * X * X - 6.0 * X * X + 11.0 * X - 6.0;
+      return true;
+    }
 
-  bool Derivative(const double X, double& D) override
-  {
-    D = 3.0 * X * X - 12.0 * X + 11.0;
-    return true;
-  }
+    bool Derivative(const double X, double& D) override
+    {
+      D = 3.0 * X * X - 12.0 * X + 11.0;
+      return true;
+    }
 
-  bool Values(const double X, double& F, double& D) override
-  {
-    F = X * X * X - 6.0 * X * X + 11.0 * X - 6.0;
-    D = 3.0 * X * X - 12.0 * X + 11.0;
-    return true;
-  }
-};
+    bool Values(const double X, double& F, double& D) override
+    {
+      F = X * X * X - 6.0 * X * X + 11.0 * X - 6.0;
+      D = 3.0 * X * X - 12.0 * X + 11.0;
+      return true;
+    }
+  };
 
-// Sine function with multiple roots
-class SineFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double X, double& F) override
+  // Sine function with multiple roots
+  class SineFunction : public math_FunctionWithDerivative
   {
-    F = sin(X);
-    return true;
-  }
+  public:
+    bool Value(const double X, double& F) override
+    {
+      F = sin(X);
+      return true;
+    }
 
-  bool Derivative(const double X, double& D) override
-  {
-    D = cos(X);
-    return true;
-  }
+    bool Derivative(const double X, double& D) override
+    {
+      D = cos(X);
+      return true;
+    }
 
-  bool Values(const double X, double& F, double& D) override
-  {
-    F = sin(X);
-    D = cos(X);
-    return true;
-  }
-};
+    bool Values(const double X, double& F, double& D) override
+    {
+      F = sin(X);
+      D = cos(X);
+      return true;
+    }
+  };
 
-// Function with a null interval: f(x) = 0 for x in [2, 4]
-class NullIntervalFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double X, double& F) override
+  // Function with a null interval: f(x) = 0 for x in [2, 4]
+  class NullIntervalFunction : public math_FunctionWithDerivative
   {
-    if (X >= 2.0 && X <= 4.0)
-      F = 0.0;
-    else if (X < 2.0)
-      F = X - 2.0;
-    else
-      F = X - 4.0;
-    return true;
-  }
+  public:
+    bool Value(const double X, double& F) override
+    {
+      if (X >= 2.0 && X <= 4.0)
+        F = 0.0;
+      else if (X < 2.0)
+        F = X - 2.0;
+      else
+        F = X - 4.0;
+      return true;
+    }
 
-  bool Derivative(const double X, double& D) override
-  {
-    if (X >= 2.0 && X <= 4.0)
-      D = 0.0;
-    else
-      D = 1.0;
-    return true;
-  }
+    bool Derivative(const double X, double& D) override
+    {
+      if (X >= 2.0 && X <= 4.0)
+        D = 0.0;
+      else
+        D = 1.0;
+      return true;
+    }
 
-  bool Values(const double X, double& F, double& D) override
+    bool Values(const double X, double& F, double& D) override
+    {
+      if (X >= 2.0 && X <= 4.0)
+      {
+        F = 0.0;
+        D = 0.0;
+      }
+      else if (X < 2.0)
+      {
+        F = X - 2.0;
+        D = 1.0;
+      }
+      else
+      {
+        F = X - 4.0;
+        D = 1.0;
+      }
+      return true;
+    }
+  };
+
+  // Function with one root: f(x) = (x-1.5)^2 - 0.25 = (x-1)(x-2)
+  class QuadraticFunction : public math_FunctionWithDerivative
   {
-    if (X >= 2.0 && X <= 4.0)
+  public:
+    bool Value(const double X, double& F) override
+    {
+      F = (X - 1.5) * (X - 1.5) - 0.25;
+      return true;
+    }
+
+    bool Derivative(const double X, double& D) override
+    {
+      D = 2.0 * (X - 1.5);
+      return true;
+    }
+
+    bool Values(const double X, double& F, double& D) override
+    {
+      F = (X - 1.5) * (X - 1.5) - 0.25;
+      D = 2.0 * (X - 1.5);
+      return true;
+    }
+  };
+
+  // Constant zero function
+  class ZeroFunction : public math_FunctionWithDerivative
+  {
+  public:
+    bool Value(const double, double& F) override
     {
       F = 0.0;
+      return true;
+    }
+
+    bool Derivative(const double, double& D) override
+    {
       D = 0.0;
+      return true;
     }
-    else if (X < 2.0)
+
+    bool Values(const double, double& F, double& D) override
     {
-      F = X - 2.0;
-      D = 1.0;
+      F = 0.0;
+      D = 0.0;
+      return true;
     }
-    else
-    {
-      F = X - 4.0;
-      D = 1.0;
-    }
-    return true;
-  }
-};
-
-// Function with one root: f(x) = (x-1.5)^2 - 0.25 = (x-1)(x-2)
-class QuadraticFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double X, double& F) override
-  {
-    F = (X - 1.5) * (X - 1.5) - 0.25;
-    return true;
-  }
-
-  bool Derivative(const double X, double& D) override
-  {
-    D = 2.0 * (X - 1.5);
-    return true;
-  }
-
-  bool Values(const double X, double& F, double& D) override
-  {
-    F = (X - 1.5) * (X - 1.5) - 0.25;
-    D = 2.0 * (X - 1.5);
-    return true;
-  }
-};
-
-// Constant zero function
-class ZeroFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double, double& F) override
-  {
-    F = 0.0;
-    return true;
-  }
-
-  bool Derivative(const double, double& D) override
-  {
-    D = 0.0;
-    return true;
-  }
-
-  bool Values(const double, double& F, double& D) override
-  {
-    F = 0.0;
-    D = 0.0;
-    return true;
-  }
-};
+  };
 } // namespace
 
 TEST(math_FunctionAllRoots, CubicFunctionBasic)

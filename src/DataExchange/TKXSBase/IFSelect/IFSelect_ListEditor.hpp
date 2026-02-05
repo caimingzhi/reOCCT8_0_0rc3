@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -135,4 +134,3 @@ private:
   occ::handle<NCollection_HSequence<int>>                                   thestat;
   occ::handle<Interface_InterfaceModel>                                     themodl;
 };
-

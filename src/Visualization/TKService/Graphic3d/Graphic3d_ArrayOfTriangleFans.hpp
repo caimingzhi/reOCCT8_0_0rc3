@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
 //! Contains triangles fan array definition
@@ -65,4 +64,3 @@ public:
   {
   }
 };
-

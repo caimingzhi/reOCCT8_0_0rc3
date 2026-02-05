@@ -548,12 +548,14 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferSplineSurface(
 
   switch (result)
   {
-    case 5: {
+    case 5:
+    {
       Message_Msg msg1305("IGES_1305");
       SendFail(start, msg1305); // less than on segment in U or V (no result produced)
       return resconv;
     }
-    case 4: {
+    case 4:
+    {
       Message_Msg msg1190("IGES_1190");
       SendFail(start, msg1190);
       return resconv;

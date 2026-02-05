@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Describes a solid shape which
@@ -22,13 +21,12 @@ public:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Solid>
-{
-  size_t operator()(const TopoDS_Solid& theShape) const
+  template <>
+  struct hash<TopoDS_Solid>
   {
-    return std::hash<TopoDS_Shape>{}(theShape);
-  }
-};
+    size_t operator()(const TopoDS_Solid& theShape) const
+    {
+      return std::hash<TopoDS_Shape>{}(theShape);
+    }
+  };
 } // namespace std
-

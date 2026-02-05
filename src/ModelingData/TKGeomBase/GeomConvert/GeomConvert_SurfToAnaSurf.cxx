@@ -672,27 +672,32 @@ double GeomConvert_SurfToAnaSurf::ComputeGap(const occ::handle<Geom_Surface>& th
       switch (aSType)
       {
 
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           ElSLib::Parameters(aPln, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aPln);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           ElSLib::Parameters(aCyl, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aCyl);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           ElSLib::Parameters(aCon, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aCon);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           ElSLib::Parameters(aSphere, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aSphere);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           ElSLib::Parameters(aTor, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aTor);
           break;
@@ -782,23 +787,28 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
   GeomAbs_SurfaceType aSType = aGAS.GetType();
   switch (aSType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       myGap = 0.;
       return new Geom_Plane(aGAS.Plane());
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       myGap = 0.;
       return new Geom_CylindricalSurface(aGAS.Cylinder());
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       myGap = 0.;
       return new Geom_ConicalSurface(aGAS.Cone());
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myGap = 0.;
       return new Geom_SphericalSurface(aGAS.Sphere());
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myGap = 0.;
       return new Geom_ToroidalSurface(aGAS.Torus());
     }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_HashUtils.hpp>
@@ -104,15 +103,16 @@ public:
 
 namespace std
 {
-template <>
-struct hash<BRepMesh_Triangle>
-{
-  size_t operator()(const BRepMesh_Triangle& theTriangle) const noexcept
+  template <>
+  struct hash<BRepMesh_Triangle>
   {
-    int aCombination[3] = {theTriangle.myEdges[0], theTriangle.myEdges[1], theTriangle.myEdges[2]};
-    std::sort(aCombination, aCombination + 3); // Sort the numbers in ascending order
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+    size_t operator()(const BRepMesh_Triangle& theTriangle) const noexcept
+    {
+      int aCombination[3] = {theTriangle.myEdges[0],
+                             theTriangle.myEdges[1],
+                             theTriangle.myEdges[2]};
+      std::sort(aCombination, aCombination + 3); // Sort the numbers in ascending order
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
+    }
+  };
 } // namespace std
-

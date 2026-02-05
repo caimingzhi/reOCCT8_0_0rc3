@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Precision.hpp>
 #include <Standard.hpp>
@@ -64,4 +63,3 @@ private:
   double                       myTolRange;
   bool                         myIsParallel;
 };
-

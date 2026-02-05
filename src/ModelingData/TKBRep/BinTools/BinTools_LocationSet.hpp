@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -55,4 +54,3 @@ public:
 private:
   NCollection_IndexedMap<TopLoc_Location> myMap;
 };
-

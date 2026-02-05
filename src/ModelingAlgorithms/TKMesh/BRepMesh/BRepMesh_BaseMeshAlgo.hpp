@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_MeshAlgo.hpp>
 #include <NCollection_Shared.hpp>
 #include <IMeshTools_Parameters.hpp>
@@ -101,4 +100,3 @@ private:
   occ::handle<VectorOfPnt>                    myNodesMap;
   occ::handle<DMapOfIntegerInteger>           myUsedNodes;
 };
-

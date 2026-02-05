@@ -1,19 +1,3 @@
-// Created on: 1995-10-19
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepOffset_Offset.hpp>
 
 #include <Adaptor3d_CurveOnSurface.hpp>
@@ -1608,7 +1592,8 @@ TopoDS_Shape BRepOffset_Offset::Generated(const TopoDS_Shape& Shape) const
 
   switch (myShape.ShapeType())
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       TopExp_Explorer exp(myShape.Oriented(TopAbs_FORWARD), TopAbs_EDGE);
       TopExp_Explorer expo(myFace.Oriented(TopAbs_FORWARD), TopAbs_EDGE);
       for (; exp.More() && expo.More(); exp.Next(), expo.Next())

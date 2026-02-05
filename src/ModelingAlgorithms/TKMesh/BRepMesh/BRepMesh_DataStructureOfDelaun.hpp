@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <BRepMesh_VertexTool.hpp>
 
@@ -219,4 +218,3 @@ private:
   IMeshData::MapOfInteger               myElementsOfDomain;
   IMeshData::MapOfInteger               myLinksOfDomain;
 };
-

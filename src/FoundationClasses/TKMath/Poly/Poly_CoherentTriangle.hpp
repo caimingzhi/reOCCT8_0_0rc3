@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 class Poly_CoherentLink;
@@ -130,4 +129,3 @@ private:
 
   friend class Poly_CoherentTriangulation;
 };
-

@@ -25,113 +25,113 @@
 
 namespace
 {
-const double THE_TOLERANCE = 1e-10;
+  const double THE_TOLERANCE = 1e-10;
 
-NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
-{
-  NCollection_Array1<double> aParams(1, theNbPoints);
-  const double               aStep = (theLast - theFirst) / (theNbPoints - 1);
-  for (int i = 1; i <= theNbPoints; ++i)
+  NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
   {
-    aParams.SetValue(i, theFirst + (i - 1) * aStep);
-  }
-  return aParams;
-}
-
-occ::handle<Geom_BSplineSurface> CreateSimpleBSplineSurface()
-{
-  NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
-  aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
-  aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
-  aPoles.SetValue(1, 2, gp_Pnt(0, 1, 0));
-  aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1)); // Non-planar corner
-
-  NCollection_Array1<double> aUKnots(1, 2);
-  NCollection_Array1<double> aVKnots(1, 2);
-  NCollection_Array1<int>    aUMults(1, 2);
-  NCollection_Array1<int>    aVMults(1, 2);
-
-  aUKnots.SetValue(1, 0.0);
-  aUKnots.SetValue(2, 1.0);
-  aVKnots.SetValue(1, 0.0);
-  aVKnots.SetValue(2, 1.0);
-  aUMults.SetValue(1, 2);
-  aUMults.SetValue(2, 2);
-  aVMults.SetValue(1, 2);
-  aVMults.SetValue(2, 2);
-
-  return new Geom_BSplineSurface(aPoles, aUKnots, aVKnots, aUMults, aVMults, 1, 1);
-}
-
-occ::handle<Geom_BSplineSurface> CreateRationalBSplineSurface()
-{
-  NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
-  NCollection_Array2<double> aWeights(1, 3, 1, 3);
-
-  for (int i = 1; i <= 3; ++i)
-  {
-    for (int j = 1; j <= 3; ++j)
+    NCollection_Array1<double> aParams(1, theNbPoints);
+    const double               aStep = (theLast - theFirst) / (theNbPoints - 1);
+    for (int i = 1; i <= theNbPoints; ++i)
     {
-      double x = (i - 1) * 1.0;
-      double y = (j - 1) * 1.0;
-      double z = (i == 2 && j == 2) ? 1.0 : 0.0;
-      aPoles.SetValue(i, j, gp_Pnt(x, y, z));
-      aWeights.SetValue(i, j, (i == 2 && j == 2) ? 2.0 : 1.0);
+      aParams.SetValue(i, theFirst + (i - 1) * aStep);
     }
+    return aParams;
   }
 
-  NCollection_Array1<double> aUKnots(1, 2);
-  NCollection_Array1<double> aVKnots(1, 2);
-  NCollection_Array1<int>    aUMults(1, 2);
-  NCollection_Array1<int>    aVMults(1, 2);
-
-  aUKnots.SetValue(1, 0.0);
-  aUKnots.SetValue(2, 1.0);
-  aVKnots.SetValue(1, 0.0);
-  aVKnots.SetValue(2, 1.0);
-  aUMults.SetValue(1, 3);
-  aUMults.SetValue(2, 3);
-  aVMults.SetValue(1, 3);
-  aVMults.SetValue(2, 3);
-
-  return new Geom_BSplineSurface(aPoles, aWeights, aUKnots, aVKnots, aUMults, aVMults, 2, 2);
-}
-
-occ::handle<Geom_BSplineSurface> CreateMultiSpanBSplineSurface()
-{
-  NCollection_Array2<gp_Pnt> aPoles(1, 5, 1, 5);
-
-  for (int i = 1; i <= 5; ++i)
+  occ::handle<Geom_BSplineSurface> CreateSimpleBSplineSurface()
   {
-    for (int j = 1; j <= 5; ++j)
-    {
-      double x = (i - 1) * 1.0;
-      double y = (j - 1) * 1.0;
-      double z = std::sin((i - 1) * M_PI / 4.0) * std::sin((j - 1) * M_PI / 4.0);
-      aPoles.SetValue(i, j, gp_Pnt(x, y, z));
-    }
+    NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
+    aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
+    aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
+    aPoles.SetValue(1, 2, gp_Pnt(0, 1, 0));
+    aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1)); // Non-planar corner
+
+    NCollection_Array1<double> aUKnots(1, 2);
+    NCollection_Array1<double> aVKnots(1, 2);
+    NCollection_Array1<int>    aUMults(1, 2);
+    NCollection_Array1<int>    aVMults(1, 2);
+
+    aUKnots.SetValue(1, 0.0);
+    aUKnots.SetValue(2, 1.0);
+    aVKnots.SetValue(1, 0.0);
+    aVKnots.SetValue(2, 1.0);
+    aUMults.SetValue(1, 2);
+    aUMults.SetValue(2, 2);
+    aVMults.SetValue(1, 2);
+    aVMults.SetValue(2, 2);
+
+    return new Geom_BSplineSurface(aPoles, aUKnots, aVKnots, aUMults, aVMults, 1, 1);
   }
 
-  NCollection_Array1<double> aUKnots(1, 3);
-  NCollection_Array1<double> aVKnots(1, 3);
-  NCollection_Array1<int>    aUMults(1, 3);
-  NCollection_Array1<int>    aVMults(1, 3);
+  occ::handle<Geom_BSplineSurface> CreateRationalBSplineSurface()
+  {
+    NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
+    NCollection_Array2<double> aWeights(1, 3, 1, 3);
 
-  aUKnots.SetValue(1, 0.0);
-  aUKnots.SetValue(2, 0.5);
-  aUKnots.SetValue(3, 1.0);
-  aVKnots.SetValue(1, 0.0);
-  aVKnots.SetValue(2, 0.5);
-  aVKnots.SetValue(3, 1.0);
-  aUMults.SetValue(1, 3);
-  aUMults.SetValue(2, 2);
-  aUMults.SetValue(3, 3);
-  aVMults.SetValue(1, 3);
-  aVMults.SetValue(2, 2);
-  aVMults.SetValue(3, 3);
+    for (int i = 1; i <= 3; ++i)
+    {
+      for (int j = 1; j <= 3; ++j)
+      {
+        double x = (i - 1) * 1.0;
+        double y = (j - 1) * 1.0;
+        double z = (i == 2 && j == 2) ? 1.0 : 0.0;
+        aPoles.SetValue(i, j, gp_Pnt(x, y, z));
+        aWeights.SetValue(i, j, (i == 2 && j == 2) ? 2.0 : 1.0);
+      }
+    }
 
-  return new Geom_BSplineSurface(aPoles, aUKnots, aVKnots, aUMults, aVMults, 2, 2);
-}
+    NCollection_Array1<double> aUKnots(1, 2);
+    NCollection_Array1<double> aVKnots(1, 2);
+    NCollection_Array1<int>    aUMults(1, 2);
+    NCollection_Array1<int>    aVMults(1, 2);
+
+    aUKnots.SetValue(1, 0.0);
+    aUKnots.SetValue(2, 1.0);
+    aVKnots.SetValue(1, 0.0);
+    aVKnots.SetValue(2, 1.0);
+    aUMults.SetValue(1, 3);
+    aUMults.SetValue(2, 3);
+    aVMults.SetValue(1, 3);
+    aVMults.SetValue(2, 3);
+
+    return new Geom_BSplineSurface(aPoles, aWeights, aUKnots, aVKnots, aUMults, aVMults, 2, 2);
+  }
+
+  occ::handle<Geom_BSplineSurface> CreateMultiSpanBSplineSurface()
+  {
+    NCollection_Array2<gp_Pnt> aPoles(1, 5, 1, 5);
+
+    for (int i = 1; i <= 5; ++i)
+    {
+      for (int j = 1; j <= 5; ++j)
+      {
+        double x = (i - 1) * 1.0;
+        double y = (j - 1) * 1.0;
+        double z = std::sin((i - 1) * M_PI / 4.0) * std::sin((j - 1) * M_PI / 4.0);
+        aPoles.SetValue(i, j, gp_Pnt(x, y, z));
+      }
+    }
+
+    NCollection_Array1<double> aUKnots(1, 3);
+    NCollection_Array1<double> aVKnots(1, 3);
+    NCollection_Array1<int>    aUMults(1, 3);
+    NCollection_Array1<int>    aVMults(1, 3);
+
+    aUKnots.SetValue(1, 0.0);
+    aUKnots.SetValue(2, 0.5);
+    aUKnots.SetValue(3, 1.0);
+    aVKnots.SetValue(1, 0.0);
+    aVKnots.SetValue(2, 0.5);
+    aVKnots.SetValue(3, 1.0);
+    aUMults.SetValue(1, 3);
+    aUMults.SetValue(2, 2);
+    aUMults.SetValue(3, 3);
+    aVMults.SetValue(1, 3);
+    aVMults.SetValue(2, 2);
+    aVMults.SetValue(3, 3);
+
+    return new Geom_BSplineSurface(aPoles, aUKnots, aVKnots, aUMults, aVMults, 2, 2);
+  }
 } // namespace
 
 //==================================================================================================

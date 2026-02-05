@@ -1,19 +1,3 @@
-// Created on: 1993-02-05
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_Surface.hpp>
 #include <Adaptor3d_HSurfaceTool.hpp>
 #include <Adaptor3d_TopolTool.hpp>
@@ -158,12 +142,14 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_Surface>&   Surf,
     case GeomAbs_Plane:
     case GeomAbs_Sphere:
     case GeomAbs_Cylinder:
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       PerformAna(Domain); // Surf,Domain,Direction,0.,gp_Pnt(0.,0.,0.),1);
     }
     break;
 
-    default: {
+    default:
+    {
       Perform(Domain); // Surf,Domain,Direction,0.,gp_Pnt(0.,0.,0.),1);
     }
     break;
@@ -236,16 +222,19 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1, double& u1, dou
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       myHS1IsUPeriodic = myHS1IsVPeriodic = false;
       break;
     }
@@ -2093,15 +2082,18 @@ IntSurf_TypeTrans ComputeTransitionOngpLine(Contap_SurfFunction& SFunc, const gp
   double u = 0., v = 0.;
   switch (typS)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Cylinder(Surf), P, u, v);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Cone(Surf), P, u, v);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Sphere(Surf), P, u, v);
       break;
     }
@@ -2121,15 +2113,18 @@ IntSurf_TypeTrans ComputeTransitionOngpCircle(Contap_SurfFunction& SFunc, const 
   double u = 0., v = 0.;
   switch (typS)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Cylinder(Surf), P, u, v);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Cone(Surf), P, u, v);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       ElSLib::Parameters(Adaptor3d_HSurfaceTool::Sphere(Surf), P, u, v);
       break;
     }
@@ -2160,11 +2155,13 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
 
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln pl(Adaptor3d_HSurfaceTool::Plane(Surf));
       switch (TypeFunc)
       {
-        case Contap_ContourStd: {
+        case Contap_ContourStd:
+        {
           gp_Dir Dirpln(pl.Axis().Direction());
           if (std::abs(mySFunc.Direction().Dot(Dirpln)) > Precision::Angular())
           {
@@ -2174,7 +2171,8 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
           }
         }
         break;
-        case Contap_ContourPrs: {
+        case Contap_ContourPrs:
+        {
           gp_Pnt Eye(mySFunc.Eye());
           if (pl.Distance(Eye) > Precision::Confusion())
           {
@@ -2184,7 +2182,8 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
           }
         }
         break;
-        case Contap_DraftStd: {
+        case Contap_DraftStd:
+        {
           gp_Dir Dirpln(pl.Axis().Direction());
           double Sina = std::sin(mySFunc.Angle());
           if (std::abs(mySFunc.Direction().Dot(Dirpln) + Sina) > // voir SurfFunction
@@ -2196,77 +2195,93 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
         }
         break;
         case Contap_DraftPrs:
-        default: {
+        default:
+        {
         }
       }
     }
     break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       switch (TypeFunc)
       {
-        case Contap_ContourStd: {
+        case Contap_ContourStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Sphere(Surf), mySFunc.Direction());
         }
         break;
-        case Contap_ContourPrs: {
+        case Contap_ContourPrs:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Sphere(Surf), mySFunc.Eye());
         }
         break;
-        case Contap_DraftStd: {
+        case Contap_DraftStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Sphere(Surf),
                           mySFunc.Direction(),
                           mySFunc.Angle());
         }
         break;
         case Contap_DraftPrs:
-        default: {
+        default:
+        {
         }
       }
     }
     break;
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       switch (TypeFunc)
       {
-        case Contap_ContourStd: {
+        case Contap_ContourStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cylinder(Surf), mySFunc.Direction());
         }
         break;
-        case Contap_ContourPrs: {
+        case Contap_ContourPrs:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cylinder(Surf), mySFunc.Eye());
         }
         break;
-        case Contap_DraftStd: {
+        case Contap_DraftStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cylinder(Surf),
                           mySFunc.Direction(),
                           mySFunc.Angle());
         }
         break;
         case Contap_DraftPrs:
-        default: {
+        default:
+        {
         }
       }
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       switch (TypeFunc)
       {
-        case Contap_ContourStd: {
+        case Contap_ContourStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cone(Surf), mySFunc.Direction());
         }
         break;
-        case Contap_ContourPrs: {
+        case Contap_ContourPrs:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cone(Surf), mySFunc.Eye());
         }
         break;
-        case Contap_DraftStd: {
+        case Contap_DraftStd:
+        {
           contana.Perform(Adaptor3d_HSurfaceTool::Cone(Surf), mySFunc.Direction(), mySFunc.Angle());
         }
         break;
         case Contap_DraftPrs:
-        default: {
+        default:
+        {
         }
       }
       default:

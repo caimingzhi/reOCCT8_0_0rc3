@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_define.hpp>
 
 Standard_EXPORT void FDSSDM_prepare(const occ::handle<TopOpeBRepDS_HDataStructure>&);
@@ -26,4 +25,3 @@ Standard_EXPORT void FDSSDM_copylist(const NCollection_List<TopoDS_Shape>& Lin,
                                      NCollection_List<TopoDS_Shape>&       Lou);
 Standard_EXPORT void FDSSDM_copylist(const NCollection_List<TopoDS_Shape>& Lin,
                                      NCollection_List<TopoDS_Shape>&       Lou);
-

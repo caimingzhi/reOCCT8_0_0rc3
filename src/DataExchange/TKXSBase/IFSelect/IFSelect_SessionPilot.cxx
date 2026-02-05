@@ -459,7 +459,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
       std::cout << "  --  Commands candidate for  xsnew  --" << std::endl;
       //  HELP : either complete (by default)  or limited to xsnew
       [[fallthrough]];
-    case 0: { //        ****     HELP
+    case 0:
+    { //        ****     HELP
       occ::handle<NCollection_HSequence<TCollection_AsciiString>> list;
       //    Complete Help : we give the list of commands, nothing more (already not bad)
       if (thenbwords <= 1)
@@ -520,10 +521,12 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
     }
     case 1:
       return IFSelect_RetStop; //        ****     End of session
-    case 2: {                  //        ****     HELP
+    case 2:
+    { //        ****     HELP
       return Do(0, this);
     }
-    case 3: { //        ****     COMMAND
+    case 3:
+    { //        ****     COMMAND
       if (argc < 2)
       {
         std::cout << "Give an option :\n"
@@ -533,7 +536,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
       }
       switch (arg1[0])
       {
-        case 'a': { //        ****    command analyse
+        case 'a':
+        { //        ****    command analyse
           std::cout << "Command n0 " << number << " : " << session->CommandLine() << std::endl;
           std::cout << "Nb Words : " << argc - 2 << " :\n";
           for (int i = 2; i < argc; i++)
@@ -545,7 +549,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
         case 'c':
           session->Clear();
           break; //        ****    command clear
-        case 'f': {
+        case 'f':
+        {
           if (argc < 3)
           {
             std::cout << "Give file name" << std::endl;
@@ -563,7 +568,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
             fout << session->Command(i) << std::endl;
           break;
         }
-        case 'l': { //        ****    command list
+        case 'l':
+        { //        ****    command list
           if (session->RecordMode())
             std::cout << "  -- Record Mode Active" << std::endl;
           else
@@ -576,7 +582,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
           }
           break;
         }
-        case 'r': { //        ****    command record
+        case 'r':
+        { //        ****    command record
           bool mode = session->RecordMode();
           if (mode)
             std::cout << " -- Record Mode now Inactive" << std::endl;
@@ -591,7 +598,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
       return IFSelect_RetVoid;
     }
 
-    case 4: { //        ****     FILE
+    case 4:
+    { //        ****     FILE
       if (argc < 2)
       {
         std::cout << "Give file name" << std::endl;
@@ -601,7 +609,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
       //          We copy the string because Word(1) changes all the time !
     }
 
-    case 5: { //        ****     XSTEP
+    case 5:
+    { //        ****     XSTEP
       if (argc < 2)
       {
         std::cout << "xstep : neutral prefix for any xstep-draw command" << std::endl
@@ -614,7 +623,8 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::Do(const int                       
         return Perform();
       }
     }
-    case 6: { //        ****    XSNEW(variable)
+    case 6:
+    { //        ****    XSNEW(variable)
       if (argc < 3)
       {
         std::cout << "xsnew varname command [args]   creates an item" << std::endl

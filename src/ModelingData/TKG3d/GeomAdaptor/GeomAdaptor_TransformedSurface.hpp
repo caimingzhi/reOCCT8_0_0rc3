@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAdaptor_Surface.hpp>
 #include <gp_Trsf.hpp>
@@ -229,4 +228,3 @@ protected:
   GeomAdaptor_Surface mySurf;
   gp_Trsf             myTrsf;
 };
-

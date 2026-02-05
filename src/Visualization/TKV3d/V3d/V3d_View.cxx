@@ -53,8 +53,8 @@ IMPLEMENT_STANDARD_RTTIEXT(V3d_View, Standard_Transient)
 
 namespace
 {
-constexpr double THE_TWO_PI          = 2.0 * M_PI;
-constexpr int    THE_NB_BOUND_POINTS = 8;
+  constexpr double THE_TWO_PI          = 2.0 * M_PI;
+  constexpr int    THE_NB_BOUND_POINTS = 8;
 } // namespace
 
 //=================================================================================================
@@ -2781,19 +2781,23 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
   {
     switch (theParams.StereoOptions)
     {
-      case V3d_SDO_MONO: {
+      case V3d_SDO_MONO:
+      {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_Perspective);
         break;
       }
-      case V3d_SDO_LEFT_EYE: {
+      case V3d_SDO_LEFT_EYE:
+      {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_MonoLeftEye);
         break;
       }
-      case V3d_SDO_RIGHT_EYE: {
+      case V3d_SDO_RIGHT_EYE:
+      {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_MonoRightEye);
         break;
       }
-      case V3d_SDO_BLENDED: {
+      case V3d_SDO_BLENDED:
+      {
         break; // dump as is
       }
     }

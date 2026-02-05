@@ -1,21 +1,3 @@
-// Created on: 1993-08-25
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Wed Aug 11 15:45:58 2004 OCC6272
-
 #include <Standard_NoSuchObject.hpp>
 #include <Standard_NotImplemented.hpp>
 #include <ProjLib_ProjectedCurve.hpp>
@@ -183,22 +165,26 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
   gp_Dir2d theBoundDir;
   switch (NumberOfSingularCase)
   {
-    case 1: {
+    case 1:
+    {
       thePole.SetCoord(u1, v1);
       theBoundDir.SetCoord(0., 1.);
       break;
     }
-    case 2: {
+    case 2:
+    {
       thePole.SetCoord(u2, v1);
       theBoundDir.SetCoord(0., 1.);
       break;
     }
-    case 3: {
+    case 3:
+    {
       thePole.SetCoord(u1, v1);
       theBoundDir.SetCoord(1., 0.);
       break;
     }
-    case 4: {
+    case 4:
+    {
       thePole.SetCoord(u1, v2);
       theBoundDir.SetCoord(1., 0.);
       break;
@@ -384,28 +370,32 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
   switch (SType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       ProjLib_Plane P(mySurface->Plane());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       ProjLib_Cylinder P(mySurface->Cylinder());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       ProjLib_Cone P(mySurface->Cone());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       ProjLib_Sphere P(mySurface->Sphere());
       Project(P, myCurve);
       if (P.IsDone())
@@ -440,7 +430,8 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     }
     break;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       ProjLib_Torus P(mySurface->Torus());
       Project(P, myCurve);
       myResult = P;
@@ -448,7 +439,8 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     break;
 
     case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       isAnalyticalSurf = false;
       double f, l;
       f  = myCurve->FirstParameter();
@@ -533,7 +525,8 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     }
     break;
 
-    default: {
+    default:
+    {
       isAnalyticalSurf    = false;
       double Vsingular[2] = {0.0, 0.0}; // for surfaces of revolution
       double f = 0.0, l = 0.0;

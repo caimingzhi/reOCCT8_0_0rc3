@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet3d.hpp>
 #include <Select3D_BVHBuilder3d.hpp>
 #include <SelectMgr_EntityOwner.hpp>
@@ -80,4 +79,3 @@ private:
   int                 myNbEntityWithPersistence; //!< number of sensitive entities that have own transform persistence
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_Frustum.hpp>
 
 //! This class contains representation of rectangular selecting frustum, created in case
@@ -265,4 +264,3 @@ private:
   double           myScale;                     //!< Scale factor of applied transformation, if there was any
   // clang-format on
 };
-

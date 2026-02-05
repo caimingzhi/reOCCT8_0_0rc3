@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Surface.hpp>
 
 class gp_Pln;
@@ -147,4 +146,3 @@ private:
   gp_Dir                       myDirection;  ///< direction of extrusion
   bool                         myHaveDir;    ///< whether the direction of extrusion is initialized
 };
-

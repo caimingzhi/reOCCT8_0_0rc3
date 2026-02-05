@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -75,4 +74,3 @@ public:
   //! return the dimension associated to the Type
   Standard_EXPORT static occ::handle<Units_Dimensions> Dimensions(const char* aType);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_OutOfRange.hpp>
 
 //! This class represents a pair of integer indices to store
@@ -94,4 +93,3 @@ public:
 private:
   int myIndex[2];
 };
-

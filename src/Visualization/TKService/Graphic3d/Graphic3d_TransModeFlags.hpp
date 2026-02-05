@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Transform Persistence Mode defining whether to lock in object position, rotation and / or
 //! zooming relative to camera position.
 enum Graphic3d_TransModeFlags
@@ -29,4 +28,3 @@ inline Graphic3d_TransModeFlags operator|(Graphic3d_TransModeFlags a, Graphic3d_
 {
   return static_cast<Graphic3d_TransModeFlags>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
 }
-

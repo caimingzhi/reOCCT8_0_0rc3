@@ -27,18 +27,18 @@
 namespace
 {
 
-//! Extracts basis curve from potentially nested TrimmedCurve wrappers.
-//! @param theCurve input curve (may be TrimmedCurve or any other)
-//! @return the underlying basis curve, or theCurve if not a TrimmedCurve
-occ::handle<Geom_Curve> ExtractBasisCurve(const occ::handle<Geom_Curve>& theCurve)
-{
-  occ::handle<Geom_Curve> aResult = theCurve;
-  while (auto aTrimmed = occ::down_cast<Geom_TrimmedCurve>(aResult))
+  //! Extracts basis curve from potentially nested TrimmedCurve wrappers.
+  //! @param theCurve input curve (may be TrimmedCurve or any other)
+  //! @return the underlying basis curve, or theCurve if not a TrimmedCurve
+  occ::handle<Geom_Curve> ExtractBasisCurve(const occ::handle<Geom_Curve>& theCurve)
   {
-    aResult = aTrimmed->BasisCurve();
+    occ::handle<Geom_Curve> aResult = theCurve;
+    while (auto aTrimmed = occ::down_cast<Geom_TrimmedCurve>(aResult))
+    {
+      aResult = aTrimmed->BasisCurve();
+    }
+    return aResult;
   }
-  return aResult;
-}
 
 } // namespace
 
@@ -134,7 +134,8 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Curve::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
 {
   return std::visit(
-    [&theParams](const auto& theEval) -> NCollection_Array1<gp_Pnt> {
+    [&theParams](const auto& theEval) -> NCollection_Array1<gp_Pnt>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -154,7 +155,8 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Curve::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
 {
   return std::visit(
-    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD1> {
+    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD1>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -174,7 +176,8 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Curve::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
 {
   return std::visit(
-    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD2> {
+    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD2>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -194,7 +197,8 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Curve::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
 {
   return std::visit(
-    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD3> {
+    [&theParams](const auto& theEval) -> NCollection_Array1<GeomGridEval::CurveD3>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -215,7 +219,8 @@ NCollection_Array1<gp_Vec> GeomGridEval_Curve::EvaluateGridDN(
   int                               theN) const
 {
   return std::visit(
-    [&theParams, theN](const auto& theEval) -> NCollection_Array1<gp_Vec> {
+    [&theParams, theN](const auto& theEval) -> NCollection_Array1<gp_Vec>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {

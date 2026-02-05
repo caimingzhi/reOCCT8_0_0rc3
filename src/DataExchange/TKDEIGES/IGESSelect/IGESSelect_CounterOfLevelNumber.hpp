@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -73,4 +72,3 @@ private:
   int                                   thenblists;
   occ::handle<NCollection_HArray1<int>> thelevels;
 };
-

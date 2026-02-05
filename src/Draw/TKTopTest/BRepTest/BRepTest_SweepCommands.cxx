@@ -1,19 +1,3 @@
-// Created on: 1993-07-22
-// Created by: Remi LEQUETTE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepTest.hpp>
 
 #include <BRepTest_Objects.hpp>
@@ -307,7 +291,8 @@ int evolved(Draw_Interpretor& di, int n, const char** a)
 
     switch (a[i][1])
     {
-      case 's': {
+      case 's':
+      {
         Base = DBRep::Get(a[++i], TopAbs_WIRE, false);
         if (Base.IsNull())
         {
@@ -316,22 +301,26 @@ int evolved(Draw_Interpretor& di, int n, const char** a)
       }
       break;
 
-      case 'p': {
+      case 'p':
+      {
         Prof = TopoDS::Wire(DBRep::Get(a[++i], TopAbs_WIRE, false));
       }
       break;
 
-      case 'v': {
+      case 'v':
+      {
         isVolume = true;
       }
       break;
 
-      case 'a': {
+      case 'a':
+      {
         hasToComputeAxes = true;
       }
       break;
 
-      case 't': {
+      case 't':
+      {
         aTolerance = Draw::Atof(a[++i]);
       }
       break;

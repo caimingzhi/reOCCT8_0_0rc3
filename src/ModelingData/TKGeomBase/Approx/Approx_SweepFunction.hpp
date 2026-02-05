@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <GeomAbs_Shape.hpp>
@@ -130,4 +129,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Approx_SweepFunction, Standard_Transient)
 };
-

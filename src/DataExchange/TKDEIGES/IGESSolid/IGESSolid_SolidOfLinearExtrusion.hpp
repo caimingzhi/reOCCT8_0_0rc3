@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -47,4 +46,3 @@ private:
   double                           theLength;
   gp_XYZ                           theDirection;
 };
-

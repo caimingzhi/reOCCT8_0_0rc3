@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -34,4 +33,3 @@ private:
   TopoDS_Shape myGeom1;
   TopoDS_Shape myGeom2;
 };
-

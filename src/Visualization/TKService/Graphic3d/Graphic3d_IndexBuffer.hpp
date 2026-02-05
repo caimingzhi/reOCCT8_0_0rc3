@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Buffer.hpp>
 
 //! Index buffer.
@@ -65,4 +64,3 @@ public:
     OCCT_DUMP_BASE_CLASS(theOStream, theDepth, Graphic3d_Buffer)
   }
 };
-

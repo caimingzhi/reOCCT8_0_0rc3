@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 
 //! Set of abstract entities (bounded by BVH boxes). This is
@@ -45,4 +44,3 @@ public:
   //! Performs transposing the two given objects in the set.
   virtual void Swap(const int theIndex1, const int theIndex2) = 0;
 };
-

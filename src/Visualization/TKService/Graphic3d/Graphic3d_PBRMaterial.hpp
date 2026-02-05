@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 #include <Graphic3d_BSDF.hpp>
 #include <NCollection_Vec2.hpp>
@@ -177,4 +176,3 @@ private:
   NCollection_Vec3<float> myEmission;  //!< light intensity emitted by material [>= 0]
   float                   myIOR;       //!< index of refraction [1, 3]
 };
-

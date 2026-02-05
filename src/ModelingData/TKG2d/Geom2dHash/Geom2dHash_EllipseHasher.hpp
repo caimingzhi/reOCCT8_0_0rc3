@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_Ellipse.hpp>
 #include <Geom2dHash_AxisPlacement.hpp>
@@ -36,4 +35,3 @@ struct Geom2dHash_EllipseHasher
            && std::abs(theEllipse1->MinorRadius() - theEllipse2->MinorRadius()) <= aTolerance;
   }
 };
-

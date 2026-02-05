@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -73,4 +72,3 @@ public:
   Standard_EXPORT virtual double TolCurveOnSurf(const int Index) const = 0;
   Standard_EXPORT virtual ~AppBlend_Approx();
 };
-

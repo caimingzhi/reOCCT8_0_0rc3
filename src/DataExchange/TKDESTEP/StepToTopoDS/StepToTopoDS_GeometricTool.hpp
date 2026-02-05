@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -40,4 +39,3 @@ public:
                                             double&                        w2,
                                             const double                   preci);
 };
-

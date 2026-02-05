@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <iostream>
 #include <vector>
 
@@ -292,4 +291,3 @@ protected:
   size_t            myBytesLastRead;        //!< The number of characters that were read last time from myReadBuffer.
   // clang-format on
 };
-

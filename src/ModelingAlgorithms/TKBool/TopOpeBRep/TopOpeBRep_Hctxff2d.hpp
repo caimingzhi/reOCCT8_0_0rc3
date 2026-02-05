@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <GeomAbs_SurfaceType.hpp>
 #include <TopoDS_Face.hpp>
@@ -50,4 +49,3 @@ private:
   double                           myTol1;
   double                           myTol2;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -38,4 +37,3 @@ private:
   occ::handle<NCollection_HSequence<occ::handle<Geom2d_Curve>>> mySegments;
   occ::handle<NCollection_HSequence<double>>                    mySplitParams;
 };
-

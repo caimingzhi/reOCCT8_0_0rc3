@@ -1,19 +1,3 @@
-// Created on: 1995-02-15
-// Created by: Roberc Coublanc
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <SelectMgr_ViewerSelector.hpp>
 
 #include <AIS_InteractiveObject.hpp>
@@ -42,37 +26,37 @@ IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_ViewerSelector, Standard_Transient)
 
 namespace
 {
-//! Comparison operator for sorting selection results
-class CompareResults
-{
-public:
-  CompareResults(const NCollection_IndexedDataMap<occ::handle<SelectMgr_EntityOwner>,
-                                                  SelectMgr_SortCriterion>& theMapOfCriterion,
-                 bool                                                       theToPreferClosest)
-      : myMapOfCriterion(&theMapOfCriterion),
-        myToPreferClosest(theToPreferClosest)
+  //! Comparison operator for sorting selection results
+  class CompareResults
   {
-  }
-
-  bool operator()(int theLeft, int theRight) const
-  {
-    const SelectMgr_SortCriterion& anElemLeft  = myMapOfCriterion->FindFromIndex(theLeft);
-    const SelectMgr_SortCriterion& anElemRight = myMapOfCriterion->FindFromIndex(theRight);
-    if ((anElemLeft.IsPreferPriority && anElemRight.IsPreferPriority) || !myToPreferClosest)
+  public:
+    CompareResults(const NCollection_IndexedDataMap<occ::handle<SelectMgr_EntityOwner>,
+                                                    SelectMgr_SortCriterion>& theMapOfCriterion,
+                   bool                                                       theToPreferClosest)
+        : myMapOfCriterion(&theMapOfCriterion),
+          myToPreferClosest(theToPreferClosest)
     {
-      return anElemLeft.IsHigherPriority(anElemRight);
     }
-    else
-    {
-      return anElemLeft.IsCloserDepth(anElemRight);
-    }
-  }
 
-private:
-  const NCollection_IndexedDataMap<occ::handle<SelectMgr_EntityOwner>, SelectMgr_SortCriterion>*
-       myMapOfCriterion;
-  bool myToPreferClosest;
-};
+    bool operator()(int theLeft, int theRight) const
+    {
+      const SelectMgr_SortCriterion& anElemLeft  = myMapOfCriterion->FindFromIndex(theLeft);
+      const SelectMgr_SortCriterion& anElemRight = myMapOfCriterion->FindFromIndex(theRight);
+      if ((anElemLeft.IsPreferPriority && anElemRight.IsPreferPriority) || !myToPreferClosest)
+      {
+        return anElemLeft.IsHigherPriority(anElemRight);
+      }
+      else
+      {
+        return anElemLeft.IsCloserDepth(anElemRight);
+      }
+    }
+
+  private:
+    const NCollection_IndexedDataMap<occ::handle<SelectMgr_EntityOwner>, SelectMgr_SortCriterion>*
+         myMapOfCriterion;
+    bool myToPreferClosest;
+  };
 
 } // namespace
 
@@ -135,12 +119,14 @@ void SelectMgr_ViewerSelector::updatePoint3d(SelectMgr_SortCriterion&       theC
                                : myDepthTolerance;
   switch (myDepthTolType)
   {
-    case SelectMgr_TypeOfDepthTolerance_Uniform: {
+    case SelectMgr_TypeOfDepthTolerance_Uniform:
+    {
       theCriterion.Tolerance = myDepthTolerance;
       break;
     }
     case SelectMgr_TypeOfDepthTolerance_UniformPixels:
-    case SelectMgr_TypeOfDepthTolerance_SensitivityFactor: {
+    case SelectMgr_TypeOfDepthTolerance_SensitivityFactor:
+    {
       if (theMgr.Camera().IsNull())
       {
         // fallback for an arbitrary projection matrix

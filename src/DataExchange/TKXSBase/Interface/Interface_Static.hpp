@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -18,11 +17,9 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <TCollection_HAsciiString.hpp>
 
 typedef bool (*Interface_StaticSatisfies)(const occ::handle<TCollection_HAsciiString>& val);
-
 
 #include <Interface_TypedValue.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -284,4 +281,3 @@ private:
   occ::handle<TCollection_HAsciiString>                     thehval;
   occ::handle<Standard_Transient>                           theoval;
 };
-

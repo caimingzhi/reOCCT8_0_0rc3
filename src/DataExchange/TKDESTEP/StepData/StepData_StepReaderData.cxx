@@ -800,7 +800,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
     FT                                = FP.ParamType();
     switch (kod)
     {
-      case 1: {
+      case 1:
+      {
         if (FT != Interface_ParamInteger)
         {
           kod = 0;
@@ -810,7 +811,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         break;
       }
       case 2:
-      case 3: {
+      case 3:
+      {
         if (FT != Interface_ParamEnum)
         {
           kod = 0;
@@ -826,7 +828,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
           kod = 0;
         break;
       }
-      case 4: {
+      case 4:
+      {
         if (FT != Interface_ParamEnum)
         {
           kod = 0;
@@ -837,7 +840,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         htr->SetValue(ip, sn);
         break;
       }
-      case 5: {
+      case 5:
+      {
         if (FT != Interface_ParamReal)
         {
           kod = 0;
@@ -846,7 +850,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         hre->SetValue(ip, Interface_FileReaderData::Fastof(str));
         break;
       }
-      case 6: {
+      case 6:
+      {
         if (FT != Interface_ParamText)
         {
           kod = 0;
@@ -857,7 +862,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         hst->SetValue(ip, txt);
         break;
       }
-      case 7: {
+      case 7:
+      {
         occ::handle<Standard_Transient> ent = BoundEntity(FP.EntityNumber());
         htr->SetValue(ip, ent);
         break;
@@ -907,13 +913,15 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
     {
       case Interface_ParamMisc:
         break;
-      case Interface_ParamInteger: {
+      case Interface_ParamInteger:
+      {
         occ::handle<StepData_SelectInt> sin = new StepData_SelectInt;
         sin->SetInteger(atoi(str));
         htr->SetValue(ip, sin);
         break;
       }
-      case Interface_ParamReal: {
+      case Interface_ParamReal:
+      {
         occ::handle<StepData_SelectReal> sre = new StepData_SelectReal;
         sre->SetReal(Interface_FileReaderData::Fastof(str));
         break;
@@ -924,7 +932,8 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         break;
       case Interface_ParamVoid:
         break;
-      case Interface_ParamEnum: {
+      case Interface_ParamEnum:
+      {
         occ::handle<StepData_SelectInt>   sin;
         occ::handle<StepData_SelectNamed> sna;
         int                               logic = -1;
@@ -965,13 +974,15 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
       }
       case Interface_ParamLogical:
         break;
-      case Interface_ParamText: {
+      case Interface_ParamText:
+      {
         occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
         cleanText(txt);
         htr->SetValue(ip, txt);
         break;
       }
-      case Interface_ParamSub: {
+      case Interface_ParamSub:
+      {
         occ::handle<Standard_Transient> sub;
         int                             nent = FP.EntityNumber();
         int                             kind = ReadSub(nent, mess, ach, descr, sub);
@@ -1051,7 +1062,8 @@ bool StepData_StepReaderData::ReadField(const int                           num,
       break;
     case Interface_ParamVoid:
       break;
-    case Interface_ParamText: {
+    case Interface_ParamText:
+    {
       occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
       cleanText(txt);
       fild.Set(txt);
@@ -1135,7 +1147,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
   {
     case Interface_ParamMisc:
       break;
-    case Interface_ParamInteger: {
+    case Interface_ParamInteger:
+    {
       if (!val.IsNull())
       {
         DeclareAndCast(StepData_SelectMember, sm, val);
@@ -1147,7 +1160,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = sin;
       return true;
     }
-    case Interface_ParamReal: {
+    case Interface_ParamReal:
+    {
       if (!val.IsNull())
       {
         DeclareAndCast(StepData_SelectMember, sm, val);
@@ -1159,7 +1173,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = sre;
       return true;
     }
-    case Interface_ParamIdent: {
+    case Interface_ParamIdent:
+    {
       int nent = FP.EntityNumber();
       if (nent > 0)
         val = BoundEntity(nent);
@@ -1167,7 +1182,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
     }
     case Interface_ParamVoid:
       break;
-    case Interface_ParamEnum: {
+    case Interface_ParamEnum:
+    {
       occ::handle<StepData_SelectMember> sm;
       if (!val.IsNull())
         sm = GetCasted(StepData_SelectMember, val);
@@ -1222,7 +1238,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
     }
     case Interface_ParamLogical:
       break;
-    case Interface_ParamText: {
+    case Interface_ParamText:
+    {
       occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
       cleanText(txt);
 
@@ -1237,7 +1254,8 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = txt;
       return true;
     }
-    case Interface_ParamSub: {
+    case Interface_ParamSub:
+    {
       int numsub = SubListNumber(num, nump, false);
       int nbp    = NbParams(numsub);
       if (nbp == 0)

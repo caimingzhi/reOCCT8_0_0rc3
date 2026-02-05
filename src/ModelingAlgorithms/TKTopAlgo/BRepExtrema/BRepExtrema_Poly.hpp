@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 class TopoDS_Shape;
@@ -16,4 +15,3 @@ public:
                                        gp_Pnt&             P2,
                                        double&             dist);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 
 #include <Standard.hpp>
@@ -43,4 +42,3 @@ public:
 private:
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myVerVerMap;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <Draw_MarkerShape.hpp>
 #include <Draw_Color.hpp>
@@ -60,4 +59,3 @@ private:
   Draw_MarkerShape myShape;
   Draw_Color       myColor;
 };
-

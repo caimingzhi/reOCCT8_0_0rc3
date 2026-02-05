@@ -1,19 +1,3 @@
-// Created on: 1995-05-23
-// Created by: Robert COUBLANC
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <SelectMgr_EntityOwner.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_EntityOwner, Standard_Transient)
@@ -82,29 +66,36 @@ bool SelectMgr_EntityOwner::Select(const AIS_SelectionScheme theSelScheme,
 {
   switch (theSelScheme)
   {
-    case AIS_SelectionScheme_UNKNOWN: {
+    case AIS_SelectionScheme_UNKNOWN:
+    {
       return myIsSelected;
     }
-    case AIS_SelectionScheme_Replace: {
+    case AIS_SelectionScheme_Replace:
+    {
       return theIsDetected;
     }
-    case AIS_SelectionScheme_Add: {
+    case AIS_SelectionScheme_Add:
+    {
       return !myIsSelected || theIsDetected || IsForcedHilight();
     }
-    case AIS_SelectionScheme_Remove: {
+    case AIS_SelectionScheme_Remove:
+    {
       return myIsSelected && !theIsDetected;
     }
-    case AIS_SelectionScheme_XOR: {
+    case AIS_SelectionScheme_XOR:
+    {
       if (theIsDetected)
       {
         return !myIsSelected && !IsForcedHilight();
       }
       return myIsSelected;
     }
-    case AIS_SelectionScheme_Clear: {
+    case AIS_SelectionScheme_Clear:
+    {
       return false;
     }
-    case AIS_SelectionScheme_ReplaceExtra: {
+    case AIS_SelectionScheme_ReplaceExtra:
+    {
       return theIsDetected;
     }
   }

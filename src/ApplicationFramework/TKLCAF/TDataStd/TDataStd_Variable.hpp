@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_AsciiString.hpp>
@@ -126,4 +125,3 @@ private:
   bool                    isConstant;
   TCollection_AsciiString myUnit;
 };
-

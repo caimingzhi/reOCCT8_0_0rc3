@@ -147,27 +147,33 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
   switch (C.GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       BndLib::Add(C.Line(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       BndLib::Add(C.Circle(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       BndLib::Add(C.Ellipse(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       BndLib::Add(C.Hyperbola(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       BndLib::Add(C.Parabola(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       occ::handle<Geom_BezierCurve> Bz = C.Bezier();
       int                           N  = Bz->Degree();
       GeomAdaptor_Curve             GACurve(Bz);
@@ -178,7 +184,8 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
       B.Enlarge(Tol);
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       occ::handle<Geom_BSplineCurve> Bs = C.BSpline();
       if (std::abs(Bs->FirstParameter() - U1) > Precision::Parametric(Tol)
           || std::abs(Bs->LastParameter() - U2) > Precision::Parametric(Tol))
@@ -259,7 +266,8 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
       //<-OCC566(apo)
       break;
     }
-    default: {
+    default:
+    {
       Bnd_Box       B1;
       constexpr int N = 33;
       tol             = FillBox(B1, C, U1, U2, N);
@@ -290,27 +298,33 @@ void BndLib_Add3dCurve::AddOptimal(const Adaptor3d_Curve& C,
   switch (C.GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       BndLib::Add(C.Line(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       BndLib::Add(C.Circle(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       BndLib::Add(C.Ellipse(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       BndLib::Add(C.Hyperbola(), U1, U2, Tol, B);
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       BndLib::Add(C.Parabola(), U1, U2, Tol, B);
       break;
     }
-    default: {
+    default:
+    {
       AddGenCurv(C, U1, U2, Tol, B);
     }
   }
@@ -575,7 +589,8 @@ int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax)
   GeomAbs_CurveType Type = C.GetType();
   switch (Type)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       N = 2 * C.NbPoles();
       // By default parametric range of Bezier curv is [0, 1]
       double du = Umax - Umin;
@@ -586,7 +601,8 @@ int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax)
       }
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       const occ::handle<Geom_BSplineCurve>& BC = C.BSpline();
       N                                        = 2 * (BC->Degree() + 1) * (BC->NbKnots() - 1);
       double umin = BC->FirstParameter(), umax = BC->LastParameter();

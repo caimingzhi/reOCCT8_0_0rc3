@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_SharedObject.hpp>
 #include <NCollection_DataMap.hpp>
 #include <ShapePersistent_HArray1.hpp>
@@ -167,4 +166,3 @@ public:
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
-

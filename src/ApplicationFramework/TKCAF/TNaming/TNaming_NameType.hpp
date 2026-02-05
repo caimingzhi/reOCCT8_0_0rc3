@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! to store naming characteristcs
 enum TNaming_NameType
 {
@@ -17,4 +16,3 @@ enum TNaming_NameType
   TNaming_WIREIN,
   TNaming_SHELLIN
 };
-

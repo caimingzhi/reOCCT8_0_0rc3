@@ -223,9 +223,9 @@ int OSD_Environment::Error() const
   #ifdef OCCT_UWP
 namespace
 {
-// emulate global map of environment variables
-static std::mutex                                                            THE_ENV_LOCK;
-static NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString> THE_ENV_MAP;
+  // emulate global map of environment variables
+  static std::mutex                                                            THE_ENV_LOCK;
+  static NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString> THE_ENV_MAP;
 } // namespace
   #else
 static void __fastcall _set_error(OSD_Error&, DWORD);

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <gp_Ax2.hpp>
 #include <GeomHash_PointHasher.hpp>
@@ -35,4 +34,3 @@ struct GeomHash_AxisPlacement
            && aDirectionHasher(theAxisPlacement1.XDirection(), theAxisPlacement2.XDirection());
   }
 };
-

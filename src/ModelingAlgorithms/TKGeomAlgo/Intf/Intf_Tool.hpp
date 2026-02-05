@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -67,4 +66,3 @@ private:
   double zint[12];
   double parint[12];
 };
-

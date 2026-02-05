@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Elips2d.hpp>
@@ -27,4 +26,3 @@ public:
 private:
   gp_Elips2d eli;
 };
-

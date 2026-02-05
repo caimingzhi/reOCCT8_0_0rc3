@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_ViewController.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -157,4 +156,3 @@ private:
 
   unsigned int myNbUpdateRequests; //!< counter for unhandled update requests
 };
-

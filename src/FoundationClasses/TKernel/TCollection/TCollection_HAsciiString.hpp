@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -466,6 +465,7 @@ public:
 private:
   TCollection_AsciiString myString;
 };
+
 // Copyright (c) 1998-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -516,26 +516,26 @@ inline const char* TCollection_HAsciiString::ToCString() const
 
 namespace std
 {
-template <>
-struct hash<occ::handle<TCollection_HAsciiString>>
-{
-  size_t operator()(const occ::handle<TCollection_HAsciiString>& theString) const
+  template <>
+  struct hash<occ::handle<TCollection_HAsciiString>>
   {
-    if (theString.IsNull())
-      return 0;
-    return std::hash<TCollection_AsciiString>{}(theString->String());
-  }
-};
+    size_t operator()(const occ::handle<TCollection_HAsciiString>& theString) const
+    {
+      if (theString.IsNull())
+        return 0;
+      return std::hash<TCollection_AsciiString>{}(theString->String());
+    }
+  };
 
-template <>
-struct equal_to<occ::handle<TCollection_HAsciiString>>
-{
-  bool operator()(const occ::handle<TCollection_HAsciiString>& theString1,
-                  const occ::handle<TCollection_HAsciiString>& theString2) const
+  template <>
+  struct equal_to<occ::handle<TCollection_HAsciiString>>
   {
-    return theString1 == theString2
-           || (!theString1.IsNull() && !theString2.IsNull()
-               && theString1->String() == theString2->String());
-  }
-};
+    bool operator()(const occ::handle<TCollection_HAsciiString>& theString1,
+                    const occ::handle<TCollection_HAsciiString>& theString2) const
+    {
+      return theString1 == theString2
+             || (!theString1.IsNull() && !theString2.IsNull()
+                 && theString1->String() == theString2->String());
+    }
+  };
 } // namespace std

@@ -20,21 +20,21 @@
 
 namespace
 {
-//! Initialize default material in this way for backward compatibility.
-inline Graphic3d_MaterialAspect initDefaultMaterial()
-{
-  Graphic3d_MaterialAspect aMat;
-  aMat.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
-  aMat.SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.2f)));
-  aMat.SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.8f)));
-  aMat.SetEmissiveColor(Quantity_Color(NCollection_Vec3<float>(0.1f)));
-  aMat.SetSpecularColor(Quantity_NOC_BLACK);
-  aMat.SetShininess(10.0f / 128.0f);
-  aMat.SetRefractionIndex(1.0f);
-  return aMat;
-}
+  //! Initialize default material in this way for backward compatibility.
+  inline Graphic3d_MaterialAspect initDefaultMaterial()
+  {
+    Graphic3d_MaterialAspect aMat;
+    aMat.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
+    aMat.SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.2f)));
+    aMat.SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.8f)));
+    aMat.SetEmissiveColor(Quantity_Color(NCollection_Vec3<float>(0.1f)));
+    aMat.SetSpecularColor(Quantity_NOC_BLACK);
+    aMat.SetShininess(10.0f / 128.0f);
+    aMat.SetRefractionIndex(1.0f);
+    return aMat;
+  }
 
-static const Graphic3d_MaterialAspect THE_DEFAULT_MATERIAL = initDefaultMaterial();
+  static const Graphic3d_MaterialAspect THE_DEFAULT_MATERIAL = initDefaultMaterial();
 } // namespace
 
 //=================================================================================================

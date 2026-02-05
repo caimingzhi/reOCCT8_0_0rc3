@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Approx_ParametrizationType.hpp>
 #include <NCollection_List.hpp>
 #include <NCollection_LocalArray.hpp>
@@ -117,4 +116,3 @@ private:
                           const int                  theMinNbPnts,
                           NCollection_Vector<int>&   theLKnots);
 };
-

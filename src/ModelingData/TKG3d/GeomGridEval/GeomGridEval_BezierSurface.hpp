@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BSplSLib_Cache.hpp>
 #include <Geom_BezierSurface.hpp>
 #include <GeomGridEval.hpp>
@@ -133,4 +132,3 @@ public:
 private:
   occ::handle<Geom_BezierSurface> myGeom;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_Animation.hpp>
 #include <AIS_InteractiveContext.hpp>
 
@@ -28,4 +27,3 @@ protected:
   occ::handle<AIS_InteractiveContext> myContext; //!< context where object is displayed
   occ::handle<AIS_InteractiveObject>  myObject;  //!< presentation object to set location
 };
-

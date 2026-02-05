@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! To deal with different results in the computation of curvatures.
 //! -   FairCurve_OK describes the case where computation is successfully
 //! completed
@@ -21,4 +20,3 @@ enum FairCurve_AnalysisCode
   FairCurve_InfiniteSliding,
   FairCurve_NullHeight
 };
-

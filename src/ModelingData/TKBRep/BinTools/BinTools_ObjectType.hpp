@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining objects identifiers in the shape read/write format.
 enum BinTools_ObjectType
 {
@@ -29,4 +28,3 @@ enum BinTools_ObjectType
   BinTools_ObjectType_EndShape   = 199, //!< identifier of the shape record end
   // here is the space for TopAbs_ShapeEnum+Orientation types
 };
-

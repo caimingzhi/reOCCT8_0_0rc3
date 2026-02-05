@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_AssemblyComponentUsage.hpp>
@@ -13,4 +12,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_PromissoryUsageOccurrence, StepRepr_AssemblyComponentUsage)
 };
-

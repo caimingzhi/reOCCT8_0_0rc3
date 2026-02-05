@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HArray1.hpp>
 #include <StdLPersistent_HArray2.hpp>
@@ -87,4 +86,3 @@ private:
   pMapData<StdLPersistent_HArray1::Persistent> myIntArrays;
   pMapData<StdLPersistent_HArray1::Persistent> myRealArrays;
 };
-

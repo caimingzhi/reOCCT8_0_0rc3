@@ -1,18 +1,3 @@
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// activate some C99 macros like UINT64_C in "stdint.h" which used by FFmpeg
 #ifndef __STDC_CONSTANT_MACROS
   #define __STDC_CONSTANT_MACROS
 #endif
@@ -27,38 +12,38 @@ IMPLEMENT_STANDARD_RTTIEXT(Media_FormatContext, Standard_Transient)
 
 namespace
 {
-constexpr double THE_SECONDS_IN_HOUR   = 3600.0;
-constexpr double THE_SECONDS_IN_MINUTE = 60.0;
-constexpr double THE_SECOND_IN_HOUR    = 1.0 / THE_SECONDS_IN_HOUR;
-constexpr double THE_SECOND_IN_MINUTE  = 1.0 / THE_SECONDS_IN_MINUTE;
+  constexpr double THE_SECONDS_IN_HOUR   = 3600.0;
+  constexpr double THE_SECONDS_IN_MINUTE = 60.0;
+  constexpr double THE_SECOND_IN_HOUR    = 1.0 / THE_SECONDS_IN_HOUR;
+  constexpr double THE_SECOND_IN_MINUTE  = 1.0 / THE_SECONDS_IN_MINUTE;
 
 #ifdef HAVE_FFMPEG
-static const AVRational ST_AV_TIME_BASE_Q = {1, AV_TIME_BASE};
-static const double     ST_AV_TIME_BASE_D = av_q2d(ST_AV_TIME_BASE_Q);
+  static const AVRational ST_AV_TIME_BASE_Q = {1, AV_TIME_BASE};
+  static const double     ST_AV_TIME_BASE_D = av_q2d(ST_AV_TIME_BASE_Q);
 
-//! Format framerate value.
-static TCollection_AsciiString formatFps(double theVal)
-{
-  const uint64_t aVal = uint64_t(theVal * 100.0 + 0.5);
-  char           aBuff[256];
-  if (aVal == 0)
+  //! Format framerate value.
+  static TCollection_AsciiString formatFps(double theVal)
   {
-    Sprintf(aBuff, "%1.4f", theVal);
+    const uint64_t aVal = uint64_t(theVal * 100.0 + 0.5);
+    char           aBuff[256];
+    if (aVal == 0)
+    {
+      Sprintf(aBuff, "%1.4f", theVal);
+    }
+    else if (aVal % 100)
+    {
+      Sprintf(aBuff, "%3.2f", theVal);
+    }
+    else if (aVal % (100 * 1000))
+    {
+      Sprintf(aBuff, "%1.0f", theVal);
+    }
+    else
+    {
+      Sprintf(aBuff, "%1.0fk", theVal / 1000);
+    }
+    return aBuff;
   }
-  else if (aVal % 100)
-  {
-    Sprintf(aBuff, "%3.2f", theVal);
-  }
-  else if (aVal % (100 * 1000))
-  {
-    Sprintf(aBuff, "%1.0f", theVal);
-  }
-  else
-  {
-    Sprintf(aBuff, "%1.0fk", theVal / 1000);
-  }
-  return aBuff;
-}
 #endif
 } // namespace
 

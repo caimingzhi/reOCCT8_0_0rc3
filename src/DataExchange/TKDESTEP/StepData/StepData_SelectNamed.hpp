@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_AsciiString.hpp>
@@ -55,4 +54,3 @@ private:
   TCollection_AsciiString thename;
   StepData_Field          theval;
 };
-

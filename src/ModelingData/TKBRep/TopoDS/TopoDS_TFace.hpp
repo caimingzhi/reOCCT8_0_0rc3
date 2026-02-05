@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <TopAbs_ShapeEnum.hpp>
@@ -25,4 +24,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TopoDS_TFace, TopoDS_TShape)
 };
-

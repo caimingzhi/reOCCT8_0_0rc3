@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <BlendFunc_GenChamfInv.hpp>
 #include <math_Vector.hpp>
@@ -56,4 +55,3 @@ protected:
   gp_Vec d1u2;
   gp_Vec d1v2;
 };
-

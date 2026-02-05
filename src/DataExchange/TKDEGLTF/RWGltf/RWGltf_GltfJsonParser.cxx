@@ -45,288 +45,294 @@ namespace
   #define reportGltfWarning(theMsg)                                                                \
     reportGltfSyntaxProblem(TCollection_AsciiString() + theMsg, Message_Warning);
 
-//! Material extension.
-static const char THE_KHR_materials_common[]       = "KHR_materials_common";
-static const char THE_KHR_binary_glTF[]            = "KHR_binary_glTF";
-static const char THE_KHR_draco_mesh_compression[] = "KHR_draco_mesh_compression";
+  //! Material extension.
+  static const char THE_KHR_materials_common[]       = "KHR_materials_common";
+  static const char THE_KHR_binary_glTF[]            = "KHR_binary_glTF";
+  static const char THE_KHR_draco_mesh_compression[] = "KHR_draco_mesh_compression";
 
-//! Data buffer referring to a portion of another buffer.
-class RWGltf_SubBuffer : public NCollection_Buffer
-{
-public:
-  RWGltf_SubBuffer(const occ::handle<NCollection_Buffer>& theBase,
-                   size_t                                 theOffset,
-                   size_t                                 theLength)
-      : NCollection_Buffer(occ::handle<NCollection_BaseAllocator>(),
-                           theLength,
-                           theBase->ChangeData() + theOffset),
-        myBaseBuffer(theBase)
+  //! Data buffer referring to a portion of another buffer.
+  class RWGltf_SubBuffer : public NCollection_Buffer
   {
-  }
+  public:
+    RWGltf_SubBuffer(const occ::handle<NCollection_Buffer>& theBase,
+                     size_t                                 theOffset,
+                     size_t                                 theLength)
+        : NCollection_Buffer(occ::handle<NCollection_BaseAllocator>(),
+                             theLength,
+                             theBase->ChangeData() + theOffset),
+          myBaseBuffer(theBase)
+    {
+    }
 
-private:
-  occ::handle<NCollection_Buffer> myBaseBuffer;
-};
+  private:
+    occ::handle<NCollection_Buffer> myBaseBuffer;
+  };
 
-//! Helper class to parse "extras" section of glTF node.
-//! In order to use, provide the ID and the "extras" value of the node
-//! in the constructor, and then call Parse().
-//! Alternatively, just call ParseExtras() static function.
-class RWGltf_ExtrasParser
-{
-public:
-  //! Constructor. Initializes parser.
-  //! @param theParentID ID of the Json object that contains this "extras" value. Used only for
-  //! printing messages.
-  //! @param theExtrasValue "extras" value to parse.
-  RWGltf_ExtrasParser(const TCollection_AsciiString& theParentID,
-                      const RWGltf_JsonValue&        theExtrasValue);
+  //! Helper class to parse "extras" section of glTF node.
+  //! In order to use, provide the ID and the "extras" value of the node
+  //! in the constructor, and then call Parse().
+  //! Alternatively, just call ParseExtras() static function.
+  class RWGltf_ExtrasParser
+  {
+  public:
+    //! Constructor. Initializes parser.
+    //! @param theParentID ID of the Json object that contains this "extras" value. Used only for
+    //! printing messages.
+    //! @param theExtrasValue "extras" value to parse.
+    RWGltf_ExtrasParser(const TCollection_AsciiString& theParentID,
+                        const RWGltf_JsonValue&        theExtrasValue);
 
-  //! Parses the "extras" value provided in the constructor.
-  //! @return Container with parsed data. May be nullptr if failed to parse.
-  occ::handle<TDataStd_NamedData> Parse();
+    //! Parses the "extras" value provided in the constructor.
+    //! @return Container with parsed data. May be nullptr if failed to parse.
+    occ::handle<TDataStd_NamedData> Parse();
 
-  //! Parses provided "extras" value.
-  //! @param theParentID ID of the Json object that contains this "extras" value. Used only for
-  //! printing messages.
-  //! @param theExtrasValue "extras" value to parse. May be nullptr, in which case function will
-  //! return nullptr.
-  //! @return Container with parsed data. May be nullptr if failed to parse.
-  static occ::handle<TDataStd_NamedData> ParseExtras(const TCollection_AsciiString& theParentID,
-                                                     const RWGltf_JsonValue*        theExtrasValue);
+    //! Parses provided "extras" value.
+    //! @param theParentID ID of the Json object that contains this "extras" value. Used only for
+    //! printing messages.
+    //! @param theExtrasValue "extras" value to parse. May be nullptr, in which case function will
+    //! return nullptr.
+    //! @return Container with parsed data. May be nullptr if failed to parse.
+    static occ::handle<TDataStd_NamedData> ParseExtras(const TCollection_AsciiString& theParentID,
+                                                       const RWGltf_JsonValue* theExtrasValue);
 
-private:
-  //! Parse value as the Json object. Serves as the entry point to parse "extras".
-  //! Can also parse any object inside it.
-  //! @param theValue Value to parse.
-  //! @param theValueName Name of the value. For "extras" object should be empty.
-  //! @return true if object was processed, false otherwise. Note that true doesn't mean that
-  //!         object was successfully parsed and stored, it could be if unsupported type in
-  //!         which case warning is issued. true only indicates that no further processing required.
-  bool parseObject(const RWGltf_JsonValue& theValue, const std::string& theValueName = {});
+  private:
+    //! Parse value as the Json object. Serves as the entry point to parse "extras".
+    //! Can also parse any object inside it.
+    //! @param theValue Value to parse.
+    //! @param theValueName Name of the value. For "extras" object should be empty.
+    //! @return true if object was processed, false otherwise. Note that true doesn't mean that
+    //!         object was successfully parsed and stored, it could be if unsupported type in
+    //!         which case warning is issued. true only indicates that no further processing
+    //!         required.
+    bool parseObject(const RWGltf_JsonValue& theValue, const std::string& theValueName = {});
 
-  //! Parse value as the integer.
-  //! @param theValue Value to parse.
-  //! @param theValueName Name of the value.
-  //! @return true if object was processed, false otherwise. Note that true doesn't mean that
-  //!         object was successfully parsed and stored, it could be if unsupported type in
-  //!         which case warning is issued. true only indicates that no further processing required.
-  bool parseNumber(const RWGltf_JsonValue& theValue, const std::string& theValueName);
+    //! Parse value as the integer.
+    //! @param theValue Value to parse.
+    //! @param theValueName Name of the value.
+    //! @return true if object was processed, false otherwise. Note that true doesn't mean that
+    //!         object was successfully parsed and stored, it could be if unsupported type in
+    //!         which case warning is issued. true only indicates that no further processing
+    //!         required.
+    bool parseNumber(const RWGltf_JsonValue& theValue, const std::string& theValueName);
 
-  //! Parse value as the string.
-  //! @param theValue Value to parse.
-  //! @param theValueName Name of the value.
-  //! @return true if object was processed, false otherwise. Note that true doesn't mean that
-  //!         object was successfully parsed and stored, it could be if unsupported type in
-  //!         which case warning is issued. true only indicates that no further processing required.
-  bool parseString(const RWGltf_JsonValue& theValue, const std::string& theValueName);
+    //! Parse value as the string.
+    //! @param theValue Value to parse.
+    //! @param theValueName Name of the value.
+    //! @return true if object was processed, false otherwise. Note that true doesn't mean that
+    //!         object was successfully parsed and stored, it could be if unsupported type in
+    //!         which case warning is issued. true only indicates that no further processing
+    //!         required.
+    bool parseString(const RWGltf_JsonValue& theValue, const std::string& theValueName);
 
-  //! Parse value as the array.
-  //! Currently only arrays of following types are supported: int, double, string.
-  //! IMPORTANT: Array of Json objects is NOT supported.
-  //! @param theValue Value to parse.
-  //! @param theValueName Name of the value.
-  //! @return true if object was processed, false otherwise. Note that true doesn't mean that
-  //!         object was successfully parsed and stored, it could be if unsupported type in
-  //!         which case warning is issued. true only indicates that no further processing required.
-  bool parseArray(const RWGltf_JsonValue& theValue, const std::string& theValueName);
+    //! Parse value as the array.
+    //! Currently only arrays of following types are supported: int, double, string.
+    //! IMPORTANT: Array of Json objects is NOT supported.
+    //! @param theValue Value to parse.
+    //! @param theValueName Name of the value.
+    //! @return true if object was processed, false otherwise. Note that true doesn't mean that
+    //!         object was successfully parsed and stored, it could be if unsupported type in
+    //!         which case warning is issued. true only indicates that no further processing
+    //!         required.
+    bool parseArray(const RWGltf_JsonValue& theValue, const std::string& theValueName);
 
-  //! Returns result container for internal usage. Is container in not initialized yet,
-  //! this function will initialize it, so it is guaranteed to be valid.
-  occ::handle<TDataStd_NamedData>& getResult();
+    //! Returns result container for internal usage. Is container in not initialized yet,
+    //! this function will initialize it, so it is guaranteed to be valid.
+    occ::handle<TDataStd_NamedData>& getResult();
 
-private:
-  // clang-format off
+  private:
+    // clang-format off
     const TCollection_AsciiString& myParentID;    //!< ID of the Json object that contains "extras" value. For printing messages.
-  // clang-format on
-  const RWGltf_JsonValue&         myExtrasValue; //!< "extras" value to parse.
-  occ::handle<TDataStd_NamedData> myResult;      //!< Result of parsing.
-};
+    // clang-format on
+    const RWGltf_JsonValue&         myExtrasValue; //!< "extras" value to parse.
+    occ::handle<TDataStd_NamedData> myResult;      //!< Result of parsing.
+  };
 
-//=================================================================================================
+  //=================================================================================================
 
-RWGltf_ExtrasParser::RWGltf_ExtrasParser(const TCollection_AsciiString& theParentID,
-                                         const RWGltf_JsonValue&        theExtrasValue)
-    : myParentID(theParentID),
-      myExtrasValue(theExtrasValue),
-      myResult(nullptr)
-{
-}
-
-//=================================================================================================
-
-occ::handle<TDataStd_NamedData> RWGltf_ExtrasParser::Parse()
-{
-  parseObject(myExtrasValue);
-  // Intentionally returning myResult instead of getResult(). If parseObject() parsed data
-  // successfully, it will be initialized already. Otherwise, we should return nullptr.
-  return myResult;
-}
-
-//=================================================================================================
-
-occ::handle<TDataStd_NamedData> RWGltf_ExtrasParser::ParseExtras(
-  const TCollection_AsciiString& theParentID,
-  const RWGltf_JsonValue*        theExtrasValue)
-{
-  if (!theExtrasValue)
+  RWGltf_ExtrasParser::RWGltf_ExtrasParser(const TCollection_AsciiString& theParentID,
+                                           const RWGltf_JsonValue&        theExtrasValue)
+      : myParentID(theParentID),
+        myExtrasValue(theExtrasValue),
+        myResult(nullptr)
   {
-    return nullptr;
   }
 
-  RWGltf_ExtrasParser anExtrasParser(theParentID, *theExtrasValue);
-  return anExtrasParser.Parse();
-}
+  //=================================================================================================
 
-//=================================================================================================
-
-bool RWGltf_ExtrasParser::parseObject(const RWGltf_JsonValue& theValue,
-                                      const std::string&      theValueName)
-{
-  if (!theValue.IsObject())
+  occ::handle<TDataStd_NamedData> RWGltf_ExtrasParser::Parse()
   {
+    parseObject(myExtrasValue);
+    // Intentionally returning myResult instead of getResult(). If parseObject() parsed data
+    // successfully, it will be initialized already. Otherwise, we should return nullptr.
+    return myResult;
+  }
+
+  //=================================================================================================
+
+  occ::handle<TDataStd_NamedData> RWGltf_ExtrasParser::ParseExtras(
+    const TCollection_AsciiString& theParentID,
+    const RWGltf_JsonValue*        theExtrasValue)
+  {
+    if (!theExtrasValue)
+    {
+      return nullptr;
+    }
+
+    RWGltf_ExtrasParser anExtrasParser(theParentID, *theExtrasValue);
+    return anExtrasParser.Parse();
+  }
+
+  //=================================================================================================
+
+  bool RWGltf_ExtrasParser::parseObject(const RWGltf_JsonValue& theValue,
+                                        const std::string&      theValueName)
+  {
+    if (!theValue.IsObject())
+    {
+      return false;
+    }
+
+    bool anIsAnyValProcessed = false;
+    for (auto& anItem : theValue.GetObject())
+    {
+      std::string             aCurrentValName = theValueName.empty()
+                                                  ? std::string(anItem.name.GetString())
+                                                  : theValueName + "." + anItem.name.GetString();
+      const RWGltf_JsonValue& aCurrentValue   = anItem.value;
+
+      const bool anIsCurrentValProcessed = parseNumber(aCurrentValue, aCurrentValName)
+                                           || parseString(aCurrentValue, aCurrentValName)
+                                           || parseArray(aCurrentValue, aCurrentValName)
+                                           || parseObject(aCurrentValue, aCurrentValName);
+      anIsAnyValProcessed |= anIsCurrentValProcessed;
+    }
+
+    return anIsAnyValProcessed;
+  }
+
+  //=================================================================================================
+
+  bool RWGltf_ExtrasParser::parseNumber(const RWGltf_JsonValue& theValue,
+                                        const std::string&      theValueName)
+  {
+    if (theValue.IsNumber() && !theValue.IsInt() && !theValue.IsDouble())
+    {
+      Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
+                             << theValueName << "\" - "
+                             << "Unsupported integer type. It will be skipped.";
+      return true;
+    }
+
+    if (theValue.IsInt())
+    {
+      getResult()->SetInteger(theValueName.c_str(), theValue.GetInt());
+      return true;
+    }
+
+    if (theValue.IsDouble())
+    {
+      getResult()->SetReal(theValueName.c_str(), theValue.GetDouble());
+      return true;
+    }
+
     return false;
   }
 
-  bool anIsAnyValProcessed = false;
-  for (auto& anItem : theValue.GetObject())
-  {
-    std::string             aCurrentValName = theValueName.empty()
-                                                ? std::string(anItem.name.GetString())
-                                                : theValueName + "." + anItem.name.GetString();
-    const RWGltf_JsonValue& aCurrentValue   = anItem.value;
+  //=================================================================================================
 
-    const bool anIsCurrentValProcessed =
-      parseNumber(aCurrentValue, aCurrentValName) || parseString(aCurrentValue, aCurrentValName)
-      || parseArray(aCurrentValue, aCurrentValName) || parseObject(aCurrentValue, aCurrentValName);
-    anIsAnyValProcessed |= anIsCurrentValProcessed;
+  bool RWGltf_ExtrasParser::parseString(const RWGltf_JsonValue& theValue,
+                                        const std::string&      theValueName)
+  {
+    if (theValue.IsString())
+    {
+      getResult()->SetString(theValueName.c_str(), theValue.GetString());
+      return true;
+      // Note: maybe in a future we should detect and parse binary data?
+      // Currently TDataStd_NamedData doesn't support array of bytes, so we can
+      // only try to process it as a string.
+    }
+
+    return false;
   }
 
-  return anIsAnyValProcessed;
-}
+  //=================================================================================================
 
-//=================================================================================================
-
-bool RWGltf_ExtrasParser::parseNumber(const RWGltf_JsonValue& theValue,
-                                      const std::string&      theValueName)
-{
-  if (theValue.IsNumber() && !theValue.IsInt() && !theValue.IsDouble())
+  bool RWGltf_ExtrasParser::parseArray(const RWGltf_JsonValue& theValue,
+                                       const std::string&      theValueName)
   {
+    if (!theValue.IsArray())
+    {
+      return false;
+    }
+
+    if (theValue.Size() == 0)
+    {
+      // Processing empty array first.
+      Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
+                          << "\" - "
+                          << "Empty array is detected. Storing as empty string.";
+      getResult()->SetString(theValueName.c_str(), "");
+      return true;
+    }
+
+    if (theValue[0].IsInt())
+    {
+      // Array of integers is supported, storing as normal.
+      occ::handle<NCollection_HArray1<int>> anArray =
+        new NCollection_HArray1<int>(0, theValue.Size());
+      for (size_t anIndex = 0; anIndex < theValue.Size(); ++anIndex)
+      {
+        anArray->SetValue(static_cast<int>(anIndex), theValue[static_cast<int>(anIndex)].GetInt());
+      }
+      getResult()->SetArrayOfIntegers(theValueName.c_str(), anArray);
+      return true;
+    }
+    else if (theValue[0].IsDouble())
+    {
+      // Array of double is supported, storing as normal.
+      occ::handle<NCollection_HArray1<double>> anArray =
+        new NCollection_HArray1<double>(0, theValue.Size());
+      for (size_t anIndex = 0; anIndex < theValue.Size(); ++anIndex)
+      {
+        anArray->SetValue(static_cast<int>(anIndex),
+                          theValue[static_cast<int>(anIndex)].GetDouble());
+      }
+      getResult()->SetArrayOfReals(theValueName.c_str(), anArray);
+      return true;
+    }
+    else if (theValue[0].IsString())
+    {
+      // Storing array of strings as string with separator.
+      Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
+                          << "\" - "
+                          << "Array of strings is detected. Storing as string with separators.";
+      std::string       anArrayString;
+      const std::string aSeparator = ";";
+      for (size_t i = 0; i < theValue.Size(); ++i)
+      {
+        anArrayString = anArrayString + aSeparator + theValue[static_cast<int>(i)].GetString();
+      }
+      getResult()->SetString(theValueName.c_str(), anArrayString.c_str());
+      return true;
+    }
+
+    // Unsupported type of array. Print warning and return.
     Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
                            << theValueName << "\" - "
-                           << "Unsupported integer type. It will be skipped.";
+                           << "Array of unsupported type is detected. It will be skipped.";
     return true;
   }
 
-  if (theValue.IsInt())
+  //=================================================================================================
+
+  occ::handle<TDataStd_NamedData>& RWGltf_ExtrasParser::getResult()
   {
-    getResult()->SetInteger(theValueName.c_str(), theValue.GetInt());
-    return true;
-  }
-
-  if (theValue.IsDouble())
-  {
-    getResult()->SetReal(theValueName.c_str(), theValue.GetDouble());
-    return true;
-  }
-
-  return false;
-}
-
-//=================================================================================================
-
-bool RWGltf_ExtrasParser::parseString(const RWGltf_JsonValue& theValue,
-                                      const std::string&      theValueName)
-{
-  if (theValue.IsString())
-  {
-    getResult()->SetString(theValueName.c_str(), theValue.GetString());
-    return true;
-    // Note: maybe in a future we should detect and parse binary data?
-    // Currently TDataStd_NamedData doesn't support array of bytes, so we can
-    // only try to process it as a string.
-  }
-
-  return false;
-}
-
-//=================================================================================================
-
-bool RWGltf_ExtrasParser::parseArray(const RWGltf_JsonValue& theValue,
-                                     const std::string&      theValueName)
-{
-  if (!theValue.IsArray())
-  {
-    return false;
-  }
-
-  if (theValue.Size() == 0)
-  {
-    // Processing empty array first.
-    Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
-                        << "\" - "
-                        << "Empty array is detected. Storing as empty string.";
-    getResult()->SetString(theValueName.c_str(), "");
-    return true;
-  }
-
-  if (theValue[0].IsInt())
-  {
-    // Array of integers is supported, storing as normal.
-    occ::handle<NCollection_HArray1<int>> anArray =
-      new NCollection_HArray1<int>(0, theValue.Size());
-    for (size_t anIndex = 0; anIndex < theValue.Size(); ++anIndex)
+    if (myResult.IsNull())
     {
-      anArray->SetValue(static_cast<int>(anIndex), theValue[static_cast<int>(anIndex)].GetInt());
+      myResult = new TDataStd_NamedData;
     }
-    getResult()->SetArrayOfIntegers(theValueName.c_str(), anArray);
-    return true;
+    return myResult;
   }
-  else if (theValue[0].IsDouble())
-  {
-    // Array of double is supported, storing as normal.
-    occ::handle<NCollection_HArray1<double>> anArray =
-      new NCollection_HArray1<double>(0, theValue.Size());
-    for (size_t anIndex = 0; anIndex < theValue.Size(); ++anIndex)
-    {
-      anArray->SetValue(static_cast<int>(anIndex), theValue[static_cast<int>(anIndex)].GetDouble());
-    }
-    getResult()->SetArrayOfReals(theValueName.c_str(), anArray);
-    return true;
-  }
-  else if (theValue[0].IsString())
-  {
-    // Storing array of strings as string with separator.
-    Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
-                        << "\" - "
-                        << "Array of strings is detected. Storing as string with separators.";
-    std::string       anArrayString;
-    const std::string aSeparator = ";";
-    for (size_t i = 0; i < theValue.Size(); ++i)
-    {
-      anArrayString = anArrayString + aSeparator + theValue[static_cast<int>(i)].GetString();
-    }
-    getResult()->SetString(theValueName.c_str(), anArrayString.c_str());
-    return true;
-  }
-
-  // Unsupported type of array. Print warning and return.
-  Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
-                         << theValueName << "\" - "
-                         << "Array of unsupported type is detected. It will be skipped.";
-  return true;
-}
-
-//=================================================================================================
-
-occ::handle<TDataStd_NamedData>& RWGltf_ExtrasParser::getResult()
-{
-  if (myResult.IsNull())
-  {
-    myResult = new TDataStd_NamedData;
-  }
-  return myResult;
-}
 } // namespace
 
 //! Find member of the object in a safe way.
@@ -913,7 +919,8 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
     Graphic3d_AlphaMode anAlphaMode = Graphic3d_AlphaMode_BlendAuto;
     switch (theMatPbr->AlphaMode)
     {
-      case RWGltf_GltfAlphaMode_Opaque: {
+      case RWGltf_GltfAlphaMode_Opaque:
+      {
         anAlphaMode = Graphic3d_AlphaMode_Opaque;
         if (aMatXde.BaseColor.Alpha() < 1.0f)
         {
@@ -922,11 +929,13 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
         }
         break;
       }
-      case RWGltf_GltfAlphaMode_Mask: {
+      case RWGltf_GltfAlphaMode_Mask:
+      {
         anAlphaMode = Graphic3d_AlphaMode_Mask;
         break;
       }
-      case RWGltf_GltfAlphaMode_Blend: {
+      case RWGltf_GltfAlphaMode_Blend:
+      {
         anAlphaMode = Graphic3d_AlphaMode_Blend;
         break;
       }
@@ -1967,7 +1976,8 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
     TopoDS_Shape aShape;
     switch (aMode)
     {
-      case RWGltf_GltfPrimitiveMode_Points: {
+      case RWGltf_GltfPrimitiveMode_Points:
+      {
         BRep_Builder    aBuilder;
         TopoDS_Compound aVertices;
         aBuilder.MakeCompound(aVertices);
@@ -1980,7 +1990,8 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
         aShape = aVertices;
         break;
       }
-      case RWGltf_GltfPrimitiveMode_Lines: {
+      case RWGltf_GltfPrimitiveMode_Lines:
+      {
         NCollection_Array1<gp_Pnt> aNodes(1, aMeshData->NbEdges());
         for (int anEdgeIdx = 1; anEdgeIdx <= aMeshData->NbEdges(); ++anEdgeIdx)
         {
@@ -1995,7 +2006,8 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
         aShape = anEdge;
         break;
       }
-      case RWGltf_GltfPrimitiveMode_Triangles: {
+      case RWGltf_GltfPrimitiveMode_Triangles:
+      {
         TopoDS_Face  aFace;
         BRep_Builder aBuilder;
         aBuilder.MakeFace(aFace, aMeshData);
@@ -2003,7 +2015,8 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
         myFaceList.Append(aFace);
         break;
       }
-      default: {
+      default:
+      {
         Message::SendFail("Unsupported primitive mode.");
         return false;
         break;

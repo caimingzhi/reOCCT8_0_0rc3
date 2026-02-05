@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <gp_Ax22d.hpp>
 #include <gp_Ax2d.hpp>
@@ -516,4 +515,3 @@ inline gp_Hypr2d gp_Hypr2d::Transformed(const gp_Trsf2d& theT) const
   aH.pos.Transform(theT);
   return aH;
 }
-

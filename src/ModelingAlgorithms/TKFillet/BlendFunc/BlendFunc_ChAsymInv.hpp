@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <math_Matrix.hpp>
 #include <Blend_FuncInv.hpp>
@@ -65,4 +64,3 @@ private:
   math_Vector                    FX;
   math_Matrix                    DX;
 };
-

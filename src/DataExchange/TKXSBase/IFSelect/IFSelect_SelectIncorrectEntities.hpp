@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_SelectFlag.hpp>
@@ -20,4 +19,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IFSelect_SelectIncorrectEntities, IFSelect_SelectFlag)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Storage format versions of OCAF documents in XML and binary file formats.
 //!
 //! OCAF document file format evolves and a new version number indicates each improvement of the
@@ -75,4 +74,3 @@ enum
   TDocStd_FormatVersion_LOWER = TDocStd_FormatVersion_VERSION_2,
   TDocStd_FormatVersion_UPPER = TDocStd_FormatVersion_VERSION_12
 };
-

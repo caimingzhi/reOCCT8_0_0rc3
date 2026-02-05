@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -64,4 +63,3 @@ private:
   int                        myK0;    //!< Polynomial degree
   NCollection_Array1<double> myTABli; //!< Array of coefficients li(i) for i = 0..myK0
 };
-

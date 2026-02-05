@@ -33,87 +33,88 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStl_Reader, Standard_Transient)
 
 namespace
 {
-// Binary STL sizes
-static const size_t THE_STL_HEADER_SIZE   = 84;
-static const size_t THE_STL_SIZEOF_FACET  = 50;
-static const size_t THE_STL_MIN_FILE_SIZE = THE_STL_HEADER_SIZE + THE_STL_SIZEOF_FACET;
+  // Binary STL sizes
+  static const size_t THE_STL_HEADER_SIZE   = 84;
+  static const size_t THE_STL_SIZEOF_FACET  = 50;
+  static const size_t THE_STL_MIN_FILE_SIZE = THE_STL_HEADER_SIZE + THE_STL_SIZEOF_FACET;
 
-// The length of buffer to read (in bytes)
-static const size_t THE_BUFFER_SIZE = 1024;
+  // The length of buffer to read (in bytes)
+  static const size_t THE_BUFFER_SIZE = 1024;
 
-//! Auxiliary tool for merging nodes during STL reading.
-class MergeNodeTool : public Poly_MergeNodesTool
-{
-public:
-  //! Constructor
-  MergeNodeTool(RWStl_Reader* theReader, const int theNbFacets = -1)
-      : Poly_MergeNodesTool(theReader->MergeAngle(), 0.0, theNbFacets),
-        myReader(theReader),
-        myNodeIndexMap(1024, new NCollection_IncAllocator(1024 * 1024))
+  //! Auxiliary tool for merging nodes during STL reading.
+  class MergeNodeTool : public Poly_MergeNodesTool
   {
-    // avoid redundant allocations as final triangulation is managed by RWStl_Reader subclass
-    ChangeOutput().Nullify();
-  }
-
-  //! Add new triangle
-  void AddTriangle(const gp_XYZ theElemNodes[3])
-  {
-    Poly_MergeNodesTool::AddTriangle(theElemNodes);
-
-    // remap node indices returned by RWStl_Reader::AddNode();
-    // this is a waste of time for most cases of sequential index adding, but preserved for keeping
-    // RWStl_Reader interface
-    int aNodesSrc[3] = {ElementNodeIndex(0), ElementNodeIndex(1), ElementNodeIndex(2)};
-    int aNodesRes[3] = {-1, -1, -1};
-    for (int aNodeIter = 0; aNodeIter < 3; ++aNodeIter)
+  public:
+    //! Constructor
+    MergeNodeTool(RWStl_Reader* theReader, const int theNbFacets = -1)
+        : Poly_MergeNodesTool(theReader->MergeAngle(), 0.0, theNbFacets),
+          myReader(theReader),
+          myNodeIndexMap(1024, new NCollection_IncAllocator(1024 * 1024))
     {
-      // use existing node if found at the same point
-      if (!myNodeIndexMap.Find(aNodesSrc[aNodeIter], aNodesRes[aNodeIter]))
+      // avoid redundant allocations as final triangulation is managed by RWStl_Reader subclass
+      ChangeOutput().Nullify();
+    }
+
+    //! Add new triangle
+    void AddTriangle(const gp_XYZ theElemNodes[3])
+    {
+      Poly_MergeNodesTool::AddTriangle(theElemNodes);
+
+      // remap node indices returned by RWStl_Reader::AddNode();
+      // this is a waste of time for most cases of sequential index adding, but preserved for
+      // keeping RWStl_Reader interface
+      int aNodesSrc[3] = {ElementNodeIndex(0), ElementNodeIndex(1), ElementNodeIndex(2)};
+      int aNodesRes[3] = {-1, -1, -1};
+      for (int aNodeIter = 0; aNodeIter < 3; ++aNodeIter)
       {
-        aNodesRes[aNodeIter] = myReader->AddNode(theElemNodes[aNodeIter]);
-        myNodeIndexMap.Bind(aNodesSrc[aNodeIter], aNodesRes[aNodeIter]);
+        // use existing node if found at the same point
+        if (!myNodeIndexMap.Find(aNodesSrc[aNodeIter], aNodesRes[aNodeIter]))
+        {
+          aNodesRes[aNodeIter] = myReader->AddNode(theElemNodes[aNodeIter]);
+          myNodeIndexMap.Bind(aNodesSrc[aNodeIter], aNodesRes[aNodeIter]);
+        }
+      }
+      if (aNodesRes[0] != aNodesRes[1] && aNodesRes[1] != aNodesRes[2]
+          && aNodesRes[2] != aNodesRes[0])
+      {
+        myReader->AddTriangle(aNodesRes[0], aNodesRes[1], aNodesRes[2]);
       }
     }
-    if (aNodesRes[0] != aNodesRes[1] && aNodesRes[1] != aNodesRes[2]
-        && aNodesRes[2] != aNodesRes[0])
+
+  private:
+    RWStl_Reader*                 myReader;
+    NCollection_DataMap<int, int> myNodeIndexMap;
+  };
+
+  //! Read a Little Endian 32 bits float
+  inline static float readStlFloat(const char* theData)
+  {
+#if OCCT_BINARY_FILE_DO_INVERSE
+    // on big-endian platform, map values byte-per-byte
+    union
     {
-      myReader->AddTriangle(aNodesRes[0], aNodesRes[1], aNodesRes[2]);
-    }
+      uint32_t i;
+      float    f;
+    } bidargum;
+
+    bidargum.i = theData[0] & 0xFF;
+    bidargum.i |= (theData[1] & 0xFF) << 0x08;
+    bidargum.i |= (theData[2] & 0xFF) << 0x10;
+    bidargum.i |= (theData[3] & 0xFF) << 0x18;
+    return bidargum.f;
+#else
+    // on little-endian platform, use plain cast
+    return *reinterpret_cast<const float*>(theData);
+#endif
   }
 
-private:
-  RWStl_Reader*                 myReader;
-  NCollection_DataMap<int, int> myNodeIndexMap;
-};
-
-//! Read a Little Endian 32 bits float
-inline static float readStlFloat(const char* theData)
-{
-#if OCCT_BINARY_FILE_DO_INVERSE
-  // on big-endian platform, map values byte-per-byte
-  union {
-    uint32_t i;
-    float    f;
-  } bidargum;
-
-  bidargum.i = theData[0] & 0xFF;
-  bidargum.i |= (theData[1] & 0xFF) << 0x08;
-  bidargum.i |= (theData[2] & 0xFF) << 0x10;
-  bidargum.i |= (theData[3] & 0xFF) << 0x18;
-  return bidargum.f;
-#else
-  // on little-endian platform, use plain cast
-  return *reinterpret_cast<const float*>(theData);
-#endif
-}
-
-//! Read a Little Endian 32 bits float
-inline static gp_XYZ readStlFloatVec3(const char* theData)
-{
-  return gp_XYZ(readStlFloat(theData),
-                readStlFloat(theData + sizeof(float)),
-                readStlFloat(theData + sizeof(float) * 2));
-}
+  //! Read a Little Endian 32 bits float
+  inline static gp_XYZ readStlFloatVec3(const char* theData)
+  {
+    return gp_XYZ(readStlFloat(theData),
+                  readStlFloat(theData + sizeof(float)),
+                  readStlFloat(theData + sizeof(float) * 2));
+  }
 
 } // namespace
 

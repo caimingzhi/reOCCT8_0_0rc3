@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IGESData_IGESModel.hpp>
 #include <IGESData_Protocol.hpp>
 #include <IGESData_FileRecognizer.hpp>
@@ -18,4 +17,3 @@ Standard_EXPORT int IGESFile_Read(char*                                       no
                                   const occ::handle<IGESData_Protocol>&       protocol,
                                   const occ::handle<IGESData_FileRecognizer>& reco,
                                   const bool                                  modefnes = false);
-

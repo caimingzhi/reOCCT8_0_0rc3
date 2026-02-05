@@ -138,7 +138,8 @@ static void drawCurve(Adaptor3d_Curve&                    aCurve,
 {
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Pnt p1 = aCurve.Value(U1);
       gp_Pnt p2 = aCurve.Value(U2);
       Points.Append(p1);
@@ -152,7 +153,8 @@ static void drawCurve(Adaptor3d_Curve&                    aCurve,
       }
       break;
     }
-    default: {
+    default:
+    {
       const int                  nbinter = aCurve.NbIntervals(GeomAbs_C1);
       NCollection_Array1<double> T(1, nbinter + 1);
       aCurve.Intervals(T, GeomAbs_C1);
@@ -217,7 +219,8 @@ static bool MatchCurve(const double           X,
   double retdist;
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Pnt p1 = aCurve.Value(U1);
       if (std::abs(X - p1.X()) + std::abs(Y - p1.Y()) + std::abs(Z - p1.Z()) <= aDistance)
         return true;
@@ -226,7 +229,8 @@ static bool MatchCurve(const double           X,
         return true;
       return Prs3d::MatchSegment(X, Y, Z, aDistance, p1, p2, retdist);
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       const double Radius = aCurve.Circle().Radius();
       if (!Precision::IsInfinite(Radius))
       {
@@ -253,7 +257,8 @@ static bool MatchCurve(const double           X,
       }
       break;
     }
-    default: {
+    default:
+    {
       GCPnts_TangentialDeflection Algo(aCurve, U1, U2, anAngle, TheDeflection);
       const int                   NumberOfPoints = Algo.NbPoints();
       if (NumberOfPoints > 0)

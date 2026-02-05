@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveSet.hpp>
 
 //! A framework to define selection of a wire owner by an
@@ -78,4 +77,3 @@ private:
   mutable Select3D_BndBox3d                            myBndBox;            //!< Bounding box of the whole wire
   // clang-format on
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomGridEval.hpp>
 #include <NCollection_Array1.hpp>
@@ -84,4 +83,3 @@ public:
 private:
   std::reference_wrapper<const Adaptor3d_Curve> myCurve;
 };
-

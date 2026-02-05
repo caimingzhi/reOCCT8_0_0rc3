@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -104,6 +103,7 @@ private:
   double                                       myMinTol;
   double                                       myMaxTol;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -208,5 +208,3 @@ inline bool ShapeFix_Root::NeedFix(const int Flag, const bool need)
 {
   return Flag < 0 ? need : (Flag > 0);
 }
-
-

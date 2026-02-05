@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_IGESEntity.hpp>
@@ -29,4 +28,3 @@ public:
 private:
   occ::handle<TCollection_HAsciiString> theExtRefEntitySymbName;
 };
-

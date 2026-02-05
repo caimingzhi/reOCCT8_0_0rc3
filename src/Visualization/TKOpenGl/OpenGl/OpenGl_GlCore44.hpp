@@ -1,81 +1,5 @@
 #pragma once
 
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Created on: 2014-03-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
 #include <OpenGl_GlCore32.hpp>
 
 //! OpenGL 3.3 definition.
@@ -122,8 +46,6 @@ public: //! @name GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
 public: //! @name OpenGL 3.3 additives to 3.2
   using theBaseClass_t::glVertexAttribDivisor;
 };
-
-
 
 //! OpenGL 4.0 definition.
 struct OpenGl_GlCore40 : public OpenGl_GlCore33
@@ -191,8 +113,6 @@ public: //! @name OpenGL 4.0 additives to 3.3
   using theBaseClass_t::glBlendFuncSeparatei;
   using theBaseClass_t::glMinSampleShading;
 };
-
-
 
 //! OpenGL 4.1 definition.
 struct OpenGl_GlCore41 : public OpenGl_GlCore40
@@ -299,8 +219,6 @@ public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
   using theBaseClass_t::glViewportIndexedfv;
 };
 
-
-
 //! OpenGL 4.2 definition.
 struct OpenGl_GlCore42 : public OpenGl_GlCore41
 {
@@ -331,8 +249,6 @@ public: //! @name GL_ARB_texture_storage (added to OpenGL 4.2 core)
   using theBaseClass_t::glTexStorage2D;
   using theBaseClass_t::glTexStorage3D;
 };
-
-
 
 //! OpenGL 4.3 definition.
 struct OpenGl_GlCore43 : public OpenGl_GlCore42
@@ -386,8 +302,6 @@ public: //! @name OpenGL 4.3 additives to 4.2
   using theBaseClass_t::glVertexBindingDivisor;
 };
 
-
-
 //! OpenGL 4.4 definition.
 struct OpenGl_GlCore44 : public OpenGl_GlCore43
 {
@@ -405,4 +319,3 @@ public: //! @name OpenGL 4.4 additives to 4.3
   using theBaseClass_t::glClearTexImage;
   using theBaseClass_t::glClearTexSubImage;
 };
-

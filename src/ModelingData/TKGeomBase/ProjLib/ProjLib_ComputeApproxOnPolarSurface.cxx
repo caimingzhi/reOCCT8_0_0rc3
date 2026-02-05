@@ -1,18 +1,3 @@
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ProjLib_ComputeApproxOnPolarSurface.hpp>
 #include <ElSLib.hpp>
 #include <ElCLib.hpp>
@@ -223,7 +208,8 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
     double S = 0., T = 0.;
     switch (Type)
     {
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         gp_Cylinder Cylinder = theData.mySurf->Cylinder();
         ElSLib::Parameters(Cylinder, p, S, T);
         if (U0 < Uinf)
@@ -233,7 +219,8 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         S += decalU * 2 * M_PI;
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         gp_Cone Cone = theData.mySurf->Cone();
         ElSLib::Parameters(Cone, p, S, T);
         if (U0 < Uinf)
@@ -243,7 +230,8 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         S += decalU * 2 * M_PI;
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         gp_Sphere Sphere = theData.mySurf->Sphere();
         ElSLib::Parameters(Sphere, p, S, T);
         if (U0 < Uinf)
@@ -266,7 +254,8 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         }
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         gp_Torus Torus = theData.mySurf->Torus();
         ElSLib::Parameters(Torus, p, S, T);
         if (U0 < Uinf)
@@ -747,31 +736,38 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::Perform(
         typeCurve = InitialCurve2d->GetType();
         switch (typeCurve)
         {
-          case GeomAbs_Line: {
+          case GeomAbs_Line:
+          {
             G2dC = new Geom2d_Line(InitialCurve2d->Line());
             break;
           }
-          case GeomAbs_Circle: {
+          case GeomAbs_Circle:
+          {
             G2dC = new Geom2d_Circle(InitialCurve2d->Circle());
             break;
           }
-          case GeomAbs_Ellipse: {
+          case GeomAbs_Ellipse:
+          {
             G2dC = new Geom2d_Ellipse(InitialCurve2d->Ellipse());
             break;
           }
-          case GeomAbs_Hyperbola: {
+          case GeomAbs_Hyperbola:
+          {
             G2dC = new Geom2d_Hyperbola(InitialCurve2d->Hyperbola());
             break;
           }
-          case GeomAbs_Parabola: {
+          case GeomAbs_Parabola:
+          {
             G2dC = new Geom2d_Parabola(InitialCurve2d->Parabola());
             break;
           }
-          case GeomAbs_BezierCurve: {
+          case GeomAbs_BezierCurve:
+          {
             G2dC = InitialCurve2d->Bezier();
             break;
           }
-          case GeomAbs_BSplineCurve: {
+          case GeomAbs_BSplineCurve:
+          {
             G2dC = InitialCurve2d->BSpline();
             break;
           }
@@ -985,7 +981,8 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         //	myProjIsDone = true;
         //	break;
         //      }
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         //	double Sloc, Tloc;
         double      Sloc;
         int         usens    = 0;
@@ -1008,7 +1005,8 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         //	double Sloc, Tloc;
         double  Sloc;
         int     usens = 0;
@@ -1031,7 +1029,8 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         double    Sloc, Tloc;
         int       usens = 0, vsens = 0; // usens steps by half-period
         bool      vparit = false;
@@ -1074,7 +1073,8 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         double   Sloc, Tloc;
         int      usens = 0, vsens = 0;
         gp_Torus Torus = Surf->Torus();

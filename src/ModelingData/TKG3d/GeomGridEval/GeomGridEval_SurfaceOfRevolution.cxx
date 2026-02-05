@@ -325,9 +325,9 @@ NCollection_Array1<gp_Pnt> GeomGridEval_SurfaceOfRevolution::EvaluatePoints(
     return NCollection_Array1<gp_Pnt>();
   }
 
-  return GeomGridEval::EvaluatePointsHelper(theUVPairs, [this](double theU, double theV) -> gp_Pnt {
-    return myGeom->Value(theU, theV);
-  });
+  return GeomGridEval::EvaluatePointsHelper(theUVPairs,
+                                            [this](double theU, double theV) -> gp_Pnt
+                                            { return myGeom->Value(theU, theV); });
 }
 
 //==================================================================================================
@@ -340,12 +340,14 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_SurfaceOfRevolution::Evalu
     return NCollection_Array1<GeomGridEval::SurfD1>();
   }
 
-  return GeomGridEval::EvaluatePointsD1Helper(theUVPairs, [this](double theU, double theV) {
-    gp_Pnt aP;
-    gp_Vec aD1U, aD1V;
-    myGeom->D1(theU, theV, aP, aD1U, aD1V);
-    return GeomGridEval::SurfD1{aP, aD1U, aD1V};
-  });
+  return GeomGridEval::EvaluatePointsD1Helper(theUVPairs,
+                                              [this](double theU, double theV)
+                                              {
+                                                gp_Pnt aP;
+                                                gp_Vec aD1U, aD1V;
+                                                myGeom->D1(theU, theV, aP, aD1U, aD1V);
+                                                return GeomGridEval::SurfD1{aP, aD1U, aD1V};
+                                              });
 }
 
 //==================================================================================================
@@ -358,12 +360,15 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_SurfaceOfRevolution::Evalu
     return NCollection_Array1<GeomGridEval::SurfD2>();
   }
 
-  return GeomGridEval::EvaluatePointsD2Helper(theUVPairs, [this](double theU, double theV) {
-    gp_Pnt aP;
-    gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
-    myGeom->D2(theU, theV, aP, aD1U, aD1V, aD2U, aD2V, aD2UV);
-    return GeomGridEval::SurfD2{aP, aD1U, aD1V, aD2U, aD2V, aD2UV};
-  });
+  return GeomGridEval::EvaluatePointsD2Helper(
+    theUVPairs,
+    [this](double theU, double theV)
+    {
+      gp_Pnt aP;
+      gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
+      myGeom->D2(theU, theV, aP, aD1U, aD1V, aD2U, aD2V, aD2UV);
+      return GeomGridEval::SurfD2{aP, aD1U, aD1V, aD2U, aD2V, aD2UV};
+    });
 }
 
 //==================================================================================================
@@ -376,12 +381,15 @@ NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_SurfaceOfRevolution::Evalu
     return NCollection_Array1<GeomGridEval::SurfD3>();
   }
 
-  return GeomGridEval::EvaluatePointsD3Helper(theUVPairs, [this](double theU, double theV) {
-    gp_Pnt aP;
-    gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV;
-    myGeom->D3(theU, theV, aP, aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV);
-    return GeomGridEval::SurfD3{aP, aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV};
-  });
+  return GeomGridEval::EvaluatePointsD3Helper(
+    theUVPairs,
+    [this](double theU, double theV)
+    {
+      gp_Pnt aP;
+      gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV;
+      myGeom->D3(theU, theV, aP, aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV);
+      return GeomGridEval::SurfD3{aP, aD1U, aD1V, aD2U, aD2V, aD2UV, aD3U, aD3V, aD3UUV, aD3UVV};
+    });
 }
 
 //==================================================================================================
@@ -398,7 +406,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_SurfaceOfRevolution::EvaluatePointsDN(
 
   return GeomGridEval::EvaluatePointsDNHelper(
     theUVPairs,
-    [this, theNU, theNV](double theU, double theV) -> gp_Vec {
-      return myGeom->DN(theU, theV, theNU, theNV);
-    });
+    [this, theNU, theNV](double theU, double theV) -> gp_Vec
+    { return myGeom->DN(theU, theV, theNU, theNV); });
 }

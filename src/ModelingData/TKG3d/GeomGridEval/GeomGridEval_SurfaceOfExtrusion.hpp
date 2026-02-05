@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomGridEval.hpp>
 #include <GeomGridEval_Curve.hpp>
 #include <Geom_Curve.hpp>
@@ -141,4 +140,3 @@ private:
   occ::handle<Geom_Curve>                    myBasisCurve;
   gp_Dir                                     myDirection;
 };
-

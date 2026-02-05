@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -121,4 +120,3 @@ private:
   occ::handle<NCollection_HArray1<double>> myUi_2;
   occ::handle<NCollection_HArray1<double>> mySi_2;
 };
-

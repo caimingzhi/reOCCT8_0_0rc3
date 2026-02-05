@@ -1,18 +1,3 @@
-// Created on: 2016-06-23
-// Copyright (c) 2016 OPEN CASCADE SAS
-// Created by: Oleg AGASHIN
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_ModelHealer.hpp>
 #include <BRepMesh_Deflection.hpp>
 #include <BRepMesh_FaceChecker.hpp>
@@ -36,80 +21,80 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelHealer, IMeshTools_ModelAlgo)
 
 namespace
 {
-//! Decreases deflection of the given edge and tries to update discretization.
-class EdgeAmplifier
-{
-public:
-  //! Constructor.
-  EdgeAmplifier(const IMeshTools_Parameters& theParameters)
-      : myParameters(theParameters)
+  //! Decreases deflection of the given edge and tries to update discretization.
+  class EdgeAmplifier
   {
-  }
-
-  //! Main operator.
-  void operator()(const IMeshData::IEdgePtr& theDEdge) const
-  {
-    const IMeshData::IEdgeHandle aDEdge = theDEdge;
-
-    int aPointsNb = aDEdge->GetCurve()->ParametersNb();
-
-    aDEdge->Clear(true);
-    aDEdge->SetDeflection(std::max(aDEdge->GetDeflection() / 3., Precision::Confusion()));
-
-    for (int aPCurveIt = 0; aPCurveIt < aDEdge->PCurvesNb(); ++aPCurveIt)
+  public:
+    //! Constructor.
+    EdgeAmplifier(const IMeshTools_Parameters& theParameters)
+        : myParameters(theParameters)
     {
-      const IMeshData::IPCurveHandle& aPCurve = aDEdge->GetPCurve(aPCurveIt);
-      const IMeshData::IFaceHandle    aDFace  = aPCurve->GetFace();
-
-      // Check that outer wire contains 2 edges or less and add an additional point.
-      const IMeshData::IWireHandle& aDWire = aDFace->GetWire(0);
-      if (aDWire->EdgesNb() <= 2)
-      {
-        ++aPointsNb;
-        break;
-      }
     }
 
-    const IMeshData::IPCurveHandle&          aPCurve = aDEdge->GetPCurve(0);
-    const IMeshData::IFaceHandle             aDFace  = aPCurve->GetFace();
-    occ::handle<IMeshTools_CurveTessellator> aTessellator =
-      BRepMesh_EdgeDiscret::CreateEdgeTessellator(aDEdge,
-                                                  aPCurve->GetOrientation(),
-                                                  aDFace,
-                                                  myParameters,
-                                                  aPointsNb);
+    //! Main operator.
+    void operator()(const IMeshData::IEdgePtr& theDEdge) const
+    {
+      const IMeshData::IEdgeHandle aDEdge = theDEdge;
 
-    BRepMesh_EdgeDiscret::Tessellate3d(aDEdge, aTessellator, false);
-    BRepMesh_EdgeDiscret::Tessellate2d(aDEdge, false);
+      int aPointsNb = aDEdge->GetCurve()->ParametersNb();
+
+      aDEdge->Clear(true);
+      aDEdge->SetDeflection(std::max(aDEdge->GetDeflection() / 3., Precision::Confusion()));
+
+      for (int aPCurveIt = 0; aPCurveIt < aDEdge->PCurvesNb(); ++aPCurveIt)
+      {
+        const IMeshData::IPCurveHandle& aPCurve = aDEdge->GetPCurve(aPCurveIt);
+        const IMeshData::IFaceHandle    aDFace  = aPCurve->GetFace();
+
+        // Check that outer wire contains 2 edges or less and add an additional point.
+        const IMeshData::IWireHandle& aDWire = aDFace->GetWire(0);
+        if (aDWire->EdgesNb() <= 2)
+        {
+          ++aPointsNb;
+          break;
+        }
+      }
+
+      const IMeshData::IPCurveHandle&          aPCurve = aDEdge->GetPCurve(0);
+      const IMeshData::IFaceHandle             aDFace  = aPCurve->GetFace();
+      occ::handle<IMeshTools_CurveTessellator> aTessellator =
+        BRepMesh_EdgeDiscret::CreateEdgeTessellator(aDEdge,
+                                                    aPCurve->GetOrientation(),
+                                                    aDFace,
+                                                    myParameters,
+                                                    aPointsNb);
+
+      BRepMesh_EdgeDiscret::Tessellate3d(aDEdge, aTessellator, false);
+      BRepMesh_EdgeDiscret::Tessellate2d(aDEdge, false);
+    }
+
+  private:
+    EdgeAmplifier(const EdgeAmplifier& theOther) = delete;
+
+    void operator=(const EdgeAmplifier& theOther) = delete;
+
+  private:
+    const IMeshTools_Parameters& myParameters;
+  };
+
+  //! Returns True if some of two vertcies is same with reference one.
+  bool isSameWithSomeOf(const TopoDS_Vertex& theRefVertex,
+                        const TopoDS_Vertex& theVertex1,
+                        const TopoDS_Vertex& theVertex2)
+  {
+    return (theRefVertex.IsSame(theVertex1) || theRefVertex.IsSame(theVertex2));
   }
 
-private:
-  EdgeAmplifier(const EdgeAmplifier& theOther) = delete;
-
-  void operator=(const EdgeAmplifier& theOther) = delete;
-
-private:
-  const IMeshTools_Parameters& myParameters;
-};
-
-//! Returns True if some of two vertcies is same with reference one.
-bool isSameWithSomeOf(const TopoDS_Vertex& theRefVertex,
-                      const TopoDS_Vertex& theVertex1,
-                      const TopoDS_Vertex& theVertex2)
-{
-  return (theRefVertex.IsSame(theVertex1) || theRefVertex.IsSame(theVertex2));
-}
-
-//! Returns True if some of two vertcies is within tolerance of reference one.
-bool isInToleranceWithSomeOf(const gp_Pnt& theRefPoint,
-                             const gp_Pnt& thePoint1,
-                             const gp_Pnt& thePoint2,
-                             const double  theTol)
-{
-  const double aSqTol = theTol * theTol;
-  return (theRefPoint.SquareDistance(thePoint1) < aSqTol
-          || theRefPoint.SquareDistance(thePoint2) < aSqTol);
-}
+  //! Returns True if some of two vertcies is within tolerance of reference one.
+  bool isInToleranceWithSomeOf(const gp_Pnt& theRefPoint,
+                               const gp_Pnt& thePoint1,
+                               const gp_Pnt& thePoint2,
+                               const double  theTol)
+  {
+    const double aSqTol = theTol * theTol;
+    return (theRefPoint.SquareDistance(thePoint1) < aSqTol
+            || theRefPoint.SquareDistance(thePoint2) < aSqTol);
+  }
 } // namespace
 
 //=================================================================================================

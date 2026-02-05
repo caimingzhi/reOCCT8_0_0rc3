@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_History.hpp>
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
@@ -207,4 +206,3 @@ private:
 
   occ::handle<BRepTools_History> myHistory; //!< The history.
 };
-

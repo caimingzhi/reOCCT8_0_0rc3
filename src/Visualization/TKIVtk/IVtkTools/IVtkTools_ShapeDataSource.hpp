@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtkTools.hpp>
 #include <IVtkOCC_Shape.hpp>
 #include <IVtkVTK_ShapeData.hpp>
@@ -101,4 +100,3 @@ protected:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

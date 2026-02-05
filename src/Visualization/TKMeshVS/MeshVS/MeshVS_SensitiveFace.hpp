@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Select3D_SensitiveFace.hpp>
@@ -20,4 +19,3 @@ public:
 protected:
   gp_Pnt myCenter;
 };
-

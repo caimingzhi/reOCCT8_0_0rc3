@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Definition of types of markers
 enum Aspect_TypeOfMarker
 {
@@ -20,4 +19,3 @@ enum Aspect_TypeOfMarker
   Aspect_TOM_BALL,       //!< a ball with 1 color and different saturations
   Aspect_TOM_USERDEFINED //!< defined by Users (custom image)
 };
-

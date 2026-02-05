@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Algorithms:
 enum GProp_ValueType
 {
@@ -16,4 +15,3 @@ enum GProp_ValueType
   GProp_InertiaYZ,
   GProp_Unknown
 };
-

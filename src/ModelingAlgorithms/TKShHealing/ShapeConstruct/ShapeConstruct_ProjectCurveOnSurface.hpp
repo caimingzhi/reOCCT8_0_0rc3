@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -280,4 +279,3 @@ private:
   int                                myAdjustOverDegen; //!< Seam adjustment flag
   CacheArray myCache; //!< Cached 3D/2D point pairs for projection optimization
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_CurveElementInterval.hpp>
@@ -77,4 +76,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_CurveElementEndOffset>>>  theEndOffsets;
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_CurveElementEndRelease>>> theEndReleases;
 };
-

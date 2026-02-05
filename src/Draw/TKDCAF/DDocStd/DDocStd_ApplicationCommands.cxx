@@ -1,18 +1,3 @@
-// Created on: 2000-03-01
-// Created by: Denis PASCAL
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <DDocStd.hpp>
 #include <Draw_Interpretor.hpp>
 #include <Draw_Viewer.hpp>
@@ -191,30 +176,36 @@ static int DDocStd_Open(Draw_Interpretor& di, int nb, const char** a)
     {
       switch (theStatus)
       {
-        case PCDM_RS_UserBreak: {
+        case PCDM_RS_UserBreak:
+        {
           di << " could not retrieve , user break \n";
           break;
         }
         case PCDM_RS_AlreadyRetrieved:
-        case PCDM_RS_AlreadyRetrievedAndModified: {
+        case PCDM_RS_AlreadyRetrievedAndModified:
+        {
           di << " already retrieved \n";
           break;
         }
-        case PCDM_RS_NoDriver: {
+        case PCDM_RS_NoDriver:
+        {
           di << " could not retrieve , no Driver to make it \n";
           break;
         }
         case PCDM_RS_UnknownDocument:
-        case PCDM_RS_NoModel: {
+        case PCDM_RS_NoModel:
+        {
           di << " could not retrieve , Unknown Document or No Model \n";
           break;
         }
         case PCDM_RS_TypeNotFoundInSchema:
-        case PCDM_RS_UnrecognizedFileFormat: {
+        case PCDM_RS_UnrecognizedFileFormat:
+        {
           di << " could not retrieve , Type not found or Unrecognized File Format\n";
           break;
         }
-        case PCDM_RS_PermissionDenied: {
+        case PCDM_RS_PermissionDenied:
+        {
           di << " could not retrieve , permission denied \n";
           break;
         }
@@ -298,31 +289,38 @@ static int DDocStd_SaveAs(Draw_Interpretor& di, int nb, const char** a)
     {
       switch (theStatus)
       {
-        case PCDM_SS_DriverFailure: {
+        case PCDM_SS_DriverFailure:
+        {
           di << "Error saving document: Could not store , no driver found to make it\n";
           break;
         }
-        case PCDM_SS_WriteFailure: {
+        case PCDM_SS_WriteFailure:
+        {
           di << "Error saving document: Write access failure\n";
           break;
         }
-        case PCDM_SS_Failure: {
+        case PCDM_SS_Failure:
+        {
           di << "Error saving document: Write failure\n";
           break;
         }
-        case PCDM_SS_Doc_IsNull: {
+        case PCDM_SS_Doc_IsNull:
+        {
           di << "Error saving document: No document to save\n";
           break;
         }
-        case PCDM_SS_No_Obj: {
+        case PCDM_SS_No_Obj:
+        {
           di << "Error saving document: No objects written\n";
           break;
         }
-        case PCDM_SS_Info_Section_Error: {
+        case PCDM_SS_Info_Section_Error:
+        {
           di << "Error saving document: Write info section failure\n";
           break;
         }
-        case PCDM_SS_UserBreak: {
+        case PCDM_SS_UserBreak:
+        {
           di << "Error saving document: User break \n";
           break;
         }

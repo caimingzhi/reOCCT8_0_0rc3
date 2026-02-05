@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -22,4 +21,3 @@ public:
 
   Standard_EXPORT static int DocumentVersion();
 };
-

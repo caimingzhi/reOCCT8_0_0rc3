@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 
 class TCollection_AsciiString;
@@ -114,4 +113,3 @@ private:
   FIBITMAP*                     myLibImage;
   [[maybe_unused]] IWICPalette* myPalette;
 };
-

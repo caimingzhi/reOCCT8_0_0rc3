@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_LineAspect.hpp>
 
 //! A framework to define the display of planes.
@@ -97,4 +96,3 @@ protected:
   bool                          myDrawEdges;
   bool                          myDrawIso;
 };
-

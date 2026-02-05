@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_PositionLight.hpp>
 #include <V3d_TypeOfOrientation.hpp>
 
@@ -36,4 +35,3 @@ public:
   using Graphic3d_CLight::SetDirection;
   using Graphic3d_CLight::SetPosition;
 };
-

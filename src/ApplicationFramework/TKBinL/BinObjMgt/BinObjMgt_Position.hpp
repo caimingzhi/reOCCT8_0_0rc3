@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 //! Stores and manipulates position in the stream.
@@ -24,4 +23,3 @@ private:
   std::streampos myPosition;
   uint64_t       mySize;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_RenderTransparentMethod.hpp>
 #include <Graphic3d_ShaderAttribute.hpp>
 #include <Graphic3d_ShaderObject.hpp>
@@ -275,4 +274,3 @@ inline bool Graphic3d_ShaderProgram::PushVariable(const TCollection_AsciiString&
   myVariables.Append(aVariable);
   return true;
 }
-

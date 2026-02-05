@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <TDataStd_GenericEmpty.hpp>
@@ -499,4 +498,3 @@ public:
   Standard_EXPORT const Standard_GUID& ID() const override;
   Standard_EXPORT Standard_OStream&    Dump(Standard_OStream& theOS) const override;
 };
-

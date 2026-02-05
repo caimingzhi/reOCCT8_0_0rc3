@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -66,4 +65,3 @@ private:
   occ::handle<IGESData_IGESEntity> theCurve3D;
   int                              thePreferenceMode;
 };
-

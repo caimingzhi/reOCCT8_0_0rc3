@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_TriangulationSource.hpp>
 
 #include <NCollection_Sequence.hpp>
@@ -87,4 +86,3 @@ protected:
   TCollection_AsciiString                        myName;           //!< entity name
   RWGltf_GltfPrimitiveMode                       myPrimMode;       //!< type of primitive array
 };
-

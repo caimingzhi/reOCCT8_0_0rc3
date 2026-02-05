@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -48,4 +47,3 @@ public:
 private:
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> theres;
 };
-

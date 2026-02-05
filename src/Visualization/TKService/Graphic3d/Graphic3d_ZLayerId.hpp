@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 
 typedef int Graphic3d_ZLayerId;
@@ -18,4 +17,3 @@ enum
   Graphic3d_ZLayerId_TopOSD  = -4, //!< overlay for 2D presentations (On-Screen-Display)
   Graphic3d_ZLayerId_BotOSD  = -5  //!< underlay for 2D presentations (On-Screen-Display)
 };
-

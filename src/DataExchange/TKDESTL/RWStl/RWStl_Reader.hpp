@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XYZ.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_ReadLineBuffer.hpp>
@@ -95,4 +94,3 @@ protected:
   double myMergeAngle;
   double myMergeTolearance;
 };
-

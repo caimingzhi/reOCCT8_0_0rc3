@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_IndexBuffer.hpp>
 
 //! Mutable index buffer.
@@ -41,4 +40,3 @@ public:
 protected:
   Graphic3d_BufferRange myInvalidatedRange; //!< invalidated buffer data range (as byte offsets)
 };
-

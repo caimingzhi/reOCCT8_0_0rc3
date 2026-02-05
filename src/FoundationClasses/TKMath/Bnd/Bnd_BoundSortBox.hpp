@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -130,4 +129,3 @@ private:
   VectorInt                  myLargeBoxes;            //!< The list of large boxes.
   occ::handle<Bnd_VoxelGrid> myVoxelGrid; //!< The voxel grid used for sorting the boxes.
 };
-

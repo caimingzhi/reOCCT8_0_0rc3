@@ -27,50 +27,51 @@
 
 namespace
 {
-// Helper function to check if solution is approximately correct
-void checkSolution(const math_Matrix& theA,
-                   const math_Vector& theX,
-                   const math_Vector& theB,
-                   const double       theTolerance = 1.0e-10)
-{
-  ASSERT_EQ(theA.ColNumber(), theX.Length()) << "Matrix and solution vector dimensions must match";
-  ASSERT_EQ(theA.RowNumber(), theB.Length()) << "Matrix and RHS vector dimensions must match";
-
-  // Compute A * X
-  math_Vector aResult(theB.Lower(), theB.Upper());
-  for (int anI = theA.LowerRow(); anI <= theA.UpperRow(); anI++)
+  // Helper function to check if solution is approximately correct
+  void checkSolution(const math_Matrix& theA,
+                     const math_Vector& theX,
+                     const math_Vector& theB,
+                     const double       theTolerance = 1.0e-10)
   {
-    double aSum = 0.0;
-    for (int aJ = theA.LowerCol(); aJ <= theA.UpperCol(); aJ++)
+    ASSERT_EQ(theA.ColNumber(), theX.Length())
+      << "Matrix and solution vector dimensions must match";
+    ASSERT_EQ(theA.RowNumber(), theB.Length()) << "Matrix and RHS vector dimensions must match";
+
+    // Compute A * X
+    math_Vector aResult(theB.Lower(), theB.Upper());
+    for (int anI = theA.LowerRow(); anI <= theA.UpperRow(); anI++)
     {
-      aSum += theA(anI, aJ) * theX(aJ - theA.LowerCol() + theX.Lower());
+      double aSum = 0.0;
+      for (int aJ = theA.LowerCol(); aJ <= theA.UpperCol(); aJ++)
+      {
+        aSum += theA(anI, aJ) * theX(aJ - theA.LowerCol() + theX.Lower());
+      }
+      aResult(anI - theA.LowerRow() + theB.Lower()) = aSum;
     }
-    aResult(anI - theA.LowerRow() + theB.Lower()) = aSum;
+
+    // Check if A * X approximately equals B
+    for (int anI = theB.Lower(); anI <= theB.Upper(); anI++)
+    {
+      EXPECT_NEAR(aResult(anI), theB(anI), theTolerance)
+        << "Solution verification failed at index " << anI;
+    }
   }
 
-  // Check if A * X approximately equals B
-  for (int anI = theB.Lower(); anI <= theB.Upper(); anI++)
+  // Helper to create a well-conditioned test matrix
+  math_Matrix createWellConditionedMatrix()
   {
-    EXPECT_NEAR(aResult(anI), theB(anI), theTolerance)
-      << "Solution verification failed at index " << anI;
+    math_Matrix aMatrix(1, 3, 1, 3);
+    aMatrix(1, 1) = 2.0;
+    aMatrix(1, 2) = 1.0;
+    aMatrix(1, 3) = 0.0;
+    aMatrix(2, 1) = 1.0;
+    aMatrix(2, 2) = 2.0;
+    aMatrix(2, 3) = 1.0;
+    aMatrix(3, 1) = 0.0;
+    aMatrix(3, 2) = 1.0;
+    aMatrix(3, 3) = 2.0;
+    return aMatrix;
   }
-}
-
-// Helper to create a well-conditioned test matrix
-math_Matrix createWellConditionedMatrix()
-{
-  math_Matrix aMatrix(1, 3, 1, 3);
-  aMatrix(1, 1) = 2.0;
-  aMatrix(1, 2) = 1.0;
-  aMatrix(1, 3) = 0.0;
-  aMatrix(2, 1) = 1.0;
-  aMatrix(2, 2) = 2.0;
-  aMatrix(2, 3) = 1.0;
-  aMatrix(3, 1) = 0.0;
-  aMatrix(3, 2) = 1.0;
-  aMatrix(3, 3) = 2.0;
-  return aMatrix;
-}
 } // namespace
 
 // Tests for math_SVD

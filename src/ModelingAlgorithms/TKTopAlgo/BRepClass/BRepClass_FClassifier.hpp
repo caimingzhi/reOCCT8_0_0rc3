@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -89,4 +88,3 @@ protected:
 #undef TopClass_FClass2d_hxx
 #undef TopClass_FaceClassifier
 #undef TopClass_FaceClassifier_hxx
-

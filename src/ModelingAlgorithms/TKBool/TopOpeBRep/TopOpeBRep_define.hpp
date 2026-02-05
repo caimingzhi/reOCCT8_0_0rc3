@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_define.hpp>
 
 #define MTPvpic TopOpeBRep_VPointInterClassifier

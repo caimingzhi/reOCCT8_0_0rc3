@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -93,6 +92,7 @@ private:
   NCollection_Sequence<TopoDS_Shape> myRemovedFaces;
   NCollection_Sequence<TopoDS_Shape> myRemoveWires;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -151,5 +151,3 @@ inline bool ShapeUpgrade_RemoveInternalWires::Status(const ShapeExtend_Status th
 {
   return ShapeExtend::DecodeStatus(myStatus, theStatus);
 }
-
-

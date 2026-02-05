@@ -1,18 +1,3 @@
-// Created on: 2019-07-05
-// Copyright (c) 2019 OPEN CASCADE SAS
-// Created by: Oleg AGASHIN
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_DelabellaBaseMeshAlgo.hpp>
 
 #include <BRepMesh_MeshTool.hpp>
@@ -28,33 +13,33 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DelabellaBaseMeshAlgo, BRepMesh_CustomBaseMe
 
 namespace
 {
-//! Redirect algorithm messages to OCCT messenger.
-static int logDelabella2Occ(void* theStream, const char* theFormat, ...)
-{
-  (void)theStream;
-  char aBuffer[1024]; // should be more than enough for Delabella messages
-
-  va_list anArgList;
-  va_start(anArgList, theFormat);
-  Vsprintf(aBuffer, theFormat, anArgList);
-  va_end(anArgList);
-
-  Message_Gravity aGravity = Message_Warning;
-  switch ((int)theFormat[1])
+  //! Redirect algorithm messages to OCCT messenger.
+  static int logDelabella2Occ(void* theStream, const char* theFormat, ...)
   {
-    case int('E'):
-      aGravity = Message_Fail;
-      break; // [ERR]
-    case int('W'):
-      aGravity = Message_Trace;
-      break; // [WRN]
-    case int('N'):
-      aGravity = Message_Trace;
-      break; // [NFO]
+    (void)theStream;
+    char aBuffer[1024]; // should be more than enough for Delabella messages
+
+    va_list anArgList;
+    va_start(anArgList, theFormat);
+    Vsprintf(aBuffer, theFormat, anArgList);
+    va_end(anArgList);
+
+    Message_Gravity aGravity = Message_Warning;
+    switch ((int)theFormat[1])
+    {
+      case int('E'):
+        aGravity = Message_Fail;
+        break; // [ERR]
+      case int('W'):
+        aGravity = Message_Trace;
+        break; // [WRN]
+      case int('N'):
+        aGravity = Message_Trace;
+        break; // [NFO]
+    }
+    Message::Send(aBuffer, aGravity);
+    return 0;
   }
-  Message::Send(aBuffer, aGravity);
-  return 0;
-}
 } // namespace
 
 //=================================================================================================

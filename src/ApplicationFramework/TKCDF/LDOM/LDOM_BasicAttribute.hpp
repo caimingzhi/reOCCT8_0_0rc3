@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_BasicNode.hpp>
 #include <LDOMBasicString.hpp>
 
@@ -65,4 +64,3 @@ private:
   const char*     myName;
   LDOMBasicString myValue;
 };
-

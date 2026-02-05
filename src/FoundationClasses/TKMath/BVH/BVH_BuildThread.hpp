@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_Thread.hpp>
 #include <BVH_BuildQueue.hpp>
 
@@ -50,4 +49,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(BVH_BuildThread, Standard_Transient)
 };
-

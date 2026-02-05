@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <setjmp.h>
@@ -254,4 +253,3 @@ inline void Standard_ErrorHandler::Callback::UnregisterCallback() {}
 
 // Definition of the old name "Standard_ErrorHandlerCallback" was kept for compatibility
 typedef Standard_ErrorHandler::Callback Standard_ErrorHandlerCallback;
-

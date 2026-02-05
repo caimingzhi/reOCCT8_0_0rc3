@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 #include <StepTidy_VectorHasher.hpp>
 
@@ -25,4 +24,3 @@ private:
                           const occ::handle<StepGeom_Vector>&    theNewEntity,
                           const occ::handle<Standard_Transient>& theSharing);
 };
-

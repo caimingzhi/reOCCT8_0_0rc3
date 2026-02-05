@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -13,4 +12,3 @@ struct HLRAlgo_TriangleData
 
   int Node1, Node2, Node3, Flags;
 };
-

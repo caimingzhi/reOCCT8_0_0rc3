@@ -1,25 +1,3 @@
-// Created on: 1995-10-20
-// Created by: Laurent BOURESCHE
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Cut and past sauvage depuis Geom!?!?
-// 14-Mar-96 : xab implemented MovePointAndTangent
-// 03-02-97 : pmn ->LocateU sur Periodic (PRO6963),
-//            bon appel a LocateParameter (PRO6973) et mise en conformite avec
-//            le cdl de LocateU, lorsque U est un noeud (PRO6988)
-
 #include <BSplCLib.hpp>
 #include <BSplCLib_KnotDistribution.hpp>
 #include <BSplCLib_MultDistribution.hpp>

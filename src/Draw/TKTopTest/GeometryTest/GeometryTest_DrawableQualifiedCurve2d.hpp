@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <DrawTrSurf_Curve2d.hpp>
 #include <GccEnt_Position.hpp>
@@ -51,4 +50,3 @@ public:
 private:
   GccEnt_Position myPosition;
 };
-

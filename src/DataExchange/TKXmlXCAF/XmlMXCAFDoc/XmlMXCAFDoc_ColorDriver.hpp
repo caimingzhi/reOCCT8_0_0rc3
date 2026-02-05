@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -30,4 +29,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_ColorDriver, XmlMDF_ADriver)
 };
-

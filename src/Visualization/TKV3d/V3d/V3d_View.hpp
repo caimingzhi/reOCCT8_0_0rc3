@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ClipPlane.hpp>
 #include <Graphic3d_Texture2D.hpp>
 #include <Graphic3d_TypeOfShadingModel.hpp>
@@ -18,7 +17,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Graphic3d_BufferType.hpp>
 #include <V3d_StereoDumpOptions.hpp>
@@ -55,7 +53,6 @@ public:
   {
   }
 };
-
 
 #include <V3d_Viewer.hpp>
 #include <V3d_Trihedron.hpp>
@@ -1118,17 +1115,21 @@ public: //! @name deprecated methods
 
   //! initializes an iteration on the active Lights.
   Standard_DEPRECATED("Deprecated method - ActiveLights() should be used instead")
+
   void InitActiveLights() { myActiveLightsIterator.Initialize(myActiveLights); }
 
   //! returns true if there are more active Light(s) to return.
   Standard_DEPRECATED("Deprecated method - ActiveLights() should be used instead")
+
   bool MoreActiveLights() const { return myActiveLightsIterator.More(); }
 
   //! Go to the next active Light (if there is not, ActiveLight will raise an exception)
   Standard_DEPRECATED("Deprecated method - ActiveLights() should be used instead")
+
   void NextActiveLights() { myActiveLightsIterator.Next(); }
 
   Standard_DEPRECATED("Deprecated method - ActiveLights() should be used instead")
+
   const occ::handle<V3d_Light>& ActiveLight() const { return myActiveLightsIterator.Value(); }
 
 protected:
@@ -1229,4 +1230,3 @@ private:
   bool                                                      myAutoZFitIsOn;
   double                                                    myAutoZFitScaleFactor;
 };
-

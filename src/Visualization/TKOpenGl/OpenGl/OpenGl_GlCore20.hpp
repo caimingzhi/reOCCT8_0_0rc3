@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlCore15.hpp>
 
 //! OpenGL 2.0 core based on 1.5 version.
@@ -107,4 +106,3 @@ public: //! @name OpenGL 2.0 additives to 1.5
   using theBaseClass_t::glVertexAttrib4usv;
 #endif
 };
-

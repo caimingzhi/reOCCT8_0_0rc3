@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -35,4 +34,3 @@ private:
   bool                                          myDone;
   NCollection_Sequence<AppParCurves_MultiCurve> myCurves;
 };
-

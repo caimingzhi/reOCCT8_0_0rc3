@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Curve.hpp>
 #include <Geom_TrimmedCurve.hpp>
 #include <Geom2d_Curve.hpp>
@@ -15,4 +14,3 @@
 #define Mgtc Geom_TrimmedCurve
 #define Mg2c Geom2d_Curve
 #define Mg2tc Geom_TrimmedCurve
-

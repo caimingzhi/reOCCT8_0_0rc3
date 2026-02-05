@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 #if defined(__cplusplus)
@@ -130,4 +129,3 @@ extern "C"
 #if defined(__cplusplus)
 }
 #endif // __cplusplus
-

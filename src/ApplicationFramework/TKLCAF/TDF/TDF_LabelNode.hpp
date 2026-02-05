@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <TDF_Attribute.hpp>
 #include <TDF_LabelNodePtr.hpp>
@@ -144,4 +143,3 @@ private:
   TCollection_AsciiString myDebugEntry;
 #endif
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2011-10-27
-// Created by: Roman KOZLOV
-// Copyright (c) 2011-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <IVtkTools_SubPolyDataFilter.hpp>
 #include <IVtkVTK_ShapeData.hpp>
 
@@ -35,76 +20,76 @@
 
 namespace
 {
-//! Modified version of vtkPolyData::CopyCells() that includes copying of normals.
-//! How to ask vtkPolyData::CopyCells() to do that automatically?
-static void copyCells(vtkPolyData* theDst, vtkPolyData* theSrc, vtkIdList* theIdList)
-{
-  // theDst->CopyCells (theSrc, theIdList);
-
-  const vtkIdType aNbPts       = theSrc->GetNumberOfPoints();
-  vtkDataArray*   anOldNormals = theSrc->GetPointData()->GetNormals();
-
-  if (theDst->GetPoints() == nullptr)
+  //! Modified version of vtkPolyData::CopyCells() that includes copying of normals.
+  //! How to ask vtkPolyData::CopyCells() to do that automatically?
+  static void copyCells(vtkPolyData* theDst, vtkPolyData* theSrc, vtkIdList* theIdList)
   {
-    theDst->SetPoints(vtkSmartPointer<vtkPoints>::New());
-  }
+    // theDst->CopyCells (theSrc, theIdList);
 
-  vtkSmartPointer<vtkIdList>      aNewCellPts = vtkSmartPointer<vtkIdList>::New();
-  vtkSmartPointer<vtkGenericCell> aCell       = vtkSmartPointer<vtkGenericCell>::New();
-  NCollection_Vec3<double>        anXYZ;
-  vtkPointData*                   aNewPntData  = theDst->GetPointData();
-  vtkCellData*                    aNewCellData = theDst->GetCellData();
-  vtkPoints*                      aNewPoints   = theDst->GetPoints();
-  vtkSmartPointer<vtkFloatArray>  aNewNormals;
-  if (anOldNormals != nullptr)
-  {
-    aNewNormals = vtkSmartPointer<vtkFloatArray>::New();
-    aNewNormals->SetName("Normals");
-    aNewNormals->SetNumberOfComponents(3);
-    theDst->GetPointData()->SetNormals(aNewNormals);
-  }
+    const vtkIdType aNbPts       = theSrc->GetNumberOfPoints();
+    vtkDataArray*   anOldNormals = theSrc->GetPointData()->GetNormals();
 
-  // clang-format off
-    vtkSmartPointer<vtkIdList> aPntMap = vtkSmartPointer<vtkIdList>::New(); // maps old pt ids into new
-  // clang-format on
-  aPntMap->SetNumberOfIds(aNbPts);
-  for (vtkIdType i = 0; i < aNbPts; ++i)
-  {
-    aPntMap->SetId(i, -1);
-  }
-
-  // Filter the cells
-  for (vtkIdType aCellIter = 0; aCellIter < theIdList->GetNumberOfIds(); ++aCellIter)
-  {
-    theSrc->GetCell(theIdList->GetId(aCellIter), aCell);
-    vtkIdList*      aCellPts   = aCell->GetPointIds();
-    const vtkIdType aNbCellPts = aCell->GetNumberOfPoints();
-    for (vtkIdType i = 0; i < aNbCellPts; ++i)
+    if (theDst->GetPoints() == nullptr)
     {
-      const vtkIdType aPtId  = aCellPts->GetId(i);
-      vtkIdType       aNewId = aPntMap->GetId(aPtId);
-      if (aNewId < 0)
-      {
-        theSrc->GetPoint(aPtId, anXYZ.ChangeData());
-
-        aNewId = aNewPoints->InsertNextPoint(anXYZ.GetData());
-        aPntMap->SetId(aPtId, aNewId);
-        aNewPntData->CopyData(theSrc->GetPointData(), aPtId, aNewId);
-
-        if (anOldNormals != nullptr)
-        {
-          anOldNormals->GetTuple(aPtId, anXYZ.ChangeData());
-          aNewNormals->InsertNextTuple(anXYZ.GetData());
-        }
-      }
-      aNewCellPts->InsertId(i, aNewId);
+      theDst->SetPoints(vtkSmartPointer<vtkPoints>::New());
     }
 
-    const vtkIdType aNewCellId = theDst->InsertNextCell(aCell->GetCellType(), aNewCellPts);
-    aNewCellData->CopyData(theSrc->GetCellData(), theIdList->GetId(aCellIter), aNewCellId);
-    aNewCellPts->Reset();
+    vtkSmartPointer<vtkIdList>      aNewCellPts = vtkSmartPointer<vtkIdList>::New();
+    vtkSmartPointer<vtkGenericCell> aCell       = vtkSmartPointer<vtkGenericCell>::New();
+    NCollection_Vec3<double>        anXYZ;
+    vtkPointData*                   aNewPntData  = theDst->GetPointData();
+    vtkCellData*                    aNewCellData = theDst->GetCellData();
+    vtkPoints*                      aNewPoints   = theDst->GetPoints();
+    vtkSmartPointer<vtkFloatArray>  aNewNormals;
+    if (anOldNormals != nullptr)
+    {
+      aNewNormals = vtkSmartPointer<vtkFloatArray>::New();
+      aNewNormals->SetName("Normals");
+      aNewNormals->SetNumberOfComponents(3);
+      theDst->GetPointData()->SetNormals(aNewNormals);
+    }
+
+    // clang-format off
+    vtkSmartPointer<vtkIdList> aPntMap = vtkSmartPointer<vtkIdList>::New(); // maps old pt ids into new
+    // clang-format on
+    aPntMap->SetNumberOfIds(aNbPts);
+    for (vtkIdType i = 0; i < aNbPts; ++i)
+    {
+      aPntMap->SetId(i, -1);
+    }
+
+    // Filter the cells
+    for (vtkIdType aCellIter = 0; aCellIter < theIdList->GetNumberOfIds(); ++aCellIter)
+    {
+      theSrc->GetCell(theIdList->GetId(aCellIter), aCell);
+      vtkIdList*      aCellPts   = aCell->GetPointIds();
+      const vtkIdType aNbCellPts = aCell->GetNumberOfPoints();
+      for (vtkIdType i = 0; i < aNbCellPts; ++i)
+      {
+        const vtkIdType aPtId  = aCellPts->GetId(i);
+        vtkIdType       aNewId = aPntMap->GetId(aPtId);
+        if (aNewId < 0)
+        {
+          theSrc->GetPoint(aPtId, anXYZ.ChangeData());
+
+          aNewId = aNewPoints->InsertNextPoint(anXYZ.GetData());
+          aPntMap->SetId(aPtId, aNewId);
+          aNewPntData->CopyData(theSrc->GetPointData(), aPtId, aNewId);
+
+          if (anOldNormals != nullptr)
+          {
+            anOldNormals->GetTuple(aPtId, anXYZ.ChangeData());
+            aNewNormals->InsertNextTuple(anXYZ.GetData());
+          }
+        }
+        aNewCellPts->InsertId(i, aNewId);
+      }
+
+      const vtkIdType aNewCellId = theDst->InsertNextCell(aCell->GetCellType(), aNewCellPts);
+      aNewCellData->CopyData(theSrc->GetCellData(), theIdList->GetId(aCellIter), aNewCellId);
+      aNewCellPts->Reset();
+    }
   }
-}
 } // namespace
 
 vtkStandardNewMacro(IVtkTools_SubPolyDataFilter)

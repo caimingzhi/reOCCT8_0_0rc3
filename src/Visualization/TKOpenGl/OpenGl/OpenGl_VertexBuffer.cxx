@@ -1,17 +1,3 @@
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_VertexBuffer.hpp>
 
 #include <OpenGl_ShaderManager.hpp>
@@ -150,29 +136,34 @@ void OpenGl_VertexBuffer::bindFixed(const occ::handle<OpenGl_Context>& theCtx,
 {
   switch (theMode)
   {
-    case Graphic3d_TOA_POS: {
+    case Graphic3d_TOA_POS:
+    {
       theCtx->core11ffp->glEnableClientState(GL_VERTEX_ARRAY);
       theCtx->core11ffp->glVertexPointer(theNbComp, theDataType, theStride, theOffset);
       return;
     }
-    case Graphic3d_TOA_NORM: {
+    case Graphic3d_TOA_NORM:
+    {
       theCtx->core11ffp->glEnableClientState(GL_NORMAL_ARRAY);
       theCtx->core11ffp->glNormalPointer(theDataType, theStride, theOffset);
       return;
     }
-    case Graphic3d_TOA_UV: {
+    case Graphic3d_TOA_UV:
+    {
       theCtx->core11ffp->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       theCtx->core11ffp->glTexCoordPointer(theNbComp, theDataType, theStride, theOffset);
       return;
     }
-    case Graphic3d_TOA_COLOR: {
+    case Graphic3d_TOA_COLOR:
+    {
       theCtx->core11ffp->glEnableClientState(GL_COLOR_ARRAY);
       theCtx->core11ffp->glColorPointer(theNbComp, theDataType, theStride, theOffset);
       theCtx->core11ffp->glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
       theCtx->core11fwd->glEnable(GL_COLOR_MATERIAL);
       return;
     }
-    case Graphic3d_TOA_CUSTOM: {
+    case Graphic3d_TOA_CUSTOM:
+    {
       return;
     }
   }
@@ -197,7 +188,8 @@ void OpenGl_VertexBuffer::unbindFixed(const occ::handle<OpenGl_Context>& theCtx,
     case Graphic3d_TOA_COLOR:
       unbindFixedColor(theCtx);
       return;
-    case Graphic3d_TOA_CUSTOM: {
+    case Graphic3d_TOA_CUSTOM:
+    {
       return;
     }
   }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! The type of primitive array in a group in a structure.
 enum Graphic3d_TypeOfPrimitiveArray
 {
@@ -39,4 +38,3 @@ enum Graphic3d_TypeOfPrimitiveArray
   Graphic3d_TOPA_POLYGONS          //!< DEPRECATED - triangle array should be used instead;
                                    //!  array defines a polygon
 };
-

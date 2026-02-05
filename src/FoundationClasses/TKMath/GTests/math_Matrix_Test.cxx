@@ -22,24 +22,24 @@
 
 namespace
 {
-// Helper function for comparing matrices with tolerance
-void checkMatricesEqual(const math_Matrix& theM1,
-                        const math_Matrix& theM2,
-                        const double       theTolerance = Precision::Confusion())
-{
-  ASSERT_EQ(theM1.RowNumber(), theM2.RowNumber());
-  ASSERT_EQ(theM1.ColNumber(), theM2.ColNumber());
-  ASSERT_EQ(theM1.LowerRow(), theM2.LowerRow());
-  ASSERT_EQ(theM1.LowerCol(), theM2.LowerCol());
-
-  for (int anI = theM1.LowerRow(); anI <= theM1.UpperRow(); anI++)
+  // Helper function for comparing matrices with tolerance
+  void checkMatricesEqual(const math_Matrix& theM1,
+                          const math_Matrix& theM2,
+                          const double       theTolerance = Precision::Confusion())
   {
-    for (int aJ = theM1.LowerCol(); aJ <= theM1.UpperCol(); aJ++)
+    ASSERT_EQ(theM1.RowNumber(), theM2.RowNumber());
+    ASSERT_EQ(theM1.ColNumber(), theM2.ColNumber());
+    ASSERT_EQ(theM1.LowerRow(), theM2.LowerRow());
+    ASSERT_EQ(theM1.LowerCol(), theM2.LowerCol());
+
+    for (int anI = theM1.LowerRow(); anI <= theM1.UpperRow(); anI++)
     {
-      EXPECT_NEAR(theM1(anI, aJ), theM2(anI, aJ), theTolerance);
+      for (int aJ = theM1.LowerCol(); aJ <= theM1.UpperCol(); aJ++)
+      {
+        EXPECT_NEAR(theM1(anI, aJ), theM2(anI, aJ), theTolerance);
+      }
     }
   }
-}
 } // namespace
 
 // Tests for constructors

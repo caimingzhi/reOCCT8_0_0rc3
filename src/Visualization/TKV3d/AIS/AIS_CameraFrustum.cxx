@@ -1,18 +1,3 @@
-// Created on: 2018-12-12
-// Created by: Olga SURYANINOVA
-// Copyright (c) 2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_CameraFrustum.hpp>
 
 #include <AIS_DisplayMode.hpp>
@@ -29,8 +14,8 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_CameraFrustum, AIS_InteractiveObject)
 
 namespace
 {
-constexpr float      THE_DEFAULT_TRANSPARENCY = 0.7f;
-const Quantity_Color THE_DEFAULT_COLOR        = Quantity_NOC_WHITE;
+  constexpr float      THE_DEFAULT_TRANSPARENCY = 0.7f;
+  const Quantity_Color THE_DEFAULT_COLOR        = Quantity_NOC_WHITE;
 } // namespace
 
 //=================================================================================================
@@ -225,13 +210,15 @@ void AIS_CameraFrustum::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   switch (theMode)
   {
-    case AIS_Shaded: {
+    case AIS_Shaded:
+    {
       occ::handle<Graphic3d_Group> aGroup = thePrs->NewGroup();
       aGroup->SetGroupPrimitivesAspect(myDrawer->ShadingAspect()->Aspect());
       aGroup->AddPrimitiveArray(myTriangles);
     }
       [[fallthrough]];
-    case AIS_WireFrame: {
+    case AIS_WireFrame:
+    {
       occ::handle<Graphic3d_Group> aGroup = thePrs->NewGroup();
       aGroup->SetGroupPrimitivesAspect(myDrawer->LineAspect()->Aspect());
       aGroup->AddPrimitiveArray(myBorders);
@@ -248,7 +235,8 @@ void AIS_CameraFrustum::ComputeSelection(const occ::handle<SelectMgr_Selection>&
   occ::handle<SelectMgr_EntityOwner> anOwner = new SelectMgr_EntityOwner(this);
   switch (theMode)
   {
-    case SelectionMode_Edges: {
+    case SelectionMode_Edges:
+    {
       occ::handle<Select3D_SensitiveGroup> aSensitiveEntity = new Select3D_SensitiveGroup(anOwner);
       for (int anIter = 1; anIter <= myBorders->EdgeNumber(); anIter += 2)
       {
@@ -260,7 +248,8 @@ void AIS_CameraFrustum::ComputeSelection(const occ::handle<SelectMgr_Selection>&
       theSelection->Add(aSensitiveEntity);
       break;
     }
-    case SelectionMode_Volume: {
+    case SelectionMode_Volume:
+    {
       occ::handle<Select3D_SensitivePrimitiveArray> aSelArray =
         new Select3D_SensitivePrimitiveArray(anOwner);
       aSelArray->InitTriangulation(myTriangles->Attributes(),

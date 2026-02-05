@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Real.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -114,4 +113,3 @@ public:
     thePapp.SetValues(aUMin, aPntMin);
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedStructuredItem.hpp>
@@ -66,4 +65,3 @@ private:
   StepVisual_FaceOrSurface                 myGeometricLink;    //!< optional
   bool                                     myHasGeometricLink; //!< flag "is GeometricLink defined"
 };
-

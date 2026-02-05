@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Extrema_Curve2dTool.hpp>
 #include <Extrema_EPCOfExtPC2d.hpp>
@@ -20,4 +19,3 @@ using Extrema_ExtPC2d = Extrema_GGExtPC<Adaptor2d_Curve2d,
                                         Extrema_POnCurv2d,
                                         NCollection_Sequence<Extrema_POnCurv2d>,
                                         Extrema_EPCOfExtPC2d>;
-

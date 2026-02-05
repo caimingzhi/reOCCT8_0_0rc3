@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -265,4 +264,3 @@ private:
   bool                                          theownflag;
   int                                           thenewnum;
 };
-

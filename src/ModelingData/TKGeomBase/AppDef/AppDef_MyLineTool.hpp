@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -109,4 +108,3 @@ public:
                                                  const int               indbad,
                                                  AppDef_MultiLine&       OtherLine);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -64,4 +63,3 @@ private:
   occ::handle<IFSelect_Selection>     thesel;
   occ::handle<IFSelect_SelectPointed> thealt;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2016-10-11
-// Created by: Ilya SEVRIKOV
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <V3d_Trihedron.hpp>
 
 #include <Graphic3d_ArrayOfPolylines.hpp>
@@ -30,29 +15,29 @@ IMPLEMENT_STANDARD_RTTIEXT(V3d_Trihedron, Standard_Transient)
 
 namespace
 {
-//! Compensates difference between old implementation (without transform persistence) and current
-//! implementation.
-constexpr double THE_INTERNAL_SCALE_FACTOR = 500.0;
+  //! Compensates difference between old implementation (without transform persistence) and current
+  //! implementation.
+  constexpr double THE_INTERNAL_SCALE_FACTOR = 500.0;
 
-constexpr float  THE_CYLINDER_LENGTH      = 0.75f;
-constexpr int    THE_CIRCLE_SERMENTS_NB   = 24;
-constexpr double THE_CIRCLE_SEGMENT_ANGLE = 2.0 * M_PI / THE_CIRCLE_SERMENTS_NB;
+  constexpr float  THE_CYLINDER_LENGTH      = 0.75f;
+  constexpr int    THE_CIRCLE_SERMENTS_NB   = 24;
+  constexpr double THE_CIRCLE_SEGMENT_ANGLE = 2.0 * M_PI / THE_CIRCLE_SERMENTS_NB;
 
-//! Create new or return existing group in the structure at specified position.
-//! @param theStruct     [in]     structure holding graphic groups
-//! @param theGroupIndex [in/out] group position, will be incremented as output
-static occ::handle<Graphic3d_Group> addGroup(const occ::handle<Graphic3d_Structure>& theStruct,
-                                             int&                                    theGroupIter)
-{
-  const NCollection_Sequence<occ::handle<Graphic3d_Group>>& aGroups     = theStruct->Groups();
-  const int                                                 aGroupIndex = theGroupIter++;
-  if (!aGroups.IsEmpty() && aGroupIndex <= aGroups.Upper())
+  //! Create new or return existing group in the structure at specified position.
+  //! @param theStruct     [in]     structure holding graphic groups
+  //! @param theGroupIndex [in/out] group position, will be incremented as output
+  static occ::handle<Graphic3d_Group> addGroup(const occ::handle<Graphic3d_Structure>& theStruct,
+                                               int&                                    theGroupIter)
   {
-    return aGroups.Value(aGroupIndex);
-  }
+    const NCollection_Sequence<occ::handle<Graphic3d_Group>>& aGroups     = theStruct->Groups();
+    const int                                                 aGroupIndex = theGroupIter++;
+    if (!aGroups.IsEmpty() && aGroupIndex <= aGroups.Upper())
+    {
+      return aGroups.Value(aGroupIndex);
+    }
 
-  return theStruct->NewGroup();
-}
+    return theStruct->NewGroup();
+  }
 } // namespace
 
 //! Dummy implementation of Graphic3d_Structure overriding ::Compute() method for handling Device

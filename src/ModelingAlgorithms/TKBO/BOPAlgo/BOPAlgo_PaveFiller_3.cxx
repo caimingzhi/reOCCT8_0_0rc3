@@ -1,20 +1,3 @@
-// Created by: Peter KURNEV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-// Copyright (c) 2007-2010 CEA/DEN, EDF R&D, OPEN CASCADE
-// Copyright (c) 2003-2007 OPEN CASCADE, EADS/CCR, LIP6, CEA/DEN, CEDRAT,
-//                         EDF R&D, LEG, PRINCIPIA R&D, BUREAU VERITAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Bnd_Box.hpp>
 #include <BOPAlgo_PaveFiller.hpp>
 #include <BOPAlgo_Tools.hpp>
@@ -366,7 +349,8 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
       aType = aCPart.Type();
       switch (aType)
       {
-        case TopAbs_VERTEX: {
+        case TopAbs_VERTEX:
+        {
           if (!bIsPBSplittable1 || !bIsPBSplittable2)
           {
             continue;
@@ -522,7 +506,8 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
         } // case TopAbs_VERTEX:
         break;
           //
-        case TopAbs_EDGE: {
+        case TopAbs_EDGE:
+        {
           if (aNbCPrts > 1)
           {
             break;

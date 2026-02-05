@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -78,4 +77,3 @@ private:
   double      myLast2d;
   TopoDS_Face myFace;
 };
-

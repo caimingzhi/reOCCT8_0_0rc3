@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_Person.hpp>
@@ -66,4 +65,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_Person>>> people;
   occ::handle<TCollection_HAsciiString>                           description;
 };
-

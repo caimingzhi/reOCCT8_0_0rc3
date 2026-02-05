@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BSplCLib_Cache.hpp>
 #include <Geom_BSplineCurve.hpp>
 #include <GeomGridEval.hpp>
@@ -84,4 +83,3 @@ public:
 private:
   occ::handle<Geom_BSplineCurve> myGeom;
 };
-

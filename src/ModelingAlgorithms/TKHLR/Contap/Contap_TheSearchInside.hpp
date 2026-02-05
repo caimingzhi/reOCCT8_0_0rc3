@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <IntSurf_InteriorPoint.hpp>
 #include <NCollection_Sequence.hpp>
@@ -81,4 +80,3 @@ private:
 #undef TheFunction_hxx
 #undef IntStart_SearchInside
 #undef IntStart_SearchInside_hxx
-

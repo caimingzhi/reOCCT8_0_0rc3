@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2d.hpp>
 #include <gp_Mat2d.hpp>
 #include <gp_TrsfForm.hpp>
@@ -293,4 +292,3 @@ inline constexpr void gp_GTrsf2d::Transforms(double& theX, double& theY) const n
   aDoublet.Add(loc);
   aDoublet.Coord(theX, theY);
 }
-

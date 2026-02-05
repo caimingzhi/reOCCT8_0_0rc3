@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines value of form variance
 enum XCAFDimTolObjects_DimensionFormVariance
 {
@@ -34,4 +33,3 @@ enum XCAFDimTolObjects_DimensionFormVariance
   XCAFDimTolObjects_DimensionFormVariance_ZB,
   XCAFDimTolObjects_DimensionFormVariance_ZC
 };
-

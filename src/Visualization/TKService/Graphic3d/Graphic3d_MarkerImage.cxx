@@ -1,18 +1,3 @@
-// Created on: 2013-06-25
-// Created by: Dmitry BOBYLEV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_MarkerImage.hpp>
 
 #include <Image_PixMap.hpp>
@@ -27,148 +12,149 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_MarkerImage, Standard_Transient)
 
 namespace
 {
-static std::atomic<int> THE_MARKER_IMAGE_COUNTER(0);
+  static std::atomic<int> THE_MARKER_IMAGE_COUNTER(0);
 
-//! Names of built-in markers
-static const char* THE_MARKER_NAMES[Aspect_TOM_USERDEFINED] = {
-  ".",     // Aspect_TOM_POINT
-  "+",     // Aspect_TOM_PLUS
-  "*",     // Aspect_TOM_STAR
-  "x",     // Aspect_TOM_X
-  "o",     // Aspect_TOM_O
-  "o.",    // Aspect_TOM_O_POINT
-  "o+",    // Aspect_TOM_O_PLUS
-  "o*",    // Aspect_TOM_O_STAR
-  "ox",    // Aspect_TOM_O_X
-  "ring1", // Aspect_TOM_RING1
-  "ring2", // Aspect_TOM_RING2
-  "ring3", // Aspect_TOM_RING3
-  "ball"   // Aspect_TOM_BALL
-};
+  //! Names of built-in markers
+  static const char* THE_MARKER_NAMES[Aspect_TOM_USERDEFINED] = {
+    ".",     // Aspect_TOM_POINT
+    "+",     // Aspect_TOM_PLUS
+    "*",     // Aspect_TOM_STAR
+    "x",     // Aspect_TOM_X
+    "o",     // Aspect_TOM_O
+    "o.",    // Aspect_TOM_O_POINT
+    "o+",    // Aspect_TOM_O_PLUS
+    "o*",    // Aspect_TOM_O_STAR
+    "ox",    // Aspect_TOM_O_X
+    "ring1", // Aspect_TOM_RING1
+    "ring2", // Aspect_TOM_RING2
+    "ring3", // Aspect_TOM_RING3
+    "ball"   // Aspect_TOM_BALL
+  };
 
-//! Returns a parameters for the marker of the specified type and scale.
-static void getMarkerBitMapParam(const Aspect_TypeOfMarker theMarkerType,
-                                 const float               theScale,
-                                 int&                      theWidth,
-                                 int&                      theHeight,
-                                 int&                      theOffset,
-                                 int&                      theNumOfBytes)
-{
-  const int    aType   = int(theMarkerType > Aspect_TOM_O ? Aspect_TOM_O : theMarkerType);
-  const double anIndex = (double)(TEL_NO_OF_SIZES - 1) * (theScale - (double)TEL_PM_START_SIZE)
-                         / (double)(TEL_PM_END_SIZE - TEL_PM_START_SIZE);
-  int anId = (int)(anIndex + 0.5);
-  if (anId < 0)
+  //! Returns a parameters for the marker of the specified type and scale.
+  static void getMarkerBitMapParam(const Aspect_TypeOfMarker theMarkerType,
+                                   const float               theScale,
+                                   int&                      theWidth,
+                                   int&                      theHeight,
+                                   int&                      theOffset,
+                                   int&                      theNumOfBytes)
   {
-    anId = 0;
-  }
-  else if (anId >= TEL_NO_OF_SIZES)
-  {
-    anId = TEL_NO_OF_SIZES - 1;
-  }
-
-  theWidth                   = (int)arrPMFontInfo[aType][anId].width;
-  theHeight                  = (int)arrPMFontInfo[aType][anId].height;
-  theOffset                  = arrPMFontInfo[aType][anId].offset;
-  const int aNumOfBytesInRow = theWidth / 8 + (theWidth % 8 ? 1 : 0);
-  theNumOfBytes              = theHeight * aNumOfBytesInRow;
-}
-
-//! Merge two image pixmap into one. Used for creating image for following markers:
-//! Aspect_TOM_O_POINT, Aspect_TOM_O_PLUS, Aspect_TOM_O_STAR, Aspect_TOM_O_X, Aspect_TOM_RING1,
-//! Aspect_TOM_RING2, Aspect_TOM_RING3
-static occ::handle<Image_PixMap> mergeImages(const occ::handle<Image_PixMap>& theImage1,
-                                             const occ::handle<Image_PixMap>& theImage2)
-{
-  if (theImage1.IsNull() && theImage2.IsNull())
-  {
-    return occ::handle<Image_PixMap>();
-  }
-
-  occ::handle<Image_PixMap> aResultImage = new Image_PixMap();
-
-  int aWidth1 = 0, aHeight1 = 0;
-  if (!theImage1.IsNull())
-  {
-    aWidth1  = (int)theImage1->Width();
-    aHeight1 = (int)theImage1->Height();
-  }
-
-  int aWidth2 = 0, aHeight2 = 0;
-  if (!theImage2.IsNull())
-  {
-    aWidth2  = (int)theImage2->Width();
-    aHeight2 = (int)theImage2->Height();
-  }
-
-  const int aMaxWidth  = std::max(aWidth1, aWidth2);
-  const int aMaxHeight = std::max(aHeight1, aHeight2);
-  const int aSize      = std::max(aMaxWidth, aMaxHeight);
-  aResultImage->InitZero(Image_Format_Alpha, aSize, aSize);
-
-  if (!theImage1.IsNull())
-  {
-    const int aXOffset1  = std::abs(aWidth1 - aMaxWidth) / 2;
-    const int anYOffset1 = std::abs(aHeight1 - aMaxHeight) / 2;
-    for (int anY = 0; anY < aHeight1; anY++)
+    const int    aType   = int(theMarkerType > Aspect_TOM_O ? Aspect_TOM_O : theMarkerType);
+    const double anIndex = (double)(TEL_NO_OF_SIZES - 1) * (theScale - (double)TEL_PM_START_SIZE)
+                           / (double)(TEL_PM_END_SIZE - TEL_PM_START_SIZE);
+    int anId = (int)(anIndex + 0.5);
+    if (anId < 0)
     {
-      uint8_t* anImageLine      = theImage1->ChangeRow(anY);
-      uint8_t* aResultImageLine = aResultImage->ChangeRow(anYOffset1 + anY);
-      for (int aX = 0; aX < aWidth1; aX++)
+      anId = 0;
+    }
+    else if (anId >= TEL_NO_OF_SIZES)
+    {
+      anId = TEL_NO_OF_SIZES - 1;
+    }
+
+    theWidth                   = (int)arrPMFontInfo[aType][anId].width;
+    theHeight                  = (int)arrPMFontInfo[aType][anId].height;
+    theOffset                  = arrPMFontInfo[aType][anId].offset;
+    const int aNumOfBytesInRow = theWidth / 8 + (theWidth % 8 ? 1 : 0);
+    theNumOfBytes              = theHeight * aNumOfBytesInRow;
+  }
+
+  //! Merge two image pixmap into one. Used for creating image for following markers:
+  //! Aspect_TOM_O_POINT, Aspect_TOM_O_PLUS, Aspect_TOM_O_STAR, Aspect_TOM_O_X, Aspect_TOM_RING1,
+  //! Aspect_TOM_RING2, Aspect_TOM_RING3
+  static occ::handle<Image_PixMap> mergeImages(const occ::handle<Image_PixMap>& theImage1,
+                                               const occ::handle<Image_PixMap>& theImage2)
+  {
+    if (theImage1.IsNull() && theImage2.IsNull())
+    {
+      return occ::handle<Image_PixMap>();
+    }
+
+    occ::handle<Image_PixMap> aResultImage = new Image_PixMap();
+
+    int aWidth1 = 0, aHeight1 = 0;
+    if (!theImage1.IsNull())
+    {
+      aWidth1  = (int)theImage1->Width();
+      aHeight1 = (int)theImage1->Height();
+    }
+
+    int aWidth2 = 0, aHeight2 = 0;
+    if (!theImage2.IsNull())
+    {
+      aWidth2  = (int)theImage2->Width();
+      aHeight2 = (int)theImage2->Height();
+    }
+
+    const int aMaxWidth  = std::max(aWidth1, aWidth2);
+    const int aMaxHeight = std::max(aHeight1, aHeight2);
+    const int aSize      = std::max(aMaxWidth, aMaxHeight);
+    aResultImage->InitZero(Image_Format_Alpha, aSize, aSize);
+
+    if (!theImage1.IsNull())
+    {
+      const int aXOffset1  = std::abs(aWidth1 - aMaxWidth) / 2;
+      const int anYOffset1 = std::abs(aHeight1 - aMaxHeight) / 2;
+      for (int anY = 0; anY < aHeight1; anY++)
       {
-        aResultImageLine[aXOffset1 + aX] |= anImageLine[aX];
+        uint8_t* anImageLine      = theImage1->ChangeRow(anY);
+        uint8_t* aResultImageLine = aResultImage->ChangeRow(anYOffset1 + anY);
+        for (int aX = 0; aX < aWidth1; aX++)
+        {
+          aResultImageLine[aXOffset1 + aX] |= anImageLine[aX];
+        }
       }
     }
-  }
 
-  if (!theImage2.IsNull())
-  {
-    const int aXOffset2  = std::abs(aWidth2 - aMaxWidth) / 2;
-    const int anYOffset2 = std::abs(aHeight2 - aMaxHeight) / 2;
-    for (int anY = 0; anY < aHeight2; anY++)
+    if (!theImage2.IsNull())
     {
-      uint8_t* anImageLine      = theImage2->ChangeRow(anY);
-      uint8_t* aResultImageLine = aResultImage->ChangeRow(anYOffset2 + anY);
-      for (int aX = 0; aX < aWidth2; aX++)
+      const int aXOffset2  = std::abs(aWidth2 - aMaxWidth) / 2;
+      const int anYOffset2 = std::abs(aHeight2 - aMaxHeight) / 2;
+      for (int anY = 0; anY < aHeight2; anY++)
       {
-        aResultImageLine[aXOffset2 + aX] |= anImageLine[aX];
+        uint8_t* anImageLine      = theImage2->ChangeRow(anY);
+        uint8_t* aResultImageLine = aResultImage->ChangeRow(anYOffset2 + anY);
+        for (int aX = 0; aX < aWidth2; aX++)
+        {
+          aResultImageLine[aXOffset2 + aX] |= anImageLine[aX];
+        }
       }
     }
+
+    return aResultImage;
   }
 
-  return aResultImage;
-}
-
-//! Draw inner point as filled rectangle
-static occ::handle<NCollection_HArray1<uint8_t>> fillPointBitmap(const int theSize)
-{
-  const int aNbBytes = (theSize / 8 + (theSize % 8 ? 1 : 0)) * theSize;
-  occ::handle<NCollection_HArray1<uint8_t>> aBitMap =
-    new NCollection_HArray1<uint8_t>(0, aNbBytes - 1);
-  for (int anIter = 0; anIter < aBitMap->Length(); ++anIter)
+  //! Draw inner point as filled rectangle
+  static occ::handle<NCollection_HArray1<uint8_t>> fillPointBitmap(const int theSize)
   {
-    aBitMap->SetValue(anIter, 255);
+    const int aNbBytes = (theSize / 8 + (theSize % 8 ? 1 : 0)) * theSize;
+    occ::handle<NCollection_HArray1<uint8_t>> aBitMap =
+      new NCollection_HArray1<uint8_t>(0, aNbBytes - 1);
+    for (int anIter = 0; anIter < aBitMap->Length(); ++anIter)
+    {
+      aBitMap->SetValue(anIter, 255);
+    }
+    return aBitMap;
   }
-  return aBitMap;
-}
 
-//! Returns a marker image for the marker of the specified type and scale.
-static occ::handle<Graphic3d_MarkerImage> getTextureImage(const Aspect_TypeOfMarker theMarkerType,
-                                                          const float               theScale)
-{
-  int aWidth = 0, aHeight = 0, anOffset = 0, aNbBytes = 0;
-  getMarkerBitMapParam(theMarkerType, theScale, aWidth, aHeight, anOffset, aNbBytes);
-
-  occ::handle<NCollection_HArray1<uint8_t>> aBitMap =
-    new NCollection_HArray1<uint8_t>(0, aNbBytes - 1);
-  for (int anIter = 0; anIter < aNbBytes; ++anIter)
+  //! Returns a marker image for the marker of the specified type and scale.
+  static occ::handle<Graphic3d_MarkerImage> getTextureImage(const Aspect_TypeOfMarker theMarkerType,
+                                                            const float               theScale)
   {
-    aBitMap->ChangeValue(anIter) = Graphic3d_MarkerImage_myMarkerRaster[anOffset + anIter];
-  }
+    int aWidth = 0, aHeight = 0, anOffset = 0, aNbBytes = 0;
+    getMarkerBitMapParam(theMarkerType, theScale, aWidth, aHeight, anOffset, aNbBytes);
 
-  occ::handle<Graphic3d_MarkerImage> aTexture = new Graphic3d_MarkerImage(aBitMap, aWidth, aHeight);
-  return aTexture;
-}
+    occ::handle<NCollection_HArray1<uint8_t>> aBitMap =
+      new NCollection_HArray1<uint8_t>(0, aNbBytes - 1);
+    for (int anIter = 0; anIter < aNbBytes; ++anIter)
+    {
+      aBitMap->ChangeValue(anIter) = Graphic3d_MarkerImage_myMarkerRaster[anOffset + anIter];
+    }
+
+    occ::handle<Graphic3d_MarkerImage> aTexture =
+      new Graphic3d_MarkerImage(aBitMap, aWidth, aHeight);
+    return aTexture;
+  }
 } // namespace
 
 //=================================================================================================
@@ -424,7 +410,8 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
     case Aspect_TOM_O_POINT:
     case Aspect_TOM_O_PLUS:
     case Aspect_TOM_O_STAR:
-    case Aspect_TOM_O_X: {
+    case Aspect_TOM_O_X:
+    {
       // For this type of markers we merge two base bitmaps into one
       // For example Aspect_TOM_O_PLUS = Aspect_TOM_O + Aspect_TOM_PLUS
       occ::handle<Graphic3d_MarkerImage> aMarkerImage1 = getTextureImage(Aspect_TOM_O, theScale);
@@ -449,7 +436,8 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
     }
     case Aspect_TOM_RING1:
     case Aspect_TOM_RING2:
-    case Aspect_TOM_RING3: {
+    case Aspect_TOM_RING3:
+    {
       const float aDelta = 0.1f;
       float       aScale = theScale;
       float       aLimit = 0.0f;
@@ -475,7 +463,8 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
         new Graphic3d_MarkerImage(aKey, aKey, anImage);
       return aNewMarkerImage;
     }
-    case Aspect_TOM_BALL: {
+    case Aspect_TOM_BALL:
+    {
       int   aWidth = 0, aHeight = 0, anOffset = 0, aNbBytes = 0;
       float aScale = theScale;
       getMarkerBitMapParam(Aspect_TOM_O, aScale, aWidth, aHeight, anOffset, aNbBytes);
@@ -525,7 +514,8 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
         new Graphic3d_MarkerImage(aKey, aKeyA, anImage, anImageA);
       return aNewMarkerImage;
     }
-    default: {
+    default:
+    {
       occ::handle<Graphic3d_MarkerImage> aNewMarkerImage = getTextureImage(theMarkerType, theScale);
       aNewMarkerImage->myImageId                         = aKey;
       aNewMarkerImage->myImageAlphaId                    = aKey;

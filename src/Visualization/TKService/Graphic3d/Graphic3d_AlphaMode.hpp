@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines how alpha value of base color / texture should be treated.
 enum Graphic3d_AlphaMode
 {
@@ -18,4 +17,3 @@ enum Graphic3d_AlphaMode
         //   since this check ignores possible transparency defined by per-vertex colors and
         //   textures - NOT recommended to use!
 };
-

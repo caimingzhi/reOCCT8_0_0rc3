@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -87,4 +86,3 @@ public:
   Standard_EXPORT static void   SetAngular(const double bAngTol);
   Standard_EXPORT static double Angular();
 };
-

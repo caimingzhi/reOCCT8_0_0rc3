@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 #include <fstream>
@@ -98,4 +97,3 @@ protected:
 #ifdef _MSC_VER
   #pragma warning(pop)
 #endif
-

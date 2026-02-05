@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -39,4 +38,3 @@ private:
   bool                      WellDone;
   occ::handle<GccInt_Bisec> bissol;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -277,6 +276,7 @@ private:
   int myAutoCorrectPrecisionMode;
   int myFixPeriodicDegenerated;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -396,5 +396,3 @@ inline occ::handle<ShapeFix_Wire> ShapeFix_Face::FixWireTool()
 {
   return myFixWire;
 }
-
-

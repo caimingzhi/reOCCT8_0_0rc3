@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAbs_CurveType.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <gp_Lin2d.hpp>
@@ -138,4 +137,3 @@ public:
   Standard_EXPORT virtual occ::handle<Geom2d_BSplineCurve> BSpline() const;
   Standard_EXPORT ~Adaptor2d_Curve2d() override;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_GraphicDriver.hpp>
 
 #include <Aspect_DisplayConnection.hpp>
@@ -192,4 +191,3 @@ protected:
   mutable OpenGl_StateCounter myStateCounter; //!< State counter for OpenGl structures.
   mutable OpenGl_StateCounter myUIDGenerator; //!< Unique ID counter for primitive arrays.
 };
-

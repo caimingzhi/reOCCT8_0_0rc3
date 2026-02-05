@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! This enumeration is used in
 //! ShapeHealing toolkit for representing flags in the
 //! return statuses of class methods.
@@ -62,4 +61,3 @@ enum ShapeExtend_Status
   ShapeExtend_FAIL8,
   ShapeExtend_FAIL
 };
-

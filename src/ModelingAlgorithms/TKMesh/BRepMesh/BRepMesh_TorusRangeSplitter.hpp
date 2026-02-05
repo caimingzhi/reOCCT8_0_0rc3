@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_UVParamRangeSplitter.hpp>
 #include <IMeshTools_Parameters.hpp>
 
@@ -32,4 +31,3 @@ private:
 
   double FUN_CalcAverageDUV(NCollection_Array1<double>& P, const int PLen) const;
 };
-

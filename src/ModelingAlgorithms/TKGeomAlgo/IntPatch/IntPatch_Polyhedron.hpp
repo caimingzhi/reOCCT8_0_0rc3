@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Bnd_Box.hpp>
 #include <NCollection_Array1.hpp>
@@ -130,4 +129,3 @@ private:
   bool                                      VMinSingular;
   bool                                      VMaxSingular;
 };
-

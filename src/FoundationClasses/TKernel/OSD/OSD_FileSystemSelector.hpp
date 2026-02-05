@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_FileSystem.hpp>
 
 #include <NCollection_List.hpp>
@@ -55,4 +54,3 @@ public:
 protected:
   NCollection_List<occ::handle<OSD_FileSystem>> myProtocols;
 };
-

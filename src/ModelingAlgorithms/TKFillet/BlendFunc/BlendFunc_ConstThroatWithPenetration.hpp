@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <BlendFunc_ConstThroat.hpp>
 #include <math_Vector.hpp>
@@ -70,4 +69,3 @@ public:
   //! Returns the length of the maximum section
   Standard_EXPORT double GetSectionSize() const override;
 };
-

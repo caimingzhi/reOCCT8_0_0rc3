@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -159,4 +158,3 @@ private:
   NCollection_DataMap<int, gp_Vec2d>       theGeomVecs;
   NCollection_Sequence<int>                theLinesLength;
 };
-

@@ -19,54 +19,54 @@
 
 namespace
 {
-//! Raw material for defining list of standard materials
-struct RawMaterial
-{
-  const char*           StringName;
-  Graphic3d_BSDF        BSDF;
-  Graphic3d_PBRMaterial PBRMaterial;
-  Quantity_Color        Colors[Graphic3d_TypeOfReflection_NB];
-  float                 TransparencyCoef;
-  float                 RefractionIndex;
-  float                 Shininess;
-  // clang-format off
+  //! Raw material for defining list of standard materials
+  struct RawMaterial
+  {
+    const char*           StringName;
+    Graphic3d_BSDF        BSDF;
+    Graphic3d_PBRMaterial PBRMaterial;
+    Quantity_Color        Colors[Graphic3d_TypeOfReflection_NB];
+    float                 TransparencyCoef;
+    float                 RefractionIndex;
+    float                 Shininess;
+    // clang-format off
     float       AmbientCoef;  //!< coefficient for Graphic3d_MaterialAspect::SetColor()
     float       DiffuseCoef;  //!< coefficient for Graphic3d_MaterialAspect::SetColor()
-  // clang-format on
-  Graphic3d_TypeOfMaterial MaterialType;
-  Graphic3d_NameOfMaterial MaterialName;
+    // clang-format on
+    Graphic3d_TypeOfMaterial MaterialType;
+    Graphic3d_NameOfMaterial MaterialName;
 
-  RawMaterial(Graphic3d_NameOfMaterial theName, const char* theStringName);
-};
+    RawMaterial(Graphic3d_NameOfMaterial theName, const char* theStringName);
+  };
 
-//! Name list of standard materials (defined within enumeration).
-static const RawMaterial THE_MATERIALS[] = {
-  RawMaterial(Graphic3d_NameOfMaterial_Brass, "Brass"),
-  RawMaterial(Graphic3d_NameOfMaterial_Bronze, "Bronze"),
-  RawMaterial(Graphic3d_NameOfMaterial_Copper, "Copper"),
-  RawMaterial(Graphic3d_NameOfMaterial_Gold, "Gold"),
-  RawMaterial(Graphic3d_NameOfMaterial_Pewter, "Pewter"),
-  RawMaterial(Graphic3d_NameOfMaterial_Plastered, "Plastered"),
-  RawMaterial(Graphic3d_NameOfMaterial_Plastified, "Plastified"),
-  RawMaterial(Graphic3d_NameOfMaterial_Silver, "Silver"),
-  RawMaterial(Graphic3d_NameOfMaterial_Steel, "Steel"),
-  RawMaterial(Graphic3d_NameOfMaterial_Stone, "Stone"),
-  RawMaterial(Graphic3d_NameOfMaterial_ShinyPlastified, "Shiny_plastified"),
-  RawMaterial(Graphic3d_NameOfMaterial_Satin, "Satined"),
-  RawMaterial(Graphic3d_NameOfMaterial_Metalized, "Metalized"),
-  RawMaterial(Graphic3d_NameOfMaterial_Ionized, "Ionized"),
-  RawMaterial(Graphic3d_NameOfMaterial_Chrome, "Chrome"),
-  RawMaterial(Graphic3d_NameOfMaterial_Aluminum, "Aluminium"),
-  RawMaterial(Graphic3d_NameOfMaterial_Obsidian, "Obsidian"),
-  RawMaterial(Graphic3d_NameOfMaterial_Neon, "Neon"),
-  RawMaterial(Graphic3d_NameOfMaterial_Jade, "Jade"),
-  RawMaterial(Graphic3d_NameOfMaterial_Charcoal, "Charcoal"),
-  RawMaterial(Graphic3d_NameOfMaterial_Water, "Water"),
-  RawMaterial(Graphic3d_NameOfMaterial_Glass, "Glass"),
-  RawMaterial(Graphic3d_NameOfMaterial_Diamond, "Diamond"),
-  RawMaterial(Graphic3d_NameOfMaterial_Transparent, "Transparent"),
-  RawMaterial(Graphic3d_NameOfMaterial_DEFAULT, "Default"),
-  RawMaterial(Graphic3d_NameOfMaterial_UserDefined, "UserDefined")};
+  //! Name list of standard materials (defined within enumeration).
+  static const RawMaterial THE_MATERIALS[] = {
+    RawMaterial(Graphic3d_NameOfMaterial_Brass, "Brass"),
+    RawMaterial(Graphic3d_NameOfMaterial_Bronze, "Bronze"),
+    RawMaterial(Graphic3d_NameOfMaterial_Copper, "Copper"),
+    RawMaterial(Graphic3d_NameOfMaterial_Gold, "Gold"),
+    RawMaterial(Graphic3d_NameOfMaterial_Pewter, "Pewter"),
+    RawMaterial(Graphic3d_NameOfMaterial_Plastered, "Plastered"),
+    RawMaterial(Graphic3d_NameOfMaterial_Plastified, "Plastified"),
+    RawMaterial(Graphic3d_NameOfMaterial_Silver, "Silver"),
+    RawMaterial(Graphic3d_NameOfMaterial_Steel, "Steel"),
+    RawMaterial(Graphic3d_NameOfMaterial_Stone, "Stone"),
+    RawMaterial(Graphic3d_NameOfMaterial_ShinyPlastified, "Shiny_plastified"),
+    RawMaterial(Graphic3d_NameOfMaterial_Satin, "Satined"),
+    RawMaterial(Graphic3d_NameOfMaterial_Metalized, "Metalized"),
+    RawMaterial(Graphic3d_NameOfMaterial_Ionized, "Ionized"),
+    RawMaterial(Graphic3d_NameOfMaterial_Chrome, "Chrome"),
+    RawMaterial(Graphic3d_NameOfMaterial_Aluminum, "Aluminium"),
+    RawMaterial(Graphic3d_NameOfMaterial_Obsidian, "Obsidian"),
+    RawMaterial(Graphic3d_NameOfMaterial_Neon, "Neon"),
+    RawMaterial(Graphic3d_NameOfMaterial_Jade, "Jade"),
+    RawMaterial(Graphic3d_NameOfMaterial_Charcoal, "Charcoal"),
+    RawMaterial(Graphic3d_NameOfMaterial_Water, "Water"),
+    RawMaterial(Graphic3d_NameOfMaterial_Glass, "Glass"),
+    RawMaterial(Graphic3d_NameOfMaterial_Diamond, "Diamond"),
+    RawMaterial(Graphic3d_NameOfMaterial_Transparent, "Transparent"),
+    RawMaterial(Graphic3d_NameOfMaterial_DEFAULT, "Default"),
+    RawMaterial(Graphic3d_NameOfMaterial_UserDefined, "UserDefined")};
 } // namespace
 
 //=================================================================================================

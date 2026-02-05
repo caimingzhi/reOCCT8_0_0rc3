@@ -1,18 +1,3 @@
-// Created on: 2011-09-20
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_View.hpp>
 
 #include <Aspect_NeutralWindow.hpp>
@@ -43,61 +28,61 @@
 
 namespace
 {
-//! Format Frame Buffer format for logging messages.
-static TCollection_AsciiString printFboFormat(const occ::handle<OpenGl_FrameBuffer>& theFbo)
-{
-  return TCollection_AsciiString() + theFbo->GetInitVPSizeX() + "x" + theFbo->GetInitVPSizeY() + "@"
-         + theFbo->NbSamples();
-}
-
-//! Return TRUE if Frame Buffer initialized has failed with the same parameters.
-static bool checkWasFailedFbo(const occ::handle<OpenGl_FrameBuffer>& theFboToCheck,
-                              int                                    theSizeX,
-                              int                                    theSizeY,
-                              int                                    theNbSamples)
-{
-  return !theFboToCheck->IsValid() && theFboToCheck->GetInitVPSizeX() == theSizeX
-         && theFboToCheck->GetInitVPSizeY() == theSizeY
-         && theFboToCheck->NbSamples() == theNbSamples;
-}
-
-//! Return TRUE if Frame Buffer initialized has failed with the same parameters.
-static bool checkWasFailedFbo(const occ::handle<OpenGl_FrameBuffer>& theFboToCheck,
-                              const occ::handle<OpenGl_FrameBuffer>& theFboRef)
-{
-  return checkWasFailedFbo(theFboToCheck,
-                           theFboRef->GetVPSizeX(),
-                           theFboRef->GetVPSizeY(),
-                           theFboRef->NbSamples());
-}
-
-//! Chooses compatible internal color format for OIT frame buffer.
-static bool chooseOitColorConfiguration(const occ::handle<OpenGl_Context>& theGlContext,
-                                        const int                          theConfigIndex,
-                                        NCollection_Vector<int>&           theFormats)
-{
-  theFormats.Clear();
-  switch (theConfigIndex)
+  //! Format Frame Buffer format for logging messages.
+  static TCollection_AsciiString printFboFormat(const occ::handle<OpenGl_FrameBuffer>& theFbo)
   {
-    case 0: // choose best applicable color format combination
-    {
-      theFormats.Append(
-        theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
-      theFormats.Append(theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_R16F
-                                                                                       : GL_R32F);
-      return true;
-    }
-    case 1: // choose non-optimal applicable color format combination
-    {
-      theFormats.Append(
-        theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
-      theFormats.Append(
-        theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
-      return true;
-    }
+    return TCollection_AsciiString() + theFbo->GetInitVPSizeX() + "x" + theFbo->GetInitVPSizeY()
+           + "@" + theFbo->NbSamples();
   }
-  return false; // color combination does not exist
-}
+
+  //! Return TRUE if Frame Buffer initialized has failed with the same parameters.
+  static bool checkWasFailedFbo(const occ::handle<OpenGl_FrameBuffer>& theFboToCheck,
+                                int                                    theSizeX,
+                                int                                    theSizeY,
+                                int                                    theNbSamples)
+  {
+    return !theFboToCheck->IsValid() && theFboToCheck->GetInitVPSizeX() == theSizeX
+           && theFboToCheck->GetInitVPSizeY() == theSizeY
+           && theFboToCheck->NbSamples() == theNbSamples;
+  }
+
+  //! Return TRUE if Frame Buffer initialized has failed with the same parameters.
+  static bool checkWasFailedFbo(const occ::handle<OpenGl_FrameBuffer>& theFboToCheck,
+                                const occ::handle<OpenGl_FrameBuffer>& theFboRef)
+  {
+    return checkWasFailedFbo(theFboToCheck,
+                             theFboRef->GetVPSizeX(),
+                             theFboRef->GetVPSizeY(),
+                             theFboRef->NbSamples());
+  }
+
+  //! Chooses compatible internal color format for OIT frame buffer.
+  static bool chooseOitColorConfiguration(const occ::handle<OpenGl_Context>& theGlContext,
+                                          const int                          theConfigIndex,
+                                          NCollection_Vector<int>&           theFormats)
+  {
+    theFormats.Clear();
+    switch (theConfigIndex)
+    {
+      case 0: // choose best applicable color format combination
+      {
+        theFormats.Append(
+          theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
+        theFormats.Append(theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_R16F
+                                                                                         : GL_R32F);
+        return true;
+      }
+      case 1: // choose non-optimal applicable color format combination
+      {
+        theFormats.Append(
+          theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
+        theFormats.Append(
+          theGlContext->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable ? GL_RGBA16F : GL_RGBA32F);
+        return true;
+      }
+    }
+    return false; // color combination does not exist
+  }
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_View, Graphic3d_CView)
@@ -3166,19 +3151,22 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
 
   switch (myRenderParams.StereoMode)
   {
-    case Graphic3d_StereoMode_Anaglyph: {
+    case Graphic3d_StereoMode_Anaglyph:
+    {
       NCollection_Mat4<float> aFilterL, aFilterR;
       aFilterL.SetDiagonal(NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
       aFilterR.SetDiagonal(NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
       switch (myRenderParams.AnaglyphFilter)
       {
-        case Graphic3d_RenderingParams::Anaglyph_RedCyan_Simple: {
+        case Graphic3d_RenderingParams::Anaglyph_RedCyan_Simple:
+        {
           aFilterL.SetRow(0, NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f));
           aFilterR.SetRow(1, NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
           aFilterR.SetRow(2, NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f));
           break;
         }
-        case Graphic3d_RenderingParams::Anaglyph_RedCyan_Optimized: {
+        case Graphic3d_RenderingParams::Anaglyph_RedCyan_Optimized:
+        {
           aFilterL.SetRow(0, NCollection_Vec4<float>(0.4154f, 0.4710f, 0.16666667f, 0.0f));
           aFilterL.SetRow(1, NCollection_Vec4<float>(-0.0458f, -0.0484f, -0.0257f, 0.0f));
           aFilterL.SetRow(2, NCollection_Vec4<float>(-0.0547f, -0.0615f, 0.0128f, 0.0f));
@@ -3191,13 +3179,15 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
           aFilterR.SetRow(3, NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
           break;
         }
-        case Graphic3d_RenderingParams::Anaglyph_YellowBlue_Simple: {
+        case Graphic3d_RenderingParams::Anaglyph_YellowBlue_Simple:
+        {
           aFilterL.SetRow(0, NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f));
           aFilterL.SetRow(1, NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
           aFilterR.SetRow(2, NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f));
           break;
         }
-        case Graphic3d_RenderingParams::Anaglyph_YellowBlue_Optimized: {
+        case Graphic3d_RenderingParams::Anaglyph_YellowBlue_Optimized:
+        {
           aFilterL.SetRow(0, NCollection_Vec4<float>(1.062f, -0.205f, 0.299f, 0.0f));
           aFilterL.SetRow(1, NCollection_Vec4<float>(-0.026f, 0.908f, 0.068f, 0.0f));
           aFilterL.SetRow(2, NCollection_Vec4<float>(-0.038f, -0.173f, 0.022f, 0.0f));
@@ -3208,13 +3198,15 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
           aFilterR.SetRow(3, NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
           break;
         }
-        case Graphic3d_RenderingParams::Anaglyph_GreenMagenta_Simple: {
+        case Graphic3d_RenderingParams::Anaglyph_GreenMagenta_Simple:
+        {
           aFilterR.SetRow(0, NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f));
           aFilterL.SetRow(1, NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
           aFilterR.SetRow(2, NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f));
           break;
         }
-        case Graphic3d_RenderingParams::Anaglyph_UserDefined: {
+        case Graphic3d_RenderingParams::Anaglyph_UserDefined:
+        {
           aFilterL = myRenderParams.AnaglyphLeft;
           aFilterR = myRenderParams.AnaglyphRight;
           break;
@@ -3224,7 +3216,8 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
       aCtx->ActiveProgram()->SetUniform(aCtx, "uMultR", aFilterR);
       break;
     }
-    case Graphic3d_StereoMode_RowInterlaced: {
+    case Graphic3d_StereoMode_RowInterlaced:
+    {
       NCollection_Vec2<float> aTexOffset =
         myRenderParams.ToSmoothInterlacing
           ? NCollection_Vec2<float>(0.0f, -0.5f / float(aPair[0]->GetSizeY()))
@@ -3232,7 +3225,8 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
       aCtx->ActiveProgram()->SetUniform(aCtx, "uTexOffset", aTexOffset);
       break;
     }
-    case Graphic3d_StereoMode_ColumnInterlaced: {
+    case Graphic3d_StereoMode_ColumnInterlaced:
+    {
       NCollection_Vec2<float> aTexOffset =
         myRenderParams.ToSmoothInterlacing
           ? NCollection_Vec2<float>(0.5f / float(aPair[0]->GetSizeX()), 0.0f)
@@ -3240,7 +3234,8 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
       aCtx->ActiveProgram()->SetUniform(aCtx, "uTexOffset", aTexOffset);
       break;
     }
-    case Graphic3d_StereoMode_ChessBoard: {
+    case Graphic3d_StereoMode_ChessBoard:
+    {
       NCollection_Vec2<float> aTexOffset =
         myRenderParams.ToSmoothInterlacing
           ? NCollection_Vec2<float>(0.5f / float(aPair[0]->GetSizeX()),
@@ -3309,17 +3304,20 @@ bool OpenGl_View::copyBackToFront()
 
   switch (aCtx->DrawBuffer())
   {
-    case GL_BACK_LEFT: {
+    case GL_BACK_LEFT:
+    {
       aCtx->SetReadBuffer(GL_BACK_LEFT);
       aCtx->SetDrawBuffer(GL_FRONT_LEFT);
       break;
     }
-    case GL_BACK_RIGHT: {
+    case GL_BACK_RIGHT:
+    {
       aCtx->SetReadBuffer(GL_BACK_RIGHT);
       aCtx->SetDrawBuffer(GL_FRONT_RIGHT);
       break;
     }
-    default: {
+    default:
+    {
       aCtx->SetReadBuffer(GL_BACK);
       aCtx->SetDrawBuffer(GL_FRONT);
       break;

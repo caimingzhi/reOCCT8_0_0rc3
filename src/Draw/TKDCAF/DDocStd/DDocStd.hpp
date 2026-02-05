@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -80,4 +79,3 @@ public:
   //! ShapeSchema_Read
   Standard_EXPORT static void ShapeSchemaCommands(Draw_Interpretor& theCommands);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BinObjMgt_Persistent.hpp>
@@ -115,4 +114,3 @@ private:
   //! Sizes of labels and some attributes that will be stored in the second pass
   NCollection_List<occ::handle<BinObjMgt_Position>> mySizesToWrite;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2015-05-14
-// Created by: data exchange team
-// Copyright (c) 2000-2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <XCAFDoc_Editor.hpp>
 
 #include <BRep_Builder.hpp>
@@ -763,12 +748,14 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
 
   XCAFDoc_AssemblyTool::Traverse(
     aG,
-    [](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool {
+    [](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool
+    {
       const XCAFDoc_AssemblyGraph::NodeType aNodeType = theGraph->GetNodeType(theNode);
       return (aNodeType == XCAFDoc_AssemblyGraph::NodeType_Part)
              || (aNodeType == XCAFDoc_AssemblyGraph::NodeType_Occurrence);
     },
-    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool {
+    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool
+    {
       const TDF_Label&                      aLabel    = theGraph->GetNode(theNode);
       const XCAFDoc_AssemblyGraph::NodeType aNodeType = theGraph->GetNodeType(theNode);
 
@@ -912,7 +899,8 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
           switch (aDimObj->GetType())
           {
             case XCAFDimTolObjects_DimensionType_Location_None:
-            case XCAFDimTolObjects_DimensionType_Location_CurvedDistance: {
+            case XCAFDimTolObjects_DimensionType_Location_CurvedDistance:
+            {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
               Message::SendWarning(aSS.str().c_str());
@@ -934,7 +922,8 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
             case XCAFDimTolObjects_DimensionType_Size_Angular:
               break;
             case XCAFDimTolObjects_DimensionType_Location_Oriented:
-            case XCAFDimTolObjects_DimensionType_Location_WithPath: {
+            case XCAFDimTolObjects_DimensionType_Location_WithPath:
+            {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
               Message::SendWarning(aSS.str().c_str());
@@ -959,13 +948,15 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
               aRescaleOtherValues = true;
               break;
             case XCAFDimTolObjects_DimensionType_CommonLabel:
-            case XCAFDimTolObjects_DimensionType_DimensionPresentation: {
+            case XCAFDimTolObjects_DimensionType_DimensionPresentation:
+            {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
               Message::SendWarning(aSS.str().c_str());
             }
             break;
-            default: {
+            default:
+            {
               Standard_SStream aSS;
               aSS << "Dimension PMI of unsupported type " << anEntryDimension << " is not scaled.";
               Message::SendWarning(aSS.str().c_str());

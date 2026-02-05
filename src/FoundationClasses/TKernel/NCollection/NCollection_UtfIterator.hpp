@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 //! Template class for Unicode strings support.
@@ -238,48 +237,6 @@ private:                   //! @name private fields
 };
 
 // template implementation
-// Created on: 2013-01-28
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Portions of code are copyrighted by Unicode, Inc.
-//
-// Copyright (c) 2001-2004 Unicode, Inc.
-//
-// Disclaimer
-//
-// This source code is provided as is by Unicode, Inc. No claims are
-// made as to fitness for any particular purpose. No warranties of any
-// kind are expressed or implied. The recipient agrees to determine
-// applicability of information provided. If this file has been
-// purchased on magnetic or optical media from Unicode, Inc., the
-// sole remedy for any claim will be exchange of defective media
-// within 90 days of receipt.
-//
-// Limitations on Rights to Redistribute This Code
-//
-// Unicode, Inc. hereby grants the right to freely use the information
-// supplied in this file in the creation of products supporting the
-// Unicode Standard, and to make copies of this file in any form
-// for internal or external distribution as long as this notice
-// remains attached.
-
-// =======================================================================
-// function : readUTF8
-// purpose  : Get a UTF-8 character; leave the tracking pointer at the start of the next character.
-//            Not protected against invalid UTF-8.
-// =======================================================================
 template <typename Type>
 inline void NCollection_UtfIterator<Type>::readUTF8()
 {
@@ -510,5 +467,3 @@ inline char32_t* NCollection_UtfIterator<Type>::GetUtf32(char32_t* theBuffer) co
   *theBuffer++ = myCharUtf32;
   return theBuffer;
 }
-
-

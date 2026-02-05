@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_IGESEntity.hpp>
@@ -51,4 +50,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> theOperands;
   occ::handle<NCollection_HArray1<int>>                              theOperations;
 };
-

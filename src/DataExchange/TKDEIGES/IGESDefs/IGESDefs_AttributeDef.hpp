@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -109,4 +108,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> theAttrValues;
   occ::handle<IGESDefs_HArray1OfHArray1OfTextDisplayTemplate>       theAttrValuePointers;
 };
-

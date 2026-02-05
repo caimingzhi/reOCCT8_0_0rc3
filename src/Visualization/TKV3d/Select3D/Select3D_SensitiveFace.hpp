@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_TypeOfSensitivity.hpp>
 #include <Select3D_SensitiveSet.hpp>
 #include <gp_Pnt.hpp>
@@ -67,4 +66,3 @@ private:
   occ::handle<Select3D_SensitiveSet> myFacePoints;     //!< Wrapper for overlap detection created depending on sensitivity type
   // clang-format on
 };
-

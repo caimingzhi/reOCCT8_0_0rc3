@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining a datum attribute, see Prs3d_Datum.
 enum Prs3d_DatumAttribute
 {
@@ -28,4 +27,3 @@ enum
 {
   Prs3d_DatumAttribute_NB = Prs3d_DatumAttribute_ShadingNumberOfFacettes + 1
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define GEOMOBJECT_GUID Standard_GUID("6c6915ab-775f-4475-859e-befd74d26a23")
 #define ATTCH_GUID Standard_GUID("12e94554-6dbc-11d4-b9c8-0060b0ee281b")
 #define XTTCH_GUID Standard_GUID("12e94555-6dbc-11d4-b9c8-0060b0ee281b")
@@ -83,4 +82,3 @@
 #define NULL_RESULT 16
 #define WRONG_CONTEXT 14
 #define NAMING_FAILED 15
-

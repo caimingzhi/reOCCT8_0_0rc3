@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom2dInt_TheCurveLocatorOfTheProjPCurOfGInter.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -257,4 +256,3 @@ private:
 #undef IntCurve_ExactIntersectionPointOfTheIntPCurvePCurve_hxx
 #undef IntCurve_IntCurveCurveGen
 #undef IntCurve_IntCurveCurveGen_hxx
-

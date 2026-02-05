@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_Array2.hpp>
@@ -1992,4 +1991,3 @@ void BSplCLib_IncreaseDegree_Bezier(const int                         NewDegree,
                                                                     aBezierKnots.Knot,
                                                                     aBezierKnots.Mult);
 }
-

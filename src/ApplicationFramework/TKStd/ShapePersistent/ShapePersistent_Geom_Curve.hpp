@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 
 #include <ShapePersistent_Geom.hpp>
@@ -307,4 +306,3 @@ const char* ShapePersistent_Geom::
 template <>
 void ShapePersistent_Geom::instance<ShapePersistent_Geom_Curve::Conic, Geom_Parabola, gp_Parab>::
   Write(StdObjMgt_WriteData& theWriteData) const;
-

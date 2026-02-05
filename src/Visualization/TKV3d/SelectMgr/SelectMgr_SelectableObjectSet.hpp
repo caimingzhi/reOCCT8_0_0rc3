@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Handle.hpp>
 #include <Select3D_BVHBuilder3d.hpp>
 #include <SelectMgr_SelectableObject.hpp>
@@ -239,4 +238,3 @@ private:
   // clang-format on
   friend class Iterator;
 };
-

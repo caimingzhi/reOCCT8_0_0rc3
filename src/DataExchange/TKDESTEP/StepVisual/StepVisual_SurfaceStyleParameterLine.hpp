@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -44,4 +43,3 @@ private:
   occ::handle<StepVisual_CurveStyle>                                styleOfParameterLines;
   occ::handle<NCollection_HArray1<StepVisual_DirectionCountSelect>> directionCounts;
 };
-

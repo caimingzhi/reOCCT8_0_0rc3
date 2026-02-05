@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Interpretor.hpp>
 #include <Geom_Geometry.hpp>
 #include <Geom_Surface.hpp>
@@ -153,4 +152,3 @@ public:
   //! defines display commands.
   Standard_EXPORT static void BasicCommands(Draw_Interpretor& I);
 };
-

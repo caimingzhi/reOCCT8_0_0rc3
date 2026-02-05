@@ -1,18 +1,3 @@
-// Created on: 2002-03-20
-// Created by: QA Admin
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <cstdio>
 
 #include <QABugs.hpp>
@@ -709,27 +694,33 @@ static int OCC381_Save(Draw_Interpretor& di, int nb, const char** a)
   {
     switch (theStatus)
     {
-      case PCDM_SS_DriverFailure: {
+      case PCDM_SS_DriverFailure:
+      {
         di << "Error saving document: Could not store , no driver found to make it\n";
         break;
       }
-      case PCDM_SS_WriteFailure: {
+      case PCDM_SS_WriteFailure:
+      {
         di << "Error saving document: Write access failure\n";
         break;
       }
-      case PCDM_SS_Failure: {
+      case PCDM_SS_Failure:
+      {
         di << "Error saving document: Write failure\n";
         break;
       }
-      case PCDM_SS_Doc_IsNull: {
+      case PCDM_SS_Doc_IsNull:
+      {
         di << "Error saving document: No document to save\n";
         break;
       }
-      case PCDM_SS_No_Obj: {
+      case PCDM_SS_No_Obj:
+      {
         di << "Error saving document: No objects written\n";
         break;
       }
-      case PCDM_SS_Info_Section_Error: {
+      case PCDM_SS_Info_Section_Error:
+      {
         di << "Error saving document: Write info section failure\n";
         break;
       }
@@ -762,27 +753,33 @@ static int OCC381_SaveAs(Draw_Interpretor& di, int nb, const char** a)
   {
     switch (theStatus)
     {
-      case PCDM_SS_DriverFailure: {
+      case PCDM_SS_DriverFailure:
+      {
         di << "Error saving document: Could not store , no driver found to make it\n";
         break;
       }
-      case PCDM_SS_WriteFailure: {
+      case PCDM_SS_WriteFailure:
+      {
         di << "Error saving document: Write access failure\n";
         break;
       }
-      case PCDM_SS_Failure: {
+      case PCDM_SS_Failure:
+      {
         di << "Error saving document: Write failure\n";
         break;
       }
-      case PCDM_SS_Doc_IsNull: {
+      case PCDM_SS_Doc_IsNull:
+      {
         di << "Error saving document: No document to save\n";
         break;
       }
-      case PCDM_SS_No_Obj: {
+      case PCDM_SS_No_Obj:
+      {
         di << "Error saving document: No objects written\n";
         break;
       }
-      case PCDM_SS_Info_Section_Error: {
+      case PCDM_SS_Info_Section_Error:
+      {
         di << "Error saving document: Write info section failure\n";
         break;
       }
@@ -4784,32 +4781,32 @@ int OCC28478(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-struct Task
-{
-  Message_ProgressRange Range;
-  math_Matrix           Mat1, Mat2, Mat3;
-
-  Task(const Message_ProgressRange& thePR, int theSize)
-      : Range(thePR),
-        Mat1(1, theSize, 1, theSize, 0.12345),
-        Mat2(1, theSize, 1, theSize, 12345),
-        Mat3(1, theSize, 1, theSize)
+  struct Task
   {
-  }
-};
+    Message_ProgressRange Range;
+    math_Matrix           Mat1, Mat2, Mat3;
 
-struct Functor
-{
-  void operator()(Task& theTask) const
-  {
-    if (theTask.Range.More())
+    Task(const Message_ProgressRange& thePR, int theSize)
+        : Range(thePR),
+          Mat1(1, theSize, 1, theSize, 0.12345),
+          Mat2(1, theSize, 1, theSize, 12345),
+          Mat3(1, theSize, 1, theSize)
     {
-      if (theTask.Mat1.RowNumber() > 1)
-        theTask.Mat3 = theTask.Mat1 * theTask.Mat2;
     }
-    theTask.Range.Close();
-  }
-};
+  };
+
+  struct Functor
+  {
+    void operator()(Task& theTask) const
+    {
+      if (theTask.Range.More())
+      {
+        if (theTask.Mat1.RowNumber() > 1)
+          theTask.Mat3 = theTask.Mat1 * theTask.Mat2;
+      }
+      theTask.Range.Close();
+    }
+  };
 } // namespace
 
 int OCC25748(Draw_Interpretor& di, int argc, const char** argv)

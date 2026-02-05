@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_IFrameQueue.hpp>
 #include <Media_Timer.hpp>
 #include <OSD_Thread.hpp>
@@ -130,4 +129,3 @@ private:
   volatile double            mySeekTo;     //!< new seeking position
   volatile Media_PlayerEvent myPlayEvent;  //!< playback event
 };
-

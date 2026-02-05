@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdPrs_HLRShapeI.hpp>
 
 //! Instantiates Prs3d_PolyHLRShape to define a display of a shape where hidden
@@ -20,4 +19,3 @@ public:
                                   const occ::handle<Prs3d_Drawer>&       theDrawer,
                                   const occ::handle<Graphic3d_Camera>& theProjector) const override;
 };
-

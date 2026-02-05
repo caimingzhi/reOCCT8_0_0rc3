@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -98,4 +97,3 @@ private:
   double                          Orig1;
   double                          Orig2;
 };
-

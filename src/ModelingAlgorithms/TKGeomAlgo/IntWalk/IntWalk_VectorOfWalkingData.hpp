@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <vector>
 #include <NCollection_OccAllocator.hpp>
 
@@ -15,4 +14,3 @@ struct IntWalk_WalkingData
 
 typedef std::vector<IntWalk_WalkingData, NCollection_OccAllocator<IntWalk_WalkingData>>
   IntWalk_VectorOfWalkingData;
-

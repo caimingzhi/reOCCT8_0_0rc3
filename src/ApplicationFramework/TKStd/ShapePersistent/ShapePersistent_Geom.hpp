@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NotImplemented.hpp>
 #include <Standard_NullObject.hpp>
 
@@ -20,7 +19,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <StdObject_gp_Axes.hpp>
 
@@ -116,7 +114,6 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData, const 
   theWriteData << anAx << aMajorRadius << aMinorRadius;
   return theWriteData;
 }
-
 
 #include <StdObject_gp_Trsfs.hpp>
 
@@ -478,4 +475,3 @@ inline const char* ShapePersistent_Geom::geometryBase<Geom_Surface>::PName() con
 {
   return "PGeom_Surface";
 }
-

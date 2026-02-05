@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <functional>
 
 #include <Standard_HashUtils.hpp>
@@ -17,7 +16,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #define DEFINE_HASHER(HasherName, TheKeyType, HashFunctor, EqualFunctor)                           \
   struct HasherName : protected HashFunctor, EqualFunctor                                          \
   {                                                                                                \
@@ -31,8 +29,6 @@
       return EqualFunctor::operator()(theK1, theK2);                                               \
     }                                                                                              \
   };
-
-
 
 /**
  * Purpose:     The  DefaultHasher  is a  Hasher  that is used by
@@ -165,4 +161,3 @@ struct NCollection_DefaultHasher<TheKeyType*>
     return theK1 == theK2;
   }
 };
-

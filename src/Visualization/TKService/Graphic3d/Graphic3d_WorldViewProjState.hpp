@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_TypeDef.hpp>
 
@@ -118,4 +117,3 @@ private:
   size_t              myProjectionState;
   size_t              myWorldViewState;
 };
-

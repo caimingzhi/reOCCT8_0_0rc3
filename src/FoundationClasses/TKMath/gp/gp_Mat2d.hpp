@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <Standard_ConstructionError.hpp>
 #include <Standard_OutOfRange.hpp>
@@ -404,4 +403,3 @@ inline constexpr gp_Mat2d operator*(const double theScalar, const gp_Mat2d& theM
 {
   return theMat2D.Multiplied(theScalar);
 }
-

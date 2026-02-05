@@ -151,7 +151,8 @@ gp_Pnt2d IntCurve_IConicTool::Value(const double X) const
       return (ElCLib::ParabolaValue(X, Axis, Parab_f));
     case GeomAbs_Hyperbola:
       return (ElCLib::HyperbolaValue(X, Axis, Hypr_a, Hypr_b));
-    default: {
+    default:
+    {
       std::cout << "### Erreur sur le  type de la courbe ###";
       return (gp_Pnt2d(0.0, 0.0));
     }
@@ -179,7 +180,8 @@ void IntCurve_IConicTool::D1(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan) const
     case GeomAbs_Hyperbola:
       ElCLib::HyperbolaD1(X, Axis, Hypr_a, Hypr_b, Pt, Tan);
       break;
-    default: {
+    default:
+    {
       std::cout << "### Erreur sur le  type de la courbe ###";
     }
   }
@@ -207,7 +209,8 @@ void IntCurve_IConicTool::D2(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan, gp_Vec
     case GeomAbs_Hyperbola:
       ElCLib::HyperbolaD2(X, Axis, Hypr_a, Hypr_b, Pt, Tan, Norm);
       break;
-    default: {
+    default:
+    {
       std::cout << "### Erreur sur le  type de la courbe ###";
     }
   }
@@ -222,11 +225,13 @@ double IntCurve_IConicTool::Distance(const gp_Pnt2d& ThePoint) const
 
   switch (type)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       return (Line_a * ThePoint.X() + Line_b * ThePoint.Y() + Line_c);
     }
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
 #if AN_ELIPS
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
@@ -244,19 +249,22 @@ double IntCurve_IConicTool::Distance(const gp_Pnt2d& ThePoint) const
 #endif
     }
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       double Dx = Circle_x0 - ThePoint.X();
       double Dy = Circle_y0 - ThePoint.Y();
       return (sqrt(Dx * Dx + Dy * Dy) - Circle_r);
     }
 
-    case GeomAbs_Parabola: { //-- Distance(X,Y) = Y**2 - 2 P X
+    case GeomAbs_Parabola:
+    { //-- Distance(X,Y) = Y**2 - 2 P X
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       return (P.Y() * P.Y() - Parab_2p * P.X());
     }
 
-    case GeomAbs_Hyperbola: { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
+    case GeomAbs_Hyperbola:
+    { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
       //--                 pour x>0
       //--     -(Y/b)**2 - 1  sinon ??
       //--     avec un gradient avec x -> std::abs(x)
@@ -267,7 +275,8 @@ double IntCurve_IConicTool::Distance(const gp_Pnt2d& ThePoint) const
       else
         return ((-P.X() * P.X()) / Hypr_aa - (P.Y() * P.Y()) / Hypr_bb - 1.0);
     }
-    default: {
+    default:
+    {
       std::cout << "### Erreur sur le  type de la courbe ###";
       return (0.0);
     }
@@ -282,7 +291,8 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
     case GeomAbs_Line:
       return (gp_Vec2d(Line_a, Line_b));
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       double Gradx = 0.0;
@@ -299,7 +309,8 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
       Gradient.Transform(Object_To_Abs);
       return (Gradient);
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
 #if AN_ELIPS
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
@@ -343,14 +354,16 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
 #endif
     }
 
-    case GeomAbs_Parabola: { //-- Distance(X,Y) = Y**2 - 2 P X
+    case GeomAbs_Parabola:
+    { //-- Distance(X,Y) = Y**2 - 2 P X
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       gp_Vec2d Gradient(-Parab_2p, P.Y() + P.Y());
       Gradient.Transform(Object_To_Abs);
       return (Gradient);
     }
-    case GeomAbs_Hyperbola: { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
+    case GeomAbs_Hyperbola:
+    { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       //--### la Branche a X negatif doit ramener vers les X positifs
@@ -358,7 +371,8 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
       Gradient.Transform(Object_To_Abs);
       return (Gradient);
     }
-    default: {
+    default:
+    {
       std::cout << "### Erreur sur le  type de la courbe ###";
       return (gp_Vec2d(0.0, 0.0));
     }
@@ -385,7 +399,8 @@ double IntCurve_IConicTool::FindParameter(const gp_Pnt2d& P) const
       }
       break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       Param = ElCLib::EllipseParameter(Axis, Elips_a, Elips_b, P);
       if (Param < 0.0)
       {
@@ -394,11 +409,13 @@ double IntCurve_IConicTool::FindParameter(const gp_Pnt2d& P) const
       break;
     }
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       Param = ElCLib::ParabolaParameter(Axis, P);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       Param = ElCLib::HyperbolaParameter(Axis, Hypr_a, Hypr_b, P);
       break;
     }

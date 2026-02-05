@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Eye.hpp>
 #include <Aspect_FrustumLRBT.hpp>
 #include <Graphic3d_CameraTile.hpp>
@@ -822,4 +821,3 @@ inline void NCollection_Lerp<occ::handle<Graphic3d_Camera>>::Interpolate(
 //! This tool interpolates camera parameters scale, eye, center, rotation (up and direction vectors)
 //! independently.
 //! @sa Graphic3d_Camera::Interpolate()
-

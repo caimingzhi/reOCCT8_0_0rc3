@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <AppDef_MultiLine.hpp>
@@ -98,4 +97,3 @@ private:
   int                                      IF;
   int                                      IL;
 };
-

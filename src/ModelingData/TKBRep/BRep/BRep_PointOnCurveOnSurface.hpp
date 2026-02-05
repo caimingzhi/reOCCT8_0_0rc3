@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRep_PointsOnSurface.hpp>
@@ -39,4 +38,3 @@ public:
 private:
   occ::handle<Geom2d_Curve> myPCurve;
 };
-

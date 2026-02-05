@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -64,4 +63,3 @@ private:
   GeomAbs_CurveType type;
   gp_Trsf2d         Abs_To_Object;
 };
-

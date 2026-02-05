@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_ConicalSurface.hpp>
 #include <GeomGridEval.hpp>
 #include <gp_Pnt2d.hpp>
@@ -172,4 +171,3 @@ private:
 
   occ::handle<Geom_ConicalSurface> myGeom;
 };
-

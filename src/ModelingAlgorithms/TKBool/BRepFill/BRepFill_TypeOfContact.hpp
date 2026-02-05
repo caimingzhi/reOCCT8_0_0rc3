@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! A pair of bound shapes with the result.
 enum BRepFill_TypeOfContact
 {
@@ -8,4 +7,3 @@ enum BRepFill_TypeOfContact
   BRepFill_Contact,
   BRepFill_ContactOnBorder
 };
-

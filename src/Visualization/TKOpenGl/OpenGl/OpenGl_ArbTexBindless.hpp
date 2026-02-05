@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlFunctions.hpp>
 
 //! Provides bindless textures.
@@ -28,4 +27,3 @@ struct OpenGl_ArbTexBindless : protected OpenGl_GlFunctions
   using OpenGl_GlFunctions::glVertexAttribL1ui64vARB;
 #endif
 };
-

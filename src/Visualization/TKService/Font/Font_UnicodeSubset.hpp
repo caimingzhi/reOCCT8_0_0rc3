@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining Unicode subsets.
 enum Font_UnicodeSubset
 {
@@ -14,4 +13,3 @@ enum
 {
   Font_UnicodeSubset_NB = Font_UnicodeSubset_Arabic
 };
-

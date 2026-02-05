@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Range.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Standard_OStream.hpp>
@@ -107,4 +106,3 @@ private:
   std::vector<Bnd_Range> myClipRanges;
   Bnd_Range              myUnclipRange;
 };
-

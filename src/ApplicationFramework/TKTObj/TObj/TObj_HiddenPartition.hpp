@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_Partition.hpp>
 
 /**
@@ -27,5 +26,5 @@ public:
 //! Define handle class for TObj_HiddenPartition
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

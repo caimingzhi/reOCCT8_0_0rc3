@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Standard_OutOfRange.hpp>
@@ -252,4 +251,3 @@ protected:
   size_t mySize;      //!< number of currently defined items
   void** myData;      //!< array of pointers to data blocks
 };
-

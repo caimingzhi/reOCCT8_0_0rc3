@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Attr.hpp>
 #include <LDOM_NodeList.hpp>
 
@@ -72,4 +71,3 @@ protected:
 private:
   // ---------- PRIVATE FIELDS ----------
 };
-

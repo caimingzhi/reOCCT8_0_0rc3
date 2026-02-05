@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 #include <iostream>
@@ -10,4 +9,3 @@
 #include <fstream>
 
 typedef std::ostream Standard_OStream;
-

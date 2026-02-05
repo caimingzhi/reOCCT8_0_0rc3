@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -81,4 +80,3 @@ private:
   occ::handle<NCollection_HArray1<gp_XY>>                                theViewOrigins;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     theAnnotations;
 };
-

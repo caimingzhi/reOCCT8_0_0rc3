@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array2.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
@@ -63,4 +62,3 @@ public:
 
   DEFINE_STANDARD_RTTI_INLINE(NCollection_HArray2, Standard_Transient)
 };
-

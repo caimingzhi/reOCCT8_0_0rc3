@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Specifies aspect of system font.
 enum Font_FontAspect
 {
@@ -22,4 +21,3 @@ enum
 {
   Font_FontAspect_NB = Font_FontAspect_BoldItalic + 1
 };
-

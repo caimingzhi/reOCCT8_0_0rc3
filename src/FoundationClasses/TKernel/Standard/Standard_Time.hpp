@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 // ------------------------------------------------------------------
@@ -15,4 +14,3 @@ typename opencascade::std::enable_if<opencascade::std::is_same<TheTimeType, std:
 {
   return theOne == theTwo;
 }
-

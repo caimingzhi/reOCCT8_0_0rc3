@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Window.hpp>
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
@@ -22,29 +21,26 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 // Purpose: Defines a Windows NT DWORD type.
 
-#ifndef __WINDOWS_H_INCLUDED
-  #define __WINDOWS_H_INCLUDED
-  #ifndef STRICT
-    #define STRICT
-  #endif /* STRICT */
-  #define WIN32_LEAN_AND_MEAN
-  #include <windows.h>
+  #ifndef __WINDOWS_H_INCLUDED
+    #define __WINDOWS_H_INCLUDED
+    #ifndef STRICT
+      #define STRICT
+    #endif /* STRICT */
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
 
-  #ifdef DrawText
-    #undef DrawText
-  #endif
+    #ifdef DrawText
+      #undef DrawText
+    #endif
 
-  #ifdef THIS
-    #undef THIS
-  #endif // THIS
-#endif   // __WINDOWS_H_INCLUDED
+    #ifdef THIS
+      #undef THIS
+    #endif // THIS
+  #endif   // __WINDOWS_H_INCLUDED
 
 typedef DWORD WNT_Dword;
-
-
 
 class Aspect_WindowInputListener;
 class WNT_WClass;

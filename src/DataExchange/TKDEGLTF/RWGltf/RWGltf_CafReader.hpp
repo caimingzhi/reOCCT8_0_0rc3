@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vector.hpp>
 #include <RWMesh_CafReader.hpp>
 #include <TopoDS_Face.hpp>
@@ -128,4 +127,3 @@ protected:
   NCollection_DataMap<TopoDS_Shape, gp_XYZ, TopTools_ShapeMapHasher>*
     myShapeScaleMap; //!< map of shapes with non-uniform scalings
 };
-

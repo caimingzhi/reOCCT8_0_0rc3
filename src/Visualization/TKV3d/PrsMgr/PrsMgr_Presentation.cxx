@@ -22,19 +22,19 @@ IMPLEMENT_STANDARD_RTTIEXT(PrsMgr_Presentation, Graphic3d_Structure)
 
 namespace
 {
-enum BeforeHighlightState
-{
-  State_Empty,
-  State_Hidden,
-  State_Visible
-};
+  enum BeforeHighlightState
+  {
+    State_Empty,
+    State_Hidden,
+    State_Visible
+  };
 
-static BeforeHighlightState StructureState(const Graphic3d_Structure* theStructure)
-{
-  return !theStructure->IsDisplayed() ? State_Empty
-         : !theStructure->IsVisible() ? State_Hidden
-                                      : State_Visible;
-}
+  static BeforeHighlightState StructureState(const Graphic3d_Structure* theStructure)
+  {
+    return !theStructure->IsDisplayed() ? State_Empty
+           : !theStructure->IsVisible() ? State_Hidden
+                                        : State_Visible;
+  }
 } // namespace
 
 //=================================================================================================

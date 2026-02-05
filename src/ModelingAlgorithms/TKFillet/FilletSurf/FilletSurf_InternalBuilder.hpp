@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Curve2d.hpp>
 #include <ChFi3d_FilBuilder.hpp>
 #include <ChFi3d_FilletShape.hpp>
@@ -208,4 +207,3 @@ protected:
                                    const bool                                          RecRst2,
                                    const math_Vector& Soldep) override;
 };
-

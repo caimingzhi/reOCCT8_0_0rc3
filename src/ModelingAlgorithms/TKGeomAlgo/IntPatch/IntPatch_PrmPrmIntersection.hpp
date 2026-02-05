@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <IntPatch_Line.hpp>
 #include <NCollection_Sequence.hpp>
@@ -218,6 +217,7 @@ private:
   bool                                             empt;
   NCollection_Sequence<occ::handle<IntPatch_Line>> SLin;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -337,5 +337,3 @@ inline int IntPatch_PrmPrmIntersection::CodeReject(const double x0,
     code |= 32;
   return (code);
 }
-
-

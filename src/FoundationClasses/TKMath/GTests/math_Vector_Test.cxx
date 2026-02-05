@@ -28,20 +28,20 @@
 
 namespace
 {
-// Helper function for comparing vectors with tolerance
-void checkVectorsEqual(const math_Vector& theV1,
-                       const math_Vector& theV2,
-                       const double       theTolerance = Precision::Confusion())
-{
-  ASSERT_EQ(theV1.Length(), theV2.Length());
-  ASSERT_EQ(theV1.Lower(), theV2.Lower());
-  ASSERT_EQ(theV1.Upper(), theV2.Upper());
-
-  for (int anI = theV1.Lower(); anI <= theV1.Upper(); anI++)
+  // Helper function for comparing vectors with tolerance
+  void checkVectorsEqual(const math_Vector& theV1,
+                         const math_Vector& theV2,
+                         const double       theTolerance = Precision::Confusion())
   {
-    EXPECT_NEAR(theV1(anI), theV2(anI), theTolerance);
+    ASSERT_EQ(theV1.Length(), theV2.Length());
+    ASSERT_EQ(theV1.Lower(), theV2.Lower());
+    ASSERT_EQ(theV1.Upper(), theV2.Upper());
+
+    for (int anI = theV1.Lower(); anI <= theV1.Upper(); anI++)
+    {
+      EXPECT_NEAR(theV1(anI), theV2(anI), theTolerance);
+    }
   }
-}
 } // namespace
 
 // Tests for constructors

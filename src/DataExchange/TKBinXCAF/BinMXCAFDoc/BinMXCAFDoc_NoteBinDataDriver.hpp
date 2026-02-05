@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMXCAFDoc_NoteDriver.hpp>
 
 class BinMXCAFDoc_NoteBinDataDriver : public BinMXCAFDoc_NoteDriver
@@ -21,4 +20,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BinMXCAFDoc_NoteBinDataDriver, BinMXCAFDoc_NoteDriver)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 
 #ifdef __cplusplus
@@ -31,4 +30,3 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-

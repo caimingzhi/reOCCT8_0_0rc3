@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_XYZ.hpp>
@@ -37,4 +36,3 @@ private:
   bool   UVIsFree;
   bool   IncrementalLoadingAllowed;
 };
-

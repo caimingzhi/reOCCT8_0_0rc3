@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XYZ.hpp>
 #include <STEPControl_Controller.hpp>
 #include <StepGeom_Axis2Placement3d.hpp>
@@ -181,4 +180,3 @@ protected:
 protected:
   occ::handle<XSControl_WorkSession> myWS;
 };
-

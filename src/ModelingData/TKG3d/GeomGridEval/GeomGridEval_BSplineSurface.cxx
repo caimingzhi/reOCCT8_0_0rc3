@@ -24,257 +24,259 @@
 
 namespace
 {
-//! Threshold for using cache vs direct evaluation.
-//! For small spans (few points), direct BSplSLib evaluation is faster than building cache.
-constexpr int THE_CACHE_THRESHOLD = 4;
+  //! Threshold for using cache vs direct evaluation.
+  //! For small spans (few points), direct BSplSLib evaluation is faster than building cache.
+  constexpr int THE_CACHE_THRESHOLD = 4;
 
-//! @brief Iterates over sorted UV points with cache-optimal span grouping.
-//!
-//! This helper processes UV points that have been sorted by (USpanIdx, VSpanIdx, U).
-//! It tracks span changes and decides whether to use cache or direct evaluation
-//! based on the number of points in each span group.
-//!
-//! @tparam BuildCacheFunc Functor type for cache initialization: void(double U, double V)
-//! @tparam CacheEvalFunc  Functor type for cache-based evaluation: void(const UVPointWithSpan& pt)
-//! @tparam DirectEvalFunc Functor type for direct evaluation: void(const UVPointWithSpan& pt)
-//!
-//! @param theUVPoints    Sorted UV points with span info
-//! @param theBuildCache  Functor to rebuild cache for a span
-//! @param theCacheEval   Functor called for cache-based evaluation (large spans)
-//! @param theDirectEval  Functor called for direct evaluation (small spans)
-template <typename BuildCacheFunc, typename CacheEvalFunc, typename DirectEvalFunc>
-void iterateSortedUVPoints(const NCollection_Array1<GeomGridEval::UVPointWithSpan>& theUVPoints,
-                           BuildCacheFunc&&                                         theBuildCache,
-                           CacheEvalFunc&&                                          theCacheEval,
-                           DirectEvalFunc&&                                         theDirectEval)
-{
-  const int aNbPoints = theUVPoints.Size();
-  if (aNbPoints == 0)
+  //! @brief Iterates over sorted UV points with cache-optimal span grouping.
+  //!
+  //! This helper processes UV points that have been sorted by (USpanIdx, VSpanIdx, U).
+  //! It tracks span changes and decides whether to use cache or direct evaluation
+  //! based on the number of points in each span group.
+  //!
+  //! @tparam BuildCacheFunc Functor type for cache initialization: void(double U, double V)
+  //! @tparam CacheEvalFunc  Functor type for cache-based evaluation: void(const UVPointWithSpan&
+  //! pt)
+  //! @tparam DirectEvalFunc Functor type for direct evaluation: void(const UVPointWithSpan& pt)
+  //!
+  //! @param theUVPoints    Sorted UV points with span info
+  //! @param theBuildCache  Functor to rebuild cache for a span
+  //! @param theCacheEval   Functor called for cache-based evaluation (large spans)
+  //! @param theDirectEval  Functor called for direct evaluation (small spans)
+  template <typename BuildCacheFunc, typename CacheEvalFunc, typename DirectEvalFunc>
+  void iterateSortedUVPoints(const NCollection_Array1<GeomGridEval::UVPointWithSpan>& theUVPoints,
+                             BuildCacheFunc&&                                         theBuildCache,
+                             CacheEvalFunc&&                                          theCacheEval,
+                             DirectEvalFunc&&                                         theDirectEval)
   {
-    return;
-  }
-
-  int i = 0;
-  while (i < aNbPoints)
-  {
-    const GeomGridEval::UVPointWithSpan& aFirstPt = theUVPoints.Value(i);
-    const int                            aUSpan   = aFirstPt.USpanIdx;
-    const int                            aVSpan   = aFirstPt.VSpanIdx;
-
-    // Count points in this span group
-    int aGroupEnd = i + 1;
-    while (aGroupEnd < aNbPoints)
+    const int aNbPoints = theUVPoints.Size();
+    if (aNbPoints == 0)
     {
-      const GeomGridEval::UVPointWithSpan& aPt = theUVPoints.Value(aGroupEnd);
-      if (aPt.USpanIdx != aUSpan || aPt.VSpanIdx != aVSpan)
+      return;
+    }
+
+    int i = 0;
+    while (i < aNbPoints)
+    {
+      const GeomGridEval::UVPointWithSpan& aFirstPt = theUVPoints.Value(i);
+      const int                            aUSpan   = aFirstPt.USpanIdx;
+      const int                            aVSpan   = aFirstPt.VSpanIdx;
+
+      // Count points in this span group
+      int aGroupEnd = i + 1;
+      while (aGroupEnd < aNbPoints)
       {
-        break;
+        const GeomGridEval::UVPointWithSpan& aPt = theUVPoints.Value(aGroupEnd);
+        if (aPt.USpanIdx != aUSpan || aPt.VSpanIdx != aVSpan)
+        {
+          break;
+        }
+        ++aGroupEnd;
       }
-      ++aGroupEnd;
-    }
-    const int aGroupSize = aGroupEnd - i;
+      const int aGroupSize = aGroupEnd - i;
 
-    if (aGroupSize >= THE_CACHE_THRESHOLD)
-    {
-      // Large group: use cache-based evaluation
-      theBuildCache(aFirstPt.U, aFirstPt.V);
-      for (int j = i; j < aGroupEnd; ++j)
+      if (aGroupSize >= THE_CACHE_THRESHOLD)
       {
-        theCacheEval(theUVPoints.Value(j));
+        // Large group: use cache-based evaluation
+        theBuildCache(aFirstPt.U, aFirstPt.V);
+        for (int j = i; j < aGroupEnd; ++j)
+        {
+          theCacheEval(theUVPoints.Value(j));
+        }
       }
-    }
-    else
-    {
-      // Small group: use direct evaluation (skip cache building)
-      for (int j = i; j < aGroupEnd; ++j)
+      else
       {
-        theDirectEval(theUVPoints.Value(j));
+        // Small group: use direct evaluation (skip cache building)
+        for (int j = i; j < aGroupEnd; ++j)
+        {
+          theDirectEval(theUVPoints.Value(j));
+        }
+      }
+
+      i = aGroupEnd;
+    }
+  }
+
+  //! Find span index for a parameter value.
+  //! @param[in,out] theParam parameter value (may be adjusted for periodicity)
+  //! @param theDegree degree in the parameter direction
+  //! @param theIsPeriodic true if periodic in this direction
+  //! @param theFlatKnots flat knots array
+  //! @return span index in flat knots array
+  int locateSpan(double&                           theParam,
+                 int                               theDegree,
+                 bool                              theIsPeriodic,
+                 const NCollection_Array1<double>& theFlatKnots)
+  {
+    int    aSpanIndex = 0;
+    double aNewParam  = theParam;
+
+    BSplCLib::LocateParameter(theDegree,
+                              theFlatKnots,
+                              BSplCLib::NoMults(),
+                              theParam,
+                              theIsPeriodic,
+                              aSpanIndex,
+                              aNewParam);
+    theParam = aNewParam;
+    return aSpanIndex;
+  }
+
+  //! Compute span indices and local parameters, then sort by span.
+  //! @param theUVPoints array of UV points to process (modified in place)
+  //! @param theUFlatKnots U direction flat knots
+  //! @param theVFlatKnots V direction flat knots
+  //! @param theUDegree U degree
+  //! @param theVDegree V degree
+  //! @param theIsUPeriodic true if U periodic
+  //! @param theIsVPeriodic true if V periodic
+  void computeSpansAndSort(NCollection_Array1<GeomGridEval::UVPointWithSpan>& theUVPoints,
+                           const NCollection_Array1<double>&                  theUFlatKnots,
+                           const NCollection_Array1<double>&                  theVFlatKnots,
+                           int                                                theUDegree,
+                           int                                                theVDegree,
+                           bool                                               theIsUPeriodic,
+                           bool                                               theIsVPeriodic)
+  {
+    if (theUVPoints.IsEmpty())
+    {
+      return;
+    }
+
+    const int aNbPoints = theUVPoints.Size();
+
+    for (int i = 0; i < aNbPoints; ++i)
+    {
+      GeomGridEval::UVPointWithSpan& aPt = theUVPoints.ChangeValue(i);
+
+      // Locate U span
+      double aUParam   = aPt.U;
+      int    aUSpanIdx = locateSpan(aUParam, theUDegree, theIsUPeriodic, theUFlatKnots);
+      aPt.U            = aUParam; // May be adjusted for periodicity
+      aPt.USpanIdx     = aUSpanIdx;
+
+      const double aUSpanStart   = theUFlatKnots.Value(aUSpanIdx);
+      const double aUSpanHalfLen = 0.5 * (theUFlatKnots.Value(aUSpanIdx + 1) - aUSpanStart);
+      const double aUSpanMid     = aUSpanStart + aUSpanHalfLen;
+      aPt.LocalU                 = (aPt.U - aUSpanMid) / aUSpanHalfLen;
+
+      // Locate V span
+      double aVParam   = aPt.V;
+      int    aVSpanIdx = locateSpan(aVParam, theVDegree, theIsVPeriodic, theVFlatKnots);
+      aPt.V            = aVParam; // May be adjusted for periodicity
+      aPt.VSpanIdx     = aVSpanIdx;
+
+      const double aVSpanStart   = theVFlatKnots.Value(aVSpanIdx);
+      const double aVSpanHalfLen = 0.5 * (theVFlatKnots.Value(aVSpanIdx + 1) - aVSpanStart);
+      const double aVSpanMid     = aVSpanStart + aVSpanHalfLen;
+      aPt.LocalV                 = (aPt.V - aVSpanMid) / aVSpanHalfLen;
+    }
+
+    // Sort by (USpanIdx, VSpanIdx, U) for cache-optimal iteration
+    std::sort(theUVPoints.begin(),
+              theUVPoints.end(),
+              [](const GeomGridEval::UVPointWithSpan& a, const GeomGridEval::UVPointWithSpan& b)
+              {
+                if (a.USpanIdx != b.USpanIdx)
+                  return a.USpanIdx < b.USpanIdx;
+                if (a.VSpanIdx != b.VSpanIdx)
+                  return a.VSpanIdx < b.VSpanIdx;
+                return a.U < b.U;
+              });
+  }
+
+  //! Prepare UV points from grid parameters and sort for cache-optimal evaluation.
+  //! @param theUParams array of U parameter values
+  //! @param theVParams array of V parameter values
+  //! @param theUFlatKnots U direction flat knots
+  //! @param theVFlatKnots V direction flat knots
+  //! @param theUDegree U degree
+  //! @param theVDegree V degree
+  //! @param theIsUPeriodic true if U periodic
+  //! @param theIsVPeriodic true if V periodic
+  //! @return array of UV points with span info, sorted for cache-optimal evaluation
+  [[nodiscard]] NCollection_Array1<GeomGridEval::UVPointWithSpan> prepareGridPoints(
+    const NCollection_Array1<double>& theUParams,
+    const NCollection_Array1<double>& theVParams,
+    const NCollection_Array1<double>& theUFlatKnots,
+    const NCollection_Array1<double>& theVFlatKnots,
+    int                               theUDegree,
+    int                               theVDegree,
+    bool                              theIsUPeriodic,
+    bool                              theIsVPeriodic)
+  {
+    const int aNbU      = theUParams.Size();
+    const int aNbV      = theVParams.Size();
+    const int aNbPoints = aNbU * aNbV;
+    const int aULower   = theUParams.Lower();
+    const int aVLower   = theVParams.Lower();
+
+    NCollection_Array1<GeomGridEval::UVPointWithSpan> aUVPoints(0, aNbPoints - 1);
+
+    int aIdx = 0;
+    for (int i = 0; i < aNbU; ++i)
+    {
+      const double aU = theUParams.Value(aULower + i);
+      for (int j = 0; j < aNbV; ++j)
+      {
+        const double aV      = theVParams.Value(aVLower + j);
+        const int    aOutIdx = i * aNbV + j; // Row-major linear index
+        aUVPoints.SetValue(aIdx++, GeomGridEval::UVPointWithSpan{aU, aV, 0.0, 0.0, 0, 0, aOutIdx});
       }
     }
 
-    i = aGroupEnd;
-  }
-}
-
-//! Find span index for a parameter value.
-//! @param[in,out] theParam parameter value (may be adjusted for periodicity)
-//! @param theDegree degree in the parameter direction
-//! @param theIsPeriodic true if periodic in this direction
-//! @param theFlatKnots flat knots array
-//! @return span index in flat knots array
-int locateSpan(double&                           theParam,
-               int                               theDegree,
-               bool                              theIsPeriodic,
-               const NCollection_Array1<double>& theFlatKnots)
-{
-  int    aSpanIndex = 0;
-  double aNewParam  = theParam;
-
-  BSplCLib::LocateParameter(theDegree,
-                            theFlatKnots,
-                            BSplCLib::NoMults(),
-                            theParam,
-                            theIsPeriodic,
-                            aSpanIndex,
-                            aNewParam);
-  theParam = aNewParam;
-  return aSpanIndex;
-}
-
-//! Compute span indices and local parameters, then sort by span.
-//! @param theUVPoints array of UV points to process (modified in place)
-//! @param theUFlatKnots U direction flat knots
-//! @param theVFlatKnots V direction flat knots
-//! @param theUDegree U degree
-//! @param theVDegree V degree
-//! @param theIsUPeriodic true if U periodic
-//! @param theIsVPeriodic true if V periodic
-void computeSpansAndSort(NCollection_Array1<GeomGridEval::UVPointWithSpan>& theUVPoints,
-                         const NCollection_Array1<double>&                  theUFlatKnots,
-                         const NCollection_Array1<double>&                  theVFlatKnots,
-                         int                                                theUDegree,
-                         int                                                theVDegree,
-                         bool                                               theIsUPeriodic,
-                         bool                                               theIsVPeriodic)
-{
-  if (theUVPoints.IsEmpty())
-  {
-    return;
+    computeSpansAndSort(aUVPoints,
+                        theUFlatKnots,
+                        theVFlatKnots,
+                        theUDegree,
+                        theVDegree,
+                        theIsUPeriodic,
+                        theIsVPeriodic);
+    return aUVPoints;
   }
 
-  const int aNbPoints = theUVPoints.Size();
-
-  for (int i = 0; i < aNbPoints; ++i)
+  //! Prepare UV points from pairs and sort for cache-optimal evaluation.
+  //! @param theUVPairs array of UV coordinate pairs
+  //! @param theUFlatKnots U direction flat knots
+  //! @param theVFlatKnots V direction flat knots
+  //! @param theUDegree U degree
+  //! @param theVDegree V degree
+  //! @param theIsUPeriodic true if U periodic
+  //! @param theIsVPeriodic true if V periodic
+  //! @return array of UV points with span info, sorted for cache-optimal evaluation
+  [[nodiscard]] NCollection_Array1<GeomGridEval::UVPointWithSpan> preparePairPoints(
+    const NCollection_Array1<gp_Pnt2d>& theUVPairs,
+    const NCollection_Array1<double>&   theUFlatKnots,
+    const NCollection_Array1<double>&   theVFlatKnots,
+    int                                 theUDegree,
+    int                                 theVDegree,
+    bool                                theIsUPeriodic,
+    bool                                theIsVPeriodic)
   {
-    GeomGridEval::UVPointWithSpan& aPt = theUVPoints.ChangeValue(i);
-
-    // Locate U span
-    double aUParam   = aPt.U;
-    int    aUSpanIdx = locateSpan(aUParam, theUDegree, theIsUPeriodic, theUFlatKnots);
-    aPt.U            = aUParam; // May be adjusted for periodicity
-    aPt.USpanIdx     = aUSpanIdx;
-
-    const double aUSpanStart   = theUFlatKnots.Value(aUSpanIdx);
-    const double aUSpanHalfLen = 0.5 * (theUFlatKnots.Value(aUSpanIdx + 1) - aUSpanStart);
-    const double aUSpanMid     = aUSpanStart + aUSpanHalfLen;
-    aPt.LocalU                 = (aPt.U - aUSpanMid) / aUSpanHalfLen;
-
-    // Locate V span
-    double aVParam   = aPt.V;
-    int    aVSpanIdx = locateSpan(aVParam, theVDegree, theIsVPeriodic, theVFlatKnots);
-    aPt.V            = aVParam; // May be adjusted for periodicity
-    aPt.VSpanIdx     = aVSpanIdx;
-
-    const double aVSpanStart   = theVFlatKnots.Value(aVSpanIdx);
-    const double aVSpanHalfLen = 0.5 * (theVFlatKnots.Value(aVSpanIdx + 1) - aVSpanStart);
-    const double aVSpanMid     = aVSpanStart + aVSpanHalfLen;
-    aPt.LocalV                 = (aPt.V - aVSpanMid) / aVSpanHalfLen;
-  }
-
-  // Sort by (USpanIdx, VSpanIdx, U) for cache-optimal iteration
-  std::sort(theUVPoints.begin(),
-            theUVPoints.end(),
-            [](const GeomGridEval::UVPointWithSpan& a, const GeomGridEval::UVPointWithSpan& b) {
-              if (a.USpanIdx != b.USpanIdx)
-                return a.USpanIdx < b.USpanIdx;
-              if (a.VSpanIdx != b.VSpanIdx)
-                return a.VSpanIdx < b.VSpanIdx;
-              return a.U < b.U;
-            });
-}
-
-//! Prepare UV points from grid parameters and sort for cache-optimal evaluation.
-//! @param theUParams array of U parameter values
-//! @param theVParams array of V parameter values
-//! @param theUFlatKnots U direction flat knots
-//! @param theVFlatKnots V direction flat knots
-//! @param theUDegree U degree
-//! @param theVDegree V degree
-//! @param theIsUPeriodic true if U periodic
-//! @param theIsVPeriodic true if V periodic
-//! @return array of UV points with span info, sorted for cache-optimal evaluation
-[[nodiscard]] NCollection_Array1<GeomGridEval::UVPointWithSpan> prepareGridPoints(
-  const NCollection_Array1<double>& theUParams,
-  const NCollection_Array1<double>& theVParams,
-  const NCollection_Array1<double>& theUFlatKnots,
-  const NCollection_Array1<double>& theVFlatKnots,
-  int                               theUDegree,
-  int                               theVDegree,
-  bool                              theIsUPeriodic,
-  bool                              theIsVPeriodic)
-{
-  const int aNbU      = theUParams.Size();
-  const int aNbV      = theVParams.Size();
-  const int aNbPoints = aNbU * aNbV;
-  const int aULower   = theUParams.Lower();
-  const int aVLower   = theVParams.Lower();
-
-  NCollection_Array1<GeomGridEval::UVPointWithSpan> aUVPoints(0, aNbPoints - 1);
-
-  int aIdx = 0;
-  for (int i = 0; i < aNbU; ++i)
-  {
-    const double aU = theUParams.Value(aULower + i);
-    for (int j = 0; j < aNbV; ++j)
+    const int aNbPairs = theUVPairs.IsEmpty() ? 0 : theUVPairs.Size();
+    if (aNbPairs == 0)
     {
-      const double aV      = theVParams.Value(aVLower + j);
-      const int    aOutIdx = i * aNbV + j; // Row-major linear index
-      aUVPoints.SetValue(aIdx++, GeomGridEval::UVPointWithSpan{aU, aV, 0.0, 0.0, 0, 0, aOutIdx});
+      return NCollection_Array1<GeomGridEval::UVPointWithSpan>();
     }
+
+    NCollection_Array1<GeomGridEval::UVPointWithSpan> aUVPoints(0, aNbPairs - 1);
+
+    const int aLower = theUVPairs.Lower();
+    for (int i = 0; i < aNbPairs; ++i)
+    {
+      const gp_Pnt2d& aUV = theUVPairs.Value(aLower + i);
+      aUVPoints.SetValue(i, GeomGridEval::UVPointWithSpan{aUV.X(), aUV.Y(), 0.0, 0.0, 0, 0, i});
+    }
+
+    computeSpansAndSort(aUVPoints,
+                        theUFlatKnots,
+                        theVFlatKnots,
+                        theUDegree,
+                        theVDegree,
+                        theIsUPeriodic,
+                        theIsVPeriodic);
+    return aUVPoints;
   }
-
-  computeSpansAndSort(aUVPoints,
-                      theUFlatKnots,
-                      theVFlatKnots,
-                      theUDegree,
-                      theVDegree,
-                      theIsUPeriodic,
-                      theIsVPeriodic);
-  return aUVPoints;
-}
-
-//! Prepare UV points from pairs and sort for cache-optimal evaluation.
-//! @param theUVPairs array of UV coordinate pairs
-//! @param theUFlatKnots U direction flat knots
-//! @param theVFlatKnots V direction flat knots
-//! @param theUDegree U degree
-//! @param theVDegree V degree
-//! @param theIsUPeriodic true if U periodic
-//! @param theIsVPeriodic true if V periodic
-//! @return array of UV points with span info, sorted for cache-optimal evaluation
-[[nodiscard]] NCollection_Array1<GeomGridEval::UVPointWithSpan> preparePairPoints(
-  const NCollection_Array1<gp_Pnt2d>& theUVPairs,
-  const NCollection_Array1<double>&   theUFlatKnots,
-  const NCollection_Array1<double>&   theVFlatKnots,
-  int                                 theUDegree,
-  int                                 theVDegree,
-  bool                                theIsUPeriodic,
-  bool                                theIsVPeriodic)
-{
-  const int aNbPairs = theUVPairs.IsEmpty() ? 0 : theUVPairs.Size();
-  if (aNbPairs == 0)
-  {
-    return NCollection_Array1<GeomGridEval::UVPointWithSpan>();
-  }
-
-  NCollection_Array1<GeomGridEval::UVPointWithSpan> aUVPoints(0, aNbPairs - 1);
-
-  const int aLower = theUVPairs.Lower();
-  for (int i = 0; i < aNbPairs; ++i)
-  {
-    const gp_Pnt2d& aUV = theUVPairs.Value(aLower + i);
-    aUVPoints.SetValue(i, GeomGridEval::UVPointWithSpan{aUV.X(), aUV.Y(), 0.0, 0.0, 0, 0, i});
-  }
-
-  computeSpansAndSort(aUVPoints,
-                      theUFlatKnots,
-                      theVFlatKnots,
-                      theUDegree,
-                      theVDegree,
-                      theIsUPeriodic,
-                      theIsVPeriodic);
-  return aUVPoints;
-}
 
 } // namespace
 
@@ -346,15 +348,16 @@ NCollection_Array2<gp_Pnt> GeomGridEval_BSplineSurface::EvaluateGrid(
   // Evaluate using sorted UV points
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPnt;
       aCache->D0Local(thePt.LocalU, thePt.LocalV, aPnt);
       aLinearResult.SetValue(thePt.OutputIdx + 1, aPnt);
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPnt;
       BSplSLib::D0(thePt.U,
                    thePt.V,
@@ -452,15 +455,16 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BSplineSurface::EvaluatePoints(
   // Evaluate using sorted UV points
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPnt;
       aCache->D0Local(thePt.LocalU, thePt.LocalV, aPnt);
       aPoints.SetValue(thePt.OutputIdx + 1, aPnt);
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPnt;
       BSplSLib::D0(thePt.U,
                    thePt.V,
@@ -578,16 +582,17 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_BSplineSurface::EvaluatePo
 
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V;
       aCache->D1Local(thePt.LocalU, thePt.LocalV, aPoint, aD1U, aD1V);
       aResults.SetValue(thePt.OutputIdx + 1, GeomGridEval::SurfD1{aPoint, aD1U, aD1V});
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V;
       BSplSLib::D1(thePt.U,
@@ -708,17 +713,18 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_BSplineSurface::EvaluatePo
 
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
       aCache->D2Local(thePt.LocalU, thePt.LocalV, aPoint, aD1U, aD1V, aD2U, aD2V, aD2UV);
       aResults.SetValue(thePt.OutputIdx + 1,
                         GeomGridEval::SurfD2{aPoint, aD1U, aD1V, aD2U, aD2V, aD2UV});
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
       BSplSLib::D2(thePt.U,
@@ -1066,16 +1072,17 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_BSplineSurface::EvaluatePo
 
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V;
       aCache->D1Local(thePt.LocalU, thePt.LocalV, aPoint, aD1U, aD1V);
       aResults.SetValue(thePt.OutputIdx + 1, GeomGridEval::SurfD1{aPoint, aD1U, aD1V});
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V;
       BSplSLib::D1(thePt.U,
@@ -1166,17 +1173,18 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_BSplineSurface::EvaluatePo
 
   iterateSortedUVPoints(
     aUVPoints,
-    [&](double theU, double theV) {
-      aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights);
-    },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](double theU, double theV)
+    { aCache->BuildCache(theU, theV, aUFlatKnots, aVFlatKnots, aPoles, aWeights); },
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
       aCache->D2Local(thePt.LocalU, thePt.LocalV, aPoint, aD1U, aD1V, aD2U, aD2V, aD2UV);
       aResults.SetValue(thePt.OutputIdx + 1,
                         GeomGridEval::SurfD2{aPoint, aD1U, aD1V, aD2U, aD2V, aD2UV});
     },
-    [&](const GeomGridEval::UVPointWithSpan& thePt) {
+    [&](const GeomGridEval::UVPointWithSpan& thePt)
+    {
       gp_Pnt aPoint;
       gp_Vec aD1U, aD1V, aD2U, aD2V, aD2UV;
       BSplSLib::D2(thePt.U,

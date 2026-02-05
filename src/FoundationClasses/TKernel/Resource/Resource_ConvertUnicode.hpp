@@ -1,6 +1,5 @@
 #pragma once
 
-
 extern "C"
 {
 
@@ -11,4 +10,3 @@ extern "C"
   void Resource_gb_to_unicode(unsigned int* ph, unsigned int* pl);
   void Resource_unicode_to_gb(unsigned int* ph, unsigned int* pl);
 }
-

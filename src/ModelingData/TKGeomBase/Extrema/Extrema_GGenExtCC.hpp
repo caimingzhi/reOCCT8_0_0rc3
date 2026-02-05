@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <algorithm>
 
 #include <Extrema_GlobOptFuncCC.hpp>
@@ -115,126 +114,126 @@ private:
 
 namespace
 {
-// Comparator, used in std::sort.
-inline bool Extrema_GGenExtCC_comp(const gp_XY& theA, const gp_XY& theB)
-{
-  if (theA.X() < theB.X())
+  // Comparator, used in std::sort.
+  inline bool Extrema_GGenExtCC_comp(const gp_XY& theA, const gp_XY& theB)
   {
-    return true;
-  }
-  else
-  {
-    if (theA.X() == theB.X())
+    if (theA.X() < theB.X())
     {
-      if (theA.Y() < theB.Y())
-        return true;
+      return true;
     }
-  }
-  return false;
-}
-
-inline void Extrema_GGenExtCC_ChangeIntervals(occ::handle<NCollection_HArray1<double>>& theInts,
-                                              const int                                 theNbInts)
-{
-  int                                      aNbInts = theInts->Length() - 1;
-  int                                      aNbAdd  = theNbInts - aNbInts;
-  occ::handle<NCollection_HArray1<double>> aNewInts =
-    new NCollection_HArray1<double>(1, theNbInts + 1);
-  int aNbLast = theInts->Length();
-  int i;
-  if (aNbInts == 1)
-  {
-    aNewInts->SetValue(1, theInts->First());
-    aNewInts->SetValue(theNbInts + 1, theInts->Last());
-    double dt = (theInts->Last() - theInts->First()) / theNbInts;
-    double t  = theInts->First() + dt;
-    for (i = 2; i <= theNbInts; ++i, t += dt)
+    else
     {
-      aNewInts->SetValue(i, t);
-    }
-    theInts = aNewInts;
-    return;
-  }
-  for (i = 1; i <= aNbLast; ++i)
-  {
-    aNewInts->SetValue(i, theInts->Value(i));
-  }
-  while (aNbAdd > 0)
-  {
-    double anLIntMax = -1.;
-    int    aMaxInd   = -1;
-    for (i = 1; i < aNbLast; ++i)
-    {
-      double anL = aNewInts->Value(i + 1) - aNewInts->Value(i);
-      if (anL > anLIntMax)
+      if (theA.X() == theB.X())
       {
-        anLIntMax = anL;
-        aMaxInd   = i;
+        if (theA.Y() < theB.Y())
+          return true;
       }
     }
-
-    double t = (aNewInts->Value(aMaxInd + 1) + aNewInts->Value(aMaxInd)) / 2.;
-    for (i = aNbLast; i > aMaxInd; --i)
-    {
-      aNewInts->SetValue(i + 1, aNewInts->Value(i));
-    }
-    aNbLast++;
-    aNbAdd--;
-    aNewInts->SetValue(aMaxInd + 1, t);
+    return false;
   }
-  theInts = aNewInts;
-}
 
-class Extrema_GGenExtCC_PointsInspector : public NCollection_CellFilter_InspectorXY
-{
-public:
-  typedef gp_XY Target;
-
-  Extrema_GGenExtCC_PointsInspector(const double theTol)
+  inline void Extrema_GGenExtCC_ChangeIntervals(occ::handle<NCollection_HArray1<double>>& theInts,
+                                                const int                                 theNbInts)
   {
-    myTol    = theTol * theTol;
-    myIsFind = false;
-  }
-
-  void ClearFind() { myIsFind = false; }
-
-  bool isFind() { return myIsFind; }
-
-  void SetCurrent(const gp_XY& theCurPnt) { myCurrent = theCurPnt; }
-
-  NCollection_CellFilter_Action Inspect(const Target& theObject)
-  {
-    gp_XY        aPt     = myCurrent.Subtracted(theObject);
-    const double aSQDist = aPt.SquareModulus();
-    if (aSQDist < myTol)
+    int                                      aNbInts = theInts->Length() - 1;
+    int                                      aNbAdd  = theNbInts - aNbInts;
+    occ::handle<NCollection_HArray1<double>> aNewInts =
+      new NCollection_HArray1<double>(1, theNbInts + 1);
+    int aNbLast = theInts->Length();
+    int i;
+    if (aNbInts == 1)
     {
-      myIsFind = true;
+      aNewInts->SetValue(1, theInts->First());
+      aNewInts->SetValue(theNbInts + 1, theInts->Last());
+      double dt = (theInts->Last() - theInts->First()) / theNbInts;
+      double t  = theInts->First() + dt;
+      for (i = 2; i <= theNbInts; ++i, t += dt)
+      {
+        aNewInts->SetValue(i, t);
+      }
+      theInts = aNewInts;
+      return;
     }
-    return CellFilter_Keep;
-  }
-
-private:
-  double myTol;
-  gp_XY  myCurrent;
-  bool   myIsFind;
-};
-
-template <typename TheCurve, typename TheExtPCType, typename ThePointType>
-double Extrema_GGenExtCC_ProjPOnC(const ThePointType& theP, TheExtPCType& theProjTool)
-{
-  double aDist = ::RealLast();
-  theProjTool.Perform(theP);
-  if (theProjTool.IsDone() && theProjTool.NbExt())
-  {
-    for (int i = 1; i <= theProjTool.NbExt(); ++i)
+    for (i = 1; i <= aNbLast; ++i)
     {
-      double aD = theProjTool.SquareDistance(i);
-      if (aD < aDist)
-        aDist = aD;
+      aNewInts->SetValue(i, theInts->Value(i));
     }
+    while (aNbAdd > 0)
+    {
+      double anLIntMax = -1.;
+      int    aMaxInd   = -1;
+      for (i = 1; i < aNbLast; ++i)
+      {
+        double anL = aNewInts->Value(i + 1) - aNewInts->Value(i);
+        if (anL > anLIntMax)
+        {
+          anLIntMax = anL;
+          aMaxInd   = i;
+        }
+      }
+
+      double t = (aNewInts->Value(aMaxInd + 1) + aNewInts->Value(aMaxInd)) / 2.;
+      for (i = aNbLast; i > aMaxInd; --i)
+      {
+        aNewInts->SetValue(i + 1, aNewInts->Value(i));
+      }
+      aNbLast++;
+      aNbAdd--;
+      aNewInts->SetValue(aMaxInd + 1, t);
+    }
+    theInts = aNewInts;
   }
-  return aDist;
-}
+
+  class Extrema_GGenExtCC_PointsInspector : public NCollection_CellFilter_InspectorXY
+  {
+  public:
+    typedef gp_XY Target;
+
+    Extrema_GGenExtCC_PointsInspector(const double theTol)
+    {
+      myTol    = theTol * theTol;
+      myIsFind = false;
+    }
+
+    void ClearFind() { myIsFind = false; }
+
+    bool isFind() { return myIsFind; }
+
+    void SetCurrent(const gp_XY& theCurPnt) { myCurrent = theCurPnt; }
+
+    NCollection_CellFilter_Action Inspect(const Target& theObject)
+    {
+      gp_XY        aPt     = myCurrent.Subtracted(theObject);
+      const double aSQDist = aPt.SquareModulus();
+      if (aSQDist < myTol)
+      {
+        myIsFind = true;
+      }
+      return CellFilter_Keep;
+    }
+
+  private:
+    double myTol;
+    gp_XY  myCurrent;
+    bool   myIsFind;
+  };
+
+  template <typename TheCurve, typename TheExtPCType, typename ThePointType>
+  double Extrema_GGenExtCC_ProjPOnC(const ThePointType& theP, TheExtPCType& theProjTool)
+  {
+    double aDist = ::RealLast();
+    theProjTool.Perform(theP);
+    if (theProjTool.IsDone() && theProjTool.NbExt())
+    {
+      for (int i = 1; i <= theProjTool.NbExt(); ++i)
+      {
+        double aD = theProjTool.SquareDistance(i);
+        if (aD < aDist)
+          aDist = aD;
+      }
+    }
+    return aDist;
+  }
 } // namespace
 
 //==================================================================================================
@@ -890,4 +889,3 @@ void Extrema_GGenExtCC<TheCurve1,
   theP1.SetValues(myPoints1(theN), TheCurveTool1::Value(*((TheCurve1*)myC[0]), myPoints1(theN)));
   theP2.SetValues(myPoints2(theN), TheCurveTool2::Value(*((TheCurve2*)myC[1]), myPoints2(theN)));
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 class OpenGl_Context;
@@ -48,4 +47,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_Resource, Standard_Transient) // Type definition
 };
-

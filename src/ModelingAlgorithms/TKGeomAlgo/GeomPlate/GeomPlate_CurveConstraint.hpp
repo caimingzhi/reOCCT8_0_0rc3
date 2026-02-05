@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <GeomLProp_SLProps.hpp>
 
@@ -147,4 +146,3 @@ protected:
   double                                myTolU;
   double                                myTolV;
 };
-

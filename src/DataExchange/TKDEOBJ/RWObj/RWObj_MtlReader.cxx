@@ -24,56 +24,56 @@
 
 namespace
 {
-//! Try to find a new location of the file relative to specified folder from absolute path.
-//! @param theAbsolutePath original absolute file path
-//! @param theNewFoler     the new folder to look for the file
-//! @param theRelativePath result file path relative to theNewFoler
-//! @return true if relative file has been found
-static bool findRelativePath(const TCollection_AsciiString& theAbsolutePath,
-                             const TCollection_AsciiString& theNewFoler,
-                             TCollection_AsciiString&       theRelativePath)
-{
-  TCollection_AsciiString aNewFoler =
-    (theNewFoler.EndsWith("\\") || theNewFoler.EndsWith("/")) ? theNewFoler : (theNewFoler + "/");
-
-  TCollection_AsciiString aRelPath;
-  TCollection_AsciiString aPath = theAbsolutePath;
-  for (;;)
+  //! Try to find a new location of the file relative to specified folder from absolute path.
+  //! @param theAbsolutePath original absolute file path
+  //! @param theNewFoler     the new folder to look for the file
+  //! @param theRelativePath result file path relative to theNewFoler
+  //! @return true if relative file has been found
+  static bool findRelativePath(const TCollection_AsciiString& theAbsolutePath,
+                               const TCollection_AsciiString& theNewFoler,
+                               TCollection_AsciiString&       theRelativePath)
   {
-    TCollection_AsciiString aFolder, aFileName;
-    OSD_Path::FolderAndFileFromPath(aPath, aFolder, aFileName);
-    if (aFolder.IsEmpty() || aFileName.IsEmpty())
-    {
-      return false;
-    }
+    TCollection_AsciiString aNewFoler =
+      (theNewFoler.EndsWith("\\") || theNewFoler.EndsWith("/")) ? theNewFoler : (theNewFoler + "/");
 
-    if (aRelPath.IsEmpty())
+    TCollection_AsciiString aRelPath;
+    TCollection_AsciiString aPath = theAbsolutePath;
+    for (;;)
     {
-      aRelPath = aFileName;
-    }
-    else
-    {
-      aRelPath = aFileName + "/" + aRelPath;
-    }
-
-    if (OSD_File(aNewFoler + aRelPath).Exists())
-    {
-      theRelativePath = aRelPath;
-      return true;
-    }
-
-    aPath = aFolder;
-    for (; aPath.Length() >= 2;)
-    {
-      if (aPath.Value(aPath.Length()) == '/' || aPath.Value(aPath.Length()) == '\\')
+      TCollection_AsciiString aFolder, aFileName;
+      OSD_Path::FolderAndFileFromPath(aPath, aFolder, aFileName);
+      if (aFolder.IsEmpty() || aFileName.IsEmpty())
       {
-        aPath = aPath.SubString(1, aPath.Length() - 1);
-        continue;
+        return false;
       }
-      break;
+
+      if (aRelPath.IsEmpty())
+      {
+        aRelPath = aFileName;
+      }
+      else
+      {
+        aRelPath = aFileName + "/" + aRelPath;
+      }
+
+      if (OSD_File(aNewFoler + aRelPath).Exists())
+      {
+        theRelativePath = aRelPath;
+        return true;
+      }
+
+      aPath = aFolder;
+      for (; aPath.Length() >= 2;)
+      {
+        if (aPath.Value(aPath.Length()) == '/' || aPath.Value(aPath.Length()) == '\\')
+        {
+          aPath = aPath.SubString(1, aPath.Length() - 1);
+          continue;
+        }
+        break;
+      }
     }
   }
-}
 } // namespace
 
 //=================================================================================================

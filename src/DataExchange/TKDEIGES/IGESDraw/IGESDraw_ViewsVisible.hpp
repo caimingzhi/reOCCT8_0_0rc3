@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_ViewKindEntity.hpp>
@@ -59,4 +58,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> theViewEntities;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     theDisplayEntity;
 };
-

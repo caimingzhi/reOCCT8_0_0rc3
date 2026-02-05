@@ -1,23 +1,3 @@
-// Created on: 1993-08-12
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified by xab, Tue Mar 11 18:31:18 1997
-// Modified by PMN 14/04/97 : Passage a Geomlite
-// Modified by JPI 01/08/97 : ajout de la commande approxcurve
-
 #include <GeomliteTest.hpp>
 #include <Draw_Appli.hpp>
 #include <DrawTrSurf.hpp>

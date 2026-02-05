@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Curve.hpp>
 #include <math_Matrix.hpp>
@@ -82,4 +81,3 @@ private:
   const Adaptor2d_Curve2d *myC1_2d, *myC2_2d;
   int                      myType;
 };
-

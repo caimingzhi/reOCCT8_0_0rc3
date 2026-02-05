@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 // Copyright (c) 2025 OPEN CASCADE SAS
 //
@@ -27,7 +26,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <StepTidy_CartesianPointHasher.hpp>
 #include <StepTidy_DirectionHasher.hpp>
@@ -91,7 +89,6 @@ struct StepTidy_Axis2Placement2dHasher
     return isSameLocation && isSameRefDirection;
   }
 };
-
 
 #include <StepTidy_Axis2Placement3dHasher.hpp>
 
@@ -176,8 +173,6 @@ struct StepTidy_CircleHasher
   }
 };
 
-
-
 #include <StepGeom_Circle.hpp>
 
 //! Processor for merging StepGeom_Circle entities.
@@ -220,4 +215,3 @@ private:
                                const occ::handle<StepGeom_Circle>&    theNewEntity,
                                const occ::handle<Standard_Transient>& theSharing);
 };
-

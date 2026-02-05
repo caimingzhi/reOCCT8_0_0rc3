@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Macro.hpp>
@@ -77,4 +76,3 @@ public:
 
   float xyz[3];
 };
-

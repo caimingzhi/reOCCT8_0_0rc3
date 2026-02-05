@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -44,4 +43,3 @@ public:
   Standard_EXPORT void SetUnits(
     const occ::handle<NCollection_HSequence<occ::handle<Units_Quantity>>>& aquantitiessequence);
 };
-

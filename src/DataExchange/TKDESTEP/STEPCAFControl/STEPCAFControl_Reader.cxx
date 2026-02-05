@@ -1,18 +1,3 @@
-// Created on: 2000-08-15
-// Created by: Andrey BETENEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <STEPCAFControl_Reader.hpp>
 
 #include <BRep_Builder.hpp>
@@ -244,33 +229,33 @@
 
 namespace
 {
-// Returns a MeasureWithUnit from the given Standard_Transient object.
-// If the object is a StepRepr_ReprItemAndMeasureWithUnit, it retrieves
-// the MeasureWithUnit from it. If it is a StepBasic_MeasureWithUnit,
-// it returns it directly. If the object is neither, it returns a null handle.
-// @param theMeasure The Standard_Transient object to check.
-// @return Handle to StepBasic_MeasureWithUnit if found, otherwise null handle.
-static occ::handle<StepBasic_MeasureWithUnit> GetMeasureWithUnit(
-  const occ::handle<Standard_Transient>& theMeasure)
-{
-  if (theMeasure.IsNull())
+  // Returns a MeasureWithUnit from the given Standard_Transient object.
+  // If the object is a StepRepr_ReprItemAndMeasureWithUnit, it retrieves
+  // the MeasureWithUnit from it. If it is a StepBasic_MeasureWithUnit,
+  // it returns it directly. If the object is neither, it returns a null handle.
+  // @param theMeasure The Standard_Transient object to check.
+  // @return Handle to StepBasic_MeasureWithUnit if found, otherwise null handle.
+  static occ::handle<StepBasic_MeasureWithUnit> GetMeasureWithUnit(
+    const occ::handle<Standard_Transient>& theMeasure)
   {
-    return nullptr;
-  }
+    if (theMeasure.IsNull())
+    {
+      return nullptr;
+    }
 
-  occ::handle<StepBasic_MeasureWithUnit> aMeasureWithUnit;
-  if (theMeasure->IsKind(STANDARD_TYPE(StepBasic_MeasureWithUnit)))
-  {
-    aMeasureWithUnit = occ::down_cast<StepBasic_MeasureWithUnit>(theMeasure);
+    occ::handle<StepBasic_MeasureWithUnit> aMeasureWithUnit;
+    if (theMeasure->IsKind(STANDARD_TYPE(StepBasic_MeasureWithUnit)))
+    {
+      aMeasureWithUnit = occ::down_cast<StepBasic_MeasureWithUnit>(theMeasure);
+    }
+    else if (theMeasure->IsKind(STANDARD_TYPE(StepRepr_ReprItemAndMeasureWithUnit)))
+    {
+      occ::handle<StepRepr_ReprItemAndMeasureWithUnit> aReprMeasureItem =
+        occ::down_cast<StepRepr_ReprItemAndMeasureWithUnit>(theMeasure);
+      aMeasureWithUnit = aReprMeasureItem->GetMeasureWithUnit();
+    }
+    return aMeasureWithUnit;
   }
-  else if (theMeasure->IsKind(STANDARD_TYPE(StepRepr_ReprItemAndMeasureWithUnit)))
-  {
-    occ::handle<StepRepr_ReprItemAndMeasureWithUnit> aReprMeasureItem =
-      occ::down_cast<StepRepr_ReprItemAndMeasureWithUnit>(theMeasure);
-    aMeasureWithUnit = aReprMeasureItem->GetMeasureWithUnit();
-  }
-  return aMeasureWithUnit;
-}
 } // namespace
 
 //=================================================================================================

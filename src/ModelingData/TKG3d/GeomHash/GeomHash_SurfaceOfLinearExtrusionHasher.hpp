@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_SurfaceOfLinearExtrusion.hpp>
 #include <GeomHash_DirectionHasher.hpp>
@@ -32,4 +31,3 @@ struct GeomHash_SurfaceOfLinearExtrusionHasher
            && aDirHasher(theSurface1->Direction(), theSurface2->Direction());
   }
 };
-

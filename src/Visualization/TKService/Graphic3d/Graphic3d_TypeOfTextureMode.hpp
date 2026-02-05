@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Type of the texture projection.
 enum Graphic3d_TypeOfTextureMode
 {
@@ -10,4 +9,3 @@ enum Graphic3d_TypeOfTextureMode
   Graphic3d_TOTM_MANUAL,
   Graphic3d_TOTM_SPRITE
 };
-

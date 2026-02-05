@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericExtString.hpp>
 #include <Standard_OStream.hpp>
 
@@ -63,4 +62,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataStd_Name, TDataStd_GenericExtString)
 };
-

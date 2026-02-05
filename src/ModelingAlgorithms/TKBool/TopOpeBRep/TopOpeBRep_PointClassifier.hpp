@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <TopoDS_Shape.hpp>
 #include <BRepTopAdaptor_TopolTool.hpp>
@@ -35,4 +34,3 @@ private:
                myTopolToolMap;
   TopAbs_State myState;
 };
-

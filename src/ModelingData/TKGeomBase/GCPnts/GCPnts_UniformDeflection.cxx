@@ -221,15 +221,18 @@ static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
       return GCPnts_Linear;
     case GeomAbs_Circle:
       return GCPnts_Circular;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBSpline = theC.BSpline();
       return (aBSpline->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBezier = theC.Bezier();
       return (aBezier->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
     }
-    default: {
+    default:
+    {
       return GCPnts_Curved;
     }
   }

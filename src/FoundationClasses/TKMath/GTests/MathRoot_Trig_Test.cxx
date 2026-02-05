@@ -19,40 +19,40 @@
 
 namespace
 {
-constexpr double THE_TOL = 1.0e-10;
-constexpr double THE_PI  = 3.14159265358979323846;
-constexpr double THE_2PI = 2.0 * THE_PI;
+  constexpr double THE_TOL = 1.0e-10;
+  constexpr double THE_PI  = 3.14159265358979323846;
+  constexpr double THE_2PI = 2.0 * THE_PI;
 
-//! Helper to verify that a root satisfies the equation
-//! a*cos^2(x) + 2*b*cos(x)*sin(x) + c*cos(x) + d*sin(x) + e = 0
-double evaluateEquation(double theA,
-                        double theB,
-                        double theC,
-                        double theD,
-                        double theE,
-                        double theX)
-{
-  double aCos = std::cos(theX);
-  double aSin = std::sin(theX);
-  return theA * aCos * aCos + 2.0 * theB * aCos * aSin + theC * aCos + theD * aSin + theE;
-}
-
-//! Helper to verify all roots satisfy the equation
-void verifyRoots(const MathRoot::TrigResult& theResult,
-                 double                      theA,
-                 double                      theB,
-                 double                      theC,
-                 double                      theD,
-                 double                      theE,
-                 double                      theTol = 1.0e-10)
-{
-  for (int i = 0; i < theResult.NbRoots; ++i)
+  //! Helper to verify that a root satisfies the equation
+  //! a*cos^2(x) + 2*b*cos(x)*sin(x) + c*cos(x) + d*sin(x) + e = 0
+  double evaluateEquation(double theA,
+                          double theB,
+                          double theC,
+                          double theD,
+                          double theE,
+                          double theX)
   {
-    double aVal = evaluateEquation(theA, theB, theC, theD, theE, theResult.Roots[i]);
-    EXPECT_NEAR(aVal, 0.0, theTol)
-      << "Root " << i << " = " << theResult.Roots[i] << " gives f(x) = " << aVal;
+    double aCos = std::cos(theX);
+    double aSin = std::sin(theX);
+    return theA * aCos * aCos + 2.0 * theB * aCos * aSin + theC * aCos + theD * aSin + theE;
   }
-}
+
+  //! Helper to verify all roots satisfy the equation
+  void verifyRoots(const MathRoot::TrigResult& theResult,
+                   double                      theA,
+                   double                      theB,
+                   double                      theC,
+                   double                      theD,
+                   double                      theE,
+                   double                      theTol = 1.0e-10)
+  {
+    for (int i = 0; i < theResult.NbRoots; ++i)
+    {
+      double aVal = evaluateEquation(theA, theB, theC, theD, theE, theResult.Roots[i]);
+      EXPECT_NEAR(aVal, 0.0, theTol)
+        << "Root " << i << " = " << theResult.Roots[i] << " gives f(x) = " << aVal;
+    }
+  }
 
 } // namespace
 

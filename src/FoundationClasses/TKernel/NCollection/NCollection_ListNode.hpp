@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
@@ -36,4 +35,3 @@ private:
 private:
   NCollection_ListNode* myNext; //!< Pointer to the next node
 };
-

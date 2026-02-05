@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -70,4 +69,3 @@ private:
   occ::handle<StepElement_SurfaceElementProperty>     theProperty;
   occ::handle<StepElement_ElementMaterial>            theMaterial;
 };
-

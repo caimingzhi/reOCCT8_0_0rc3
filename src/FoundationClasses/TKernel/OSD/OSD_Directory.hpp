@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_FileNode.hpp>
 
 //! Management of directories (a set of directory oriented tools)
@@ -27,4 +26,3 @@ public:
   //! OSDError is raised.
   Standard_EXPORT void Build(const OSD_Protection& Protect);
 };
-

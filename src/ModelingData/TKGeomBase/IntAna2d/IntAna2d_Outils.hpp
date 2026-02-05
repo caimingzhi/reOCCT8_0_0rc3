@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_TrigonometricFunctionRoots.hpp>
 #include <IntAna2d_IntPoint.hpp>
 
@@ -35,4 +34,3 @@ bool Points_Confondus(const double xa, const double ya, const double xb, const d
 void Traitement_Points_Confondus(int& nb_pts, IntAna2d_IntPoint* pts);
 
 void Coord_Ancien_Repere(double& Ancien_X, double& Ancien_Y, const gp_Ax2d& Axe_Nouveau_Repere);
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Sequence.hpp>
@@ -225,4 +224,3 @@ private:
   gp_Pnt2d                     pointStart;
   gp_Pnt2d                     pointEnd;
 };
-

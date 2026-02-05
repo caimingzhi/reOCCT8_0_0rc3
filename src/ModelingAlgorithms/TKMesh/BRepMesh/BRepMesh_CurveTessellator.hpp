@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_CurveTessellator.hpp>
 #include <GCPnts_TangentialDeflection.hpp>
 #include <TopoDS_Vertex.hpp>
@@ -83,4 +82,3 @@ private:
   double                        myFaceRangeU[2];
   double                        myFaceRangeV[2];
 };
-

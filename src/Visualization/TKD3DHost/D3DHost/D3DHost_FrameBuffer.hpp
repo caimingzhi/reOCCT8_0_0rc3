@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_FrameBuffer.hpp>
 
 struct IDirect3DDevice9;
@@ -115,4 +114,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(D3DHost_FrameBuffer, OpenGl_FrameBuffer)
 };
-

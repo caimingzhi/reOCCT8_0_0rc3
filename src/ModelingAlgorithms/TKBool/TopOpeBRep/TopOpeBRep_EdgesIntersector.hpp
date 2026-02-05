@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <GeomAbs_SurfaceType.hpp>
 #include <Geom2dAdaptor_Curve.hpp>
@@ -186,4 +185,3 @@ private:
   int                                                mynp2d;
   bool                                               myselectkeep;
 };
-

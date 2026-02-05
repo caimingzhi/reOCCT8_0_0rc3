@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Pnt.hpp>
@@ -228,4 +227,3 @@ private:
   occ::handle<Law_Function>      fevol;
   double                         sg1;
 };
-

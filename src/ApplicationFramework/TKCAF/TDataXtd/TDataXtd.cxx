@@ -1,18 +1,3 @@
-// Created on: 2008-05-29
-// Created by: Sergey ZARITCHNY
-// Copyright (c) 2008-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <TDataXtd.hpp>
 #include <TDataXtd_Axis.hpp>
 #include <TDataXtd_Constraint.hpp>
@@ -53,115 +38,142 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_ConstraintEnum C, Standard_OStr
 
       // 2d planar constraints
 
-    case TDataXtd_RADIUS: {
+    case TDataXtd_RADIUS:
+    {
       s << "RADIUS";
       break;
     }
-    case TDataXtd_DIAMETER: {
+    case TDataXtd_DIAMETER:
+    {
       s << "DIAMETER";
       break;
     }
-    case TDataXtd_MINOR_RADIUS: {
+    case TDataXtd_MINOR_RADIUS:
+    {
       s << "MINOR_RADIUS";
       break;
     }
-    case TDataXtd_MAJOR_RADIUS: {
+    case TDataXtd_MAJOR_RADIUS:
+    {
       s << "MAJOR_RADIUS";
       break;
     }
-    case TDataXtd_TANGENT: {
+    case TDataXtd_TANGENT:
+    {
       s << "TANGENT";
       break;
     }
-    case TDataXtd_PARALLEL: {
+    case TDataXtd_PARALLEL:
+    {
       s << "PARALLEL";
       break;
     }
-    case TDataXtd_PERPENDICULAR: {
+    case TDataXtd_PERPENDICULAR:
+    {
       s << "PERPENDICULAR";
       break;
     }
-    case TDataXtd_CONCENTRIC: {
+    case TDataXtd_CONCENTRIC:
+    {
       s << "CONCENTRIC";
       break;
     }
-    case TDataXtd_COINCIDENT: {
+    case TDataXtd_COINCIDENT:
+    {
       s << "COINCIDENT";
       break;
     }
-    case TDataXtd_DISTANCE: {
+    case TDataXtd_DISTANCE:
+    {
       s << "DISTANCE";
       break;
     }
-    case TDataXtd_ANGLE: {
+    case TDataXtd_ANGLE:
+    {
       s << "ANGLE";
       break;
     }
-    case TDataXtd_EQUAL_RADIUS: {
+    case TDataXtd_EQUAL_RADIUS:
+    {
       s << "EQUAL_RADIUS";
       break;
     }
-    case TDataXtd_SYMMETRY: {
+    case TDataXtd_SYMMETRY:
+    {
       s << "SYMMETRY";
       break;
     }
-    case TDataXtd_MIDPOINT: {
+    case TDataXtd_MIDPOINT:
+    {
       s << "MIDPOINT";
       break;
     }
-    case TDataXtd_EQUAL_DISTANCE: {
+    case TDataXtd_EQUAL_DISTANCE:
+    {
       s << "EQUAL_DISTANCE";
       break;
     }
-    case TDataXtd_FIX: {
+    case TDataXtd_FIX:
+    {
       s << "FIX";
       break;
     }
-    case TDataXtd_RIGID: {
+    case TDataXtd_RIGID:
+    {
       s << "RIGID";
       break;
     }
 
       // placement constraint
 
-    case TDataXtd_FROM: {
+    case TDataXtd_FROM:
+    {
       s << "FROM";
       break;
     }
-    case TDataXtd_AXIS: {
+    case TDataXtd_AXIS:
+    {
       s << "AXIS";
       break;
     }
-    case TDataXtd_MATE: {
+    case TDataXtd_MATE:
+    {
       s << "MATE";
       break;
     }
-    case TDataXtd_ALIGN_FACES: {
+    case TDataXtd_ALIGN_FACES:
+    {
       s << "ALIGN_FACES";
       break;
     }
-    case TDataXtd_ALIGN_AXES: {
+    case TDataXtd_ALIGN_AXES:
+    {
       s << "ALIGN_AXES";
       break;
     }
-    case TDataXtd_AXES_ANGLE: {
+    case TDataXtd_AXES_ANGLE:
+    {
       s << "AXES_ANGLE";
       break;
     }
-    case TDataXtd_FACES_ANGLE: {
+    case TDataXtd_FACES_ANGLE:
+    {
       s << "FACES_ANGLE";
       break;
     }
-    case TDataXtd_ROUND: {
+    case TDataXtd_ROUND:
+    {
       s << "ROUND";
       break;
     }
-    case TDataXtd_OFFSET: {
+    case TDataXtd_OFFSET:
+    {
       s << "OFFSET";
       break;
     }
 
-    default: {
+    default:
+    {
       s << "UNKNOWN";
       break;
     }
@@ -178,39 +190,48 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_GeometryEnum G, Standard_OStrea
 {
   switch (G)
   {
-    case TDataXtd_ANY_GEOM: {
+    case TDataXtd_ANY_GEOM:
+    {
       s << "ANY_GEOM";
       break;
     }
-    case TDataXtd_POINT: {
+    case TDataXtd_POINT:
+    {
       s << "POINT";
       break;
     }
-    case TDataXtd_LINE: {
+    case TDataXtd_LINE:
+    {
       s << "LINE";
       break;
     }
-    case TDataXtd_CIRCLE: {
+    case TDataXtd_CIRCLE:
+    {
       s << "CIRCLE";
       break;
     }
-    case TDataXtd_ELLIPSE: {
+    case TDataXtd_ELLIPSE:
+    {
       s << "ELLIPSE";
       break;
     }
-    case TDataXtd_SPLINE: {
+    case TDataXtd_SPLINE:
+    {
       s << "SPLINE";
       break;
     }
-    case TDataXtd_PLANE: {
+    case TDataXtd_PLANE:
+    {
       s << "PLANE";
       break;
     }
-    case TDataXtd_CYLINDER: {
+    case TDataXtd_CYLINDER:
+    {
       s << "CYLINDER";
       break;
     }
-    default: {
+    default:
+    {
       s << "UNKNOWN";
       break;
     }

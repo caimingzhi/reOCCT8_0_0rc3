@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_CharacterizedDefinition.hpp>
@@ -30,4 +29,3 @@ private:
   occ::handle<TCollection_HAsciiString> name;
   StepRepr_CharacterizedDefinition      ofDefinition;
 };
-

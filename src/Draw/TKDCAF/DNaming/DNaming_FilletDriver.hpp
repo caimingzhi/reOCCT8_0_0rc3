@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -45,4 +44,3 @@ private:
                                     BRepFilletAPI_MakeFillet& mkFillet,
                                     const TopoDS_Shape&       theContext) const;
 };
-

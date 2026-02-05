@@ -1,19 +1,3 @@
-// Created on: 1992-10-14
-// Created by: Christophe MARION
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <HLRBRep_InterCSurf.hpp>
 
 #include <Bnd_BoundSortBox.hpp>
@@ -111,9 +95,8 @@ void HLRBRep_InterCSurf::Perform(const TheCurve& curve, TheSurface surface)
     surface,
     done,
     [this]() { this->ResetFields(); },
-    [this](const TheCurve& c, TheSurface s, double u0, double v0, double u1, double v1) {
-      this->Perform(c, s, u0, v0, u1, v1);
-    });
+    [this](const TheCurve& c, TheSurface s, double u0, double v0, double u1, double v1)
+    { this->Perform(c, s, u0, v0, u1, v1); });
 }
 
 //==================================================================================================
@@ -163,9 +146,8 @@ void HLRBRep_InterCSurf::Perform(const TheCurve&   curve,
       surface,
       done,
       [this]() { this->ResetFields(); },
-      [this](const TheCurve& c, const ThePolygon& p, TheSurface s, const ThePolyhedron& ph) {
-        this->Perform(c, p, s, ph);
-      });
+      [this](const TheCurve& c, const ThePolygon& p, TheSurface s, const ThePolyhedron& ph)
+      { this->Perform(c, p, s, ph); });
 }
 
 //==================================================================================================
@@ -185,9 +167,8 @@ void HLRBRep_InterCSurf::Perform(const TheCurve&      curve,
     polyhedron,
     done,
     [this]() { this->ResetFields(); },
-    [this](const TheCurve& c, const ThePolygon& p, TheSurface s, const ThePolyhedron& ph) {
-      this->Perform(c, p, s, ph);
-    });
+    [this](const TheCurve& c, const ThePolygon& p, TheSurface s, const ThePolyhedron& ph)
+    { this->Perform(c, p, s, ph); });
 }
 
 //==================================================================================================
@@ -387,9 +368,8 @@ void HLRBRep_InterCSurf::PerformConicSurf(const gp_Lin&   Line,
     V1,
     U2,
     V2,
-    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana) {
-      this->AppendIntAna(c, s, ana);
-    },
+    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana)
+    { this->AppendIntAna(c, s, ana); },
     [this](const TheCurve&      c,
            const ThePolygon&    p,
            TheSurface           s,
@@ -420,9 +400,8 @@ void HLRBRep_InterCSurf::PerformConicSurf(const gp_Circ&  Circle,
       V1,
       U2,
       V2,
-      [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana) {
-        this->AppendIntAna(c, s, ana);
-      },
+      [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana)
+      { this->AppendIntAna(c, s, ana); },
       [this](const TheCurve&   c,
              const ThePolygon& p,
              TheSurface        s,
@@ -451,9 +430,8 @@ void HLRBRep_InterCSurf::PerformConicSurf(const gp_Elips& Ellipse,
       V1,
       U2,
       V2,
-      [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana) {
-        this->AppendIntAna(c, s, ana);
-      },
+      [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana)
+      { this->AppendIntAna(c, s, ana); },
       [this](const TheCurve&   c,
              const ThePolygon& p,
              TheSurface        s,
@@ -486,9 +464,8 @@ void HLRBRep_InterCSurf::PerformConicSurf(const gp_Parab& Parab,
     V1,
     U2,
     V2,
-    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana) {
-      this->AppendIntAna(c, s, ana);
-    },
+    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana)
+    { this->AppendIntAna(c, s, ana); },
     [this](const TheCurve&      c,
            const ThePolygon&    p,
            TheSurface           s,
@@ -522,9 +499,8 @@ void HLRBRep_InterCSurf::PerformConicSurf(const gp_Hypr&  Hypr,
     V1,
     U2,
     V2,
-    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana) {
-      this->AppendIntAna(c, s, ana);
-    },
+    [this](const TheCurve& c, TheSurface s, const IntAna_IntConicQuad& ana)
+    { this->AppendIntAna(c, s, ana); },
     [this](const TheCurve&      c,
            const ThePolygon&    p,
            TheSurface           s,

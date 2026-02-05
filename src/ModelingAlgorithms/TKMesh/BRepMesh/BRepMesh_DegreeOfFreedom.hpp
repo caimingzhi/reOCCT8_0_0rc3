@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum BRepMesh_DegreeOfFreedom
 {
   BRepMesh_Free,
@@ -11,4 +10,3 @@ enum BRepMesh_DegreeOfFreedom
   BRepMesh_Frontier,
   BRepMesh_Deleted
 };
-

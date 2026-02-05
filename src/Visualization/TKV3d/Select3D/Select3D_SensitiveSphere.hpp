@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 
 //! A framework to define selection by a sensitive sphere.
@@ -52,4 +51,3 @@ protected:
   gp_Pnt myLastDetectedPoint;
   double myRadius;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_LineAspect.hpp>
 
 //! A framework to define the display attributes of isoparameters.
@@ -36,4 +35,3 @@ public:
 protected:
   int myNumber;
 };
-

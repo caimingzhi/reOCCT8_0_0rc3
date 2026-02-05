@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomLib_CheckCurveOnSurface.hpp>
 
 //! Computes the max distance between edge and its 2d representation on the face.
@@ -63,4 +62,3 @@ private:
   occ::handle<Adaptor3d_CurveOnSurface> myAdaptorCurveOnSurface2;
   bool                                  myIsParallel;
 };
-

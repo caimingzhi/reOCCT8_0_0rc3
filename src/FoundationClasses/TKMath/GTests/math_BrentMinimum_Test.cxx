@@ -26,63 +26,63 @@
 namespace
 {
 
-// Quadratic function: f(x) = (x-2)^2 + 1, minimum at x = 2 with value 1
-class QuadraticFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quadratic function: f(x) = (x-2)^2 + 1, minimum at x = 2 with value 1
+  class QuadraticFunction : public math_Function
   {
-    theF = (theX - 2.0) * (theX - 2.0) + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = (theX - 2.0) * (theX - 2.0) + 1.0;
+      return true;
+    }
+  };
 
-// Quartic function: f(x) = (x-1)^4 + 2, minimum at x = 1 with value 2
-class QuarticFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quartic function: f(x) = (x-1)^4 + 2, minimum at x = 1 with value 2
+  class QuarticFunction : public math_Function
   {
-    double dx = theX - 1.0;
-    theF      = dx * dx * dx * dx + 2.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      double dx = theX - 1.0;
+      theF      = dx * dx * dx * dx + 2.0;
+      return true;
+    }
+  };
 
-// Cosine function: f(x) = cos(x), minimum at x = PI with value -1
-class CosineFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Cosine function: f(x) = cos(x), minimum at x = PI with value -1
+  class CosineFunction : public math_Function
   {
-    theF = cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = cos(theX);
+      return true;
+    }
+  };
 
-// Shifted exponential: f(x) = e^(x-3), minimum approaches x = -infinity
-class ShiftedExponentialFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Shifted exponential: f(x) = e^(x-3), minimum approaches x = -infinity
+  class ShiftedExponentialFunction : public math_Function
   {
-    theF = exp(theX - 3.0);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = exp(theX - 3.0);
+      return true;
+    }
+  };
 
-// Rosenbrock 1D slice: f(x) = (1-x)^2 + 100*(x-x^2)^2 for fixed y
-class RosenbrockSliceFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Rosenbrock 1D slice: f(x) = (1-x)^2 + 100*(x-x^2)^2 for fixed y
+  class RosenbrockSliceFunction : public math_Function
   {
-    double dx = 1.0 - theX;
-    double dy = theX - theX * theX;
-    theF      = dx * dx + 100.0 * dy * dy;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      double dx = 1.0 - theX;
+      double dy = theX - theX * theX;
+      theF      = dx * dx + 100.0 * dy * dy;
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

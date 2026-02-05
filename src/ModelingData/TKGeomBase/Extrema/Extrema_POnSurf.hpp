@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <Precision.hpp>
 #include <Standard.hpp>
@@ -53,4 +52,3 @@ private:
   double myV;
   gp_Pnt myP;
 };
-

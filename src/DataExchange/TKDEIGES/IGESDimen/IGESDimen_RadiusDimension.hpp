@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -60,4 +59,3 @@ private:
   gp_XY                              theCenter;
   occ::handle<IGESDimen_LeaderArrow> theLeader2;
 };
-

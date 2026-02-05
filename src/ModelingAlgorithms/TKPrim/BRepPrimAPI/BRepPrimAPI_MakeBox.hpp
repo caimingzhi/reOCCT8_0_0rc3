@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -111,4 +110,3 @@ public:
 protected:
   BRepPrim_Wedge myWedge;
 };
-

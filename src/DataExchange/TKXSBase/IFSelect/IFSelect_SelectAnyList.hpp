@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -113,4 +112,3 @@ private:
   occ::handle<IFSelect_IntParam> thelower;
   occ::handle<IFSelect_IntParam> theupper;
 };
-

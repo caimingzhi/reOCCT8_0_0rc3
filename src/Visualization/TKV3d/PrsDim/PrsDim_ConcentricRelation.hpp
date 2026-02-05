@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 #include <gp_Dir.hpp>
 
@@ -47,4 +46,3 @@ private:
   gp_Dir myDir;
   gp_Pnt myPnt;
 };
-

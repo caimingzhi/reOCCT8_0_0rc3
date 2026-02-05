@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -57,4 +56,3 @@ private:
   occ::handle<StepDimTol_GeometricTolerance> myRelatingGeometricTolerance;
   occ::handle<StepDimTol_GeometricTolerance> myRelatedGeometricTolerance;
 };
-

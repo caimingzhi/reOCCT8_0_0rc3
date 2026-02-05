@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -44,4 +43,3 @@ public:
                                       math_Vector&       G,
                                       math_Matrix&       H) = 0;
 };
-

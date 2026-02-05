@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -38,4 +37,3 @@ public:
   //! - Surface extension by length
   Standard_EXPORT static void ModificationCommands(Draw_Interpretor& I);
 };
-

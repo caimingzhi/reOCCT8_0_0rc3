@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <NCollection_Sequence.hpp>
 #include <math_Function.hpp>
@@ -246,4 +245,3 @@ private:
   NCollection_Sequence<gp_Pnt> myPoints;
   NCollection_Sequence<double> myParameters;
 };
-

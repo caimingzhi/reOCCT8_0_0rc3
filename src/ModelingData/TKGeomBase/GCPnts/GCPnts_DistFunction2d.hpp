@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_Function.hpp>
 #include <math_MultipleVarFunction.hpp>
 #include <Adaptor2d_Curve2d.hpp>
@@ -48,4 +47,3 @@ private:
 };
 
 //
-

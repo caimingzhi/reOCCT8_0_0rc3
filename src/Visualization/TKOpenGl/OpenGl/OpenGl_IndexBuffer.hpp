@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Buffer.hpp>
 
 //! Index buffer is just a VBO with special target (GL_ELEMENT_ARRAY_BUFFER).
@@ -19,4 +18,3 @@ public:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_IndexBuffer, OpenGl_Buffer)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Describes the error.
 enum BRepFeat_StatusError
 {
@@ -33,4 +32,3 @@ enum BRepFeat_StatusError
   BRepFeat_NullToolF,
   BRepFeat_NullToolU
 };
-

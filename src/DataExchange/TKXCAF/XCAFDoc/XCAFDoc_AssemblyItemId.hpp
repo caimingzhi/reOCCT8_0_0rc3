@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_GUID.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_List.hpp>
@@ -74,13 +73,13 @@ private:
 namespace std
 {
 
-template <>
-struct hash<XCAFDoc_AssemblyItemId>
-{
-  size_t operator()(const XCAFDoc_AssemblyItemId& theAssemblyItemId) const
+  template <>
+  struct hash<XCAFDoc_AssemblyItemId>
   {
-    return std::hash<TCollection_AsciiString>{}(theAssemblyItemId.ToString());
-  }
-};
+    size_t operator()(const XCAFDoc_AssemblyItemId& theAssemblyItemId) const
+    {
+      return std::hash<TCollection_AsciiString>{}(theAssemblyItemId.ToString());
+    }
+  };
 
 } // namespace std

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 class Standard_Transient;
@@ -22,4 +21,3 @@ public:
   Standard_EXPORT static occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
     const occ::handle<Message_Messenger>& theMsgDriver);
 };
-

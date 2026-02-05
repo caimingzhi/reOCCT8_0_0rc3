@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <BRepMesh_DegreeOfFreedom.hpp>
 // Copyright (c) 2013 OPEN CASCADE SAS
@@ -15,7 +14,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Standard.hpp>
 #include <Standard_HashUtils.hpp>
@@ -65,24 +63,24 @@ private:
 
 namespace std
 {
-template <>
-struct hash<BRepMesh_OrientedEdge>
-{
-  size_t operator()(const BRepMesh_OrientedEdge& theOrientedEdge) const noexcept
+  template <>
+  struct hash<BRepMesh_OrientedEdge>
   {
-    union Combination {
-      unsigned short Arr[2]; // Node can be represented as a short
-      uint32_t       Hash;
+    size_t operator()(const BRepMesh_OrientedEdge& theOrientedEdge) const noexcept
+    {
+      union Combination
+      {
+        unsigned short Arr[2]; // Node can be represented as a short
+        uint32_t       Hash;
 
-    } aCombination;
+      } aCombination;
 
-    aCombination.Arr[0] = static_cast<unsigned short>(theOrientedEdge.FirstNode());
-    aCombination.Arr[1] = static_cast<unsigned short>(theOrientedEdge.LastNode());
-    return static_cast<size_t>(aCombination.Hash);
-  }
-};
+      aCombination.Arr[0] = static_cast<unsigned short>(theOrientedEdge.FirstNode());
+      aCombination.Arr[1] = static_cast<unsigned short>(theOrientedEdge.LastNode());
+      return static_cast<size_t>(aCombination.Hash);
+    }
+  };
 } // namespace std
-
 
 #include <Standard_HashUtils.hpp>
 
@@ -141,25 +139,25 @@ private:
 
 namespace std
 {
-template <>
-struct hash<BRepMesh_Edge>
-{
-  size_t operator()(const BRepMesh_Edge& theEdge) const noexcept
+  template <>
+  struct hash<BRepMesh_Edge>
   {
-    union Combination {
-      unsigned short Arr[2]; // Node can be represented as a short
-      uint32_t       Hash;
-
-    } aCombination;
-
-    aCombination.Arr[0] = static_cast<unsigned short>(theEdge.FirstNode());
-    aCombination.Arr[1] = static_cast<unsigned short>(theEdge.LastNode());
-    if (aCombination.Arr[0] > aCombination.Arr[1])
+    size_t operator()(const BRepMesh_Edge& theEdge) const noexcept
     {
-      std::swap(aCombination.Arr[0], aCombination.Arr[1]);
-    }
-    return static_cast<size_t>(aCombination.Hash);
-  }
-};
-} // namespace std
+      union Combination
+      {
+        unsigned short Arr[2]; // Node can be represented as a short
+        uint32_t       Hash;
 
+      } aCombination;
+
+      aCombination.Arr[0] = static_cast<unsigned short>(theEdge.FirstNode());
+      aCombination.Arr[1] = static_cast<unsigned short>(theEdge.LastNode());
+      if (aCombination.Arr[0] > aCombination.Arr[1])
+      {
+        std::swap(aCombination.Arr[0], aCombination.Arr[1]);
+      }
+      return static_cast<size_t>(aCombination.Hash);
+    }
+  };
+} // namespace std

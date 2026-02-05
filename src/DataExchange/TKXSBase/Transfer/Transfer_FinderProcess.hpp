@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Transfer_ProcessForFinder.hpp>
 #include <Interface_InterfaceModel.hpp>
 
@@ -59,4 +58,3 @@ public:
 private:
   occ::handle<Interface_InterfaceModel> themodel;
 };
-

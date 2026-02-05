@@ -1,19 +1,3 @@
-// Created on: 1992-03-13
-// Created by: Christophe MARION
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifndef No_Exception
 // #define No_Exception
 #endif
@@ -175,7 +159,8 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
     double X, Y;
     switch (myType)
     {
-      case 0: { //-- axono standard
+      case 0:
+      { //-- axono standard
         double x07 = P.X() * 0.7071067811865475;
         double y05 = P.Y() * 0.5;
         double z05 = P.Z() * 0.5;
@@ -184,19 +169,22 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
         //-- Z=0.7071067811865475*(P.Y()+P.Z());
         break;
       }
-      case 1: { //-- top
+      case 1:
+      { //-- top
         X = P.X();
         Y = P.Y(); //-- Z=P.Z();
         Pout.SetCoord(X, Y);
         break;
       }
-      case 2: {
+      case 2:
+      {
         X = P.X();
         Y = P.Z(); //-- Z=-P.Y();
         Pout.SetCoord(X, Y);
         break;
       }
-      case 3: {
+      case 3:
+      {
         double xmy05 = (P.X() - P.Y()) * 0.5;
         double z07   = P.Z() * 0.7071067811865476;
         X            = 0.7071067811865476 * (P.X() + P.Y());
@@ -205,7 +193,8 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
         //-- Z= xmy05+z07;
         break;
       }
-      default: {
+      default:
+      {
         gp_Pnt P2 = P;
         Transform(P2);
         if (myPersp)
@@ -261,7 +250,8 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
   {
     switch (myType)
     {
-      case 0: { //-- axono standard
+      case 0:
+      { //-- axono standard
         double x07 = P.X() * 0.7071067811865475;
         double y05 = P.Y() * 0.5;
         double z05 = P.Z() * 0.5;
@@ -270,19 +260,22 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
         Z          = 0.7071067811865475 * (P.Y() + P.Z());
         break;
       }
-      case 1: { //-- top
+      case 1:
+      { //-- top
         X = P.X();
         Y = P.Y();
         Z = P.Z();
         break;
       }
-      case 2: {
+      case 2:
+      {
         X = P.X();
         Y = P.Z();
         Z = -P.Y();
         break;
       }
-      case 3: {
+      case 3:
+      {
         double xmy05 = (P.X() - P.Y()) * 0.5;
         double z07   = P.Z() * 0.7071067811865476;
         X            = 0.7071067811865476 * (P.X() + P.Y());
@@ -290,7 +283,8 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
         Z            = xmy05 + z07;
         break;
       }
-      default: {
+      default:
+      {
         gp_Pnt P2 = P;
         Transform(P2);
         P2.Coord(X, Y, Z);

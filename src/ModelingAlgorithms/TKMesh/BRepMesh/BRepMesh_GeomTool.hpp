@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <GCPnts_TangentialDeflection.hpp>
 #include <GeomAbs_IsoType.hpp>
@@ -210,4 +209,3 @@ private:
   GCPnts_TangentialDeflection myDiscretTool;
   GeomAbs_IsoType             myIsoType;
 };
-

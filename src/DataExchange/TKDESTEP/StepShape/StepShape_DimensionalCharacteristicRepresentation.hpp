@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_DimensionalCharacteristic.hpp>
@@ -39,4 +38,3 @@ private:
   StepShape_DimensionalCharacteristic                 theDimension;
   occ::handle<StepShape_ShapeDimensionRepresentation> theRepresentation;
 };
-

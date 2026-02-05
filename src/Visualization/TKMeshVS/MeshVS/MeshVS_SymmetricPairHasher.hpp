@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <Standard_HashUtils.hpp>
 
@@ -29,4 +28,3 @@ struct MeshVS_SymmetricPairHasher
            || (thePair1.first == thePair2.second && thePair1.second == thePair2.first);
   }
 };
-

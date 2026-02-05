@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -36,4 +35,3 @@ inline bool operator<(const math_ValueAndWeight& theLeft, const math_ValueAndWei
 {
   return theLeft.Value() < theRight.Value();
 }
-

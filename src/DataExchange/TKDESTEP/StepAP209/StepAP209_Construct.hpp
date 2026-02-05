@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -130,4 +129,3 @@ protected:
                   GetFeaElements(const occ::handle<StepFEA_FeaModel>& theFeaModel,
                                  const occ::handle<Standard_Type>&    theType) const;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Transient.hpp>
@@ -54,4 +53,3 @@ private:
   NCollection_Sequence<occ::handle<Standard_Transient>> thesubs;
   NCollection_Sequence<int>                             thetabs;
 };
-

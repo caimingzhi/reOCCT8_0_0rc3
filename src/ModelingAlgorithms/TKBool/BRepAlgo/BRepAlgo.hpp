@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAbs_Shape.hpp>
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
@@ -71,4 +70,3 @@ public:
   //! (intersection of wires, pcurve validity) are performed.
   Standard_EXPORT static bool IsTopologicallyValid(const TopoDS_Shape& S);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <stddef.h>
@@ -19,8 +18,8 @@ class Standard_Type;
 
 namespace opencascade
 {
-template <class T>
-class handle;
+  template <class T>
+  class handle;
 }
 
 //! Abstract class which forms the root of the entire
@@ -110,4 +109,3 @@ private:
 };
 
 //! Definition of opencascade::handle<Standard_Transient> as typedef for compatibility
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Root.hpp>
 #include <Prs3d_Drawer.hpp>
 #include <Prs3d_Presentation.hpp>
@@ -85,4 +84,3 @@ private:
                        const double                          theShapeDeflection,
                        NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& thePolylines);
 };
-

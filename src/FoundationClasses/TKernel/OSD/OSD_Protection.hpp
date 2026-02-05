@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -106,4 +105,3 @@ private:
   OSD_SingleProtection g;
   OSD_SingleProtection w;
 };
-

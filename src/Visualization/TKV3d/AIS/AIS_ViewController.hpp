@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_WindowInputListener.hpp>
 #include <Aspect_XRHapticActionData.hpp>
 #include <Aspect_XRTrackedDeviceRole.hpp>
@@ -17,7 +16,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <AIS_SelectionScheme.hpp>
 #include <NCollection_DataMap.hpp>
@@ -51,7 +49,6 @@ enum AIS_MouseGesture
 
 //! Map defining mouse gestures.
 
-
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -64,7 +61,6 @@ enum AIS_MouseGesture
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! Camera navigation mode.
 enum AIS_NavigationMode
@@ -80,7 +76,6 @@ enum
   AIS_NavigationMode_UPPER = AIS_NavigationMode_FirstPersonWalk
 };
 
-
 // Copyright (c) 2016-2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -93,7 +88,6 @@ enum
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Aspect_ScrollDelta.hpp>
 
@@ -285,7 +279,6 @@ public:
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Camera rotation mode.
 enum AIS_RotationMode
 {
@@ -302,7 +295,6 @@ enum
   AIS_RotationMode_UPPER = AIS_RotationMode_BndBoxScene,
 };
 
-
 // Copyright (c) 2019 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -315,7 +307,6 @@ enum
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Standard_Real.hpp>
 
@@ -432,8 +423,6 @@ private:
   bool         myIsCrouching;
   bool         myIsRunning;
 };
-
-
 
 #include <gp_Pnt.hpp>
 #include <gp_Quaternion.hpp>
@@ -1251,4 +1240,3 @@ protected: //! @name rotation/panning transient state variables
   double              myCurrentRollAngle;        //!< current roll angle for instantaneous roll
   // clang-format on
 };
-

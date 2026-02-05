@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -22,4 +21,3 @@ public:
   //! does the computation
   Standard_EXPORT void Evaluate() override;
 };
-

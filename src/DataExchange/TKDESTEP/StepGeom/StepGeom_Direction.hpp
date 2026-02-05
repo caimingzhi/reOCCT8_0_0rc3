@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -52,4 +51,3 @@ private:
   int                   myNbCoord;
   std::array<double, 3> myCoords;
 };
-

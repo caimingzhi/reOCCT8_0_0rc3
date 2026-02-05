@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <Precision.hpp>
 #include <RWMesh_CoordinateSystem.hpp>
@@ -91,4 +90,3 @@ public:
     TCollection_AsciiString WriteAuthor;  //!< Author of exported file name
   } InternalParameters;
 };
-

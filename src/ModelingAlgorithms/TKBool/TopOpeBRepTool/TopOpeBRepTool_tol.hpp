@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Bnd_Box.hpp>
 #include <BRepAdaptor_Surface.hpp>
 
@@ -38,4 +37,3 @@ Standard_EXPORT void FTOL_FaceTolerances2d(const Bnd_Box&             B1,
                                            const BRepAdaptor_Surface& mySurface2,
                                            double&                    myTol1,
                                            double&                    myTol2);
-

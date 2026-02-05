@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -222,4 +221,3 @@ public:
                                           const gp_Pnt&  thePoint    = gp_Pnt(0.0, 0.0, 0.0),
                                           const double   theCriteria = 1.e+5);
 };
-

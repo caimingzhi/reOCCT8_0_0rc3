@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_CompressedFormat.hpp>
 #include <Image_PixMapData.hpp>
 #include <Standard_Transient.hpp>
@@ -14,7 +13,8 @@ public:
   //! Determine Big-Endian at runtime
   static inline bool IsBigEndianHost()
   {
-    union {
+    union
+    {
       int  myInt;
       char myChar[sizeof(int)];
     } aUnion;
@@ -433,7 +433,8 @@ public:
   //! Convert 16-bit half-float value into 32-bit float (simple conversion).
   static float ConvertFromHalfFloat(const uint16_t theHalf)
   {
-    union FloatUint32 {
+    union FloatUint32
+    {
       float    Float32;
       uint32_t UInt32;
     };
@@ -453,7 +454,8 @@ public:
   //! 1-5-10, exp-15, +-131008.0, +-6.1035156E-5, +-5.9604645E-8, 3.311 digits.
   static uint16_t ConvertToHalfFloat(const float theFloat)
   {
-    union FloatUint32 {
+    union FloatUint32
+    {
       float    Float32;
       uint32_t UInt32;
     };
@@ -478,4 +480,3 @@ private:
   Image_PixMap(const Image_PixMap&)            = delete;
   Image_PixMap& operator=(const Image_PixMap&) = delete;
 };
-

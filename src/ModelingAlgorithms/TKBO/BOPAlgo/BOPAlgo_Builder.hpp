@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -203,27 +202,32 @@ public: //! @name BOPs on open solids
     TopAbs_State anObjState, aToolsState;
     switch (theOperation)
     {
-      case BOPAlgo_COMMON: {
+      case BOPAlgo_COMMON:
+      {
         anObjState  = TopAbs_IN;
         aToolsState = TopAbs_IN;
         break;
       }
-      case BOPAlgo_FUSE: {
+      case BOPAlgo_FUSE:
+      {
         anObjState  = TopAbs_OUT;
         aToolsState = TopAbs_OUT;
         break;
       }
-      case BOPAlgo_CUT: {
+      case BOPAlgo_CUT:
+      {
         anObjState  = TopAbs_OUT;
         aToolsState = TopAbs_IN;
         break;
       }
-      case BOPAlgo_CUT21: {
+      case BOPAlgo_CUT21:
+      {
         anObjState  = TopAbs_IN;
         aToolsState = TopAbs_OUT;
         break;
       }
-      default: {
+      default:
+      {
         anObjState  = TopAbs_UNKNOWN;
         aToolsState = TopAbs_UNKNOWN;
         break;
@@ -488,4 +492,3 @@ protected:                                    //! @name Fields
   bool myCheckInverted;             //!< Check inverted option allows disabling the check of input solids on inverted status
   // clang-format on
 };
-

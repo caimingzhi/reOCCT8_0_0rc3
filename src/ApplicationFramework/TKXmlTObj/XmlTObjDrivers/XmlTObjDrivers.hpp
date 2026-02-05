@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_GUID.hpp>
 
 class XmlMDF_ADriverTable;
@@ -23,7 +22,6 @@ public:
                                          const occ::handle<Message_Messenger>&   anMsgDrv);
 };
 
-
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

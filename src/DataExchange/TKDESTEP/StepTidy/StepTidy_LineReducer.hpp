@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 // Copyright (c) 2025 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <StepTidy_CartesianPointHasher.hpp>
 #include <StepTidy_VectorHasher.hpp>
@@ -75,8 +73,6 @@ struct StepTidy_LineHasher
     return true;
   }
 };
-
-
 
 #include <StepGeom_Line.hpp>
 
@@ -140,4 +136,3 @@ private:
                                const occ::handle<StepGeom_Line>&      theNewEntity,
                                const occ::handle<Standard_Transient>& theSharing);
 };
-

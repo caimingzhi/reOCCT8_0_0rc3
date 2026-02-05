@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Vector.hpp>
@@ -49,6 +48,7 @@ public:
 private:
   NCollection_Vector<Interface_FileParameter> myVector;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -76,5 +76,3 @@ inline int Interface_ParamList::Upper() const
 {
   return (myVector.Length());
 }
-
-

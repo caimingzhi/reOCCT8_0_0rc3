@@ -22,44 +22,44 @@
 namespace TDF_DerivedAttributeGlobals
 {
 
-//! Data for the derived attribute correct creation
-struct CreatorData
-{
-  TDF_DerivedAttribute::NewDerived myCreator;
-  const char*                      myNameSpace;
-  const char*                      myTypeName;
-};
+  //! Data for the derived attribute correct creation
+  struct CreatorData
+  {
+    TDF_DerivedAttribute::NewDerived myCreator;
+    const char*                      myNameSpace;
+    const char*                      myTypeName;
+  };
 
-//! List that contains the methods that create all registered derived attributes
-static NCollection_List<CreatorData>& Creators()
-{
-  static NCollection_List<CreatorData> THE_CREATORS_LIST;
-  return THE_CREATORS_LIST;
-}
+  //! List that contains the methods that create all registered derived attributes
+  static NCollection_List<CreatorData>& Creators()
+  {
+    static NCollection_List<CreatorData> THE_CREATORS_LIST;
+    return THE_CREATORS_LIST;
+  }
 
-//! Global map of the string-type of derived attribute -> instance of such attribute
-static NCollection_DataMap<const char*, occ::handle<TDF_Attribute>, Standard_CStringHasher>&
-  Attributes()
-{
-  static NCollection_DataMap<const char*, occ::handle<TDF_Attribute>, Standard_CStringHasher>
-    THE_DERIVED;
-  return THE_DERIVED;
-}
+  //! Global map of the string-type of derived attribute -> instance of such attribute
+  static NCollection_DataMap<const char*, occ::handle<TDF_Attribute>, Standard_CStringHasher>&
+    Attributes()
+  {
+    static NCollection_DataMap<const char*, occ::handle<TDF_Attribute>, Standard_CStringHasher>
+      THE_DERIVED;
+    return THE_DERIVED;
+  }
 
-//! Global map of the string-type of derived attribute -> type name to identify this attribute
-static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>& Types()
-{
-  static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>
-    THE_DERIVED_TYPES;
-  return THE_DERIVED_TYPES;
-}
+  //! Global map of the string-type of derived attribute -> type name to identify this attribute
+  static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>& Types()
+  {
+    static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>
+      THE_DERIVED_TYPES;
+    return THE_DERIVED_TYPES;
+  }
 
-//! To minimize simultaneous access to global "DERIVED" maps from parallel threads
-static std::mutex& Mutex()
-{
-  static std::mutex THE_DERIVED_MUTEX;
-  return THE_DERIVED_MUTEX;
-}
+  //! To minimize simultaneous access to global "DERIVED" maps from parallel threads
+  static std::mutex& Mutex()
+  {
+    static std::mutex THE_DERIVED_MUTEX;
+    return THE_DERIVED_MUTEX;
+  }
 } // namespace TDF_DerivedAttributeGlobals
 
 //=======================================================================

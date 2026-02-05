@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -127,4 +126,3 @@ private:
   StepElement_MeasureOrUnspecifiedValue theNonStructuralMass;
   StepElement_MeasureOrUnspecifiedValue thePolarMoment;
 };
-

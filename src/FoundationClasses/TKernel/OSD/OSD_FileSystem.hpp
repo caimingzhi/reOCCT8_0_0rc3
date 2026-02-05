@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_StreamBuffer.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DefineAlloc.hpp>

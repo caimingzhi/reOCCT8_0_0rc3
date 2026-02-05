@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CubeMap.hpp>
 #include <NCollection_Vec3.hpp>
 #include <Standard_TypeDef.hpp>
@@ -214,6 +213,7 @@ public:
 public:
   Standard_DEPRECATED("Deprecated method, OpenGl_TextureFormat::FindFormat() should be used "
                       "instead")
+
   static bool GetDataFormat(const occ::handle<OpenGl_Context>& theCtx,
                             const Image_Format                 theFormat,
                             int&                               theTextFormat,
@@ -229,6 +229,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method, OpenGl_TextureFormat::FindFormat() should be used "
                       "instead")
+
   static bool GetDataFormat(const occ::handle<OpenGl_Context>& theCtx,
                             const Image_PixMap&                theData,
                             int&                               theTextFormat,
@@ -245,6 +246,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method, OpenGl_TextureFormat should be passed instead of "
                       "separate parameters")
+
   bool Init(const occ::handle<OpenGl_Context>& theCtx,
             const int                          theTextFormat,
             const unsigned int                 thePixelFormat,
@@ -263,6 +265,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method, theIsColorMap parameter should be explicitly "
                       "specified")
+
   bool Init(const occ::handle<OpenGl_Context>& theCtx,
             const Image_PixMap&                theImage,
             const Graphic3d_TypeOfTexture      theType)
@@ -272,6 +275,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method, OpenGl_TextureFormat should be passed instead of "
                       "separate parameters")
+
   bool Init3D(const occ::handle<OpenGl_Context>& theCtx,
               const int                          theTextFormat,
               const unsigned int                 thePixelFormat,
@@ -323,4 +327,3 @@ protected:
   bool             myIsTopDown;  //!< indicates if 2D surface is defined top-down (TRUE) or bottom-up (FALSE)
   // clang-format on
 };
-

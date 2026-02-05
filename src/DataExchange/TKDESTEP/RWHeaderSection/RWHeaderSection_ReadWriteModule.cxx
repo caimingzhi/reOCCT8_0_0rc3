@@ -115,7 +115,8 @@ void RWHeaderSection_ReadWriteModule::ReadStep(const int                        
     return;
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(HeaderSection_FileName, anent, ent);
       RWHeaderSection_RWFileName tool;
       if (anent.IsNull())
@@ -125,7 +126,8 @@ void RWHeaderSection_ReadWriteModule::ReadStep(const int                        
     }
 
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(HeaderSection_FileDescription, anent, ent);
       RWHeaderSection_RWFileDescription tool;
       if (anent.IsNull())
@@ -135,7 +137,8 @@ void RWHeaderSection_ReadWriteModule::ReadStep(const int                        
     }
 
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(HeaderSection_FileSchema, anent, ent);
       RWHeaderSection_RWFileSchema tool;
       if (anent.IsNull())
@@ -145,7 +148,8 @@ void RWHeaderSection_ReadWriteModule::ReadStep(const int                        
     }
 
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(StepData_UndefinedEntity, und, ent);
       if (und.IsNull())
         ach->AddFail("# Entity neither Recognized nor set as UndefinedEntity from StepData #");
@@ -171,7 +175,8 @@ void RWHeaderSection_ReadWriteModule::WriteStep(const int                       
     return;
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(HeaderSection_FileName, anent, ent);
       RWHeaderSection_RWFileName tool;
       if (anent.IsNull())
@@ -181,7 +186,8 @@ void RWHeaderSection_ReadWriteModule::WriteStep(const int                       
     }
 
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(HeaderSection_FileDescription, anent, ent);
       RWHeaderSection_RWFileDescription tool;
       if (anent.IsNull())
@@ -191,7 +197,8 @@ void RWHeaderSection_ReadWriteModule::WriteStep(const int                       
     }
 
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(HeaderSection_FileSchema, anent, ent);
       RWHeaderSection_RWFileSchema tool;
       if (anent.IsNull())
@@ -201,7 +208,8 @@ void RWHeaderSection_ReadWriteModule::WriteStep(const int                       
     }
 
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(StepData_UndefinedEntity, und, ent);
       if (und.IsNull())
         break;

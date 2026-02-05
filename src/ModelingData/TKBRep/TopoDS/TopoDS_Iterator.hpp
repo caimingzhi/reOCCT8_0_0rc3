@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NoSuchObject.hpp>
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
@@ -73,4 +72,3 @@ private:
   TopAbs_Orientation                       myOrientation;
   TopLoc_Location                          myLocation;
 };
-

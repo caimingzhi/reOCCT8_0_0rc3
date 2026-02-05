@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_View.hpp>
 
 //! Obsolete clip plane presentation class.
@@ -67,4 +66,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(V3d_Plane, Standard_Transient)
 };
-

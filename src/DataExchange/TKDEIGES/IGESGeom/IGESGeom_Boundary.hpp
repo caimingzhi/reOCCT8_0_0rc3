@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -97,4 +96,3 @@ private:
   occ::handle<NCollection_HArray1<int>>                              theSenses;
   occ::handle<IGESBasic_HArray1OfHArray1OfIGESEntity>                theParameterCurves;
 };
-

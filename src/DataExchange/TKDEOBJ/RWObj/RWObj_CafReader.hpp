@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_CafReader.hpp>
 #include <RWObj_TriangulationReader.hpp>
 
@@ -46,4 +45,3 @@ protected:
   bool myIsSinglePrecision; //!< flag for reading vertex data with single or double floating point precision
   // clang-format on
 };
-

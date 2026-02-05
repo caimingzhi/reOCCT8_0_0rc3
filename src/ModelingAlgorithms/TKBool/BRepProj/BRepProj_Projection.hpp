@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -62,6 +61,7 @@ private:
   occ::handle<NCollection_HSequence<TopoDS_Shape>> mySection;
   int                                              myItr;
 };
+
 // Copyright (c) 1998-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -110,5 +110,3 @@ inline TopoDS_Wire BRepProj_Projection::Current() const
 {
   return TopoDS::Wire(mySection->Value(myItr));
 }
-
-

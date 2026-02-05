@@ -1105,7 +1105,8 @@ YY_DECL
         case YY_STATE_EOF(Text):
           yyterminate();
 
-        case YY_END_OF_BUFFER: {
+        case YY_END_OF_BUFFER:
+        {
           /* Amount of text matched not including the EOB char. */
           int yy_amount_of_matched_text = (int)(yy_cp - (yytext_ptr)) - 1;
 
@@ -1175,7 +1176,8 @@ YY_DECL
           else
             switch (yy_get_next_buffer())
             {
-              case EOB_ACT_END_OF_FILE: {
+              case EOB_ACT_END_OF_FILE:
+              {
                 (yy_did_buffer_switch_on_eof) = 0;
 
                 if (yywrap())
@@ -1588,7 +1590,8 @@ int yyFlexLexer::yyinput()
 
           /*FALLTHROUGH*/
 
-        case EOB_ACT_END_OF_FILE: {
+        case EOB_ACT_END_OF_FILE:
+        {
           if (yywrap())
             return 0;
 
@@ -1885,7 +1888,7 @@ void yyFlexLexer::yyensure_buffer_stack()
     return;
   }
 
-  if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1)
+  if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max))-1)
   {
 
     /* Increase the buffer to prepare for a possible push. */

@@ -1,23 +1,3 @@
-// Created on: 1991-09-09
-// Created by: Michel Chauvat
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Evolutions   JCV Dec 1991 ajout de calculs de derivees et traitement
-//              d'entites 2d
-//              JCV Mars 1992 ajout method SetLinearForm
-
 #define No_Standard_OutOfRange
 
 #include <ElCLib.hpp>
@@ -46,30 +26,30 @@
 
 namespace
 {
-static constexpr double PIPI = M_PI + M_PI;
-// Threshold for angle normalization to avoid discontinuity near zero
-static constexpr double NEGATIVE_RESOLUTION = -Precision::Computational();
+  static constexpr double PIPI = M_PI + M_PI;
+  // Threshold for angle normalization to avoid discontinuity near zero
+  static constexpr double NEGATIVE_RESOLUTION = -Precision::Computational();
 
-// Normalize angle to [0, 2*PI] range, with special handling
-// for values very close to zero to avoid discontinuity.
-// Preserves values at exactly 2*PI for proper seam handling.
-static inline void normalizeAngle(double& theAngle)
-{
-  while (theAngle < NEGATIVE_RESOLUTION)
+  // Normalize angle to [0, 2*PI] range, with special handling
+  // for values very close to zero to avoid discontinuity.
+  // Preserves values at exactly 2*PI for proper seam handling.
+  static inline void normalizeAngle(double& theAngle)
   {
-    theAngle += PIPI;
+    while (theAngle < NEGATIVE_RESOLUTION)
+    {
+      theAngle += PIPI;
+    }
+    // Only normalize angles strictly greater than 2*PI (with small tolerance)
+    // to preserve the closing seam value of exactly 2*PI
+    while (theAngle > PIPI * (1.0 + gp::Resolution()))
+    {
+      theAngle -= PIPI;
+    }
+    if (theAngle < 0.)
+    {
+      theAngle = 0.;
+    }
   }
-  // Only normalize angles strictly greater than 2*PI (with small tolerance)
-  // to preserve the closing seam value of exactly 2*PI
-  while (theAngle > PIPI * (1.0 + gp::Resolution()))
-  {
-    theAngle -= PIPI;
-  }
-  if (theAngle < 0.)
-  {
-    theAngle = 0.;
-  }
-}
 } // namespace
 
 //=======================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DimensionMismatch.hpp>
 #include <Standard_OutOfMemory.hpp>
 #include <NCollection_Allocator.hpp>
@@ -355,4 +354,3 @@ protected:
   friend iterator;
   friend const_iterator;
 };
-

@@ -1,21 +1,3 @@
-// Created on: 1995-07-24
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503
-
 #include <Adaptor3d_Surface.hpp>
 #include <Bnd_Box.hpp>
 #include <BndLib.hpp>
@@ -82,11 +64,13 @@ static int NbUSamples(const Adaptor3d_Surface& S)
   GeomAbs_SurfaceType Type = S.GetType();
   switch (Type)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       N = 2 * S.NbUPoles();
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const occ::handle<Geom_BSplineSurface>& BS = S.BSpline();
       N                                          = 2 * (BS->UDegree() + 1) * (BS->NbUKnots() - 1);
       break;
@@ -105,11 +89,13 @@ static int NbVSamples(const Adaptor3d_Surface& S)
   GeomAbs_SurfaceType Type = S.GetType();
   switch (Type)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       N = 2 * S.NbVPoles();
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const occ::handle<Geom_BSplineSurface>& BS = S.BSpline();
       N                                          = 2 * (BS->VDegree() + 1) * (BS->NbVKnots() - 1);
       break;
@@ -258,11 +244,13 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
     //     return;
     switch (Type)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         TreatInfinitePlane(S.Plane(), UMin, UMax, VMin, VMax, Tol, B);
         return;
       }
-      default: {
+      default:
+      {
         B.SetWhole();
         return;
       }
@@ -275,7 +263,8 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
   switch (Type)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln Plan = S.Plane();
       B.Add(ElSLib::Value(UMin, VMin, Plan));
       B.Add(ElSLib::Value(UMin, VMax, Plan));
@@ -284,19 +273,23 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
       B.Enlarge(Tol);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       BndLib::Add(S.Cylinder(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       BndLib::Add(S.Cone(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       BndLib::Add(S.Torus(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       if (std::abs(UMin) < Precision::Angular() && std::abs(UMax - 2. * M_PI) < Precision::Angular()
           && std::abs(VMin + M_PI / 2.) < Precision::Angular()
           && std::abs(VMax - M_PI / 2.) < Precision::Angular()) // a whole sphere
@@ -305,7 +298,8 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
         BndLib::Add(S.Sphere(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       occ::handle<Adaptor3d_Surface> HS = S.BasisSurface();
       Add(*HS, UMin, UMax, VMin, VMax, Tol, B);
       B.Enlarge(S.OffsetValue());
@@ -313,7 +307,8 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
       break;
     }
     case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       bool   isUseConvexHullAlgorithm = true;
       double PTol                     = Precision::Parametric(Precision::Confusion());
       // Borders of underlying geometry.
@@ -438,7 +433,8 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
       }
     }
       [[fallthrough]];
-    default: {
+    default:
+    {
       // Use batch grid evaluation for optimized surface point computation
       const int Nu = NbUSamples(S);
       const int Nv = NbVSamples(S);
@@ -504,11 +500,13 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
   {
     switch (Type)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         TreatInfinitePlane(S.Plane(), UMin, UMax, VMin, VMax, Tol, B);
         return;
       }
-      default: {
+      default:
+      {
         B.SetWhole();
         return;
       }
@@ -518,7 +516,8 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
   switch (Type)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln Plan = S.Plane();
       B.Add(ElSLib::Value(UMin, VMin, Plan));
       B.Add(ElSLib::Value(UMin, VMax, Plan));
@@ -527,19 +526,23 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
       B.Enlarge(Tol);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       BndLib::Add(S.Cylinder(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       BndLib::Add(S.Cone(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       BndLib::Add(S.Sphere(), UMin, UMax, VMin, VMax, Tol, B);
       break;
     }
-    default: {
+    default:
+    {
       AddGenSurf(S, UMin, UMax, VMin, VMax, Tol, B);
     }
   }
@@ -895,7 +898,8 @@ int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax)
   GeomAbs_SurfaceType Type = S.GetType();
   switch (Type)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       N = 2 * S.NbUPoles();
       // By default parametric range of Bezier surf is [0, 1] [0, 1]
       double du = Umax - Umin;
@@ -906,7 +910,8 @@ int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax)
       }
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const occ::handle<Geom_BSplineSurface>& BS = S.BSpline();
       N                                          = 2 * (BS->UDegree() + 1) * (BS->NbUKnots() - 1);
       double umin, umax, vmin, vmax;
@@ -933,7 +938,8 @@ int NbVSamples(const Adaptor3d_Surface& S, const double Vmin, const double Vmax)
   GeomAbs_SurfaceType Type = S.GetType();
   switch (Type)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       N = 2 * S.NbVPoles();
       // By default parametric range of Bezier surf is [0, 1] [0, 1]
       double dv = Vmax - Vmin;
@@ -944,7 +950,8 @@ int NbVSamples(const Adaptor3d_Surface& S, const double Vmin, const double Vmax)
       }
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const occ::handle<Geom_BSplineSurface>& BS = S.BSpline();
       N                                          = 2 * (BS->VDegree() + 1) * (BS->NbVKnots() - 1);
       double umin, umax, vmin, vmax;

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -91,4 +90,3 @@ private:
   double             CurvLast;
   TopAbs_Orientation TranLast;
 };
-

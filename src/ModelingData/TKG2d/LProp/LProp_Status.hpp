@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum LProp_Status
 {
   LProp_Undecided,
@@ -8,4 +7,3 @@ enum LProp_Status
   LProp_Defined,
   LProp_Computed
 };
-

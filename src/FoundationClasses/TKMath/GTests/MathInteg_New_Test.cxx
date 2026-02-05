@@ -24,120 +24,120 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-8;
+  constexpr double THE_TOLERANCE = 1.0e-8;
 
-// ============================================================================
-// Test function classes
-// ============================================================================
+  // ============================================================================
+  // Test function classes
+  // ============================================================================
 
-//! Polynomial: f(x) = x^2
-struct PolynomialFunc
-{
-  bool Value(double theX, double& theF)
+  //! Polynomial: f(x) = x^2
+  struct PolynomialFunc
   {
-    theF = theX * theX;
-    return true;
-  }
-};
-
-//! Sine function: f(x) = sin(x)
-struct SineFunc
-{
-  bool Value(double theX, double& theF)
-  {
-    theF = std::sin(theX);
-    return true;
-  }
-};
-
-//! Exponential: f(x) = exp(-x^2)
-struct GaussianFunc
-{
-  bool Value(double theX, double& theF)
-  {
-    theF = std::exp(-theX * theX);
-    return true;
-  }
-};
-
-//! Oscillatory: f(x) = cos(10*x)
-struct OscillatoryFunc
-{
-  bool Value(double theX, double& theF)
-  {
-    theF = std::cos(10.0 * theX);
-    return true;
-  }
-};
-
-//! Square root singularity: f(x) = 1/sqrt(x)
-struct SqrtSingularityFunc
-{
-  bool Value(double theX, double& theF)
-  {
-    if (theX <= 0.0)
+    bool Value(double theX, double& theF)
     {
-      return false;
+      theF = theX * theX;
+      return true;
     }
-    theF = 1.0 / std::sqrt(theX);
-    return true;
-  }
-};
+  };
 
-//! Log singularity: f(x) = -log(x)
-struct LogSingularityFunc
-{
-  bool Value(double theX, double& theF)
+  //! Sine function: f(x) = sin(x)
+  struct SineFunc
   {
-    if (theX <= 0.0)
+    bool Value(double theX, double& theF)
     {
-      return false;
+      theF = std::sin(theX);
+      return true;
     }
-    theF = -std::log(theX);
-    return true;
-  }
-};
+  };
 
-//! Decaying exponential for semi-infinite: f(x) = exp(-x)
-struct ExponentialDecayFunc
-{
-  bool Value(double theX, double& theF)
+  //! Exponential: f(x) = exp(-x^2)
+  struct GaussianFunc
   {
-    theF = std::exp(-theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF)
+    {
+      theF = std::exp(-theX * theX);
+      return true;
+    }
+  };
 
-//! Gaussian for infinite interval: f(x) = exp(-x^2)
-struct InfiniteGaussianFunc
-{
-  bool Value(double theX, double& theF)
+  //! Oscillatory: f(x) = cos(10*x)
+  struct OscillatoryFunc
   {
-    theF = std::exp(-theX * theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF)
+    {
+      theF = std::cos(10.0 * theX);
+      return true;
+    }
+  };
 
-// Old API adapter
-class SineFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! Square root singularity: f(x) = 1/sqrt(x)
+  struct SqrtSingularityFunc
   {
-    theF = std::sin(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF)
+    {
+      if (theX <= 0.0)
+      {
+        return false;
+      }
+      theF = 1.0 / std::sqrt(theX);
+      return true;
+    }
+  };
 
-class PolynomialFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! Log singularity: f(x) = -log(x)
+  struct LogSingularityFunc
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF)
+    {
+      if (theX <= 0.0)
+      {
+        return false;
+      }
+      theF = -std::log(theX);
+      return true;
+    }
+  };
+
+  //! Decaying exponential for semi-infinite: f(x) = exp(-x)
+  struct ExponentialDecayFunc
+  {
+    bool Value(double theX, double& theF)
+    {
+      theF = std::exp(-theX);
+      return true;
+    }
+  };
+
+  //! Gaussian for infinite interval: f(x) = exp(-x^2)
+  struct InfiniteGaussianFunc
+  {
+    bool Value(double theX, double& theF)
+    {
+      theF = std::exp(-theX * theX);
+      return true;
+    }
+  };
+
+  // Old API adapter
+  class SineFuncOld : public math_Function
+  {
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::sin(theX);
+      return true;
+    }
+  };
+
+  class PolynomialFuncOld : public math_Function
+  {
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 
 } // namespace
 

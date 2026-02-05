@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_FileSystem.hpp>
 
 //! File system keeping last stream created by linked file system
@@ -75,4 +74,3 @@ protected:
   OSD_CachedStream            myStream;   //!< active cached stream
   occ::handle<OSD_FileSystem> myLinkedFS; //!< linked file system to open files
 };
-

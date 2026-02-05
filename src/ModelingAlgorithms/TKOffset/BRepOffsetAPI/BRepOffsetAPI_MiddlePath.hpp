@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -38,4 +37,3 @@ private:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>   myEndWireEdges;
   NCollection_Sequence<NCollection_Sequence<TopoDS_Shape>> myPaths;
 };
-

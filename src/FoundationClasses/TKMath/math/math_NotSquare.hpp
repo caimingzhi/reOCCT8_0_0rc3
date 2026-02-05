@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <Standard_DimensionError.hpp>
@@ -17,4 +16,3 @@ DEFINE_STANDARD_HANDLE(math_NotSquare, Standard_DimensionError)
 #endif
 
 DEFINE_STANDARD_EXCEPTION(math_NotSquare, Standard_DimensionError)
-

@@ -1,19 +1,3 @@
-// Created on: 1995-02-08
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomInt_LineTool.hpp>
 
 #include <Extrema_ExtPS.hpp>
@@ -34,95 +18,96 @@
 
 namespace
 {
-class ProjectPointOnSurf
-{
-public:
-  ProjectPointOnSurf()
-      : myIsDone(false),
-        myIndex(0)
+  class ProjectPointOnSurf
   {
+  public:
+    ProjectPointOnSurf()
+        : myIsDone(false),
+          myIndex(0)
+    {
+    }
+
+    void Init(const occ::handle<Geom_Surface>& Surface,
+              const double                     Umin,
+              const double                     Usup,
+              const double                     Vmin,
+              const double                     Vsup);
+    void Init();
+    void Perform(const gp_Pnt& P);
+
+    bool IsDone() const { return myIsDone; }
+
+    void   LowerDistanceParameters(double& U, double& V) const;
+    double LowerDistance() const;
+
+  protected:
+    bool                myIsDone;
+    int                 myIndex;
+    Extrema_ExtPS       myExtPS;
+    GeomAdaptor_Surface myGeomAdaptor;
+  };
+
+  //=================================================================================================
+
+  void ProjectPointOnSurf::Init(const occ::handle<Geom_Surface>& Surface,
+                                const double                     Umin,
+                                const double                     Usup,
+                                const double                     Vmin,
+                                const double                     Vsup)
+  {
+    constexpr double Tolerance = Precision::PConfusion();
+    //
+    myGeomAdaptor.Load(Surface, Umin, Usup, Vmin, Vsup);
+    myExtPS.Initialize(myGeomAdaptor, Umin, Usup, Vmin, Vsup, Tolerance, Tolerance);
+    myIsDone = false;
   }
 
-  void Init(const occ::handle<Geom_Surface>& Surface,
-            const double                     Umin,
-            const double                     Usup,
-            const double                     Vmin,
-            const double                     Vsup);
-  void Init();
-  void Perform(const gp_Pnt& P);
+  //=================================================================================================
 
-  bool IsDone() const { return myIsDone; }
-
-  void   LowerDistanceParameters(double& U, double& V) const;
-  double LowerDistance() const;
-
-protected:
-  bool                myIsDone;
-  int                 myIndex;
-  Extrema_ExtPS       myExtPS;
-  GeomAdaptor_Surface myGeomAdaptor;
-};
-
-//=================================================================================================
-
-void ProjectPointOnSurf::Init(const occ::handle<Geom_Surface>& Surface,
-                              const double                     Umin,
-                              const double                     Usup,
-                              const double                     Vmin,
-                              const double                     Vsup)
-{
-  constexpr double Tolerance = Precision::PConfusion();
-  //
-  myGeomAdaptor.Load(Surface, Umin, Usup, Vmin, Vsup);
-  myExtPS.Initialize(myGeomAdaptor, Umin, Usup, Vmin, Vsup, Tolerance, Tolerance);
-  myIsDone = false;
-}
-
-//=================================================================================================
-
-void ProjectPointOnSurf::Init()
-{
-  myIsDone = myExtPS.IsDone() && (myExtPS.NbExt() > 0);
-  if (myIsDone)
+  void ProjectPointOnSurf::Init()
   {
-    // evaluate the lower distance and its index;
-    double Dist2Min = myExtPS.SquareDistance(1);
-    myIndex         = 1;
-    for (int i = 2; i <= myExtPS.NbExt(); i++)
+    myIsDone = myExtPS.IsDone() && (myExtPS.NbExt() > 0);
+    if (myIsDone)
     {
-      const double Dist2 = myExtPS.SquareDistance(i);
-      if (Dist2 < Dist2Min)
+      // evaluate the lower distance and its index;
+      double Dist2Min = myExtPS.SquareDistance(1);
+      myIndex         = 1;
+      for (int i = 2; i <= myExtPS.NbExt(); i++)
       {
-        Dist2Min = Dist2;
-        myIndex  = i;
+        const double Dist2 = myExtPS.SquareDistance(i);
+        if (Dist2 < Dist2Min)
+        {
+          Dist2Min = Dist2;
+          myIndex  = i;
+        }
       }
     }
   }
-}
 
-//=================================================================================================
+  //=================================================================================================
 
-void ProjectPointOnSurf::Perform(const gp_Pnt& P)
-{
-  myExtPS.Perform(P);
-  Init();
-}
+  void ProjectPointOnSurf::Perform(const gp_Pnt& P)
+  {
+    myExtPS.Perform(P);
+    Init();
+  }
 
-//=================================================================================================
+  //=================================================================================================
 
-void ProjectPointOnSurf::LowerDistanceParameters(double& U, double& V) const
-{
-  StdFail_NotDone_Raise_if(!myIsDone, "GeomInt_IntSS::ProjectPointOnSurf::LowerDistanceParameters");
-  (myExtPS.Point(myIndex)).Parameter(U, V);
-}
+  void ProjectPointOnSurf::LowerDistanceParameters(double& U, double& V) const
+  {
+    StdFail_NotDone_Raise_if(!myIsDone,
+                             "GeomInt_IntSS::ProjectPointOnSurf::LowerDistanceParameters");
+    (myExtPS.Point(myIndex)).Parameter(U, V);
+  }
 
-//=================================================================================================
+  //=================================================================================================
 
-double ProjectPointOnSurf::LowerDistance() const
-{
-  StdFail_NotDone_Raise_if(!myIsDone, "GeomInt_IntSS::ProjectPointOnSurf::LowerDistance");
-  return sqrt(myExtPS.SquareDistance(myIndex));
-}
+  double ProjectPointOnSurf::LowerDistance() const
+  {
+    StdFail_NotDone_Raise_if(!myIsDone, "GeomInt_IntSS::ProjectPointOnSurf::LowerDistance");
+    return sqrt(myExtPS.SquareDistance(myIndex));
+  }
 } // namespace
 
 //=================================================================================================
@@ -309,7 +294,8 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
   const IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> alin = occ::down_cast<IntPatch_ALine>(L);
       if (alin->HasFirstPoint())
         return alin->FirstPoint().ParameterOnLine();
@@ -320,19 +306,22 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
       return firstp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
       // clang-format off
 	  return (rlin->HasFirstPoint()? rlin->FirstPoint().ParameterOnLine() : -Precision::Infinite()); // a voir selon le type de la ligne 2d
-      // clang-format on
+                                                            // clang-format on
     }
 
-    case IntPatch_Walking: {
+    case IntPatch_Walking:
+    {
       occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
       return (wlin->HasFirstPoint() ? wlin->FirstPoint().ParameterOnLine() : 1.);
     }
 
-    default: {
+    default:
+    {
       occ::handle<IntPatch_GLine> glin = occ::down_cast<IntPatch_GLine>(L);
       if (glin->HasFirstPoint())
         return glin->FirstPoint().ParameterOnLine();
@@ -357,7 +346,8 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
   const IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> alin = occ::down_cast<IntPatch_ALine>(L);
       if (alin->HasLastPoint())
         return alin->LastPoint().ParameterOnLine();
@@ -368,19 +358,22 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
       return lastp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_Restriction:
+    {
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
       // clang-format off
 	  return (rlin->HasLastPoint()? rlin->LastPoint().ParameterOnLine() : Precision::Infinite()); // a voir selon le type de la ligne 2d
-      // clang-format on
+                                                          // clang-format on
     }
 
-    case IntPatch_Walking: {
+    case IntPatch_Walking:
+    {
       occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
       return (wlin->HasLastPoint() ? wlin->LastPoint().ParameterOnLine() : wlin->NbPnts());
     }
 
-    default: {
+    default:
+    {
       occ::handle<IntPatch_GLine> glin = occ::down_cast<IntPatch_GLine>(L);
       if (glin->HasLastPoint())
         return glin->LastPoint().ParameterOnLine();

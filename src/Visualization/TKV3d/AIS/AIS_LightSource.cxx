@@ -1,18 +1,3 @@
-// Created on: 2020-09-07
-// Created by: Maria KRYLOVA
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_LightSource.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -248,14 +233,17 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
 
   switch (theAction)
   {
-    case AIS_DragAction_Start: {
+    case AIS_DragAction_Start:
+    {
       myLocTrsfStart = LocalTransformation();
       return true;
     }
-    case AIS_DragAction_Confirmed: {
+    case AIS_DragAction_Confirmed:
+    {
       return true;
     }
-    case AIS_DragAction_Update: {
+    case AIS_DragAction_Update:
+    {
       mySensSphere->ResetLastDetectedPoint();
       SetLocalTransformation(myLocTrsfStart);
       theCtx->MainSelector()->Pick(theDragFrom.x(), theDragFrom.y(), theView);
@@ -278,10 +266,12 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
       }
       return true;
     }
-    case AIS_DragAction_Abort: {
+    case AIS_DragAction_Abort:
+    {
       return true;
     }
-    case AIS_DragAction_Stop: {
+    case AIS_DragAction_Stop:
+    {
       GetHilightPresentation(theCtx->MainPrsMgr())->Clear();
       break;
     }
@@ -332,7 +322,8 @@ void AIS_LightSource::updateLightTransformPersistence()
   occ::handle<Graphic3d_TransformPers> aTrsfPers = myTransformPersistence;
   switch (myLightSource->Type())
   {
-    case Graphic3d_TypeOfLightSource_Ambient: {
+    case Graphic3d_TypeOfLightSource_Ambient:
+    {
       if (!myIsZoomable)
       {
         if (aTrsfPers.IsNull() || !aTrsfPers->IsTrihedronOr2d())
@@ -348,7 +339,8 @@ void AIS_LightSource::updateLightTransformPersistence()
       }
       break;
     }
-    case Graphic3d_TypeOfLightSource_Directional: {
+    case Graphic3d_TypeOfLightSource_Directional:
+    {
       Graphic3d_TransModeFlags aMode =
         myLightSource->IsHeadlight() ? Graphic3d_TMF_2d : Graphic3d_TMF_TriedronPers;
       if (myIsZoomable)
@@ -377,7 +369,8 @@ void AIS_LightSource::updateLightTransformPersistence()
       break;
     }
     case Graphic3d_TypeOfLightSource_Positional:
-    case Graphic3d_TypeOfLightSource_Spot: {
+    case Graphic3d_TypeOfLightSource_Spot:
+    {
       Graphic3d_TransModeFlags aMode =
         myLightSource->IsHeadlight()
           ? Graphic3d_TMF_CameraPers
@@ -418,7 +411,8 @@ void AIS_LightSource::updateLightLocalTransformation()
   myLocalTransformation.Nullify();
   switch (myLightSource->Type())
   {
-    case Graphic3d_TypeOfLightSource_Ambient: {
+    case Graphic3d_TypeOfLightSource_Ambient:
+    {
       if (myIsZoomable)
       {
         gp_Trsf aTrsf;
@@ -427,7 +421,8 @@ void AIS_LightSource::updateLightLocalTransformation()
       }
       break;
     }
-    case Graphic3d_TypeOfLightSource_Directional: {
+    case Graphic3d_TypeOfLightSource_Directional:
+    {
       const gp_Pnt aLightPos = (myIsZoomable && !myLightSource->IsHeadlight())
                                  ? myLightSource->DisplayPosition()
                                  : gp::Origin();
@@ -437,7 +432,8 @@ void AIS_LightSource::updateLightLocalTransformation()
       myLocalTransformation = new TopLoc_Datum3D(aTrsf);
       break;
     }
-    case Graphic3d_TypeOfLightSource_Positional: {
+    case Graphic3d_TypeOfLightSource_Positional:
+    {
       if (myIsZoomable)
       {
         gp_Trsf aTrsf;
@@ -446,7 +442,8 @@ void AIS_LightSource::updateLightLocalTransformation()
       }
       break;
     }
-    case Graphic3d_TypeOfLightSource_Spot: {
+    case Graphic3d_TypeOfLightSource_Spot:
+    {
       gp_Trsf      aTrsf;
       const gp_Ax2 anAx2(myIsZoomable ? myLightSource->Position() : gp::Origin(),
                          -myLightSource->Direction());
@@ -465,10 +462,12 @@ void AIS_LightSource::setLocalTransformation(const occ::handle<TopLoc_Datum3D>& 
   const gp_Trsf aTrsf = !theTrsf.IsNull() ? theTrsf->Transformation() : gp_Trsf();
   switch (myLightSource->Type())
   {
-    case Graphic3d_TypeOfLightSource_Ambient: {
+    case Graphic3d_TypeOfLightSource_Ambient:
+    {
       break;
     }
-    case Graphic3d_TypeOfLightSource_Directional: {
+    case Graphic3d_TypeOfLightSource_Directional:
+    {
       gp_Dir aNewDir = (-gp::DZ()).Transformed(aTrsf);
       myLightSource->SetDirection(aNewDir);
       if (myIsZoomable)
@@ -478,12 +477,14 @@ void AIS_LightSource::setLocalTransformation(const occ::handle<TopLoc_Datum3D>& 
       }
       break;
     }
-    case Graphic3d_TypeOfLightSource_Positional: {
+    case Graphic3d_TypeOfLightSource_Positional:
+    {
       gp_Pnt aNewPos = gp::Origin().Transformed(aTrsf);
       myLightSource->SetPosition(aNewPos);
       break;
     }
-    case Graphic3d_TypeOfLightSource_Spot: {
+    case Graphic3d_TypeOfLightSource_Spot:
+    {
       gp_Pnt aNewPos = gp::Origin().Transformed(aTrsf);
       myLightSource->SetPosition(aNewPos);
 
@@ -651,24 +652,28 @@ void AIS_LightSource::computeDirectional(const occ::handle<Prs3d_Presentation>& 
     const gp_XYZ aDXY = aDX + aDY;
     switch (aNbArrows)
     {
-      case 9: {
+      case 9:
+      {
         aPoints.SetValue(6, aLightPos + aDY);
         aPoints.SetValue(7, aLightPos + aDX);
         aPoints.SetValue(8, aLightPos - aDY);
         aPoints.SetValue(9, aLightPos - aDX);
       }
         [[fallthrough]];
-      case 5: {
+      case 5:
+      {
         aPoints.SetValue(4, aLightPos - aDY + aDX);
         aPoints.SetValue(5, aLightPos + aDY - aDX);
       }
         [[fallthrough]];
-      case 3: {
+      case 3:
+      {
         aPoints.SetValue(2, aLightPos + aDXY);
         aPoints.SetValue(3, aLightPos - aDXY);
       }
         [[fallthrough]];
-      case 1: {
+      case 1:
+      {
         aPoints.SetValue(1, aLightPos);
         break;
       }

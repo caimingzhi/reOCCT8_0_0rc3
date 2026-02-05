@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_Shape.hpp>
 
@@ -93,4 +92,3 @@ protected:
   double myTgBeta;
   double myTolAngle;
 };
-

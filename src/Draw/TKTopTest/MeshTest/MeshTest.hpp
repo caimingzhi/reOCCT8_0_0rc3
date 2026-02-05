@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -19,4 +18,3 @@ public:
   //! Defines plugin commands
   Standard_EXPORT static void PluginCommands(Draw_Interpretor& DI);
 };
-

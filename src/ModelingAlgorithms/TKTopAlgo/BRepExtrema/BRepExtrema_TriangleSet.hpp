@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet3d.hpp>
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
@@ -109,4 +108,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(BRepExtrema_TriangleSet, BVH_PrimitiveSet3d)
 };
-

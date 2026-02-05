@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -29,4 +28,3 @@ public:
   Standard_EXPORT static void Path(const TopoDS_Wire&              aWire,
                                    NCollection_List<TopoDS_Shape>& aResList);
 };
-

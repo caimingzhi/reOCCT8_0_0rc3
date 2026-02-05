@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -92,6 +91,7 @@ private:
   double              prm4;
   bool                ax3direc;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -147,5 +147,3 @@ inline gp_Torus IntSurf_Quadric::Torus() const
 
   return gp_Torus(ax3, prm1, prm2);
 }
-
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Draft_ErrorStatus
 {
   Draft_NoError,
@@ -8,4 +7,3 @@ enum Draft_ErrorStatus
   Draft_EdgeRecomputation,
   Draft_VertexRecomputation
 };
-

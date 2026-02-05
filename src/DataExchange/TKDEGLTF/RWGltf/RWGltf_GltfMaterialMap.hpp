@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_MaterialMap.hpp>
 #include <RWGltf_GltfBufferView.hpp>
 
@@ -92,4 +91,3 @@ protected:
 
   int myDefSamplerId;
 };
-

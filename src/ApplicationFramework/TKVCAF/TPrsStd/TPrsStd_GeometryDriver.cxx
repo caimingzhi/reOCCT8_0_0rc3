@@ -1,19 +1,3 @@
-// Created on: 1999-09-30
-// Created by: Sergey RUIN
-// Copyright (c) 1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Circle.hpp>
 #include <AIS_InteractiveContext.hpp>
 #include <AIS_InteractiveObject.hpp>
@@ -68,7 +52,8 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
 
   switch (GeomType)
   {
-    case TDataXtd_POINT: {
+    case TDataXtd_POINT:
+    {
       gp_Pnt pt;
       if (!TDataXtd_Geometry::Point(aLabel, pt))
         return false;
@@ -93,7 +78,8 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetColor(Quantity_NOC_RED);
     }
     break;
-    case TDataXtd_LINE: {
+    case TDataXtd_LINE:
+    {
       gp_Lin ln;
       if (!TDataXtd_Geometry::Line(aLabel, ln))
         return false;
@@ -119,7 +105,8 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetInfiniteState(true);
       break;
     }
-    case TDataXtd_CIRCLE: {
+    case TDataXtd_CIRCLE:
+    {
       occ::handle<AIS_Line> ais2;
       gp_Circ               cir;
       if (!TDataXtd_Geometry::Circle(aLabel, cir))
@@ -145,7 +132,8 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetColor(Quantity_NOC_RED);
       break;
     }
-    case TDataXtd_ELLIPSE: {
+    case TDataXtd_ELLIPSE:
+    {
       gp_Elips elp;
       if (!TDataXtd_Geometry::Ellipse(aLabel, elp))
         return false;

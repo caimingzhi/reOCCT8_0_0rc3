@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -173,4 +172,3 @@ protected:
   NCollection_IndexedMap<TopoDS_Shape>     myOMSH;
   bool                                     myCheckShape;
 };
-

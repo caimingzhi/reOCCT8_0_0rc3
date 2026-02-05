@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_ModelAlgo.hpp>
 #include <IMeshTools_Parameters.hpp>
 #include <IMeshTools_MeshAlgoFactory.hpp>
@@ -39,4 +38,3 @@ private:
   occ::handle<IMeshData_Model>            myModel;
   IMeshTools_Parameters                   myParameters;
 };
-

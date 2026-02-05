@@ -1,19 +1,3 @@
-// Created on: 2012-05-28
-//
-// Copyright (c) 2011-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #ifdef _WIN32
   #include <vtkWin32RenderWindowInteractor.h>
@@ -650,7 +634,8 @@ LRESULT CALLBACK ViewerWindowProc(HWND                 theHWnd,
                                  MAKEPOINTS(theLParam).x,
                                  MAKEPOINTS(theLParam).y);
       break;
-    case WM_MOUSELEAVE: {
+    case WM_MOUSELEAVE:
+    {
       theInteractor->InvokeEvent(vtkCommand::LeaveEvent, NULL);
       theInteractor->myMouseInWindow = 0;
     }
@@ -661,7 +646,8 @@ LRESULT CALLBACK ViewerWindowProc(HWND                 theHWnd,
                                  MAKEPOINTS(theLParam).x,
                                  MAKEPOINTS(theLParam).y);
       break;
-    case WM_MOUSEWHEEL: {
+    case WM_MOUSEWHEEL:
+    {
       POINT pt;
       pt.x = MAKEPOINTS(theLParam).x;
       pt.y = MAKEPOINTS(theLParam).y;
@@ -723,7 +709,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
 
   switch (anEvent.type)
   {
-    case Expose: {
+    case Expose:
+    {
       if (!this->Enabled)
       {
         return aPick;
@@ -750,7 +737,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case MapNotify: {
+    case MapNotify:
+    {
       // only render if we are currently accepting events
       if (this->Enabled && this->GetRenderWindow()->GetNeverRendered())
       {
@@ -759,7 +747,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case ConfigureNotify: {
+    case ConfigureNotify:
+    {
       XEvent aResult;
       while (XCheckTypedWindowEvent(this->myDisplayId, this->myWindowId, ConfigureNotify, &aResult))
       {
@@ -797,7 +786,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case ButtonPress: {
+    case ButtonPress:
+    {
       if (!this->Enabled)
       {
         return aPick;
@@ -851,7 +841,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case ButtonRelease: {
+    case ButtonRelease:
+    {
       if (!this->Enabled)
       {
         return aPick;
@@ -881,7 +872,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case EnterNotify: {
+    case EnterNotify:
+    {
       if (this->Enabled)
       {
         XEnterWindowEvent* anEnterEvent = reinterpret_cast<XEnterWindowEvent*>(&anEvent);
@@ -897,7 +889,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case LeaveNotify: {
+    case LeaveNotify:
+    {
       if (this->Enabled)
       {
         XLeaveWindowEvent* aLeaveEvent = reinterpret_cast<XLeaveWindowEvent*>(&anEvent);
@@ -913,7 +906,8 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
     }
     break;
 
-    case MotionNotify: {
+    case MotionNotify:
+    {
       if (!this->Enabled)
       {
         return aPick;

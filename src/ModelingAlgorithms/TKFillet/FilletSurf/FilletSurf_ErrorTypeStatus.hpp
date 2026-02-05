@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum FilletSurf_ErrorTypeStatus
 {
   FilletSurf_EmptyList,
@@ -10,4 +9,3 @@ enum FilletSurf_ErrorTypeStatus
   FilletSurf_NotSharpEdge,
   FilletSurf_PbFilletCompute
 };
-

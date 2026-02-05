@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XYZ.hpp>
 #include <TDF_Attribute.hpp>
 
@@ -72,5 +71,5 @@ public:
 //! Define handle class for TObj_TXYZ
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

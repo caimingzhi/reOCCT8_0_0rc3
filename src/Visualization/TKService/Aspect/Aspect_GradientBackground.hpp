@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_GradientFillMethod.hpp>
 #include <Aspect_Background.hpp>
 
@@ -40,4 +39,3 @@ private:
   Quantity_Color            MyColor2;
   Aspect_GradientFillMethod MyGradientMethod;
 };
-

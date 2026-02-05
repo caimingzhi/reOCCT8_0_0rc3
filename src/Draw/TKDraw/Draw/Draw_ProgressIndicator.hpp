@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Message_ProgressIndicator.hpp>
@@ -82,4 +81,3 @@ private:
   size_t            myStartTime;
   Standard_ThreadId myGuiThreadId;
 };
-

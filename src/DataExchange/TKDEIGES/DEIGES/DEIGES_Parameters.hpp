@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ShapeFixParameters.hpp>
 #include <Resource_FormatType.hpp>
 #include <STEPControl_StepModelType.hpp>
@@ -112,4 +111,3 @@ public:
   bool WriteLayer      = true;  //<! LayerMode is used to indicate write Layers or not
   // clang-format on
 };
-

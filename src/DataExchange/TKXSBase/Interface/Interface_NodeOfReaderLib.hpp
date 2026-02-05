@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -38,4 +37,3 @@ private:
   occ::handle<Interface_GlobalNodeOfReaderLib> thenode;
   occ::handle<Interface_NodeOfReaderLib>       thenext;
 };
-

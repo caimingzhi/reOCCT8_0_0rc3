@@ -1,18 +1,3 @@
-// Created on: 2013-01-17
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Standard_CLocaleSentry.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -24,35 +9,35 @@
 namespace
 {
 
-//! CLocalePtr - static object representing C locale
-class CLocalePtr
-{
-public:
-  CLocalePtr()
+  //! CLocalePtr - static object representing C locale
+  class CLocalePtr
+  {
+  public:
+    CLocalePtr()
   #ifdef OCCT_CLOCALE_POSIX2008
-      : myLocale(newlocale(LC_ALL_MASK, "C", nullptr))
+        : myLocale(newlocale(LC_ALL_MASK, "C", nullptr))
   #elif defined(_MSC_VER)
-      : myLocale(_create_locale(LC_ALL, "C"))
+        : myLocale(_create_locale(LC_ALL, "C"))
   #else
-      : myLocale(NULL)
+        : myLocale(NULL)
   #endif
-  {
-  }
+    {
+    }
 
-  ~CLocalePtr()
-  {
+    ~CLocalePtr()
+    {
   #ifdef OCCT_CLOCALE_POSIX2008
-    freelocale(myLocale);
+      freelocale(myLocale);
   #elif defined(_MSC_VER)
-    _free_locale(myLocale);
+      _free_locale(myLocale);
   #endif
-  }
+    }
 
-public:
-  Standard_CLocaleSentry::clocale_t myLocale;
-};
+  public:
+    Standard_CLocaleSentry::clocale_t myLocale;
+  };
 
-static CLocalePtr theCLocale;
+  static CLocalePtr theCLocale;
 
 } // namespace
 

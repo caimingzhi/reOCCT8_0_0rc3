@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Classifies checks
 //! OK     : check is empty
 //! Warning: Warning, no Fail
@@ -18,4 +17,3 @@ enum Interface_CheckStatus
   Interface_CheckMessage,
   Interface_CheckNoFail
 };
-

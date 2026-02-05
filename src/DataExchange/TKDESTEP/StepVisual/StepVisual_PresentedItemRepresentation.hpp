@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -33,4 +32,3 @@ private:
   StepVisual_PresentationRepresentationSelect thePresentation;
   occ::handle<StepVisual_PresentedItem>       theItem;
 };
-

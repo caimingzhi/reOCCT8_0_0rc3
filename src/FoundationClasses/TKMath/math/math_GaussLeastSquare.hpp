@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -57,6 +56,7 @@ protected:
 private:
   bool Done;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -81,5 +81,3 @@ inline Standard_OStream& operator<<(Standard_OStream& o, const math_GaussLeastSq
   G.Dump(o);
   return o;
 }
-
-

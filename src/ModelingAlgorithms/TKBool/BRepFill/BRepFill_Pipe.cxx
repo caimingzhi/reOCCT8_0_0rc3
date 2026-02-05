@@ -1,19 +1,3 @@
-// Created on: 1994-06-07
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -520,12 +504,14 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
   switch (S.ShapeType())
   {
 
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       B.MakeWire(TopoDS::Wire(result));
       break;
     }
 
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       TopoDS_Wire W;
       B.MakeShell(TopoDS::Shell(result));
       B.MakeWire(W);
@@ -554,7 +540,8 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
       B.MakeShell(TopoDS::Shell(result));
       break;
 
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       B.MakeShell(TopoDS::Shell(result));
       explode = true;
       if (!mySpine.Closed() && !TheFirst.IsNull())
@@ -565,7 +552,8 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
       break;
     }
 
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       B.MakeCompSolid(TopoDS::CompSolid(result));
       explode = true;
       break;
@@ -576,7 +564,8 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
       throw Standard_DomainError("BRepFill_Pipe::profile contains solids");
       break;
 
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       B.MakeCompound(TopoDS::Compound(result));
       explode = true;
       break;
@@ -797,14 +786,16 @@ int BRepFill_Pipe::FindEdge(const TopoDS_Shape& S, const TopoDS_Edge& E, int& In
   switch (S.ShapeType())
   {
 
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       InitialLength++;
       if (S.IsSame(E))
         result = InitialLength;
       break;
     }
 
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       occ::handle<BRepFill_ShapeLaw> Section = new (BRepFill_ShapeLaw)(TopoDS::Wire(S), false);
       int                            NbLaw   = Section->NbLaw();
 
@@ -819,7 +810,8 @@ int BRepFill_Pipe::FindEdge(const TopoDS_Shape& S, const TopoDS_Edge& E, int& In
 
     case TopAbs_FACE:
     case TopAbs_SHELL:
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       for (TopoDS_Iterator it(S); it.More() && (!result); it.Next())
         result = FindEdge(it.Value(), E, InitialLength);
       break;
@@ -849,14 +841,16 @@ int BRepFill_Pipe::FindVertex(const TopoDS_Shape&  S,
 
   switch (S.ShapeType())
   {
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       InitialLength++;
       if (S.IsSame(V))
         result = InitialLength;
       break;
     }
 
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       TopoDS_Vertex VF, VL;
       TopExp::Vertices(TopoDS::Edge(S), VF, VL);
       if (S.Orientation() == TopAbs_REVERSED)
@@ -874,7 +868,8 @@ int BRepFill_Pipe::FindVertex(const TopoDS_Shape&  S,
       break;
     }
 
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       int                            ii      = InitialLength + 1;
       occ::handle<BRepFill_ShapeLaw> Section = new (BRepFill_ShapeLaw)(TopoDS::Wire(S), false);
       InitialLength += Section->NbLaw() + 1;
@@ -889,7 +884,8 @@ int BRepFill_Pipe::FindVertex(const TopoDS_Shape&  S,
 
     case TopAbs_FACE:
     case TopAbs_SHELL:
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       for (TopoDS_Iterator it(S); it.More() && (!result); it.Next())
         result = FindVertex(it.Value(), V, InitialLength);
       break;

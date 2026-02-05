@@ -1,18 +1,3 @@
-// Created on: 2015-01-16
-// Created by: Anastasia BORISOVA
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_BackgroundArray.hpp>
 
 #include <Aspect_FillMethod.hpp>
@@ -139,21 +124,24 @@ bool OpenGl_BackgroundArray::init(const occ::handle<OpenGl_Workspace>& theWorksp
 
   switch (myType)
   {
-    case Graphic3d_TOB_GRADIENT: {
+    case Graphic3d_TOB_GRADIENT:
+    {
       if (!createGradientArray(aCtx))
       {
         return false;
       }
       break;
     }
-    case Graphic3d_TOB_TEXTURE: {
+    case Graphic3d_TOB_TEXTURE:
+    {
       if (!createTextureArray(theWorkspace))
       {
         return false;
       }
       break;
     }
-    case Graphic3d_TOB_CUBEMAP: {
+    case Graphic3d_TOB_CUBEMAP:
+    {
       if (!createCubeMapArray())
       {
         return false;
@@ -161,7 +149,8 @@ bool OpenGl_BackgroundArray::init(const occ::handle<OpenGl_Workspace>& theWorksp
       break;
     }
     case Graphic3d_TOB_NONE:
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -213,21 +202,24 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
 
   switch (myGradientParams.type)
   {
-    case Aspect_GradientFillMethod_Horizontal: {
+    case Aspect_GradientFillMethod_Horizontal:
+    {
       aCorners[0] = myGradientParams.color2.ChangeData();
       aCorners[1] = myGradientParams.color2.ChangeData();
       aCorners[2] = myGradientParams.color1.ChangeData();
       aCorners[3] = myGradientParams.color1.ChangeData();
       break;
     }
-    case Aspect_GradientFillMethod_Vertical: {
+    case Aspect_GradientFillMethod_Vertical:
+    {
       aCorners[0] = myGradientParams.color2.ChangeData();
       aCorners[1] = myGradientParams.color1.ChangeData();
       aCorners[2] = myGradientParams.color1.ChangeData();
       aCorners[3] = myGradientParams.color2.ChangeData();
       break;
     }
-    case Aspect_GradientFillMethod_Diagonal1: {
+    case Aspect_GradientFillMethod_Diagonal1:
+    {
       aCorners[0]     = myGradientParams.color2.ChangeData();
       aCorners[2]     = myGradientParams.color1.ChangeData();
       aDiagCorner1[0] = aDiagCorner2[0] = 0.5f * (aCorners[0][0] + aCorners[2][0]);
@@ -237,7 +229,8 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
       aCorners[3]                       = aDiagCorner2;
       break;
     }
-    case Aspect_GradientFillMethod_Diagonal2: {
+    case Aspect_GradientFillMethod_Diagonal2:
+    {
       aCorners[1]     = myGradientParams.color1.ChangeData();
       aCorners[3]     = myGradientParams.color2.ChangeData();
       aDiagCorner1[0] = aDiagCorner2[0] = 0.5f * (aCorners[1][0] + aCorners[3][0]);
@@ -250,7 +243,8 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
     case Aspect_GradientFillMethod_Corner1:
     case Aspect_GradientFillMethod_Corner2:
     case Aspect_GradientFillMethod_Corner3:
-    case Aspect_GradientFillMethod_Corner4: {
+    case Aspect_GradientFillMethod_Corner4:
+    {
       Graphic3d_Attribute aCornerAttribInfo[] = {{Graphic3d_TOA_POS, Graphic3d_TOD_VEC2},
                                                  {Graphic3d_TOA_UV, Graphic3d_TOD_VEC2}};
 
@@ -276,7 +270,8 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
       }
       return true;
     }
-    case Aspect_GradientFillMethod_Elliptical: {
+    case Aspect_GradientFillMethod_Elliptical:
+    {
       // construction of a circle circumscribed about a view rectangle
       // using parametric equation (scaled by aspect ratio and centered)
       const int aSubdiv = 64;
@@ -326,7 +321,8 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
 
       return true;
     }
-    case Aspect_GradientFillMethod_None: {
+    case Aspect_GradientFillMethod_None:
+    {
       break;
     }
   }

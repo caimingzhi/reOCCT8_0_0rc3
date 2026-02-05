@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureParams.hpp>
 #include <OpenGl_Resource.hpp>
 
@@ -134,4 +133,3 @@ protected:
   bool                            myIsImmutable;     //!< immutable flag preventing further modifications of sampler parameters, FALSE by default
   // clang-format on
 };
-

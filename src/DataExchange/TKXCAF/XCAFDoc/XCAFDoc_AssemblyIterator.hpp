@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <XCAFDoc_AssemblyItemId.hpp>
 
@@ -52,4 +51,3 @@ private:
   int                                   myMaxLevel;  //!< Limit on max depth of iteration.
   int                                   mySeedLevel; //!< Level of hierarchy where we start.
 };
-

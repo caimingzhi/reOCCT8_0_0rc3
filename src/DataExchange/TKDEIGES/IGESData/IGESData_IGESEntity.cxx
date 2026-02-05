@@ -39,13 +39,13 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESData_IGESEntity, Standard_Transient)
 
 namespace
 {
-static const int IGESFlagAssocs  = 131072;
-static const int IGESFlagProps   = 262144;
-static const int IGESFourStatus  = 65535;
-static const int IGESStatusField = 15;
-static const int IGESShiftSubord = 4;
-static const int IGESShiftUse    = 8;
-static const int IGESShiftHier   = 12;
+  static const int IGESFlagAssocs  = 131072;
+  static const int IGESFlagProps   = 262144;
+  static const int IGESFourStatus  = 65535;
+  static const int IGESStatusField = 15;
+  static const int IGESShiftSubord = 4;
+  static const int IGESShiftUse    = 8;
+  static const int IGESShiftHier   = 12;
 } // namespace
 
 //=================================================================================================

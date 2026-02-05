@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <IntSurf_Quadric.hpp>
 #include <math_FunctionWithDerivative.hpp>
@@ -37,4 +36,3 @@ private:
   IntSurf_Quadric              myQuadric;
   occ::handle<Adaptor3d_Curve> myCurve;
 };
-

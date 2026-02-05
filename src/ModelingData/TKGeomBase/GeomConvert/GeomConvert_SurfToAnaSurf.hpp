@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -123,4 +122,3 @@ private:
   GeomConvert_ConvType      myConvType;
   GeomAbs_SurfaceType       myTarget;
 };
-

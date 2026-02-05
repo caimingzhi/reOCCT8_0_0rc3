@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 
 #include <Standard_Macro.hpp>
@@ -54,96 +53,96 @@ protected:
 
 namespace BVH
 {
-template <class T, int N>
-struct MatrixOp
-{
-  // Not implemented
-};
-
-template <class T>
-struct MatrixOp<T, 4>
-{
-  typedef typename BVH::MatrixType<T, 4>::Type BVH_Mat4t;
-
-  static void Inverse(const BVH_Mat4t& theIn, BVH_Mat4t& theOut) { theIn.Inverted(theOut); }
-
-  typedef typename BVH::VectorType<T, 4>::Type BVH_Vec4t;
-
-  static BVH_Vec4t Multiply(const BVH_Mat4t& theMat, const BVH_Vec4t& theVec)
+  template <class T, int N>
+  struct MatrixOp
   {
-    BVH_Vec4t aOut = theMat * theVec;
-    return aOut * static_cast<T>(1.0 / aOut.w());
-  }
-};
+    // Not implemented
+  };
 
-template <class T, int N>
-struct UnitVector
-{
-  // Not implemented
-};
-
-template <class T>
-struct UnitVector<T, 2>
-{
-  typedef typename BVH::VectorType<T, 2>::Type BVH_Vec2t;
-
-  static BVH_Vec2t DX() { return BVH_Vec2t(static_cast<T>(1.0), static_cast<T>(0.0)); }
-
-  static BVH_Vec2t DY() { return BVH_Vec2t(static_cast<T>(0.0), static_cast<T>(1.0)); }
-
-  static BVH_Vec2t DZ() { return BVH_Vec2t(static_cast<T>(0.0), static_cast<T>(0.0)); }
-};
-
-template <class T>
-struct UnitVector<T, 3>
-{
-  typedef typename BVH::VectorType<T, 3>::Type BVH_Vec3t;
-
-  static BVH_Vec3t DX()
+  template <class T>
+  struct MatrixOp<T, 4>
   {
-    return BVH_Vec3t(static_cast<T>(1.0), static_cast<T>(0.0), static_cast<T>(0.0));
-  }
+    typedef typename BVH::MatrixType<T, 4>::Type BVH_Mat4t;
 
-  static BVH_Vec3t DY()
+    static void Inverse(const BVH_Mat4t& theIn, BVH_Mat4t& theOut) { theIn.Inverted(theOut); }
+
+    typedef typename BVH::VectorType<T, 4>::Type BVH_Vec4t;
+
+    static BVH_Vec4t Multiply(const BVH_Mat4t& theMat, const BVH_Vec4t& theVec)
+    {
+      BVH_Vec4t aOut = theMat * theVec;
+      return aOut * static_cast<T>(1.0 / aOut.w());
+    }
+  };
+
+  template <class T, int N>
+  struct UnitVector
   {
-    return BVH_Vec3t(static_cast<T>(0.0), static_cast<T>(1.0), static_cast<T>(0.0));
-  }
+    // Not implemented
+  };
 
-  static BVH_Vec3t DZ()
+  template <class T>
+  struct UnitVector<T, 2>
   {
-    return BVH_Vec3t(static_cast<T>(0.0), static_cast<T>(0.0), static_cast<T>(1.0));
-  }
-};
+    typedef typename BVH::VectorType<T, 2>::Type BVH_Vec2t;
 
-template <class T>
-struct UnitVector<T, 4>
-{
-  typedef typename BVH::VectorType<T, 4>::Type BVH_Vec4t;
+    static BVH_Vec2t DX() { return BVH_Vec2t(static_cast<T>(1.0), static_cast<T>(0.0)); }
 
-  static BVH_Vec4t DX()
+    static BVH_Vec2t DY() { return BVH_Vec2t(static_cast<T>(0.0), static_cast<T>(1.0)); }
+
+    static BVH_Vec2t DZ() { return BVH_Vec2t(static_cast<T>(0.0), static_cast<T>(0.0)); }
+  };
+
+  template <class T>
+  struct UnitVector<T, 3>
   {
-    return BVH_Vec4t(static_cast<T>(1.0),
-                     static_cast<T>(0.0),
-                     static_cast<T>(0.0),
-                     static_cast<T>(0.0));
-  }
+    typedef typename BVH::VectorType<T, 3>::Type BVH_Vec3t;
 
-  static BVH_Vec4t DY()
-  {
-    return BVH_Vec4t(static_cast<T>(0.0),
-                     static_cast<T>(1.0),
-                     static_cast<T>(0.0),
-                     static_cast<T>(0.0));
-  }
+    static BVH_Vec3t DX()
+    {
+      return BVH_Vec3t(static_cast<T>(1.0), static_cast<T>(0.0), static_cast<T>(0.0));
+    }
 
-  static BVH_Vec4t DZ()
+    static BVH_Vec3t DY()
+    {
+      return BVH_Vec3t(static_cast<T>(0.0), static_cast<T>(1.0), static_cast<T>(0.0));
+    }
+
+    static BVH_Vec3t DZ()
+    {
+      return BVH_Vec3t(static_cast<T>(0.0), static_cast<T>(0.0), static_cast<T>(1.0));
+    }
+  };
+
+  template <class T>
+  struct UnitVector<T, 4>
   {
-    return BVH_Vec4t(static_cast<T>(0.0),
-                     static_cast<T>(0.0),
-                     static_cast<T>(1.0),
-                     static_cast<T>(0.0));
-  }
-};
+    typedef typename BVH::VectorType<T, 4>::Type BVH_Vec4t;
+
+    static BVH_Vec4t DX()
+    {
+      return BVH_Vec4t(static_cast<T>(1.0),
+                       static_cast<T>(0.0),
+                       static_cast<T>(0.0),
+                       static_cast<T>(0.0));
+    }
+
+    static BVH_Vec4t DY()
+    {
+      return BVH_Vec4t(static_cast<T>(0.0),
+                       static_cast<T>(1.0),
+                       static_cast<T>(0.0),
+                       static_cast<T>(0.0));
+    }
+
+    static BVH_Vec4t DZ()
+    {
+      return BVH_Vec4t(static_cast<T>(0.0),
+                       static_cast<T>(0.0),
+                       static_cast<T>(1.0),
+                       static_cast<T>(0.0));
+    }
+  };
 } // namespace BVH
 
 //=================================================================================================
@@ -181,4 +180,3 @@ BVH_Box<T, N> BVH_Transform<T, N>::Apply(const BVH_Box<T, N>& theBox) const
 
   return aBox;
 }
-

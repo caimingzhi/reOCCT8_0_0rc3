@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -38,4 +37,3 @@ private:
   gp_Pnt2d                  p1;
   gp_Vec2d                  t1;
 };
-

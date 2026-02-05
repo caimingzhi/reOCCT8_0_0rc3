@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <gp_Pnt.hpp>
 
@@ -58,4 +57,3 @@ private:
   char  myAutoData[MeshVS_BufSize];
   void* myDynData;
 };
-

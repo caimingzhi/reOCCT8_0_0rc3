@@ -95,7 +95,8 @@ static void DrawCurve(const Adaptor3d_Curve&                   aCurve,
 
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Vec V;
       HAV1 = new NCollection_HArray1<gp_Vec>(1, 2);
       // array of coordinates of line
@@ -118,7 +119,8 @@ static void DrawCurve(const Adaptor3d_Curve&                   aCurve,
       HAI1->SetValue(3, -1);
     }
     break;
-    default: {
+    default:
+    {
 
       double U;
       int    N = std::max(2, NbP * nbintervals);

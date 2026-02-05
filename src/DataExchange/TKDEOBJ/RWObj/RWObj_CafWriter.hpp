@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Map.hpp>
@@ -155,4 +154,3 @@ protected:
   XCAFPrs_Style                    myDefaultStyle; //!< default material definition to be used for nodes with only color defined
   // clang-format on
 };
-

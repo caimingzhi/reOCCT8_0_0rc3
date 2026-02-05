@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObject_gp_Vectors.hpp>
 
 #include <gp_Mat2d.hpp>
@@ -115,4 +114,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData, const 
 
   return theWriteData;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <NCollection_Sequence.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -644,26 +643,25 @@ struct OpenGl_VariableSetter : public OpenGl_SetterInterface
 
 namespace OpenGl_HashMapInitializer
 {
-template <class K, class V>
-struct MapListOfType
-{
-  NCollection_DataMap<K, V> myDictionary;
-
-  MapListOfType(K theKey, V theValue) { myDictionary.Bind(theKey, theValue); }
-
-  MapListOfType& operator()(K theKey, V theValue)
+  template <class K, class V>
+  struct MapListOfType
   {
-    myDictionary.Bind(theKey, theValue);
-    return *this;
+    NCollection_DataMap<K, V> myDictionary;
+
+    MapListOfType(K theKey, V theValue) { myDictionary.Bind(theKey, theValue); }
+
+    MapListOfType& operator()(K theKey, V theValue)
+    {
+      myDictionary.Bind(theKey, theValue);
+      return *this;
+    }
+
+    operator const NCollection_DataMap<K, V>&() const { return myDictionary; }
+  };
+
+  template <class K, class V>
+  MapListOfType<K, V> CreateListOf(K theKey, V theValue)
+  {
+    return MapListOfType<K, V>(theKey, theValue);
   }
-
-  operator const NCollection_DataMap<K, V>&() const { return myDictionary; }
-};
-
-template <class K, class V>
-MapListOfType<K, V> CreateListOf(K theKey, V theValue)
-{
-  return MapListOfType<K, V>(theKey, theValue);
-}
 } // namespace OpenGl_HashMapInitializer
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <gp_Pnt.hpp>
 
@@ -121,4 +120,3 @@ inline double Contap_ThePathPointOfTheSearch::Parameter() const
 {
   return param;
 }
-

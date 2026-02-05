@@ -1,27 +1,3 @@
-// Created on: 1994-04-13
-// Created by: Joelle CHAUVET
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified 22/09/1997 by PMN : Refonte du a l'introduction de F(t) dans
-//             le cas des 2 lignes guides
-// Modified:	Mon Jan 18 11:06:46 1999
-//		dans Init(Path, Nsections) :
-//              les parametres des sections doivent etre strict. croissants
-//		dans Init(Path, FirstSect, LastSect) :
-//		il faut placer les 2 sections au debut de la trajectoire
-
 #include <GeomFill_Pipe.hpp>
 
 #include <Adaptor3d_CurveOnSurface.hpp>
@@ -439,7 +415,8 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
   // Construction de la loi de triedre
   switch (Option)
   {
-    case GeomFill_IsCorrectedFrenet: {
+    case GeomFill_IsCorrectedFrenet:
+    {
       TLaw = new (GeomFill_CorrectedFrenet)();
       break;
     }
@@ -450,12 +427,14 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
       std::cout << "Option Darboux: non realisable" << std::endl;
     }
 #endif
-    case GeomFill_IsFrenet: {
+    case GeomFill_IsFrenet:
+    {
       TLaw = new (GeomFill_Frenet)();
       break;
     }
 
-    case GeomFill_IsFixed: {
+    case GeomFill_IsFixed:
+    {
       double            Eps = 1.e-9;
       gp_Vec            V1(0, 0, 1), V2(0, 1, 0);
       gp_Dir            D;
@@ -484,7 +463,8 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
       break;
     }
 
-    case GeomFill_IsConstantNormal: {
+    case GeomFill_IsConstantNormal:
+    {
       TLaw  = new (GeomFill_Frenet)();
       myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
       myLoc->SetCurve(myAdpPath);
@@ -518,7 +498,8 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
       break;
     }
 
-    default: {
+    default:
+    {
       throw Standard_ConstructionError("GeomFill::Init : Unknown Option");
     }
   }
@@ -757,17 +738,20 @@ void GeomFill_Pipe::Perform(const double        Tol,
   GeomAbs_Shape TheConti;
   switch (Conti)
   {
-    case GeomAbs_C0: {
+    case GeomAbs_C0:
+    {
       TheConti = GeomAbs_C0;
     }
     break;
     case GeomAbs_G1:
-    case GeomAbs_C1: {
+    case GeomAbs_C1:
+    {
       TheConti = GeomAbs_C1;
     }
     break;
     case GeomAbs_G2:
-    case GeomAbs_C2: {
+    case GeomAbs_C2:
+    {
       TheConti = GeomAbs_C2;
     }
     break;

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Describes an edge which
@@ -22,13 +21,12 @@ public:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Edge>
-{
-  size_t operator()(const TopoDS_Edge& theShape) const
+  template <>
+  struct hash<TopoDS_Edge>
   {
-    return std::hash<TopoDS_Shape>{}(theShape);
-  }
-};
+    size_t operator()(const TopoDS_Edge& theShape) const
+    {
+      return std::hash<TopoDS_Shape>{}(theShape);
+    }
+  };
 } // namespace std
-

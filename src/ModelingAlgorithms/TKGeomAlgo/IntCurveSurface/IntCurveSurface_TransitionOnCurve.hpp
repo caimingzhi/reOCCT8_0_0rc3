@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! \ Uo     ^        \ U1     ^
 //! \       | n       \       | n
 //! Surf  ====\======|===   ====\======|===
@@ -24,4 +23,3 @@ enum IntCurveSurface_TransitionOnCurve
   IntCurveSurface_In,
   IntCurveSurface_Out
 };
-

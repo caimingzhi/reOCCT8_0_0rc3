@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum GCPnts_DeflectionType
 {
   GCPnts_Linear,
@@ -8,4 +7,3 @@ enum GCPnts_DeflectionType
   GCPnts_Curved,
   GCPnts_DefComposite
 };
-

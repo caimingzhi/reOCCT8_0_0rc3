@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
 #include <TopOpeBRepDS_CurvePointInterference.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
@@ -509,4 +508,3 @@ bool ChFi3d_IsPseudoSeam(const TopoDS_Edge& E, const TopoDS_Face& F);
 occ::handle<Geom_BSplineCurve> ChFi3d_ApproxByC2(const occ::handle<Geom_Curve>& C);
 
 bool ChFi3d_IsSmooth(const occ::handle<Geom_Curve>& C);
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESBasic_Group.hpp>
@@ -20,4 +19,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IGESBasic_OrderedGroup, IGESBasic_Group)
 };
-

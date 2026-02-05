@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <cstddef>
 #include <ctime>
 
@@ -120,4 +119,3 @@ typedef const char* Standard_CString;
 //! @deprecated Use 'const char16_t*' directly instead.
 Standard_DEPRECATED("Standard_ExtString is deprecated, use const char16_t* directly")
 typedef const char16_t* Standard_ExtString;
-

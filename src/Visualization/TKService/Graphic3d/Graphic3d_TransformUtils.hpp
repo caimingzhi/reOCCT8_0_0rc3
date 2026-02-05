@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Trsf.hpp>
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
@@ -11,114 +10,114 @@
 //! Helper class that implements transformation matrix functionality.
 namespace Graphic3d_TransformUtils
 {
-template <class T>
-struct MatrixType
-{
-};
+  template <class T>
+  struct MatrixType
+  {
+  };
 
-template <>
-struct MatrixType<double>
-{
-  typedef NCollection_Mat4<double> Mat4;
-};
+  template <>
+  struct MatrixType<double>
+  {
+    typedef NCollection_Mat4<double> Mat4;
+  };
 
-template <>
-struct MatrixType<float>
-{
-  typedef NCollection_Mat4<float> Mat4;
-};
+  template <>
+  struct MatrixType<float>
+  {
+    typedef NCollection_Mat4<float> Mat4;
+  };
 
-template <class T>
-struct VectorType
-{
-};
+  template <class T>
+  struct VectorType
+  {
+  };
 
-template <>
-struct VectorType<double>
-{
-  typedef NCollection_Vec2<double> Vec2;
-  typedef NCollection_Vec3<double> Vec3;
-  typedef NCollection_Vec4<double> Vec4;
-};
+  template <>
+  struct VectorType<double>
+  {
+    typedef NCollection_Vec2<double> Vec2;
+    typedef NCollection_Vec3<double> Vec3;
+    typedef NCollection_Vec4<double> Vec4;
+  };
 
-template <>
-struct VectorType<float>
-{
-  typedef NCollection_Vec2<float> Vec2;
-  typedef NCollection_Vec3<float> Vec3;
-  typedef NCollection_Vec4<float> Vec4;
-};
+  template <>
+  struct VectorType<float>
+  {
+    typedef NCollection_Vec2<float> Vec2;
+    typedef NCollection_Vec3<float> Vec3;
+    typedef NCollection_Vec4<float> Vec4;
+  };
 
-//! Converts gp_Trsf to NCollection_Mat4<float>.
-template <class T>
-static void Convert(const gp_Trsf& theTransformation, typename MatrixType<T>::Mat4& theOut);
+  //! Converts gp_Trsf to NCollection_Mat4<float>.
+  template <class T>
+  static void Convert(const gp_Trsf& theTransformation, typename MatrixType<T>::Mat4& theOut);
 
-//! Constructs a 3D orthographic projection matrix.
-template <class T>
-static void Ortho(typename MatrixType<T>::Mat4& theOut,
-                  const T                       theLeft,
-                  const T                       theRight,
-                  const T                       theBottom,
-                  const T                       theTop,
-                  const T                       theZNear,
-                  const T                       theZFar);
-
-//! Constructs a 2D orthographic projection matrix.
-template <class T>
-static void Ortho2D(typename MatrixType<T>::Mat4& theOut,
+  //! Constructs a 3D orthographic projection matrix.
+  template <class T>
+  static void Ortho(typename MatrixType<T>::Mat4& theOut,
                     const T                       theLeft,
                     const T                       theRight,
                     const T                       theBottom,
-                    const T                       theTop);
+                    const T                       theTop,
+                    const T                       theZNear,
+                    const T                       theZFar);
 
-//! Maps object coordinates to window coordinates.
-template <class T>
-static bool Project(const T                             theObjX,
-                    const T                             theObjY,
-                    const T                             theObjZ,
-                    const typename MatrixType<T>::Mat4& theModViewMat,
-                    const typename MatrixType<T>::Mat4& theProjectMat,
-                    const int                           theViewport[4],
-                    T&                                  theWinX,
-                    T&                                  theWinY,
-                    T&                                  theWinZ);
+  //! Constructs a 2D orthographic projection matrix.
+  template <class T>
+  static void Ortho2D(typename MatrixType<T>::Mat4& theOut,
+                      const T                       theLeft,
+                      const T                       theRight,
+                      const T                       theBottom,
+                      const T                       theTop);
 
-//! Maps window coordinates to object coordinates.
-template <class T>
-static bool UnProject(const T                             theWinX,
-                      const T                             theWinY,
-                      const T                             theWinZ,
+  //! Maps object coordinates to window coordinates.
+  template <class T>
+  static bool Project(const T                             theObjX,
+                      const T                             theObjY,
+                      const T                             theObjZ,
                       const typename MatrixType<T>::Mat4& theModViewMat,
                       const typename MatrixType<T>::Mat4& theProjectMat,
                       const int                           theViewport[4],
-                      T&                                  theObjX,
-                      T&                                  theObjY,
-                      T&                                  theObjZ);
+                      T&                                  theWinX,
+                      T&                                  theWinY,
+                      T&                                  theWinZ);
 
-//! Constructs a 4x4 rotation matrix.
-template <class T>
-static void ConstructRotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
+  //! Maps window coordinates to object coordinates.
+  template <class T>
+  static bool UnProject(const T                             theWinX,
+                        const T                             theWinY,
+                        const T                             theWinZ,
+                        const typename MatrixType<T>::Mat4& theModViewMat,
+                        const typename MatrixType<T>::Mat4& theProjectMat,
+                        const int                           theViewport[4],
+                        T&                                  theObjX,
+                        T&                                  theObjY,
+                        T&                                  theObjZ);
 
-//! Constructs a 4x4 rotation matrix.
-template <class T>
-static void Rotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
+  //! Constructs a 4x4 rotation matrix.
+  template <class T>
+  static void ConstructRotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
 
-//! Constructs a 4x4 scaling matrix.
-template <class T>
-static void Scale(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
+  //! Constructs a 4x4 rotation matrix.
+  template <class T>
+  static void Rotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
 
-//! Constructs a 4x4 translation matrix.
-template <class T>
-static void Translate(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
+  //! Constructs a 4x4 scaling matrix.
+  template <class T>
+  static void Scale(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
 
-//! Returns scaling factor from 3x3 affine matrix.
-template <class T>
-static double ScaleFactor(const NCollection_Mat4<T>& theMatrix)
-{
-  // The determinant of the matrix should give the scale factor (cubed).
-  const T aDeterminant = theMatrix.DeterminantMat3();
-  return std::pow(static_cast<double>(aDeterminant), 1.0 / 3.0);
-}
+  //! Constructs a 4x4 translation matrix.
+  template <class T>
+  static void Translate(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
+
+  //! Returns scaling factor from 3x3 affine matrix.
+  template <class T>
+  static double ScaleFactor(const NCollection_Mat4<T>& theMatrix)
+  {
+    // The determinant of the matrix should give the scale factor (cubed).
+    const T aDeterminant = theMatrix.DeterminantMat3();
+    return std::pow(static_cast<double>(aDeterminant), 1.0 / 3.0);
+  }
 } // namespace Graphic3d_TransformUtils
 
 //=================================================================================================
@@ -466,4 +465,3 @@ static bool Graphic3d_TransformUtils::UnProject(const T                         
 
   return true;
 }
-

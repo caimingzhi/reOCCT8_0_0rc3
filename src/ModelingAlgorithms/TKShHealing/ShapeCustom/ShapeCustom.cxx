@@ -38,64 +38,64 @@
 
 namespace
 {
-//=======================================================================
-// function : UpdateHistoryShape
-// purpose  : Updates ShapeBuild_ReShape by the info of the given shape
-//=======================================================================
-bool UpdateHistoryShape(const TopoDS_Shape&                    theShape,
-                        const BRepTools_Modifier&              theModifier,
-                        const occ::handle<ShapeBuild_ReShape>& theReShape)
-{
-  TopoDS_Shape aResult;
-  try
+  //=======================================================================
+  // function : UpdateHistoryShape
+  // purpose  : Updates ShapeBuild_ReShape by the info of the given shape
+  //=======================================================================
+  bool UpdateHistoryShape(const TopoDS_Shape&                    theShape,
+                          const BRepTools_Modifier&              theModifier,
+                          const occ::handle<ShapeBuild_ReShape>& theReShape)
   {
-    OCC_CATCH_SIGNALS
-    aResult = theModifier.ModifiedShape(theShape);
-  }
-  catch (Standard_NoSuchObject const&)
-  {
-    // the sub shape isn't in the map
-    aResult.Nullify();
-  }
-
-  if (!aResult.IsNull() && !theShape.IsSame(aResult))
-  {
-    theReShape->Replace(theShape, aResult);
-    return true;
-  }
-
-  return false;
-}
-
-//=======================================================================
-// function : UpdateHistory
-// purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
-//=======================================================================
-void UpdateHistory(const TopoDS_Shape&                    theShape,
-                   const BRepTools_Modifier&              theModifier,
-                   const occ::handle<ShapeBuild_ReShape>& theReShape)
-{
-  for (TopoDS_Iterator theIterator(theShape, false); theIterator.More(); theIterator.Next())
-  {
-    const TopoDS_Shape& aCurrent = theIterator.Value();
-    if (UpdateHistoryShape(aCurrent, theModifier, theReShape))
+    TopoDS_Shape aResult;
+    try
     {
-      UpdateHistory(aCurrent, theModifier, theReShape);
+      OCC_CATCH_SIGNALS
+      aResult = theModifier.ModifiedShape(theShape);
+    }
+    catch (Standard_NoSuchObject const&)
+    {
+      // the sub shape isn't in the map
+      aResult.Nullify();
+    }
+
+    if (!aResult.IsNull() && !theShape.IsSame(aResult))
+    {
+      theReShape->Replace(theShape, aResult);
+      return true;
+    }
+
+    return false;
+  }
+
+  //=======================================================================
+  // function : UpdateHistory
+  // purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
+  //=======================================================================
+  void UpdateHistory(const TopoDS_Shape&                    theShape,
+                     const BRepTools_Modifier&              theModifier,
+                     const occ::handle<ShapeBuild_ReShape>& theReShape)
+  {
+    for (TopoDS_Iterator theIterator(theShape, false); theIterator.More(); theIterator.Next())
+    {
+      const TopoDS_Shape& aCurrent = theIterator.Value();
+      if (UpdateHistoryShape(aCurrent, theModifier, theReShape))
+      {
+        UpdateHistory(aCurrent, theModifier, theReShape);
+      }
     }
   }
-}
 
-//=======================================================================
-// function : UpdateShapeBuild
-// purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
-//=======================================================================
-void UpdateShapeBuild(const TopoDS_Shape&                    theShape,
-                      const BRepTools_Modifier&              theModifier,
-                      const occ::handle<ShapeBuild_ReShape>& theReShape)
-{
-  UpdateHistoryShape(theShape, theModifier, theReShape);
-  UpdateHistory(theShape, theModifier, theReShape);
-}
+  //=======================================================================
+  // function : UpdateShapeBuild
+  // purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
+  //=======================================================================
+  void UpdateShapeBuild(const TopoDS_Shape&                    theShape,
+                        const BRepTools_Modifier&              theModifier,
+                        const occ::handle<ShapeBuild_ReShape>& theReShape)
+  {
+    UpdateHistoryShape(theShape, theModifier, theReShape);
+    UpdateHistory(theShape, theModifier, theReShape);
+  }
 } // namespace
 
 //=================================================================================================

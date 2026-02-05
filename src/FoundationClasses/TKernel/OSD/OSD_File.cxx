@@ -255,7 +255,8 @@ int __fastcall _get_file_type(const char* theFileName, HANDLE theFileHandle)
   {
     case FILE_TYPE_UNKNOWN:
       return FLAG_SOCKET;
-    case FILE_TYPE_DISK: {
+    case FILE_TYPE_DISK:
+    {
       const TCollection_ExtendedString aFileNameW(theFileName, true);
       WIN32_FILE_ATTRIBUTE_DATA        aFileInfo;
       if (GetFileAttributesExW(aFileNameW.ToWideString(), GetFileExInfoStandard, &aFileInfo))

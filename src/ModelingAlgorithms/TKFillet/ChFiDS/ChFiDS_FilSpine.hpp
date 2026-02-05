@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ChFiDS_Spine.hpp>
 #include <ChFiDS_ElSpine.hpp>
 #include <Law_Function.hpp>
@@ -87,4 +86,3 @@ private:
   NCollection_Sequence<gp_XY>                 parandrad;
   NCollection_List<occ::handle<Law_Function>> laws;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
@@ -103,4 +102,3 @@ private:
   LProp_Status                 myTangentStatus;
   int                          mySignificantFirstDerivativeOrder;
 };
-

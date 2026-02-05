@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <XCAFDimTolObjects_DatumTargetType.hpp>
@@ -193,4 +192,3 @@ private:
   occ::handle<TCollection_HAsciiString>                    mySemanticName;
   occ::handle<TCollection_HAsciiString>                    myPresentationName;
 };
-

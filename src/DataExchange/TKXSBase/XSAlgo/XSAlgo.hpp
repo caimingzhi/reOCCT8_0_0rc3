@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -23,4 +22,3 @@ public:
   //! Returns default AlgoContainer
   Standard_EXPORT static occ::handle<XSAlgo_AlgoContainer> AlgoContainer();
 };
-

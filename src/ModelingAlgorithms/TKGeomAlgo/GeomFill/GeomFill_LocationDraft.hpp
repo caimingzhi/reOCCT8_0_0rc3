@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <gp_Mat.hpp>
 #include <gp_Dir.hpp>
@@ -165,4 +164,3 @@ private:
   bool                                 Intersec;
   bool                                 WithTrans;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HString.hpp>
 
@@ -42,4 +41,3 @@ private:
   Handle(StdLPersistent_HString::Ascii) myDocEntry;
   Handle(StdLPersistent_HString::Ascii) myLabEntry;
 };
-

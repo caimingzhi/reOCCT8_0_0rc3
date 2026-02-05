@@ -1,6 +1,5 @@
 #pragma once
 
-
 typedef int MeshVS_DisplayModeFlags;
 
 enum
@@ -25,4 +24,3 @@ enum
   MeshVS_DMF_HilightPrs   = 0x0400,
   MeshVS_DMF_User         = 0x0800
 };
-

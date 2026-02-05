@@ -534,23 +534,28 @@ static int testread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   theDI << "Status from reading IGES file " << filename << " : ";
   switch (readstat)
   {
-    case IFSelect_RetVoid: {
+    case IFSelect_RetVoid:
+    {
       theDI << "empty file\n";
       return 1;
     }
-    case IFSelect_RetDone: {
+    case IFSelect_RetDone:
+    {
       theDI << "file read\n";
       break;
     }
-    case IFSelect_RetError: {
+    case IFSelect_RetError:
+    {
       theDI << "file not found\n";
       return 1;
     }
-    case IFSelect_RetFail: {
+    case IFSelect_RetFail:
+    {
       theDI << "error during read\n";
       return 1;
     }
-    default: {
+    default:
+    {
       theDI << "failure\n";
       return 1;
     }
@@ -1094,12 +1099,12 @@ static int WriteIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
 namespace
 {
-// Singleton to ensure DEIGES plugin is registered only once
-void DEIGESSingleton()
-{
-  static DE_PluginHolder<DEIGES_ConfigurationNode> aHolder;
-  (void)aHolder;
-}
+  // Singleton to ensure DEIGES plugin is registered only once
+  void DEIGESSingleton()
+  {
+    static DE_PluginHolder<DEIGES_ConfigurationNode> aHolder;
+    (void)aHolder;
+  }
 } // namespace
 
 //=================================================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Geom_AxisPlacement.hpp>
@@ -54,4 +53,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Geom_Axis1Placement, Geom_AxisPlacement)
 };
-

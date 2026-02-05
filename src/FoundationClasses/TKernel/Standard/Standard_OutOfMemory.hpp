@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_ProgramError.hpp>
 
 #include <memory>
@@ -43,4 +42,3 @@ public:
 private:
   char myBuffer[1024];
 };
-

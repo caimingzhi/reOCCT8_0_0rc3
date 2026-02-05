@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <XmlMDF_ADriver.hpp>
@@ -30,4 +29,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_LengthUnitDriver, XmlMDF_ADriver)
 };
-

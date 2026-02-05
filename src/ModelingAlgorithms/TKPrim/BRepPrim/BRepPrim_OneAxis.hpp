@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -277,4 +276,3 @@ private:
   TopoDS_Face   myFaces[5];
   bool          FacesBuilt[5];
 };
-

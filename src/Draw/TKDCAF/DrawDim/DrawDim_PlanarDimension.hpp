@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Face.hpp>
@@ -20,4 +19,3 @@ public:
 protected:
   TopoDS_Face myPlane;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -34,4 +33,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Bisector_Curve, Geom2d_Curve)
 };
-

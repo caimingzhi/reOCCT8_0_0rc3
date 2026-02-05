@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -250,4 +249,3 @@ protected: //! @name Fields
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>
     myInputsMap; //!< Map of all sub-shapes of the input shape
 };
-

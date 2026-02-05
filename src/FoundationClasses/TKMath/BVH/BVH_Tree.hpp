@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 
 template <class T, int N>
@@ -214,4 +213,3 @@ class BVH_Tree
 {
   // Invalid type
 };
-

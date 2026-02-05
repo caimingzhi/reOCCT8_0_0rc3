@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_VKeySet.hpp>
 // Copyright (c) 2016-2019 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <NCollection_Vec2.hpp>
 
@@ -55,7 +53,6 @@ public:
   {
   }
 };
-
 
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Vec2.hpp>
@@ -301,4 +298,3 @@ protected:                                         //! @name 3d mouse input vari
   float                  my3dMouseAccelRotate;     //!< acceleration ratio for rotation event
   bool                   my3dMouseIsQuadric;       //!< quadric acceleration
 };
-

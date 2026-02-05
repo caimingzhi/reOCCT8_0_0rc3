@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_OStream.hpp>
 #include <BinLDrivers_DocumentStorageDriver.hpp>
@@ -49,4 +48,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BinDrivers_DocumentStorageDriver, BinLDrivers_DocumentStorageDriver)
 };
-

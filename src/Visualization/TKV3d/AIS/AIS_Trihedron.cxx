@@ -1,19 +1,3 @@
-// Created on: 1995-10-09
-// Created by: Arnaud BOUZY/Odile Olivier
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Trihedron.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -180,7 +164,8 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
   occ::handle<Prs3d_DatumAspect> anAspect = myDrawer->DatumAspect();
   switch (theMode)
   {
-    case AIS_TrihedronSelectionMode_EntireObject: {
+    case AIS_TrihedronSelectionMode_EntireObject:
+    {
       occ::handle<SelectMgr_EntityOwner> anOwner =
         new SelectMgr_EntityOwner(this, mySelectionPriority[Prs3d_DatumParts_None]);
       const bool isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
@@ -197,7 +182,8 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_Origin: {
+    case AIS_TrihedronSelectionMode_Origin:
+    {
       const Prs3d_DatumParts aPart = Prs3d_DatumParts_Origin;
       if (anAspect->DrawDatumPart(aPart))
       {
@@ -208,7 +194,8 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_Axes: {
+    case AIS_TrihedronSelectionMode_Axes:
+    {
       for (int aPartIter = Prs3d_DatumParts_XAxis; aPartIter <= Prs3d_DatumParts_ZAxis; ++aPartIter)
       {
         const Prs3d_DatumParts aPart = (Prs3d_DatumParts)aPartIter;
@@ -222,7 +209,8 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_MainPlanes: {
+    case AIS_TrihedronSelectionMode_MainPlanes:
+    {
       // create owner for each trihedron plane
       {
         for (int aPartIter = Prs3d_DatumParts_XOYAxis; aPartIter <= Prs3d_DatumParts_XOZAxis;
@@ -879,17 +867,20 @@ void AIS_Trihedron::updatePrimitives(const occ::handle<Prs3d_DatumAspect>& theAs
     Prs3d_DatumParts aPart1 = Prs3d_DatumParts_XAxis, aPart2 = Prs3d_DatumParts_XAxis;
     switch (aPart)
     {
-      case Prs3d_DatumParts_XOYAxis: {
+      case Prs3d_DatumParts_XOYAxis:
+      {
         aPart1 = Prs3d_DatumParts_XAxis;
         aPart2 = Prs3d_DatumParts_YAxis;
         break;
       }
-      case Prs3d_DatumParts_YOZAxis: {
+      case Prs3d_DatumParts_YOZAxis:
+      {
         aPart1 = Prs3d_DatumParts_YAxis;
         aPart2 = Prs3d_DatumParts_ZAxis;
         break;
       }
-      case Prs3d_DatumParts_XOZAxis: {
+      case Prs3d_DatumParts_XOZAxis:
+      {
         aPart1 = Prs3d_DatumParts_XAxis;
         aPart2 = Prs3d_DatumParts_ZAxis;
         break;

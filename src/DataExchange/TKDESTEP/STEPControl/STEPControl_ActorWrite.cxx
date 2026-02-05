@@ -367,7 +367,8 @@ bool STEPControl_ActorWrite::separateShapeToSoloVertex(
   }
   switch (theShape.ShapeType())
   {
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       for (TopoDS_Iterator anIter(theShape); anIter.More(); anIter.Next())
       {
         if (!separateShapeToSoloVertex(anIter.Value(), theVertices))
@@ -377,11 +378,13 @@ bool STEPControl_ActorWrite::separateShapeToSoloVertex(
       }
       break;
     }
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       theVertices.Append(theShape);
       break;
     }
-    default: {
+    default:
+    {
       theVertices.Clear();
       return false;
     }
@@ -1080,7 +1083,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
     occ::handle<StepGeom_GeometricRepresentationItem> item, itemTess;
     switch (trmode)
     {
-      case STEPControl_ManifoldSolidBrep: {
+      case STEPControl_ManifoldSolidBrep:
+      {
         if (aShape.ShapeType() == TopAbs_SOLID)
         {
           TopoDS_Solid aSolid = TopoDS::Solid(aShape);
@@ -1136,7 +1140,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
         }
         break;
       }
-      case STEPControl_BrepWithVoids: {
+      case STEPControl_BrepWithVoids:
+      {
         if (aShape.ShapeType() == TopAbs_SOLID)
         {
           TopoDS_Solid                   aSolid = TopoDS::Solid(aShape);
@@ -1150,7 +1155,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
         }
         break;
       }
-      case STEPControl_FacetedBrep: {
+      case STEPControl_FacetedBrep:
+      {
         TopoDSToStep_FacetedError facErr = TopoDSToStep_FacetedTool::CheckTopoDSShape(aShape);
         if (facErr != TopoDSToStep_FacetedDone)
         {
@@ -1178,7 +1184,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
         }
         break;
       }
-      case STEPControl_FacetedBrepAndBrepWithVoids: {
+      case STEPControl_FacetedBrepAndBrepWithVoids:
+      {
         TopoDSToStep_FacetedError facErr = TopoDSToStep_FacetedTool::CheckTopoDSShape(aShape);
         if (facErr != TopoDSToStep_FacetedDone)
         {
@@ -1210,7 +1217,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
         }
         break;
       }
-      case STEPControl_ShellBasedSurfaceModel: {
+      case STEPControl_ShellBasedSurfaceModel:
+      {
         if (aShape.ShapeType() == TopAbs_SOLID)
         {
           TopoDS_Solid                            aSolid = TopoDS::Solid(aShape);
@@ -1256,7 +1264,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
         }
         break;
       }
-      case STEPControl_GeometricCurveSet: {
+      case STEPControl_GeometricCurveSet:
+      {
         TopoDSToStep_MakeGeometricCurveSet MkGeometricCurveSet(aShape, FP, theLocalFactors);
         MkGeometricCurveSet.Tolerance() = Tol;
         if (MkGeometricCurveSet.IsDone())
@@ -1386,7 +1395,8 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
       case STEPControl_GeometricCurveSet:
         shapeRep = new StepShape_GeometricallyBoundedWireframeShapeRepresentation;
         break;
-      case STEPControl_AsIs: {
+      case STEPControl_AsIs:
+      {
         if (nbs == 1)
         {
           if (trmode == STEPControl_ManifoldSolidBrep)

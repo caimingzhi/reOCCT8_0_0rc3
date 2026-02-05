@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMDF_ADriver.hpp>
 
 //! XML persistence driver for XCAFDoc_VisMaterialTool.
@@ -25,4 +24,3 @@ public:
                              XmlObjMgt_Persistent&             theTarget,
                              XmlObjMgt_SRelocationTable&       theRelocTable) const override;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -33,4 +32,3 @@ public:
                                             Poly_Connect&               pc,
                                             NCollection_Array1<gp_Dir>& Nor);
 };
-

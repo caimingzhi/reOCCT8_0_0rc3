@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Dump.hpp>
 #include <Standard_Transient.hpp>
 
@@ -104,4 +103,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTI_INLINE(NCollection_Buffer, Standard_Transient) // Type definition
 };
-

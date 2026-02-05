@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -81,4 +80,3 @@ private:
   StepData_Logical                                                       vClosed;
   StepData_Logical                                                       selfIntersect;
 };
-

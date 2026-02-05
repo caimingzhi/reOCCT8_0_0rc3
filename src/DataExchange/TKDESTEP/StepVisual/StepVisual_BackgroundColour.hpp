@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_AreaOrView.hpp>
@@ -24,4 +23,3 @@ public:
 private:
   StepVisual_AreaOrView presentation;
 };
-

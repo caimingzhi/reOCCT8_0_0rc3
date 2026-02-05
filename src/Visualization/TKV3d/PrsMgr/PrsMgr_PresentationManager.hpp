@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_StructureManager.hpp>
 #include <Graphic3d_ZLayerId.hpp>
 #include <NCollection_List.hpp>
@@ -184,4 +183,3 @@ protected:
   NCollection_List<occ::handle<Prs3d_Presentation>> myImmediateList;
   NCollection_List<occ::handle<Prs3d_Presentation>> myViewDependentImmediateList;
 };
-

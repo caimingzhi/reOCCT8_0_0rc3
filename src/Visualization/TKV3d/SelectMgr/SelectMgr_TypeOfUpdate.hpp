@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Provides values for types of update, including
 //! -   full
 //! -   partial
@@ -11,4 +10,3 @@ enum SelectMgr_TypeOfUpdate
   SelectMgr_TOU_Partial,
   SelectMgr_TOU_None
 };
-

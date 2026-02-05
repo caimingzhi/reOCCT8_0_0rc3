@@ -1,19 +1,3 @@
-// Created on: 1995-08-09
-// Created by: Arnaud BOUZY/Odile Olivier
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Axis.hpp>
 
 #include <Aspect_TypeOfLine.hpp>
@@ -258,7 +242,8 @@ void AIS_Axis::ComputeFields()
 
     switch (myTypeOfAxis)
     {
-      case AIS_TOAX_XAxis: {
+      case AIS_TOAX_XAxis:
+      {
         oX.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_XAxis);
         myDir        = oX;
@@ -266,7 +251,8 @@ void AIS_Axis::ComputeFields()
         myText       = static_cast<const char*>("X");
         break;
       }
-      case AIS_TOAX_YAxis: {
+      case AIS_TOAX_YAxis:
+      {
         oY.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_YAxis);
         myDir        = oY;
@@ -274,7 +260,8 @@ void AIS_Axis::ComputeFields()
         myText       = static_cast<const char*>("Y");
         break;
       }
-      case AIS_TOAX_ZAxis: {
+      case AIS_TOAX_ZAxis:
+      {
         oZ.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_ZAxis);
         myDir        = oZ;

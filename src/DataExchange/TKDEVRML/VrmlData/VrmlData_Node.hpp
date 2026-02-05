@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_TypeDef.hpp>
@@ -170,27 +169,26 @@ Standard_EXPORT bool IsEqual(const occ::handle<VrmlData_Node>& theOne,
 
 namespace std
 {
-template <>
-struct hash<occ::handle<VrmlData_Node>>
-{
-  size_t operator()(const occ::handle<VrmlData_Node>& theNode) const
+  template <>
+  struct hash<occ::handle<VrmlData_Node>>
   {
-    if (!theNode->Name())
+    size_t operator()(const occ::handle<VrmlData_Node>& theNode) const
     {
-      return 1;
+      if (!theNode->Name())
+      {
+        return 1;
+      }
+      return Standard_CStringHasher{}(theNode->Name());
     }
-    return Standard_CStringHasher{}(theNode->Name());
-  }
-};
+  };
 
-template <>
-struct equal_to<occ::handle<VrmlData_Node>>
-{
-  bool operator()(const occ::handle<VrmlData_Node>& theNode1,
-                  const occ::handle<VrmlData_Node>& theNode2) const noexcept
+  template <>
+  struct equal_to<occ::handle<VrmlData_Node>>
   {
-    return IsEqual(theNode1, theNode2);
-  }
-};
+    bool operator()(const occ::handle<VrmlData_Node>& theNode1,
+                    const occ::handle<VrmlData_Node>& theNode2) const noexcept
+    {
+      return IsEqual(theNode1, theNode2);
+    }
+  };
 } // namespace std
-

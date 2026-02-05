@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -48,4 +47,3 @@ private:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>                   myMap;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myGShape;
 };
-

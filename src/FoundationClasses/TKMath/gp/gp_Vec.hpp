@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_VectorWithNullMagnitude.hpp>
 #include <gp_XYZ.hpp>
 #include <Standard_DomainError.hpp>
@@ -519,4 +518,3 @@ inline constexpr gp_Vec operator*(const double theScalar, const gp_Vec& theV) no
 {
   return theV.Multiplied(theScalar);
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_AlphaMode.hpp>
 #include <Graphic3d_TypeOfBackfacingModel.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -18,7 +17,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <NCollection_Vec2.hpp>
 
@@ -106,8 +104,6 @@ struct XCAFDoc_VisMaterialPBR
     OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, IsDefined)
   }
 };
-
-
 
 class Graphic3d_Aspects;
 class Graphic3d_MaterialAspect;
@@ -219,6 +215,7 @@ public:
   Standard_EXPORT void SetFaceCulling(Graphic3d_TypeOfBackfacingModel theFaceCulling);
 
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
+
   bool IsDoubleSided() const
   {
     return myFaceCulling == Graphic3d_TypeOfBackfacingModel_DoubleSided;
@@ -226,6 +223,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used "
                       "instead")
+
   void SetDoubleSided(bool theIsDoubleSided)
   {
     SetFaceCulling(theIsDoubleSided ? Graphic3d_TypeOfBackfacingModel_DoubleSided
@@ -287,4 +285,3 @@ private:
   Graphic3d_TypeOfBackfacingModel  myFaceCulling;   //!< specifies whether the material is double/single sided
   // clang-format on
 };
-

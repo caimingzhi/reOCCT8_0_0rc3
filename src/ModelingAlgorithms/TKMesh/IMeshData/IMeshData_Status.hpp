@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumerates statuses used to notify state of discrete model.
 enum IMeshData_Status
 {
@@ -22,4 +21,3 @@ enum IMeshData_Status
                               //!< specified deflection.
   IMeshData_UserBreak = 0x100 //!< User break
 };
-

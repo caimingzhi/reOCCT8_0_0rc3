@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -50,4 +49,3 @@ private:
   StepElement_MeasureOrUnspecifiedValue theBendingThickness;
   StepElement_MeasureOrUnspecifiedValue theShearThickness;
 };
-

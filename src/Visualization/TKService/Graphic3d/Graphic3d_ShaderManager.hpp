@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_GraphicsLibrary.hpp>
 #include <Graphic3d_ShaderFlags.hpp>
 #include <Graphic3d_StereoMode.hpp>
@@ -226,4 +225,3 @@ protected:
   bool myToEmulateDepthClamp;                 //!< emulate depth clamping in GLSL program
   bool mySRgbState;                           //!< track sRGB state
 };
-

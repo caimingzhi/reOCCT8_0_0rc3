@@ -24,8 +24,8 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1e-10;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1e-10;
+  constexpr double THE_PI        = 3.14159265358979323846;
 } // namespace
 
 //==================================================================================================
@@ -34,10 +34,12 @@ constexpr double THE_PI        = 3.14159265358979323846;
 
 TEST(MathUtils_Functor_Scalar, ScalarLambda_Value)
 {
-  auto aFunc = MathUtils::MakeScalar([](double x, double& y) {
-    y = x * x - 2.0;
-    return true;
-  });
+  auto aFunc = MathUtils::MakeScalar(
+    [](double x, double& y)
+    {
+      y = x * x - 2.0;
+      return true;
+    });
 
   double aValue = 0.0;
   EXPECT_TRUE(aFunc.Value(2.0, aValue));
@@ -49,11 +51,13 @@ TEST(MathUtils_Functor_Scalar, ScalarLambda_Value)
 
 TEST(MathUtils_Functor_Scalar, ScalarLambdaWithDerivative_Values)
 {
-  auto aFunc = MathUtils::MakeScalarWithDerivative([](double x, double& y, double& dy) {
-    y  = x * x - 2.0;
-    dy = 2.0 * x;
-    return true;
-  });
+  auto aFunc = MathUtils::MakeScalarWithDerivative(
+    [](double x, double& y, double& dy)
+    {
+      y  = x * x - 2.0;
+      dy = 2.0 * x;
+      return true;
+    });
 
   double aValue = 0.0;
   double aDeriv = 0.0;
@@ -355,10 +359,12 @@ TEST(MathUtils_Functor_Scalar, Gaussian_Value)
 
 TEST(MathUtils_Functor_Vector, VectorLambda_Value)
 {
-  auto aFunc = MathUtils::MakeVector([](const math_Vector& x, double& y) {
-    y = x(1) * x(1) + x(2) * x(2); // Sphere
-    return true;
-  });
+  auto aFunc = MathUtils::MakeVector(
+    [](const math_Vector& x, double& y)
+    {
+      y = x(1) * x(1) + x(2) * x(2); // Sphere
+      return true;
+    });
 
   math_Vector aX(1, 2);
   aX(1) = 3.0;
@@ -372,11 +378,13 @@ TEST(MathUtils_Functor_Vector, VectorLambda_Value)
 TEST(MathUtils_Functor_Vector, VectorLambdaWithGradient_Values)
 {
   auto aFunc = MathUtils::MakeVectorWithGradient(
-    [](const math_Vector& x, double& y) {
+    [](const math_Vector& x, double& y)
+    {
       y = x(1) * x(1) + x(2) * x(2);
       return true;
     },
-    [](const math_Vector& x, math_Vector& g) {
+    [](const math_Vector& x, math_Vector& g)
+    {
       g(1) = 2.0 * x(1);
       g(2) = 2.0 * x(2);
       return true;

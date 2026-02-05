@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Messenger.hpp>
 #include <TObj_Partition.hpp>
 #include <TCollection_ExtendedString.hpp>
@@ -332,4 +331,3 @@ public:
 };
 
 //! The Model Handle is defined in a separate header file
-

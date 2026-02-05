@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopLoc_Location.hpp>
@@ -49,4 +48,3 @@ public:
 private:
   TopLoc_Location myLocation;
 };
-

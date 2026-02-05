@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <gp_XY.hpp>
@@ -98,14 +97,13 @@ private:
 
 namespace std
 {
-template <>
-struct hash<BRepMesh_Vertex>
-{
-  size_t operator()(const BRepMesh_Vertex& theVertex) const noexcept
+  template <>
+  struct hash<BRepMesh_Vertex>
   {
-    return std::hash<double>{}(
-      (std::floor(1e5 * theVertex.Coord().X()) * std::floor(1e5 * theVertex.Coord().Y())));
-  }
-};
+    size_t operator()(const BRepMesh_Vertex& theVertex) const noexcept
+    {
+      return std::hash<double>{}(
+        (std::floor(1e5 * theVertex.Coord().X()) * std::floor(1e5 * theVertex.Coord().Y())));
+    }
+  };
 } // namespace std
-

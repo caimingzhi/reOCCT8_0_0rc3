@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ShapeFixParameters.hpp>
 #include <ShapeProcess.hpp>
 #include <TopAbs_ShapeEnum.hpp>
@@ -193,4 +192,3 @@ private:
   ParameterMap                           myParameters; //!< Parameters to be used in the processing.
   occ::handle<ShapeProcess_ShapeContext> myContext;    //!< Shape context.
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2012-07-10
-// Created by: VRO
-// Copyright (c) 2012-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Image_Diff.hpp>
 
 #include <Image_AlienPixMap.hpp>
@@ -27,38 +12,41 @@ IMPLEMENT_STANDARD_RTTIEXT(Image_Diff, Standard_Transient)
 namespace
 {
 
-//! Number of neighbor pixels.
-static const size_t Image_Diff_NbOfNeighborPixels = 8;
+  //! Number of neighbor pixels.
+  static const size_t Image_Diff_NbOfNeighborPixels = 8;
 
-//! List of neighbor pixels (offsets).
-static const int Image_Diff_NEIGHBOR_PIXELS[Image_Diff_NbOfNeighborPixels][2] =
-  {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+  //! List of neighbor pixels (offsets).
+  static const int Image_Diff_NEIGHBOR_PIXELS[Image_Diff_NbOfNeighborPixels][2] =
+    {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
 
-//! @return true if pixel is black
-static bool isBlackPixel(const Image_PixMap& theData, size_t theY, size_t theX)
-{
-  switch (theData.Format())
+  //! @return true if pixel is black
+  static bool isBlackPixel(const Image_PixMap& theData, size_t theY, size_t theX)
   {
-    case Image_Format_Gray:
-    case Image_Format_Alpha: {
-      return theData.Value<unsigned char>(theY, theX) == 0;
-    }
-    case Image_Format_RGB:
-    case Image_Format_BGR:
-    case Image_Format_RGB32:
-    case Image_Format_BGR32:
-    case Image_Format_RGBA:
-    case Image_Format_BGRA: {
-      const uint8_t* aColor = theData.RawValue(theY, theX);
-      return aColor[0] == 0 && aColor[1] == 0 && aColor[2] == 0;
-    }
-    default: {
-      const Quantity_ColorRGBA       aPixelRgba = theData.PixelColor((int)theY, (int)theX);
-      const NCollection_Vec4<float>& aPixel     = aPixelRgba;
-      return aPixel.r() == 0.0f && aPixel.g() == 0.0f && aPixel.b() == 0.0f;
+    switch (theData.Format())
+    {
+      case Image_Format_Gray:
+      case Image_Format_Alpha:
+      {
+        return theData.Value<unsigned char>(theY, theX) == 0;
+      }
+      case Image_Format_RGB:
+      case Image_Format_BGR:
+      case Image_Format_RGB32:
+      case Image_Format_BGR32:
+      case Image_Format_RGBA:
+      case Image_Format_BGRA:
+      {
+        const uint8_t* aColor = theData.RawValue(theY, theX);
+        return aColor[0] == 0 && aColor[1] == 0 && aColor[2] == 0;
+      }
+      default:
+      {
+        const Quantity_ColorRGBA       aPixelRgba = theData.PixelColor((int)theY, (int)theX);
+        const NCollection_Vec4<float>& aPixel     = aPixelRgba;
+        return aPixel.r() == 0.0f && aPixel.g() == 0.0f && aPixel.b() == 0.0f;
+      }
     }
   }
-}
 
 } // namespace
 
@@ -150,7 +138,8 @@ int Image_Diff::Compare()
   switch (myImageRef->Format())
   {
     case Image_Format_Gray:
-    case Image_Format_Alpha: {
+    case Image_Format_Alpha:
+    {
       // Tolerance of comparison operation for color
       const int aDiffThreshold = int(255.0 * myColorTolerance);
       for (size_t aRow = 0; aRow < myImageRef->SizeY(); ++aRow)
@@ -173,7 +162,8 @@ int Image_Diff::Compare()
     case Image_Format_RGB32:
     case Image_Format_BGR32:
     case Image_Format_RGBA:
-    case Image_Format_BGRA: {
+    case Image_Format_BGRA:
+    {
       // Tolerance of comparison operation for color
       // Maximum difference between colors (white - black) = 100%
       const int aDiffThreshold = int(255.0 * myColorTolerance);
@@ -201,7 +191,8 @@ int Image_Diff::Compare()
       }
       break;
     }
-    default: {
+    default:
+    {
       // Tolerance of comparison operation for color
       // Maximum difference between colors (white - black) = 100%
       const float aDiffThreshold = float(myColorTolerance);
@@ -267,7 +258,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
     switch (theDiffImage.Format())
     {
       case Image_Format_Gray:
-      case Image_Format_Alpha: {
+      case Image_Format_Alpha:
+      {
         for (NCollection_Vector<int>::Iterator aPixelIter(myDiffPixels); aPixelIter.More();
              aPixelIter.Next())
         {
@@ -281,7 +273,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
       case Image_Format_RGB32:
       case Image_Format_BGR32:
       case Image_Format_RGBA:
-      case Image_Format_BGRA: {
+      case Image_Format_BGRA:
+      {
         for (NCollection_Vector<int>::Iterator aPixelIter(myDiffPixels); aPixelIter.More();
              aPixelIter.Next())
         {
@@ -292,7 +285,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
         }
         break;
       }
-      default: {
+      default:
+      {
         for (NCollection_Vector<int>::Iterator aPixelIter(myDiffPixels); aPixelIter.More();
              aPixelIter.Next())
         {
@@ -321,7 +315,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
     switch (theDiffImage.Format())
     {
       case Image_Format_Gray:
-      case Image_Format_Alpha: {
+      case Image_Format_Alpha:
+      {
         for (TColStd_MapIteratorOfPackedMapOfInteger aPixelIter(aGroup->Map()); aPixelIter.More();
              aPixelIter.Next())
         {
@@ -335,7 +330,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
       case Image_Format_RGB32:
       case Image_Format_BGR32:
       case Image_Format_RGBA:
-      case Image_Format_BGRA: {
+      case Image_Format_BGRA:
+      {
         for (TColStd_MapIteratorOfPackedMapOfInteger aPixelIter(aGroup->Map()); aPixelIter.More();
              aPixelIter.Next())
         {
@@ -346,7 +342,8 @@ bool Image_Diff::SaveDiffImage(Image_PixMap& theDiffImage) const
         }
         break;
       }
-      default: {
+      default:
+      {
         for (TColStd_MapIteratorOfPackedMapOfInteger aPixelIter(aGroup->Map()); aPixelIter.More();
              aPixelIter.Next())
         {

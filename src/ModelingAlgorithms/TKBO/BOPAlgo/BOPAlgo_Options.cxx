@@ -1,17 +1,3 @@
-// Created by: Eugeny MALTCHIKOV
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BOPAlgo_Options.hpp>
 #include <Message_MsgFile.hpp>
 #include <Message_ProgressScope.hpp>
@@ -23,23 +9,23 @@
 
 namespace
 {
-bool myGlobalRunParallel = false;
+  bool myGlobalRunParallel = false;
 
 // Initialize textual messages for errors and warnings defined in BOPAlgo
 #include "BOPAlgo_BOPAlgo_msg.hpp"
-bool BOPAlgo_InitMessages = false;
+  bool BOPAlgo_InitMessages = false;
 
-void BOPAlgo_LoadMessages()
-{
-  if (BOPAlgo_InitMessages)
-    return;
-  BOPAlgo_InitMessages = true;
-
-  if (!Message_MsgFile::HasMsg("BOPAlgo_LOAD_CHECKER"))
+  void BOPAlgo_LoadMessages()
   {
-    Message_MsgFile::LoadFromString(BOPAlgo_BOPAlgo_msg);
+    if (BOPAlgo_InitMessages)
+      return;
+    BOPAlgo_InitMessages = true;
+
+    if (!Message_MsgFile::HasMsg("BOPAlgo_LOAD_CHECKER"))
+    {
+      Message_MsgFile::LoadFromString(BOPAlgo_BOPAlgo_msg);
+    }
   }
-}
 } // namespace
 
 //=================================================================================================

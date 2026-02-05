@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <gp_Dir.hpp>
 #include <PrsDim_Relation.hpp>
@@ -59,4 +58,3 @@ private:
   gp_Dir       myFDirAttach;
   gp_Dir       myAxisDirAttach;
 };
-

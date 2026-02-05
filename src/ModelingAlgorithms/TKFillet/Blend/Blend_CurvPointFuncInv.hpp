@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -67,4 +66,3 @@ public:
   //! Tol is the tolerance used in 3d space.
   Standard_EXPORT virtual bool IsSolution(const math_Vector& Sol, const double Tol) = 0;
 };
-

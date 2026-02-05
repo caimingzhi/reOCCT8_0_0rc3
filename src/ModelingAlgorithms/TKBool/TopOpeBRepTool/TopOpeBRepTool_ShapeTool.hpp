@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -104,4 +103,3 @@ public:
 
   Standard_EXPORT static double Resolution3d(const TopoDS_Face& F, const double Tol2d);
 };
-

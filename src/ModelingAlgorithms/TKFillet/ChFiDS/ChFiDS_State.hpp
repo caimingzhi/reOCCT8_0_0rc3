@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! This enum describe the different kinds of extremities
 //! of a fillet. OnSame, Ondiff and AllSame are
 //! particular cases of BreakPoint for a corner with 3
@@ -22,4 +21,3 @@ enum ChFiDS_State
   ChFiDS_Closed,
   ChFiDS_Tangent
 };
-

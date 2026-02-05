@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! To give the display status of an Interactive Object.
 enum PrsMgr_DisplayStatus
 {
@@ -12,4 +11,3 @@ enum PrsMgr_DisplayStatus
   AIS_DS_Erased    = PrsMgr_DisplayStatus_Erased,
   AIS_DS_None      = PrsMgr_DisplayStatus_None
 };
-

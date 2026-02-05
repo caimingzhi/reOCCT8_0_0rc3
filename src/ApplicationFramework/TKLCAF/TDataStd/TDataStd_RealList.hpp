@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_List.hpp>
@@ -94,4 +93,3 @@ private:
   NCollection_List<double> myList;
   Standard_GUID            myID;
 };
-

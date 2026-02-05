@@ -1,19 +1,3 @@
-// Created on: 1993-08-13
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Draw.hpp>
 #include <Draw_Appli.hpp>
 #include <Draw_Failure.hpp>
@@ -752,157 +736,159 @@ void Draw::Load(Draw_Interpretor&              theDI,
 
 namespace
 {
-const int   THE_MAX_INTEGER_COLOR_COMPONENT = 255;
-const float THE_MAX_REAL_COLOR_COMPONENT    = 1.0f;
+  const int   THE_MAX_INTEGER_COLOR_COMPONENT = 255;
+  const float THE_MAX_REAL_COLOR_COMPONENT    = 1.0f;
 
-//! Parses string and get an integer color component (only values within range 0 .. 255 are allowed)
-//! @param theColorComponentString the string representing the color component
-//! @param theIntegerColorComponent an integer color component that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-static bool parseNumericalColorComponent(const char* theColorComponentString,
-                                         int&        theIntegerColorComponent)
-{
-  int anIntegerColorComponent;
-  if (!Draw::ParseInteger(theColorComponentString, anIntegerColorComponent))
+  //! Parses string and get an integer color component (only values within range 0 .. 255 are
+  //! allowed)
+  //! @param theColorComponentString the string representing the color component
+  //! @param theIntegerColorComponent an integer color component that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  static bool parseNumericalColorComponent(const char* theColorComponentString,
+                                           int&        theIntegerColorComponent)
   {
-    return false;
-  }
-  if ((anIntegerColorComponent < 0) || (anIntegerColorComponent > THE_MAX_INTEGER_COLOR_COMPONENT))
-  {
-    return false;
-  }
-  theIntegerColorComponent = anIntegerColorComponent;
-  return true;
-}
-
-//! Parses the string and gets a real color component from it (only values within range 0.0 .. 1.0
-//! are allowed)
-//! @param theColorComponentString the string representing the color component
-//! @param theRealColorComponent a real color component that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-static bool parseNumericalColorComponent(const char* theColorComponentString,
-                                         float&      theRealColorComponent)
-{
-  double aRealColorComponent;
-  if (!Draw::ParseReal(theColorComponentString, aRealColorComponent))
-  {
-    return false;
-  }
-  const float aShortRealColorComponent = static_cast<float>(aRealColorComponent);
-  if ((aShortRealColorComponent < 0.0f)
-      || (aShortRealColorComponent > THE_MAX_REAL_COLOR_COMPONENT))
-  {
-    return false;
-  }
-  theRealColorComponent = aShortRealColorComponent;
-  return true;
-}
-
-//! Parses the string and gets a real color component from it (integer values 2 .. 255 are scaled to
-//! the 0.0 .. 1.0 range, values 0 and 1 are leaved as they are)
-//! @param theColorComponentString the string representing the color component
-//! @param theColorComponent a color component that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-static bool parseColorComponent(const char* theColorComponentString, float& theColorComponent)
-{
-  int anIntegerColorComponent;
-  if (parseNumericalColorComponent(theColorComponentString, anIntegerColorComponent))
-  {
-    if (anIntegerColorComponent == 1)
+    int anIntegerColorComponent;
+    if (!Draw::ParseInteger(theColorComponentString, anIntegerColorComponent))
     {
-      theColorComponent = THE_MAX_REAL_COLOR_COMPONENT;
+      return false;
     }
-    else
+    if ((anIntegerColorComponent < 0)
+        || (anIntegerColorComponent > THE_MAX_INTEGER_COLOR_COMPONENT))
     {
-      theColorComponent = anIntegerColorComponent * 1.0f / THE_MAX_INTEGER_COLOR_COMPONENT;
+      return false;
     }
+    theIntegerColorComponent = anIntegerColorComponent;
     return true;
   }
-  return parseNumericalColorComponent(theColorComponentString, theColorComponent);
-}
 
-//! Parses the array of strings and gets an integer color (only values within range 0 .. 255 are
-//! allowed and at least one of components must be greater than 1)
-//! @tparam TheNumber the type of resulting color vector elements
-//! @param theNumberOfColorComponents the number of color components
-//! @param theColorComponentStrings the array of strings representing color components
-//! @param theNumericalColor a 4-component vector that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-template <typename TheNumber>
-static bool parseNumericalColor(int&                         theNumberOfColorComponents,
-                                const char* const* const     theColorComponentStrings,
-                                NCollection_Vec4<TheNumber>& theNumericalColor)
-{
-  for (int aColorComponentIndex = 0; aColorComponentIndex < theNumberOfColorComponents;
-       ++aColorComponentIndex)
+  //! Parses the string and gets a real color component from it (only values within range 0.0 .. 1.0
+  //! are allowed)
+  //! @param theColorComponentString the string representing the color component
+  //! @param theRealColorComponent a real color component that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  static bool parseNumericalColorComponent(const char* theColorComponentString,
+                                           float&      theRealColorComponent)
   {
-    const char* const aColorComponentString = theColorComponentStrings[aColorComponentIndex];
-    TheNumber         aNumericalColorComponent;
-    if (parseNumericalColorComponent(aColorComponentString, aNumericalColorComponent))
+    double aRealColorComponent;
+    if (!Draw::ParseReal(theColorComponentString, aRealColorComponent))
     {
-      theNumericalColor[aColorComponentIndex] = aNumericalColorComponent;
+      return false;
     }
-    else
+    const float aShortRealColorComponent = static_cast<float>(aRealColorComponent);
+    if ((aShortRealColorComponent < 0.0f)
+        || (aShortRealColorComponent > THE_MAX_REAL_COLOR_COMPONENT))
     {
-      if (aColorComponentIndex == 3)
+      return false;
+    }
+    theRealColorComponent = aShortRealColorComponent;
+    return true;
+  }
+
+  //! Parses the string and gets a real color component from it (integer values 2 .. 255 are scaled
+  //! to the 0.0 .. 1.0 range, values 0 and 1 are leaved as they are)
+  //! @param theColorComponentString the string representing the color component
+  //! @param theColorComponent a color component that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  static bool parseColorComponent(const char* theColorComponentString, float& theColorComponent)
+  {
+    int anIntegerColorComponent;
+    if (parseNumericalColorComponent(theColorComponentString, anIntegerColorComponent))
+    {
+      if (anIntegerColorComponent == 1)
       {
-        theNumberOfColorComponents = 3;
+        theColorComponent = THE_MAX_REAL_COLOR_COMPONENT;
       }
       else
       {
-        return false;
+        theColorComponent = anIntegerColorComponent * 1.0f / THE_MAX_INTEGER_COLOR_COMPONENT;
+      }
+      return true;
+    }
+    return parseNumericalColorComponent(theColorComponentString, theColorComponent);
+  }
+
+  //! Parses the array of strings and gets an integer color (only values within range 0 .. 255 are
+  //! allowed and at least one of components must be greater than 1)
+  //! @tparam TheNumber the type of resulting color vector elements
+  //! @param theNumberOfColorComponents the number of color components
+  //! @param theColorComponentStrings the array of strings representing color components
+  //! @param theNumericalColor a 4-component vector that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  template <typename TheNumber>
+  static bool parseNumericalColor(int&                         theNumberOfColorComponents,
+                                  const char* const* const     theColorComponentStrings,
+                                  NCollection_Vec4<TheNumber>& theNumericalColor)
+  {
+    for (int aColorComponentIndex = 0; aColorComponentIndex < theNumberOfColorComponents;
+         ++aColorComponentIndex)
+    {
+      const char* const aColorComponentString = theColorComponentStrings[aColorComponentIndex];
+      TheNumber         aNumericalColorComponent;
+      if (parseNumericalColorComponent(aColorComponentString, aNumericalColorComponent))
+      {
+        theNumericalColor[aColorComponentIndex] = aNumericalColorComponent;
+      }
+      else
+      {
+        if (aColorComponentIndex == 3)
+        {
+          theNumberOfColorComponents = 3;
+        }
+        else
+        {
+          return false;
+        }
       }
     }
-  }
-  return true;
-}
-
-//! Parses an array of strings and get an integer color (only values within range 0 .. 255 are
-//! allowed and at least one of components must be greater than 1)
-//! @param theNumberOfColorComponents the number of color components
-//! @param theColorComponentStrings the array of strings representing color components
-//! @param theColor a color that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-static bool parseIntegerColor(int&                     theNumberOfColorComponents,
-                              const char* const* const theColorComponentStrings,
-                              Quantity_ColorRGBA&      theColor)
-{
-  const int             THE_COLOR_COMPONENT_NOT_PARSED = -1;
-  NCollection_Vec4<int> anIntegerColor(THE_COLOR_COMPONENT_NOT_PARSED);
-  if (!parseNumericalColor(theNumberOfColorComponents, theColorComponentStrings, anIntegerColor)
-      || anIntegerColor.maxComp() <= 1)
-  {
-    return false;
-  }
-  if (anIntegerColor.a() == THE_COLOR_COMPONENT_NOT_PARSED)
-  {
-    anIntegerColor.a() = THE_MAX_INTEGER_COLOR_COMPONENT;
+    return true;
   }
 
-  const NCollection_Vec4<float> aRealColor =
-    NCollection_Vec4<float>(anIntegerColor) / static_cast<float>(THE_MAX_INTEGER_COLOR_COMPONENT);
-  theColor = Quantity_ColorRGBA(Quantity_ColorRGBA::Convert_sRGB_To_LinearRGB(aRealColor));
-  return true;
-}
-
-//! Parses an array of strings and get a real color (only values within range 0.0 .. 1.0 are
-//! allowed)
-//! @param theNumberOfColorComponents the number of color components
-//! @param theColorComponentStrings the array of strings representing color components
-//! @param theColor a color that is a result of parsing
-//! @return true if parsing was successful, or false otherwise
-static bool parseRealColor(int&                     theNumberOfColorComponents,
-                           const char* const* const theColorComponentStrings,
-                           Quantity_ColorRGBA&      theColor)
-{
-  NCollection_Vec4<float> aRealColor(THE_MAX_REAL_COLOR_COMPONENT);
-  if (!parseNumericalColor(theNumberOfColorComponents, theColorComponentStrings, aRealColor))
+  //! Parses an array of strings and get an integer color (only values within range 0 .. 255 are
+  //! allowed and at least one of components must be greater than 1)
+  //! @param theNumberOfColorComponents the number of color components
+  //! @param theColorComponentStrings the array of strings representing color components
+  //! @param theColor a color that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  static bool parseIntegerColor(int&                     theNumberOfColorComponents,
+                                const char* const* const theColorComponentStrings,
+                                Quantity_ColorRGBA&      theColor)
   {
-    return false;
+    const int             THE_COLOR_COMPONENT_NOT_PARSED = -1;
+    NCollection_Vec4<int> anIntegerColor(THE_COLOR_COMPONENT_NOT_PARSED);
+    if (!parseNumericalColor(theNumberOfColorComponents, theColorComponentStrings, anIntegerColor)
+        || anIntegerColor.maxComp() <= 1)
+    {
+      return false;
+    }
+    if (anIntegerColor.a() == THE_COLOR_COMPONENT_NOT_PARSED)
+    {
+      anIntegerColor.a() = THE_MAX_INTEGER_COLOR_COMPONENT;
+    }
+
+    const NCollection_Vec4<float> aRealColor =
+      NCollection_Vec4<float>(anIntegerColor) / static_cast<float>(THE_MAX_INTEGER_COLOR_COMPONENT);
+    theColor = Quantity_ColorRGBA(Quantity_ColorRGBA::Convert_sRGB_To_LinearRGB(aRealColor));
+    return true;
   }
-  theColor = Quantity_ColorRGBA(aRealColor);
-  return true;
-}
+
+  //! Parses an array of strings and get a real color (only values within range 0.0 .. 1.0 are
+  //! allowed)
+  //! @param theNumberOfColorComponents the number of color components
+  //! @param theColorComponentStrings the array of strings representing color components
+  //! @param theColor a color that is a result of parsing
+  //! @return true if parsing was successful, or false otherwise
+  static bool parseRealColor(int&                     theNumberOfColorComponents,
+                             const char* const* const theColorComponentStrings,
+                             Quantity_ColorRGBA&      theColor)
+  {
+    NCollection_Vec4<float> aRealColor(THE_MAX_REAL_COLOR_COMPONENT);
+    if (!parseNumericalColor(theNumberOfColorComponents, theColorComponentStrings, aRealColor))
+    {
+      return false;
+    }
+    theColor = Quantity_ColorRGBA(aRealColor);
+    return true;
+  }
 } // namespace
 
 //=================================================================================================

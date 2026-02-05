@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
@@ -146,4 +145,3 @@ private:
                                                 // size of array: (max(myDegree)+1) * A*(min(myDegree)+1), where A = 4 or 3
   // clang-format on
 };
-

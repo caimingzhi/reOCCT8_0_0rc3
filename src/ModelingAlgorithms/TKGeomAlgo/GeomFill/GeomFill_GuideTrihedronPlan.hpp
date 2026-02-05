@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -112,4 +111,3 @@ private:
   int                                        myNbPts;
   GeomFill_PipeError                         myStatus;
 };
-

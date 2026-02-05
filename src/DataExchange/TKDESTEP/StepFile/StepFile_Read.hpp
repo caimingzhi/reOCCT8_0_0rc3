@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_CString.hpp>
 #include <Standard_Type.hpp>
 
@@ -24,4 +23,3 @@ Standard_EXPORT int StepFile_Read(const char*                            theName
                                   std::istream*                          theIStream,
                                   const occ::handle<StepData_StepModel>& theModel,
                                   const occ::handle<StepData_Protocol>&  theProtocol);
-

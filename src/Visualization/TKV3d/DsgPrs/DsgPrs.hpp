@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DsgPrs_ArrowSide.hpp>
 #include <gp_Circ.hpp>
 #include <gp_Elips.hpp>
@@ -110,4 +109,3 @@ public:
                                                  const gp_Pnt&   Apex,
                                                  const double    par);
 };
-

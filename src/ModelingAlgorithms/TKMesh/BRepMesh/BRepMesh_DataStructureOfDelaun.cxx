@@ -1,19 +1,3 @@
-// Created on: 1993-05-11
-// Created by: Didier PIFFAULT
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_DataStructureOfDelaun.hpp>
 #include <BRepBuilderAPI_MakeEdge.hpp>
 #include <BRepBuilderAPI_MakeVertex.hpp>
@@ -165,7 +149,7 @@ int BRepMesh_DataStructureOfDelaun::AddElement(const BRepMesh_Triangle& theEleme
   int aElementIndex = myElements.Size();
   myElementsOfDomain.Add(aElementIndex);
 
-  const int (&e)[3] = theElement.myEdges;
+  const int(&e)[3] = theElement.myEdges;
   for (int i = 0; i < 3; ++i)
     myLinks(e[i]).Append(aElementIndex);
 
@@ -193,7 +177,7 @@ void BRepMesh_DataStructureOfDelaun::cleanElement(const int                theIn
   if (theElement.Movability() != BRepMesh_Free)
     return;
 
-  const int (&e)[3] = theElement.myEdges;
+  const int(&e)[3] = theElement.myEdges;
   for (int i = 0; i < 3; ++i)
     removeElementIndex(theIndex, myLinks(e[i]));
 }
@@ -229,7 +213,7 @@ bool BRepMesh_DataStructureOfDelaun::SubstituteElement(const int                
   // Warning: here new element and old element should have different Hash code
   myElements(theIndex) = theNewElement;
 
-  const int (&e)[3] = theNewElement.myEdges;
+  const int(&e)[3] = theNewElement.myEdges;
   for (int i = 0; i < 3; ++i)
     myLinks(e[i]).Append(theIndex);
 
@@ -241,8 +225,8 @@ bool BRepMesh_DataStructureOfDelaun::SubstituteElement(const int                
 void BRepMesh_DataStructureOfDelaun::ElementNodes(const BRepMesh_Triangle& theElement,
                                                   int (&theNodes)[3])
 {
-  const int (&e)[3]  = theElement.myEdges;
-  const bool (&o)[3] = theElement.myOrientations;
+  const int(&e)[3]  = theElement.myEdges;
+  const bool(&o)[3] = theElement.myOrientations;
 
   const BRepMesh_Edge& aLink1 = GetLink(e[0]);
   if (o[0])
@@ -274,7 +258,7 @@ void BRepMesh_DataStructureOfDelaun::ClearDomain()
     const int          aElementId = aElementIt.Key();
     BRepMesh_Triangle& aElement   = (BRepMesh_Triangle&)GetElement(aElementId);
 
-    const int (&e)[3] = aElement.myEdges;
+    const int(&e)[3] = aElement.myEdges;
 
     for (int i = 0; i < 3; ++i)
       aFreeEdges.Add(e[i]);

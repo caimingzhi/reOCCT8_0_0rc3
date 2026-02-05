@@ -29,84 +29,84 @@
 
 namespace
 {
-// ================================================================
-// Function : GetSharing
-// Purpose  : Returns a step entity of a type StepShapeType that is
-//            sharing theStepEntity. If no sharing entity of
-//            required type is found, returns nullptr.
-// ================================================================
-template <typename StepShapeType>
-occ::handle<StepShapeType> GetSharing(const occ::handle<Standard_Transient>& theStepEntity,
-                                      const Interface_ShareTool&             theShareTool)
-{
-  Interface_EntityIterator aSharedEntitiesIt = theShareTool.Sharings(theStepEntity);
-  aSharedEntitiesIt.SelectType(STANDARD_TYPE(StepShapeType), true);
-  return aSharedEntitiesIt.NbEntities() == 0
-           ? occ::handle<StepShapeType>{}
-           : occ::down_cast<StepShapeType>(aSharedEntitiesIt.Value());
-}
-
-// ================================================================
-// Function : GetFaceBoundOrientation
-// Purpose  : Returns an orientation of face bound sharing
-//            theOrientedEdge. If face bound cannot be found,
-//            returns true (to preserve pre-refactoring behavior).
-// ================================================================
-bool GetFaceBoundOrientation(const occ::handle<StepShape_OrientedEdge>& theOrientedEdge,
-                             const Interface_ShareTool&                 theShareTool)
-{
-  if (!theShareTool.IsShared(theOrientedEdge))
+  // ================================================================
+  // Function : GetSharing
+  // Purpose  : Returns a step entity of a type StepShapeType that is
+  //            sharing theStepEntity. If no sharing entity of
+  //            required type is found, returns nullptr.
+  // ================================================================
+  template <typename StepShapeType>
+  occ::handle<StepShapeType> GetSharing(const occ::handle<Standard_Transient>& theStepEntity,
+                                        const Interface_ShareTool&             theShareTool)
   {
-    return true;
+    Interface_EntityIterator aSharedEntitiesIt = theShareTool.Sharings(theStepEntity);
+    aSharedEntitiesIt.SelectType(STANDARD_TYPE(StepShapeType), true);
+    return aSharedEntitiesIt.NbEntities() == 0
+             ? occ::handle<StepShapeType>{}
+             : occ::down_cast<StepShapeType>(aSharedEntitiesIt.Value());
   }
 
-  const occ::handle<StepShape_EdgeLoop> anEdgeLoop =
-    GetSharing<StepShape_EdgeLoop>(theOrientedEdge, theShareTool);
-  if (!theShareTool.IsShared(anEdgeLoop))
+  // ================================================================
+  // Function : GetFaceBoundOrientation
+  // Purpose  : Returns an orientation of face bound sharing
+  //            theOrientedEdge. If face bound cannot be found,
+  //            returns true (to preserve pre-refactoring behavior).
+  // ================================================================
+  bool GetFaceBoundOrientation(const occ::handle<StepShape_OrientedEdge>& theOrientedEdge,
+                               const Interface_ShareTool&                 theShareTool)
   {
-    return true;
+    if (!theShareTool.IsShared(theOrientedEdge))
+    {
+      return true;
+    }
+
+    const occ::handle<StepShape_EdgeLoop> anEdgeLoop =
+      GetSharing<StepShape_EdgeLoop>(theOrientedEdge, theShareTool);
+    if (!theShareTool.IsShared(anEdgeLoop))
+    {
+      return true;
+    }
+
+    const occ::handle<StepShape_FaceBound> aFaceBound =
+      GetSharing<StepShape_FaceBound>(anEdgeLoop, theShareTool);
+    return aFaceBound.IsNull() ? true : aFaceBound->Orientation();
   }
 
-  const occ::handle<StepShape_FaceBound> aFaceBound =
-    GetSharing<StepShape_FaceBound>(anEdgeLoop, theShareTool);
-  return aFaceBound.IsNull() ? true : aFaceBound->Orientation();
-}
-
-// ================================================================
-// Function : GetFaceBoundOrientation
-// Purpose  : Returns true if start and end points of theEdgeCurve
-//            are valid points of the different vertices and are
-//            equal to each other within Precision::Confusion().
-// ================================================================
-bool AreEndsMatch(const occ::handle<StepShape_EdgeCurve>& theEdgeCurve)
-{
-  occ::handle<StepShape_VertexPoint> aStartVertex =
-    occ::down_cast<StepShape_VertexPoint>(theEdgeCurve->EdgeStart());
-  occ::handle<StepShape_VertexPoint> anEndVertex =
-    occ::down_cast<StepShape_VertexPoint>(theEdgeCurve->EdgeEnd());
-  if (aStartVertex == anEndVertex)
+  // ================================================================
+  // Function : GetFaceBoundOrientation
+  // Purpose  : Returns true if start and end points of theEdgeCurve
+  //            are valid points of the different vertices and are
+  //            equal to each other within Precision::Confusion().
+  // ================================================================
+  bool AreEndsMatch(const occ::handle<StepShape_EdgeCurve>& theEdgeCurve)
   {
-    return false;
-  }
+    occ::handle<StepShape_VertexPoint> aStartVertex =
+      occ::down_cast<StepShape_VertexPoint>(theEdgeCurve->EdgeStart());
+    occ::handle<StepShape_VertexPoint> anEndVertex =
+      occ::down_cast<StepShape_VertexPoint>(theEdgeCurve->EdgeEnd());
+    if (aStartVertex == anEndVertex)
+    {
+      return false;
+    }
 
-  occ::handle<StepGeom_CartesianPoint> aStartPoint =
-    occ::down_cast<StepGeom_CartesianPoint>(aStartVertex->VertexGeometry());
-  occ::handle<StepGeom_CartesianPoint> anEndPoint =
-    occ::down_cast<StepGeom_CartesianPoint>(anEndVertex->VertexGeometry());
-  if (aStartPoint.IsNull() || anEndPoint.IsNull())
-  {
-    return false;
-  }
+    occ::handle<StepGeom_CartesianPoint> aStartPoint =
+      occ::down_cast<StepGeom_CartesianPoint>(aStartVertex->VertexGeometry());
+    occ::handle<StepGeom_CartesianPoint> anEndPoint =
+      occ::down_cast<StepGeom_CartesianPoint>(anEndVertex->VertexGeometry());
+    if (aStartPoint.IsNull() || anEndPoint.IsNull())
+    {
+      return false;
+    }
 
-  const double aDistance =
-    std::sqrt((aStartPoint->CoordinatesValue(1) - anEndPoint->CoordinatesValue(1))
-                * (aStartPoint->CoordinatesValue(1) - anEndPoint->CoordinatesValue(1))
-              + (aStartPoint->CoordinatesValue(2) - anEndPoint->CoordinatesValue(2))
-                  * (aStartPoint->CoordinatesValue(2) - anEndPoint->CoordinatesValue(2))
-              + (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3))
-                  * (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3)));
-  return aDistance < Precision::Confusion();
-}
+    const double aDistance =
+      std::sqrt((aStartPoint->CoordinatesValue(1) - anEndPoint->CoordinatesValue(1))
+                  * (aStartPoint->CoordinatesValue(1) - anEndPoint->CoordinatesValue(1))
+                + (aStartPoint->CoordinatesValue(2) - anEndPoint->CoordinatesValue(2))
+                    * (aStartPoint->CoordinatesValue(2) - anEndPoint->CoordinatesValue(2))
+                + (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3))
+                    * (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3)));
+    return aDistance < Precision::Confusion();
+  }
 } // namespace
 
 //=================================================================================================

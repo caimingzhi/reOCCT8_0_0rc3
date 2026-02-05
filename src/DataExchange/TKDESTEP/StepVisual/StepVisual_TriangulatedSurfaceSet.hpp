@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <StepVisual_TessellatedSurfaceSet.hpp>
 
@@ -59,4 +58,3 @@ private:
   occ::handle<NCollection_HArray1<int>> myPnindex;
   occ::handle<NCollection_HArray2<int>> myTriangles;
 };
-

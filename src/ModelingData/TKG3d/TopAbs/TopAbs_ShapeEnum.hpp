@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies various topological shapes. This
 //! enumeration allows you to use dynamic typing of shapes.
 //! The values are listed in order of complexity, from the
@@ -38,4 +37,3 @@ enum TopAbs_ShapeEnum
   TopAbs_VERTEX,
   TopAbs_SHAPE
 };
-

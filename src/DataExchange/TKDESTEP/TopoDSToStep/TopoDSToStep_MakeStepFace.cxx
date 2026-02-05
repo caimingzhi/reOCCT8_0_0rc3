@@ -1,27 +1,3 @@
-// Created on: 1994-11-30
-// Created by: Frederic MAUPAS
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Integration to ensure SCCS base integrity
-//%pdn 30 Nov 98: TestRally 9 issue on r1001_ec.stp (toruses)
-// abv 6 Jan 99: TR10: fix by PDN commented (temporarily) because CATIA do not read DEG_TORUSes
-// rln 19.01.99: uncomment %30 pdn for integration into K4L
-// szv#4 S4163
-// abv 30.11.99: fix %30 pdn changed to produce SurfaceOfRevolution instead of
-// DegenerateToroidalSurface
-
 #include <Bnd_Box2d.hpp>
 #include <BRep_Tool.hpp>
 #include <BRepTools.hpp>

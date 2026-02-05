@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <gp_Pnt2d.hpp>
@@ -170,4 +169,3 @@ private:
   double                     myUMax        = 0.0; //!< Original maximum U bound
   double                     myVMax        = 0.0; //!< Original maximum V bound
 };
-

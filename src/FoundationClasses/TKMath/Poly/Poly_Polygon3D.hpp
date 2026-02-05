@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
@@ -76,4 +75,3 @@ private:
   NCollection_Array1<gp_Pnt>               myNodes;
   occ::handle<NCollection_HArray1<double>> myParameters;
 };
-

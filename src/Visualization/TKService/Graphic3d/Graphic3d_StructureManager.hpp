@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_GenId.hpp>
 #include <Graphic3d_CView.hpp>
 #include <Graphic3d_ViewAffinity.hpp>
@@ -177,4 +176,3 @@ protected:
   NCollection_IndexedMap<Graphic3d_CView*> myDefinedViews;
   bool                                     myDeviceLostFlag;
 };
-

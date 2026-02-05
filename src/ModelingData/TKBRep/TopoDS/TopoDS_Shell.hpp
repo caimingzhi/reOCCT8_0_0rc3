@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Describes a shell which
@@ -21,13 +20,12 @@ public:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Shell>
-{
-  size_t operator()(const TopoDS_Shell& theShape) const
+  template <>
+  struct hash<TopoDS_Shell>
   {
-    return std::hash<TopoDS_Shape>{}(theShape);
-  }
-};
+    size_t operator()(const TopoDS_Shell& theShape) const
+    {
+      return std::hash<TopoDS_Shape>{}(theShape);
+    }
+  };
 } // namespace std
-

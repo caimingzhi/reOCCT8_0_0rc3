@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Types.hpp>
 #include <IMeshData_Face.hpp>
 #include <IMeshData_Wire.hpp>
@@ -34,4 +33,3 @@ private:
   occ::handle<NCollection_IncAllocator> myAllocator;
   IMeshData::VectorOfIWireHandles       myDWires;
 };
-

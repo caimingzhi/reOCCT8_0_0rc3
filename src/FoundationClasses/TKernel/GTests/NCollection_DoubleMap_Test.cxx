@@ -69,23 +69,23 @@ private:
 
 namespace std
 {
-template <>
-struct hash<TestKey1>
-{
-  size_t operator()(const TestKey1& key) const
+  template <>
+  struct hash<TestKey1>
   {
-    return static_cast<size_t>(key.GetId() + std::hash<std::string>()(key.GetName()));
-  }
-};
+    size_t operator()(const TestKey1& key) const
+    {
+      return static_cast<size_t>(key.GetId() + std::hash<std::string>()(key.GetName()));
+    }
+  };
 
-template <>
-struct hash<TestKey2>
-{
-  size_t operator()(const TestKey2& key) const
+  template <>
+  struct hash<TestKey2>
   {
-    return static_cast<size_t>(key.GetValue() * 100 + std::hash<std::string>()(key.GetCode()));
-  }
-};
+    size_t operator()(const TestKey2& key) const
+    {
+      return static_cast<size_t>(key.GetValue() * 100 + std::hash<std::string>()(key.GetCode()));
+    }
+  };
 } // namespace std
 
 TEST(NCollection_DoubleMapTest, DefaultConstructor)

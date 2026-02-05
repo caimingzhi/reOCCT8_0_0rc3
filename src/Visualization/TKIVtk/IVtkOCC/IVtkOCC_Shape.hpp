@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_IShape.hpp>
 #include <TopoDS_Shape.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
@@ -89,4 +88,3 @@ private:
   occ::handle<SelectMgr_SelectableObject>
     mySelectable; //!< Link to a holder of selection primitives
 };
-

@@ -26,84 +26,84 @@
 namespace
 {
 
-// Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
-class QuadraticFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
-
-  bool Value(const math_Vector& theX, double& theF) override
+  // Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
+  class QuadraticFunction : public math_MultipleVarFunction
   {
-    double dx = theX(1) - 1.0;
-    double dy = theX(2) - 2.0;
-    theF      = dx * dx + dy * dy;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// 1D quadratic function: f(x) = (x-3)^2, minimum at x = 3
-class Quadratic1DFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 1; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double dx = theX(1) - 1.0;
+      double dy = theX(2) - 2.0;
+      theF      = dx * dx + dy * dy;
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // 1D quadratic function: f(x) = (x-3)^2, minimum at x = 3
+  class Quadratic1DFunction : public math_MultipleVarFunction
   {
-    double dx = theX(1) - 3.0;
-    theF      = dx * dx;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 1; }
 
-// Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
-class RosenbrockFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double dx = theX(1) - 3.0;
+      theF      = dx * dx;
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
+  class RosenbrockFunction : public math_MultipleVarFunction
   {
-    double x  = theX(1);
-    double y  = theX(2);
-    double dx = 1.0 - x;
-    double dy = y - x * x;
-    theF      = dx * dx + 100.0 * dy * dy;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// Multi-modal function: f(x,y) = -cos(x)*cos(y)*exp(-((x-PI)^2+(y-PI)^2))
-class MultiModalFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x  = theX(1);
+      double y  = theX(2);
+      double dx = 1.0 - x;
+      double dy = y - x * x;
+      theF      = dx * dx + 100.0 * dy * dy;
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // Multi-modal function: f(x,y) = -cos(x)*cos(y)*exp(-((x-PI)^2+(y-PI)^2))
+  class MultiModalFunction : public math_MultipleVarFunction
   {
-    double x  = theX(1);
-    double y  = theX(2);
-    double dx = x - M_PI;
-    double dy = y - M_PI;
-    theF      = -cos(x) * cos(y) * exp(-(dx * dx + dy * dy));
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// 3D function: f(x,y,z) = x^2 + 2*y^2 + 3*z^2, minimum at (0,0,0)
-class Quadratic3DFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 3; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x  = theX(1);
+      double y  = theX(2);
+      double dx = x - M_PI;
+      double dy = y - M_PI;
+      theF      = -cos(x) * cos(y) * exp(-(dx * dx + dy * dy));
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // 3D function: f(x,y,z) = x^2 + 2*y^2 + 3*z^2, minimum at (0,0,0)
+  class Quadratic3DFunction : public math_MultipleVarFunction
   {
-    double x = theX(1);
-    double y = theX(2);
-    double z = theX(3);
-    theF     = x * x + 2.0 * y * y + 3.0 * z * z;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 3; }
+
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x = theX(1);
+      double y = theX(2);
+      double z = theX(3);
+      theF     = x * x + 2.0 * y * y + 3.0 * z * z;
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

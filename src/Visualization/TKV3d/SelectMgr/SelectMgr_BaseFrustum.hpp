@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_BaseIntersector.hpp>
 
 //! This class is an interface for different types of selecting frustums,
@@ -54,4 +53,3 @@ protected:
 
   occ::handle<SelectMgr_FrustumBuilder> myBuilder; //!< A tool implementing methods for volume build
 };
-

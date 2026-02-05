@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <NCollection_Array1.hpp>
@@ -43,4 +42,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<double>> myTessellationAccuracyParameters;
 };
-

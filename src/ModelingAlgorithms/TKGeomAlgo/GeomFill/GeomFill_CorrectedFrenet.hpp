@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array1.hpp>
@@ -139,4 +138,3 @@ private:
   occ::handle<NCollection_HArray1<gp_Vec>> HArrTangent;
   occ::handle<NCollection_HArray1<gp_Vec>> HArrNormal;
 };
-

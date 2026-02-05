@@ -26,63 +26,63 @@
 namespace
 {
 
-// Quadratic function with minimum: f(x) = (x-2)^2 + 1, minimum at x = 2
-class QuadraticFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quadratic function with minimum: f(x) = (x-2)^2 + 1, minimum at x = 2
+  class QuadraticFunction : public math_Function
   {
-    theF = (theX - 2.0) * (theX - 2.0) + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = (theX - 2.0) * (theX - 2.0) + 1.0;
+      return true;
+    }
+  };
 
-// Quartic function: f(x) = x^4 - 4*x^3 + 6*x^2 - 4*x + 5, minimum at x = 1
-class QuarticFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quartic function: f(x) = x^4 - 4*x^3 + 6*x^2 - 4*x + 5, minimum at x = 1
+  class QuarticFunction : public math_Function
   {
-    double x2 = theX * theX;
-    double x3 = x2 * theX;
-    double x4 = x3 * theX;
-    theF      = x4 - 4.0 * x3 + 6.0 * x2 - 4.0 * theX + 5.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      double x2 = theX * theX;
+      double x3 = x2 * theX;
+      double x4 = x3 * theX;
+      theF      = x4 - 4.0 * x3 + 6.0 * x2 - 4.0 * theX + 5.0;
+      return true;
+    }
+  };
 
-// Cosine function: f(x) = cos(x), minimum at x = PI in [0, 2*PI]
-class CosineFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Cosine function: f(x) = cos(x), minimum at x = PI in [0, 2*PI]
+  class CosineFunction : public math_Function
   {
-    theF = cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = cos(theX);
+      return true;
+    }
+  };
 
-// Exponential function: f(x) = e^x, no minimum (always increasing)
-class ExponentialFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Exponential function: f(x) = e^x, no minimum (always increasing)
+  class ExponentialFunction : public math_Function
   {
-    theF = exp(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = exp(theX);
+      return true;
+    }
+  };
 
-// Multiple minima function: f(x) = sin(x) + 0.1*x, has local minima
-class MultipleMinFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Multiple minima function: f(x) = sin(x) + 0.1*x, has local minima
+  class MultipleMinFunction : public math_Function
   {
-    theF = sin(theX) + 0.1 * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = sin(theX) + 0.1 * theX;
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

@@ -28,8 +28,8 @@ IMPLEMENT_STANDARD_RTTIEXT(V3d_RectangularGrid, Aspect_RectangularGrid)
 
 namespace
 {
-constexpr double THE_DEFAULT_GRID_STEP = 10.0;
-constexpr double THE_MYFACTOR          = 50.0;
+  constexpr double THE_DEFAULT_GRID_STEP = 10.0;
+  constexpr double THE_MYFACTOR          = 50.0;
 } // namespace
 
 //! Dummy implementation of Graphic3d_Structure overriding ::Compute() method for handling Device

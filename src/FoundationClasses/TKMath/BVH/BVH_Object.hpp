@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 #include <BVH_Properties.hpp>
 
@@ -54,4 +53,3 @@ public:
   //! Returns AABB of the geometric object.
   virtual BVH_Box<T, N> Box() const = 0;
 };
-

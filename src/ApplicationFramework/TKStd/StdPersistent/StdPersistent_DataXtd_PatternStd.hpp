@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 
 #include <TDataXtd_PatternStd.hpp>
@@ -52,4 +51,3 @@ private:
   occ::handle<StdObjMgt_Persistent> myNb2;
   occ::handle<StdObjMgt_Persistent> myMirror;
 };
-

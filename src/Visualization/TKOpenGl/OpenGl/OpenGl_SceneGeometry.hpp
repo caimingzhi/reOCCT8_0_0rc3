@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Geometry.hpp>
 #include <BVH_Triangulation.hpp>
 #include <BVH_BinnedBuilder.hpp>
@@ -14,14 +13,14 @@ class OpenGl_Group;
 
 namespace OpenGl_Raytrace
 {
-//! Checks to see if the group contains ray-trace geometry.
-Standard_EXPORT bool IsRaytracedGroup(const OpenGl_Group* theGroup);
+  //! Checks to see if the group contains ray-trace geometry.
+  Standard_EXPORT bool IsRaytracedGroup(const OpenGl_Group* theGroup);
 
-//! Checks to see if the element contains ray-trace geometry.
-Standard_EXPORT bool IsRaytracedElement(const OpenGl_ElementNode* theNode);
+  //! Checks to see if the element contains ray-trace geometry.
+  Standard_EXPORT bool IsRaytracedElement(const OpenGl_ElementNode* theNode);
 
-//! Checks to see if the element contains ray-trace geometry.
-Standard_EXPORT bool IsRaytracedElement(const OpenGl_Element* theElement);
+  //! Checks to see if the element contains ray-trace geometry.
+  Standard_EXPORT bool IsRaytracedElement(const OpenGl_Element* theElement);
 } // namespace OpenGl_Raytrace
 
 //! Stores properties of surface material.
@@ -258,4 +257,3 @@ protected:
 
   QuadBvhHandle myQuadBVH; //!< QBVH produced from binary BVH tree.
 };
-

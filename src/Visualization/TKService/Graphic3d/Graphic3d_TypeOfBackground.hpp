@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Describes type of view background.
 enum Graphic3d_TypeOfBackground
 {
@@ -14,4 +13,3 @@ enum
 {
   Graphic3d_TypeOfBackground_NB = Graphic3d_TOB_CUBEMAP + 1
 };
-

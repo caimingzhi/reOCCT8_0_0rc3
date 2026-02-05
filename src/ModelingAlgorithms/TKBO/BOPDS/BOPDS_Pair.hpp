@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_HashUtils.hpp>
@@ -68,20 +67,19 @@ protected:
 
 namespace std
 {
-template <>
-struct hash<BOPDS_Pair>
-{
-  size_t operator()(const BOPDS_Pair& thePair) const noexcept
+  template <>
+  struct hash<BOPDS_Pair>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2];
-    thePair.Indices(aCombination[0], aCombination[1]);
-    if (aCombination[0] > aCombination[1])
+    size_t operator()(const BOPDS_Pair& thePair) const noexcept
     {
-      std::swap(aCombination[0], aCombination[1]);
+      // Combine two int values into a single hash value.
+      int aCombination[2];
+      thePair.Indices(aCombination[0], aCombination[1]);
+      if (aCombination[0] > aCombination[1])
+      {
+        std::swap(aCombination[0], aCombination[1]);
+      }
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+  };
 } // namespace std
-

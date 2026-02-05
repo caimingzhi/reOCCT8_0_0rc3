@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DEGLTF_ConfigurationNode.hpp>
 #include <DE_Provider.hpp>
 #include <RWGltf_CafReader.hpp>
@@ -126,4 +125,3 @@ public:
   //! @return provider's vendor name
   Standard_EXPORT TCollection_AsciiString GetVendor() const override;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -118,6 +117,7 @@ private:
   bool   myFA;
   bool   myFB;
 };
+
 // Copyright (c) 1997-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -186,5 +186,3 @@ inline double math_BracketMinimum::Limited(const double theValue) const
 {
   return theValue < myLeft ? myLeft : theValue > myRight ? myRight : theValue;
 }
-
-

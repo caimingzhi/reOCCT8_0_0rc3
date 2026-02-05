@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Enumeration defining font hinting options.
 enum Font_Hinting
 {
@@ -13,4 +12,3 @@ enum Font_Hinting
     0x10, //!< prefer autohinting over native hinting (FT_LOAD_FORCE_AUTOHINT)
   Font_Hinting_NoAutohint = 0x20, //!< disallow autohinting (FT_LOAD_NO_AUTOHINT)
 };
-

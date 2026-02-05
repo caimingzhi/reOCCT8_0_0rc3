@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -1462,6 +1461,7 @@ private:
   Standard_PCharacter myString{}; //!< NULL-terminated string
   int                 myLength{}; //!< length in bytes (excluding terminating NULL symbol)
 };
+
 // Copyright (c) 1998-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -1490,11 +1490,14 @@ inline bool IsEqual(const TCollection_AsciiString& theString1,
 
 namespace std
 {
-template <>
-struct hash<TCollection_AsciiString>
-{
-  size_t operator()(const TCollection_AsciiString& theString) const { return theString.HashCode(); }
-};
+  template <>
+  struct hash<TCollection_AsciiString>
+  {
+    size_t operator()(const TCollection_AsciiString& theString) const
+    {
+      return theString.HashCode();
+    }
+  };
 } // namespace std
 
 //=================================================================================================
@@ -2404,5 +2407,3 @@ inline TCollection_AsciiString::TCollection_AsciiString(const char (&theLiteral)
     : TCollection_AsciiString(theLiteral, static_cast<int>(strlen(theLiteral)))
 {
 }
-
-

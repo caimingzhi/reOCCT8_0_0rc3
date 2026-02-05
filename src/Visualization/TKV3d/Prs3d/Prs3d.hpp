@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Prs3d_Drawer.hpp>
@@ -108,4 +107,3 @@ public:
                                            const occ::handle<Poly_Triangulation>& thePolyTri,
                                            const gp_Trsf&                         theLocation);
 };
-

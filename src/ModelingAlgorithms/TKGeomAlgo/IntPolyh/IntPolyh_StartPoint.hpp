@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 class IntPolyh_Triangle;
@@ -105,4 +104,3 @@ private:
   int    e2;
   int    chainlist;
 };
-

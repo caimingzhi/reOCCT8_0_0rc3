@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -50,4 +49,3 @@ public:
   //! returns Value as a Approval (Null if another type)
   Standard_EXPORT occ::handle<StepBasic_Approval> Approval() const;
 };
-

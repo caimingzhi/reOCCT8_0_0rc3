@@ -1,22 +1,3 @@
-// Created on: 1994-03-09
-// Created by: Isabelle GRIGNON
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Mon Jun  7 18:38:57 2004 OCC5898
-//  Modified by skv - Thu Aug 21 11:55:58 2008 OCC20222
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Blend_FuncInv.hpp>
 #include <BRepAlgo_NormalProjection.hpp>
@@ -1647,14 +1628,16 @@ static bool IsShrink(const Geom2dAdaptor_Curve& PC,
 {
   switch (PC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Pnt2d P1 = PC.Value(Pf);
       gp_Pnt2d P2 = PC.Value(Pl);
       return std::abs(P1.Coord(isU ? 1 : 2) - Param) <= tol
              && std::abs(P2.Coord(isU ? 1 : 2) - Param) <= tol;
     }
     case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       math_FunctionSample aSample(Pf, Pl, 10);
       int                 i;
       for (i = 1; i <= aSample.NbPoints(); i++)

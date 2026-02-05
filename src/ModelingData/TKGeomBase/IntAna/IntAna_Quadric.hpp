@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -91,4 +90,3 @@ private:
   double                   CCte;
   NCollection_List<gp_Pnt> mySpecialPoints;
 };
-

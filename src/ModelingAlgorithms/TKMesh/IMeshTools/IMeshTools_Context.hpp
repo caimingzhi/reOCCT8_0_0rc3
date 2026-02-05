@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <IMeshTools_ModelBuilder.hpp>
 #include <IMeshData_Model.hpp>
@@ -188,4 +187,3 @@ private:
   occ::handle<IMeshTools_ModelAlgo>    myPostProcessor;
   IMeshTools_Parameters                myParameters;
 };
-

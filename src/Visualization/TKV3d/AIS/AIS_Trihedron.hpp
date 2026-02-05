@@ -1,11 +1,11 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <AIS_KindOfInteractive.hpp>
 #include <Graphic3d_ArrayOfTriangles.hpp>
 #include <PrsMgr_PresentationManager.hpp>
 #include <Prs3d_DatumAspect.hpp>
+
 // Copyright (c) 2016 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -19,14 +19,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Enumeration defining a mode of datum graphic presentation, see Prs3d_Datum.
 enum Prs3d_DatumMode
 {
   Prs3d_DM_WireFrame = 0,
   Prs3d_DM_Shaded
 };
-
 
 #include <Prs3d_DatumParts.hpp>
 #include <Prs3d_LineAspect.hpp>
@@ -249,4 +247,3 @@ protected:
 
   occ::handle<Graphic3d_ArrayOfPrimitives> myPrimitives[Prs3d_DatumParts_NB];
 };
-

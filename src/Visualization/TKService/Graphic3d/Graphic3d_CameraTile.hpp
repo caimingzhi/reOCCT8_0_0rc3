@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Standard_Integer.hpp>
@@ -71,4 +70,3 @@ public:
   //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 };
-

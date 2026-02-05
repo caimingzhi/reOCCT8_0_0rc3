@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -120,4 +119,3 @@ public:
 private:
   occ::handle<NCollection_HSequence<int>> thenegptrs;
 };
-

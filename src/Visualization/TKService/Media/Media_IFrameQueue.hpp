@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_Frame.hpp>
 
 //! Interface defining frame queuing.
@@ -14,4 +13,3 @@ public:
   //! Release previously locked frame, e.g. it can be displayed on the screen.
   virtual void ReleaseFrame(const occ::handle<Media_Frame>& theFrame) = 0;
 };
-

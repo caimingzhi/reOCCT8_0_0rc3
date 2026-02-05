@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -89,4 +88,3 @@ public:
     occ::handle<NCollection_HSequence<TopoDS_Shape>>&       compsols,
     occ::handle<NCollection_HSequence<TopoDS_Shape>>&       compounds) const;
 };
-

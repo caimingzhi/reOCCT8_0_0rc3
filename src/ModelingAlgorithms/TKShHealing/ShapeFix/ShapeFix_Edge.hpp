@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -229,4 +228,3 @@ protected:
   int                                               myStatus;
   occ::handle<ShapeConstruct_ProjectCurveOnSurface> myProjector;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 #include <cctype>
@@ -132,4 +131,3 @@ inline char UpperCase(const char me)
 {
   return (char)(unsigned char)std::toupper((unsigned char)me);
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_InvisibilityContext.hpp>
@@ -30,4 +29,3 @@ public:
 private:
   StepVisual_InvisibilityContext presentationContext;
 };
-

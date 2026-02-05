@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 
 //! A framework to display tangency constraints between
@@ -55,4 +54,3 @@ private:
   double myLength;
   int    myExternRef;
 };
-

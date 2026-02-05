@@ -1,21 +1,3 @@
-// Created on: 1997-04-17
-// Created by: Christophe MARION
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// #define No_Standard_OutOfRange
-
 #include <BRepTopAdaptor_Tool.hpp>
 #include <BRepTopAdaptor_TopolTool.hpp>
 #include <ElCLib.hpp>
@@ -1829,46 +1811,46 @@ void HLRBRep_Data::OrientOthEdge(const int I, HLRBRep_FaceData& FD)
 namespace
 {
 
-static void REJECT1(const double                       theDeca[],
-                    const double                       theTotMin[],
-                    const double                       theTotMax[],
-                    const double                       theSurD[],
-                    HLRAlgo_EdgesBlock::MinMaxIndices& theVertMin,
-                    HLRAlgo_EdgesBlock::MinMaxIndices& theVertMax)
-{
-  theVertMin.Min[0] = (int)((theDeca[0] + theTotMin[0]) * theSurD[0]);
-  theVertMax.Min[0] = (int)((theDeca[0] + theTotMax[0]) * theSurD[0]);
-  theVertMin.Min[1] = (int)((theDeca[1] + theTotMin[1]) * theSurD[1]);
-  theVertMax.Min[1] = (int)((theDeca[1] + theTotMax[1]) * theSurD[1]);
-  theVertMin.Min[2] = (int)((theDeca[2] + theTotMin[2]) * theSurD[2]);
-  theVertMax.Min[2] = (int)((theDeca[2] + theTotMax[2]) * theSurD[2]);
-  theVertMin.Min[3] = (int)((theDeca[3] + theTotMin[3]) * theSurD[3]);
-  theVertMax.Min[3] = (int)((theDeca[3] + theTotMax[3]) * theSurD[3]);
-  theVertMin.Min[4] = (int)((theDeca[4] + theTotMin[4]) * theSurD[4]);
-  theVertMax.Min[4] = (int)((theDeca[4] + theTotMax[4]) * theSurD[4]);
-  theVertMin.Min[5] = (int)((theDeca[5] + theTotMin[5]) * theSurD[5]);
-  theVertMax.Min[5] = (int)((theDeca[5] + theTotMax[5]) * theSurD[5]);
-  theVertMin.Min[6] = (int)((theDeca[6] + theTotMin[6]) * theSurD[6]);
-  theVertMax.Min[6] = (int)((theDeca[6] + theTotMax[6]) * theSurD[6]);
-  theVertMin.Min[7] = (int)((theDeca[7] + theTotMin[7]) * theSurD[7]);
-  theVertMax.Min[7] = (int)((theDeca[7] + theTotMax[7]) * theSurD[7]);
-  theVertMin.Max[0] = (int)((theDeca[8] + theTotMin[8]) * theSurD[8]);
-  theVertMax.Max[0] = (int)((theDeca[8] + theTotMax[8]) * theSurD[8]);
-  theVertMin.Max[1] = (int)((theDeca[9] + theTotMin[9]) * theSurD[9]);
-  theVertMax.Max[1] = (int)((theDeca[9] + theTotMax[9]) * theSurD[9]);
-  theVertMin.Max[2] = (int)((theDeca[10] + theTotMin[10]) * theSurD[10]);
-  theVertMax.Max[2] = (int)((theDeca[10] + theTotMax[10]) * theSurD[10]);
-  theVertMin.Max[3] = (int)((theDeca[11] + theTotMin[11]) * theSurD[11]);
-  theVertMax.Max[3] = (int)((theDeca[11] + theTotMax[11]) * theSurD[11]);
-  theVertMin.Max[4] = (int)((theDeca[12] + theTotMin[12]) * theSurD[12]);
-  theVertMax.Max[4] = (int)((theDeca[12] + theTotMax[12]) * theSurD[12]);
-  theVertMin.Max[5] = (int)((theDeca[13] + theTotMin[13]) * theSurD[13]);
-  theVertMax.Max[5] = (int)((theDeca[13] + theTotMax[13]) * theSurD[13]);
-  theVertMin.Max[6] = (int)((theDeca[14] + theTotMin[14]) * theSurD[14]);
-  theVertMax.Max[6] = (int)((theDeca[14] + theTotMax[14]) * theSurD[14]);
-  theVertMin.Max[7] = (int)((theDeca[15] + theTotMin[15]) * theSurD[15]);
-  theVertMax.Max[7] = (int)((theDeca[15] + theTotMax[15]) * theSurD[15]);
-}
+  static void REJECT1(const double                       theDeca[],
+                      const double                       theTotMin[],
+                      const double                       theTotMax[],
+                      const double                       theSurD[],
+                      HLRAlgo_EdgesBlock::MinMaxIndices& theVertMin,
+                      HLRAlgo_EdgesBlock::MinMaxIndices& theVertMax)
+  {
+    theVertMin.Min[0] = (int)((theDeca[0] + theTotMin[0]) * theSurD[0]);
+    theVertMax.Min[0] = (int)((theDeca[0] + theTotMax[0]) * theSurD[0]);
+    theVertMin.Min[1] = (int)((theDeca[1] + theTotMin[1]) * theSurD[1]);
+    theVertMax.Min[1] = (int)((theDeca[1] + theTotMax[1]) * theSurD[1]);
+    theVertMin.Min[2] = (int)((theDeca[2] + theTotMin[2]) * theSurD[2]);
+    theVertMax.Min[2] = (int)((theDeca[2] + theTotMax[2]) * theSurD[2]);
+    theVertMin.Min[3] = (int)((theDeca[3] + theTotMin[3]) * theSurD[3]);
+    theVertMax.Min[3] = (int)((theDeca[3] + theTotMax[3]) * theSurD[3]);
+    theVertMin.Min[4] = (int)((theDeca[4] + theTotMin[4]) * theSurD[4]);
+    theVertMax.Min[4] = (int)((theDeca[4] + theTotMax[4]) * theSurD[4]);
+    theVertMin.Min[5] = (int)((theDeca[5] + theTotMin[5]) * theSurD[5]);
+    theVertMax.Min[5] = (int)((theDeca[5] + theTotMax[5]) * theSurD[5]);
+    theVertMin.Min[6] = (int)((theDeca[6] + theTotMin[6]) * theSurD[6]);
+    theVertMax.Min[6] = (int)((theDeca[6] + theTotMax[6]) * theSurD[6]);
+    theVertMin.Min[7] = (int)((theDeca[7] + theTotMin[7]) * theSurD[7]);
+    theVertMax.Min[7] = (int)((theDeca[7] + theTotMax[7]) * theSurD[7]);
+    theVertMin.Max[0] = (int)((theDeca[8] + theTotMin[8]) * theSurD[8]);
+    theVertMax.Max[0] = (int)((theDeca[8] + theTotMax[8]) * theSurD[8]);
+    theVertMin.Max[1] = (int)((theDeca[9] + theTotMin[9]) * theSurD[9]);
+    theVertMax.Max[1] = (int)((theDeca[9] + theTotMax[9]) * theSurD[9]);
+    theVertMin.Max[2] = (int)((theDeca[10] + theTotMin[10]) * theSurD[10]);
+    theVertMax.Max[2] = (int)((theDeca[10] + theTotMax[10]) * theSurD[10]);
+    theVertMin.Max[3] = (int)((theDeca[11] + theTotMin[11]) * theSurD[11]);
+    theVertMax.Max[3] = (int)((theDeca[11] + theTotMax[11]) * theSurD[11]);
+    theVertMin.Max[4] = (int)((theDeca[12] + theTotMin[12]) * theSurD[12]);
+    theVertMax.Max[4] = (int)((theDeca[12] + theTotMax[12]) * theSurD[12]);
+    theVertMin.Max[5] = (int)((theDeca[13] + theTotMin[13]) * theSurD[13]);
+    theVertMax.Max[5] = (int)((theDeca[13] + theTotMax[13]) * theSurD[13]);
+    theVertMin.Max[6] = (int)((theDeca[14] + theTotMin[14]) * theSurD[14]);
+    theVertMax.Max[6] = (int)((theDeca[14] + theTotMax[14]) * theSurD[14]);
+    theVertMin.Max[7] = (int)((theDeca[15] + theTotMin[15]) * theSurD[15]);
+    theVertMax.Max[7] = (int)((theDeca[15] + theTotMax[15]) * theSurD[15]);
+  }
 
 } // namespace
 

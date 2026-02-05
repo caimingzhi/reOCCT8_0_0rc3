@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -26,4 +25,3 @@ public:
 private:
   gp_Pnt2d pnt;
 };
-

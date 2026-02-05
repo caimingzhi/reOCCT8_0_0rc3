@@ -1,19 +1,3 @@
-// Created on: 1995-05-05
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GCPnts_AbscissaPoint.hpp>
 
 #include <GCPnts_AbscissaType.hpp>
@@ -32,15 +16,18 @@ static GCPnts_AbscissaType computeType(const TheCurve& theC, double& theRatio)
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       theRatio = 1.0;
       return GCPnts_LengthParametrized;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       theRatio = theC.Circle().Radius();
       return GCPnts_LengthParametrized;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBz = theC.Bezier();
       if (aBz->NbPoles() == 2 && !aBz->IsRational())
       {
@@ -49,7 +36,8 @@ static GCPnts_AbscissaType computeType(const TheCurve& theC, double& theRatio)
       }
       return GCPnts_Parametrized;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBs = theC.BSpline();
       if (aBs->NbPoles() == 2 && !aBs->IsRational())
       {
@@ -58,7 +46,8 @@ static GCPnts_AbscissaType computeType(const TheCurve& theC, double& theRatio)
       }
       return GCPnts_Parametrized;
     }
-    default: {
+    default:
+    {
       return GCPnts_Parametrized;
     }
   }
@@ -84,16 +73,19 @@ static void Compute(CPnts_AbscissaPoint& theComputer,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_LengthParametrized:
+    {
       theComputer.SetParameter(theU0 + theAbscis / aRatio);
       return;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_Parametrized:
+    {
       theComputer.Init(theC);
       theComputer.Perform(theAbscis, theU0, theUi, theEPSILON);
       return;
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbsComposite:
+    {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);
@@ -174,17 +166,20 @@ static void AdvCompute(CPnts_AbscissaPoint& theComputer,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_LengthParametrized:
+    {
       theComputer.SetParameter(theU0 + theAbscis / aRatio);
       return;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_Parametrized:
+    {
       // theComputer.Init (theC);
       theComputer.Init(theC, theEPSILON); // rbv's modification
       theComputer.AdvPerform(theAbscis, theU0, theUi, theEPSILON);
       return;
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbsComposite:
+    {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);
@@ -378,14 +373,17 @@ double GCPnts_AbscissaPoint::length(const TheCurve& theC,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_LengthParametrized:
+    {
       return std::abs(theU2 - theU1) * aRatio;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_Parametrized:
+    {
       return theTol != nullptr ? CPnts_AbscissaPoint::Length(theC, theU1, theU2, *theTol)
                                : CPnts_AbscissaPoint::Length(theC, theU1, theU2);
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbsComposite:
+    {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);

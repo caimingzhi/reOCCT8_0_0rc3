@@ -468,7 +468,8 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
                                               : Graphic3d_AlphaMode_BlendAuto;
     switch (anAlphaMode)
     {
-      case Graphic3d_AlphaMode_BlendAuto: {
+      case Graphic3d_AlphaMode_BlendAuto:
+      {
         if (aPbrMat.BaseColor.Alpha() < 1.0f)
         {
           myWriter->Key("alphaMode");
@@ -476,16 +477,19 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
         }
         break;
       }
-      case Graphic3d_AlphaMode_Opaque: {
+      case Graphic3d_AlphaMode_Opaque:
+      {
         break;
       }
-      case Graphic3d_AlphaMode_Mask: {
+      case Graphic3d_AlphaMode_Mask:
+      {
         myWriter->Key("alphaMode");
         myWriter->String("MASK");
         break;
       }
       case Graphic3d_AlphaMode_Blend:
-      case Graphic3d_AlphaMode_MaskBlend: {
+      case Graphic3d_AlphaMode_MaskBlend:
+      {
         myWriter->Key("alphaMode");
         myWriter->String("BLEND");
         break;

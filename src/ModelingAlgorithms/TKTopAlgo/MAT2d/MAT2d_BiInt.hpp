@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -35,15 +34,14 @@ private:
 
 namespace std
 {
-template <>
-struct hash<MAT2d_BiInt>
-{
-  size_t operator()(const MAT2d_BiInt& theBiInt) const noexcept
+  template <>
+  struct hash<MAT2d_BiInt>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2]{theBiInt.FirstIndex(), theBiInt.SecondIndex()};
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+    size_t operator()(const MAT2d_BiInt& theBiInt) const noexcept
+    {
+      // Combine two int values into a single hash value.
+      int aCombination[2]{theBiInt.FirstIndex(), theBiInt.SecondIndex()};
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
+    }
+  };
 } // namespace std
-

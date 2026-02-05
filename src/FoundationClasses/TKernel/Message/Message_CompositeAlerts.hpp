@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Alert.hpp>
 #include <Message_Gravity.hpp>
 #include <NCollection_List.hpp>
@@ -65,4 +64,3 @@ protected:
   NCollection_List<occ::handle<Message_Alert>> myAlerts[Message_Fail + 1]; //!< container of child alert for each type of gravity
   // clang-format on
 };
-

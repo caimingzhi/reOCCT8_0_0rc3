@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_HAsciiString.hpp>
@@ -80,4 +79,3 @@ private:
   occ::handle<TCollection_HAsciiString>                                   originatingSystem;
   occ::handle<TCollection_HAsciiString>                                   authorisation;
 };
-

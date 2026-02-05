@@ -88,68 +88,68 @@ QA_DEFINECLASS(QaClass50_50, QaClass49_50)
 // Anonymous namespace class for testing
 namespace
 {
-class QaClass50_50Anon : public QaClass49_50
-{
-public:
-  QaClass50_50Anon() = default;
-};
+  class QaClass50_50Anon : public QaClass49_50
+  {
+  public:
+    QaClass50_50Anon() = default;
+  };
 } // namespace
 
 // Named namespace class for testing
 namespace QaNamespace
 {
-class QaClass50_50 : public QaClass49_50
-{
-public:
-  QaClass50_50() = default;
-};
+  class QaClass50_50 : public QaClass49_50
+  {
+  public:
+    QaClass50_50() = default;
+  };
 } // namespace QaNamespace
 
 // Timer class for performance testing
 namespace
 {
-class QATimer : public OSD_Timer
-{
-public:
-  enum TimeFormat
+  class QATimer : public OSD_Timer
   {
-    Seconds,
-    Milliseconds,
-    Microseconds
-  };
-
-  QATimer(const char* theOperationName, TimeFormat theFormat = Milliseconds)
-      : myOperationName(theOperationName),
-        myFormat(theFormat)
-  {
-    Start();
-  }
-
-  ~QATimer() override
-  {
-    Stop();
-    double aTime = 0.0;
-    switch (myFormat)
+  public:
+    enum TimeFormat
     {
-      case Seconds:
-        aTime = ElapsedTime();
-        break;
-      case Milliseconds:
-        aTime = ElapsedTime() * 1000.0;
-        break;
-      case Microseconds:
-        aTime = ElapsedTime() * 1000000.0;
-        break;
-    }
-    // Note: In tests we don't print timing info but could store it for verification
-    (void)aTime;           // Avoid unused variable warning
-    (void)myOperationName; // Avoid unused field warning
-  }
+      Seconds,
+      Milliseconds,
+      Microseconds
+    };
 
-private:
-  const char* myOperationName;
-  TimeFormat  myFormat;
-};
+    QATimer(const char* theOperationName, TimeFormat theFormat = Milliseconds)
+        : myOperationName(theOperationName),
+          myFormat(theFormat)
+    {
+      Start();
+    }
+
+    ~QATimer() override
+    {
+      Stop();
+      double aTime = 0.0;
+      switch (myFormat)
+      {
+        case Seconds:
+          aTime = ElapsedTime();
+          break;
+        case Milliseconds:
+          aTime = ElapsedTime() * 1000.0;
+          break;
+        case Microseconds:
+          aTime = ElapsedTime() * 1000000.0;
+          break;
+      }
+      // Note: In tests we don't print timing info but could store it for verification
+      (void)aTime;           // Avoid unused variable warning
+      (void)myOperationName; // Avoid unused field warning
+    }
+
+  private:
+    const char* myOperationName;
+    TimeFormat  myFormat;
+  };
 } // namespace
 
 // Test fixture for advanced Handle operations tests
@@ -172,9 +172,8 @@ TEST_F(HandleAdvancedTest, CompilerSpecificBehavior)
 
   // Test passing handle as reference to base class
   // This tests template argument deduction and inheritance
-  auto testFunction = [](const occ::handle<Standard_Transient>& theObj) -> bool {
-    return !theObj.IsNull();
-  };
+  auto testFunction = [](const occ::handle<Standard_Transient>& theObj) -> bool
+  { return !theObj.IsNull(); };
 
   EXPECT_TRUE(testFunction(aRoot));
 

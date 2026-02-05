@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopAbs_ShapeEnum.hpp>
 
 #include <TopAbs_Orientation.hpp>
@@ -66,4 +65,3 @@ Standard_EXPORT void FUN_tool_UpdateBnd2d(Bnd_Box2d& B2d, const Bnd_Box2d& newB2
 // ----------------------------------------------------------------------
 Standard_EXPORT gp_Dir   FUN_tool_nCinsideS(const gp_Dir& tgC, const gp_Dir& ngS);
 Standard_EXPORT gp_Dir2d FUN_tool_nC2dINSIDES(const gp_Dir2d& tgC2d);
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_SurfaceOfRevolution.hpp>
 #include <gp_Ax2.hpp>
 #include <Extrema_GenExtPS.hpp>
@@ -70,4 +69,3 @@ private:
   double                                       mySqDist[8];
   Extrema_POnSurf                              myPoint[8];
 };
-

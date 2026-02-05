@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -145,4 +144,3 @@ private:
   occ::handle<Geom_Curve>        mySection;
   occ::handle<Geom_BSplineCurve> myCurve;
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1996-12-05
-// Created by: Arnaud BOUZY/Odile Olivier
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <PrsDim_AngleDimension.hpp>
 
 #include <PrsDim.hpp>
@@ -54,20 +38,20 @@ IMPLEMENT_STANDARD_RTTIEXT(PrsDim_AngleDimension, PrsDim_Dimension)
 
 namespace
 {
-constexpr double   THE_EMPTY_LABEL_WIDTH = 0.0;
-constexpr char16_t THE_DEGREE_SYMBOL     = 0x00B0;
-constexpr double   THE_3D_TEXT_MARGIN    = 0.1;
+  constexpr double   THE_EMPTY_LABEL_WIDTH = 0.0;
+  constexpr char16_t THE_DEGREE_SYMBOL     = 0x00B0;
+  constexpr double   THE_3D_TEXT_MARGIN    = 0.1;
 
-//! Returns true if the given points lie on a same line.
-static bool isSameLine(const gp_Pnt& theFirstPoint,
-                       const gp_Pnt& theCenterPoint,
-                       const gp_Pnt& theSecondPoint)
-{
-  gp_Vec aVec1(theFirstPoint, theCenterPoint);
-  gp_Vec aVec2(theCenterPoint, theSecondPoint);
+  //! Returns true if the given points lie on a same line.
+  static bool isSameLine(const gp_Pnt& theFirstPoint,
+                         const gp_Pnt& theCenterPoint,
+                         const gp_Pnt& theSecondPoint)
+  {
+    gp_Vec aVec1(theFirstPoint, theCenterPoint);
+    gp_Vec aVec2(theCenterPoint, theSecondPoint);
 
-  return aVec1.IsParallel(aVec2, Precision::Angular());
-}
+    return aVec1.IsParallel(aVec2, Precision::Angular());
+  }
 } // namespace
 
 //=================================================================================================
@@ -657,7 +641,8 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   // draw text label
   switch (aHPosition)
   {
-    case LabelPosition_HCenter: {
+    case LabelPosition_HCenter:
+    {
       bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DTVP_Center
                          && aDimensionAspect->IsText3d();
 
@@ -702,7 +687,8 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     }
     break;
 
-    case LabelPosition_Left: {
+    case LabelPosition_Left:
+    {
       DrawExtension(thePresentation,
                     anExtensionSize,
                     (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
@@ -716,7 +702,8 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     }
     break;
 
-    case LabelPosition_Right: {
+    case LabelPosition_Right:
+    {
       DrawExtension(thePresentation,
                     anExtensionSize,
                     (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
@@ -1220,11 +1207,13 @@ gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
   // Get text position
   switch (aLabelPosition & LabelPosition_HMask)
   {
-    case LabelPosition_HCenter: {
+    case LabelPosition_HCenter:
+    {
       aTextPosition = GetCenterOnArc(aFirstAttach, aSecondAttach, myCenterPoint);
     }
     break;
-    case LabelPosition_Left: {
+    case LabelPosition_Left:
+    {
       gp_Dir aPlaneNormal =
         gp_Vec(aFirstAttach, aSecondAttach) ^ gp_Vec(myCenterPoint, aFirstAttach);
       gp_Dir anExtensionDir  = aPlaneNormal ^ gp_Vec(myCenterPoint, aFirstAttach);
@@ -1236,7 +1225,8 @@ gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
       aTextPosition          = aFirstAttach.Translated(anExtensionVec);
     }
     break;
-    case LabelPosition_Right: {
+    case LabelPosition_Right:
+    {
       gp_Dir aPlaneNormal =
         gp_Vec(aFirstAttach, aSecondAttach) ^ gp_Vec(myCenterPoint, aFirstAttach);
       gp_Dir anExtensionDir  = aPlaneNormal ^ gp_Vec(myCenterPoint, aSecondAttach);
@@ -1409,7 +1399,8 @@ void PrsDim_AngleDimension::FitTextAlignment(
     case Prs3d_DAO_Internal:
       theIsArrowsExternal = false;
       break;
-    case Prs3d_DAO_Fit: {
+    case Prs3d_DAO_Fit:
+    {
       gp_Vec anAttachVector(aFirstAttach, aSecondAttach);
       double aDimensionWidth = anAttachVector.Magnitude();
 
@@ -1437,7 +1428,8 @@ void PrsDim_AngleDimension::FitTextAlignment(
     case Prs3d_DTHP_Center:
       theLabelPosition |= LabelPosition_HCenter;
       break;
-    case Prs3d_DTHP_Fit: {
+    case Prs3d_DTHP_Fit:
+    {
       gp_Vec anAttachVector(aFirstAttach, aSecondAttach);
       double aDimensionWidth = anAttachVector.Magnitude();
       double anArrowsWidth   = anArrowLength * 2.0;

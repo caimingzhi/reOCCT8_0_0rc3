@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Buffer.hpp>
 #include <RWGltf_GltfAccessor.hpp>
 #include <RWGltf_GltfArrayType.hpp>
@@ -32,4 +31,3 @@ public:
   {
   }
 };
-

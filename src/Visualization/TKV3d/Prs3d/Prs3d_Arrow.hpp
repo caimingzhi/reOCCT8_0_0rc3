@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfTriangles.hpp>
 #include <Graphic3d_ArrayOfSegments.hpp>
 #include <Prs3d_Presentation.hpp>
@@ -57,4 +56,3 @@ public:
                                    const double                        theAngle,
                                    const double                        theLength);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_FrameStats.hpp>
 #include <NCollection_IndexedMap.hpp>
 
@@ -37,4 +36,3 @@ protected:
     bool                                                       theToCountTris,
     bool                                                       theToCountMem);
 };
-

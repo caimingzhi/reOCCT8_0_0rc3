@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 #include <Standard_Handle.hpp>
 
@@ -86,4 +85,3 @@ private:
   bool                                  myIsExactMethod;
   bool                                  myIsMultiThread;
 };
-

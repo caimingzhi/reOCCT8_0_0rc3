@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Poly_Triangulation.hpp>
@@ -132,4 +131,3 @@ public:
 private:
   occ::handle<Poly_Triangulation> myTriangulation;
 };
-

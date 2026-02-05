@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopLoc_SListOfItemLocation.hpp>
@@ -24,6 +23,7 @@ private:
   TopLoc_SListOfItemLocation myTail;
   TopLoc_ItemLocation        myValue;
 };
+
 // Copyright (c) 1998-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -57,5 +57,3 @@ inline TopLoc_ItemLocation& TopLoc_SListNodeOfItemLocation::Value() const
 {
   return (TopLoc_ItemLocation&)myValue;
 }
-
-

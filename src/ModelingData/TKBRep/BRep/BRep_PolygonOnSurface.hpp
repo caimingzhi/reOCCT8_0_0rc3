@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -46,4 +45,3 @@ private:
   occ::handle<Poly_Polygon2D> myPolygon2D;
   occ::handle<Geom_Surface>   mySurface;
 };
-

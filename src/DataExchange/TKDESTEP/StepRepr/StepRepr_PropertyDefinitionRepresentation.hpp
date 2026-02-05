@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_RepresentedDefinition.hpp>
@@ -38,4 +37,3 @@ private:
   StepRepr_RepresentedDefinition       theDefinition;
   occ::handle<StepRepr_Representation> theUsedRepresentation;
 };
-

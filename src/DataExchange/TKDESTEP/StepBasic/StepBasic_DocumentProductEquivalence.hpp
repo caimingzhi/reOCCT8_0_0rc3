@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_DocumentProductAssociation.hpp>
@@ -16,4 +15,3 @@ public:
   DEFINE_STANDARD_RTTIEXT(StepBasic_DocumentProductEquivalence,
                           StepBasic_DocumentProductAssociation)
 };
-

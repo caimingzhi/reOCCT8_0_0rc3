@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -56,4 +55,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TNaming_TranslateTool, Standard_Transient)
 };
-

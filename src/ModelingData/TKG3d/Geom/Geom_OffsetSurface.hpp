@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -367,4 +366,3 @@ private:
   std::unique_ptr<Geom_OsculatingSurface> myOscSurf;
   GeomAbs_Shape                           myBasisSurfContinuity;
 };
-

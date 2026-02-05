@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2d.hpp>
 
 //! Describes a line in 2D space.
@@ -242,4 +241,3 @@ inline double gp_Lin2d::SquareDistance(const gp_Lin2d& theOther) const noexcept
   }
   return aD;
 }
-

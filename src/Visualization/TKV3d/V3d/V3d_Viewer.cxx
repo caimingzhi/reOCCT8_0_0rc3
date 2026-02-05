@@ -548,7 +548,8 @@ occ::handle<Aspect_Grid> V3d_Viewer::Grid(Aspect_GridType theGridType, bool theT
 {
   switch (theGridType)
   {
-    case Aspect_GT_Circular: {
+    case Aspect_GT_Circular:
+    {
       if (myCGrid.IsNull() && theToCreate)
       {
         myCGrid = new V3d_CircularGrid(this,
@@ -557,7 +558,8 @@ occ::handle<Aspect_Grid> V3d_Viewer::Grid(Aspect_GridType theGridType, bool theT
       }
       return occ::handle<Aspect_Grid>(myCGrid);
     }
-    case Aspect_GT_Rectangular: {
+    case Aspect_GT_Rectangular:
+    {
       if (myRGrid.IsNull() && theToCreate)
       {
         myRGrid = new V3d_RectangularGrid(this,

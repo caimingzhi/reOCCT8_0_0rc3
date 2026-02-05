@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_DegreeOfFreedom.hpp>
@@ -37,4 +36,3 @@ private:
   StepFEA_DegreeOfFreedom               theFreedom;
   StepElement_MeasureOrUnspecifiedValue theA;
 };
-

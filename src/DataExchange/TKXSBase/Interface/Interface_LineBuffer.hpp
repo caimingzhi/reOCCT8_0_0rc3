@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 #include <TCollection_HAsciiString.hpp>
 
@@ -94,4 +93,3 @@ private:
   int                      myFriz;
   char                     myKept;
 };
-

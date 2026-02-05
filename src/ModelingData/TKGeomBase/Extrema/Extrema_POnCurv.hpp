@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -42,4 +41,3 @@ private:
   double myU;
   gp_Pnt myP;
 };
-

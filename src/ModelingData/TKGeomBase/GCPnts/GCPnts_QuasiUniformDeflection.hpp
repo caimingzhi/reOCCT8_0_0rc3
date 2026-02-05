@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdFail_NotDone.hpp>
 #include <NCollection_Sequence.hpp>
 #include <gp_Pnt.hpp>
@@ -232,4 +231,3 @@ private:
   NCollection_Sequence<gp_Pnt> myPoints;
   GeomAbs_Shape                myCont;
 };
-

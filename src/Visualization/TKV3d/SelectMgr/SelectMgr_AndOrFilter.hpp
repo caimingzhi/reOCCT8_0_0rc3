@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -8,6 +7,7 @@
 #include <NCollection_Map.hpp>
 #include <NCollection_Shared.hpp>
 #include <SelectMgr_CompositionFilter.hpp>
+
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -21,15 +21,12 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Enumeration defines the filter type.
 enum SelectMgr_FilterType
 {
   SelectMgr_FilterType_AND, //!< an object should be suitable for all filters.
   SelectMgr_FilterType_OR   //!< an object should be suitable at least one filter.
 };
-
-
 
 //! A framework to define an OR or AND selection filter.
 //! To use an AND selection filter call SetUseOrFilter with False parameter.
@@ -66,4 +63,3 @@ private:
   SelectMgr_FilterType myFilterType; //!< selection filter type. SelectMgr_TypeFilter_OR by default.
   // clang-format on
 };
-

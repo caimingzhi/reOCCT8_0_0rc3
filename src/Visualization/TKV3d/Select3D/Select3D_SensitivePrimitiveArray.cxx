@@ -1,18 +1,3 @@
-// Created on: 2016-02-20
-// Created by: Kirill Gavrilov
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Select3D_SensitivePrimitiveArray.hpp>
 
 #include <OSD_Parallel.hpp>
@@ -24,44 +9,44 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitivePrimitiveArray, Select3D_SensitiveS
 namespace
 {
 
-//! Auxiliary converter.
-static inline gp_Pnt vecToPnt(const NCollection_Vec3<float>& theVec)
-{
-  return gp_Pnt(theVec.x(), theVec.y(), theVec.z());
-}
-
-//! Auxiliary converter.
-static inline gp_Pnt vecToPnt(const NCollection_Vec2<float>& theVec)
-{
-  return gp_Pnt(theVec.x(), theVec.y(), 0.0);
-}
-
-//! Auxiliary function to find shared node between two triangles.
-static inline bool hasSharedNode(const int* theTri1, const int* theTri2)
-{
-  return theTri1[0] == theTri2[0] || theTri1[1] == theTri2[0] || theTri1[2] == theTri2[0]
-         || theTri1[0] == theTri2[1] || theTri1[1] == theTri2[1] || theTri1[2] == theTri2[1]
-         || theTri1[0] == theTri2[2] || theTri1[1] == theTri2[2] || theTri1[2] == theTri2[2];
-}
-
-//! Fill in the triangle nodes indices.
-static inline void getTriIndices(const occ::handle<Graphic3d_IndexBuffer>& theIndices,
-                                 const int                                 theIndexOffset,
-                                 int*                                      theNodes)
-{
-  if (!theIndices.IsNull())
+  //! Auxiliary converter.
+  static inline gp_Pnt vecToPnt(const NCollection_Vec3<float>& theVec)
   {
-    theNodes[0] = theIndices->Index(theIndexOffset + 0);
-    theNodes[1] = theIndices->Index(theIndexOffset + 1);
-    theNodes[2] = theIndices->Index(theIndexOffset + 2);
+    return gp_Pnt(theVec.x(), theVec.y(), theVec.z());
   }
-  else
+
+  //! Auxiliary converter.
+  static inline gp_Pnt vecToPnt(const NCollection_Vec2<float>& theVec)
   {
-    theNodes[0] = theIndexOffset + 0;
-    theNodes[1] = theIndexOffset + 1;
-    theNodes[2] = theIndexOffset + 2;
+    return gp_Pnt(theVec.x(), theVec.y(), 0.0);
   }
-}
+
+  //! Auxiliary function to find shared node between two triangles.
+  static inline bool hasSharedNode(const int* theTri1, const int* theTri2)
+  {
+    return theTri1[0] == theTri2[0] || theTri1[1] == theTri2[0] || theTri1[2] == theTri2[0]
+           || theTri1[0] == theTri2[1] || theTri1[1] == theTri2[1] || theTri1[2] == theTri2[1]
+           || theTri1[0] == theTri2[2] || theTri1[1] == theTri2[2] || theTri1[2] == theTri2[2];
+  }
+
+  //! Fill in the triangle nodes indices.
+  static inline void getTriIndices(const occ::handle<Graphic3d_IndexBuffer>& theIndices,
+                                   const int                                 theIndexOffset,
+                                   int*                                      theNodes)
+  {
+    if (!theIndices.IsNull())
+    {
+      theNodes[0] = theIndices->Index(theIndexOffset + 0);
+      theNodes[1] = theIndices->Index(theIndexOffset + 1);
+      theNodes[2] = theIndices->Index(theIndexOffset + 2);
+    }
+    else
+    {
+      theNodes[0] = theIndexOffset + 0;
+      theNodes[1] = theIndexOffset + 1;
+      theNodes[2] = theIndexOffset + 2;
+    }
+  }
 
 } // namespace
 
@@ -95,7 +80,8 @@ struct Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray_InitFu
     anEntity->SetSensitivityFactor(myPrimArray.SensitivityFactor());
     switch (myPrimArray.myPrimType)
     {
-      case Graphic3d_TOPA_POINTS: {
+      case Graphic3d_TOPA_POINTS:
+      {
         if (!anEntity->InitPoints(myPrimArray.myVerts,
                                   myPrimArray.myIndices,
                                   myPrimArray.myInitLocation,
@@ -109,7 +95,8 @@ struct Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray_InitFu
         }
         break;
       }
-      case Graphic3d_TOPA_TRIANGLES: {
+      case Graphic3d_TOPA_TRIANGLES:
+      {
         if (!anEntity->InitTriangulation(myPrimArray.myVerts,
                                          myPrimArray.myIndices,
                                          myPrimArray.myInitLocation,
@@ -123,7 +110,8 @@ struct Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray_InitFu
         }
         break;
       }
-      default: {
+      default:
+      {
         ++myNbFailures;
         return;
       }
@@ -584,7 +572,8 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitivePrimitiveArray::GetConne
     new Select3D_SensitivePrimitiveArray(myOwnerId);
   switch (myPrimType)
   {
-    case Graphic3d_TOPA_POINTS: {
+    case Graphic3d_TOPA_POINTS:
+    {
       aNewEntity->InitPoints(myVerts,
                              myIndices,
                              myInitLocation,
@@ -594,7 +583,8 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitivePrimitiveArray::GetConne
                              !myGroups.IsNull() ? myGroups->Size() : 1);
       break;
     }
-    case Graphic3d_TOPA_TRIANGLES: {
+    case Graphic3d_TOPA_TRIANGLES:
+    {
       aNewEntity->InitTriangulation(myVerts,
                                     myIndices,
                                     myInitLocation,
@@ -678,7 +668,8 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::Box(const int theIdx) const
   Select3D_BndBox3d aBox;
   switch (myPrimType)
   {
-    case Graphic3d_TOPA_POINTS: {
+    case Graphic3d_TOPA_POINTS:
+    {
       for (int anElemIter = 0; anElemIter < aPatchSize; ++anElemIter)
       {
         const int anIndexOffset = (anElemIdx + anElemIter);
@@ -697,7 +688,8 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::Box(const int theIdx) const
       }
       break;
     }
-    case Graphic3d_TOPA_TRIANGLES: {
+    case Graphic3d_TOPA_TRIANGLES:
+    {
       int aTriNodes[3];
       if (myIs3d)
       {
@@ -731,7 +723,8 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::Box(const int theIdx) const
       }
       break;
     }
-    default: {
+    default:
+    {
       return aBox;
     }
   }
@@ -945,7 +938,8 @@ bool Select3D_SensitivePrimitiveArray::overlapsElement(SelectBasics_PickResult& 
   SelectBasics_PickResult aPickResult;
   switch (myPrimType)
   {
-    case Graphic3d_TOPA_POINTS: {
+    case Graphic3d_TOPA_POINTS:
+    {
       for (int anElemIter = 0; anElemIter < aPatchSize; ++anElemIter)
       {
         const int anIndexOffset = (anElemIdx + anElemIter);
@@ -988,7 +982,8 @@ bool Select3D_SensitivePrimitiveArray::overlapsElement(SelectBasics_PickResult& 
       }
       break;
     }
-    case Graphic3d_TOPA_TRIANGLES: {
+    case Graphic3d_TOPA_TRIANGLES:
+    {
       NCollection_Vec3<int> aTriNodes;
       for (int anElemIter = 0; anElemIter < aPatchSize; ++anElemIter)
       {
@@ -1074,7 +1069,8 @@ bool Select3D_SensitivePrimitiveArray::overlapsElement(SelectBasics_PickResult& 
       }
       break;
     }
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -1105,7 +1101,8 @@ bool Select3D_SensitivePrimitiveArray::elementIsInside(SelectBasics_SelectingVol
   const int aPatchSize = myBvhIndices.PatchSize(theElemIdx);
   switch (myPrimType)
   {
-    case Graphic3d_TOPA_POINTS: {
+    case Graphic3d_TOPA_POINTS:
+    {
       for (int anElemIter = 0; anElemIter < aPatchSize; ++anElemIter)
       {
         const int anIndexOffset = (anElemIdx + anElemIter);
@@ -1139,7 +1136,8 @@ bool Select3D_SensitivePrimitiveArray::elementIsInside(SelectBasics_SelectingVol
       }
       return true;
     }
-    case Graphic3d_TOPA_TRIANGLES: {
+    case Graphic3d_TOPA_TRIANGLES:
+    {
       NCollection_Vec3<int> aTriNodes;
       for (int anElemIter = 0; anElemIter < aPatchSize; ++anElemIter)
       {
@@ -1183,7 +1181,8 @@ bool Select3D_SensitivePrimitiveArray::elementIsInside(SelectBasics_SelectingVol
       }
       return true;
     }
-    default: {
+    default:
+    {
       return false;
     }
   }

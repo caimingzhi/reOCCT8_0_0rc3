@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Structure defining frustum boundaries.
 template <typename Elem_t>
 struct Aspect_FrustumLRBT
@@ -46,4 +45,3 @@ struct Aspect_FrustumLRBT
     return aCopy;
   }
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <GeomAbs_CurveType.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -163,4 +162,3 @@ private:
   double                         myFirst;
   double                         myLast;
 };
-

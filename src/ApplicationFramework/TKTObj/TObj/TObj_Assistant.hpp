@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_IndexedMap.hpp>
@@ -84,7 +83,6 @@ private:
   static Standard_EXPORT int& getVersion();
 };
 
-
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

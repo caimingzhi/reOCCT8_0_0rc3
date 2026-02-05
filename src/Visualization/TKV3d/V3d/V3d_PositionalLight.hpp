@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_PositionLight.hpp>
 
 //! Creation and modification of an isolated (positional) light source.
@@ -31,4 +30,3 @@ private:
   using Graphic3d_CLight::SetConcentration;
   using Graphic3d_CLight::SetDirection;
 };
-

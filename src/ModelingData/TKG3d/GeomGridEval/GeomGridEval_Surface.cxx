@@ -33,83 +33,84 @@
 namespace
 {
 
-//! Extracts basis surface from potentially nested RectangularTrimmedSurface wrappers.
-//! @param theSurface input surface (may be RectangularTrimmedSurface or any other)
-//! @return the underlying basis surface, or theSurface if not a RectangularTrimmedSurface
-occ::handle<Geom_Surface> ExtractBasisSurface(const occ::handle<Geom_Surface>& theSurface)
-{
-  occ::handle<Geom_Surface> aResult = theSurface;
-  while (auto aTrimmed = occ::down_cast<Geom_RectangularTrimmedSurface>(aResult))
+  //! Extracts basis surface from potentially nested RectangularTrimmedSurface wrappers.
+  //! @param theSurface input surface (may be RectangularTrimmedSurface or any other)
+  //! @return the underlying basis surface, or theSurface if not a RectangularTrimmedSurface
+  occ::handle<Geom_Surface> ExtractBasisSurface(const occ::handle<Geom_Surface>& theSurface)
   {
-    aResult = aTrimmed->BasisSurface();
+    occ::handle<Geom_Surface> aResult = theSurface;
+    while (auto aTrimmed = occ::down_cast<Geom_RectangularTrimmedSurface>(aResult))
+    {
+      aResult = aTrimmed->BasisSurface();
+    }
+    return aResult;
   }
-  return aResult;
-}
 
-//! Creates Geom_Surface from adaptor's elementary surface type.
-//! @param theSurface the adaptor to extract geometry from
-//! @return Geom_Surface handle, or null if type is not elementary
-occ::handle<Geom_Surface> CreateGeomSurfaceFromAdaptor(const Adaptor3d_Surface& theSurface)
-{
-  switch (theSurface.GetType())
+  //! Creates Geom_Surface from adaptor's elementary surface type.
+  //! @param theSurface the adaptor to extract geometry from
+  //! @return Geom_Surface handle, or null if type is not elementary
+  occ::handle<Geom_Surface> CreateGeomSurfaceFromAdaptor(const Adaptor3d_Surface& theSurface)
   {
-    case GeomAbs_Plane:
-      return new Geom_Plane(theSurface.Plane());
-    case GeomAbs_Cylinder:
-      return new Geom_CylindricalSurface(theSurface.Cylinder());
-    case GeomAbs_Cone:
-      return new Geom_ConicalSurface(theSurface.Cone());
-    case GeomAbs_Sphere:
-      return new Geom_SphericalSurface(theSurface.Sphere());
-    case GeomAbs_Torus:
-      return new Geom_ToroidalSurface(theSurface.Torus());
-    default:
-      return occ::handle<Geom_Surface>();
+    switch (theSurface.GetType())
+    {
+      case GeomAbs_Plane:
+        return new Geom_Plane(theSurface.Plane());
+      case GeomAbs_Cylinder:
+        return new Geom_CylindricalSurface(theSurface.Cylinder());
+      case GeomAbs_Cone:
+        return new Geom_ConicalSurface(theSurface.Cone());
+      case GeomAbs_Sphere:
+        return new Geom_SphericalSurface(theSurface.Sphere());
+      case GeomAbs_Torus:
+        return new Geom_ToroidalSurface(theSurface.Torus());
+      default:
+        return occ::handle<Geom_Surface>();
+    }
   }
-}
 
-//! Extracts Geom_Curve from Adaptor3d_Curve if possible.
-//! @param theCurve the curve adaptor
-//! @return Geom_Curve handle, or null if not available
-occ::handle<Geom_Curve> ExtractGeomCurve(const occ::handle<Adaptor3d_Curve>& theCurve)
-{
-  if (theCurve.IsNull())
+  //! Extracts Geom_Curve from Adaptor3d_Curve if possible.
+  //! @param theCurve the curve adaptor
+  //! @return Geom_Curve handle, or null if not available
+  occ::handle<Geom_Curve> ExtractGeomCurve(const occ::handle<Adaptor3d_Curve>& theCurve)
   {
+    if (theCurve.IsNull())
+    {
+      return occ::handle<Geom_Curve>();
+    }
+    if (auto aGeomAdaptor = occ::down_cast<GeomAdaptor_Curve>(theCurve))
+    {
+      return aGeomAdaptor->Curve();
+    }
     return occ::handle<Geom_Curve>();
   }
-  if (auto aGeomAdaptor = occ::down_cast<GeomAdaptor_Curve>(theCurve))
-  {
-    return aGeomAdaptor->Curve();
-  }
-  return occ::handle<Geom_Curve>();
-}
 
-//! Creates Geom_SurfaceOfRevolution from adaptor data.
-//! @param theAdaptor the revolution surface adaptor
-//! @return Geom_SurfaceOfRevolution handle, or null if curve not available
-occ::handle<Geom_Surface> CreateRevolutionSurface(const GeomAdaptor_SurfaceOfRevolution& theAdaptor)
-{
-  occ::handle<Geom_Curve> aCurve = ExtractGeomCurve(theAdaptor.BasisCurve());
-  if (aCurve.IsNull())
+  //! Creates Geom_SurfaceOfRevolution from adaptor data.
+  //! @param theAdaptor the revolution surface adaptor
+  //! @return Geom_SurfaceOfRevolution handle, or null if curve not available
+  occ::handle<Geom_Surface> CreateRevolutionSurface(
+    const GeomAdaptor_SurfaceOfRevolution& theAdaptor)
   {
-    return occ::handle<Geom_Surface>();
+    occ::handle<Geom_Curve> aCurve = ExtractGeomCurve(theAdaptor.BasisCurve());
+    if (aCurve.IsNull())
+    {
+      return occ::handle<Geom_Surface>();
+    }
+    return new Geom_SurfaceOfRevolution(aCurve, theAdaptor.AxeOfRevolution());
   }
-  return new Geom_SurfaceOfRevolution(aCurve, theAdaptor.AxeOfRevolution());
-}
 
-//! Creates Geom_SurfaceOfLinearExtrusion from adaptor data.
-//! @param theAdaptor the extrusion surface adaptor
-//! @return Geom_SurfaceOfLinearExtrusion handle, or null if curve not available
-occ::handle<Geom_Surface> CreateExtrusionSurface(
-  const GeomAdaptor_SurfaceOfLinearExtrusion& theAdaptor)
-{
-  occ::handle<Geom_Curve> aCurve = ExtractGeomCurve(theAdaptor.BasisCurve());
-  if (aCurve.IsNull())
+  //! Creates Geom_SurfaceOfLinearExtrusion from adaptor data.
+  //! @param theAdaptor the extrusion surface adaptor
+  //! @return Geom_SurfaceOfLinearExtrusion handle, or null if curve not available
+  occ::handle<Geom_Surface> CreateExtrusionSurface(
+    const GeomAdaptor_SurfaceOfLinearExtrusion& theAdaptor)
   {
-    return occ::handle<Geom_Surface>();
+    occ::handle<Geom_Curve> aCurve = ExtractGeomCurve(theAdaptor.BasisCurve());
+    if (aCurve.IsNull())
+    {
+      return occ::handle<Geom_Surface>();
+    }
+    return new Geom_SurfaceOfLinearExtrusion(aCurve, theAdaptor.Direction());
   }
-  return new Geom_SurfaceOfLinearExtrusion(aCurve, theAdaptor.Direction());
-}
 
 } // namespace
 
@@ -331,7 +332,8 @@ NCollection_Array2<gp_Pnt> GeomGridEval_Surface::EvaluateGrid(
   const NCollection_Array1<double>& theVParams) const
 {
   NCollection_Array2<gp_Pnt> aResult = std::visit(
-    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<gp_Pnt> {
+    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<gp_Pnt>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -359,7 +361,8 @@ NCollection_Array2<GeomGridEval::SurfD1> GeomGridEval_Surface::EvaluateGridD1(
   const NCollection_Array1<double>& theVParams) const
 {
   NCollection_Array2<GeomGridEval::SurfD1> aResult = std::visit(
-    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD1> {
+    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD1>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -387,7 +390,8 @@ NCollection_Array2<GeomGridEval::SurfD2> GeomGridEval_Surface::EvaluateGridD2(
   const NCollection_Array1<double>& theVParams) const
 {
   NCollection_Array2<GeomGridEval::SurfD2> aResult = std::visit(
-    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD2> {
+    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD2>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -415,7 +419,8 @@ NCollection_Array2<GeomGridEval::SurfD3> GeomGridEval_Surface::EvaluateGridD3(
   const NCollection_Array1<double>& theVParams) const
 {
   NCollection_Array2<GeomGridEval::SurfD3> aResult = std::visit(
-    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD3> {
+    [&theUParams, &theVParams](const auto& theEval) -> NCollection_Array2<GeomGridEval::SurfD3>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -445,7 +450,8 @@ NCollection_Array2<gp_Vec> GeomGridEval_Surface::EvaluateGridDN(
   int                               theNV) const
 {
   NCollection_Array2<gp_Vec> aResult = std::visit(
-    [&theUParams, &theVParams, theNU, theNV](const auto& theEval) -> NCollection_Array2<gp_Vec> {
+    [&theUParams, &theVParams, theNU, theNV](const auto& theEval) -> NCollection_Array2<gp_Vec>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -472,7 +478,8 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Surface::EvaluatePoints(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
   NCollection_Array1<gp_Pnt> aResult = std::visit(
-    [&theUVPairs](const auto& theEval) -> NCollection_Array1<gp_Pnt> {
+    [&theUVPairs](const auto& theEval) -> NCollection_Array1<gp_Pnt>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -499,7 +506,8 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_Surface::EvaluatePointsD1(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
   NCollection_Array1<GeomGridEval::SurfD1> aResult = std::visit(
-    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD1> {
+    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD1>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -526,7 +534,8 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_Surface::EvaluatePointsD2(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
   NCollection_Array1<GeomGridEval::SurfD2> aResult = std::visit(
-    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD2> {
+    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD2>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -553,7 +562,8 @@ NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_Surface::EvaluatePointsD3(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
   NCollection_Array1<GeomGridEval::SurfD3> aResult = std::visit(
-    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD3> {
+    [&theUVPairs](const auto& theEval) -> NCollection_Array1<GeomGridEval::SurfD3>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {
@@ -582,7 +592,8 @@ NCollection_Array1<gp_Vec> GeomGridEval_Surface::EvaluatePointsDN(
   int                                 theNV) const
 {
   NCollection_Array1<gp_Vec> aResult = std::visit(
-    [&theUVPairs, theNU, theNV](const auto& theEval) -> NCollection_Array1<gp_Vec> {
+    [&theUVPairs, theNU, theNV](const auto& theEval) -> NCollection_Array1<gp_Vec>
+    {
       using T = std::decay_t<decltype(theEval)>;
       if constexpr (std::is_same_v<T, std::monostate>)
       {

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <Standard_OutOfRange.hpp>
 #include <Standard_OStream.hpp>
@@ -501,4 +500,3 @@ inline constexpr gp_Mat operator*(const double theScalar, const gp_Mat& theMat3D
 {
   return theMat3D.Multiplied(theScalar);
 }
-

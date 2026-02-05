@@ -1,18 +1,3 @@
-// Created on: 2014-08-13
-// Created by: Maxim GLIBIN
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_PointCloud.hpp>
 
 #include <AIS_GraphicTool.hpp>
@@ -349,7 +334,8 @@ void AIS_PointCloud::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 {
   switch (theMode)
   {
-    case AIS_PointCloud::DM_Points: {
+    case AIS_PointCloud::DM_Points:
+    {
       const occ::handle<Graphic3d_ArrayOfPoints> aPoints = GetPoints();
       if (aPoints.IsNull())
       {
@@ -361,7 +347,8 @@ void AIS_PointCloud::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       aGroup->AddPrimitiveArray(aPoints);
       break;
     }
-    case AIS_PointCloud::DM_BndBox: {
+    case AIS_PointCloud::DM_BndBox:
+    {
       Bnd_Box aBndBox = GetBoundingBox();
       if (aBndBox.IsVoid())
       {
@@ -383,7 +370,8 @@ void AIS_PointCloud::ComputeSelection(const occ::handle<SelectMgr_Selection>& th
   switch (theMode)
   {
     case SM_Points:
-    case SM_SubsetOfPoints: {
+    case SM_SubsetOfPoints:
+    {
       const occ::handle<Graphic3d_ArrayOfPoints> aPoints = GetPoints();
       if (!aPoints.IsNull() && !aPoints->Attributes().IsNull())
       {
@@ -410,10 +398,12 @@ void AIS_PointCloud::ComputeSelection(const occ::handle<SelectMgr_Selection>& th
       }
       break;
     }
-    case SM_BndBox: {
+    case SM_BndBox:
+    {
       break;
     }
-    default: {
+    default:
+    {
       return;
     }
   }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Wire.hpp>
 #include <IMeshData_Types.hpp>
 
@@ -38,4 +37,3 @@ private:
   IMeshData::VectorOfIEdgePtrs   myDEdges;
   IMeshData::VectorOfOrientation myDEdgesOri;
 };
-

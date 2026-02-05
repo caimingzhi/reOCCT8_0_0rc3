@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Font_FontAspect.hpp>
 #include <Font_Hinting.hpp>
 #include <Font_Rect.hpp>
@@ -292,6 +291,7 @@ public:
   //! @return true on success
   Standard_DEPRECATED("Deprecated method, Font_FTFontParams should be used for passing "
                       "parameters")
+
   bool Init(const NCollection_String& theFontPath,
             unsigned int              thePointSize,
             unsigned int              theResolution)
@@ -310,6 +310,7 @@ public:
   //! @return true on success
   Standard_DEPRECATED("Deprecated method, Font_FTFontParams should be used for passing "
                       "parameters")
+
   bool Init(const NCollection_String& theFontName,
             Font_FontAspect           theFontAspect,
             unsigned int              thePointSize,
@@ -379,4 +380,3 @@ protected:
   bool           myToUseUnicodeSubsetFallback; //!< use default fallback fonts for extended Unicode sub-sets (Korean, CJK, etc.)
   // clang-format on
 };
-

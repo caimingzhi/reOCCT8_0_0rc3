@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_ExtendedString.hpp>
@@ -37,4 +36,3 @@ public:
 private:
   NCollection_DataMap<TCollection_ExtendedString, occ::handle<NCollection_HArray1<int>>> myMap;
 };
-

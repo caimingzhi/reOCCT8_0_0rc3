@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -56,4 +55,3 @@ public:
   Standard_EXPORT static bool GetAverageNormal(const NCollection_Array1<double>& Nodes,
                                                gp_Vec&                           Norm);
 };
-

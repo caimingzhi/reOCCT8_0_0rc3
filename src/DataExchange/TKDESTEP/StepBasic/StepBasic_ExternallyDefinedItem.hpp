@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_SourceItem.hpp>
@@ -37,4 +36,3 @@ private:
   StepBasic_SourceItem                  theItemId;
   occ::handle<StepBasic_ExternalSource> theSource;
 };
-

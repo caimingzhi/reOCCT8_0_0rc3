@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -35,4 +34,3 @@ public:
                                            TopOpeBRepBuild_LoopClassifier& LC,
                                            const bool                      ForceClass = false);
 };
-

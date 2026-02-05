@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_SignatureList.hpp>
@@ -44,4 +43,3 @@ public:
 private:
   occ::handle<MoniTool_SignText> thesign;
 };
-

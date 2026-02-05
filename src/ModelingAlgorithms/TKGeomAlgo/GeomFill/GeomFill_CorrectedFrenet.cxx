@@ -1,19 +1,3 @@
-// Created on: 1997-12-19
-// Created by: Roman BORISOV /Philippe MANGIN
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomFill_CorrectedFrenet.hpp>
 
 #include <Adaptor3d_Curve.hpp>
@@ -176,7 +160,8 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
   switch (theC->GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       found = false;
     }
     break;
@@ -197,7 +182,8 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
       theP = new Geom_Plane(gp_Ax3(theC->Parabola().Position()));
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       occ::handle<Geom_BezierCurve> GC  = theC->Bezier();
       int                           nbp = GC->NbPoles();
       if (nbp < 2)
@@ -214,7 +200,8 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
     }
     break;
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       occ::handle<Geom_BSplineCurve> GC  = theC->BSpline();
       int                            nbp = GC->NbPoles();
       if (nbp < 2)
@@ -231,7 +218,8 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
     }
     break;
 
-    default: { // On utilise un echantillonage
+    default:
+    { // On utilise un echantillonage
       int    nbp = 15 + theC->NbIntervals(GeomAbs_C3);
       double f, l, t, inv;
       int    ii;
@@ -322,12 +310,14 @@ bool GeomFill_CorrectedFrenet::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
       case GeomAbs_Ellipse:
       case GeomAbs_Hyperbola:
       case GeomAbs_Parabola:
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         // No probleme isFrenet
         isFrenet = true;
         break;
       }
-      default: {
+      default:
+      {
         // We have to search singularities
         isFrenet = true;
         Init();

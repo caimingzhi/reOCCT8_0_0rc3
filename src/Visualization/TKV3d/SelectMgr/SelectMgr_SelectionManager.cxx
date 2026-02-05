@@ -1,19 +1,3 @@
-// Created on: 1995-02-13
-// Created by: Mister rmi
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <SelectMgr_SelectionManager.hpp>
 
 #include <Select3D_SensitiveGroup.hpp>
@@ -140,7 +124,8 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
   const occ::handle<SelectMgr_Selection>& aSelection = theObject->Selection(theMode);
   switch (aSelection->UpdateStatus())
   {
-    case SelectMgr_TOU_Full: {
+    case SelectMgr_TOU_Full:
+    {
       if (theObject->HasSelection(theMode))
       {
         mySelector->RemoveSelectionOfObject(theObject, aSelection);
@@ -149,7 +134,8 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
       // pass through SelectMgr_TOU_Partial
     }
       [[fallthrough]];
-    case SelectMgr_TOU_Partial: {
+    case SelectMgr_TOU_Partial:
+    {
       theObject->UpdateTransformations(aSelection);
       mySelector->RebuildObjectsTree();
       break;
@@ -162,11 +148,13 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
   switch (aSelection->BVHUpdateStatus())
   {
     case SelectMgr_TBU_Add:
-    case SelectMgr_TBU_Renew: {
+    case SelectMgr_TBU_Renew:
+    {
       mySelector->AddSelectionToObject(theObject, aSelection);
       break;
     }
-    case SelectMgr_TBU_Remove: {
+    case SelectMgr_TBU_Remove:
+    {
       if (aSelection->GetSelectionState() == SelectMgr_SOS_Deactivated)
       {
         mySelector->AddSelectionToObject(theObject, aSelection);
@@ -482,14 +470,16 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
     {
       switch (aSelection->UpdateStatus())
       {
-        case SelectMgr_TOU_Full: {
+        case SelectMgr_TOU_Full:
+        {
           ClearSelectionStructures(theObject, aSelection->Mode());
           theObject->RecomputePrimitives(aSelection->Mode()); // no break on purpose...
           RestoreSelectionStructures(theObject, aSelection->Mode());
           // pass through SelectMgr_TOU_Partial
         }
           [[fallthrough]];
-        case SelectMgr_TOU_Partial: {
+        case SelectMgr_TOU_Partial:
+        {
           theObject->UpdateTransformations(aSelection);
           mySelector->RebuildObjectsTree();
           break;

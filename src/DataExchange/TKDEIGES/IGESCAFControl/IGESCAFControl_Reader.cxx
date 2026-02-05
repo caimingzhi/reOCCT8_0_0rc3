@@ -1,18 +1,3 @@
-// Created on: 2000-08-16
-// Created by: Andrey BETENEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Builder.hpp>
 #include <IGESBasic_SubfigureDef.hpp>
 #include <IGESCAFControl.hpp>
@@ -281,12 +266,14 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
               IGESData_DefList aDeflist = ent->DefLevel();
               switch (aDeflist)
               {
-                case IGESData_DefOne: {
+                case IGESData_DefOne:
+                {
                   TCollection_ExtendedString aLayerName(ent->Level());
                   LTool->SetLayer(L, aLayerName);
                   break;
                 }
-                case IGESData_DefSeveral: {
+                case IGESData_DefSeveral:
+                {
                   occ::handle<IGESData_LevelListEntity> aLevelList = ent->LevelList();
                   int                                   layerNb    = aLevelList->NbLevelNumbers();
                   for (int ilev = 1; ilev <= layerNb; ilev++)
@@ -329,12 +316,14 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
         IGESData_DefList aDeflist = ent->DefLevel();
         switch (aDeflist)
         {
-          case IGESData_DefOne: {
+          case IGESData_DefOne:
+          {
             TCollection_ExtendedString aLayerName(ent->Level());
             LTool->SetLayer(L, aLayerName);
             break;
           }
-          case IGESData_DefSeveral: {
+          case IGESData_DefSeveral:
+          {
             occ::handle<IGESData_LevelListEntity> aLevelList = ent->LevelList();
             int                                   layerNb    = aLevelList->NbLevelNumbers();
             for (int ilev = 1; ilev <= layerNb; ilev++)

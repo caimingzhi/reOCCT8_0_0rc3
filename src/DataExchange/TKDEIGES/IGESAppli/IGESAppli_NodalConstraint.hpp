@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -54,4 +53,3 @@ private:
   occ::handle<IGESAppli_Node>                                         theNode;
   occ::handle<NCollection_HArray1<occ::handle<IGESDefs_TabularData>>> theTabularDataProps;
 };
-

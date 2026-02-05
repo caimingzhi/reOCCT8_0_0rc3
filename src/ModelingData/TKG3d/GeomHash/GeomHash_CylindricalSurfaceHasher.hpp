@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_CylindricalSurface.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -33,4 +32,3 @@ struct GeomHash_CylindricalSurfaceHasher
            && std::abs(theCylinder1->Radius() - theCylinder2->Radius()) <= aTolerance;
   }
 };
-

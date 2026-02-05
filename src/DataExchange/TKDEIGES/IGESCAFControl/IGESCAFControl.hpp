@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -22,4 +21,3 @@ public:
   //! If no corresponding color defined in IGES, returns 0
   Standard_EXPORT static int EncodeColor(const Quantity_Color& col);
 };
-

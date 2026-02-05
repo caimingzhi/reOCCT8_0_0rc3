@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -143,4 +142,3 @@ private:
   NCollection_Array1<int>         therefs;
   NCollection_Array1<int>         theassocs;
 };
-

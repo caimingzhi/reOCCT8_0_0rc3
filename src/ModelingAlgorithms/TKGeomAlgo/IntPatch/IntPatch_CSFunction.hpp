@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <math_FunctionSetWithDerivatives.hpp>
@@ -46,4 +45,3 @@ private:
   gp_Pnt p;
   double f;
 };
-

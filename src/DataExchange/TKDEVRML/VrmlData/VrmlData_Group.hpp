@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_List.hpp>
 #include <VrmlData_Node.hpp>
 #include <NCollection_DataMap.hpp>

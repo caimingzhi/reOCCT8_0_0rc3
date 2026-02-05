@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Definition of the Trihedron position in the views.
 //! It is defined as a bitmask to simplify handling vertical and horizontal alignment independently.
 enum Aspect_TypeOfTriedronPosition
@@ -15,4 +14,3 @@ enum Aspect_TypeOfTriedronPosition
   Aspect_TOTP_RIGHT_LOWER = Aspect_TOTP_BOTTOM | Aspect_TOTP_RIGHT, //!< at the right lower corner
   Aspect_TOTP_RIGHT_UPPER = Aspect_TOTP_TOP | Aspect_TOTP_RIGHT,    //!< at the right upper corner
 };
-

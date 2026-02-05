@@ -776,7 +776,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
 
   switch (theMsg.message)
   {
-    case WM_CLOSE: {
+    case WM_CLOSE:
+    {
       if (theMsg.hwnd == (HWND)myHWindow)
       {
         theListener.ProcessClose();
@@ -785,7 +786,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       return false;
     }
     case WM_SETFOCUS:
-    case WM_KILLFOCUS: {
+    case WM_KILLFOCUS:
+    {
       if (theMsg.hwnd == (HWND)myHWindow)
       {
         theListener.ProcessFocus(theMsg.message == WM_SETFOCUS);
@@ -793,7 +795,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       }
       return false;
     }
-    case WM_PAINT: {
+    case WM_PAINT:
+    {
       PAINTSTRUCT aPaint;
       BeginPaint(theMsg.hwnd, &aPaint);
       EndPaint(theMsg.hwnd, &aPaint);
@@ -803,12 +806,14 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
     case WM_SIZE:
     case WM_MOVE:
     case WM_MOVING:
-    case WM_SIZING: {
+    case WM_SIZING:
+    {
       theListener.ProcessConfigure(theMsg.message == WM_SIZE);
       return true;
     }
     case WM_KEYUP:
-    case WM_KEYDOWN: {
+    case WM_KEYDOWN:
+    {
       const Aspect_VKey aVKey = WNT_Window::VirtualKeyFromNative((int)theMsg.wParam);
       if (aVKey != Aspect_VKey_UNKNOWN)
       {
@@ -830,7 +835,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
     case WM_RBUTTONUP:
     case WM_LBUTTONDOWN:
     case WM_MBUTTONDOWN:
-    case WM_RBUTTONDOWN: {
+    case WM_RBUTTONDOWN:
+    {
       const LPARAM anExtraInfo = GetMessageExtraInfo();
       bool         isEmulated  = false;
       if ((anExtraInfo & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH)
@@ -876,7 +882,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       theListener.ProcessInput();
       return true;
     }
-    case WM_MOUSEWHEEL: {
+    case WM_MOUSEWHEEL:
+    {
       const int              aDelta  = GET_WHEEL_DELTA_WPARAM(theMsg.wParam);
       const double           aDeltaF = double(aDelta) / double(WHEEL_DELTA);
       const Aspect_VKeyFlags aFlags  = WNT_Window::MouseKeyFlagsFromEvent(theMsg.wParam);
@@ -897,7 +904,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       theListener.ProcessInput();
       return true;
     }
-    case WM_MOUSEMOVE: {
+    case WM_MOUSEMOVE:
+    {
       NCollection_Vec2<int> aPos(LOWORD(theMsg.lParam), HIWORD(theMsg.lParam));
       Aspect_VKeyMouse      aButtons = WNT_Window::MouseButtonsFromEvent(theMsg.wParam);
       Aspect_VKeyFlags      aFlags   = WNT_Window::MouseKeyFlagsFromEvent(theMsg.wParam);
@@ -927,7 +935,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       theListener.ProcessInput();
       return true;
     }
-    case WM_INPUT: {
+    case WM_INPUT:
+    {
       UINT aSize = 0;
       ::GetRawInputData((HRAWINPUT)theMsg.lParam, RID_INPUT, NULL, &aSize, sizeof(RAWINPUTHEADER));
       NCollection_LocalArray<BYTE> aRawData(aSize);
@@ -971,7 +980,8 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       }
       return true;
     }
-    case WM_TOUCH: {
+    case WM_TOUCH:
+    {
       if (theMsg.hwnd != (HWND)myHWindow || myTouchInputHelper.IsNull())
       {
         return false;

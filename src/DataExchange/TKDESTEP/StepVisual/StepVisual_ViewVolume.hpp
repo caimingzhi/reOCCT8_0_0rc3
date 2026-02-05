@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -76,4 +75,3 @@ private:
   bool                                 viewVolumeSidesClipping;
   occ::handle<StepVisual_PlanarBox>    viewWindow;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_Model.hpp>
 #include <Message_Algorithm.hpp>
 
@@ -60,5 +59,5 @@ public:
 //! Definition of HANDLE object using Standard_DefineHandle.hpp
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

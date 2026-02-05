@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt.hpp>
 
 //! This structure provides unified access to the results of Matches() method in all sensitive
@@ -90,4 +89,3 @@ private:
   double           myDistToCenter; //!< Distance from 3d projection user-picked selection point to entity's geometry center
   // clang-format on
 };
-

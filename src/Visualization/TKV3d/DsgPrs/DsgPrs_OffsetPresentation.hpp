@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -46,4 +45,3 @@ public:
                                       const gp_Dir&                          aDirection2,
                                       const gp_Pnt&                          OffsetPoint);
 };
-

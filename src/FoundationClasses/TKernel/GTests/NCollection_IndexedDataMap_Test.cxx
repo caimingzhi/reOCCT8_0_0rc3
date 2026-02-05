@@ -48,17 +48,17 @@ private:
 
 namespace std
 {
-template <>
-struct hash<TestKey>
-{
-  size_t operator()(const TestKey& key) const
+  template <>
+  struct hash<TestKey>
   {
-    // Combine the hash
-    size_t aCombintation[2] = {std::hash<int>()(key.GetId()),
-                               std::hash<std::string>()(key.GetName())};
-    return opencascade::hashBytes(aCombintation, sizeof(aCombintation));
-  }
-};
+    size_t operator()(const TestKey& key) const
+    {
+      // Combine the hash
+      size_t aCombintation[2] = {std::hash<int>()(key.GetId()),
+                                 std::hash<std::string>()(key.GetName())};
+      return opencascade::hashBytes(aCombintation, sizeof(aCombintation));
+    }
+  };
 } // namespace std
 
 // Custom class for testing complex items

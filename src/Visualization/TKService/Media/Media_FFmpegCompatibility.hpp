@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef HAVE_FFMPEG
 
   // activate some C99 macros like UINT64_C in "stdint.h" which used by FFmpeg
@@ -156,4 +155,3 @@ inline AVCodec* ffmpeg_find_decoder(enum AVCodecID id)
 }
 
 #endif // HAVE_FFMPEG
-

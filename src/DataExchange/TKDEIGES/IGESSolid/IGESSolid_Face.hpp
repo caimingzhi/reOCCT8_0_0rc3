@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESSolid_Loop.hpp>
@@ -48,4 +47,3 @@ private:
   bool                                                          hasOuterLoop;
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Loop>>> theLoops;
 };
-

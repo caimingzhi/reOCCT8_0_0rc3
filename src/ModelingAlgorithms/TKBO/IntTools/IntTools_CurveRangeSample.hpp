@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -45,15 +44,14 @@ private:
 
 namespace std
 {
-template <>
-struct hash<IntTools_CurveRangeSample>
-{
-  size_t operator()(const IntTools_CurveRangeSample& theCurveRangeSample) const noexcept
+  template <>
+  struct hash<IntTools_CurveRangeSample>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2]{theCurveRangeSample.GetDepth(), theCurveRangeSample.GetRangeIndex()};
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+    size_t operator()(const IntTools_CurveRangeSample& theCurveRangeSample) const noexcept
+    {
+      // Combine two int values into a single hash value.
+      int aCombination[2]{theCurveRangeSample.GetDepth(), theCurveRangeSample.GetRangeIndex()};
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
+    }
+  };
 } // namespace std
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines types of color assignments
 //! Color of shape is defined following way
 //! in dependance with type of color.
@@ -17,4 +16,3 @@ enum XCAFDoc_ColorType
   XCAFDoc_ColorSurf,
   XCAFDoc_ColorCurv
 };
-

@@ -1,21 +1,3 @@
-// Created on: 1993-09-07
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// modified by NIZHNY-OFV  Thu Jan 20 11:04:19 2005
-
 #include <ProjLib_ComputeApprox.hpp>
 #include <ProjLib.hpp>
 
@@ -50,43 +32,43 @@
 namespace
 {
 
-//! Helper for optimized point-to-plane projection without gp_Trsf overhead.
-//! Pre-computes plane basis for efficient batch projection of multiple points.
-struct PlaneProjector
-{
-  double OX, OY, OZ;    //!< Plane origin
-  double DXx, DXy, DXz; //!< X direction components
-  double DYx, DYy, DYz; //!< Y direction components
-
-  //! Initialize from plane position.
-  PlaneProjector(const gp_Ax3& thePos)
+  //! Helper for optimized point-to-plane projection without gp_Trsf overhead.
+  //! Pre-computes plane basis for efficient batch projection of multiple points.
+  struct PlaneProjector
   {
-    const gp_Pnt& aLoc = thePos.Location();
-    OX                 = aLoc.X();
-    OY                 = aLoc.Y();
-    OZ                 = aLoc.Z();
+    double OX, OY, OZ;    //!< Plane origin
+    double DXx, DXy, DXz; //!< X direction components
+    double DYx, DYy, DYz; //!< Y direction components
 
-    const gp_Dir& aXDir = thePos.XDirection();
-    DXx                 = aXDir.X();
-    DXy                 = aXDir.Y();
-    DXz                 = aXDir.Z();
+    //! Initialize from plane position.
+    PlaneProjector(const gp_Ax3& thePos)
+    {
+      const gp_Pnt& aLoc = thePos.Location();
+      OX                 = aLoc.X();
+      OY                 = aLoc.Y();
+      OZ                 = aLoc.Z();
 
-    const gp_Dir& aYDir = thePos.YDirection();
-    DYx                 = aYDir.X();
-    DYy                 = aYDir.Y();
-    DYz                 = aYDir.Z();
-  }
+      const gp_Dir& aXDir = thePos.XDirection();
+      DXx                 = aXDir.X();
+      DXy                 = aXDir.Y();
+      DXz                 = aXDir.Z();
 
-  //! Project point onto plane.
-  //! @return 2D point where X = (P - Origin) x XDirection, Y = (P - Origin) x YDirection
-  gp_Pnt2d Project(const gp_Pnt& theP) const
-  {
-    const double dX = theP.X() - OX;
-    const double dY = theP.Y() - OY;
-    const double dZ = theP.Z() - OZ;
-    return gp_Pnt2d(dX * DXx + dY * DXy + dZ * DXz, dX * DYx + dY * DYy + dZ * DYz);
-  }
-};
+      const gp_Dir& aYDir = thePos.YDirection();
+      DYx                 = aYDir.X();
+      DYy                 = aYDir.Y();
+      DYz                 = aYDir.Z();
+    }
+
+    //! Project point onto plane.
+    //! @return 2D point where X = (P - Origin) x XDirection, Y = (P - Origin) x YDirection
+    gp_Pnt2d Project(const gp_Pnt& theP) const
+    {
+      const double dX = theP.X() - OX;
+      const double dY = theP.Y() - OY;
+      const double dZ = theP.Z() - OZ;
+      return gp_Pnt2d(dX * DXx + dY * DXy + dZ * DXz, dX * DYx + dY * DYy + dZ * DYz);
+    }
+  };
 
 } // namespace
 
@@ -118,27 +100,32 @@ static gp_Pnt2d Function_Value(const double                          U,
   switch (SType)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln Plane = mySurface->Plane();
       ElSLib::Parameters(Plane, P3d, S, T);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Cylinder Cylinder = mySurface->Cylinder();
       ElSLib::Parameters(Cylinder, P3d, S, T);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       gp_Cone Cone = mySurface->Cone();
       ElSLib::Parameters(Cone, P3d, S, T);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       gp_Sphere Sphere = mySurface->Sphere();
       ElSLib::Parameters(Sphere, P3d, S, T);
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Torus Torus = mySurface->Torus();
       ElSLib::Parameters(Torus, P3d, S, T);
       break;
@@ -201,7 +188,8 @@ static bool Function_D1(const double                          U,
     case GeomAbs_Cone:
     case GeomAbs_Cylinder:
     case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Vec D1U, D1V;
       gp_Vec T;
       myCurve->D1(U, P3d, T);
@@ -278,7 +266,8 @@ static void Function_SetUVBounds(double&                               myU1,
   switch (mySurface->GetType())
   {
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       double           tol  = Epsilon(1.);
       constexpr double ptol = Precision::PConfusion();
       gp_Cone          Cone = mySurface->Cone();
@@ -306,7 +295,8 @@ static void Function_SetUVBounds(double&                               myU1,
       {
         case GeomAbs_Parabola:
         case GeomAbs_Hyperbola:
-        case GeomAbs_Ellipse: {
+        case GeomAbs_Ellipse:
+        {
           double U1, U2, V1, V2, U, V;
           ElSLib::Parameters(Cone, P1, U1, V1);
           ElSLib::Parameters(Cone, P2, U2, V2);
@@ -324,7 +314,8 @@ static void Function_SetUVBounds(double&                               myU1,
           }
         }
         break;
-        default: {
+        default:
+        {
           double U1, V1, U, V, Delta = 0., d = 0., pmin = W1, pmax = W1, dmax = 0., Uf, Ul;
           ElSLib::Parameters(Cone, P1, U1, V1);
           ElSLib::Parameters(Cone, P2, Ul, V1);
@@ -430,7 +421,8 @@ static void Function_SetUVBounds(double&                               myU1,
     } // case Cone
     break;
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Cylinder Cylinder = mySurface->Cylinder();
       VCouture             = false;
 
@@ -556,7 +548,8 @@ static void Function_SetUVBounds(double&                               myU1,
     }
     break;
     //
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       VCouture     = false;
       gp_Sphere SP = mySurface->Sphere();
       if (myCurve->GetType() == GeomAbs_Circle)
@@ -837,7 +830,8 @@ static void Function_SetUVBounds(double&                               myU1,
     }
     break;
     //
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Torus TR = mySurface->Torus();
       double   U1, V1, U, V, dU, dV;
       ElSLib::Parameters(TR, P1, U1, V1);
@@ -952,7 +946,8 @@ static void Function_SetUVBounds(double&                               myU1,
     }
     break;
 
-    default: {
+    default:
+    {
       UCouture = false;
       VCouture = false;
     }
@@ -1361,27 +1356,32 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
     double u = 0., v = 0.;
     switch (SType)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         gp_Pln Plane = S->Plane();
         ElSLib::Parameters(Plane, P3d, u, v);
         break;
       }
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         gp_Cylinder Cylinder = S->Cylinder();
         ElSLib::Parameters(Cylinder, P3d, u, v);
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         gp_Cone Cone = S->Cone();
         ElSLib::Parameters(Cone, P3d, u, v);
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         gp_Sphere Sphere = S->Sphere();
         ElSLib::Parameters(Sphere, P3d, u, v);
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         gp_Torus Torus = S->Torus();
         ElSLib::Parameters(Torus, P3d, u, v);
         break;

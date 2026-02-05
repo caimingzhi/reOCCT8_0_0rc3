@@ -1,19 +1,3 @@
-// Created on: 1995-08-28
-// Created by: Laurent BOURESCHE
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <PLib.hpp>
 
 #include <GeomAbs_Shape.hpp>
@@ -204,54 +188,54 @@ void PLib::GetPoles(const NCollection_Array1<double>& FP,
 namespace
 {
 
-//! Compile-time Pascal's triangle allocator for binomial coefficients
-//! @tparam MaxDegree Maximum degree N for which C(N,P) can be computed
-template <int MaxDegree>
-class BinomAllocator
-{
-public:
-  //! Constructor - computes Pascal's triangle at compile time
-  //! Uses the recurrence relation: C(n,k) = C(n-1,k-1) + C(n-1,k)
-  constexpr BinomAllocator()
-      : myBinom{}
+  //! Compile-time Pascal's triangle allocator for binomial coefficients
+  //! @tparam MaxDegree Maximum degree N for which C(N,P) can be computed
+  template <int MaxDegree>
+  class BinomAllocator
   {
-    // Initialize first row: C(0,0) = 1
-    myBinom[0][0] = 1;
-
-    // Build Pascal's triangle row by row
-    for (int i = 1; i <= MaxDegree; ++i)
+  public:
+    //! Constructor - computes Pascal's triangle at compile time
+    //! Uses the recurrence relation: C(n,k) = C(n-1,k-1) + C(n-1,k)
+    constexpr BinomAllocator()
+        : myBinom{}
     {
-      // First and last elements are always 1
-      myBinom[i][0] = 1;
-      myBinom[i][i] = 1;
+      // Initialize first row: C(0,0) = 1
+      myBinom[0][0] = 1;
 
-      // Use recurrence relation for middle elements
-      for (int j = 1; j < i; ++j)
+      // Build Pascal's triangle row by row
+      for (int i = 1; i <= MaxDegree; ++i)
       {
-        myBinom[i][j] = myBinom[i - 1][j - 1] + myBinom[i - 1][j];
+        // First and last elements are always 1
+        myBinom[i][0] = 1;
+        myBinom[i][i] = 1;
+
+        // Use recurrence relation for middle elements
+        for (int j = 1; j < i; ++j)
+        {
+          myBinom[i][j] = myBinom[i - 1][j - 1] + myBinom[i - 1][j];
+        }
       }
     }
+
+    //! Returns the binomial coefficient C(N,P)
+    //! @param N the degree (n in C(n,k))
+    //! @param P the parameter (k in C(n,k))
+    //! @return the value of C(N,P)
+    //! @note Caller must ensure N and P are within valid range
+    constexpr int Value(const int N, const int P) const { return myBinom[N][P]; }
+
+  private:
+    int myBinom[MaxDegree + 1][MaxDegree + 1];
+  };
+
+  //! Thread-safe lazy initialization of compile-time computed binomial coefficients
+  //! @tparam MaxDegree Maximum degree supported (default 25)
+  template <int MaxDegree = BSplCLib::MaxDegree()>
+  inline const BinomAllocator<MaxDegree>& GetBinomAllocator()
+  {
+    static constexpr BinomAllocator<MaxDegree> THE_ALLOCATOR{};
+    return THE_ALLOCATOR;
   }
-
-  //! Returns the binomial coefficient C(N,P)
-  //! @param N the degree (n in C(n,k))
-  //! @param P the parameter (k in C(n,k))
-  //! @return the value of C(N,P)
-  //! @note Caller must ensure N and P are within valid range
-  constexpr int Value(const int N, const int P) const { return myBinom[N][P]; }
-
-private:
-  int myBinom[MaxDegree + 1][MaxDegree + 1];
-};
-
-//! Thread-safe lazy initialization of compile-time computed binomial coefficients
-//! @tparam MaxDegree Maximum degree supported (default 25)
-template <int MaxDegree = BSplCLib::MaxDegree()>
-inline const BinomAllocator<MaxDegree>& GetBinomAllocator()
-{
-  static constexpr BinomAllocator<MaxDegree> THE_ALLOCATOR{};
-  return THE_ALLOCATOR;
-}
 
 } // namespace
 
@@ -706,233 +690,233 @@ void PLib::RationalDerivatives(const int DerivativeRequest,
 
 namespace
 {
-// Maximum dimension for optimized template dispatch
-constexpr int THE_MAX_OPT_DIM = 15;
+  // Maximum dimension for optimized template dispatch
+  constexpr int THE_MAX_OPT_DIM = 15;
 
-// Evaluation of only value using local array (register-friendly).
-// Writes to output only at the end.
-template <int dim>
-inline void eval_poly0(double* theResult, const double* theCoeffs, int theDegree, double thePar)
-{
-  std::array<double, dim> aLocal;
-  for (int i = 0; i < dim; ++i)
+  // Evaluation of only value using local array (register-friendly).
+  // Writes to output only at the end.
+  template <int dim>
+  inline void eval_poly0(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
-    aLocal[i] = theCoeffs[i];
-  }
-
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
-  {
-    aCoeffs -= dim;
+    std::array<double, dim> aLocal;
     for (int i = 0; i < dim; ++i)
     {
-      aLocal[i] = aLocal[i] * thePar + aCoeffs[i];
+      aLocal[i] = theCoeffs[i];
     }
-  }
 
-  for (int i = 0; i < dim; ++i)
-  {
-    theResult[i] = aLocal[i];
-  }
-}
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= dim;
+      for (int i = 0; i < dim; ++i)
+      {
+        aLocal[i] = aLocal[i] * thePar + aCoeffs[i];
+      }
+    }
 
-// Evaluation of value and first derivative using local arrays.
-// Fuses derivative and value loops to read aLocal0 only once per iteration.
-template <int dim>
-inline void eval_poly1(double* theResult, const double* theCoeffs, int theDegree, double thePar)
-{
-  std::array<double, dim> aLocal0;
-  std::array<double, dim> aLocal1;
-
-  for (int i = 0; i < dim; ++i)
-  {
-    aLocal0[i] = theCoeffs[i];
-    aLocal1[i] = 0.0;
-  }
-
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
-  {
-    aCoeffs -= dim;
     for (int i = 0; i < dim; ++i)
     {
-      const double aVal = aLocal0[i];
-      aLocal1[i]        = aLocal1[i] * thePar + aVal;
-      aLocal0[i]        = aVal * thePar + aCoeffs[i];
+      theResult[i] = aLocal[i];
     }
   }
 
-  for (int i = 0; i < dim; ++i)
+  // Evaluation of value and first derivative using local arrays.
+  // Fuses derivative and value loops to read aLocal0 only once per iteration.
+  template <int dim>
+  inline void eval_poly1(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
-    theResult[i]       = aLocal0[i];
-    theResult[dim + i] = aLocal1[i];
-  }
-}
+    std::array<double, dim> aLocal0;
+    std::array<double, dim> aLocal1;
 
-// Evaluation of value and first and second derivatives using local arrays.
-// Fuses all three loops for better cache utilization.
-template <int dim>
-inline void eval_poly2(double* theResult, const double* theCoeffs, int theDegree, double thePar)
-{
-  std::array<double, dim> aLocal0;
-  std::array<double, dim> aLocal1;
-  std::array<double, dim> aLocal2;
-
-  for (int i = 0; i < dim; ++i)
-  {
-    aLocal0[i] = theCoeffs[i];
-    aLocal1[i] = 0.0;
-    aLocal2[i] = 0.0;
-  }
-
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
-  {
-    aCoeffs -= dim;
     for (int i = 0; i < dim; ++i)
     {
-      const double aD1  = aLocal1[i];
-      const double aVal = aLocal0[i];
-      aLocal2[i]        = aLocal2[i] * thePar + aD1 * 2.0;
-      aLocal1[i]        = aD1 * thePar + aVal;
-      aLocal0[i]        = aVal * thePar + aCoeffs[i];
+      aLocal0[i] = theCoeffs[i];
+      aLocal1[i] = 0.0;
+    }
+
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= dim;
+      for (int i = 0; i < dim; ++i)
+      {
+        const double aVal = aLocal0[i];
+        aLocal1[i]        = aLocal1[i] * thePar + aVal;
+        aLocal0[i]        = aVal * thePar + aCoeffs[i];
+      }
+    }
+
+    for (int i = 0; i < dim; ++i)
+    {
+      theResult[i]       = aLocal0[i];
+      theResult[dim + i] = aLocal1[i];
     }
   }
 
-  for (int i = 0; i < dim; ++i)
+  // Evaluation of value and first and second derivatives using local arrays.
+  // Fuses all three loops for better cache utilization.
+  template <int dim>
+  inline void eval_poly2(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
-    theResult[i]           = aLocal0[i];
-    theResult[dim + i]     = aLocal1[i];
-    theResult[2 * dim + i] = aLocal2[i];
-  }
-}
+    std::array<double, dim> aLocal0;
+    std::array<double, dim> aLocal1;
+    std::array<double, dim> aLocal2;
 
-// Runtime evaluation for dimension > THE_MAX_OPT_DIM (value only)
-inline void eval_poly0_runtime(double*       theResult,
-                               const double* theCoeffs,
-                               int           theDegree,
-                               double        thePar,
-                               int           theDimension)
-{
-  for (int i = 0; i < theDimension; ++i)
-  {
-    theResult[i] = theCoeffs[i];
+    for (int i = 0; i < dim; ++i)
+    {
+      aLocal0[i] = theCoeffs[i];
+      aLocal1[i] = 0.0;
+      aLocal2[i] = 0.0;
+    }
+
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= dim;
+      for (int i = 0; i < dim; ++i)
+      {
+        const double aD1  = aLocal1[i];
+        const double aVal = aLocal0[i];
+        aLocal2[i]        = aLocal2[i] * thePar + aD1 * 2.0;
+        aLocal1[i]        = aD1 * thePar + aVal;
+        aLocal0[i]        = aVal * thePar + aCoeffs[i];
+      }
+    }
+
+    for (int i = 0; i < dim; ++i)
+    {
+      theResult[i]           = aLocal0[i];
+      theResult[dim + i]     = aLocal1[i];
+      theResult[2 * dim + i] = aLocal2[i];
+    }
   }
 
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value only)
+  inline void eval_poly0_runtime(double*       theResult,
+                                 const double* theCoeffs,
+                                 int           theDegree,
+                                 double        thePar,
+                                 int           theDimension)
   {
-    aCoeffs -= theDimension;
     for (int i = 0; i < theDimension; ++i)
     {
-      theResult[i] = theResult[i] * thePar + aCoeffs[i];
+      theResult[i] = theCoeffs[i];
+    }
+
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= theDimension;
+      for (int i = 0; i < theDimension; ++i)
+      {
+        theResult[i] = theResult[i] * thePar + aCoeffs[i];
+      }
     }
   }
-}
 
-// Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st derivative)
-inline void eval_poly1_runtime(double*       theResult,
-                               const double* theCoeffs,
-                               int           theDegree,
-                               double        thePar,
-                               int           theDimension)
-{
-  double* aRes0 = theResult;
-  double* aRes1 = theResult + theDimension;
-
-  for (int i = 0; i < theDimension; ++i)
+  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st derivative)
+  inline void eval_poly1_runtime(double*       theResult,
+                                 const double* theCoeffs,
+                                 int           theDegree,
+                                 double        thePar,
+                                 int           theDimension)
   {
-    aRes0[i] = theCoeffs[i];
-    aRes1[i] = 0.0;
-  }
+    double* aRes0 = theResult;
+    double* aRes1 = theResult + theDimension;
 
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
-  {
-    aCoeffs -= theDimension;
     for (int i = 0; i < theDimension; ++i)
     {
-      const double aVal = aRes0[i];
-      aRes1[i]          = aRes1[i] * thePar + aVal;
-      aRes0[i]          = aVal * thePar + aCoeffs[i];
+      aRes0[i] = theCoeffs[i];
+      aRes1[i] = 0.0;
+    }
+
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= theDimension;
+      for (int i = 0; i < theDimension; ++i)
+      {
+        const double aVal = aRes0[i];
+        aRes1[i]          = aRes1[i] * thePar + aVal;
+        aRes0[i]          = aVal * thePar + aCoeffs[i];
+      }
     }
   }
-}
 
-// Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st + 2nd derivatives)
-inline void eval_poly2_runtime(double*       theResult,
-                               const double* theCoeffs,
-                               int           theDegree,
-                               double        thePar,
-                               int           theDimension)
-{
-  double* aRes0 = theResult;
-  double* aRes1 = theResult + theDimension;
-  double* aRes2 = theResult + 2 * theDimension;
-
-  for (int i = 0; i < theDimension; ++i)
+  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st + 2nd derivatives)
+  inline void eval_poly2_runtime(double*       theResult,
+                                 const double* theCoeffs,
+                                 int           theDegree,
+                                 double        thePar,
+                                 int           theDimension)
   {
-    aRes0[i] = theCoeffs[i];
-    aRes1[i] = 0.0;
-    aRes2[i] = 0.0;
-  }
+    double* aRes0 = theResult;
+    double* aRes1 = theResult + theDimension;
+    double* aRes2 = theResult + 2 * theDimension;
 
-  const double* aCoeffs = theCoeffs;
-  for (int aDeg = 0; aDeg < theDegree; ++aDeg)
-  {
-    aCoeffs -= theDimension;
     for (int i = 0; i < theDimension; ++i)
     {
-      const double aD1  = aRes1[i];
-      const double aVal = aRes0[i];
-      aRes2[i]          = aRes2[i] * thePar + aD1 * 2.0;
-      aRes1[i]          = aD1 * thePar + aVal;
-      aRes0[i]          = aVal * thePar + aCoeffs[i];
+      aRes0[i] = theCoeffs[i];
+      aRes1[i] = 0.0;
+      aRes2[i] = 0.0;
+    }
+
+    const double* aCoeffs = theCoeffs;
+    for (int aDeg = 0; aDeg < theDegree; ++aDeg)
+    {
+      aCoeffs -= theDimension;
+      for (int i = 0; i < theDimension; ++i)
+      {
+        const double aD1  = aRes1[i];
+        const double aVal = aRes0[i];
+        aRes2[i]          = aRes2[i] * thePar + aD1 * 2.0;
+        aRes1[i]          = aD1 * thePar + aVal;
+        aRes0[i]          = aVal * thePar + aCoeffs[i];
+      }
     }
   }
-}
 
-// Function pointer type for dispatch tables
-using EvalPolyFunc = void (*)(double*, const double*, int, double);
+  // Function pointer type for dispatch tables
+  using EvalPolyFunc = void (*)(double*, const double*, int, double);
 
-// Helper to generate dispatch tables at compile time
-template <template <int> class EvalFunc, typename FuncPtr, int... Is>
-constexpr std::array<FuncPtr, sizeof...(Is)> makeDispatchTable(std::integer_sequence<int, Is...>)
-{
-  return {{&EvalFunc<Is + 1>::call...}};
-}
+  // Helper to generate dispatch tables at compile time
+  template <template <int> class EvalFunc, typename FuncPtr, int... Is>
+  constexpr std::array<FuncPtr, sizeof...(Is)> makeDispatchTable(std::integer_sequence<int, Is...>)
+  {
+    return {{&EvalFunc<Is + 1>::call...}};
+  }
 
-// Wrapper structs to allow template parameter deduction
-template <int Dim>
-struct EvalPoly0Wrapper
-{
-  static void call(double* r, const double* c, int d, double p) { eval_poly0<Dim>(r, c, d, p); }
-};
+  // Wrapper structs to allow template parameter deduction
+  template <int Dim>
+  struct EvalPoly0Wrapper
+  {
+    static void call(double* r, const double* c, int d, double p) { eval_poly0<Dim>(r, c, d, p); }
+  };
 
-template <int Dim>
-struct EvalPoly1Wrapper
-{
-  static void call(double* r, const double* c, int d, double p) { eval_poly1<Dim>(r, c, d, p); }
-};
+  template <int Dim>
+  struct EvalPoly1Wrapper
+  {
+    static void call(double* r, const double* c, int d, double p) { eval_poly1<Dim>(r, c, d, p); }
+  };
 
-template <int Dim>
-struct EvalPoly2Wrapper
-{
-  static void call(double* r, const double* c, int d, double p) { eval_poly2<Dim>(r, c, d, p); }
-};
+  template <int Dim>
+  struct EvalPoly2Wrapper
+  {
+    static void call(double* r, const double* c, int d, double p) { eval_poly2<Dim>(r, c, d, p); }
+  };
 
-// Dispatch tables for dimensions 1..15
-constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY0_TABLE =
-  makeDispatchTable<EvalPoly0Wrapper, EvalPolyFunc>(
-    std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
+  // Dispatch tables for dimensions 1..15
+  constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY0_TABLE =
+    makeDispatchTable<EvalPoly0Wrapper, EvalPolyFunc>(
+      std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
 
-constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY1_TABLE =
-  makeDispatchTable<EvalPoly1Wrapper, EvalPolyFunc>(
-    std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
+  constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY1_TABLE =
+    makeDispatchTable<EvalPoly1Wrapper, EvalPolyFunc>(
+      std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
 
-constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY2_TABLE =
-  makeDispatchTable<EvalPoly2Wrapper, EvalPolyFunc>(
-    std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
+  constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY2_TABLE =
+    makeDispatchTable<EvalPoly2Wrapper, EvalPolyFunc>(
+      std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
 
 } // namespace
 
@@ -970,7 +954,8 @@ void PLib::EvalPolynomial(const double  Par,
 
   switch (DerivativeRequest)
   {
-    case 1: {
+    case 1:
+    {
       if (Dimension >= 1 && Dimension <= THE_MAX_OPT_DIM)
       {
         THE_EVAL_POLY1_TABLE[Dimension - 1](aRes, aCoeffs, Degree, Par);
@@ -981,7 +966,8 @@ void PLib::EvalPolynomial(const double  Par,
       }
       break;
     }
-    case 2: {
+    case 2:
+    {
       if (Dimension >= 1 && Dimension <= THE_MAX_OPT_DIM)
       {
         THE_EVAL_POLY2_TABLE[Dimension - 1](aRes, aCoeffs, Degree, Par);
@@ -992,7 +978,8 @@ void PLib::EvalPolynomial(const double  Par,
       }
       break;
     }
-    default: {
+    default:
+    {
       // General case for DerivativeRequest > 2
       const int aResSize = (1 + DerivativeRequest) * Dimension;
       for (int i = 0; i < aResSize; ++i)

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -97,4 +96,3 @@ public:
 protected:
   occ::handle<NCollection_HArray1<AppDef_MultiPointConstraint>> tabMult;
 };
-

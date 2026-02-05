@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_Drawable.hpp>
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -23,9 +22,7 @@
 /*============================================================================*/
 // To manage Display
 
-
 typedef void* Aspect_Display; /* Display* under UNIX */
-
 
 #include <Aspect_GraphicsLibrary.hpp>
 #include <Aspect_RenderingContext.hpp>
@@ -34,27 +31,13 @@ typedef void* Aspect_Display; /* Display* under UNIX */
 #include <OpenGl_Caps.hpp>
 #include <OpenGl_LineAttributes.hpp>
 #include <OpenGl_Material.hpp>
-// Created on: 2014-09-30
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #ifndef _OpenGl_MatrixState_H__
-#define _OpenGl_MatrixState_H__
+  #define _OpenGl_MatrixState_H__
 
-#include <OpenGl_Vec.hpp>
-#include <NCollection_Vector.hpp>
-#include <Standard_Dump.hpp>
+  #include <OpenGl_Vec.hpp>
+  #include <NCollection_Vector.hpp>
+  #include <Standard_Dump.hpp>
 
 //! Software implementation for OpenGL matrix stack.
 template <class T>
@@ -966,6 +949,7 @@ public: //! @name methods to alter or retrieve current state
 
   //! Bind specified texture set to current context taking into account active GLSL program.
   Standard_DEPRECATED("BindTextures() with explicit GLSL program should be used instead")
+
   occ::handle<OpenGl_TextureSet> BindTextures(const occ::handle<OpenGl_TextureSet>& theTextures)
   {
     return BindTextures(theTextures, myActiveProgram);
@@ -1332,4 +1316,3 @@ private:
   OpenGl_Context(const OpenGl_Context&)            = delete;
   OpenGl_Context& operator=(const OpenGl_Context&) = delete;
 };
-

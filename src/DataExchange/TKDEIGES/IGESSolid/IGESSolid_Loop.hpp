@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -98,4 +97,3 @@ private:
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger>                   theIsoparametricFlags;
   occ::handle<IGESBasic_HArray1OfHArray1OfIGESEntity>                theCurves;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IntSurf_TypeTrans
 {
   IntSurf_In,
@@ -8,4 +7,3 @@ enum IntSurf_TypeTrans
   IntSurf_Touch,
   IntSurf_Undecided
 };
-

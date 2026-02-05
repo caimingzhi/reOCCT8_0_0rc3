@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -64,4 +63,3 @@ private:
   TopoDS_Edge   myEdges[4];
   TopoDS_Face   myFace;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AppCont_Function.hpp>
 
 #include <Standard.hpp>
@@ -102,4 +101,3 @@ private:
   int                 myKPart;
   GeomAbs_Shape       myCont;
 };
-

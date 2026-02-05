@@ -1,19 +1,3 @@
-// Created on: 1997-10-22
-// Created by: Sergey SOKOLOV
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <NCollection_LocalArray.hpp>
 #include <PLib.hpp>
 #include <PLib_HermitJacobi.hpp>
@@ -23,77 +7,80 @@
 
 namespace
 {
-// W coefficients for C0 continuity (NivConstr = 0, DegreeH = 1)
-// W(t) = (1 - t^2)
-constexpr double WCoeff_C0[3] = {1.0, 0.0, -1.0};
+  // W coefficients for C0 continuity (NivConstr = 0, DegreeH = 1)
+  // W(t) = (1 - t^2)
+  constexpr double WCoeff_C0[3] = {1.0, 0.0, -1.0};
 
-// W coefficients for C1 continuity (NivConstr = 1, DegreeH = 3)
-// W(t) = (1 - t^2)^2 = 1 - 2t^2 + t^4
-constexpr double WCoeff_C1[5] = {1.0, 0.0, -2.0, 0.0, 1.0};
+  // W coefficients for C1 continuity (NivConstr = 1, DegreeH = 3)
+  // W(t) = (1 - t^2)^2 = 1 - 2t^2 + t^4
+  constexpr double WCoeff_C1[5] = {1.0, 0.0, -2.0, 0.0, 1.0};
 
-// W coefficients for C2 continuity (NivConstr = 2, DegreeH = 5)
-// W(t) = (1 - t^2)^3 = 1 - 3t^2 + 3t^4 - t^6
-constexpr double WCoeff_C2[7] = {1.0, 0.0, -3.0, 0.0, 3.0, 0.0, -1.0};
+  // W coefficients for C2 continuity (NivConstr = 2, DegreeH = 5)
+  // W(t) = (1 - t^2)^3 = 1 - 3t^2 + 3t^4 - t^6
+  constexpr double WCoeff_C2[7] = {1.0, 0.0, -3.0, 0.0, 3.0, 0.0, -1.0};
 
-inline const double& GetWCoefficients(const int theNivConstr)
-{
-  switch (theNivConstr)
+  inline const double& GetWCoefficients(const int theNivConstr)
   {
-    case 0:
-      return WCoeff_C0[0];
-    case 1:
-      return WCoeff_C1[0];
-    case 2:
-      return WCoeff_C2[0];
-    default:
-      return WCoeff_C0[0]; // Fallback, should never happen
+    switch (theNivConstr)
+    {
+      case 0:
+        return WCoeff_C0[0];
+      case 1:
+        return WCoeff_C1[0];
+      case 2:
+        return WCoeff_C2[0];
+      default:
+        return WCoeff_C0[0]; // Fallback, should never happen
+    }
   }
-}
 
-const math_Matrix& GetHermiteMatrix_C0()
-{
-  static math_Matrix aMatrix = []() {
-    math_Matrix aResult(1, 2, 1, 2);
-    PLib::HermiteCoefficients(-1., 1., 0, 0, aResult);
-    return aResult;
-  }();
-  return aMatrix;
-}
-
-const math_Matrix& GetHermiteMatrix_C1()
-{
-  static math_Matrix aMatrix = []() {
-    math_Matrix aResult(1, 4, 1, 4);
-    PLib::HermiteCoefficients(-1., 1., 1, 1, aResult);
-    return aResult;
-  }();
-  return aMatrix;
-}
-
-const math_Matrix& GetHermiteMatrix_C2()
-{
-  static math_Matrix aMatrix = []() {
-    math_Matrix aResult(1, 6, 1, 6);
-    PLib::HermiteCoefficients(-1., 1., 2, 2, aResult);
-    return aResult;
-  }();
-  return aMatrix;
-}
-
-inline const math_Matrix& GetHermiteMatrix(const int theNivConstr)
-{
-  switch (theNivConstr)
+  const math_Matrix& GetHermiteMatrix_C0()
   {
-    case 0:
-      return GetHermiteMatrix_C0();
-    case 1:
-      return GetHermiteMatrix_C1();
-    case 2:
-      return GetHermiteMatrix_C2();
-    default:
-      return GetHermiteMatrix_C0(); // Fallback, should never happen
+    static math_Matrix aMatrix = []()
+    {
+      math_Matrix aResult(1, 2, 1, 2);
+      PLib::HermiteCoefficients(-1., 1., 0, 0, aResult);
+      return aResult;
+    }();
+    return aMatrix;
   }
-}
+
+  const math_Matrix& GetHermiteMatrix_C1()
+  {
+    static math_Matrix aMatrix = []()
+    {
+      math_Matrix aResult(1, 4, 1, 4);
+      PLib::HermiteCoefficients(-1., 1., 1, 1, aResult);
+      return aResult;
+    }();
+    return aMatrix;
+  }
+
+  const math_Matrix& GetHermiteMatrix_C2()
+  {
+    static math_Matrix aMatrix = []()
+    {
+      math_Matrix aResult(1, 6, 1, 6);
+      PLib::HermiteCoefficients(-1., 1., 2, 2, aResult);
+      return aResult;
+    }();
+    return aMatrix;
+  }
+
+  inline const math_Matrix& GetHermiteMatrix(const int theNivConstr)
+  {
+    switch (theNivConstr)
+    {
+      case 0:
+        return GetHermiteMatrix_C0();
+      case 1:
+        return GetHermiteMatrix_C1();
+      case 2:
+        return GetHermiteMatrix_C2();
+      default:
+        return GetHermiteMatrix_C0(); // Fallback, should never happen
+    }
+  }
 } // namespace
 
 //=================================================================================================
@@ -242,18 +229,21 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
       case 0:
         myJacobi.D0(U, JacValue0);
         break;
-      case 1: {
+      case 1:
+      {
         NCollection_Array1<double> JacValue1(jac1[0], 0, aJacDegree);
         myJacobi.D1(U, JacValue0, JacValue1);
         break;
       }
-      case 2: {
+      case 2:
+      {
         NCollection_Array1<double> JacValue1(jac1[0], 0, aJacDegree);
         NCollection_Array1<double> JacValue2(jac2[0], 0, aJacDegree);
         myJacobi.D2(U, JacValue0, JacValue1, JacValue2);
         break;
       }
-      case 3: {
+      case 3:
+      {
         NCollection_Array1<double> JacValue1(jac1[0], 0, aJacDegree);
         NCollection_Array1<double> JacValue2(jac2[0], 0, aJacDegree);
         NCollection_Array1<double> JacValue3(jac3[0], 0, aJacDegree);

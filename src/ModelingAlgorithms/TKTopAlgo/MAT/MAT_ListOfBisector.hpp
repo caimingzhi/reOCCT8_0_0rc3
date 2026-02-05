@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -96,4 +95,3 @@ private:
 #undef MAT_TList
 #undef MAT_TList_hxx
 #undef Handle_MAT_TList
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <BlendFunc_Corde.hpp>
 #include <BlendFunc_GenChamfInv.hpp>
@@ -41,4 +40,3 @@ private:
   BlendFunc_Corde corde1;
   BlendFunc_Corde corde2;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Declares the kinds of dimensions needed in the
 //! display of Interactive Objects.
 enum PrsDim_KindOfDimension
@@ -20,4 +19,3 @@ enum PrsDim_KindOfDimension
   PrsDim_KOD_OFFSET,
   PrsDim_KOD_ELLIPSERADIUS
 };
-

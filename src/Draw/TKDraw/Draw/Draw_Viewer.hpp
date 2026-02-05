@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Trsf.hpp>
 #include <gp_Ax1.hpp>
 #include <Draw_Drawable3D.hpp>
@@ -121,4 +120,3 @@ private:
   Draw_View*                                         myViews[MAXVIEW];
   NCollection_Sequence<occ::handle<Draw_Drawable3D>> myDrawables;
 };
-

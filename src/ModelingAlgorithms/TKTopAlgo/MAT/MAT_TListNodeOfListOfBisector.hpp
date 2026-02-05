@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -95,4 +94,3 @@ inline void MAT_TListNodeOfListOfBisector::Previous(
 {
   theprevious = atlistnode;
 }
-

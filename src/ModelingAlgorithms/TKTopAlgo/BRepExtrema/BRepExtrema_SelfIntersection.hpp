@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepExtrema_OverlapTool.hpp>
 
 #include <TopoDS.hpp>
@@ -104,4 +103,3 @@ private:
   //! Overlap tool used for self-intersection test.
   BRepExtrema_OverlapTool myOverlapTool;
 };
-

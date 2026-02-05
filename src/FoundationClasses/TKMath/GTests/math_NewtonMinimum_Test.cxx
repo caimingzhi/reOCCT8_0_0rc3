@@ -29,181 +29,193 @@
 namespace
 {
 
-// Quadratic bowl function: f(x,y) = (x-1)^2 + 2*(y-2)^2, minimum at (1, 2) with value 0
-class QuadraticBowlWithHessian : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 2; }
-
-  bool Value(const math_Vector& theX, double& theF) override
+  // Quadratic bowl function: f(x,y) = (x-1)^2 + 2*(y-2)^2, minimum at (1, 2) with value 0
+  class QuadraticBowlWithHessian : public math_MultipleVarFunctionWithHessian
   {
-    double dx = theX(1) - 1.0;
-    double dy = theX(2) - 2.0;
-    theF      = dx * dx + 2.0 * dy * dy;
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double dx = theX(1) - 1.0;
+      double dy = theX(2) - 2.0;
+      theF      = dx * dx + 2.0 * dy * dy;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      theG(1) = 2.0 * (theX(1) - 1.0);
+      theG(2) = 4.0 * (theX(2) - 2.0);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+      // Hessian matrix: [[2, 0], [0, 4]]
+      theH(1, 1) = 2.0;
+      theH(1, 2) = 0.0;
+      theH(2, 1) = 0.0;
+      theH(2, 2) = 4.0;
+      return true;
+    }
+  };
+
+  // Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
+  class RosenbrockWithHessian : public math_MultipleVarFunctionWithHessian
   {
-    theG(1) = 2.0 * (theX(1) - 1.0);
-    theG(2) = 4.0 * (theX(2) - 2.0);
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x  = theX(1);
+      double y  = theX(2);
+      double dx = 1.0 - x;
+      double dy = y - x * x;
+      theF      = dx * dx + 100.0 * dy * dy;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      double x = theX(1);
+      double y = theX(2);
+      theG(1)  = -2.0 * (1.0 - x) + 200.0 * (y - x * x) * (-2.0 * x);
+      theG(2)  = 200.0 * (y - x * x);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      double x = theX(1);
+      double y = theX(2);
+
+      Value(theX, theF);
+      Gradient(theX, theG);
+
+      // Hessian matrix computation
+      theH(1, 1) = 2.0 + 1200.0 * x * x - 400.0 * (y - x * x);
+      theH(1, 2) = -400.0 * x;
+      theH(2, 1) = -400.0 * x;
+      theH(2, 2) = 200.0;
+      return true;
+    }
+  };
+
+  // 3D quadratic function: f(x,y,z) = (x-1)^2 + 2*(y-2)^2 + 3*(z-3)^2
+  class Quadratic3DWithHessian : public math_MultipleVarFunctionWithHessian
   {
-    Value(theX, theF);
-    Gradient(theX, theG);
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 3; }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double dx = theX(1) - 1.0;
+      double dy = theX(2) - 2.0;
+      double dz = theX(3) - 3.0;
+      theF      = dx * dx + 2.0 * dy * dy + 3.0 * dz * dz;
+      return true;
+    }
+
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      theG(1) = 2.0 * (theX(1) - 1.0);
+      theG(2) = 4.0 * (theX(2) - 2.0);
+      theG(3) = 6.0 * (theX(3) - 3.0);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+
+      // Diagonal Hessian matrix
+      theH.Init(0.0);
+      theH(1, 1) = 2.0;
+      theH(2, 2) = 4.0;
+      theH(3, 3) = 6.0;
+      return true;
+    }
+  };
+
+  // Non-convex function with saddle point: f(x,y) = x^2 - y^2
+  class SaddleFunction : public math_MultipleVarFunctionWithHessian
   {
-    Value(theX, theF);
-    Gradient(theX, theG);
-    // Hessian matrix: [[2, 0], [0, 4]]
-    theH(1, 1) = 2.0;
-    theH(1, 2) = 0.0;
-    theH(2, 1) = 0.0;
-    theH(2, 2) = 4.0;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
-class RosenbrockWithHessian : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x = theX(1);
+      double y = theX(2);
+      theF     = x * x - y * y;
+      return true;
+    }
 
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    double x  = theX(1);
-    double y  = theX(2);
-    double dx = 1.0 - x;
-    double dy = y - x * x;
-    theF      = dx * dx + 100.0 * dy * dy;
-    return true;
-  }
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      theG(1) = 2.0 * theX(1);
+      theG(2) = -2.0 * theX(2);
+      return true;
+    }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
-  {
-    double x = theX(1);
-    double y = theX(2);
-    theG(1)  = -2.0 * (1.0 - x) + 200.0 * (y - x * x) * (-2.0 * x);
-    theG(2)  = 200.0 * (y - x * x);
-    return true;
-  }
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
+      return true;
+    }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    Value(theX, theF);
-    Gradient(theX, theG);
-    return true;
-  }
+    bool Values(const math_Vector& theX,
+                double&            theF,
+                math_Vector&       theG,
+                math_Matrix&       theH) override
+    {
+      Value(theX, theF);
+      Gradient(theX, theG);
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
-  {
-    double x = theX(1);
-    double y = theX(2);
-
-    Value(theX, theF);
-    Gradient(theX, theG);
-
-    // Hessian matrix computation
-    theH(1, 1) = 2.0 + 1200.0 * x * x - 400.0 * (y - x * x);
-    theH(1, 2) = -400.0 * x;
-    theH(2, 1) = -400.0 * x;
-    theH(2, 2) = 200.0;
-    return true;
-  }
-};
-
-// 3D quadratic function: f(x,y,z) = (x-1)^2 + 2*(y-2)^2 + 3*(z-3)^2
-class Quadratic3DWithHessian : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 3; }
-
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    double dx = theX(1) - 1.0;
-    double dy = theX(2) - 2.0;
-    double dz = theX(3) - 3.0;
-    theF      = dx * dx + 2.0 * dy * dy + 3.0 * dz * dz;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
-  {
-    theG(1) = 2.0 * (theX(1) - 1.0);
-    theG(2) = 4.0 * (theX(2) - 2.0);
-    theG(3) = 6.0 * (theX(3) - 3.0);
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    Value(theX, theF);
-    Gradient(theX, theG);
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
-  {
-    Value(theX, theF);
-    Gradient(theX, theG);
-
-    // Diagonal Hessian matrix
-    theH.Init(0.0);
-    theH(1, 1) = 2.0;
-    theH(2, 2) = 4.0;
-    theH(3, 3) = 6.0;
-    return true;
-  }
-};
-
-// Non-convex function with saddle point: f(x,y) = x^2 - y^2
-class SaddleFunction : public math_MultipleVarFunctionWithHessian
-{
-public:
-  int NbVariables() const override { return 2; }
-
-  bool Value(const math_Vector& theX, double& theF) override
-  {
-    double x = theX(1);
-    double y = theX(2);
-    theF     = x * x - y * y;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
-  {
-    theG(1) = 2.0 * theX(1);
-    theG(2) = -2.0 * theX(2);
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    Value(theX, theF);
-    Gradient(theX, theG);
-    return true;
-  }
-
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG, math_Matrix& theH) override
-  {
-    Value(theX, theF);
-    Gradient(theX, theG);
-
-    // Hessian matrix: [[2, 0], [0, -2]] (indefinite)
-    theH(1, 1) = 2.0;
-    theH(1, 2) = 0.0;
-    theH(2, 1) = 0.0;
-    theH(2, 2) = -2.0;
-    return true;
-  }
-};
+      // Hessian matrix: [[2, 0], [0, -2]] (indefinite)
+      theH(1, 1) = 2.0;
+      theH(1, 2) = 0.0;
+      theH(2, 1) = 0.0;
+      theH(2, 2) = -2.0;
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

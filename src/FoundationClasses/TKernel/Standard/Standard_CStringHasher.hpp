@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_CString.hpp>
 #include <Standard_HashUtils.hpp>
 #include <Standard_TypeDef.hpp>
@@ -23,4 +22,3 @@ public:
     return strcmp(theString1, theString2) == 0;
   }
 };
-

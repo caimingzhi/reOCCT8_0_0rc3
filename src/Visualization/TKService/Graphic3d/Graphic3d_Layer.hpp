@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_BvhCStructureSet.hpp>
 #include <Graphic3d_BvhCStructureSetTrsfPers.hpp>
 #include <Graphic3d_DisplayPriority.hpp>
@@ -194,4 +193,3 @@ private:
   //! Cached layer bounding box.
   mutable Bnd_Box myBoundingBox[2];
 };
-

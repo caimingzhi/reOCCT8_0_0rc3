@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_Format.hpp>
 
 //! List of compressed pixel formats natively supported by various graphics hardware (e.g. for
@@ -18,4 +17,3 @@ enum
 {
   Image_CompressedFormat_NB = Image_CompressedFormat_RGBA_S3TC_DXT5 + 1
 };
-

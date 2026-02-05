@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlFunctions.hpp>
 
 //! Instancing is available on OpenGL 3.0+ hardware
@@ -13,4 +12,3 @@ struct OpenGl_ArbIns : protected OpenGl_GlFunctions
   using OpenGl_GlFunctions::glDrawArraysInstanced;
   using OpenGl_GlFunctions::glDrawElementsInstanced;
 };
-

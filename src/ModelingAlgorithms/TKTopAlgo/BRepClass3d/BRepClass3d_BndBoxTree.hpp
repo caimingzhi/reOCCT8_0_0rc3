@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <NCollection_UBTreeFiller.hpp>
 #include <NCollection_UBTree.hpp>
@@ -121,4 +120,3 @@ private:
   GeomAdaptor_Curve               myLC;
   bool                            myIsValid;
 };
-

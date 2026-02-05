@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_GUID.hpp>
 
@@ -161,4 +160,3 @@ private:
   //! Checks a list of selection modes.
   bool HasSelectionMode(const int theSelectionMode) const;
 };
-

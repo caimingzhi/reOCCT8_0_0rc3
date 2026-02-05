@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Resource.hpp>
 
 #include <Graphic3d_HatchStyle.hpp>
@@ -37,4 +36,3 @@ private:
 protected:
   NCollection_DataMap<occ::handle<Graphic3d_HatchStyle>, unsigned int> myStyles; //!< Hatch patterns
 };
-

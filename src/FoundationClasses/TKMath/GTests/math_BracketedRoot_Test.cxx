@@ -26,49 +26,49 @@
 namespace
 {
 
-// Quadratic function: f(x) = (x-2)^2 - 1, roots at x = 1 and x = 3
-class QuadraticFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quadratic function: f(x) = (x-2)^2 - 1, roots at x = 1 and x = 3
+  class QuadraticFunction : public math_Function
   {
-    theF = (theX - 2.0) * (theX - 2.0) - 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = (theX - 2.0) * (theX - 2.0) - 1.0;
+      return true;
+    }
+  };
 
-// Cubic function: f(x) = x^3 - x - 2, root at x approximately 1.521
-class CubicFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Cubic function: f(x) = x^3 - x - 2, root at x approximately 1.521
+  class CubicFunction : public math_Function
   {
-    theF = theX * theX * theX - theX - 2.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX * theX - theX - 2.0;
+      return true;
+    }
+  };
 
-// Sine function: f(x) = sin(x), root at x = PI
-class SineFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Sine function: f(x) = sin(x), root at x = PI
+  class SineFunction : public math_Function
   {
-    theF = sin(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = sin(theX);
+      return true;
+    }
+  };
 
-// Linear function: f(x) = 2x - 4, root at x = 2
-class LinearFunction : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Linear function: f(x) = 2x - 4, root at x = 2
+  class LinearFunction : public math_Function
   {
-    theF = 2.0 * theX - 4.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = 2.0 * theX - 4.0;
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

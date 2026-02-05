@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -44,4 +43,3 @@ private:
   Standard_EXPORT void LoadNamingDS(const TDF_Label&          theResultLabel,
                                     BRepPrimAPI_MakeCylinder& mkCyl) const;
 };
-

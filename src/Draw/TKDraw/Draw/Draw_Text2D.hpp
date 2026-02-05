@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -35,4 +34,3 @@ private:
   int                     mymoveX;
   int                     mymoveY;
 };
-

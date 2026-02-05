@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepData_ReadWriteModule.hpp>
@@ -55,4 +54,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule)
 };
-

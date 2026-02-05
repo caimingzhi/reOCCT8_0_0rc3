@@ -1,19 +1,3 @@
-// Created on: 1995-03-14
-// Created by: Robert COUBLANC
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <StdSelect_BRepSelectionTool.hpp>
 
 #include <BRep_Tool.hpp>
@@ -70,31 +54,31 @@
 
 namespace
 {
-// Check if face represents a full cylinder or cone surface
-// (single wire with 4 edges: 2 seam edges and 2 circular edges)
-static bool isCylinderOrCone(const TopoDS_Face& theFace)
-{
-  if (theFace.NbChildren() != 1)
-    return false;
-
-  const TopoDS_Iterator aWireIt(theFace);
-  const TopoDS_Shape&   aWire = aWireIt.Value();
-  if (aWire.ShapeType() != TopAbs_WIRE || aWire.NbChildren() != 4)
-    return false;
-
-  int aNbSeams = 0, aNbCirles = 0;
-  for (TopoDS_Iterator anEdgeIt(aWire); anEdgeIt.More(); anEdgeIt.Next())
+  // Check if face represents a full cylinder or cone surface
+  // (single wire with 4 edges: 2 seam edges and 2 circular edges)
+  static bool isCylinderOrCone(const TopoDS_Face& theFace)
   {
-    const TopoDS_Edge& anEdge = TopoDS::Edge(anEdgeIt.Value());
-    if (BRep_Tool::IsClosed(anEdge, theFace))
-      ++aNbSeams;
+    if (theFace.NbChildren() != 1)
+      return false;
 
-    BRepAdaptor_Curve anAdaptor(anEdge);
-    if (anAdaptor.GetType() == GeomAbs_Circle)
-      ++aNbCirles;
+    const TopoDS_Iterator aWireIt(theFace);
+    const TopoDS_Shape&   aWire = aWireIt.Value();
+    if (aWire.ShapeType() != TopAbs_WIRE || aWire.NbChildren() != 4)
+      return false;
+
+    int aNbSeams = 0, aNbCirles = 0;
+    for (TopoDS_Iterator anEdgeIt(aWire); anEdgeIt.More(); anEdgeIt.Next())
+    {
+      const TopoDS_Edge& anEdge = TopoDS::Edge(anEdgeIt.Value());
+      if (BRep_Tool::IsClosed(anEdge, theFace))
+        ++aNbSeams;
+
+      BRepAdaptor_Curve anAdaptor(anEdge);
+      if (anAdaptor.GetType() == GeomAbs_Circle)
+        ++aNbCirles;
+    }
+    return aNbSeams == 2 && aNbCirles == 2;
   }
-  return aNbSeams == 2 && aNbCirles == 2;
-}
 } // namespace
 
 //==================================================
@@ -164,7 +148,8 @@ void StdSelect_BRepSelectionTool::Load(const occ::handle<SelectMgr_Selection>& t
     case TopAbs_FACE:
     case TopAbs_SHELL:
     case TopAbs_SOLID:
-    case TopAbs_COMPSOLID: {
+    case TopAbs_COMPSOLID:
+    {
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aSubShapes;
       TopExp::MapShapes(theShape, theType, aSubShapes);
 
@@ -184,7 +169,8 @@ void StdSelect_BRepSelectionTool::Load(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    default: {
+    default:
+    {
       aBrepOwner = new StdSelect_BRepOwner(theShape, aPriority);
       ComputeSensitive(theShape,
                        aBrepOwner,
@@ -248,12 +234,14 @@ void StdSelect_BRepSelectionTool::ComputeSensitive(
 {
   switch (theShape.ShapeType())
   {
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       theSelection->Add(
         new Select3D_SensitivePoint(theOwner, BRep_Tool::Pnt(TopoDS::Vertex(theShape))));
       break;
     }
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       occ::handle<Select3D_SensitiveEntity> aSensitive;
       GetEdgeSensitive(theShape,
                        theOwner,
@@ -269,7 +257,8 @@ void StdSelect_BRepSelectionTool::ComputeSensitive(
       }
       break;
     }
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       BRepTools_WireExplorer                aWireExp(TopoDS::Wire(theShape));
       occ::handle<Select3D_SensitiveEntity> aSensitive;
       occ::handle<Select3D_SensitiveWire>   aWireSensitive = new Select3D_SensitiveWire(theOwner);
@@ -292,7 +281,8 @@ void StdSelect_BRepSelectionTool::ComputeSensitive(
       }
       break;
     }
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       const TopoDS_Face& aFace = TopoDS::Face(theShape);
 
       NCollection_Sequence<occ::handle<Select3D_SensitiveEntity>> aSensitiveList;
@@ -313,7 +303,8 @@ void StdSelect_BRepSelectionTool::ComputeSensitive(
     }
     case TopAbs_SHELL:
     case TopAbs_SOLID:
-    case TopAbs_COMPSOLID: {
+    case TopAbs_COMPSOLID:
+    {
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aSubfacesMap;
       TopExp::MapShapes(theShape, TopAbs_FACE, aSubfacesMap);
 
@@ -334,7 +325,8 @@ void StdSelect_BRepSelectionTool::ComputeSensitive(
       break;
     }
     case TopAbs_COMPOUND:
-    default: {
+    default:
+    {
       TopExp_Explorer anExp;
       // sub-vertices
       for (anExp.Init(theShape, TopAbs_VERTEX, TopAbs_EDGE); anExp.More(); anExp.Next())
@@ -552,13 +544,15 @@ void StdSelect_BRepSelectionTool::GetEdgeSensitive(
   double aParamLast  = cu3d.LastParameter();
   switch (cu3d.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       BRep_Tool::Range(anEdge, aParamFirst, aParamLast);
       theSensitive =
         new Select3D_SensitiveSegment(theOwner, cu3d.Value(aParamFirst), cu3d.Value(aParamLast));
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       const gp_Circ aCircle = cu3d.Circle();
       if (aCircle.Radius() <= Precision::Confusion())
       {
@@ -571,7 +565,8 @@ void StdSelect_BRepSelectionTool::GetEdgeSensitive(
       }
       break;
     }
-    default: {
+    default:
+    {
       // reproduce drawing behaviour
       // TODO: remove copy-paste from StdPrs_Curve and some others...
       if (FindLimits(cu3d, theMaxParam, aParamFirst, aParamLast))
@@ -862,11 +857,13 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
 
     switch (cu3d.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         aWirePoints.Append(cu3d.Value((aWireExplorer.Orientation() == TopAbs_FORWARD) ? wl : wf));
         break;
       }
-      case GeomAbs_Circle: {
+      case GeomAbs_Circle:
+      {
         if (2.0 * M_PI - std::abs(wl - wf) <= Precision::Confusion())
         {
           if (BS.GetType() == GeomAbs_Cylinder || BS.GetType() == GeomAbs_Torus
@@ -927,7 +924,8 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
         }
         break;
       }
-      default: {
+      default:
+      {
         double ff = wf, ll = wl;
         double dw =
           (std::max(wf, wl) - std::min(wf, wl)) / static_cast<double>(std::max(2, NbPOnEdge - 1));

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt.hpp>
@@ -64,4 +63,3 @@ public:
 private:
   gp_Pnt gpPnt;
 };
-

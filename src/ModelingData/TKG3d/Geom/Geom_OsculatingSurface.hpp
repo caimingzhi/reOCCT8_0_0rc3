@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAbs_IsoType.hpp>
 #include <Geom_BSplineSurface.hpp>
 #include <NCollection_Sequence.hpp>
@@ -112,4 +111,3 @@ private:
   NCollection_Sequence<int>                              myKdeg;
   std::array<bool, 4>                                    myAlong;
 };
-

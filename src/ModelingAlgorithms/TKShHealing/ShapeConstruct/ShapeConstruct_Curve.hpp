@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -92,4 +91,3 @@ public:
   //! Returns True if something fixed (by shifting knot)
   Standard_EXPORT static bool FixKnots(NCollection_Array1<double>& knots);
 };
-

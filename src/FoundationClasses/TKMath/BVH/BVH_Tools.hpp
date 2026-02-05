@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 #include <BVH_Ray.hpp>
 #include <BVH_Types.hpp>
@@ -408,4 +407,3 @@ public: //! @name Ray-Box Intersection
     return true;
   }
 };
-

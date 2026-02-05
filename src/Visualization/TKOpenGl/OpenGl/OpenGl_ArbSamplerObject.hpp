@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlFunctions.hpp>
 
 //! Provide Sampler Object functionality (texture parameters stored independently from texture
@@ -25,4 +24,3 @@ struct OpenGl_ArbSamplerObject : protected OpenGl_GlFunctions
   using OpenGl_GlFunctions::glSamplerParameterIuiv;
 #endif
 };
-

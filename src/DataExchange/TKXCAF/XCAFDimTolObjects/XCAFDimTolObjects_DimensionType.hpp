@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines types of dimension
 enum XCAFDimTolObjects_DimensionType
 {
@@ -37,4 +36,3 @@ enum XCAFDimTolObjects_DimensionType
   XCAFDimTolObjects_DimensionType_CommonLabel,
   XCAFDimTolObjects_DimensionType_DimensionPresentation
 };
-

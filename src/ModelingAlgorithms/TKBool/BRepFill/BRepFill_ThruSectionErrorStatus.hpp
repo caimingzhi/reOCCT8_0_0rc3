@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Errors that can occur at thrusection algorithm.
 enum BRepFill_ThruSectionErrorStatus
 {
@@ -13,4 +12,3 @@ enum BRepFill_ThruSectionErrorStatus
   BRepFill_ThruSectionErrorStatus_Null3DCurve,          //!< Null 3D curve in edge
   BRepFill_ThruSectionErrorStatus_Failed                //!< Thrusection algorithm has failed
 };
-

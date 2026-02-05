@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_GeneralModule.hpp>
@@ -52,4 +51,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IGESData_DefaultGeneral, IGESData_GeneralModule)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NoSuchObject.hpp>
 #include <StdObjMgt_Persistent.hpp>
 

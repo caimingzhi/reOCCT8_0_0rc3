@@ -27,75 +27,75 @@
 
 namespace
 {
-// Helper function to create a tridiagonal matrix from arrays
-void createTridiagonalMatrix(const NCollection_Array1<double>& theDiagonal,
-                             const NCollection_Array1<double>& theSubdiagonal,
-                             math_Matrix&                      theMatrix)
-{
-  const int aN = theDiagonal.Length();
-  theMatrix.Init(0.0);
-
-  // Set diagonal elements
-  for (int i = 1; i <= aN; i++)
-    theMatrix(i, i) = theDiagonal(i);
-
-  // Set sub and super diagonal elements
-  for (int i = 2; i <= aN; i++)
+  // Helper function to create a tridiagonal matrix from arrays
+  void createTridiagonalMatrix(const NCollection_Array1<double>& theDiagonal,
+                               const NCollection_Array1<double>& theSubdiagonal,
+                               math_Matrix&                      theMatrix)
   {
-    theMatrix(i, i - 1) = theSubdiagonal(i);
-    theMatrix(i - 1, i) = theSubdiagonal(i);
-  }
-}
+    const int aN = theDiagonal.Length();
+    theMatrix.Init(0.0);
 
-// Helper function to verify eigenvalue-eigenvector relationship: A*v = lambda*v
-bool verifyEigenPair(const math_Matrix& theMatrix,
-                     const double       theEigenValue,
-                     const math_Vector& theEigenVector,
+    // Set diagonal elements
+    for (int i = 1; i <= aN; i++)
+      theMatrix(i, i) = theDiagonal(i);
+
+    // Set sub and super diagonal elements
+    for (int i = 2; i <= aN; i++)
+    {
+      theMatrix(i, i - 1) = theSubdiagonal(i);
+      theMatrix(i - 1, i) = theSubdiagonal(i);
+    }
+  }
+
+  // Helper function to verify eigenvalue-eigenvector relationship: A*v = lambda*v
+  bool verifyEigenPair(const math_Matrix& theMatrix,
+                       const double       theEigenValue,
+                       const math_Vector& theEigenVector,
+                       const double       theTolerance = 1e-12)
+  {
+    const int   aN = theMatrix.RowNumber();
+    math_Vector aResult(1, aN);
+
+    // Compute A*v
+    for (int i = 1; i <= aN; i++)
+    {
+      double aSum = 0.0;
+      for (int j = 1; j <= aN; j++)
+        aSum += theMatrix(i, j) * theEigenVector(j);
+      aResult(i) = aSum;
+    }
+
+    // Check if A*v ~= lambda*v
+    for (int i = 1; i <= aN; i++)
+    {
+      const double aExpected = theEigenValue * theEigenVector(i);
+      if (std::abs(aResult(i) - aExpected) > theTolerance)
+        return false;
+    }
+
+    return true;
+  }
+
+  // Helper function to check if eigenvectors are orthogonal
+  bool areOrthogonal(const math_Vector& theVec1,
+                     const math_Vector& theVec2,
                      const double       theTolerance = 1e-12)
-{
-  const int   aN = theMatrix.RowNumber();
-  math_Vector aResult(1, aN);
-
-  // Compute A*v
-  for (int i = 1; i <= aN; i++)
   {
-    double aSum = 0.0;
-    for (int j = 1; j <= aN; j++)
-      aSum += theMatrix(i, j) * theEigenVector(j);
-    aResult(i) = aSum;
+    double aDotProduct = 0.0;
+    for (int i = 1; i <= theVec1.Length(); i++)
+      aDotProduct += theVec1(i) * theVec2(i);
+
+    return std::abs(aDotProduct) < theTolerance;
   }
 
-  // Check if A*v ~= lambda*v
-  for (int i = 1; i <= aN; i++)
+  // Helper function to compute vector norm
+  double vectorNorm(const math_Vector& theVector)
   {
-    const double aExpected = theEigenValue * theEigenVector(i);
-    if (std::abs(aResult(i) - aExpected) > theTolerance)
-      return false;
+    double aNorm = 0.0;
+    for (int i = 1; i <= theVector.Length(); i++)
+      aNorm += theVector(i) * theVector(i);
+    return std::sqrt(aNorm);
   }
-
-  return true;
-}
-
-// Helper function to check if eigenvectors are orthogonal
-bool areOrthogonal(const math_Vector& theVec1,
-                   const math_Vector& theVec2,
-                   const double       theTolerance = 1e-12)
-{
-  double aDotProduct = 0.0;
-  for (int i = 1; i <= theVec1.Length(); i++)
-    aDotProduct += theVec1(i) * theVec2(i);
-
-  return std::abs(aDotProduct) < theTolerance;
-}
-
-// Helper function to compute vector norm
-double vectorNorm(const math_Vector& theVector)
-{
-  double aNorm = 0.0;
-  for (int i = 1; i <= theVector.Length(); i++)
-    aNorm += theVector(i) * theVector(i);
-  return std::sqrt(aNorm);
-}
 } // namespace
 
 // Test constructor with dimension mismatch

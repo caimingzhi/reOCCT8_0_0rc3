@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Buffer.hpp>
 
 //! Buffer of vertex attributes.
@@ -66,4 +65,3 @@ protected:
                                             // clang-format on
   bool myIsMutable;                         //!< flag indicating that data can be invalidated
 };
-

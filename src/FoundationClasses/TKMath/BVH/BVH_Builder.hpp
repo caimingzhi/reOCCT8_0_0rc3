@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Set.hpp>
 #include <BVH_BinaryTree.hpp>
 
@@ -66,4 +65,3 @@ protected:
     }
   }
 };
-

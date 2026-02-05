@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <StepGeom_Direction.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -57,4 +56,3 @@ struct StepTidy_DirectionHasher
     return true;
   }
 };
-

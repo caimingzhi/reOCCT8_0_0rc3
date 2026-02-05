@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XY.hpp>
 #include <Standard_ConstructionError.hpp>
 #include <Standard_DomainError.hpp>
@@ -423,4 +422,3 @@ inline void gp_Dir2d::Rotate(const double theAng)
   aT.SetRotation(gp_Pnt2d(0.0, 0.0), theAng);
   coord.Multiply(aT.HVectorialPart());
 }
-

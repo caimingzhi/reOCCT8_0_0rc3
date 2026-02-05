@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <NCollection_Array1.hpp>
 #include <IntPolyh_ArrayOfPointNormal.hpp>
@@ -39,4 +38,3 @@ public:
                                                      const NCollection_Array1<double>&     theVPars,
                                                      IntPolyh_ArrayOfPointNormal& thePoints);
 };
-

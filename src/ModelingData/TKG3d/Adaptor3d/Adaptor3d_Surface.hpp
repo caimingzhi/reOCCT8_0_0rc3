@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <GeomAbs_SurfaceType.hpp>
@@ -215,4 +214,3 @@ public:
   Standard_EXPORT virtual double OffsetValue() const;
   Standard_EXPORT ~Adaptor3d_Surface() override;
 };
-

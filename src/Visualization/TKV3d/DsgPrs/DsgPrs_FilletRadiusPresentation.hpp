@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -40,4 +39,3 @@ public:
                                   occ::handle<Geom_TrimmedCurve>&        TrimCurve,
                                   bool&                                  HasCircle);
 };
-

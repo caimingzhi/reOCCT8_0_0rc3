@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <TDF_Label.hpp>
 #include <NCollection_Sequence.hpp>
@@ -123,4 +122,3 @@ public:
 private:
   occ::handle<XCAFDoc_ShapeTool> myShapeTool;
 };
-

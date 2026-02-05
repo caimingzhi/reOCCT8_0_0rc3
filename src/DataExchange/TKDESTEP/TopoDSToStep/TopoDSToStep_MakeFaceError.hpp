@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum TopoDSToStep_MakeFaceError
 {
   TopoDSToStep_FaceDone,
@@ -9,4 +8,3 @@ enum TopoDSToStep_MakeFaceError
   TopoDSToStep_NoWireMapped,
   TopoDSToStep_FaceOther
 };
-

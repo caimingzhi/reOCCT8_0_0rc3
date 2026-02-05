@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -79,4 +78,3 @@ private:
   bool                                            myIsExclusionFlagOn;
   NCollection_DataMap<int, NCollection_List<int>> myStoredTypes;
 };
-

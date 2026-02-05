@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <gp_XY.hpp>
@@ -45,4 +44,3 @@ private:
   gp_XY  myLocation;
   double myRadius;
 };
-

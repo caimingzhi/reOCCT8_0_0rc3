@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 #include <StepTidy_DirectionHasher.hpp>
 
@@ -47,4 +46,3 @@ private:
                             const occ::handle<StepGeom_Direction>& theNewEntity,
                             const occ::handle<Standard_Transient>& theSharing);
 };
-

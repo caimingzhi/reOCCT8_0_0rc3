@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -58,4 +57,3 @@ public:
 private:
   TCollection_AsciiString myMeterName;
 };
-

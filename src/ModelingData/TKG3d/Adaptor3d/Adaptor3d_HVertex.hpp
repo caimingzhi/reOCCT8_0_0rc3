@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <gp_Pnt2d.hpp>
 #include <TopAbs_Orientation.hpp>
@@ -33,4 +32,3 @@ private:
   double             myTol;
   TopAbs_Orientation myOri;
 };
-

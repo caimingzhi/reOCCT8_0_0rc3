@@ -81,7 +81,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -89,7 +90,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -97,7 +99,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -105,7 +108,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -113,7 +117,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -121,7 +126,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, anent, ent);
       if (anent.IsNull())
         return;
@@ -129,7 +135,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, anent, ent);
       if (anent.IsNull())
         return;
@@ -137,7 +144,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -145,7 +153,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -153,7 +162,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -161,7 +171,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, anent, ent);
       if (anent.IsNull())
         return;
@@ -169,7 +180,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -177,7 +189,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, anent, ent);
       if (anent.IsNull())
         return;
@@ -185,7 +198,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, anent, ent);
       if (anent.IsNull())
         return;
@@ -193,7 +207,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -201,7 +216,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -209,7 +225,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -217,7 +234,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -225,7 +243,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -233,7 +252,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -241,7 +261,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, anent, ent);
       if (anent.IsNull())
         return;
@@ -249,7 +270,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, anent, ent);
       if (anent.IsNull())
         return;
@@ -257,7 +279,8 @@ void IGESDimen_GeneralModule::OwnSharedCase(const int                           
       tool.OwnShared(anent, iter);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -276,161 +299,184 @@ IGESData_DirChecker IGESDimen_GeneralModule::DirChecker(
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolAngularDimension tool;
       return tool.DirChecker(anent);
     }
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolBasicDimension tool;
       return tool.DirChecker(anent);
     }
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolCenterLine tool;
       return tool.DirChecker(anent);
     }
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolCurveDimension tool;
       return tool.DirChecker(anent);
     }
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolDiameterDimension tool;
       return tool.DirChecker(anent);
     }
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolDimensionDisplayData tool;
       return tool.DirChecker(anent);
     }
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolDimensionTolerance tool;
       return tool.DirChecker(anent);
     }
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolDimensionUnits tool;
       return tool.DirChecker(anent);
     }
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolDimensionedGeometry tool;
       return tool.DirChecker(anent);
     }
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolFlagNote tool;
       return tool.DirChecker(anent);
     }
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolGeneralLabel tool;
       return tool.DirChecker(anent);
     }
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolGeneralNote tool;
       return tool.DirChecker(anent);
     }
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolGeneralSymbol tool;
       return tool.DirChecker(anent);
     }
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolLeaderArrow tool;
       return tool.DirChecker(anent);
     }
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolLinearDimension tool;
       return tool.DirChecker(anent);
     }
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolNewDimensionedGeometry tool;
       return tool.DirChecker(anent);
     }
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolNewGeneralNote tool;
       return tool.DirChecker(anent);
     }
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolOrdinateDimension tool;
       return tool.DirChecker(anent);
     }
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolPointDimension tool;
       return tool.DirChecker(anent);
     }
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolRadiusDimension tool;
       return tool.DirChecker(anent);
     }
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolSection tool;
       return tool.DirChecker(anent);
     }
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, anent, ent);
       if (anent.IsNull())
         break;
       IGESDimen_ToolSectionedArea tool;
       return tool.DirChecker(anent);
     }
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, anent, ent);
       if (anent.IsNull())
         break;
@@ -450,7 +496,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -458,7 +505,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -466,7 +514,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -474,7 +523,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -482,7 +532,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -490,7 +541,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, anent, ent);
       if (anent.IsNull())
         return;
@@ -498,7 +550,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, anent, ent);
       if (anent.IsNull())
         return;
@@ -506,7 +559,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -514,7 +568,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -522,7 +577,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -530,7 +586,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, anent, ent);
       if (anent.IsNull())
         return;
@@ -538,7 +595,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -546,7 +604,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, anent, ent);
       if (anent.IsNull())
         return;
@@ -554,7 +613,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, anent, ent);
       if (anent.IsNull())
         return;
@@ -562,7 +622,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -570,7 +631,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -578,7 +640,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -586,7 +649,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -594,7 +658,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -602,7 +667,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -610,7 +676,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, anent, ent);
       if (anent.IsNull())
         return;
@@ -618,7 +685,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, anent, ent);
       if (anent.IsNull())
         return;
@@ -626,7 +694,8 @@ void IGESDimen_GeneralModule::OwnCheckCase(const int                            
       tool.OwnCheck(anent, shares, ach);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -725,161 +794,184 @@ void IGESDimen_GeneralModule::OwnCopyCase(const int                             
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_AngularDimension, ento, entto);
       IGESDimen_ToolAngularDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_BasicDimension, ento, entto);
       IGESDimen_ToolBasicDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, enfr, entfrom);
       DeclareAndCast(IGESDimen_CenterLine, ento, entto);
       IGESDimen_ToolCenterLine tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_CurveDimension, ento, entto);
       IGESDimen_ToolCurveDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_DiameterDimension, ento, entto);
       IGESDimen_ToolDiameterDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, enfr, entfrom);
       DeclareAndCast(IGESDimen_DimensionDisplayData, ento, entto);
       IGESDimen_ToolDimensionDisplayData tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, enfr, entfrom);
       DeclareAndCast(IGESDimen_DimensionTolerance, ento, entto);
       IGESDimen_ToolDimensionTolerance tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, enfr, entfrom);
       DeclareAndCast(IGESDimen_DimensionUnits, ento, entto);
       IGESDimen_ToolDimensionUnits tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, enfr, entfrom);
       DeclareAndCast(IGESDimen_DimensionedGeometry, ento, entto);
       IGESDimen_ToolDimensionedGeometry tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, enfr, entfrom);
       DeclareAndCast(IGESDimen_FlagNote, ento, entto);
       IGESDimen_ToolFlagNote tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, enfr, entfrom);
       DeclareAndCast(IGESDimen_GeneralLabel, ento, entto);
       IGESDimen_ToolGeneralLabel tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, enfr, entfrom);
       DeclareAndCast(IGESDimen_GeneralNote, ento, entto);
       IGESDimen_ToolGeneralNote tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, enfr, entfrom);
       DeclareAndCast(IGESDimen_GeneralSymbol, ento, entto);
       IGESDimen_ToolGeneralSymbol tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, enfr, entfrom);
       DeclareAndCast(IGESDimen_LeaderArrow, ento, entto);
       IGESDimen_ToolLeaderArrow tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_LinearDimension, ento, entto);
       IGESDimen_ToolLinearDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, enfr, entfrom);
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, ento, entto);
       IGESDimen_ToolNewDimensionedGeometry tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, enfr, entfrom);
       DeclareAndCast(IGESDimen_NewGeneralNote, ento, entto);
       IGESDimen_ToolNewGeneralNote tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_OrdinateDimension, ento, entto);
       IGESDimen_ToolOrdinateDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_PointDimension, ento, entto);
       IGESDimen_ToolPointDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, enfr, entfrom);
       DeclareAndCast(IGESDimen_RadiusDimension, ento, entto);
       IGESDimen_ToolRadiusDimension tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, enfr, entfrom);
       DeclareAndCast(IGESDimen_Section, ento, entto);
       IGESDimen_ToolSection tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, enfr, entfrom);
       DeclareAndCast(IGESDimen_SectionedArea, ento, entto);
       IGESDimen_ToolSectionedArea tool;
       tool.OwnCopy(enfr, ento, TC);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, enfr, entfrom);
       DeclareAndCast(IGESDimen_WitnessLine, ento, entto);
       IGESDimen_ToolWitnessLine tool;

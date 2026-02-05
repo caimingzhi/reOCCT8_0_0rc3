@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -49,4 +48,3 @@ private:
   int                                                                 thecurr;
   occ::handle<NCollection_HSequence<occ::handle<IFSelect_Selection>>> thelist;
 };
-

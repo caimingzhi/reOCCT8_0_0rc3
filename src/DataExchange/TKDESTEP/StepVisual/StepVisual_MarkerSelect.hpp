@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -32,4 +31,3 @@ public:
   //! Gives access to the MarkerMember in order to get/set its value
   Standard_EXPORT occ::handle<StepVisual_MarkerMember> MarkerMember() const;
 };
-

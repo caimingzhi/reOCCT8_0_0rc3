@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Handle.hpp>
 
@@ -96,4 +95,3 @@ public:
     return NCollection_Handle<T>(dynamic_cast<Ptr*>(theOther.get()), 0);
   }
 };
-

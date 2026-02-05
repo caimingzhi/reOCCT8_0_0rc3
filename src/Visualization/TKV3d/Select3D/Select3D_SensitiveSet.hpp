@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet3d.hpp>
 #include <Select3D_BVHBuilder3d.hpp>
 #include <Select3D_SensitiveEntity.hpp>
@@ -208,4 +207,3 @@ protected:
   BvhPrimitiveSet myContent;     //!< A link between sensitive entity and BVH_PrimitiveSet
   int             myDetectedIdx; //!< Index of detected primitive in BVH sorted primitive array
 };
-

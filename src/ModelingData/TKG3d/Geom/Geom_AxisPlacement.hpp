@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Ax1.hpp>
@@ -84,4 +83,3 @@ public:
 protected:
   gp_Ax1 axis;
 };
-

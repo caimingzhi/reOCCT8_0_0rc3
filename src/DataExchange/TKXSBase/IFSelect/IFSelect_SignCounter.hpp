@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -155,4 +154,3 @@ private:
   int                                              thenbcomp1;
   int                                              thenbcomp2;
 };
-

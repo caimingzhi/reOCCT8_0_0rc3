@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_XY.hpp>
 #include <NCollection_List.hpp>
 #include <NCollection_DataMap.hpp>
@@ -72,4 +71,3 @@ typedef enum
   DM_Wireframe = 0, //!< Wireframe display mode
   DM_Shading   = 1  //!< Shaded display mode
 } IVtk_DisplayMode;
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -156,4 +155,3 @@ public:
   //! Checks if <theFace> has the properly closed in 2D boundary(ies)
   Standard_EXPORT static bool CheckFaceClosed2d(const TopoDS_Face& theFace);
 };
-

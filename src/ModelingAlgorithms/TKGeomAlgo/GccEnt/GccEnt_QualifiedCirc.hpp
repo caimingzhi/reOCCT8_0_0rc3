@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -63,4 +62,3 @@ private:
   gp_Circ2d       TheQualified;
   GccEnt_Position TheQualifier;
 };
-

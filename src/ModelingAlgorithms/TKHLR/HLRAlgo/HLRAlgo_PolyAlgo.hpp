@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <HLRAlgo_PolyData.hpp>
 #include <HLRAlgo_BiPoint.hpp>
 #include <NCollection_List.hpp>
@@ -74,4 +73,3 @@ private:
   int                                                    myCurShell;
   bool                                                   myFound;
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1998-01-20
-// Created by: Yves FRICAUD
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <TNaming.hpp>
 
 #include <BRep_Builder.hpp>
@@ -331,23 +315,28 @@ static void LoadNamedShape(TNaming_Builder&    B,
 {
   switch (Evol)
   {
-    case TNaming_PRIMITIVE: {
+    case TNaming_PRIMITIVE:
+    {
       B.Generated(NS);
       break;
     }
-    case TNaming_GENERATED: {
+    case TNaming_GENERATED:
+    {
       B.Generated(OS, NS);
       break;
     }
-    case TNaming_MODIFY: {
+    case TNaming_MODIFY:
+    {
       B.Modify(OS, NS);
       break;
     }
-    case TNaming_DELETE: {
+    case TNaming_DELETE:
+    {
       B.Delete(OS);
       break;
     }
-    case TNaming_SELECTED: {
+    case TNaming_SELECTED:
+    {
       B.Select(NS, OS);
       break;
     }
@@ -617,23 +606,28 @@ Standard_OStream& TNaming::Print(const TNaming_Evolution EVOL, Standard_OStream&
 {
   switch (EVOL)
   {
-    case TNaming_PRIMITIVE: {
+    case TNaming_PRIMITIVE:
+    {
       s << "PRIMITIVE";
       break;
     }
-    case TNaming_GENERATED: {
+    case TNaming_GENERATED:
+    {
       s << "GENERATED";
       break;
     }
-    case TNaming_MODIFY: {
+    case TNaming_MODIFY:
+    {
       s << "MODIFY";
       break;
     }
-    case TNaming_DELETE: {
+    case TNaming_DELETE:
+    {
       s << "DELETE";
       break;
     }
-    case TNaming_SELECTED: {
+    case TNaming_SELECTED:
+    {
       s << "SELECTED";
       break;
     }
@@ -651,55 +645,68 @@ Standard_OStream& TNaming::Print(const TNaming_NameType NAME, Standard_OStream& 
 
   switch (NAME)
   {
-    case TNaming_UNKNOWN: {
+    case TNaming_UNKNOWN:
+    {
       s << "UNKNOWN";
       break;
     }
-    case TNaming_IDENTITY: {
+    case TNaming_IDENTITY:
+    {
       s << "IDENTITY";
       break;
     }
-    case TNaming_MODIFUNTIL: {
+    case TNaming_MODIFUNTIL:
+    {
       s << "MODIFUNTIL";
       break;
     }
-    case TNaming_GENERATION: {
+    case TNaming_GENERATION:
+    {
       s << "GENERATION";
       break;
     }
-    case TNaming_INTERSECTION: {
+    case TNaming_INTERSECTION:
+    {
       s << "INTERSECTION";
       break;
     }
-    case TNaming_UNION: {
+    case TNaming_UNION:
+    {
       s << "UNION";
       break;
     }
-    case TNaming_SUBSTRACTION: {
+    case TNaming_SUBSTRACTION:
+    {
       s << "SUBSTRACTION";
       break;
     }
-    case TNaming_CONSTSHAPE: {
+    case TNaming_CONSTSHAPE:
+    {
       s << "CONSTSHAPE";
       break;
     }
-    case TNaming_FILTERBYNEIGHBOURGS: {
+    case TNaming_FILTERBYNEIGHBOURGS:
+    {
       s << "FILTERBYNEIGHBOURGS";
       break;
     }
-    case TNaming_ORIENTATION: {
+    case TNaming_ORIENTATION:
+    {
       s << "ORIENTATION";
       break;
     }
-    case TNaming_WIREIN: {
+    case TNaming_WIREIN:
+    {
       s << "WIREIN";
       break;
     }
-    case TNaming_SHELLIN: {
+    case TNaming_SHELLIN:
+    {
       s << "SHELLIN";
       break;
     }
-    default: {
+    default:
+    {
       s << "UNKNOWN_NameType";
       break;
     }

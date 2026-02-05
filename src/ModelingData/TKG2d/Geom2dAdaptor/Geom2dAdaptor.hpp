@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -22,4 +21,3 @@ public:
   //! cannot process the OtherCurves.
   Standard_EXPORT static occ::handle<Geom2d_Curve> MakeCurve(const Adaptor2d_Curve2d& HC);
 };
-

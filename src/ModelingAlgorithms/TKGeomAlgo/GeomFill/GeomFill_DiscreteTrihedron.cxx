@@ -1,18 +1,3 @@
-// Created on: 2013-02-05
-// Created by: Julia GERASIMOVA
-// Copyright (c) 2001-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomFill_DiscreteTrihedron.hpp>
 
 #include <Adaptor3d_Curve.hpp>
@@ -66,13 +51,15 @@ bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
       case GeomAbs_Ellipse:
       case GeomAbs_Hyperbola:
       case GeomAbs_Parabola:
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         // No problem
         myUseFrenet = true;
         myFrenet->SetCurve(C);
         break;
       }
-      default: {
+      default:
+      {
         myUseFrenet = false;
         // We have to fill <myKnots> and <myTrihedrons>
         Init();

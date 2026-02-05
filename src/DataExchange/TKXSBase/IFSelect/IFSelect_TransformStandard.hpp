@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -150,4 +149,3 @@ private:
   NCollection_Sequence<occ::handle<IFSelect_GeneralModifier>> themodifs;
   occ::handle<Interface_CopyControl>                          themap;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom2d_BezierCurve.hpp>
 #include <Geom2dHash_PointHasher.hpp>
@@ -64,4 +63,3 @@ struct Geom2dHash_BezierCurveHasher
     return true;
   }
 };
-

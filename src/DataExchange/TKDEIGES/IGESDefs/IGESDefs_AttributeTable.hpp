@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -90,4 +89,3 @@ public:
 private:
   occ::handle<NCollection_HArray2<occ::handle<Standard_Transient>>> theAttributes;
 };
-

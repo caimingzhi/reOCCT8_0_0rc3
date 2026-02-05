@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMDF_ADriver.hpp>
 #include <TDF_DerivedAttribute.hpp>
 
@@ -61,4 +60,3 @@ protected:
   occ::handle<TDF_Attribute>  myDerivative; //!< the derivative attribute that inherits the base
   occ::handle<XmlMDF_ADriver> myBaseDirver; //!< the base attribute driver to be reused here
 };
-

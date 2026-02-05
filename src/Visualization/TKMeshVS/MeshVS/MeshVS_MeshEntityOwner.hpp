@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <MeshVS_EntityType.hpp>
 #include <SelectMgr_EntityOwner.hpp>
 #include <PrsMgr_PresentationManager.hpp>
@@ -57,4 +56,3 @@ private:
   int               myID;
   bool              myIsGroup;
 };
-

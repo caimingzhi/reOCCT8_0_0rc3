@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepBasic_SiPrefix
 {
   StepBasic_spExa,
@@ -20,4 +19,3 @@ enum StepBasic_SiPrefix
   StepBasic_spFemto,
   StepBasic_spAtto
 };
-

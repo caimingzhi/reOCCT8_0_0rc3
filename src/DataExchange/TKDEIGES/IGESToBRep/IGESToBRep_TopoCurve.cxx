@@ -427,11 +427,13 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
     shapeEnum = myshape.ShapeType();
     switch (shapeEnum)
     {
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         face = TopoDS::Face(myshape);
         break;
       }
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         TopoDS_Iterator IT(myshape);
         int             nbfaces = 0;
         for (; IT.More(); IT.Next())
@@ -467,7 +469,8 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
         }
       }
       break;
-      default: {
+      default:
+      {
         if (!start->Curve3D().IsNull())
         {
           if (IGESToBRep::IsTopoCurve(start->Curve3D()))
@@ -1313,11 +1316,13 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
     shapeEnum = myshape.ShapeType();
     switch (shapeEnum)
     {
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         face = TopoDS::Face(myshape);
         break;
       }
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         TopoDS_Iterator IT(myshape);
         int             nbfaces = 0;
         for (; IT.More(); IT.Next())
@@ -1335,7 +1340,8 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
         }
       }
       break;
-      default: {
+      default:
+      {
         Message_Msg Msg1156("IGES_1156"); //"Basis Surface Error." ?? Msg1066
         occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(igesSurface);
         Msg1156.Arg("basic surface");

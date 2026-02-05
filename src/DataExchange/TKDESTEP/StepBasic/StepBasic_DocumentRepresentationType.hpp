@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -39,4 +38,3 @@ private:
   occ::handle<TCollection_HAsciiString> theName;
   occ::handle<StepBasic_Document>       theRepresentedDocument;
 };
-

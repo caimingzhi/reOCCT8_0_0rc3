@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -30,4 +29,3 @@ protected:
   //! unchanges (because it works on the model already produced)
   Standard_EXPORT IGESSelect_FileModifier();
 };
-

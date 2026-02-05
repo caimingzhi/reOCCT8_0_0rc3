@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Delta.hpp>
@@ -22,4 +21,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TDocStd_CompoundDelta, TDF_Delta)
 };
-

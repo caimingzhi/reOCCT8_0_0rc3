@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_Expression.hpp>
 
 //! Relation attribute.
@@ -39,4 +38,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataStd_Relation, TDataStd_Expression)
 };
-

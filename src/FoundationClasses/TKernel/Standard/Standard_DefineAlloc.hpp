@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Macro to override new and delete operators for arrays.
 // Defined to empty for old SUN compiler
 #if defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x530)
@@ -49,12 +48,12 @@
   DEFINE_STANDARD_ALLOC_PLACEMENT
 
 // Declare operator new in global scope for old sun compiler
-  #if defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x420)
+#if defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x420)
 inline void* operator new(size_t, void* anAddress) noexcept
 {
   return anAddress;
 }
-  #endif
+#endif
 
 //! @def STANDARD_ALIGNED(theAlignment, theType, theVar)
 //! Declare variable with memory alignment.
@@ -71,4 +70,3 @@ inline void* operator new(size_t, void* anAddress) noexcept
 #else
   #define STANDARD_ALIGNED(theAlignment, theType, theVar) theType theVar
 #endif
-

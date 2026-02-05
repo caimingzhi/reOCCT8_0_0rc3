@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_SelectionScheme.hpp>
 #include <Aspect_VKey.hpp>
 #include <PrsMgr_PresentationManager.hpp>
@@ -145,6 +144,7 @@ public:
 
   //! Returns selection state.
   Standard_DEPRECATED("Deprecated method - IsSelected() should be used instead")
+
   int State() const { return myIsSelected ? 1 : 0; }
 
   //! Set the state of the owner.
@@ -198,10 +198,12 @@ public:
 public:
   //! Sets the selectable object.
   Standard_DEPRECATED("Deprecated method - SetSelectable() should be used instead")
+
   void Set(const occ::handle<SelectMgr_SelectableObject>& theSelObj) { SetSelectable(theSelObj); }
 
   //! sets the selectable priority of the owner
   Standard_DEPRECATED("Deprecated method - SetPriority() should be used instead")
+
   void Set(const int thePriority) { SetPriority(thePriority); }
 
 protected:
@@ -212,4 +214,3 @@ protected:
   bool            myFromDecomposition; //!< flag indicating this owner points to a part of object (TRUE) or to entire object (FALSE)
   // clang-format on
 };
-

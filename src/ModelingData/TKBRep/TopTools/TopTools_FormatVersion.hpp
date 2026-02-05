@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defined TopTools format version
 enum TopTools_FormatVersion
 {
@@ -20,4 +19,3 @@ enum
   TopTools_FormatVersion_LOWER = TopTools_FormatVersion_VERSION_1,
   TopTools_FormatVersion_UPPER = TopTools_FormatVersion_VERSION_3
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! To declare the type of selection semantics for local operation Perform methods
 //! -   NoSelection
 //! -   SelectionFU - selection of a face up to which a
@@ -19,4 +18,3 @@ enum BRepFeat_PerfSelection
   BRepFeat_SelectionSh,
   BRepFeat_SelectionShU
 };
-

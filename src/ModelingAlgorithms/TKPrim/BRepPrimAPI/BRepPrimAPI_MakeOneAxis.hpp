@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -36,4 +35,3 @@ public:
   Standard_EXPORT const TopoDS_Solid& Solid();
   Standard_EXPORT                     operator TopoDS_Solid();
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -80,6 +79,7 @@ private:
   double u2;
   double v2;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -150,5 +150,3 @@ inline void IntSurf_PntOn2S::Parameters(double& U1, double& V1, double& U2, doub
   U2 = u2;
   V2 = v2;
 }
-
-

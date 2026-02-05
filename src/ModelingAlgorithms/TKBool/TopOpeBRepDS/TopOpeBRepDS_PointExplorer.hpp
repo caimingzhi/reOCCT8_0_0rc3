@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -46,4 +45,3 @@ private:
   TopOpeBRepDS_Point myEmpty;
   bool               myFindKeep;
 };
-

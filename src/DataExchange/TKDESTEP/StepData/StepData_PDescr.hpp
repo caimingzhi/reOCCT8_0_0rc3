@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -207,4 +206,3 @@ private:
   TCollection_AsciiString      thefnam;
   int                          thefnum;
 };
-

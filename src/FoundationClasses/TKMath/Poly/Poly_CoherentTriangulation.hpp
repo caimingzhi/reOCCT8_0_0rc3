@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Poly_Triangulation.hpp>
 #include <Poly_CoherentNode.hpp>
 #include <Poly_CoherentTriangle.hpp>
@@ -350,4 +349,3 @@ public:
   friend class IteratorOfNode;
   friend class IteratorOfLink;
 };
-

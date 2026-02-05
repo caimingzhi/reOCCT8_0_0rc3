@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -152,4 +151,3 @@ private:
   gp_Vec                            DV;
   gp_Vec                            D2V;
 };
-

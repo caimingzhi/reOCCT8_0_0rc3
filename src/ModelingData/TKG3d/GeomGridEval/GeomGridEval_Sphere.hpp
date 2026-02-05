@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_SphericalSurface.hpp>
 #include <GeomGridEval.hpp>
 #include <gp_Pnt2d.hpp>
@@ -169,4 +168,3 @@ private:
 
   occ::handle<Geom_SphericalSurface> myGeom;
 };
-

@@ -672,16 +672,20 @@ Graphic3d_TypeOfAnswer Graphic3d_CView::acceptDisplay(
 {
   switch (theStructType)
   {
-    case Graphic3d_TOS_ALL: {
+    case Graphic3d_TOS_ALL:
+    {
       return Graphic3d_TOA_YES; // The structure accepts any type of view
     }
-    case Graphic3d_TOS_SHADING: {
+    case Graphic3d_TOS_SHADING:
+    {
       return myVisualization == Graphic3d_TOV_SHADING ? Graphic3d_TOA_YES : Graphic3d_TOA_NO;
     }
-    case Graphic3d_TOS_WIREFRAME: {
+    case Graphic3d_TOS_WIREFRAME:
+    {
       return myVisualization == Graphic3d_TOV_WIREFRAME ? Graphic3d_TOA_YES : Graphic3d_TOA_NO;
     }
-    case Graphic3d_TOS_COMPUTED: {
+    case Graphic3d_TOS_COMPUTED:
+    {
       return (myVisualization == Graphic3d_TOV_SHADING
               || myVisualization == Graphic3d_TOV_WIREFRAME)
                ? Graphic3d_TOA_COMPUTE

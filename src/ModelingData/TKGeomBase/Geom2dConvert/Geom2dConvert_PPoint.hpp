@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
@@ -61,4 +60,3 @@ private:
   gp_Pnt2d myPoint;     //! Point location
   gp_Vec2d myD1;        //! derivatives by parameter (components of the tangent).
 };
-

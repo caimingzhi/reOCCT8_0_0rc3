@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -93,4 +92,3 @@ private:
   occ::handle<StepGeom_BSplineCurveWithKnots> bSplineCurveWithKnots;
   occ::handle<StepGeom_RationalBSplineCurve>  rationalBSplineCurve;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TypeOfPrimitiveArray.hpp>
 #include <Graphic3d_IndexBuffer.hpp>
 #include <Graphic3d_BoundBuffer.hpp>
@@ -144,4 +143,3 @@ protected:
 public:
   DEFINE_STANDARD_ALLOC
 };
-

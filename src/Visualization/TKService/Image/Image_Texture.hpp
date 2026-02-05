@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Buffer.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -93,31 +92,31 @@ protected:
 
 namespace std
 {
-template <>
-struct equal_to<occ::handle<Image_Texture>>
-{
-  bool operator()(const occ::handle<Image_Texture>& theTex1,
-                  const occ::handle<Image_Texture>& theTex2) const
+  template <>
+  struct equal_to<occ::handle<Image_Texture>>
   {
-    if (theTex1.IsNull() != theTex2.IsNull())
+    bool operator()(const occ::handle<Image_Texture>& theTex1,
+                    const occ::handle<Image_Texture>& theTex2) const
     {
-      return false;
+      if (theTex1.IsNull() != theTex2.IsNull())
+      {
+        return false;
+      }
+      else if (theTex1.IsNull())
+      {
+        return true;
+      }
+      return theTex1->TextureId().IsEqual(theTex2->TextureId());
     }
-    else if (theTex1.IsNull())
-    {
-      return true;
-    }
-    return theTex1->TextureId().IsEqual(theTex2->TextureId());
-  }
-};
+  };
 
-template <>
-struct hash<occ::handle<Image_Texture>>
-{
-  size_t operator()(const occ::handle<Image_Texture>& theTexture) const noexcept
+  template <>
+  struct hash<occ::handle<Image_Texture>>
   {
-    return !theTexture.IsNull() ? std::hash<TCollection_AsciiString>{}(theTexture->TextureId()) : 0;
-  }
-};
+    size_t operator()(const occ::handle<Image_Texture>& theTexture) const noexcept
+    {
+      return !theTexture.IsNull() ? std::hash<TCollection_AsciiString>{}(theTexture->TextureId())
+                                  : 0;
+    }
+  };
 } // namespace std
-

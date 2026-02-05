@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -238,4 +237,3 @@ private:
   double                  uTrim1;
   double                  uTrim2;
 };
-

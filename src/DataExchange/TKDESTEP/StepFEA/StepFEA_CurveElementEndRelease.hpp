@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepFEA_CurveElementEndCoordinateSystem.hpp>
@@ -47,4 +46,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepElement_CurveElementEndReleasePacket>>>
     theReleases;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -112,4 +111,3 @@ protected:
   occ::handle<StdSelect_Shape> myPrsSh;
   int                          myCurMode;
 };
-

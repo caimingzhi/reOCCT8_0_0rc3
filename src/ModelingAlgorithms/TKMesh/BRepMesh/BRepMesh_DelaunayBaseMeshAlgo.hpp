@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_ConstrainedBaseMeshAlgo.hpp>
 
 //! Class provides base functionality to build face triangulation using Dealunay approach.
@@ -20,4 +19,3 @@ protected:
   //! Generates mesh for the contour stored in data structure.
   Standard_EXPORT void generateMesh(const Message_ProgressRange& theRange) override;
 };
-

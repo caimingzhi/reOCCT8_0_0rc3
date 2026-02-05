@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <DrawTrSurf_BSplineCurve2d.hpp>
@@ -44,4 +43,3 @@ public:
 protected:
   void* MyBatten;
 };
-

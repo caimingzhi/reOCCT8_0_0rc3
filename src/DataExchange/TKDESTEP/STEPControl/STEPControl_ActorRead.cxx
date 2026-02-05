@@ -202,10 +202,10 @@ static void DumpWhatIs(const TopoDS_Shape& S)
 
 namespace
 {
-// Set global var to inform outer methods that current representation item is non-manifold.
-// The better way is to pass this information via binder or via TopoDS_Shape itself, however,
-// this is very specific info to do so...
-bool NM_DETECTED = false;
+  // Set global var to inform outer methods that current representation item is non-manifold.
+  // The better way is to pass this information via binder or via TopoDS_Shape itself, however,
+  // this is very specific info to do so...
+  bool NM_DETECTED = false;
 } // namespace
 
 // ============================================================================

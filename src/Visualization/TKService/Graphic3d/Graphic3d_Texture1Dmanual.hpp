@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Texture1D.hpp>
 #include <Graphic3d_NameOfTexture1D.hpp>
 
@@ -19,4 +18,3 @@ public:
   //! Creates a texture from the pixmap.
   Standard_EXPORT Graphic3d_Texture1Dmanual(const occ::handle<Image_PixMap>& thePixMap);
 };
-

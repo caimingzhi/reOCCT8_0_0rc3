@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -35,4 +34,3 @@ public:
   Standard_EXPORT occ::handle<IGESGeom_Point> Transfer2dPoint(
     const occ::handle<Geom2d_CartesianPoint>& start);
 };
-

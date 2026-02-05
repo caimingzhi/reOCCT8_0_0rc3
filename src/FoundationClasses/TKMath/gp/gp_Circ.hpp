@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax2.hpp>
 #include <gp_Pnt.hpp>
@@ -263,4 +262,3 @@ inline gp_Circ gp_Circ::Transformed(const gp_Trsf& theT) const
   aC.pos.Transform(theT);
   return aC;
 }
-

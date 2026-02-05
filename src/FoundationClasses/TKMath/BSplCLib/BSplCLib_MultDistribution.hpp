@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! This enumeration describes the form of the
 //! sequence of mutiplicities. MultDistribution is:
 //!
@@ -18,4 +17,3 @@ enum BSplCLib_MultDistribution
   BSplCLib_Constant,
   BSplCLib_QuasiConstant
 };
-

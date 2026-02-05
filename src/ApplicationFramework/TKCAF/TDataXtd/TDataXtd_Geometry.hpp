@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -123,4 +122,3 @@ public:
 private:
   TDataXtd_GeometryEnum myType;
 };
-

@@ -69,10 +69,12 @@ Storage_Error FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Stor
     std::ios_base::openmode anOpenMode = std::ios_base::openmode{};
     switch (aMode)
     {
-      case Storage_VSNone: {
+      case Storage_VSNone:
+      {
         break;
       }
-      case Storage_VSRead: {
+      case Storage_VSRead:
+      {
         // std::ios::nocreate is not portable
 #if !defined(IRIX) && !defined(DECOSF1)
         anOpenMode = std::ios::in | std::ios::binary;
@@ -81,7 +83,8 @@ Storage_Error FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Stor
 #endif
         break;
       }
-      case Storage_VSWrite: {
+      case Storage_VSWrite:
+      {
 #if !defined(IRIX) && !defined(DECOSF1)
         anOpenMode = std::ios::out | std::ios::binary;
 #else
@@ -89,7 +92,8 @@ Storage_Error FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Stor
 #endif
         break;
       }
-      case Storage_VSReadWrite: {
+      case Storage_VSReadWrite:
+      {
 #if !defined(IRIX) && !defined(DECOSF1)
         anOpenMode = std::ios::in | std::ios::out | std::ios::binary;
 #else

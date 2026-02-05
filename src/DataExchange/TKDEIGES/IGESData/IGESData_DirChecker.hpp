@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -153,4 +152,3 @@ private:
   int              theuseflag;
   int              thehierst;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_IStream.hpp>
 
 /**
@@ -22,4 +21,3 @@ struct VrmlData_InBuffer
 private:
   void operator=(const VrmlData_InBuffer&) = delete;
 };
-

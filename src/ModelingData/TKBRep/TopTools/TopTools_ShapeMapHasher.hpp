@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -21,4 +20,3 @@ public:
     return S1.IsSame(S2);
   }
 };
-

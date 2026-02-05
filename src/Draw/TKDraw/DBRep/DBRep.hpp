@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <Standard_Real.hpp>
 
 //! DBRep parameters.
@@ -49,7 +48,6 @@ public:
   {
   }
 };
-
 
 #include <Draw_Interpretor.hpp>
 #include <TopoDS_Shape.hpp>
@@ -158,4 +156,3 @@ protected:
                                                TopAbs_ShapeEnum theType,
                                                bool             theToComplain);
 };
-

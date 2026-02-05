@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -147,4 +146,3 @@ private:
   int                                       themnum;
   Interface_CheckStatus                     themchk;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Name format preference for XCAF shape labels.
 enum RWMesh_NameFormat
 {
@@ -17,4 +16,3 @@ enum RWMesh_NameFormat
   RWMesh_NameFormat_ProductAndInstanceAndOcaf, //!< generate name combining Product+Instance+Ocaf
                                                //!< (useful for debugging purposes)
 };
-

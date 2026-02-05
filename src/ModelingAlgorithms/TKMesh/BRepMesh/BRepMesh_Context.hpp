@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_Context.hpp>
 
 //! Class implementing default context of BRepMesh algorithm.
@@ -17,4 +16,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_Context, IMeshTools_Context)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_GlCore12.hpp>
 
 //! OpenGL 1.3 without deprecated entry points.
@@ -21,4 +20,3 @@ public: //! @name OpenGL 1.3 additives to 1.2
   using OpenGl_GlFunctions::glCompressedTexSubImage2D;
   using OpenGl_GlFunctions::glSampleCoverage;
 };
-

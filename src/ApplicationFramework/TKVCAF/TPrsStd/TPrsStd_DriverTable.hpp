@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -52,4 +51,3 @@ public:
 private:
   NCollection_DataMap<Standard_GUID, occ::handle<TPrsStd_Driver>> myDrivers;
 };
-

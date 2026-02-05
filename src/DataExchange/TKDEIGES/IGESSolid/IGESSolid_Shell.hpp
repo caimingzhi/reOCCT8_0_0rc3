@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESSolid_Face.hpp>
@@ -56,4 +55,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Face>>> theFaces;
   occ::handle<NCollection_HArray1<int>>                         theOrientation;
 };
-

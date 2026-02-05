@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Geometry.hpp>
 #include <VrmlData_Group.hpp>
 #include <NCollection_List.hpp>
@@ -127,4 +126,3 @@ private:
   // ---------- PRIVATE METHODS ----------
   void operator=(const VrmlData_ShapeConvert&) = delete;
 };
-

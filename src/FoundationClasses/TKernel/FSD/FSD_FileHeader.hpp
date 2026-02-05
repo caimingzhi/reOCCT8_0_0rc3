@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <stddef.h>
 
 #include <stdlib.h>
@@ -35,4 +34,3 @@ struct FSD_FileHeader
   int bdata;
   int edata;
 };
-

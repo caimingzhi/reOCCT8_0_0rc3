@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_RectangularTrimmedSurface.hpp>
 #include <GeomHash_SurfaceHasher.hpp>
@@ -55,4 +54,3 @@ struct GeomHash_RectangularTrimmedSurfaceHasher
            && std::abs(aV1_1 - aV1_2) <= aTolerance && std::abs(aV2_1 - aV2_2) <= aTolerance;
   }
 };
-

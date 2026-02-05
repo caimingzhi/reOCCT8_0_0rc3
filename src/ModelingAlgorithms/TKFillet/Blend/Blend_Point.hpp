@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -286,6 +285,7 @@ private:
   bool   hasc2;
   bool   istgt;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -485,5 +485,3 @@ inline const gp_Vec& Blend_Point::TangentOnC2() const
   }
   return tg2;
 }
-
-

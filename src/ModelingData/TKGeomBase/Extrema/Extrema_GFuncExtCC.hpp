@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAbs_CurveType.hpp>
 #include <math_FunctionSetWithDerivatives.hpp>
 #include <math_Matrix.hpp>
@@ -906,4 +905,3 @@ void Extrema_GFuncExtCC<TheCurve1,
   myVinfium   = theInfBound(2);
   myVsupremum = theSupBound(2);
 }
-

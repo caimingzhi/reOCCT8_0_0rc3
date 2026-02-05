@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Presentation.hpp>
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
@@ -21,4 +20,3 @@ public:
                           const occ::handle<Prs3d_Drawer>&       theDrawer,
                           const occ::handle<Graphic3d_Camera>&   theProjector) const = 0;
 };
-

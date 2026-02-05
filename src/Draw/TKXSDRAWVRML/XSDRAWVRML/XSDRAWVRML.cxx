@@ -282,7 +282,8 @@ static int loadvrml(Draw_Interpretor& di, int argc, const char** argv)
       switch (aScene.Status())
       {
 
-        case VrmlData_StatusOK: {
+        case VrmlData_StatusOK:
+        {
           aShape = aScene.GetShape(aShapeAppMap);
           break;
         }
@@ -412,12 +413,12 @@ static int writevrml(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-// Singleton to ensure DEVRML plugin is registered only once
-void DEVRMLSingleton()
-{
-  static DE_PluginHolder<DEVRML_ConfigurationNode> aHolder;
-  (void)aHolder;
-}
+  // Singleton to ensure DEVRML plugin is registered only once
+  void DEVRMLSingleton()
+  {
+    static DE_PluginHolder<DEVRML_ConfigurationNode> aHolder;
+    (void)aHolder;
+  }
 } // namespace
 
 //=================================================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 //! The class represents the point on the surface with
@@ -138,4 +137,3 @@ private:
   int    myPOC;
   bool   myDegenerated;
 };
-

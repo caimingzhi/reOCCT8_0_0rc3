@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -191,4 +190,3 @@ private:
                                    const NCollection_Array1<double>& theZ,
                                    NCollection_Array1<double>&       theBounds);
 };
-

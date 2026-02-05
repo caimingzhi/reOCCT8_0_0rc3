@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -158,4 +157,3 @@ private:
 #undef IntCurve_MyImpParToolOfTheIntersector_hxx
 #undef IntCurve_IntConicCurveGen
 #undef IntCurve_IntConicCurveGen_hxx
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -175,4 +174,3 @@ public:
   //! impose the parameters in the approximation.
   Standard_EXPORT double Parameter(const Blend_Point& P) const;
 };
-

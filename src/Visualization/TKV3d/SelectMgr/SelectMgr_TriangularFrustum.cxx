@@ -1,18 +1,3 @@
-// Created on: 2014-11-21
-// Created by: Varvara POSKONINA
-// Copyright (c) 2005-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <SelectMgr_TriangularFrustum.hpp>
 
 #include <SelectMgr_FrustumBuilder.hpp>
@@ -22,19 +7,19 @@ IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_TriangularFrustum, Standard_Transient)
 
 namespace
 {
-void computeFrustumNormals(const gp_Vec* theEdges, gp_Vec* theNormals)
-{
-  // V0V1
-  theNormals[0] = theEdges[0].Crossed(theEdges[3]);
-  // V1V2
-  theNormals[1] = theEdges[1].Crossed(theEdges[4]);
-  // V0V2
-  theNormals[2] = theEdges[0].Crossed(theEdges[5]);
-  // Near
-  theNormals[3] = theEdges[3].Crossed(theEdges[4]);
-  // Far
-  theNormals[4] = -theNormals[3];
-}
+  void computeFrustumNormals(const gp_Vec* theEdges, gp_Vec* theNormals)
+  {
+    // V0V1
+    theNormals[0] = theEdges[0].Crossed(theEdges[3]);
+    // V1V2
+    theNormals[1] = theEdges[1].Crossed(theEdges[4]);
+    // V0V2
+    theNormals[2] = theEdges[0].Crossed(theEdges[5]);
+    // Near
+    theNormals[3] = theEdges[3].Crossed(theEdges[4]);
+    // Far
+    theNormals[4] = -theNormals[3];
+  }
 } // namespace
 
 //=================================================================================================

@@ -1,30 +1,3 @@
-// Created on: 1993-05-07
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// ----------------------------------------------------------------------
-//-- lbr: Modifs importantes du 16-17 Nov 95
-//--      - Chercher APointOnRstStillExist et OnDifferentRst
-//--      On veut pouvoir creer un Vtx (A1 sur S1, A2    sur S2)
-//--                         et le Vtx (A1 sur S1, A2bis sur S2)
-//--      ce qui revient a distinguer un point deja pose sur une
-//--      restriction de S avec un point pose sur une nouvelle
-//--       restriction de S.
-//--      - Pour rester coherent avec cette facon de faire,
-//--      Chercher(Nbvtx++).
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_TopolTool.hpp>
 #include <gp_Pnt2d.hpp>
@@ -554,7 +527,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
     switch (arc->GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         NbEchant = 10;
 
         double aXmin, aYmin, aXmax, aYmax;
@@ -580,7 +554,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         }
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         NbEchant = (3 + arc->NbPoles());
         if (NbEchant < 10)
           NbEchant = 10;
@@ -588,7 +563,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
           NbEchant = 50;
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         // szv:const double nbs = (arc->NbKnots() * arc->Degree())*(arc->LastParameter() -
         // arc->FirstParameter())/(PLast-PFirst);
         const double nbs = (arc->NbKnots() * arc->Degree()) * (PLast - PFirst)
@@ -600,7 +576,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
           NbEchant = 50;
       }
       break;
-      default: {
+      default:
+      {
         NbEchant = 25;
       }
     }
@@ -1154,7 +1131,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
       case GeomAbs_Torus:
         pu1 = pv1 = M_PI + M_PI;
         break;
-      default: {
+      default:
+      {
         if (Surf1->IsUPeriodic())
         {
           pu1 = Surf1->UPeriod();
@@ -1189,7 +1167,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
       case GeomAbs_Torus:
         pu2 = pv2 = M_PI + M_PI;
         break;
-      default: {
+      default:
+      {
         if (Surf2->IsUPeriodic())
         {
           pu2 = Surf2->UPeriod();

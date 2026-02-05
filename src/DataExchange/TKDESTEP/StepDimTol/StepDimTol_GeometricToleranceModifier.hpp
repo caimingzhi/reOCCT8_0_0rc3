@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepDimTol_GeometricToleranceModifier
 {
   StepDimTol_GTMAnyCrossSection,
@@ -19,4 +18,3 @@ enum StepDimTol_GeometricToleranceModifier
   StepDimTol_GTMStatisticalTolerance,
   StepDimTol_GTMTangentPlane
 };
-

@@ -27,177 +27,177 @@
 namespace
 {
 
-// Quadratic function: f(x) = x^2 - 4, f'(x) = 2x, roots at x = +/-2
-class QuadraticWithDerivative : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Quadratic function: f(x) = x^2 - 4, f'(x) = 2x, roots at x = +/-2
+  class QuadraticWithDerivative : public math_FunctionWithDerivative
   {
-    theF = theX * theX - 4.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX - 4.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = 2.0 * theX;
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = 2.0 * theX;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = theX * theX - 4.0;
-    theD = 2.0 * theX;
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = theX * theX - 4.0;
+      theD = 2.0 * theX;
+      return true;
+    }
+  };
 
-// Cubic function: f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3), f'(x) = 3x^2 - 12x + 11
-class CubicWithDerivative : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Cubic function: f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3), f'(x) = 3x^2 - 12x + 11
+  class CubicWithDerivative : public math_FunctionWithDerivative
   {
-    theF = theX * theX * theX - 6.0 * theX * theX + 11.0 * theX - 6.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX * theX - 6.0 * theX * theX + 11.0 * theX - 6.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = 3.0 * theX * theX - 12.0 * theX + 11.0;
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = 3.0 * theX * theX - 12.0 * theX + 11.0;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = theX * theX * theX - 6.0 * theX * theX + 11.0 * theX - 6.0;
-    theD = 3.0 * theX * theX - 12.0 * theX + 11.0;
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = theX * theX * theX - 6.0 * theX * theX + 11.0 * theX - 6.0;
+      theD = 3.0 * theX * theX - 12.0 * theX + 11.0;
+      return true;
+    }
+  };
 
-// Sine function: f(x) = sin(x), f'(x) = cos(x), multiple roots
-class SineWithDerivative : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Sine function: f(x) = sin(x), f'(x) = cos(x), multiple roots
+  class SineWithDerivative : public math_FunctionWithDerivative
   {
-    theF = sin(theX);
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = sin(theX);
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = cos(theX);
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = cos(theX);
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = sin(theX);
-    theD = cos(theX);
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = sin(theX);
+      theD = cos(theX);
+      return true;
+    }
+  };
 
-// Linear function: f(x) = 2x - 4, f'(x) = 2, root at x = 2
-class LinearWithDerivative : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Linear function: f(x) = 2x - 4, f'(x) = 2, root at x = 2
+  class LinearWithDerivative : public math_FunctionWithDerivative
   {
-    theF = 2.0 * theX - 4.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = 2.0 * theX - 4.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    (void)theX;
-    theD = 2.0;
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      (void)theX;
+      theD = 2.0;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = 2.0 * theX - 4.0;
-    theD = 2.0;
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = 2.0 * theX - 4.0;
+      theD = 2.0;
+      return true;
+    }
+  };
 
-// Constant function: f(x) = 0, f'(x) = 0 (always null)
-class ConstantZeroFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double, double& theF) override
+  // Constant function: f(x) = 0, f'(x) = 0 (always null)
+  class ConstantZeroFunction : public math_FunctionWithDerivative
   {
-    theF = 0.0;
-    return true;
-  }
+  public:
+    bool Value(const double, double& theF) override
+    {
+      theF = 0.0;
+      return true;
+    }
 
-  bool Derivative(const double, double& theD) override
-  {
-    theD = 0.0;
-    return true;
-  }
+    bool Derivative(const double, double& theD) override
+    {
+      theD = 0.0;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    (void)theX;
-    theF = 0.0;
-    theD = 0.0;
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      (void)theX;
+      theF = 0.0;
+      theD = 0.0;
+      return true;
+    }
+  };
 
-// Function with no real roots: f(x) = x^2 + 1, f'(x) = 2x
-class NoRootsFunction : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // Function with no real roots: f(x) = x^2 + 1, f'(x) = 2x
+  class NoRootsFunction : public math_FunctionWithDerivative
   {
-    theF = theX * theX + 1.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX + 1.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = 2.0 * theX;
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = 2.0 * theX;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = theX * theX + 1.0;
-    theD = 2.0 * theX;
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = theX * theX + 1.0;
+      theD = 2.0 * theX;
+      return true;
+    }
+  };
 
-// High degree polynomial: f(x) = (x-1)(x-2)(x-3)(x-4) = x^4 - 10x^3 + 35x^2 - 50x + 24
-class QuarticWithDerivative : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  // High degree polynomial: f(x) = (x-1)(x-2)(x-3)(x-4) = x^4 - 10x^3 + 35x^2 - 50x + 24
+  class QuarticWithDerivative : public math_FunctionWithDerivative
   {
-    // f(x) = (x-1)(x-2)(x-3)(x-4)
-    theF = (theX - 1.0) * (theX - 2.0) * (theX - 3.0) * (theX - 4.0);
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      // f(x) = (x-1)(x-2)(x-3)(x-4)
+      theF = (theX - 1.0) * (theX - 2.0) * (theX - 3.0) * (theX - 4.0);
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    // f'(x) = 4x^3 - 30x^2 + 70x - 50
-    theD = 4.0 * theX * theX * theX - 30.0 * theX * theX + 70.0 * theX - 50.0;
-    return true;
-  }
+    bool Derivative(const double theX, double& theD) override
+    {
+      // f'(x) = 4x^3 - 30x^2 + 70x - 50
+      theD = 4.0 * theX * theX * theX - 30.0 * theX * theX + 70.0 * theX - 50.0;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    Value(theX, theF);
-    Derivative(theX, theD);
-    return true;
-  }
-};
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      Value(theX, theF);
+      Derivative(theX, theD);
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

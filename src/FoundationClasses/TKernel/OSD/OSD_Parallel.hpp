@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_ThreadPool.hpp>
 #include <Standard_Type.hpp>
 #include <memory>
@@ -363,4 +362,3 @@ public: //! @name public methods
     }
   }
 };
-

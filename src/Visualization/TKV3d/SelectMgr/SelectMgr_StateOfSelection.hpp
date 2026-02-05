@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! different state of a Selection in a ViewerSelector...
 enum SelectMgr_StateOfSelection
 {
@@ -11,4 +10,3 @@ enum SelectMgr_StateOfSelection
     0,                     //!< deactivated selection, once been in SelectMgr_SOS_Activated state
   SelectMgr_SOS_Activated, //!< activated selection
 };
-

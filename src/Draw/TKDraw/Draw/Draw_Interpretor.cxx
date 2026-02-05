@@ -1,19 +1,3 @@
-// Created on: 1995-02-23
-// Created by: Remi LEQUETTE
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Draw_Interpretor.hpp>
 
 #include <Draw_Appli.hpp>
@@ -54,61 +38,61 @@
 // logging helpers
 namespace
 {
-void dumpArgs(Standard_OStream& os, int argc, const char* argv[])
-{
-  for (int i = 0; i < argc; i++)
-    os << argv[i] << " ";
-  os << std::endl;
-}
-
-void flush_standard_streams()
-{
-  fflush(stderr);
-  fflush(stdout);
-  std::cerr << std::flush;
-  std::cout << std::flush;
-}
-
-int capture_start(int theFDStd, int theFDLog)
-{
-  Standard_ASSERT_RETURN(theFDLog >= 0, "Invalid descriptor of log file", -1);
-
-  // Duplicate a file descriptor of the standard stream to be able to restore output to it later
-  int aFDSave = dup(theFDStd);
-  if (aFDSave < 0)
+  void dumpArgs(Standard_OStream& os, int argc, const char* argv[])
   {
-    perror("Error capturing standard stream to log: dup() returned");
-    return -1;
+    for (int i = 0; i < argc; i++)
+      os << argv[i] << " ";
+    os << std::endl;
   }
 
-  // Redirect the stream to the log file
-  if (dup2(theFDLog, theFDStd) < 0)
+  void flush_standard_streams()
   {
-    close(aFDSave);
-    perror("Error capturing standard stream to log: dup2() returned");
-    return -1;
+    fflush(stderr);
+    fflush(stdout);
+    std::cerr << std::flush;
+    std::cout << std::flush;
   }
 
-  // remember saved file descriptor of standard stream
-  return aFDSave;
-}
-
-void capture_end(int theFDStd, int& theFDSave)
-{
-  if (theFDSave < 0)
-    return;
-
-  // restore normal descriptors of console stream
-  if (dup2(theFDSave, theFDStd) < 0)
+  int capture_start(int theFDStd, int theFDLog)
   {
-    perror("Error returning capturing standard stream to log: dup2() returned");
-    return;
+    Standard_ASSERT_RETURN(theFDLog >= 0, "Invalid descriptor of log file", -1);
+
+    // Duplicate a file descriptor of the standard stream to be able to restore output to it later
+    int aFDSave = dup(theFDStd);
+    if (aFDSave < 0)
+    {
+      perror("Error capturing standard stream to log: dup() returned");
+      return -1;
+    }
+
+    // Redirect the stream to the log file
+    if (dup2(theFDLog, theFDStd) < 0)
+    {
+      close(aFDSave);
+      perror("Error capturing standard stream to log: dup2() returned");
+      return -1;
+    }
+
+    // remember saved file descriptor of standard stream
+    return aFDSave;
   }
 
-  // close saved file descriptor
-  close(theFDSave);
-  theFDSave = -1;
-}
+  void capture_end(int theFDStd, int& theFDSave)
+  {
+    if (theFDSave < 0)
+      return;
+
+    // restore normal descriptors of console stream
+    if (dup2(theFDSave, theFDStd) < 0)
+    {
+      perror("Error returning capturing standard stream to log: dup2() returned");
+      return;
+    }
+
+    // close saved file descriptor
+    close(theFDSave);
+    theFDSave = -1;
+  }
 
 } // anonymous namespace
 

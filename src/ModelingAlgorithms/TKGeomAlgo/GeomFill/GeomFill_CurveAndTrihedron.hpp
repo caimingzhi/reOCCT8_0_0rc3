@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Mat.hpp>
@@ -130,4 +129,3 @@ private:
   gp_Vec                             V3;
   gp_Mat                             Trans;
 };
-

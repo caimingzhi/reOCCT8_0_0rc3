@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HArray1.hpp>
 
@@ -46,4 +45,3 @@ private:
   bool                                       myIsVerified;
   occ::handle<StdObjMgt_Persistent>          myPlane;
 };
-

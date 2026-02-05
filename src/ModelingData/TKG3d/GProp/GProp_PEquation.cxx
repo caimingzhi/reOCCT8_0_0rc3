@@ -83,11 +83,13 @@ GProp_PEquation::GProp_PEquation(const NCollection_Array1<gp_Pnt>& Pnts, const d
   }
   switch (dimension)
   {
-    case 0: {
+    case 0:
+    {
       type = GProp_Point;
       break;
     }
-    case 1: {
+    case 1:
+    {
       type = GProp_Line;
       if (It == 4)
         v1 = V3;
@@ -97,7 +99,8 @@ GProp_PEquation::GProp_PEquation(const NCollection_Array1<gp_Pnt>& Pnts, const d
         v1 = V1;
       break;
     }
-    case 2: {
+    case 2:
+    {
       type = GProp_Plane;
       if (It == 1)
         v1 = V1;
@@ -107,7 +110,8 @@ GProp_PEquation::GProp_PEquation(const NCollection_Array1<gp_Pnt>& Pnts, const d
         v1 = V3;
       break;
     }
-    case 3: {
+    case 3:
+    {
       type = GProp_Space;
       g.SetXYZ(g.XYZ() + Dmn1 * V1.XYZ() + Dmn2 * V2.XYZ() + Dmn3 * V3.XYZ());
       v1 = (Dmx1 - Dmn1) * V1;

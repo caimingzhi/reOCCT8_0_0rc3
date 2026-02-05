@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum BRepOffset_Error
 {
   BRepOffset_NoError,
@@ -16,4 +15,3 @@ enum BRepOffset_Error
   BRepOffset_MixedConnectivity   //!< Different connectivity of faces along edge: partially C0 and
                                  //!< tangent
 };
-

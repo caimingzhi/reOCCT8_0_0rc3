@@ -1,18 +1,3 @@
-// Created on: 2013-09-19
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OSD_File.hpp>
 #include <OSD_Environment.hpp>
 
@@ -91,26 +76,26 @@ const char* OpenGl_ShaderProgram::PredefinedKeywords[] = {
 
 namespace
 {
-//! Convert Graphic3d_TypeOfShaderObject enumeration into OpenGL enumeration.
-static GLenum shaderTypeToGl(Graphic3d_TypeOfShaderObject theType)
-{
-  switch (theType)
+  //! Convert Graphic3d_TypeOfShaderObject enumeration into OpenGL enumeration.
+  static GLenum shaderTypeToGl(Graphic3d_TypeOfShaderObject theType)
   {
-    case Graphic3d_TOS_VERTEX:
-      return GL_VERTEX_SHADER;
-    case Graphic3d_TOS_FRAGMENT:
-      return GL_FRAGMENT_SHADER;
-    case Graphic3d_TOS_GEOMETRY:
-      return GL_GEOMETRY_SHADER;
-    case Graphic3d_TOS_TESS_CONTROL:
-      return GL_TESS_CONTROL_SHADER;
-    case Graphic3d_TOS_TESS_EVALUATION:
-      return GL_TESS_EVALUATION_SHADER;
-    case Graphic3d_TOS_COMPUTE:
-      return GL_COMPUTE_SHADER;
+    switch (theType)
+    {
+      case Graphic3d_TOS_VERTEX:
+        return GL_VERTEX_SHADER;
+      case Graphic3d_TOS_FRAGMENT:
+        return GL_FRAGMENT_SHADER;
+      case Graphic3d_TOS_GEOMETRY:
+        return GL_GEOMETRY_SHADER;
+      case Graphic3d_TOS_TESS_CONTROL:
+        return GL_TESS_CONTROL_SHADER;
+      case Graphic3d_TOS_TESS_EVALUATION:
+        return GL_TESS_EVALUATION_SHADER;
+      case Graphic3d_TOS_COMPUTE:
+        return GL_COMPUTE_SHADER;
+    }
+    return 0;
   }
-  return 0;
-}
 } // namespace
 
 // =======================================================================
@@ -252,7 +237,8 @@ bool OpenGl_ShaderProgram::Initialize(
     {
       switch (theCtx->hasGeometryStage)
       {
-        case OpenGl_FeatureNotAvailable: {
+        case OpenGl_FeatureNotAvailable:
+        {
           theCtx->PushMessage(
             GL_DEBUG_SOURCE_APPLICATION,
             GL_DEBUG_TYPE_ERROR,
@@ -261,14 +247,16 @@ bool OpenGl_ShaderProgram::Initialize(
             "Error! Geometry shader requires OpenGL ES 3.2+ or GL_EXT_geometry_shader");
           return false;
         }
-        case OpenGl_FeatureInExtensions: {
+        case OpenGl_FeatureInExtensions:
+        {
           if (aHeaderVer.IsEmpty())
           {
             aHeaderVer = "#version 310 es";
           }
           break;
         }
-        case OpenGl_FeatureInCore: {
+        case OpenGl_FeatureInCore:
+        {
           if (aHeaderVer.IsEmpty())
           {
             aHeaderVer = "#version 320 es";
@@ -454,27 +442,33 @@ bool OpenGl_ShaderProgram::Initialize(
     TCollection_AsciiString aHeaderType;
     switch (anIter.Value()->Type())
     {
-      case Graphic3d_TOS_COMPUTE: {
+      case Graphic3d_TOS_COMPUTE:
+      {
         aHeaderType = "#define COMPUTE_SHADER\n";
         break;
       }
-      case Graphic3d_TOS_VERTEX: {
+      case Graphic3d_TOS_VERTEX:
+      {
         aHeaderType = "#define VERTEX_SHADER\n";
         break;
       }
-      case Graphic3d_TOS_TESS_CONTROL: {
+      case Graphic3d_TOS_TESS_CONTROL:
+      {
         aHeaderType = "#define TESS_CONTROL_SHADER\n";
         break;
       }
-      case Graphic3d_TOS_TESS_EVALUATION: {
+      case Graphic3d_TOS_TESS_EVALUATION:
+      {
         aHeaderType = "#define TESS_EVALUATION_SHADER\n";
         break;
       }
-      case Graphic3d_TOS_GEOMETRY: {
+      case Graphic3d_TOS_GEOMETRY:
+      {
         aHeaderType = "#define GEOMETRY_SHADER\n";
         break;
       }
-      case Graphic3d_TOS_FRAGMENT: {
+      case Graphic3d_TOS_FRAGMENT:
+      {
         aHeaderType = "#define FRAGMENT_SHADER\n";
         break;
       }

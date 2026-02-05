@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopOpeBRepDS_define.hpp>
 #include <TopoDS_Shape.hpp>
 #include <TopOpeBRepDS_ListOfShapeOn1State.hpp>

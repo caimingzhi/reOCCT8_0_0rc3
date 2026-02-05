@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -107,4 +106,3 @@ private:
   TopOpeBRepBuild_FaceAreaBuilder                                 myFaceAreaBuilder;
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> myMOSI;
 };
-

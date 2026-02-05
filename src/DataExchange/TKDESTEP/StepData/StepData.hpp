@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -31,4 +30,3 @@ public:
   //! Returns a Protocol from StepData (avoids to create it)
   Standard_EXPORT static occ::handle<StepData_Protocol> Protocol();
 };
-

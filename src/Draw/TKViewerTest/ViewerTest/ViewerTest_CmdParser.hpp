@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec3.hpp>
 #include <Standard_TypeDef.hpp>
 
@@ -263,4 +262,3 @@ private:
   //! @return true if the given option was not found or not used, or false otherwise
   RawStringArguments getRawStringArguments(std::size_t theUsedOptionIndex) const;
 };
-

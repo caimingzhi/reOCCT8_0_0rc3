@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Trsf2d.hpp>
@@ -179,4 +178,3 @@ public:
 private:
   gp_Trsf2d gpTrsf2d;
 };
-

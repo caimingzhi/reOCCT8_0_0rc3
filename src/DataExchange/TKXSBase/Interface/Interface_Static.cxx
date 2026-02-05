@@ -51,7 +51,8 @@ Interface_Static::Interface_Static(const char*                          family,
 {
   switch (Type())
   {
-    case Interface_ParamInteger: {
+    case Interface_ParamInteger:
+    {
       int lim;
       if (other->IntegerLimit(true, lim))
         SetIntegerLimit(true, lim);
@@ -59,7 +60,8 @@ Interface_Static::Interface_Static(const char*                          family,
         SetIntegerLimit(false, lim);
     }
     break;
-    case Interface_ParamReal: {
+    case Interface_ParamReal:
+    {
       double lim;
       if (other->RealLimit(true, lim))
         SetRealLimit(true, lim);
@@ -68,7 +70,8 @@ Interface_Static::Interface_Static(const char*                          family,
       SetUnitDef(other->UnitDef());
     }
     break;
-    case Interface_ParamEnum: {
+    case Interface_ParamEnum:
+    {
       bool match;
       int  e0, e1, i;
       other->EnumDef(e0, e1, match);
@@ -186,7 +189,8 @@ bool Interface_Static::Init(const char* family, const char* name, const char typ
     case '=':
       epyt = Interface_ParamMisc;
       break;
-    case '&': {
+    case '&':
+    {
       occ::handle<Interface_Static> unstat = Interface_Static::Static(name);
       if (unstat.IsNull())
         return false;

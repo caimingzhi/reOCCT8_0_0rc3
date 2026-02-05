@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <BRep_Builder.hpp>
 #include <Font_FTFont.hpp>
@@ -203,4 +202,3 @@ protected: //! @name Shared temporary variables for glyph construction
   NCollection_Array1<gp_Pnt2d>          my4Poles;
   BRep_Builder                          myBuilder;
 };
-

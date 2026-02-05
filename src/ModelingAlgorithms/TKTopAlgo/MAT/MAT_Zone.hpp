@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -52,4 +51,3 @@ private:
   NCollection_Sequence<occ::handle<MAT_Arc>> frontier;
   bool                                       limited;
 };
-

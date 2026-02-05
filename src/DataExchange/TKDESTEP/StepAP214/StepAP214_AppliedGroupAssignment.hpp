@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP214_GroupItem.hpp>
@@ -32,4 +31,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP214_GroupItem>> theItems;
 };
-

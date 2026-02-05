@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Resource.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -21,4 +20,3 @@ public:
 protected:
   TCollection_AsciiString myResourceId; //!< resource name
 };
-

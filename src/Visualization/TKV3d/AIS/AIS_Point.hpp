@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 
 class Geom_Point;
@@ -71,4 +70,3 @@ private:
   bool                    myHasTOM;
   Aspect_TypeOfMarker     myTOM;
 };
-

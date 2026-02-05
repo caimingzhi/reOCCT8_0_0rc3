@@ -1,19 +1,3 @@
-// Created on: 1997-07-23
-// Created by: Henri JEANNIN
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Standard_Macro.hpp>
 
 #include <iostream>
@@ -1223,7 +1207,8 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   }
   switch (aStereoPair)
   {
-    case ViewerTest_SP_Single: {
+    case ViewerTest_SP_Single:
+    {
       if (!aView->ToPixMap(aPixMap, aParams))
       {
         theDI << "Fail: view dump failed!\n";
@@ -1240,7 +1225,8 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       }
       break;
     }
-    case ViewerTest_SP_SideBySide: {
+    case ViewerTest_SP_SideBySide:
+    {
       if (!aPixMap.InitZero(aFormat, aParams.Width * 2, aParams.Height))
       {
         theDI << "Fail: not enough memory for image allocation!\n";
@@ -1270,7 +1256,8 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       }
       break;
     }
-    case ViewerTest_SP_OverUnder: {
+    case ViewerTest_SP_OverUnder:
+    {
       if (!aPixMap.InitZero(aFormat, aParams.Width, aParams.Height * 2))
       {
         theDI << "Fail: not enough memory for image allocation!\n";
@@ -1329,7 +1316,8 @@ static void VwrTst_DispErase(const occ::handle<AIS_InteractiveObject>& thePrs,
   occ::handle<AIS_InteractiveContext> aCtx = ViewerTest::GetAISContext();
   switch (theType)
   {
-    case TypeOfDispOperation_SetDispMode: {
+    case TypeOfDispOperation_SetDispMode:
+    {
       if (!thePrs.IsNull())
       {
         aCtx->SetDisplayMode(thePrs, theMode, theToUpdate);
@@ -1340,7 +1328,8 @@ static void VwrTst_DispErase(const occ::handle<AIS_InteractiveObject>& thePrs,
       }
       break;
     }
-    case TypeOfDispOperation_UnsetDispMode: {
+    case TypeOfDispOperation_UnsetDispMode:
+    {
       if (!thePrs.IsNull())
       {
         aCtx->UnsetDisplayMode(thePrs, theToUpdate);
@@ -1561,15 +1550,18 @@ public:
     myCurrent.Nullify();
     switch (mySource)
     {
-      case IterSource_All: {
+      case IterSource_All:
+      {
         myMapIter.Next();
         break;
       }
-      case IterSource_List: {
+      case IterSource_List:
+      {
         mySeqIter.Next();
         break;
       }
-      case IterSource_Selected: {
+      case IterSource_Selected:
+      {
         mySelIter->NextSelected();
         break;
       }
@@ -1582,7 +1574,8 @@ private:
   {
     switch (mySource)
     {
-      case IterSource_All: {
+      case IterSource_All:
+      {
         if (myMapIter.More())
         {
           myCurrentName = myMapIter.Key2();
@@ -1591,7 +1584,8 @@ private:
         }
         break;
       }
-      case IterSource_List: {
+      case IterSource_List:
+      {
         if (mySeqIter.More())
         {
           if (!GetMapOfAIS().IsBound2(mySeqIter.Value()))
@@ -1605,7 +1599,8 @@ private:
         }
         break;
       }
-      case IterSource_Selected: {
+      case IterSource_Selected:
+      {
         if (mySelIter->MoreSelected())
         {
           myCurrentName = GetMapOfAIS().Find1(mySelIter->SelectedInteractive());
@@ -3922,15 +3917,18 @@ inline void bndPresentation(Draw_Interpretor&                              theDI
 {
   switch (theAction)
   {
-    case BndAction_Hide: {
+    case BndAction_Hide:
+    {
       theMgr->Unhighlight(theObj);
       break;
     }
-    case BndAction_Show: {
+    case BndAction_Show:
+    {
       theMgr->Color(theObj, theStyle, theDispMode);
       break;
     }
-    case BndAction_Print: {
+    case BndAction_Print:
+    {
       Bnd_Box aBox;
       for (NCollection_Sequence<occ::handle<PrsMgr_Presentation>>::Iterator aPrsIter(
              theObj->Presentations());
@@ -6585,9 +6583,8 @@ void ViewerTest::Commands(Draw_Interpretor& theCommands)
   const char* aGroup    = "AIS Viewer";
   const char* aFileName = __FILE__;
   auto        addCmd =
-    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp) {
-      theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup);
-    };
+    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
+  { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
   // display
   addCmd("visos", visos, /* [visos] */ R"(

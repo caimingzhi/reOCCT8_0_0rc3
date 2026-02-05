@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Aspect_Grid.hpp>
@@ -76,4 +75,3 @@ private:
   double b2;
   double c2;
 };
-

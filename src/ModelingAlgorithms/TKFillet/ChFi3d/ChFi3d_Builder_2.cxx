@@ -1,19 +1,3 @@
-// Created on: 1993-12-15
-// Created by: Isabelle GRIGNON
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Blend_FuncInv.hpp>
 #include <BRepBlend_Line.hpp>
@@ -74,102 +58,105 @@
 namespace
 {
 
-// Simple wrapper over BRep_Tool::CurveOnSurface to get the 2d curve of an edge on a face
-// without caring about the first and last parameters of the curve.
-static inline occ::handle<Geom2d_Curve> getCurveOnSurface(const TopoDS_Edge& theEdge,
-                                                          const TopoDS_Face& theFace)
-{
-  double aFirstParam = 0.;
-  double aLastParam  = 0.;
-  return BRep_Tool::CurveOnSurface(theEdge, theFace, aFirstParam, aLastParam);
-}
-
-//===================================================================
-//   Definition by a plane
-//
-// It is considered that P1 and P2 are points associated to commonpoints compoint1 and
-// compoint2, while E1 and E2 are edges containing P1 and P2.
-// The plane containing three directions D12 T1 T2  ou  D12 represente la direction formee
-// par les points P1 et P2, T1 la tangente de E1 en P1 et T2 la tangente de
-// E2 en P2 is found (if exists).
-// Then fillet HConge is intersected by this plane
-// to find associated curve 3d C3d and the curve 2d.
-//
-//====================================================================
-static void ChFi3d_CoupeParPlan(const ChFiDS_CommonPoint&         compoint1,
-                                const ChFiDS_CommonPoint&         compoint2,
-                                occ::handle<GeomAdaptor_Surface>& HConge,
-                                const gp_Pnt2d&                   UV1,
-                                const gp_Pnt2d&                   UV2,
-                                const double                      tol3d,
-                                const double                      tol2d,
-                                occ::handle<Geom_Curve>&          C3d,
-                                occ::handle<Geom2d_Curve>&        pcurve,
-                                double&                           tolreached,
-                                double&                           Pardeb,
-                                double&                           Parfin,
-                                bool&                             plane)
-{
-  plane = true;
-  if (compoint1.IsOnArc() && compoint2.IsOnArc())
+  // Simple wrapper over BRep_Tool::CurveOnSurface to get the 2d curve of an edge on a face
+  // without caring about the first and last parameters of the curve.
+  static inline occ::handle<Geom2d_Curve> getCurveOnSurface(const TopoDS_Edge& theEdge,
+                                                            const TopoDS_Face& theFace)
   {
-    gp_Pnt            P1, P2;
-    BRepAdaptor_Curve BCurv1(compoint1.Arc());
-    BRepAdaptor_Curve BCurv2(compoint2.Arc());
-    double            parE1, parE2;
-    parE1 = compoint1.ParameterOnArc();
-    parE2 = compoint2.ParameterOnArc();
-    gp_Vec t1, t2;
-    BCurv1.D1(parE1, P1, t1);
-    BCurv2.D1(parE2, P2, t2);
-    gp_Dir                  tgt1(t1);
-    gp_Dir                  tgt2(t2);
-    gp_Vec                  v12(P2.X() - P1.X(), P2.Y() - P1.Y(), P2.Z() - P1.Z());
-    gp_Dir                  d12(v12);
-    gp_Dir                  nor  = tgt1.Crossed(d12);
-    occ::handle<Geom_Plane> Plan = new Geom_Plane(P1, nor);
-    double                  scal;
-    scal = std::abs(nor.Dot(tgt2));
-    if (scal < 0.01)
+    double aFirstParam = 0.;
+    double aLastParam  = 0.;
+    return BRep_Tool::CurveOnSurface(theEdge, theFace, aFirstParam, aLastParam);
+  }
+
+  //===================================================================
+  //   Definition by a plane
+  //
+  // It is considered that P1 and P2 are points associated to commonpoints compoint1 and
+  // compoint2, while E1 and E2 are edges containing P1 and P2.
+  // The plane containing three directions D12 T1 T2  ou  D12 represente la direction formee
+  // par les points P1 et P2, T1 la tangente de E1 en P1 et T2 la tangente de
+  // E2 en P2 is found (if exists).
+  // Then fillet HConge is intersected by this plane
+  // to find associated curve 3d C3d and the curve 2d.
+  //
+  //====================================================================
+  static void ChFi3d_CoupeParPlan(const ChFiDS_CommonPoint&         compoint1,
+                                  const ChFiDS_CommonPoint&         compoint2,
+                                  occ::handle<GeomAdaptor_Surface>& HConge,
+                                  const gp_Pnt2d&                   UV1,
+                                  const gp_Pnt2d&                   UV2,
+                                  const double                      tol3d,
+                                  const double                      tol2d,
+                                  occ::handle<Geom_Curve>&          C3d,
+                                  occ::handle<Geom2d_Curve>&        pcurve,
+                                  double&                           tolreached,
+                                  double&                           Pardeb,
+                                  double&                           Parfin,
+                                  bool&                             plane)
+  {
+    plane = true;
+    if (compoint1.IsOnArc() && compoint2.IsOnArc())
     {
-      occ::handle<GeomAdaptor_Surface> HPlan = new GeomAdaptor_Surface(Plan);
-      occ::handle<Geom2d_Curve>        C2dint2;
-      NCollection_Array1<double>       Pdeb(1, 4), Pfin(1, 4);
-      GeomAdaptor_Surface              AS(Plan);
-      Extrema_ExtPS                    anExtPS(P1,
-                            AS,
-                            AS.FirstUParameter(),
-                            AS.LastUParameter(),
-                            AS.FirstVParameter(),
-                            AS.LastVParameter(),
-                            1.e-3,
-                            1.e-3,
-                            Extrema_ExtFlag_MIN);
-      double                           u1, v1;
-      anExtPS.Point(1).Parameter(u1, v1);
-      Pdeb(1) = UV1.X();
-      Pdeb(2) = UV1.Y();
-      Pdeb(3) = u1;
-      Pdeb(4) = v1;
-      anExtPS.Perform(P2);
-      anExtPS.Point(1).Parameter(u1, v1);
-      Pfin(1) = UV2.X();
-      Pfin(2) = UV2.Y();
-      Pfin(3) = u1;
-      Pfin(4) = v1;
-      if (ChFi3d_ComputeCurves(HConge,
-                               HPlan,
-                               Pdeb,
-                               Pfin,
-                               C3d,
-                               pcurve,
-                               C2dint2,
-                               tol3d,
-                               tol2d,
-                               tolreached))
+      gp_Pnt            P1, P2;
+      BRepAdaptor_Curve BCurv1(compoint1.Arc());
+      BRepAdaptor_Curve BCurv2(compoint2.Arc());
+      double            parE1, parE2;
+      parE1 = compoint1.ParameterOnArc();
+      parE2 = compoint2.ParameterOnArc();
+      gp_Vec t1, t2;
+      BCurv1.D1(parE1, P1, t1);
+      BCurv2.D1(parE2, P2, t2);
+      gp_Dir                  tgt1(t1);
+      gp_Dir                  tgt2(t2);
+      gp_Vec                  v12(P2.X() - P1.X(), P2.Y() - P1.Y(), P2.Z() - P1.Z());
+      gp_Dir                  d12(v12);
+      gp_Dir                  nor  = tgt1.Crossed(d12);
+      occ::handle<Geom_Plane> Plan = new Geom_Plane(P1, nor);
+      double                  scal;
+      scal = std::abs(nor.Dot(tgt2));
+      if (scal < 0.01)
       {
-        Pardeb = C3d->FirstParameter();
-        Parfin = C3d->LastParameter();
+        occ::handle<GeomAdaptor_Surface> HPlan = new GeomAdaptor_Surface(Plan);
+        occ::handle<Geom2d_Curve>        C2dint2;
+        NCollection_Array1<double>       Pdeb(1, 4), Pfin(1, 4);
+        GeomAdaptor_Surface              AS(Plan);
+        Extrema_ExtPS                    anExtPS(P1,
+                              AS,
+                              AS.FirstUParameter(),
+                              AS.LastUParameter(),
+                              AS.FirstVParameter(),
+                              AS.LastVParameter(),
+                              1.e-3,
+                              1.e-3,
+                              Extrema_ExtFlag_MIN);
+        double                           u1, v1;
+        anExtPS.Point(1).Parameter(u1, v1);
+        Pdeb(1) = UV1.X();
+        Pdeb(2) = UV1.Y();
+        Pdeb(3) = u1;
+        Pdeb(4) = v1;
+        anExtPS.Perform(P2);
+        anExtPS.Point(1).Parameter(u1, v1);
+        Pfin(1) = UV2.X();
+        Pfin(2) = UV2.Y();
+        Pfin(3) = u1;
+        Pfin(4) = v1;
+        if (ChFi3d_ComputeCurves(HConge,
+                                 HPlan,
+                                 Pdeb,
+                                 Pfin,
+                                 C3d,
+                                 pcurve,
+                                 C2dint2,
+                                 tol3d,
+                                 tol2d,
+                                 tolreached))
+        {
+          Pardeb = C3d->FirstParameter();
+          Parfin = C3d->LastParameter();
+        }
+        else
+          plane = false;
       }
       else
         plane = false;
@@ -177,430 +164,428 @@ static void ChFi3d_CoupeParPlan(const ChFiDS_CommonPoint&         compoint1,
     else
       plane = false;
   }
-  else
-    plane = false;
-}
 
-//=================================================================================================
+  //=================================================================================================
 
-static bool isTangentToArc(const ChFiDS_CommonPoint& aCommonPoint, const double anAngularTolerance)
-{
-  if (!aCommonPoint.HasVector())
+  static bool isTangentToArc(const ChFiDS_CommonPoint& aCommonPoint,
+                             const double              anAngularTolerance)
   {
-    return false;
+    if (!aCommonPoint.HasVector())
+    {
+      return false;
+    }
+
+    double                        aDummyParam1, aDummyParam2; // Not used.
+    const occ::handle<Geom_Curve> anArcCurve =
+      BRep_Tool::Curve(aCommonPoint.Arc(), aDummyParam1, aDummyParam2);
+
+    gp_Pnt aDummyPoint;  // Not used.
+    gp_Vec anArcTangent; // Tangent to the arc at the common point.
+    anArcCurve->D1(aCommonPoint.ParameterOnArc(), aDummyPoint, anArcTangent);
+
+    const gp_Vec aCommonPointVector = aCommonPoint.Vector();
+    return aCommonPointVector.IsParallel(anArcTangent, anAngularTolerance);
   }
 
-  double                        aDummyParam1, aDummyParam2; // Not used.
-  const occ::handle<Geom_Curve> anArcCurve =
-    BRep_Tool::Curve(aCommonPoint.Arc(), aDummyParam1, aDummyParam2);
+  //=================================================================================================
 
-  gp_Pnt aDummyPoint;  // Not used.
-  gp_Vec anArcTangent; // Tangent to the arc at the common point.
-  anArcCurve->D1(aCommonPoint.ParameterOnArc(), aDummyPoint, anArcTangent);
-
-  const gp_Vec aCommonPointVector = aCommonPoint.Vector();
-  return aCommonPointVector.IsParallel(anArcTangent, anAngularTolerance);
-}
-
-//=================================================================================================
-
-static bool BonVoisin(const gp_Pnt&                     Point,
-                      occ::handle<BRepAdaptor_Surface>& HS,
-                      TopoDS_Face&                      F,
-                      occ::handle<GeomAdaptor_Surface>& plane,
-                      const TopoDS_Edge&                cured,
-                      double&                           XDep,
-                      double&                           YDep,
-                      const ChFiDS_Map&                 EFMap,
-                      const double                      tol3d)
-{
-  bool                           bonvoisin = true;
-  double                         winter;
-  gp_Pnt                         papp = HS->Value(XDep, YDep);
-  double                         dist = RealLast();
-  occ::handle<BRepAdaptor_Curve> hc   = new BRepAdaptor_Curve();
-  occ::handle<Geom2d_Curve>      PC;
-  bool                           found = false;
-
-  TopExp_Explorer Ex;
-  for (Ex.Init(F, TopAbs_EDGE); Ex.More(); Ex.Next())
+  static bool BonVoisin(const gp_Pnt&                     Point,
+                        occ::handle<BRepAdaptor_Surface>& HS,
+                        TopoDS_Face&                      F,
+                        occ::handle<GeomAdaptor_Surface>& plane,
+                        const TopoDS_Edge&                cured,
+                        double&                           XDep,
+                        double&                           YDep,
+                        const ChFiDS_Map&                 EFMap,
+                        const double                      tol3d)
   {
-    const TopoDS_Edge& ecur = TopoDS::Edge(Ex.Current());
-    if (!ecur.IsSame(cured))
+    bool                           bonvoisin = true;
+    double                         winter;
+    gp_Pnt                         papp = HS->Value(XDep, YDep);
+    double                         dist = RealLast();
+    occ::handle<BRepAdaptor_Curve> hc   = new BRepAdaptor_Curve();
+    occ::handle<Geom2d_Curve>      PC;
+    bool                           found = false;
+
+    TopExp_Explorer Ex;
+    for (Ex.Init(F, TopAbs_EDGE); Ex.More(); Ex.Next())
     {
-      hc->Initialize(ecur);
-      double tolc = hc->Resolution(tol3d);
-      if (ChFi3d_InterPlaneEdge(plane, hc, winter, true, tolc))
+      const TopoDS_Edge& ecur = TopoDS::Edge(Ex.Current());
+      if (!ecur.IsSame(cured))
       {
-        gp_Pnt np    = hc->Value(winter);
-        double ndist = np.SquareDistance(papp);
-        if (ndist < dist)
+        hc->Initialize(ecur);
+        double tolc = hc->Resolution(tol3d);
+        if (ChFi3d_InterPlaneEdge(plane, hc, winter, true, tolc))
         {
-          NCollection_List<TopoDS_Shape>::Iterator It;
-          TopoDS_Face                              ff;
-          bool                                     isclosed = BRep_Tool::IsClosed(ecur, F);
-          bool isreallyclosed                               = BRepTools::IsReallyClosed(ecur, F);
-          for (It.Initialize(EFMap(ecur)); It.More(); It.Next())
+          gp_Pnt np    = hc->Value(winter);
+          double ndist = np.SquareDistance(papp);
+          if (ndist < dist)
           {
-            ff          = TopoDS::Face(It.Value());
-            bool issame = ff.IsSame(F);
-            //  Modified by Sergey KHROMOV - Fri Dec 21 17:12:48 2001 Begin
-            // 	    bool istg =
-            // 	      BRep_Tool::Continuity(ecur,ff,F) != GeomAbs_C0;
-            bool istg = ChFi3d::IsTangentFaces(ecur, ff, F);
-            //  Modified by Sergey KHROMOV - Fri Dec 21 17:12:51 2001 End
-            if ((!issame || (issame && isreallyclosed)) && istg)
+            NCollection_List<TopoDS_Shape>::Iterator It;
+            TopoDS_Face                              ff;
+            bool                                     isclosed = BRep_Tool::IsClosed(ecur, F);
+            bool isreallyclosed                               = BRepTools::IsReallyClosed(ecur, F);
+            for (It.Initialize(EFMap(ecur)); It.More(); It.Next())
             {
-              found            = true;
-              TopoDS_Edge newe = ecur;
-              newe.Orientation(TopAbs_FORWARD);
-              dist = ndist;
-              HS->Initialize(ff);
-              if (isclosed && !isreallyclosed)
+              ff          = TopoDS::Face(It.Value());
+              bool issame = ff.IsSame(F);
+              //  Modified by Sergey KHROMOV - Fri Dec 21 17:12:48 2001 Begin
+              // 	    bool istg =
+              // 	      BRep_Tool::Continuity(ecur,ff,F) != GeomAbs_C0;
+              bool istg = ChFi3d::IsTangentFaces(ecur, ff, F);
+              //  Modified by Sergey KHROMOV - Fri Dec 21 17:12:51 2001 End
+              if ((!issame || (issame && isreallyclosed)) && istg)
               {
-                TopoDS_Face fff = ff;
-                fff.Orientation(TopAbs_FORWARD);
-                TopExp_Explorer Ex2;
-                for (Ex2.Init(fff, TopAbs_EDGE); Ex2.More(); Ex2.Next())
+                found            = true;
+                TopoDS_Edge newe = ecur;
+                newe.Orientation(TopAbs_FORWARD);
+                dist = ndist;
+                HS->Initialize(ff);
+                if (isclosed && !isreallyclosed)
                 {
-                  if (newe.IsSame(Ex2.Current()))
+                  TopoDS_Face fff = ff;
+                  fff.Orientation(TopAbs_FORWARD);
+                  TopExp_Explorer Ex2;
+                  for (Ex2.Init(fff, TopAbs_EDGE); Ex2.More(); Ex2.Next())
                   {
-                    newe = TopoDS::Edge(Ex2.Current());
-                    PC   = getCurveOnSurface(newe, fff);
-                    break;
+                    if (newe.IsSame(Ex2.Current()))
+                    {
+                      newe = TopoDS::Edge(Ex2.Current());
+                      PC   = getCurveOnSurface(newe, fff);
+                      break;
+                    }
                   }
                 }
-              }
-              else
-                PC = getCurveOnSurface(newe, ff);
-              PC->Value(winter).Coord(XDep, YDep);
-              if (issame)
-              {
-                gp_Pnt spt;
-                gp_Vec sdu, sdv, nors;
-                HS->D1(XDep, YDep, spt, sdu, sdv);
-                nors = sdu.Crossed(sdv);
-                gp_Pnt cpt;
-                gp_Vec cd;
-                hc->D1(winter, cpt, cd);
-                gp_Vec      vref(Point, cpt);
-                TopoDS_Face fff = ff;
-                fff.Orientation(TopAbs_FORWARD);
-                if (vref.Dot(nors.Crossed(cd)) < 0.)
-                {
-                  newe.Orientation(TopAbs_REVERSED);
-                }
-                PC = getCurveOnSurface(newe, fff);
+                else
+                  PC = getCurveOnSurface(newe, ff);
                 PC->Value(winter).Coord(XDep, YDep);
+                if (issame)
+                {
+                  gp_Pnt spt;
+                  gp_Vec sdu, sdv, nors;
+                  HS->D1(XDep, YDep, spt, sdu, sdv);
+                  nors = sdu.Crossed(sdv);
+                  gp_Pnt cpt;
+                  gp_Vec cd;
+                  hc->D1(winter, cpt, cd);
+                  gp_Vec      vref(Point, cpt);
+                  TopoDS_Face fff = ff;
+                  fff.Orientation(TopAbs_FORWARD);
+                  if (vref.Dot(nors.Crossed(cd)) < 0.)
+                  {
+                    newe.Orientation(TopAbs_REVERSED);
+                  }
+                  PC = getCurveOnSurface(newe, fff);
+                  PC->Value(winter).Coord(XDep, YDep);
+                }
+                break;
               }
-              break;
             }
           }
         }
       }
     }
-  }
-  if (!found)
-    bonvoisin = false;
-  return bonvoisin;
-}
-
-//=======================================================================
-// function : Projection
-// purpose  : Projects a point on a curve
-//=======================================================================
-
-static bool Projection(Extrema_ExtPC&         PExt,
-                       const gp_Pnt&          P,
-                       const Adaptor3d_Curve& C,
-                       double&                W,
-                       double                 Tol)
-{
-  double Dist2, daux2;
-  Dist2 = C.Value(W).SquareDistance(P);
-
-  // It is checked if it is not already a solution
-  if (Dist2 < Tol * Tol)
-    return true;
-
-  bool Ok = false;
-
-  // On essai une resolution initialise
-  Extrema_LocateExtPC ext(P, C, W, Tol / 10);
-  if (ext.IsDone())
-  {
-    daux2 = C.Value(ext.Point().Parameter()).SquareDistance(P);
-    if (daux2 < Dist2)
-    {
-      W     = ext.Point().Parameter();
-      Dist2 = daux2;
-      Ok    = true;
-      if (Dist2 < Tol * Tol)
-        return true;
-    }
+    if (!found)
+      bonvoisin = false;
+    return bonvoisin;
   }
 
-  // Global resolution
-  PExt.Perform(P);
-  if (PExt.IsDone())
+  //=======================================================================
+  // function : Projection
+  // purpose  : Projects a point on a curve
+  //=======================================================================
+
+  static bool Projection(Extrema_ExtPC&         PExt,
+                         const gp_Pnt&          P,
+                         const Adaptor3d_Curve& C,
+                         double&                W,
+                         double                 Tol)
   {
-    for (int ii = 1; ii <= PExt.NbExt(); ii++)
+    double Dist2, daux2;
+    Dist2 = C.Value(W).SquareDistance(P);
+
+    // It is checked if it is not already a solution
+    if (Dist2 < Tol * Tol)
+      return true;
+
+    bool Ok = false;
+
+    // On essai une resolution initialise
+    Extrema_LocateExtPC ext(P, C, W, Tol / 10);
+    if (ext.IsDone())
     {
-      if (PExt.SquareDistance(ii) < Dist2)
+      daux2 = C.Value(ext.Point().Parameter()).SquareDistance(P);
+      if (daux2 < Dist2)
       {
-        Dist2 = PExt.SquareDistance(ii);
-        W     = PExt.Point(ii).Parameter();
+        W     = ext.Point().Parameter();
+        Dist2 = daux2;
         Ok    = true;
+        if (Dist2 < Tol * Tol)
+          return true;
       }
     }
-  }
-  return Ok;
-}
 
-//=================================================================================================
-
-static void TgtKP(const occ::handle<ChFiDS_SurfData>& CD,
-                  const occ::handle<ChFiDS_Spine>&    Spine,
-                  const int                           iedge,
-                  const bool                          isfirst,
-                  gp_Pnt&                             ped,
-                  gp_Vec&                             ded)
-{
-  double                   wtg = CD->InterferenceOnS1().Parameter(isfirst);
-  const BRepAdaptor_Curve& bc  = Spine->CurrentElementarySpine(iedge);
-  if (Spine->Edges(iedge).Orientation() == TopAbs_FORWARD)
-    bc.D1(wtg + bc.FirstParameter(), ped, ded);
-  else
-  {
-    bc.D1(-wtg + bc.LastParameter(), ped, ded);
-    ded.Reverse();
-  }
-  ded.Normalize();
-}
-
-//=======================================================================
-// function : IsInput
-// purpose  : Checks if a vector belongs to a Face
-//=======================================================================
-
-static bool IsInput(const gp_Vec& Vec, const TopoDS_Vertex& Ve, const TopoDS_Face& Fa)
-{
-  TopExp_Explorer        FaceExp(Fa, TopAbs_WIRE);
-  BRepTools_WireExplorer WireExp;
-  int                    Trouve = 0;
-  TopoDS_Wire            W;
-  TopoDS_Edge            E;
-  TopoDS_Vertex          Vf, Vl;
-  gp_Vec                 Vec3d[2];
-  gp_Pnt                 Point;
-
-  // Find edges and compute 3D vectors
-  for (; (FaceExp.More() && (Trouve < 2)); FaceExp.Next())
-  {
-    W = TopoDS::Wire(FaceExp.Current());
-    for (Trouve = 0, WireExp.Init(W); WireExp.More() && (Trouve < 2); WireExp.Next())
+    // Global resolution
+    PExt.Perform(P);
+    if (PExt.IsDone())
     {
-      E = TopoDS::Edge(WireExp.Current());
-      TopExp::Vertices(E, Vf, Vl);
-      if (Vf.IsSame(Ve))
+      for (int ii = 1; ii <= PExt.NbExt(); ii++)
       {
-        BRepAdaptor_Curve Cb(E);
-        Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
-        Trouve++;
-      }
-      else if (Vl.IsSame(Ve))
-      {
-        BRepAdaptor_Curve Cb(E);
-        Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
-        Vec3d[Trouve].Reverse();
-        Trouve++;
+        if (PExt.SquareDistance(ii) < Dist2)
+        {
+          Dist2 = PExt.SquareDistance(ii);
+          W     = PExt.Point(ii).Parameter();
+          Ok    = true;
+        }
       }
     }
+    return Ok;
   }
-  if (Trouve < 2)
+
+  //=================================================================================================
+
+  static void TgtKP(const occ::handle<ChFiDS_SurfData>& CD,
+                    const occ::handle<ChFiDS_Spine>&    Spine,
+                    const int                           iedge,
+                    const bool                          isfirst,
+                    gp_Pnt&                             ped,
+                    gp_Vec&                             ded)
+  {
+    double                   wtg = CD->InterferenceOnS1().Parameter(isfirst);
+    const BRepAdaptor_Curve& bc  = Spine->CurrentElementarySpine(iedge);
+    if (Spine->Edges(iedge).Orientation() == TopAbs_FORWARD)
+      bc.D1(wtg + bc.FirstParameter(), ped, ded);
+    else
+    {
+      bc.D1(-wtg + bc.LastParameter(), ped, ded);
+      ded.Reverse();
+    }
+    ded.Normalize();
+  }
+
+  //=======================================================================
+  // function : IsInput
+  // purpose  : Checks if a vector belongs to a Face
+  //=======================================================================
+
+  static bool IsInput(const gp_Vec& Vec, const TopoDS_Vertex& Ve, const TopoDS_Face& Fa)
+  {
+    TopExp_Explorer        FaceExp(Fa, TopAbs_WIRE);
+    BRepTools_WireExplorer WireExp;
+    int                    Trouve = 0;
+    TopoDS_Wire            W;
+    TopoDS_Edge            E;
+    TopoDS_Vertex          Vf, Vl;
+    gp_Vec                 Vec3d[2];
+    gp_Pnt                 Point;
+
+    // Find edges and compute 3D vectors
+    for (; (FaceExp.More() && (Trouve < 2)); FaceExp.Next())
+    {
+      W = TopoDS::Wire(FaceExp.Current());
+      for (Trouve = 0, WireExp.Init(W); WireExp.More() && (Trouve < 2); WireExp.Next())
+      {
+        E = TopoDS::Edge(WireExp.Current());
+        TopExp::Vertices(E, Vf, Vl);
+        if (Vf.IsSame(Ve))
+        {
+          BRepAdaptor_Curve Cb(E);
+          Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
+          Trouve++;
+        }
+        else if (Vl.IsSame(Ve))
+        {
+          BRepAdaptor_Curve Cb(E);
+          Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
+          Vec3d[Trouve].Reverse();
+          Trouve++;
+        }
+      }
+    }
+    if (Trouve < 2)
+      return false;
+    // Calculate the normal and the angles in the associated vector plane
+    gp_Vec Normal;
+    Normal = Vec3d[0] ^ Vec3d[1];
+    if (Normal.SquareMagnitude() < Precision::Confusion())
+    { // Colinear case
+      return (Vec.IsParallel(Vec3d[0], Precision::Confusion()));
+    }
+
+    double amin, amax;
+    amax = Vec3d[1].AngleWithRef(Vec3d[0], Normal);
+    if (amax < 0)
+    {
+      amin = amax;
+      amax = 0;
+    }
+    else
+      amin = 0;
+
+    // Projection of the vector
+    gp_Ax3  Axe(Point, Normal, Vec3d[0]);
+    gp_Trsf Transf;
+    Transf.SetTransformation(Axe);
+    gp_XYZ coord = Vec.XYZ();
+    Transf.Transforms(coord);
+    coord.SetZ(0);
+    Transf.Invert();
+    Transf.Transforms(coord);
+    gp_Vec theProj(coord);
+
+    // and finally...
+    double Angle = theProj.AngleWithRef(Vec3d[0], Normal);
+    return ((Angle >= amin) && (Angle <= amax));
+  }
+
+  //=======================================================================
+  // function : IsG1
+  // purpose  : Find a neighbor G1 by an edge
+  //=======================================================================
+
+  static bool IsG1(const ChFiDS_Map&  TheMap,
+                   const TopoDS_Edge& E,
+                   const TopoDS_Face& FRef,
+                   TopoDS_Face&       FVoi)
+  {
+    NCollection_List<TopoDS_Shape>::Iterator It;
+    // Find a neighbor of E different from FRef (general case).
+    for (It.Initialize(TheMap(E)); It.More(); It.Next())
+    {
+      if (!TopoDS::Face(It.Value()).IsSame(FRef))
+      {
+        FVoi = TopoDS::Face(It.Value());
+        //  Modified by Sergey KHROMOV - Fri Dec 21 17:09:32 2001 Begin
+        //    if (BRep_Tool::Continuity(E,FRef,FVoi) != GeomAbs_C0) {
+        if (ChFi3d::IsTangentFaces(E, FRef, FVoi))
+        {
+          //  Modified by Sergey KHROMOV - Fri Dec 21 17:09:33 2001 End
+          return true;
+        }
+      }
+    }
+    // If is was not found it is checked if E is a cutting edge,
+    // in which case FVoi = FRef is returned (less frequent case).
+    TopExp_Explorer    Ex;
+    bool               orset  = false;
+    TopAbs_Orientation orient = TopAbs_FORWARD;
+    TopoDS_Edge        ed;
+    for (Ex.Init(FRef, TopAbs_EDGE); Ex.More(); Ex.Next())
+    {
+      ed = TopoDS::Edge(Ex.Current());
+      if (ed.IsSame(E))
+      {
+        if (!orset)
+        {
+          orient = ed.Orientation();
+          orset  = true;
+        }
+        else if (ed.Orientation() == TopAbs::Reverse(orient))
+        {
+          FVoi = FRef;
+          //  Modified by Sergey KHROMOV - Fri Dec 21 17:15:12 2001 Begin
+          //  if (BRep_Tool::Continuity(E,FRef,FRef) >= GeomAbs_G1)
+          return ChFi3d::IsTangentFaces(E, FRef, FRef);
+        }
+      }
+    }
     return false;
-  // Calculate the normal and the angles in the associated vector plane
-  gp_Vec Normal;
-  Normal = Vec3d[0] ^ Vec3d[1];
-  if (Normal.SquareMagnitude() < Precision::Confusion())
-  { // Colinear case
-    return (Vec.IsParallel(Vec3d[0], Precision::Confusion()));
   }
 
-  double amin, amax;
-  amax = Vec3d[1].AngleWithRef(Vec3d[0], Normal);
-  if (amax < 0)
+  //=======================================================================
+  // function : SearchFaceOnV
+  // purpose  : Finds the output face(s) of the path by a vertex
+  //           The following criteria should be followed
+  //         -1 : The face shares regular edges with FRef
+  //              (too hard condition that should be reconsidered)
+  //         -2 : The vector starting in CommonPoint "belongs" to the face
+  //========================================================================
+  static int SearchFaceOnV(const ChFiDS_CommonPoint& Pc,
+                           const TopoDS_Face&        FRef,
+                           const ChFiDS_Map&         VEMap,
+                           const ChFiDS_Map&         EFMap,
+                           TopoDS_Face&              F1,
+                           TopoDS_Face&              F2)
   {
-    amin = amax;
-    amax = 0;
-  }
-  else
-    amin = 0;
-
-  // Projection of the vector
-  gp_Ax3  Axe(Point, Normal, Vec3d[0]);
-  gp_Trsf Transf;
-  Transf.SetTransformation(Axe);
-  gp_XYZ coord = Vec.XYZ();
-  Transf.Transforms(coord);
-  coord.SetZ(0);
-  Transf.Invert();
-  Transf.Transforms(coord);
-  gp_Vec theProj(coord);
-
-  // and finally...
-  double Angle = theProj.AngleWithRef(Vec3d[0], Normal);
-  return ((Angle >= amin) && (Angle <= amax));
-}
-
-//=======================================================================
-// function : IsG1
-// purpose  : Find a neighbor G1 by an edge
-//=======================================================================
-
-static bool IsG1(const ChFiDS_Map&  TheMap,
-                 const TopoDS_Edge& E,
-                 const TopoDS_Face& FRef,
-                 TopoDS_Face&       FVoi)
-{
-  NCollection_List<TopoDS_Shape>::Iterator It;
-  // Find a neighbor of E different from FRef (general case).
-  for (It.Initialize(TheMap(E)); It.More(); It.Next())
-  {
-    if (!TopoDS::Face(It.Value()).IsSame(FRef))
+    // it is checked that it leaves the current face.
+    bool FindFace = IsInput(Pc.Vector(), Pc.Vertex(), FRef);
+    if (FindFace)
     {
-      FVoi = TopoDS::Face(It.Value());
-      //  Modified by Sergey KHROMOV - Fri Dec 21 17:09:32 2001 Begin
-      //    if (BRep_Tool::Continuity(E,FRef,FVoi) != GeomAbs_C0) {
-      if (ChFi3d::IsTangentFaces(E, FRef, FVoi))
+      FindFace = IsInput(Pc.Vector().Reversed(), Pc.Vertex(), FRef);
+    }
+    // If it does not leave, it is finished
+    if (FindFace)
+    {
+      F1 = FRef;
+      return 1;
+    }
+    int                                      Num = 0;
+    bool                                     Trouve;
+    NCollection_List<TopoDS_Shape>::Iterator ItE, ItF;
+    TopoDS_Edge                              E;
+    TopoDS_Face                              FVoi;
+
+    for (ItE.Initialize(VEMap(Pc.Vertex())); ItE.More() && (Num < 2); ItE.Next())
+    {
+      E = TopoDS::Edge(ItE.Value());
+      for (ItF.Initialize(EFMap(E)), Trouve = false; ItF.More() && (!Trouve); ItF.Next())
       {
-        //  Modified by Sergey KHROMOV - Fri Dec 21 17:09:33 2001 End
-        return true;
+        if (TopoDS::Face(ItF.Value()).IsSame(FRef))
+        {
+          Trouve = true;
+        }
+      }
+      if (Trouve)
+        Trouve = IsG1(EFMap, E, FRef, FVoi);
+      if (Trouve)
+        Trouve = IsInput(Pc.Vector(), Pc.Vertex(), FVoi);
+      if (Trouve)
+      {
+        if (Num == 0)
+          F1 = FVoi;
+        else
+          F2 = FVoi;
+        Num++;
       }
     }
+    return Num;
   }
-  // If is was not found it is checked if E is a cutting edge,
-  // in which case FVoi = FRef is returned (less frequent case).
-  TopExp_Explorer    Ex;
-  bool               orset  = false;
-  TopAbs_Orientation orient = TopAbs_FORWARD;
-  TopoDS_Edge        ed;
-  for (Ex.Init(FRef, TopAbs_EDGE); Ex.More(); Ex.Next())
+
+  //=======================================================================
+  // function : ChangeTransition
+  // purpose  : Changes the transition of the second common Point, when the surface
+  //           does not cross the arc
+  //           As it is supposed that the support Faces are the same, it is enough
+  //           to examine the cas of cutting edges.
+  //========================================================================
+  static void ChangeTransition(const ChFiDS_CommonPoint&                       Precedant,
+                               ChFiDS_CommonPoint&                             Courant,
+                               int                                             FaceIndex,
+                               const occ::handle<TopOpeBRepDS_HDataStructure>& DS)
   {
-    ed = TopoDS::Edge(Ex.Current());
-    if (ed.IsSame(E))
+    bool                      tochange = true;
+    const TopoDS_Face&        F        = TopoDS::Face(DS->Shape(FaceIndex));
+    const TopoDS_Edge&        Arc      = Precedant.Arc();
+    occ::handle<Geom2d_Curve> PCurve1, PCurve2;
+    PCurve1                  = getCurveOnSurface(Arc, F);
+    TopoDS_Shape aLocalShape = Arc.Reversed();
+    PCurve2                  = getCurveOnSurface(TopoDS::Edge(aLocalShape), F);
+    if (PCurve1 != PCurve2)
     {
-      if (!orset)
-      {
-        orient = ed.Orientation();
-        orset  = true;
-      }
-      else if (ed.Orientation() == TopAbs::Reverse(orient))
-      {
-        FVoi = FRef;
-        //  Modified by Sergey KHROMOV - Fri Dec 21 17:15:12 2001 Begin
-        //  if (BRep_Tool::Continuity(E,FRef,FRef) >= GeomAbs_G1)
-        return ChFi3d::IsTangentFaces(E, FRef, FRef);
-      }
+      // This is a cutting edge, it is necessary to make a small Geometric test
+      gp_Vec            tgarc;
+      gp_Pnt            P;
+      BRepAdaptor_Curve AC(Arc);
+      AC.D1(Precedant.ParameterOnArc(), P, tgarc);
+      tochange = tgarc.IsParallel(Precedant.Vector(), Precision::Confusion());
     }
-  }
-  return false;
-}
 
-//=======================================================================
-// function : SearchFaceOnV
-// purpose  : Finds the output face(s) of the path by a vertex
-//           The following criteria should be followed
-//         -1 : The face shares regular edges with FRef
-//              (too hard condition that should be reconsidered)
-//         -2 : The vector starting in CommonPoint "belongs" to the face
-//========================================================================
-static int SearchFaceOnV(const ChFiDS_CommonPoint& Pc,
-                         const TopoDS_Face&        FRef,
-                         const ChFiDS_Map&         VEMap,
-                         const ChFiDS_Map&         EFMap,
-                         TopoDS_Face&              F1,
-                         TopoDS_Face&              F2)
-{
-  // it is checked that it leaves the current face.
-  bool FindFace = IsInput(Pc.Vector(), Pc.Vertex(), FRef);
-  if (FindFace)
-  {
-    FindFace = IsInput(Pc.Vector().Reversed(), Pc.Vertex(), FRef);
+    if (tochange)
+      Courant.SetArc(Precision::Confusion(),
+                     Arc,
+                     Precedant.ParameterOnArc(),
+                     TopAbs::Reverse(Precedant.TransitionOnArc()));
   }
-  // If it does not leave, it is finished
-  if (FindFace)
-  {
-    F1 = FRef;
-    return 1;
-  }
-  int                                      Num = 0;
-  bool                                     Trouve;
-  NCollection_List<TopoDS_Shape>::Iterator ItE, ItF;
-  TopoDS_Edge                              E;
-  TopoDS_Face                              FVoi;
-
-  for (ItE.Initialize(VEMap(Pc.Vertex())); ItE.More() && (Num < 2); ItE.Next())
-  {
-    E = TopoDS::Edge(ItE.Value());
-    for (ItF.Initialize(EFMap(E)), Trouve = false; ItF.More() && (!Trouve); ItF.Next())
-    {
-      if (TopoDS::Face(ItF.Value()).IsSame(FRef))
-      {
-        Trouve = true;
-      }
-    }
-    if (Trouve)
-      Trouve = IsG1(EFMap, E, FRef, FVoi);
-    if (Trouve)
-      Trouve = IsInput(Pc.Vector(), Pc.Vertex(), FVoi);
-    if (Trouve)
-    {
-      if (Num == 0)
-        F1 = FVoi;
-      else
-        F2 = FVoi;
-      Num++;
-    }
-  }
-  return Num;
-}
-
-//=======================================================================
-// function : ChangeTransition
-// purpose  : Changes the transition of the second common Point, when the surface
-//           does not cross the arc
-//           As it is supposed that the support Faces are the same, it is enough
-//           to examine the cas of cutting edges.
-//========================================================================
-static void ChangeTransition(const ChFiDS_CommonPoint&                       Precedant,
-                             ChFiDS_CommonPoint&                             Courant,
-                             int                                             FaceIndex,
-                             const occ::handle<TopOpeBRepDS_HDataStructure>& DS)
-{
-  bool                      tochange = true;
-  const TopoDS_Face&        F        = TopoDS::Face(DS->Shape(FaceIndex));
-  const TopoDS_Edge&        Arc      = Precedant.Arc();
-  occ::handle<Geom2d_Curve> PCurve1, PCurve2;
-  PCurve1                  = getCurveOnSurface(Arc, F);
-  TopoDS_Shape aLocalShape = Arc.Reversed();
-  PCurve2                  = getCurveOnSurface(TopoDS::Edge(aLocalShape), F);
-  if (PCurve1 != PCurve2)
-  {
-    // This is a cutting edge, it is necessary to make a small Geometric test
-    gp_Vec            tgarc;
-    gp_Pnt            P;
-    BRepAdaptor_Curve AC(Arc);
-    AC.D1(Precedant.ParameterOnArc(), P, tgarc);
-    tochange = tgarc.IsParallel(Precedant.Vector(), Precision::Confusion());
-  }
-
-  if (tochange)
-    Courant.SetArc(Precision::Confusion(),
-                   Arc,
-                   Precedant.ParameterOnArc(),
-                   TopAbs::Reverse(Precedant.TransitionOnArc()));
-}
 } // namespace
 
 //=======================================================================
@@ -1332,7 +1317,8 @@ bool ChFi3d_Builder::StartSol(
 
     // Lambda to avoid code duplication.
     // Sets HS, W, aPCurve and pons to default return values.
-    auto prepareDefaultReturn = [&]() {
+    auto prepareDefaultReturn = [&]()
+    {
       HS->Initialize(F);
       W       = aCommonPoint.ParameterOnArc();
       aPCurve = getCurveOnSurface(anArcEdge, F);

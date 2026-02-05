@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_AttributeDelta.hpp>
@@ -23,4 +22,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(TDF_DeltaOnForget, TDF_AttributeDelta)
 };
-

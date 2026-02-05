@@ -1,23 +1,3 @@
-// Created on: 1993-05-14
-// Created by: Joelle CHAUVET
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified:	Thu Nov 26 16:37:18 1998
-//		correction in NbUIntervals for SurfaceOfLinearExtrusion
-//		(PRO16346)
-
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 
@@ -74,216 +54,216 @@ IMPLEMENT_STANDARD_RTTIEXT(GeomAdaptor_Surface, Adaptor3d_Surface)
 namespace
 {
 
-//=================================================================================================
+  //=================================================================================================
 
-GeomAbs_Shape LocalContinuity(int                         Degree,
-                              int                         Nb,
-                              NCollection_Array1<double>& TK,
-                              NCollection_Array1<int>&    TM,
-                              double                      PFirst,
-                              double                      PLast,
-                              bool                        IsPeriodic)
-{
-  Standard_DomainError_Raise_if((TK.Length() != Nb || TM.Length() != Nb), " ");
-  int    Index1 = 0;
-  int    Index2 = 0;
-  double newFirst, newLast;
-  BSplCLib::LocateParameter(Degree, TK, TM, PFirst, IsPeriodic, 1, Nb, Index1, newFirst);
-  BSplCLib::LocateParameter(Degree, TK, TM, PLast, IsPeriodic, 1, Nb, Index2, newLast);
-  constexpr double EpsKnot = Precision::PConfusion();
-  if (std::abs(newFirst - TK(Index1 + 1)) < EpsKnot)
-    Index1++;
-  if (std::abs(newLast - TK(Index2)) < EpsKnot)
-    Index2--;
-  // attention aux courbes peridiques.
-  if ((IsPeriodic) && (Index1 == Nb))
-    Index1 = 1;
-
-  if (Index2 != Index1)
+  GeomAbs_Shape LocalContinuity(int                         Degree,
+                                int                         Nb,
+                                NCollection_Array1<double>& TK,
+                                NCollection_Array1<int>&    TM,
+                                double                      PFirst,
+                                double                      PLast,
+                                bool                        IsPeriodic)
   {
-    int i, Multmax = TM(Index1 + 1);
-    for (i = Index1 + 1; i <= Index2; i++)
+    Standard_DomainError_Raise_if((TK.Length() != Nb || TM.Length() != Nb), " ");
+    int    Index1 = 0;
+    int    Index2 = 0;
+    double newFirst, newLast;
+    BSplCLib::LocateParameter(Degree, TK, TM, PFirst, IsPeriodic, 1, Nb, Index1, newFirst);
+    BSplCLib::LocateParameter(Degree, TK, TM, PLast, IsPeriodic, 1, Nb, Index2, newLast);
+    constexpr double EpsKnot = Precision::PConfusion();
+    if (std::abs(newFirst - TK(Index1 + 1)) < EpsKnot)
+      Index1++;
+    if (std::abs(newLast - TK(Index2)) < EpsKnot)
+      Index2--;
+    // attention aux courbes peridiques.
+    if ((IsPeriodic) && (Index1 == Nb))
+      Index1 = 1;
+
+    if (Index2 != Index1)
     {
-      if (TM(i) > Multmax)
-        Multmax = TM(i);
+      int i, Multmax = TM(Index1 + 1);
+      for (i = Index1 + 1; i <= Index2; i++)
+      {
+        if (TM(i) > Multmax)
+          Multmax = TM(i);
+      }
+      Multmax = Degree - Multmax;
+      if (Multmax <= 0)
+        return GeomAbs_C0;
+      switch (Multmax)
+      {
+        case 1:
+          return GeomAbs_C1;
+        case 2:
+          return GeomAbs_C2;
+        case 3:
+          return GeomAbs_C3;
+      }
     }
-    Multmax = Degree - Multmax;
-    if (Multmax <= 0)
-      return GeomAbs_C0;
-    switch (Multmax)
-    {
-      case 1:
-        return GeomAbs_C1;
-      case 2:
-        return GeomAbs_C2;
-      case 3:
-        return GeomAbs_C3;
-    }
+    return GeomAbs_CN;
   }
-  return GeomAbs_CN;
-}
 
-//! Offset surface D0 evaluation with retry mechanism for singular points.
-//! Uses equivalent surface adaptor for faster evaluation when available.
-inline void offsetD0(const double                           theU,
-                     const double                           theV,
-                     const GeomAdaptor_Surface::OffsetData& theData,
-                     gp_Pnt&                                theValue)
-{
-  if (!theData.EquivalentAdaptor.IsNull())
-  {
-    theData.EquivalentAdaptor->D0(theU, theV, theValue);
-    return;
-  }
-  if (!Geom_OffsetSurfaceUtils::EvaluateD0(theU,
-                                           theV,
-                                           theData.BasisAdaptor,
-                                           theData.Offset,
-                                           theData.OffsetSurface.get(),
-                                           theValue))
-  {
-    throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D0");
-  }
-}
-
-//! Offset surface D1 evaluation with retry mechanism for singular points.
-//! Uses equivalent surface adaptor for faster evaluation when available.
-inline void offsetD1(const double                           theU,
-                     const double                           theV,
-                     const GeomAdaptor_Surface::OffsetData& theData,
-                     gp_Pnt&                                theValue,
-                     gp_Vec&                                theD1U,
-                     gp_Vec&                                theD1V)
-{
-  if (!theData.EquivalentAdaptor.IsNull())
-  {
-    theData.EquivalentAdaptor->D1(theU, theV, theValue, theD1U, theD1V);
-    return;
-  }
-  if (!Geom_OffsetSurfaceUtils::EvaluateD1(theU,
-                                           theV,
-                                           theData.BasisAdaptor,
-                                           theData.Offset,
-                                           theData.OffsetSurface.get(),
-                                           theValue,
-                                           theD1U,
-                                           theD1V))
-  {
-    throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D1");
-  }
-}
-
-//! Offset surface D2 evaluation with retry mechanism for singular points.
-//! Uses equivalent surface adaptor for faster evaluation when available.
-inline void offsetD2(const double                           theU,
-                     const double                           theV,
-                     const GeomAdaptor_Surface::OffsetData& theData,
-                     gp_Pnt&                                theValue,
-                     gp_Vec&                                theD1U,
-                     gp_Vec&                                theD1V,
-                     gp_Vec&                                theD2U,
-                     gp_Vec&                                theD2V,
-                     gp_Vec&                                theD2UV)
-{
-  if (!theData.EquivalentAdaptor.IsNull())
-  {
-    theData.EquivalentAdaptor->D2(theU, theV, theValue, theD1U, theD1V, theD2U, theD2V, theD2UV);
-    return;
-  }
-  if (!Geom_OffsetSurfaceUtils::EvaluateD2(theU,
-                                           theV,
-                                           theData.BasisAdaptor,
-                                           theData.Offset,
-                                           theData.OffsetSurface.get(),
-                                           theValue,
-                                           theD1U,
-                                           theD1V,
-                                           theD2U,
-                                           theD2V,
-                                           theD2UV))
-  {
-    throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D2");
-  }
-}
-
-//! Offset surface D3 evaluation with retry mechanism for singular points.
-//! Uses equivalent surface adaptor for faster evaluation when available.
-inline void offsetD3(const double                           theU,
-                     const double                           theV,
-                     const GeomAdaptor_Surface::OffsetData& theData,
-                     gp_Pnt&                                theValue,
-                     gp_Vec&                                theD1U,
-                     gp_Vec&                                theD1V,
-                     gp_Vec&                                theD2U,
-                     gp_Vec&                                theD2V,
-                     gp_Vec&                                theD2UV,
-                     gp_Vec&                                theD3U,
-                     gp_Vec&                                theD3V,
-                     gp_Vec&                                theD3UUV,
-                     gp_Vec&                                theD3UVV)
-{
-  if (!theData.EquivalentAdaptor.IsNull())
-  {
-    theData.EquivalentAdaptor->D3(theU,
-                                  theV,
-                                  theValue,
-                                  theD1U,
-                                  theD1V,
-                                  theD2U,
-                                  theD2V,
-                                  theD2UV,
-                                  theD3U,
-                                  theD3V,
-                                  theD3UUV,
-                                  theD3UVV);
-    return;
-  }
-  if (!Geom_OffsetSurfaceUtils::EvaluateD3(theU,
-                                           theV,
-                                           theData.BasisAdaptor,
-                                           theData.Offset,
-                                           theData.OffsetSurface.get(),
-                                           theValue,
-                                           theD1U,
-                                           theD1V,
-                                           theD2U,
-                                           theD2V,
-                                           theD2UV,
-                                           theD3U,
-                                           theD3V,
-                                           theD3UUV,
-                                           theD3UVV))
-  {
-    throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D3");
-  }
-}
-
-//! Offset surface DN evaluation.
-//! Uses equivalent surface adaptor for faster evaluation when available.
-inline gp_Vec offsetDN(const double                           theU,
+  //! Offset surface D0 evaluation with retry mechanism for singular points.
+  //! Uses equivalent surface adaptor for faster evaluation when available.
+  inline void offsetD0(const double                           theU,
                        const double                           theV,
                        const GeomAdaptor_Surface::OffsetData& theData,
-                       int                                    theNu,
-                       int                                    theNv)
-{
-  if (!theData.EquivalentAdaptor.IsNull())
+                       gp_Pnt&                                theValue)
   {
-    return theData.EquivalentAdaptor->DN(theU, theV, theNu, theNv);
+    if (!theData.EquivalentAdaptor.IsNull())
+    {
+      theData.EquivalentAdaptor->D0(theU, theV, theValue);
+      return;
+    }
+    if (!Geom_OffsetSurfaceUtils::EvaluateD0(theU,
+                                             theV,
+                                             theData.BasisAdaptor,
+                                             theData.Offset,
+                                             theData.OffsetSurface.get(),
+                                             theValue))
+    {
+      throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D0");
+    }
   }
-  gp_Vec aResult;
-  if (!Geom_OffsetSurfaceUtils::EvaluateDN(theU,
-                                           theV,
-                                           theNu,
-                                           theNv,
-                                           theData.BasisAdaptor.get(),
-                                           theData.Offset,
-                                           theData.OffsetSurface.get(),
-                                           aResult))
+
+  //! Offset surface D1 evaluation with retry mechanism for singular points.
+  //! Uses equivalent surface adaptor for faster evaluation when available.
+  inline void offsetD1(const double                           theU,
+                       const double                           theV,
+                       const GeomAdaptor_Surface::OffsetData& theData,
+                       gp_Pnt&                                theValue,
+                       gp_Vec&                                theD1U,
+                       gp_Vec&                                theD1V)
   {
-    throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset DN");
+    if (!theData.EquivalentAdaptor.IsNull())
+    {
+      theData.EquivalentAdaptor->D1(theU, theV, theValue, theD1U, theD1V);
+      return;
+    }
+    if (!Geom_OffsetSurfaceUtils::EvaluateD1(theU,
+                                             theV,
+                                             theData.BasisAdaptor,
+                                             theData.Offset,
+                                             theData.OffsetSurface.get(),
+                                             theValue,
+                                             theD1U,
+                                             theD1V))
+    {
+      throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D1");
+    }
   }
-  return aResult;
-}
+
+  //! Offset surface D2 evaluation with retry mechanism for singular points.
+  //! Uses equivalent surface adaptor for faster evaluation when available.
+  inline void offsetD2(const double                           theU,
+                       const double                           theV,
+                       const GeomAdaptor_Surface::OffsetData& theData,
+                       gp_Pnt&                                theValue,
+                       gp_Vec&                                theD1U,
+                       gp_Vec&                                theD1V,
+                       gp_Vec&                                theD2U,
+                       gp_Vec&                                theD2V,
+                       gp_Vec&                                theD2UV)
+  {
+    if (!theData.EquivalentAdaptor.IsNull())
+    {
+      theData.EquivalentAdaptor->D2(theU, theV, theValue, theD1U, theD1V, theD2U, theD2V, theD2UV);
+      return;
+    }
+    if (!Geom_OffsetSurfaceUtils::EvaluateD2(theU,
+                                             theV,
+                                             theData.BasisAdaptor,
+                                             theData.Offset,
+                                             theData.OffsetSurface.get(),
+                                             theValue,
+                                             theD1U,
+                                             theD1V,
+                                             theD2U,
+                                             theD2V,
+                                             theD2UV))
+    {
+      throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D2");
+    }
+  }
+
+  //! Offset surface D3 evaluation with retry mechanism for singular points.
+  //! Uses equivalent surface adaptor for faster evaluation when available.
+  inline void offsetD3(const double                           theU,
+                       const double                           theV,
+                       const GeomAdaptor_Surface::OffsetData& theData,
+                       gp_Pnt&                                theValue,
+                       gp_Vec&                                theD1U,
+                       gp_Vec&                                theD1V,
+                       gp_Vec&                                theD2U,
+                       gp_Vec&                                theD2V,
+                       gp_Vec&                                theD2UV,
+                       gp_Vec&                                theD3U,
+                       gp_Vec&                                theD3V,
+                       gp_Vec&                                theD3UUV,
+                       gp_Vec&                                theD3UVV)
+  {
+    if (!theData.EquivalentAdaptor.IsNull())
+    {
+      theData.EquivalentAdaptor->D3(theU,
+                                    theV,
+                                    theValue,
+                                    theD1U,
+                                    theD1V,
+                                    theD2U,
+                                    theD2V,
+                                    theD2UV,
+                                    theD3U,
+                                    theD3V,
+                                    theD3UUV,
+                                    theD3UVV);
+      return;
+    }
+    if (!Geom_OffsetSurfaceUtils::EvaluateD3(theU,
+                                             theV,
+                                             theData.BasisAdaptor,
+                                             theData.Offset,
+                                             theData.OffsetSurface.get(),
+                                             theValue,
+                                             theD1U,
+                                             theD1V,
+                                             theD2U,
+                                             theD2V,
+                                             theD2UV,
+                                             theD3U,
+                                             theD3V,
+                                             theD3UUV,
+                                             theD3UVV))
+    {
+      throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset D3");
+    }
+  }
+
+  //! Offset surface DN evaluation.
+  //! Uses equivalent surface adaptor for faster evaluation when available.
+  inline gp_Vec offsetDN(const double                           theU,
+                         const double                           theV,
+                         const GeomAdaptor_Surface::OffsetData& theData,
+                         int                                    theNu,
+                         int                                    theNv)
+  {
+    if (!theData.EquivalentAdaptor.IsNull())
+    {
+      return theData.EquivalentAdaptor->DN(theU, theV, theNu, theNv);
+    }
+    gp_Vec aResult;
+    if (!Geom_OffsetSurfaceUtils::EvaluateDN(theU,
+                                             theV,
+                                             theNu,
+                                             theNv,
+                                             theData.BasisAdaptor.get(),
+                                             theData.Offset,
+                                             theData.OffsetSurface.get(),
+                                             aResult))
+    {
+      throw Standard_NumericError("GeomAdaptor_Surface: Unable to calculate offset DN");
+    }
+    return aResult;
+  }
 
 } // end of anonymous namespace
 
@@ -461,7 +441,8 @@ GeomAbs_Shape GeomAdaptor_Surface::UContinuity() const
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&                aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       const int                  N     = aBSpl->NbUKnots();
       NCollection_Array1<double> TK(1, N);
@@ -476,7 +457,8 @@ GeomAbs_Shape GeomAdaptor_Surface::UContinuity() const
                              myULast,
                              IsUPeriodic());
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       switch (BasisSurface()->UContinuity())
       {
         case GeomAbs_CN:
@@ -493,7 +475,8 @@ GeomAbs_Shape GeomAdaptor_Surface::UContinuity() const
       throw Standard_NoSuchObject("GeomAdaptor_Surface::UContinuity");
       break;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       occ::handle<Geom_SurfaceOfLinearExtrusion> myExtSurf =
         occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurface);
       GeomAdaptor_Curve GC(myExtSurf->BasisCurve(), myUFirst, myULast);
@@ -519,7 +502,8 @@ GeomAbs_Shape GeomAdaptor_Surface::VContinuity() const
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&                aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       const int                  N     = aBSpl->NbVKnots();
       NCollection_Array1<double> TK(1, N);
@@ -534,7 +518,8 @@ GeomAbs_Shape GeomAdaptor_Surface::VContinuity() const
                              myVLast,
                              IsVPeriodic());
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       switch (BasisSurface()->VContinuity())
       {
         case GeomAbs_CN:
@@ -551,7 +536,8 @@ GeomAbs_Shape GeomAdaptor_Surface::VContinuity() const
       throw Standard_NoSuchObject("GeomAdaptor_Surface::VContinuity");
       break;
     }
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       occ::handle<Geom_SurfaceOfRevolution> myRevSurf =
         occ::down_cast<Geom_SurfaceOfRevolution>(mySurface);
       GeomAdaptor_Curve GC(myRevSurf->BasisCurve(), myVFirst, myVLast);
@@ -577,14 +563,16 @@ int GeomAdaptor_Surface::NbUIntervals(const GeomAbs_Shape S) const
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&       aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       GeomAdaptor_Curve myBasisCurve(aBSpl->VIso(aBSpl->VKnot(aBSpl->FirstVKnotIndex())),
                                      myUFirst,
                                      myULast);
       return myBasisCurve.NbIntervals(S);
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       occ::handle<Geom_SurfaceOfLinearExtrusion> myExtSurf =
         occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurface);
       GeomAdaptor_Curve myBasisCurve(myExtSurf->BasisCurve(), myUFirst, myULast);
@@ -592,7 +580,8 @@ int GeomAdaptor_Surface::NbUIntervals(const GeomAbs_Shape S) const
         return myBasisCurve.NbIntervals(S);
       break;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       GeomAbs_Shape BaseS = GeomAbs_CN;
       switch (S)
       {
@@ -635,14 +624,16 @@ int GeomAdaptor_Surface::NbVIntervals(const GeomAbs_Shape S) const
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&       aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       GeomAdaptor_Curve myBasisCurve(aBSpl->UIso(aBSpl->UKnot(aBSpl->FirstUKnotIndex())),
                                      myVFirst,
                                      myVLast);
       return myBasisCurve.NbIntervals(S);
     }
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       occ::handle<Geom_SurfaceOfRevolution> myRevSurf =
         occ::down_cast<Geom_SurfaceOfRevolution>(mySurface);
       GeomAdaptor_Curve myBasisCurve(myRevSurf->BasisCurve(), myVFirst, myVLast);
@@ -650,7 +641,8 @@ int GeomAdaptor_Surface::NbVIntervals(const GeomAbs_Shape S) const
         return myBasisCurve.NbIntervals(S);
       break;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       GeomAbs_Shape BaseS = GeomAbs_CN;
       switch (S)
       {
@@ -693,7 +685,8 @@ void GeomAdaptor_Surface::UIntervals(NCollection_Array1<double>& T, const GeomAb
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&       aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       GeomAdaptor_Curve myBasisCurve(aBSpl->VIso(aBSpl->VKnot(aBSpl->FirstVKnotIndex())),
                                      myUFirst,
@@ -701,7 +694,8 @@ void GeomAdaptor_Surface::UIntervals(NCollection_Array1<double>& T, const GeomAb
       myBasisCurve.Intervals(T, S);
       return;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       GeomAdaptor_Curve myBasisCurve(
         occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurface)->BasisCurve(),
         myUFirst,
@@ -713,7 +707,8 @@ void GeomAdaptor_Surface::UIntervals(NCollection_Array1<double>& T, const GeomAb
       }
       break;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       GeomAbs_Shape BaseS = GeomAbs_CN;
       switch (S)
       {
@@ -759,7 +754,8 @@ void GeomAdaptor_Surface::VIntervals(NCollection_Array1<double>& T, const GeomAb
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto&       aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       GeomAdaptor_Curve myBasisCurve(aBSpl->UIso(aBSpl->UKnot(aBSpl->FirstUKnotIndex())),
                                      myVFirst,
@@ -767,7 +763,8 @@ void GeomAdaptor_Surface::VIntervals(NCollection_Array1<double>& T, const GeomAb
       myBasisCurve.Intervals(T, S);
       return;
     }
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       occ::handle<Geom_SurfaceOfRevolution> myRevSurf =
         occ::down_cast<Geom_SurfaceOfRevolution>(mySurface);
       GeomAdaptor_Curve myBasisCurve(myRevSurf->BasisCurve(), myVFirst, myVLast);
@@ -778,7 +775,8 @@ void GeomAdaptor_Surface::VIntervals(NCollection_Array1<double>& T, const GeomAb
       }
       break;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       GeomAbs_Shape BaseS = GeomAbs_CN;
       switch (S)
       {
@@ -961,14 +959,16 @@ void GeomAdaptor_Surface::D0(const double U, const double V, gp_Pnt& P) const
 {
   switch (mySurfaceType)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       auto& aCache = std::get<BezierData>(mySurfaceData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U, V))
         RebuildCache(U, V);
       aCache->D0(U, V, P);
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       auto& aCache = std::get<BSplineData>(mySurfaceData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U, V))
         RebuildCache(U, V);
@@ -976,19 +976,22 @@ void GeomAdaptor_Surface::D0(const double U, const double V, gp_Pnt& P) const
       break;
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       const auto& anExtData = std::get<GeomAdaptor_Surface::ExtrusionData>(mySurfaceData);
       Geom_ExtrusionUtils::D0(U, V, *anExtData.BasisCurve, anExtData.Direction, P);
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       const auto& aRevData = std::get<GeomAdaptor_Surface::RevolutionData>(mySurfaceData);
       Geom_RevolutionUtils::D0(U, V, *aRevData.BasisCurve, aRevData.Axis, P);
       break;
     }
 
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       const auto& anOffData = std::get<GeomAdaptor_Surface::OffsetData>(mySurfaceData);
       offsetD0(U, V, anOffData, P);
       break;
@@ -1032,14 +1035,16 @@ void GeomAdaptor_Surface::D1(const double U,
 
   switch (mySurfaceType)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       auto& aCache = std::get<BezierData>(mySurfaceData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U, V))
         RebuildCache(U, V);
       aCache->D1(U, V, P, D1U, D1V);
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       auto&       aBSplData = std::get<BSplineData>(mySurfaceData);
       const auto& aBSpl     = aBSplData.Surface;
       if ((USide != 0 || VSide != 0) && IfUVBound(u, v, Ideb, Ifin, IVdeb, IVfin, USide, VSide))
@@ -1053,19 +1058,22 @@ void GeomAdaptor_Surface::D1(const double U,
       break;
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       const auto& anExtData = std::get<GeomAdaptor_Surface::ExtrusionData>(mySurfaceData);
       Geom_ExtrusionUtils::D1(u, v, *anExtData.BasisCurve, anExtData.Direction, P, D1U, D1V);
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       const auto& aRevData = std::get<GeomAdaptor_Surface::RevolutionData>(mySurfaceData);
       Geom_RevolutionUtils::D1(u, v, *aRevData.BasisCurve, aRevData.Axis, P, D1U, D1V);
       break;
     }
 
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       const auto& anOffData = std::get<GeomAdaptor_Surface::OffsetData>(mySurfaceData);
       offsetD1(u, v, anOffData, P, D1U, D1V);
       break;
@@ -1112,14 +1120,16 @@ void GeomAdaptor_Surface::D2(const double U,
 
   switch (mySurfaceType)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       auto& aCache = std::get<BezierData>(mySurfaceData).Cache;
       if (aCache.IsNull() || !aCache->IsCacheValid(U, V))
         RebuildCache(U, V);
       aCache->D2(U, V, P, D1U, D1V, D2U, D2V, D2UV);
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       auto&       aBSplData = std::get<BSplineData>(mySurfaceData);
       const auto& aBSpl     = aBSplData.Surface;
       if ((USide != 0 || VSide != 0) && IfUVBound(u, v, Ideb, Ifin, IVdeb, IVfin, USide, VSide))
@@ -1133,7 +1143,8 @@ void GeomAdaptor_Surface::D2(const double U,
       break;
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       const auto& anExtData = std::get<GeomAdaptor_Surface::ExtrusionData>(mySurfaceData);
       Geom_ExtrusionUtils::D2(u,
                               v,
@@ -1148,7 +1159,8 @@ void GeomAdaptor_Surface::D2(const double U,
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       const auto& aRevData = std::get<GeomAdaptor_Surface::RevolutionData>(mySurfaceData);
       Geom_RevolutionUtils::D2(u,
                                v,
@@ -1163,13 +1175,15 @@ void GeomAdaptor_Surface::D2(const double U,
       break;
     }
 
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       const auto& anOffData = std::get<GeomAdaptor_Surface::OffsetData>(mySurfaceData);
       offsetD2(u, v, anOffData, P, D1U, D1V, D2U, D2V, D2UV);
       break;
     }
 
-    default: {
+    default:
+    {
       mySurface->D2(u, v, P, D1U, D1V, D2U, D2V, D2UV);
       break;
     }
@@ -1216,7 +1230,8 @@ void GeomAdaptor_Surface::D3(const double U,
 
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto& aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       if ((USide == 0) && (VSide == 0))
         aBSpl->D3(u, v, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
@@ -1245,7 +1260,8 @@ void GeomAdaptor_Surface::D3(const double U,
       break;
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       const auto& anExtData = std::get<GeomAdaptor_Surface::ExtrusionData>(mySurfaceData);
       Geom_ExtrusionUtils::D3(u,
                               v,
@@ -1264,7 +1280,8 @@ void GeomAdaptor_Surface::D3(const double U,
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       const auto& aRevData = std::get<GeomAdaptor_Surface::RevolutionData>(mySurfaceData);
       Geom_RevolutionUtils::D3(u,
                                v,
@@ -1283,13 +1300,15 @@ void GeomAdaptor_Surface::D3(const double U,
       break;
     }
 
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       const auto& anOffData = std::get<GeomAdaptor_Surface::OffsetData>(mySurfaceData);
       offsetD3(u, v, anOffData, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
       break;
     }
 
-    default: {
+    default:
+    {
       mySurface->D3(u, v, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
       break;
     }
@@ -1325,7 +1344,8 @@ gp_Vec GeomAdaptor_Surface::DN(const double U, const double V, const int Nu, con
 
   switch (mySurfaceType)
   {
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       const auto& aBSpl = std::get<BSplineData>(mySurfaceData).Surface;
       if ((USide == 0) && (VSide == 0))
         return aBSpl->DN(u, v, Nu, Nv);
@@ -1338,17 +1358,20 @@ gp_Vec GeomAdaptor_Surface::DN(const double U, const double V, const int Nu, con
       }
     }
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       const auto& anExtData = std::get<GeomAdaptor_Surface::ExtrusionData>(mySurfaceData);
       return Geom_ExtrusionUtils::DN(u, *anExtData.BasisCurve, anExtData.Direction, Nu, Nv);
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       const auto& aRevData = std::get<GeomAdaptor_Surface::RevolutionData>(mySurfaceData);
       return Geom_RevolutionUtils::DN(u, v, *aRevData.BasisCurve, aRevData.Axis, Nu, Nv);
     }
 
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       const auto& anOffData = std::get<GeomAdaptor_Surface::OffsetData>(mySurfaceData);
       return offsetDN(u, v, anOffData, Nu, Nv);
     }
@@ -1375,35 +1398,40 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
 
   switch (mySurfaceType)
   {
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceOfExtrusion:
+    {
       GeomAdaptor_Curve myBasisCurve(
         occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurface)->BasisCurve(),
         myUFirst,
         myULast);
       return myBasisCurve.Resolution(R3d);
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       occ::handle<Geom_ToroidalSurface> S(occ::down_cast<Geom_ToroidalSurface>(mySurface));
       const double                      R = S->MajorRadius() + S->MinorRadius();
       if (R > Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       occ::handle<Geom_SphericalSurface> S(occ::down_cast<Geom_SphericalSurface>(mySurface));
       const double                       R = S->Radius();
       if (R > Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       occ::handle<Geom_CylindricalSurface> S(occ::down_cast<Geom_CylindricalSurface>(mySurface));
       const double                         R = S->Radius();
       if (R > Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       if (myVLast - myVFirst > 1.e10)
       {
         // Pas vraiment borne => resolution inconnue
@@ -1417,20 +1445,24 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
       const double R                          = (Rayon1 > Rayon2) ? Rayon1 : Rayon2;
       return (R > Precision::Confusion() ? (R3d / R) : 0.);
     }
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       return R3d;
     }
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       double Ures, Vres;
       occ::down_cast<Geom_BezierSurface>(mySurface)->Resolution(R3d, Ures, Vres);
       return Ures;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       double Ures, Vres;
       std::get<BSplineData>(mySurfaceData).Surface->Resolution(R3d, Ures, Vres);
       return Ures;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       occ::handle<Geom_Surface> base =
         occ::down_cast<Geom_OffsetSurface>(mySurface)->BasisSurface();
       GeomAdaptor_Surface gabase(base, myUFirst, myULast, myVFirst, myVLast);
@@ -1454,21 +1486,24 @@ double GeomAdaptor_Surface::VResolution(const double R3d) const
 
   switch (mySurfaceType)
   {
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceOfRevolution:
+    {
       GeomAdaptor_Curve myBasisCurve(
         occ::down_cast<Geom_SurfaceOfRevolution>(mySurface)->BasisCurve(),
         myUFirst,
         myULast);
       return myBasisCurve.Resolution(R3d);
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       occ::handle<Geom_ToroidalSurface> S(occ::down_cast<Geom_ToroidalSurface>(mySurface));
       const double                      R = S->MinorRadius();
       if (R > Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       occ::handle<Geom_SphericalSurface> S(occ::down_cast<Geom_SphericalSurface>(mySurface));
       const double                       R = S->Radius();
       if (R > Precision::Confusion())
@@ -1478,20 +1513,24 @@ double GeomAdaptor_Surface::VResolution(const double R3d) const
     case GeomAbs_SurfaceOfExtrusion:
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       return R3d;
     }
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       double Ures, Vres;
       occ::down_cast<Geom_BezierSurface>(mySurface)->Resolution(R3d, Ures, Vres);
       return Vres;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       double Ures, Vres;
       std::get<BSplineData>(mySurfaceData).Surface->Resolution(R3d, Ures, Vres);
       return Vres;
     }
-    case GeomAbs_OffsetSurface: {
+    case GeomAbs_OffsetSurface:
+    {
       occ::handle<Geom_Surface> base =
         occ::down_cast<Geom_OffsetSurface>(mySurface)->BasisSurface();
       GeomAdaptor_Surface gabase(base, myUFirst, myULast, myVFirst, myVLast);

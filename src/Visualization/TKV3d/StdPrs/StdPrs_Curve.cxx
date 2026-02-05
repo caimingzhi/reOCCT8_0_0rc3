@@ -1,22 +1,3 @@
-// Created on: 1995-08-04
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Great zoom leads to non-coincidence of
-// a point and non-infinite lines passing through this point:
-
 #include <Adaptor3d_Curve.hpp>
 #include <gp_Circ.hpp>
 #include <gp_Dir.hpp>
@@ -103,7 +84,8 @@ static void DrawCurve(const Adaptor3d_Curve&              aCurve,
 
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Pnt p1 = aCurve.Value(U1);
       gp_Pnt p2 = aCurve.Value(U2);
       Points.Append(p1);
@@ -117,7 +99,8 @@ static void DrawCurve(const Adaptor3d_Curve&              aCurve,
       }
     }
     break;
-    default: {
+    default:
+    {
       const int    N  = std::max(2, NbP * nbintervals);
       const double DU = (U2 - U1) / (N - 1);
       gp_Pnt       p;
@@ -154,7 +137,8 @@ static bool MatchCurve(const double           X,
   double retdist;
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Pnt p1 = aCurve.Value(U1);
       if (std::abs(X - p1.X()) + std::abs(Y - p1.Y()) + std::abs(Z - p1.Z()) <= aDistance)
         return true;
@@ -163,7 +147,8 @@ static bool MatchCurve(const double           X,
         return true;
       return Prs3d::MatchSegment(X, Y, Z, aDistance, p1, p2, retdist);
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       const double Radius = aCurve.Circle().Radius();
       const double DU     = std::sqrt(8.0 * TheDeflection / Radius);
       const double Er     = std::abs(U2 - U1) / DU;
@@ -187,7 +172,8 @@ static bool MatchCurve(const double           X,
       }
       break;
     }
-    default: {
+    default:
+    {
       const double DU = (U2 - U1) / (NbP - 1);
       gp_Pnt       p1, p2;
       for (int i = 1; i <= NbP; i++)

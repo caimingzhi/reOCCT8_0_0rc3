@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax1.hpp>
 #include <gp_Ax3.hpp>
 
@@ -235,4 +234,3 @@ inline gp_Cylinder gp_Cylinder::Transformed(const gp_Trsf& theT) const
   }
   return aCyl;
 }
-

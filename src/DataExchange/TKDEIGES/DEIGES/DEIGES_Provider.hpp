@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DEIGES_ConfigurationNode.hpp>
 #include <DE_Provider.hpp>
 
@@ -143,4 +142,3 @@ private:
   DEIGES_Parameters myOldValues;
   int               myOldLengthUnit = 1;
 };
-

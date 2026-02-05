@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Transaction.hpp>
@@ -56,4 +55,3 @@ public:
 private:
   TDF_Transaction myTransaction;
 };
-

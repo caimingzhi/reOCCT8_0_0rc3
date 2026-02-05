@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_XY.hpp>
@@ -76,4 +75,3 @@ protected:
   gp_XY myUV;
   int   myActiveOrder;
 };
-

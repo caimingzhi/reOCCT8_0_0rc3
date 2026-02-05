@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -78,4 +77,3 @@ private:
   TCollection_AsciiString                               thelab;
   NCollection_Sequence<occ::handle<Standard_Transient>> thesel;
 };
-

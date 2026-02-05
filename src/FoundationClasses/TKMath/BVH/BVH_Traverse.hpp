@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Box.hpp>
 #include <BVH_Tree.hpp>
 
@@ -336,20 +335,6 @@ protected: //! @name Fields
   BVHSetType* myBVHSet1;
   BVHSetType* myBVHSet2;
 };
-// Created by: Eugeny MALTCHIKOV
-// Created on: 2019-04-17
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Standard_Assert.hpp>
 
@@ -614,5 +599,3 @@ int BVH_PairTraverse<NumType, Dimension, BVHSetType, MetricType>::Select(
     aPrevNode = aNode;
   }
 }
-
-

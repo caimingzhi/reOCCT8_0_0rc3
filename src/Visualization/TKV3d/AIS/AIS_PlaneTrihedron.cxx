@@ -1,23 +1,3 @@
-// Created on: 1996-12-13
-// Created by: Jean-Pierre COMBE
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// + X/YAxis() returns AIS_Line instead of AIS_Axis
-// + (-1) selection mode token into account
-// (SAMTECH specific)
-
 #include <AIS_Line.hpp>
 #include <AIS_PlaneTrihedron.hpp>
 #include <AIS_Point.hpp>
@@ -187,7 +167,8 @@ void AIS_PlaneTrihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>
   ExtremityPoints(PP, myPlane, myDrawer);
   switch (aMode)
   {
-    case 0: { // triedre complet
+    case 0:
+    { // triedre complet
       Prior = 5;
       //      gp_Ax2 theax = gp_Ax2(myPlane->Position().Ax2());
       //      gp_Pnt p1 = theax.Location();
@@ -198,7 +179,8 @@ void AIS_PlaneTrihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>
 
       break;
     }
-    case 1: { // origine
+    case 1:
+    { // origine
       Prior                                                = 8;
       const occ::handle<SelectMgr_SelectableObject>& anObj = myShapes[0]; // to avoid ambiguity
       eown = new SelectMgr_EntityOwner(anObj, Prior);
@@ -206,7 +188,8 @@ void AIS_PlaneTrihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>
 
       break;
     }
-    case 2: { // axes ... priorite 7
+    case 2:
+    { // axes ... priorite 7
       Prior = 7;
       for (int i = 1; i <= 2; i++)
       {
@@ -216,7 +199,8 @@ void AIS_PlaneTrihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>
       }
       break;
     }
-    case -1: {
+    case -1:
+    {
       Prior = 5;
       aSelection->Clear();
       break;

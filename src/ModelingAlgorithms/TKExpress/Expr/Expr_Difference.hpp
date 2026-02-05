@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Expr_BinaryExpression.hpp>
@@ -54,4 +53,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Expr_Difference, Expr_BinaryExpression)
 };
-

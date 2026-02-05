@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Graphic3d_NameOfTexture1D.hpp>
@@ -40,4 +39,3 @@ protected:
 private:
   Graphic3d_NameOfTexture1D myName;
 };
-

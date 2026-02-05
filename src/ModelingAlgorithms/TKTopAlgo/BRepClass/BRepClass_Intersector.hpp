@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -33,4 +32,3 @@ public:
                                      gp_Dir2d&             N,
                                      double&               C) const;
 };
-

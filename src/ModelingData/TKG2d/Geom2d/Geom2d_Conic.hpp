@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax22d.hpp>
 #include <Geom2d_Curve.hpp>
 
@@ -94,4 +93,3 @@ public:
 protected:
   gp_Ax22d pos;
 };
-

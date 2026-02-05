@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Standard GLSL program combination bits.
 enum Graphic3d_ShaderFlags
 {
@@ -37,4 +36,3 @@ enum Graphic3d_ShaderFlags
     Graphic3d_ShaderFlags_TextureRGB | Graphic3d_ShaderFlags_TextureEnv,
   Graphic3d_ShaderFlags_NeedsGeomShader = Graphic3d_ShaderFlags_MeshEdges,
 };
-

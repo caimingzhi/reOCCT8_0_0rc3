@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_SurfaceCurve.hpp>
@@ -14,4 +13,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_SeamCurve, StepGeom_SurfaceCurve)
 };
-

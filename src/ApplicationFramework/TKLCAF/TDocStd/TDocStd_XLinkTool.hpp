@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -86,4 +85,3 @@ private:
   occ::handle<TDF_DataSet>         myDS;
   occ::handle<TDF_RelocationTable> myRT;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepLib_ToolTriangulatedShape.hpp>
 #include <gp_Dir.hpp>
 #include <NCollection_Array1.hpp>
@@ -59,4 +58,3 @@ public:
                                                          const occ::handle<Prs3d_Drawer>& theDrawer,
                                                          const bool theToResetCoeff);
 };
-

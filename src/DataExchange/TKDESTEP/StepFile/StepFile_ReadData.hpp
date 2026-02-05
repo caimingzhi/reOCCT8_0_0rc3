@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Handle.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -240,4 +239,3 @@ private:
   ErrorsPage*         myFirstError;      //!< First node of the errors pages list
   ErrorsPage*         myCurError;        //!< Current node of the errors pages list
 };
-

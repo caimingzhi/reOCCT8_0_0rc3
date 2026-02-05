@@ -1,18 +1,3 @@
-// Created on: 2017-04-21
-// Created by: Alexander Bobkov
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepTools_History.hpp>
 
 #include <TopExp.hpp>
@@ -25,31 +10,31 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepTools_History, Standard_Transient)
 namespace
 {
 
-//==============================================================================
-// function : add
-// purpose  : Adds the elements of the list to the map.
-//==============================================================================
-void add(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap,
-         const NCollection_List<TopoDS_Shape>&                   theList)
-{
-  for (NCollection_List<TopoDS_Shape>::Iterator aSIt(theList); aSIt.More(); aSIt.Next())
+  //==============================================================================
+  // function : add
+  // purpose  : Adds the elements of the list to the map.
+  //==============================================================================
+  void add(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap,
+           const NCollection_List<TopoDS_Shape>&                   theList)
   {
-    theMap.Add(aSIt.Value());
+    for (NCollection_List<TopoDS_Shape>::Iterator aSIt(theList); aSIt.More(); aSIt.Next())
+    {
+      theMap.Add(aSIt.Value());
+    }
   }
-}
 
-//==============================================================================
-// function : add
-// purpose  : Adds the elements of the collection to the list.
-//==============================================================================
-template <typename TCollection>
-void add(NCollection_List<TopoDS_Shape>& theList, const TCollection& theCollection)
-{
-  for (typename TCollection::Iterator aSIt(theCollection); aSIt.More(); aSIt.Next())
+  //==============================================================================
+  // function : add
+  // purpose  : Adds the elements of the collection to the list.
+  //==============================================================================
+  template <typename TCollection>
+  void add(NCollection_List<TopoDS_Shape>& theList, const TCollection& theCollection)
   {
-    theList.Append(aSIt.Value());
+    for (typename TCollection::Iterator aSIt(theCollection); aSIt.More(); aSIt.Next())
+    {
+      theList.Append(aSIt.Value());
+    }
   }
-}
 
 } // namespace
 

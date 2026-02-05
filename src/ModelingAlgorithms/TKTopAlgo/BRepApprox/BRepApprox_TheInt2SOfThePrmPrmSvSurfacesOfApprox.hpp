@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -140,4 +139,3 @@ private:
 #undef IntImp_TheFunction_hxx
 #undef IntImp_Int2S
 #undef IntImp_Int2S_hxx
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <NCollection_Map.hpp>
 
@@ -46,4 +45,3 @@ private:
 private:
   occ::handle<XSControl_WorkSession> myWS; //!< The work session containing the model with entities.
 };
-

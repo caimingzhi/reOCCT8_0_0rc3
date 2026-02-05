@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_TrimmingSelect.hpp>
@@ -68,4 +67,3 @@ private:
   bool                                                      senseAgreement;
   StepGeom_TrimmingPreference                               masterRepresentation;
 };
-

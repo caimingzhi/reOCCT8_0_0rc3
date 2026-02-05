@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -41,4 +40,3 @@ private:
   occ::handle<StepBasic_Approval>     authorizedApproval;
   occ::handle<StepBasic_ApprovalRole> role;
 };
-

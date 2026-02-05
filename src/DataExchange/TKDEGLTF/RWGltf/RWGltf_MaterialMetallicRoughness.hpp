@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec2.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -24,7 +23,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <Standard_CString.hpp>
 
@@ -54,7 +52,6 @@ inline RWGltf_GltfAlphaMode RWGltf_GltfParseAlphaMode(const char* theType)
   }
   return RWGltf_GltfAlphaMode_Opaque;
 }
-
 
 #include <Standard_Transient.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -93,4 +90,3 @@ public:
   {
   }
 };
-

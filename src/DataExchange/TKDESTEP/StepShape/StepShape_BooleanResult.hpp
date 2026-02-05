@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_BooleanOperator.hpp>
@@ -39,4 +38,3 @@ private:
   StepShape_BooleanOperand  firstOperand;
   StepShape_BooleanOperand  secondOperand;
 };
-

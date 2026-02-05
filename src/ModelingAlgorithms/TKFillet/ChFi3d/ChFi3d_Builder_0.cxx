@@ -1,23 +1,3 @@
-// Created on: 1993-12-16
-// Created by: Isabelle GRIGNON
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  modified by ofv - Thu Feb 26 11:18:16 2004 OCC5246
-//  Modified by skv - Fri Oct 24 14:24:47 2003 OCC4077
-//  Modified by skv - Mon Jun 16 15:50:44 2003 OCC615
-
 #include <ChFi3d_Builder_0.hpp>
 
 #include <AppParCurves_MultiBSpCurve.hpp>
@@ -685,19 +665,22 @@ void ChFi3d_ExtrSpineCarac(const TopOpeBRepDS_DataStructure& DStr,
   gp_Vec Vbid;
   switch (gs.GetType())
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Cylinder cyl = gs.Cylinder();
       R               = cyl.Radius();
       ElSLib::D1(pp.X(), pp.Y(), cyl, Pbid, Vbid, V);
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Torus tor = gs.Torus();
       R            = tor.MinorRadius();
       ElSLib::D1(pp.X(), pp.Y(), tor, Pbid, V, Vbid);
     }
     break;
-    default: {
+    default:
+    {
       int                              nbelspine;
       const occ::handle<ChFiDS_Spine>& sp  = cd->Spine();
       occ::handle<ChFiDS_FilSpine>     fsp = occ::down_cast<ChFiDS_FilSpine>(sp);
@@ -1356,31 +1339,38 @@ void ChFi3d_ProjectPCurv(const occ::handle<Adaptor3d_Curve>&   HCg,
     tolreached = Projc.GetTolerance();
     switch (Projc.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         Pcurv = new Geom2d_Line(Projc.Line());
       }
       break;
-      case GeomAbs_Circle: {
+      case GeomAbs_Circle:
+      {
         Pcurv = new Geom2d_Circle(Projc.Circle());
       }
       break;
-      case GeomAbs_Ellipse: {
+      case GeomAbs_Ellipse:
+      {
         Pcurv = new Geom2d_Ellipse(Projc.Ellipse());
       }
       break;
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_Hyperbola:
+      {
         Pcurv = new Geom2d_Hyperbola(Projc.Hyperbola());
       }
       break;
-      case GeomAbs_Parabola: {
+      case GeomAbs_Parabola:
+      {
         Pcurv = new Geom2d_Parabola(Projc.Parabola());
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         Pcurv = Projc.Bezier();
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         Pcurv = Projc.BSpline();
       }
       break;
@@ -3480,7 +3470,8 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       bool c1line = false;
       switch (ImpKK.TypeInter())
       {
-        case IntAna_Line: {
+        case IntAna_Line:
+        {
           c1line       = true;
           int    nbsol = ImpKK.NbSolutions();
           gp_Lin C1;
@@ -3497,7 +3488,8 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
           ElCLib::D1(Udeb, C1, Pbid, Vint);
         }
         break;
-        case IntAna_Circle: {
+        case IntAna_Circle:
+        {
           gp_Circ C1 = ImpKK.Circle(1);
           C3d        = new Geom_Circle(C1);
           Udeb       = ElCLib::Parameter(C1, pdeb);
@@ -3505,7 +3497,8 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
           ElCLib::D1(Udeb, C1, Pbid, Vint);
         }
         break;
-        case IntAna_Ellipse: {
+        case IntAna_Ellipse:
+        {
           gp_Elips C1 = ImpKK.Ellipse(1);
           C3d         = new Geom_Ellipse(C1);
           Udeb        = ElCLib::Parameter(C1, pdeb);
@@ -4343,7 +4336,8 @@ void ChFi3d_Parameters(const occ::handle<Geom_Surface>& S, const gp_Pnt& p3d, do
       break;
     case GeomAbs_BezierSurface:
     case GeomAbs_BSplineSurface:
-    default: {
+    default:
+    {
       GeomAPI_ProjectPointOnSurf tool(p3d, S);
       if (tool.NbPoints() != 1)
         throw StdFail_NotDone("ChFi3d_Parameters() - no projection results");
@@ -4368,32 +4362,38 @@ void ChFi3d_TrimCurve(const occ::handle<Geom_Curve>&  gc,
   GeomAdaptor_Curve gac(gc);
   switch (gac.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       uf = ElCLib::Parameter(gac.Line(), FirstP);
       ul = ElCLib::Parameter(gac.Line(), LastP);
     }
     break;
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       uf = ElCLib::Parameter(gac.Circle(), FirstP);
       ul = ElCLib::Parameter(gac.Circle(), LastP);
     }
     break;
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       uf = ElCLib::Parameter(gac.Ellipse(), FirstP);
       ul = ElCLib::Parameter(gac.Ellipse(), LastP);
     }
     break;
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       uf = ElCLib::Parameter(gac.Hyperbola(), FirstP);
       ul = ElCLib::Parameter(gac.Hyperbola(), LastP);
     }
     break;
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       uf = ElCLib::Parameter(gac.Parabola(), FirstP);
       ul = ElCLib::Parameter(gac.Parabola(), LastP);
     }
     break;
-    default: {
+    default:
+    {
       GeomAPI_ProjectPointOnCurve tool(FirstP, gc);
       if (tool.NbPoints() != 1)
         throw StdFail_NotDone("ChFi3d_TrimCurve() - no projection results for the first point");

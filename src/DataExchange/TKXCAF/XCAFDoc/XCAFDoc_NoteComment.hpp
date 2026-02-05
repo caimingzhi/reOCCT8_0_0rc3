@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XCAFDoc_Note.hpp>
 
 //! A comment note attribute.
@@ -48,4 +47,3 @@ public:
 protected:
   TCollection_ExtendedString myComment; ///< Comment text.
 };
-

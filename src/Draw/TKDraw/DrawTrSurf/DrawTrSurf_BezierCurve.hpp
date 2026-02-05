@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Color.hpp>
 #include <DrawTrSurf_Curve.hpp>
 
@@ -50,4 +49,3 @@ private:
   bool       drawPoles;
   Draw_Color polesLook;
 };
-

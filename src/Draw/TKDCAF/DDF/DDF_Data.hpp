@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Draw_Drawable3D.hpp>
@@ -33,4 +32,3 @@ public:
 private:
   occ::handle<TDF_Data> myDF;
 };
-

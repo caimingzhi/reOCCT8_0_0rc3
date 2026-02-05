@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BinLDrivers_DocumentRetrievalDriver.hpp>
@@ -40,4 +39,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BinDrivers_DocumentRetrievalDriver, BinLDrivers_DocumentRetrievalDriver)
 };
-

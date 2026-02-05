@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IntRes2d_Domain.hpp>
 #include <IntRes2d_Transition.hpp>
 #include <gp_Pnt2d.hpp>
@@ -18,4 +17,3 @@ void Determine_Transition(const IntRes2d_Position Pos1,
                           const gp_Vec2d&         Norm2,
                           IntRes2d_Transition&    Trans2,
                           const double            ToleranceAng);
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TObj_Object.hpp>
 
 #include <TDF_Attribute.hpp>
@@ -82,5 +81,5 @@ public:
 //! Define handle class for TObj_TObject
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

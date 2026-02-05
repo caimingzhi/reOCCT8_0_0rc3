@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureUnit.hpp>
 
 //! Standard texture units combination bits.
@@ -14,4 +13,3 @@ enum Graphic3d_TextureSetBits
   Graphic3d_TextureSetBits_MetallicRoughness =
     (unsigned int)(1 << int(Graphic3d_TextureUnit_MetallicRoughness)),
 };
-

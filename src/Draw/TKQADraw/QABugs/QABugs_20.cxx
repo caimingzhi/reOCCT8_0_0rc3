@@ -1,18 +1,3 @@
-// Created on: 2015-10-26
-// Created by: Nikolai BUKHALOV
-// Copyright (c) 2002-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <QABugs.hpp>
 
 #include <Extrema_GenLocateExtPS.hpp>
@@ -2140,23 +2125,23 @@ static int OCC27466(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
 
 namespace Parab2d_Bug26747
 {
-// Directrix and X-axe direction
-gp_Ax2d Axes;
+  // Directrix and X-axe direction
+  gp_Ax2d Axes;
 
-// Focus
-gp_Pnt2d FocusPoint;
+  // Focus
+  gp_Pnt2d FocusPoint;
 
-// Focal length
-double FocalLength;
+  // Focal length
+  double FocalLength;
 
-// Coordinates of the vertex
-double VertX, VertY;
+  // Coordinates of the vertex
+  double VertX, VertY;
 
-// Parameter
-double Parameter;
+  // Parameter
+  double Parameter;
 
-// Coefficients
-double Coeffs[6];
+  // Coefficients
+  double Coeffs[6];
 } // namespace Parab2d_Bug26747
 
 //========================================================================
@@ -3944,55 +3929,55 @@ static int OCC31320(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-class QABugs_XdeLoader : public OSD_Thread
-{
-public:
-  QABugs_XdeLoader(const occ::handle<TDocStd_Application>& theXdeApp,
-                   const occ::handle<TDocStd_Document>&    theXdeDoc,
-                   const TCollection_AsciiString&          theFilePath)
-      : OSD_Thread(performThread),
-        myXdeApp(theXdeApp),
-        myXdeDoc(theXdeDoc),
-        myFilePath(theFilePath)
+  class QABugs_XdeLoader : public OSD_Thread
   {
-  }
-
-private:
-  void perform()
-  {
-    occ::handle<TDocStd_Document> aNewDoc;
-    const PCDM_ReaderStatus       aReaderStatus = myXdeApp->Open(myFilePath, aNewDoc);
-    if (aReaderStatus != PCDM_RS_OK)
+  public:
+    QABugs_XdeLoader(const occ::handle<TDocStd_Application>& theXdeApp,
+                     const occ::handle<TDocStd_Document>&    theXdeDoc,
+                     const TCollection_AsciiString&          theFilePath)
+        : OSD_Thread(performThread),
+          myXdeApp(theXdeApp),
+          myXdeDoc(theXdeDoc),
+          myFilePath(theFilePath)
     {
-      Message::SendFail("Error occurred while reading the file");
-      return;
     }
-    myXdeDoc = aNewDoc;
-    Message::SendInfo() << "Info: document has been opened";
-  }
 
-  static void* performThread(void* theData)
-  {
-    QABugs_XdeLoader* aLoader = (QABugs_XdeLoader*)theData;
-    OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
-    try
+  private:
+    void perform()
     {
-      OCC_CATCH_SIGNALS
-      aLoader->perform();
+      occ::handle<TDocStd_Document> aNewDoc;
+      const PCDM_ReaderStatus       aReaderStatus = myXdeApp->Open(myFilePath, aNewDoc);
+      if (aReaderStatus != PCDM_RS_OK)
+      {
+        Message::SendFail("Error occurred while reading the file");
+        return;
+      }
+      myXdeDoc = aNewDoc;
+      Message::SendInfo() << "Info: document has been opened";
     }
-    catch (Standard_Failure const& theExcep)
+
+    static void* performThread(void* theData)
     {
-      Message::SendFail() << "Error: unexpected exception " << theExcep;
+      QABugs_XdeLoader* aLoader = (QABugs_XdeLoader*)theData;
+      OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
+      try
+      {
+        OCC_CATCH_SIGNALS
+        aLoader->perform();
+      }
+      catch (Standard_Failure const& theExcep)
+      {
+        Message::SendFail() << "Error: unexpected exception " << theExcep;
+        return nullptr;
+      }
       return nullptr;
     }
-    return nullptr;
-  }
 
-private:
-  occ::handle<TDocStd_Application> myXdeApp;
-  occ::handle<TDocStd_Document>    myXdeDoc;
-  TCollection_AsciiString          myFilePath;
-};
+  private:
+    occ::handle<TDocStd_Application> myXdeApp;
+    occ::handle<TDocStd_Document>    myXdeDoc;
+    TCollection_AsciiString          myFilePath;
+  };
 } // namespace
 
 //=======================================================================
@@ -4076,12 +4061,15 @@ static int OCC33657_1(Draw_Interpretor&, int, const char**)
 {
   STEPCAFControl_Controller::Init();
   // Checking constructors working in parallel.
-  OSD_Parallel::For(0, 1000, [](int) {
-    STEPCAFControl_Reader aReader;
-    aReader.SetColorMode(true);
-    STEPCAFControl_Writer aWriter;
-    aWriter.SetDimTolMode(true);
-  });
+  OSD_Parallel::For(0,
+                    1000,
+                    [](int)
+                    {
+                      STEPCAFControl_Reader aReader;
+                      aReader.SetColorMode(true);
+                      STEPCAFControl_Writer aWriter;
+                      aWriter.SetDimTolMode(true);
+                    });
 
   return 0;
 }
@@ -4098,11 +4086,14 @@ static int OCC33657_2(Draw_Interpretor& theDI, int theArgC, const char** theArgV
 
   STEPCAFControl_Controller::Init();
   // Checking readers working in parallel.
-  OSD_Parallel::For(0, 100, [&](int) {
-    STEPControl_Reader aReader;
-    aReader.ReadFile(theArgV[1], DESTEP_Parameters{});
-    aReader.TransferRoots();
-  });
+  OSD_Parallel::For(0,
+                    100,
+                    [&](int)
+                    {
+                      STEPControl_Reader aReader;
+                      aReader.ReadFile(theArgV[1], DESTEP_Parameters{});
+                      aReader.TransferRoots();
+                    });
 
   return 0;
 }
@@ -4114,12 +4105,16 @@ static int OCC33657_3(Draw_Interpretor&, int, const char**)
   STEPCAFControl_Controller::Init();
   const TopoDS_Shape aShape = BRepPrimAPI_MakeBox(10.0, 20.0, 30.0).Shape();
   // Checking writers working in parallel.
-  OSD_Parallel::For(0, 100, [&](int) {
-    STEPControl_Writer aWriter;
-    aWriter.Transfer(aShape, STEPControl_StepModelType::STEPControl_AsIs, DESTEP_Parameters{});
-    std::ostringstream aStream;
-    aWriter.WriteStream(aStream);
-  });
+  OSD_Parallel::For(
+    0,
+    100,
+    [&](int)
+    {
+      STEPControl_Writer aWriter;
+      aWriter.Transfer(aShape, STEPControl_StepModelType::STEPControl_AsIs, DESTEP_Parameters{});
+      std::ostringstream aStream;
+      aWriter.WriteStream(aStream);
+    });
 
   return 0;
 }
@@ -4151,66 +4146,70 @@ static int OCC33657_4(Draw_Interpretor& theDI, int theArgC, const char** theArgV
   // in order to avoid inter-thread syncronization that can potentially omit some problems.
   std::atomic_bool anErrorOccurred(false);
 
-  OSD_Parallel::For(0, 100, [&](int) {
-    if (anErrorOccurred.load(std::memory_order_relaxed))
+  OSD_Parallel::For(
+    0,
+    100,
+    [&](int)
     {
-      return;
-    }
+      if (anErrorOccurred.load(std::memory_order_relaxed))
+      {
+        return;
+      }
 
-    // Writing.
-    STEPControl_Writer aWriter;
-    aWriter.Transfer(aSourceShape,
-                     STEPControl_StepModelType::STEPControl_AsIs,
-                     DESTEP_Parameters{});
-    std::stringstream aStream;
-    aWriter.WriteStream(aStream);
+      // Writing.
+      STEPControl_Writer aWriter;
+      aWriter.Transfer(aSourceShape,
+                       STEPControl_StepModelType::STEPControl_AsIs,
+                       DESTEP_Parameters{});
+      std::stringstream aStream;
+      aWriter.WriteStream(aStream);
 
-    // Reading.
-    STEPControl_Reader aReader;
-    aReader.ReadStream("", DESTEP_Parameters{}, aStream);
-    aReader.TransferRoots();
-    const TopoDS_Shape          aResultShape = aReader.OneShape();
-    ShapeAnalysis_ShapeContents aResultAnalyzer;
-    aResultAnalyzer.Perform(aResultShape);
+      // Reading.
+      STEPControl_Reader aReader;
+      aReader.ReadStream("", DESTEP_Parameters{}, aStream);
+      aReader.TransferRoots();
+      const TopoDS_Shape          aResultShape = aReader.OneShape();
+      ShapeAnalysis_ShapeContents aResultAnalyzer;
+      aResultAnalyzer.Perform(aResultShape);
 
-    // Making sure that shape is unchanged.
-    if (aSourceAnalyzer.NbSolids() != aResultAnalyzer.NbSolids())
-    {
-      theDI << "Error: Wrong number of solids in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbSolids() << "\nActual" << aResultAnalyzer.NbSolids() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-    if (aSourceAnalyzer.NbShells() != aResultAnalyzer.NbShells())
-    {
-      theDI << "Error: Wrong number of shells in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbShells() << "\nActual" << aResultAnalyzer.NbShells() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-    if (aSourceAnalyzer.NbFaces() != aResultAnalyzer.NbFaces())
-    {
-      theDI << "Error: Wrong number of faces in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbFaces() << "\nActual" << aResultAnalyzer.NbFaces() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-    if (aSourceAnalyzer.NbWires() != aResultAnalyzer.NbWires())
-    {
-      theDI << "Error: Wrong number of wires in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbWires() << "\nActual" << aResultAnalyzer.NbWires() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-    if (aSourceAnalyzer.NbEdges() != aResultAnalyzer.NbEdges())
-    {
-      theDI << "Error: Wrong number of edges in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbEdges() << "\nActual" << aResultAnalyzer.NbEdges() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-    if (aSourceAnalyzer.NbVertices() != aResultAnalyzer.NbVertices())
-    {
-      theDI << "Error: Wrong number of vertices in the result shape.\nExpected: "
-            << aSourceAnalyzer.NbVertices() << "\nActual" << aResultAnalyzer.NbVertices() << "\n";
-      anErrorOccurred.store(true, std::memory_order_relaxed);
-    }
-  });
+      // Making sure that shape is unchanged.
+      if (aSourceAnalyzer.NbSolids() != aResultAnalyzer.NbSolids())
+      {
+        theDI << "Error: Wrong number of solids in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbSolids() << "\nActual" << aResultAnalyzer.NbSolids() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+      if (aSourceAnalyzer.NbShells() != aResultAnalyzer.NbShells())
+      {
+        theDI << "Error: Wrong number of shells in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbShells() << "\nActual" << aResultAnalyzer.NbShells() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+      if (aSourceAnalyzer.NbFaces() != aResultAnalyzer.NbFaces())
+      {
+        theDI << "Error: Wrong number of faces in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbFaces() << "\nActual" << aResultAnalyzer.NbFaces() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+      if (aSourceAnalyzer.NbWires() != aResultAnalyzer.NbWires())
+      {
+        theDI << "Error: Wrong number of wires in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbWires() << "\nActual" << aResultAnalyzer.NbWires() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+      if (aSourceAnalyzer.NbEdges() != aResultAnalyzer.NbEdges())
+      {
+        theDI << "Error: Wrong number of edges in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbEdges() << "\nActual" << aResultAnalyzer.NbEdges() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+      if (aSourceAnalyzer.NbVertices() != aResultAnalyzer.NbVertices())
+      {
+        theDI << "Error: Wrong number of vertices in the result shape.\nExpected: "
+              << aSourceAnalyzer.NbVertices() << "\nActual" << aResultAnalyzer.NbVertices() << "\n";
+        anErrorOccurred.store(true, std::memory_order_relaxed);
+      }
+    });
 
   return anErrorOccurred;
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Macro.hpp>
@@ -119,4 +118,3 @@ private:
   gp_XY                                 myFaceMax;
   gp_XY                                 myFaceMin;
 };
-

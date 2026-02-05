@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_Root.hpp>
 #include <Prs3d_Drawer.hpp>
 
@@ -24,4 +23,3 @@ public:
                                   const Adaptor3d_Surface&               aSurface,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer);
 };
-

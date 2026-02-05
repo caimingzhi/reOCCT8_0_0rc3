@@ -1,18 +1,3 @@
-// Created on: 2000-08-04
-// Created by: Pavel TELKOV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <XSDRAW.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -1469,38 +1454,42 @@ static int XDumpAssemblyTree(Draw_Interpretor& di, int argc, const char** argv)
 
   XCAFDoc_AssemblyIterator anIt = aRoot.IsNull() ? XCAFDoc_AssemblyIterator(aDoc, aLevel)
                                                  : XCAFDoc_AssemblyIterator(aDoc, aRoot, aLevel);
-  XCAFDoc_AssemblyTool::Traverse(anIt, [&](const XCAFDoc_AssemblyItemId& theItem) -> bool {
-    if (aPrintNames)
+  XCAFDoc_AssemblyTool::Traverse(
+    anIt,
+    [&](const XCAFDoc_AssemblyItemId& theItem) -> bool
     {
-      bool aFirst = true;
-      for (NCollection_List<TCollection_AsciiString>::Iterator anIt(theItem.GetPath()); anIt.More();
-           anIt.Next(), aFirst = false)
+      if (aPrintNames)
       {
-        if (!aFirst)
-          aSS << "/";
-        TDF_Label aL;
-        TDF_Tool::Label(aDoc->GetData(), anIt.Value(), aL, false);
-        if (!aL.IsNull())
+        bool aFirst = true;
+        for (NCollection_List<TCollection_AsciiString>::Iterator anIt(theItem.GetPath());
+             anIt.More();
+             anIt.Next(), aFirst = false)
         {
-          TCollection_ExtendedString aName;
-          occ::handle<TDataStd_Name> aNameAttr;
-          if (aL.FindAttribute(TDataStd_Name::GetID(), aNameAttr))
+          if (!aFirst)
+            aSS << "/";
+          TDF_Label aL;
+          TDF_Tool::Label(aDoc->GetData(), anIt.Value(), aL, false);
+          if (!aL.IsNull())
           {
-            aName = aNameAttr->Get();
-            aSS << aName;
-            continue;
+            TCollection_ExtendedString aName;
+            occ::handle<TDataStd_Name> aNameAttr;
+            if (aL.FindAttribute(TDataStd_Name::GetID(), aNameAttr))
+            {
+              aName = aNameAttr->Get();
+              aSS << aName;
+              continue;
+            }
           }
+          aSS << anIt.Value();
         }
-        aSS << anIt.Value();
+        aSS << std::endl;
       }
-      aSS << std::endl;
-    }
-    else
-    {
-      aSS << theItem.ToString() << std::endl;
-    }
-    return true;
-  });
+      else
+      {
+        aSS << theItem.ToString() << std::endl;
+      }
+      return true;
+    });
 
   di << aSS.str().c_str();
   return 0;
@@ -1577,10 +1566,10 @@ static int XDumpAssemblyGraph(Draw_Interpretor& di, int argc, const char** argv)
 
   XCAFDoc_AssemblyTool::Traverse(
     aG,
-    [](const occ::handle<XCAFDoc_AssemblyGraph>& /*theGraph*/, const int /*theNode*/) -> bool {
-      return true;
-    },
-    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool {
+    [](const occ::handle<XCAFDoc_AssemblyGraph>& /*theGraph*/, const int /*theNode*/) -> bool
+    { return true; },
+    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool
+    {
       const TDF_Label& aLabel = theGraph->GetNode(theNode);
 
       const XCAFDoc_AssemblyGraph::NodeType aNodeType = theGraph->GetNodeType(theNode);
@@ -1660,13 +1649,15 @@ static int XDumpNomenclature(Draw_Interpretor& di, int argc, const char** argv)
 
   XCAFDoc_AssemblyTool::Traverse(
     aG,
-    [](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool {
+    [](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool
+    {
       const XCAFDoc_AssemblyGraph::NodeType aNodeType = theGraph->GetNodeType(theNode);
       return (aNodeType == XCAFDoc_AssemblyGraph::NodeType_AssemblyRoot)
              || (aNodeType == XCAFDoc_AssemblyGraph::NodeType_Subassembly)
              || (aNodeType == XCAFDoc_AssemblyGraph::NodeType_Part);
     },
-    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool {
+    [&](const occ::handle<XCAFDoc_AssemblyGraph>& theGraph, const int theNode) -> bool
+    {
       const TDF_Label& aLabel = theGraph->GetNode(theNode);
 
       const XCAFDoc_AssemblyGraph::NodeType aNodeType = theGraph->GetNodeType(theNode);

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Buffer.hpp>
 #include <Graphic3d_Buffer.hpp>
 
@@ -106,4 +105,3 @@ public: //! @name methods for interleaved attributes array
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_VertexBuffer, OpenGl_Buffer)
 };
-

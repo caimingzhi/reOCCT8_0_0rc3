@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -298,4 +297,3 @@ inline bool IntPatch_TheIWLineOfTheIWalking::IsTangentAtEnd() const
 {
   return istgtend;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum IGESData_Status
 {
   IGESData_EntityOK,
@@ -8,4 +7,3 @@ enum IGESData_Status
   IGESData_ReferenceError,
   IGESData_TypeError
 };
-

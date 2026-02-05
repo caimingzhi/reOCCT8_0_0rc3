@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -52,4 +51,3 @@ private:
   occ::handle<TCollection_HAsciiString> theArtworkStackupIdent;
   occ::handle<NCollection_HArray1<int>> theLevelNumbers;
 };
-

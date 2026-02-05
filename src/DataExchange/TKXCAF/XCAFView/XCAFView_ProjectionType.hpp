@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines projection types of view
 enum XCAFView_ProjectionType
 {
@@ -8,4 +7,3 @@ enum XCAFView_ProjectionType
   XCAFView_ProjectionType_Parallel,
   XCAFView_ProjectionType_Central
 };
-

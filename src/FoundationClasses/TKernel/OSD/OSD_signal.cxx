@@ -132,60 +132,71 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
   aBuffer[0]      = '\0';
   switch (theExceptionCode)
   {
-    case EXCEPTION_FLT_DENORMAL_OPERAND: {
+    case EXCEPTION_FLT_DENORMAL_OPERAND:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT DENORMAL OPERAND");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_DIVIDE_BY_ZERO: {
+    case EXCEPTION_FLT_DIVIDE_BY_ZERO:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT DIVIDE BY ZERO");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_INEXACT_RESULT: {
+    case EXCEPTION_FLT_INEXACT_RESULT:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT INEXACT RESULT");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_INVALID_OPERATION: {
+    case EXCEPTION_FLT_INVALID_OPERATION:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT INVALID OPERATION");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_OVERFLOW: {
+    case EXCEPTION_FLT_OVERFLOW:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT OVERFLOW");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_STACK_CHECK: {
+    case EXCEPTION_FLT_STACK_CHECK:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT STACK CHECK");
       isFloatErr = true;
       break;
     }
-    case EXCEPTION_FLT_UNDERFLOW: {
+    case EXCEPTION_FLT_UNDERFLOW:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT UNDERFLOW");
       isFloatErr = true;
       break;
     }
-    case STATUS_FLOAT_MULTIPLE_TRAPS: {
+    case STATUS_FLOAT_MULTIPLE_TRAPS:
+    {
       strcat_s(aBuffer,
                sizeof(aBuffer),
                "FLT MULTIPLE TRAPS (possible overflow in conversion of double to integer)");
       isFloatErr = true;
       break;
     }
-    case STATUS_FLOAT_MULTIPLE_FAULTS: {
+    case STATUS_FLOAT_MULTIPLE_FAULTS:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "FLT MULTIPLE FAULTS");
       isFloatErr = true;
       break;
     }
-    case STATUS_NO_MEMORY: {
+    case STATUS_NO_MEMORY:
+    {
       THROW_OR_JUMP(OSD_Exception_STATUS_NO_MEMORY,
                     "MEMORY ALLOCATION ERROR ( no room in the process heap )",
                     NULL);
       break;
     }
-    case EXCEPTION_ACCESS_VIOLATION: {
+    case EXCEPTION_ACCESS_VIOLATION:
+    {
       _snprintf_s(aBuffer,
                   sizeof(aBuffer),
                   _TRUNCATE,
@@ -199,43 +210,53 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
                   "' operation");
       break;
     }
-    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED: {
+    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "ARRAY BOUNDS EXCEEDED");
       break;
     }
-    case EXCEPTION_DATATYPE_MISALIGNMENT: {
+    case EXCEPTION_DATATYPE_MISALIGNMENT:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "DATATYPE MISALIGNMENT");
       break;
     }
-    case EXCEPTION_ILLEGAL_INSTRUCTION: {
+    case EXCEPTION_ILLEGAL_INSTRUCTION:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "ILLEGAL INSTRUCTION");
       break;
     }
-    case EXCEPTION_IN_PAGE_ERROR: {
+    case EXCEPTION_IN_PAGE_ERROR:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "IN_PAGE ERROR");
       break;
     }
-    case EXCEPTION_INT_DIVIDE_BY_ZERO: {
+    case EXCEPTION_INT_DIVIDE_BY_ZERO:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "INTEGER DIVISION BY ZERO");
       break;
     }
-    case EXCEPTION_INT_OVERFLOW: {
+    case EXCEPTION_INT_OVERFLOW:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "INTEGER OVERFLOW");
       break;
     }
-    case EXCEPTION_INVALID_DISPOSITION: {
+    case EXCEPTION_INVALID_DISPOSITION:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "INVALID DISPOSITION");
       break;
     }
-    case EXCEPTION_NONCONTINUABLE_EXCEPTION: {
+    case EXCEPTION_NONCONTINUABLE_EXCEPTION:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "NONCONTINUABLE EXCEPTION");
       break;
     }
-    case EXCEPTION_PRIV_INSTRUCTION: {
+    case EXCEPTION_PRIV_INSTRUCTION:
+    {
       strcat_s(aBuffer, sizeof(aBuffer), "PRIVILEGED INSTRUCTION ENCOUNTERED");
       break;
     }
-    case EXCEPTION_STACK_OVERFLOW: {
+    case EXCEPTION_STACK_OVERFLOW:
+    {
   #if defined(_MSC_VER) && (_MSC_VER >= 1300) && !defined(OCCT_UWP)
       // try recovering from stack overflow: available in MS VC++ 7.0
       if (!_resetstkoflw())
@@ -249,7 +270,8 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
       }
       break;
     }
-    default: {
+    default:
+    {
       _snprintf_s(aBuffer,
                   sizeof(aBuffer),
                   _TRUNCATE,

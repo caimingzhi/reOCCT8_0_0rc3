@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <ExprIntrp_Generator.hpp>
@@ -26,4 +25,3 @@ private:
 
   bool done;
 };
-

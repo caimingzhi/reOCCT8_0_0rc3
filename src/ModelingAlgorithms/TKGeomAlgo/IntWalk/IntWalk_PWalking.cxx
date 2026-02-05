@@ -1128,12 +1128,14 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
         //
         switch (aStatus) // 007
         {
-          case IntWalk_ArretSurPointPrecedent: {
+          case IntWalk_ArretSurPointPrecedent:
+          {
             Arrive = false;
             RepartirOuDiviser(DejaReparti, ChoixIso, Arrive);
             break;
           }
-          case IntWalk_PasTropGrand: {
+          case IntWalk_PasTropGrand:
+          {
             Param(1) = SvParam[0];
             Param(2) = SvParam[1];
             Param(3) = SvParam[2];
@@ -1163,7 +1165,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
 
             break;
           }
-          case IntWalk_PointConfondu: {
+          case IntWalk_PointConfondu:
+          {
             LevelOfPointConfondu++;
 
             if (LevelOfPointConfondu > 5)
@@ -1203,7 +1206,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
 
             break;
           }
-          case IntWalk_StepTooSmall: {
+          case IntWalk_StepTooSmall:
+          {
             bool hasStepBeenIncreased = false;
 
             for (int i = 0; i < 4; i++)
@@ -1884,12 +1888,14 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
 
       switch (aStatus)
       {
-        case IntWalk_ArretSurPointPrecedent: {
+        case IntWalk_ArretSurPointPrecedent:
+        {
           bStop             = true;
           bOutOfTangentZone = !myIntersectionOn2S.IsTangent();
           break;
         }
-        case IntWalk_PasTropGrand: {
+        case IntWalk_PasTropGrand:
+        {
           for (parit = 0; parit < 4; parit++)
           {
             Param(parit + 1) = SvParam[parit];
@@ -1909,7 +1915,8 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
             nbIterWithoutAppend--;
           break;
         }
-        case IntWalk_PointConfondu: {
+        case IntWalk_PointConfondu:
+        {
           for (uvit = 0; uvit < 4; uvit++)
           {
             if (pasuv[uvit] < pasInit[uvit])
@@ -1920,7 +1927,8 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
           break;
         }
         case IntWalk_OK:
-        case IntWalk_ArretSurPoint: {
+        case IntWalk_ArretSurPoint:
+        {
           //
           bStop = TestArret(theDirectionFlag, Param, ChoixIso);
           //
@@ -2081,7 +2089,8 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
           }
           break;
         }
-        default: {
+        default:
+        {
           break;
         }
       }
@@ -3192,10 +3201,10 @@ void IntWalk_PWalking::RepartirOuDiviser(bool&                      DejaReparti,
 
 namespace
 {
-// OCC431(apo): modified ->
-static const double CosRef2D = std::cos(M_PI / 9.0), AngRef2D = M_PI / 2.0;
+  // OCC431(apo): modified ->
+  static const double CosRef2D = std::cos(M_PI / 9.0), AngRef2D = M_PI / 2.0;
 
-static const double d = 7.0;
+  static const double d = 7.0;
 } // namespace
 
 IntWalk_StatusDeflection IntWalk_PWalking::TestDeflection(const IntImp_ConstIsoparametric choixIso,

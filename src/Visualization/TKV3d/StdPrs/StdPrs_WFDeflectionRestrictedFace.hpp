@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <Prs3d_Root.hpp>
 #include <Prs3d_Drawer.hpp>
@@ -135,4 +134,3 @@ public:
                                     const int                               NBUiso,
                                     const int                               NBViso);
 };
-

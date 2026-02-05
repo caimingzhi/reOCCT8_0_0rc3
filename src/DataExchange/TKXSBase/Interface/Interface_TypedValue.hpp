@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <MoniTool_TypedValue.hpp>
@@ -66,4 +65,3 @@ private:
   occ::handle<TCollection_HAsciiString>                     thehval;
   occ::handle<Standard_Transient>                           theoval;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_ToolQuadric.hpp>
 
 //! Standard presentation algorithm that outputs graphical primitives for disk surface.
@@ -53,4 +52,3 @@ protected:
   double myStartAngle;  //!< Start angle in counter clockwise order
   double myEndAngle;    //!< End   angle in counter clockwise order
 };
-

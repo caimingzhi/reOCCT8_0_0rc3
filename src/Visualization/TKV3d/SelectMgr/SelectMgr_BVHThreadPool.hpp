@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <OSD_Thread.hpp>
 #include <Select3D_SensitiveEntity.hpp>
@@ -146,4 +145,3 @@ protected:
   bool myIsStarted;                                        //!< indicates that threads are running
   // clang-format on
 };
-

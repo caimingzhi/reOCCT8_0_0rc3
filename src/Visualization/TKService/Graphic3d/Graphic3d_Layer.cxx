@@ -508,18 +508,18 @@ void Graphic3d_Layer::updateBVH() const
 
 namespace
 {
-//! This structure describes the node in BVH
-struct NodeInStack
-{
-  NodeInStack(int theId = 0, bool theIsFullInside = false)
-      : Id(theId),
-        IsFullInside(theIsFullInside)
+  //! This structure describes the node in BVH
+  struct NodeInStack
   {
-  }
+    NodeInStack(int theId = 0, bool theIsFullInside = false)
+        : Id(theId),
+          IsFullInside(theIsFullInside)
+    {
+    }
 
-  int  Id;           //!< node identifier
-  bool IsFullInside; //!< if the node is completely inside
-};
+    int  Id;           //!< node identifier
+    bool IsFullInside; //!< if the node is completely inside
+  };
 } // namespace
 
 //=================================================================================================

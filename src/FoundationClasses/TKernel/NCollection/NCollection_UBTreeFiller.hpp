@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_UBTree.hpp>
 #include <NCollection_Vector.hpp>
 
@@ -194,4 +193,3 @@ double NCollection_UBTreeFiller<TheObjType, TheBndType>::checkNode(
   }
   return aLength;
 }
-

@@ -22,27 +22,27 @@
 
 namespace
 {
-//! Custom message printer that collects messages into a string stream
-class TestMessagePrinter : public Message_Printer
-{
-public:
-  TestMessagePrinter(std::ostringstream& theStream)
-      : myStream(theStream)
+  //! Custom message printer that collects messages into a string stream
+  class TestMessagePrinter : public Message_Printer
   {
-  }
-
-  void send(const TCollection_AsciiString& theString,
-            const Message_Gravity          theGravity) const override
-  {
-    if (theGravity >= Message_Info)
+  public:
+    TestMessagePrinter(std::ostringstream& theStream)
+        : myStream(theStream)
     {
-      myStream << theString << "\n";
     }
-  }
 
-private:
-  std::ostringstream& myStream;
-};
+    void send(const TCollection_AsciiString& theString,
+              const Message_Gravity          theGravity) const override
+    {
+      if (theGravity >= Message_Info)
+      {
+        myStream << theString << "\n";
+      }
+    }
+
+  private:
+    std::ostringstream& myStream;
+  };
 } // namespace
 
 TEST(Message_Messenger_Test, OCC31189_StreamBufferMessageOrdering)

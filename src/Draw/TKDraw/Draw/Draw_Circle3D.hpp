@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Circ.hpp>
@@ -28,4 +27,3 @@ private:
   double     myA2;
   Draw_Color myColor;
 };
-

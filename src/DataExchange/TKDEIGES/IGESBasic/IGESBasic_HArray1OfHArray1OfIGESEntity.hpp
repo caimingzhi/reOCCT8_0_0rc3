@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -34,4 +33,3 @@ public:
 private:
   NCollection_Array1<occ::handle<Standard_Transient>> thelist;
 };
-

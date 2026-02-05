@@ -63,33 +63,33 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_Surface, Standard_Transient)
 
 namespace
 {
-inline void RestrictBounds(double& theFirst, double& theLast)
-{
-  bool isFInf = Precision::IsNegativeInfinite(theFirst);
-  bool isLInf = Precision::IsPositiveInfinite(theLast);
-  if (isFInf || isLInf)
+  inline void RestrictBounds(double& theFirst, double& theLast)
   {
-    if (isFInf && isLInf)
+    bool isFInf = Precision::IsNegativeInfinite(theFirst);
+    bool isLInf = Precision::IsPositiveInfinite(theLast);
+    if (isFInf || isLInf)
     {
-      theFirst = -1000;
-      theLast  = 1000;
-    }
-    else if (isFInf)
-    {
-      theFirst = theLast - 2000;
-    }
-    else
-    {
-      theLast = theFirst + 2000;
+      if (isFInf && isLInf)
+      {
+        theFirst = -1000;
+        theLast  = 1000;
+      }
+      else if (isFInf)
+      {
+        theFirst = theLast - 2000;
+      }
+      else
+      {
+        theLast = theFirst + 2000;
+      }
     }
   }
-}
 
-inline void RestrictBounds(double& theUf, double& theUl, double& theVf, double& theVl)
-{
-  RestrictBounds(theUf, theUl);
-  RestrictBounds(theVf, theVl);
-}
+  inline void RestrictBounds(double& theUf, double& theUl, double& theVf, double& theVl)
+  {
+    RestrictBounds(theUf, theUl);
+    RestrictBounds(theVf, theVl);
+  }
 } // namespace
 
 // S4135
@@ -630,12 +630,14 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
 
     switch (surftype)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         myUCloseVal = RealLast();
         break;
       }
-      case GeomAbs_SurfaceOfExtrusion: { //: c8 abv 03 Mar 98: UKI60094 #753: process
-                                         //: Geom_SurfaceOfLinearExtrusion
+      case GeomAbs_SurfaceOfExtrusion:
+      { //: c8 abv 03 Mar 98: UKI60094 #753: process
+        //: Geom_SurfaceOfLinearExtrusion
         occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
           occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurf);
         occ::handle<Geom_Curve> crv = extr->BasisCurve();
@@ -656,7 +658,8 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BSplineSurface: {
+      case GeomAbs_BSplineSurface:
+      {
         occ::handle<Geom_BSplineSurface> bs      = occ::down_cast<Geom_BSplineSurface>(mySurf);
         int                              nbup    = bs->NbUPoles();
         double                           distmin = RealLast();
@@ -727,7 +730,8 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BezierSurface: {
+      case GeomAbs_BezierSurface:
+      {
         occ::handle<Geom_BezierSurface> bz      = occ::down_cast<Geom_BezierSurface>(mySurf);
         int                             nbup    = bz->NbUPoles();
         double                          distmin = RealLast();
@@ -759,7 +763,8 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         }
         break;
       }
-      default: { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
+      default:
+      { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
         double distmin  = RealLast();
         int    nbpoints = 101; // can be revised
         gp_Pnt p1       = SurfAdapt.Value(uf, vf);
@@ -841,11 +846,13 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
       case GeomAbs_Cone:
       case GeomAbs_Cylinder:
       case GeomAbs_Sphere:
-      case GeomAbs_SurfaceOfExtrusion: {
+      case GeomAbs_SurfaceOfExtrusion:
+      {
         myVCloseVal = RealLast();
         break;
       }
-      case GeomAbs_SurfaceOfRevolution: {
+      case GeomAbs_SurfaceOfRevolution:
+      {
         occ::handle<Geom_SurfaceOfRevolution> revol =
           occ::down_cast<Geom_SurfaceOfRevolution>(mySurf);
         occ::handle<Geom_Curve> crv = revol->BasisCurve();
@@ -854,7 +861,8 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
         myVCloseVal                 = p1.SquareDistance(p2);
         break;
       }
-      case GeomAbs_BSplineSurface: {
+      case GeomAbs_BSplineSurface:
+      {
         occ::handle<Geom_BSplineSurface> bs      = occ::down_cast<Geom_BSplineSurface>(mySurf);
         int                              nbvp    = bs->NbVPoles();
         double                           distmin = RealLast();
@@ -922,7 +930,8 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BezierSurface: {
+      case GeomAbs_BezierSurface:
+      {
         occ::handle<Geom_BezierSurface> bz      = occ::down_cast<Geom_BezierSurface>(mySurf);
         int                             nbvp    = bz->NbVPoles();
         double                          distmin = RealLast();
@@ -954,7 +963,8 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
         }
         break;
       }
-      default: { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
+      default:
+      { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
         double distmin  = RealLast();
         int    nbpoints = 101; // can be revised
         gp_Pnt p1       = SurfAdapt.Value(uf, vf);
@@ -1183,30 +1193,35 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
       switch (surftype)
       {
 
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           gp_Pln Plane = SurfAdapt.Plane();
           ElSLib::Parameters(Plane, P3D, S, T);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           gp_Cylinder Cylinder = SurfAdapt.Cylinder();
           ElSLib::Parameters(Cylinder, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           gp_Cone Cone = SurfAdapt.Cone();
           ElSLib::Parameters(Cone, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           gp_Sphere Sphere = SurfAdapt.Sphere();
           ElSLib::Parameters(Sphere, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           gp_Torus Torus = SurfAdapt.Torus();
           ElSLib::Parameters(Torus, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);

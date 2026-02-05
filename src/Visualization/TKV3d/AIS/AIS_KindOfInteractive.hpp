@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Declares the type of Interactive Object.
 //! This type can be used for fast pre-filtering of objects of specific group.
 enum AIS_KindOfInteractive
@@ -23,4 +22,3 @@ enum AIS_KindOfInteractive
   AIS_KOI_Relation  = AIS_KindOfInteractive_Relation,
   AIS_KOI_Dimension = AIS_KindOfInteractive_Dimension
 };
-

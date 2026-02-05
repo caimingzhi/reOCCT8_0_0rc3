@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -68,4 +67,3 @@ protected:
 protected:
   Message_Gravity myTraceLevel;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum GeomAbs_SurfaceType
 {
   GeomAbs_Plane,
@@ -15,4 +14,3 @@ enum GeomAbs_SurfaceType
   GeomAbs_OffsetSurface,
   GeomAbs_OtherSurface
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -185,4 +184,3 @@ private:
   XSControl_WorkSessionMap              myContext;
   occ::handle<XSControl_Vars>           myVars;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DESTEP_ConfigurationNode.hpp>
 #include <DE_Provider.hpp>
 
@@ -219,4 +218,3 @@ private:
   //! @param[in] theWS current work session
   void personizeWS(occ::handle<XSControl_WorkSession>& theWS);
 };
-

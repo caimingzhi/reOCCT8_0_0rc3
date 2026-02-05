@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Surface.hpp>
 #include <GeomInt_LineConstructor.hpp>
 #include <IntPatch_Intersection.hpp>
@@ -110,4 +109,3 @@ protected:
   NCollection_List<IntSurf_PntOn2S>          myListOfPnts;
   occ::handle<IntTools_Context>              myContext;
 };
-

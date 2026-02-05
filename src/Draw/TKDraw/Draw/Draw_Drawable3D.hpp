@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_CString.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
@@ -103,4 +102,3 @@ private:
   bool        isVisible;
   bool        isProtected;
 };
-

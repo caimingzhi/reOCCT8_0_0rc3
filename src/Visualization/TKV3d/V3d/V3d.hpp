@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Dir.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -135,4 +134,3 @@ public:
   Standard_EXPORT static bool TypeOfOrientationFromString(const char*            theTypeString,
                                                           V3d_TypeOfOrientation& theType);
 };
-

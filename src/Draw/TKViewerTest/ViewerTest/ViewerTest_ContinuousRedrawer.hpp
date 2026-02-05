@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OSD_Thread.hpp>
 #include <Standard_Condition.hpp>
 #include <Standard_Type.hpp>
@@ -64,4 +63,3 @@ private:
   volatile bool         myToStop;    //!< flag to stop working thread
   volatile bool         myToPause;   //!< flag to put  working thread asleep without stopping
 };
-

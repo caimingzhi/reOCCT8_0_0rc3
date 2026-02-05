@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_Geometry.hpp>
 #include <VrmlData_Coordinate.hpp>
 #include <VrmlData_Color.hpp>

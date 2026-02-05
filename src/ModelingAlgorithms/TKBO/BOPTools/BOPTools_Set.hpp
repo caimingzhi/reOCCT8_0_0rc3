@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -52,10 +51,9 @@ protected:
 
 namespace std
 {
-template <>
-struct hash<BOPTools_Set>
-{
-  size_t operator()(const BOPTools_Set& theSet) const noexcept { return theSet.GetSum(); }
-};
+  template <>
+  struct hash<BOPTools_Set>
+  {
+    size_t operator()(const BOPTools_Set& theSet) const noexcept { return theSet.GetSum(); }
+  };
 } // namespace std
-

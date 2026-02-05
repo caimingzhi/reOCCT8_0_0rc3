@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_NamedResource.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <Graphic3d_BufferType.hpp>
@@ -268,6 +267,7 @@ public:
 
   //! Initialize FBO for rendering into single/multiple color buffer and depth textures.
   Standard_DEPRECATED("Obsolete method, use Init() taking NCollection_Vec2<int>")
+
   bool Init(const occ::handle<OpenGl_Context>& theGlCtx,
             const int                          theSizeX,
             const int                          theSizeY,
@@ -284,6 +284,7 @@ public:
 
   //! Initialize FBO for rendering into textures.
   Standard_DEPRECATED("Obsolete method, use Init() taking NCollection_Vec2<int>")
+
   bool Init(const occ::handle<OpenGl_Context>& theGlCtx,
             const int                          theSizeX,
             const int                          theSizeY,
@@ -300,6 +301,7 @@ public:
 
   //! Initialize FBO for rendering into single/multiple color buffer and depth textures.
   Standard_DEPRECATED("Obsolete method, use Init() taking NCollection_Vec2<int>")
+
   bool Init(const occ::handle<OpenGl_Context>& theGlCtx,
             const int                          theSizeX,
             const int                          theSizeY,
@@ -316,6 +318,7 @@ public:
 
   //! (Re-)initialize FBO with specified dimensions.
   Standard_DEPRECATED("Obsolete method, use InitLazy() taking NCollection_Vec2<int>")
+
   bool InitLazy(const occ::handle<OpenGl_Context>& theGlCtx,
                 const int                          theViewportSizeX,
                 const int                          theViewportSizeY,
@@ -332,6 +335,7 @@ public:
 
   //! (Re-)initialize FBO with specified dimensions.
   Standard_DEPRECATED("Obsolete method, use InitLazy() taking NCollection_Vec2<int>")
+
   bool InitLazy(const occ::handle<OpenGl_Context>& theGlCtx,
                 const int                          theViewportSizeX,
                 const int                          theViewportSizeY,
@@ -350,6 +354,7 @@ public:
   //! The Render Buffer Objects will be used for Color, Depth and Stencil attachments (as opposite
   //! to textures).
   Standard_DEPRECATED("Obsolete method, use InitWithRB() taking NCollection_Vec2<int>")
+
   bool InitWithRB(const occ::handle<OpenGl_Context>& theGlCtx,
                   const int                          theSizeX,
                   const int                          theSizeY,
@@ -389,4 +394,3 @@ protected:
   OpenGl_TextureArray         myColorTextures;       //!< color texture objects
   occ::handle<OpenGl_Texture> myDepthStencilTexture; //!< depth-stencil texture object
 };
-

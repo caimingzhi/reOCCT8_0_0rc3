@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_UBTree.hpp>
 #include <Bnd_Box.hpp>
 #include <gp_Pnt.hpp>
@@ -93,4 +92,3 @@ private:
   NCollection_Array1<int>                        myArrIndices;
   int                                            myStatus;
 };
-

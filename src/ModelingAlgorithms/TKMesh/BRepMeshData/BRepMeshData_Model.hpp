@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Model.hpp>
 #include <IMeshData_Types.hpp>
 #include <NCollection_IncAllocator.hpp>
@@ -51,4 +50,3 @@ private:
   IMeshData::VectorOfIFaceHandles       myDFaces;
   IMeshData::VectorOfIEdgeHandles       myDEdges;
 };
-

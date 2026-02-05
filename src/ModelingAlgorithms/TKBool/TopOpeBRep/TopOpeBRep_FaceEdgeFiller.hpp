@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -73,4 +72,3 @@ private:
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
     TopOpeBRepDS_DataStructure&                               BDS) const;
 };
-

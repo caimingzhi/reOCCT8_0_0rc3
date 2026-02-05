@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_Frame.hpp>
 
 #include <Standard_Transient.hpp>
@@ -48,4 +47,3 @@ protected:
   NCollection_Vec2<int> myResDims;    //!< dimensions of destination frame
   int                   myResFormat;  //!< pixel format (AVPixelFormat) of destination frame
 };
-

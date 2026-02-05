@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum math_Status
 {
   math_OK,
@@ -9,4 +8,3 @@ enum math_Status
   math_DirectionSearchError,
   math_NotBracketed
 };
-

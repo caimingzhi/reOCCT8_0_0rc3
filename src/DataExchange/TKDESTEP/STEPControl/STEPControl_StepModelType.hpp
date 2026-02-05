@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Gives you the choice of translation mode for an Open
 //! CASCADE shape that is being translated to STEP.
 //! - STEPControl_AsIs translates an Open CASCADE shape to its
@@ -24,4 +23,3 @@ enum STEPControl_StepModelType
   STEPControl_GeometricCurveSet,
   STEPControl_Hybrid
 };
-

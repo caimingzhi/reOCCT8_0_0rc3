@@ -1,17 +1,3 @@
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_Texture.hpp>
 
 #include <OpenGl_ArbFBO.hpp>
@@ -31,65 +17,65 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Texture, OpenGl_NamedResource)
 namespace
 {
 
-//! Simple class to reset unpack alignment settings
-struct OpenGl_UnpackAlignmentSentry
-{
-  //! Reset unpack alignment settings to safe values
-  static void Reset(const OpenGl_Context& theCtx)
+  //! Simple class to reset unpack alignment settings
+  struct OpenGl_UnpackAlignmentSentry
   {
-    theCtx.core11fwd->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    if (theCtx.hasUnpackRowLength)
+    //! Reset unpack alignment settings to safe values
+    static void Reset(const OpenGl_Context& theCtx)
     {
-      theCtx.core11fwd->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+      theCtx.core11fwd->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+      if (theCtx.hasUnpackRowLength)
+      {
+        theCtx.core11fwd->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+      }
+    }
+
+    OpenGl_UnpackAlignmentSentry(const occ::handle<OpenGl_Context>& theCtx)
+        : myCtx(theCtx.get())
+    {
+    }
+
+    ~OpenGl_UnpackAlignmentSentry() { Reset(*myCtx); }
+
+  private:
+    OpenGl_Context* myCtx;
+  };
+
+  //! Compute the upper mipmap level for complete mipmap set (e.g. till the 1x1 level).
+  static int computeUpperMipMapLevel(int theSize)
+  {
+    for (int aMipIter = 0;; ++aMipIter, theSize /= 2)
+    {
+      if (theSize <= 1)
+      {
+        return aMipIter;
+      }
     }
   }
 
-  OpenGl_UnpackAlignmentSentry(const occ::handle<OpenGl_Context>& theCtx)
-      : myCtx(theCtx.get())
+  //! Compute size of the smallest defined mipmap level (for verbose messages).
+  static NCollection_Vec2<int> computeSmallestMipMapSize(const NCollection_Vec2<int>& theBaseSize,
+                                                         int                          theMaxLevel)
   {
-  }
-
-  ~OpenGl_UnpackAlignmentSentry() { Reset(*myCtx); }
-
-private:
-  OpenGl_Context* myCtx;
-};
-
-//! Compute the upper mipmap level for complete mipmap set (e.g. till the 1x1 level).
-static int computeUpperMipMapLevel(int theSize)
-{
-  for (int aMipIter = 0;; ++aMipIter, theSize /= 2)
-  {
-    if (theSize <= 1)
+    NCollection_Vec2<int> aMipSizeXY = theBaseSize;
+    for (int aMipIter = 0;; ++aMipIter)
     {
-      return aMipIter;
-    }
-  }
-}
+      if (aMipIter > theMaxLevel)
+      {
+        return aMipSizeXY;
+      }
 
-//! Compute size of the smallest defined mipmap level (for verbose messages).
-static NCollection_Vec2<int> computeSmallestMipMapSize(const NCollection_Vec2<int>& theBaseSize,
-                                                       int                          theMaxLevel)
-{
-  NCollection_Vec2<int> aMipSizeXY = theBaseSize;
-  for (int aMipIter = 0;; ++aMipIter)
-  {
-    if (aMipIter > theMaxLevel)
-    {
-      return aMipSizeXY;
-    }
-
-    aMipSizeXY /= 2;
-    if (aMipSizeXY.x() == 0)
-    {
-      aMipSizeXY.x() = 1;
-    }
-    if (aMipSizeXY.y() == 0)
-    {
-      aMipSizeXY.y() = 1;
+      aMipSizeXY /= 2;
+      if (aMipSizeXY.x() == 0)
+      {
+        aMipSizeXY.x() = 1;
+      }
+      if (aMipSizeXY.y() == 0)
+      {
+        aMipSizeXY.y() = 1;
+      }
     }
   }
-}
 
 } // namespace
 
@@ -230,21 +216,25 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   GLenum aTarget = GL_TEXTURE_2D;
   switch (theType)
   {
-    case Graphic3d_TypeOfTexture_1D: {
+    case Graphic3d_TypeOfTexture_1D:
+    {
       aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES ? GL_TEXTURE_1D
                                                                              : GL_TEXTURE_2D;
       break;
     }
     case Graphic3d_TypeOfTexture_2D:
-    case Graphic3d_TOT_2D_MIPMAP: {
+    case Graphic3d_TOT_2D_MIPMAP:
+    {
       aTarget = GL_TEXTURE_2D;
       break;
     }
-    case Graphic3d_TypeOfTexture_3D: {
+    case Graphic3d_TypeOfTexture_3D:
+    {
       aTarget = GL_TEXTURE_3D;
       break;
     }
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture_CUBEMAP:
+    {
       aTarget = GL_TEXTURE_CUBE_MAP;
       break;
     }
@@ -374,7 +364,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   myTarget = aTarget;
   switch (theType)
   {
-    case Graphic3d_TypeOfTexture_1D: {
+    case Graphic3d_TypeOfTexture_1D:
+    {
       if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
       {
         theCtx->PushMessage(
@@ -446,7 +437,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       break;
     }
     case Graphic3d_TypeOfTexture_2D:
-    case Graphic3d_TOT_2D_MIPMAP: {
+    case Graphic3d_TOT_2D_MIPMAP:
+    {
       Bind(theCtx);
       applyDefaultSamplerParams(theCtx);
       if (toPatchExisting)
@@ -527,7 +519,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       mySize.SetValues(theSizeXYZ.xy(), 1);
       break;
     }
-    case Graphic3d_TypeOfTexture_3D: {
+    case Graphic3d_TypeOfTexture_3D:
+    {
       if (theCtx->Functions()->glTexImage3D == nullptr)
       {
         theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -612,7 +605,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       mySize = theSizeXYZ;
       break;
     }
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture_CUBEMAP:
+    {
       Unbind(theCtx);
       Release(theCtx.get());
       return false;
@@ -749,7 +743,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>&        theCtx,
 
   switch (theTextureMap->Type())
   {
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture_CUBEMAP:
+    {
       return InitCubeMap(theCtx,
                          occ::down_cast<Graphic3d_CubeMap>(theTextureMap),
                          0,
@@ -757,7 +752,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>&        theCtx,
                          false,
                          theTextureMap->IsColorMap());
     }
-    default: {
+    default:
+    {
       if (theCtx->SupportedTextureFormats()->HasCompressed()
           && !theCtx->caps->compressedTexturesDisable)
       {

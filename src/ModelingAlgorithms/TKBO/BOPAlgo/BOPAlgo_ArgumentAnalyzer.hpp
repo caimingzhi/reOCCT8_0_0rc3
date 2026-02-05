@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -127,6 +126,7 @@ private:
   bool                                  myEmpty2;
   NCollection_List<BOPAlgo_CheckResult> myResult;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -189,5 +189,3 @@ inline bool& BOPAlgo_ArgumentAnalyzer::CurveOnSurfaceMode()
 // {
 //   return myMergeFaceMode;
 // }
-
-

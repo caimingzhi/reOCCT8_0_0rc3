@@ -1,18 +1,3 @@
-// Created on: 2010-07-18
-// Created by: Kirill GAVRILOV
-// Copyright (c) 2010-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Image_PixMap.hpp>
 
 #include <NCollection_AlignedAllocator.hpp>
@@ -22,36 +7,36 @@
 
 namespace
 {
-//! Structure defining image pixel format description.
-struct Image_FormatInfo
-{
-  const char*  Name;         //!< string representation
-  int          Format;       //!< enumeration name
-  unsigned int NbComponents; //!< number of components
-  unsigned int PixelSize;    //!< bytes per pixel
-
-  Image_FormatInfo(Image_Format theFormat,
-                   const char*  theName,
-                   unsigned int theNbComponents,
-                   size_t       thePixelSize)
-      : Name(theName),
-        Format(theFormat),
-        NbComponents(theNbComponents),
-        PixelSize((unsigned int)thePixelSize)
+  //! Structure defining image pixel format description.
+  struct Image_FormatInfo
   {
-  }
+    const char*  Name;         //!< string representation
+    int          Format;       //!< enumeration name
+    unsigned int NbComponents; //!< number of components
+    unsigned int PixelSize;    //!< bytes per pixel
 
-  Image_FormatInfo(Image_CompressedFormat theFormat,
-                   const char*            theName,
-                   unsigned int           theNbComponents,
-                   size_t                 thePixelSize)
-      : Name(theName),
-        Format(theFormat),
-        NbComponents(theNbComponents),
-        PixelSize((unsigned int)thePixelSize)
-  {
-  }
-};
+    Image_FormatInfo(Image_Format theFormat,
+                     const char*  theName,
+                     unsigned int theNbComponents,
+                     size_t       thePixelSize)
+        : Name(theName),
+          Format(theFormat),
+          NbComponents(theNbComponents),
+          PixelSize((unsigned int)thePixelSize)
+    {
+    }
+
+    Image_FormatInfo(Image_CompressedFormat theFormat,
+                     const char*            theName,
+                     unsigned int           theNbComponents,
+                     size_t                 thePixelSize)
+        : Name(theName),
+          Format(theFormat),
+          NbComponents(theNbComponents),
+          PixelSize((unsigned int)thePixelSize)
+    {
+    }
+  };
 
 #define ImageFormatInfo(theName, theNbComponents, thePixelSize)                                    \
   Image_FormatInfo(Image_Format_##theName, #theName, theNbComponents, thePixelSize)
@@ -59,36 +44,36 @@ struct Image_FormatInfo
 #define CompressedImageFormatInfo(theName, theNbComponents, thePixelSize)                          \
   Image_FormatInfo(Image_CompressedFormat_##theName, #theName, theNbComponents, thePixelSize)
 
-//! Table of image pixel formats.
-static const Image_FormatInfo Image_Table_ImageFormats[Image_CompressedFormat_NB] = {
-  ImageFormatInfo(UNKNOWN, 0, 1),
-  ImageFormatInfo(Gray, 1, 1),
-  ImageFormatInfo(Alpha, 1, 1),
-  ImageFormatInfo(RGB, 3, 3),
-  ImageFormatInfo(BGR, 3, 3),
-  ImageFormatInfo(RGB32, 3, 4),
-  ImageFormatInfo(BGR32, 3, 4),
-  ImageFormatInfo(RGBA, 4, 4),
-  ImageFormatInfo(BGRA, 4, 4),
-  ImageFormatInfo(GrayF, 1, sizeof(float)),
-  ImageFormatInfo(AlphaF, 1, sizeof(float)),
-  ImageFormatInfo(RGF, 2, sizeof(float) * 2),
-  ImageFormatInfo(RGBF, 3, sizeof(float) * 3),
-  ImageFormatInfo(BGRF, 3, sizeof(float) * 3),
-  ImageFormatInfo(RGBAF, 4, sizeof(float) * 4),
-  ImageFormatInfo(BGRAF, 4, sizeof(float) * 4),
-  ImageFormatInfo(GrayF_half, 1, sizeof(uint16_t) * 1),
-  ImageFormatInfo(RGF_half, 2, sizeof(uint16_t) * 2),
-  ImageFormatInfo(RGBAF_half, 4, sizeof(uint16_t) * 4),
-  ImageFormatInfo(Gray16, 1, 2),
-  CompressedImageFormatInfo(RGB_S3TC_DXT1,
-                            3,
-                            1), // DXT1 uses circa half a byte per pixel (64 bits per 4x4 block)
-  CompressedImageFormatInfo(RGBA_S3TC_DXT1, 4, 1),
-  CompressedImageFormatInfo(RGBA_S3TC_DXT3,
-                            4,
-                            1), // DXT3/5 uses circa 1 byte per pixel (128 bits per 4x4 block)
-  CompressedImageFormatInfo(RGBA_S3TC_DXT5, 4, 1)};
+  //! Table of image pixel formats.
+  static const Image_FormatInfo Image_Table_ImageFormats[Image_CompressedFormat_NB] = {
+    ImageFormatInfo(UNKNOWN, 0, 1),
+    ImageFormatInfo(Gray, 1, 1),
+    ImageFormatInfo(Alpha, 1, 1),
+    ImageFormatInfo(RGB, 3, 3),
+    ImageFormatInfo(BGR, 3, 3),
+    ImageFormatInfo(RGB32, 3, 4),
+    ImageFormatInfo(BGR32, 3, 4),
+    ImageFormatInfo(RGBA, 4, 4),
+    ImageFormatInfo(BGRA, 4, 4),
+    ImageFormatInfo(GrayF, 1, sizeof(float)),
+    ImageFormatInfo(AlphaF, 1, sizeof(float)),
+    ImageFormatInfo(RGF, 2, sizeof(float) * 2),
+    ImageFormatInfo(RGBF, 3, sizeof(float) * 3),
+    ImageFormatInfo(BGRF, 3, sizeof(float) * 3),
+    ImageFormatInfo(RGBAF, 4, sizeof(float) * 4),
+    ImageFormatInfo(BGRAF, 4, sizeof(float) * 4),
+    ImageFormatInfo(GrayF_half, 1, sizeof(uint16_t) * 1),
+    ImageFormatInfo(RGF_half, 2, sizeof(uint16_t) * 2),
+    ImageFormatInfo(RGBAF_half, 4, sizeof(uint16_t) * 4),
+    ImageFormatInfo(Gray16, 1, 2),
+    CompressedImageFormatInfo(RGB_S3TC_DXT1,
+                              3,
+                              1), // DXT1 uses circa half a byte per pixel (64 bits per 4x4 block)
+    CompressedImageFormatInfo(RGBA_S3TC_DXT1, 4, 1),
+    CompressedImageFormatInfo(RGBA_S3TC_DXT3,
+                              4,
+                              1), // DXT3/5 uses circa 1 byte per pixel (128 bits per 4x4 block)
+    CompressedImageFormatInfo(RGBA_S3TC_DXT5, 4, 1)};
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_PixMapData, NCollection_Buffer)
@@ -303,31 +288,37 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
 {
   switch (theFormat)
   {
-    case Image_Format_GrayF: {
+    case Image_Format_GrayF:
+    {
       const float& aPixel = *reinterpret_cast<const float*>(theRawValue);
       // clang-format off
       return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel, aPixel, aPixel, 1.0f)); // opaque
       // clang-format on
     }
-    case Image_Format_AlphaF: {
+    case Image_Format_AlphaF:
+    {
       const float& aPixel = *reinterpret_cast<const float*>(theRawValue);
       return Quantity_ColorRGBA(NCollection_Vec4<float>(1.0f, 1.0f, 1.0f, aPixel));
     }
-    case Image_Format_RGF: {
+    case Image_Format_RGF:
+    {
       const Image_ColorRGF& aPixel = *reinterpret_cast<const Image_ColorRGF*>(theRawValue);
       return Quantity_ColorRGBA(NCollection_Vec4<float>(aPixel.r(), aPixel.g(), 0.0f, 1.0f));
     }
-    case Image_Format_RGBAF: {
+    case Image_Format_RGBAF:
+    {
       const Image_ColorRGBAF& aPixel = *reinterpret_cast<const Image_ColorRGBAF*>(theRawValue);
       return Quantity_ColorRGBA(
         NCollection_Vec4<float>(aPixel.r(), aPixel.g(), aPixel.b(), aPixel.a()));
     }
-    case Image_Format_BGRAF: {
+    case Image_Format_BGRAF:
+    {
       const Image_ColorBGRAF& aPixel = *reinterpret_cast<const Image_ColorBGRAF*>(theRawValue);
       return Quantity_ColorRGBA(
         NCollection_Vec4<float>(aPixel.r(), aPixel.g(), aPixel.b(), aPixel.a()));
     }
-    case Image_Format_RGBF: {
+    case Image_Format_RGBF:
+    {
       const Image_ColorRGBF& aPixel = *reinterpret_cast<const Image_ColorRGBF*>(theRawValue);
       // clang-format off
       return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel.r(), aPixel.g(), aPixel.b(), 1.0f)); // opaque
@@ -338,12 +329,14 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
       return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel.r(), aPixel.g(), aPixel.b(), 1.0f)); // opaque
       // clang-format on
     }
-    case Image_Format_GrayF_half: {
+    case Image_Format_GrayF_half:
+    {
       const uint16_t& aPixel = *reinterpret_cast<const uint16_t*>(theRawValue);
       return Quantity_ColorRGBA(
         NCollection_Vec4<float>(ConvertFromHalfFloat(aPixel), 0.0f, 0.0f, 1.0f));
     }
-    case Image_Format_RGF_half: {
+    case Image_Format_RGF_half:
+    {
       const NCollection_Vec2<uint16_t>& aPixel =
         *reinterpret_cast<const NCollection_Vec2<uint16_t>*>(theRawValue);
       return Quantity_ColorRGBA(NCollection_Vec4<float>(ConvertFromHalfFloat(aPixel.x()),
@@ -351,7 +344,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                                         0.0f,
                                                         1.0f));
     }
-    case Image_Format_RGBAF_half: {
+    case Image_Format_RGBAF_half:
+    {
       const NCollection_Vec4<uint16_t>& aPixel =
         *reinterpret_cast<const NCollection_Vec4<uint16_t>*>(theRawValue);
       return Quantity_ColorRGBA(NCollection_Vec4<float>(ConvertFromHalfFloat(aPixel.r()),
@@ -359,7 +353,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                                         ConvertFromHalfFloat(aPixel.b()),
                                                         ConvertFromHalfFloat(aPixel.a())));
     }
-    case Image_Format_RGBA: {
+    case Image_Format_RGBA:
+    {
       const Image_ColorRGBA& aPixel = *reinterpret_cast<const Image_ColorRGBA*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -372,7 +367,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     float(aPixel.a()) / 255.0f);
     }
-    case Image_Format_BGRA: {
+    case Image_Format_BGRA:
+    {
       const Image_ColorBGRA& aPixel = *reinterpret_cast<const Image_ColorBGRA*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -385,7 +381,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     float(aPixel.a()) / 255.0f);
     }
-    case Image_Format_RGB32: {
+    case Image_Format_RGB32:
+    {
       const Image_ColorRGB32& aPixel = *reinterpret_cast<const Image_ColorRGB32*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -398,7 +395,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     1.0f);
     }
-    case Image_Format_BGR32: {
+    case Image_Format_BGR32:
+    {
       const Image_ColorBGR32& aPixel = *reinterpret_cast<const Image_ColorBGR32*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -411,7 +409,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     1.0f);
     }
-    case Image_Format_RGB: {
+    case Image_Format_RGB:
+    {
       const Image_ColorRGB& aPixel = *reinterpret_cast<const Image_ColorRGB*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -424,7 +423,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     1.0f);
     }
-    case Image_Format_BGR: {
+    case Image_Format_BGR:
+    {
       const Image_ColorBGR& aPixel = *reinterpret_cast<const Image_ColorBGR*>(theRawValue);
       return theToLinearize
                ? Quantity_ColorRGBA(
@@ -437,21 +437,25 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
                                     float(aPixel.b()) / 255.0f,
                                     1.0f);
     }
-    case Image_Format_Gray: {
+    case Image_Format_Gray:
+    {
       const uint8_t& aPixel      = *reinterpret_cast<const uint8_t*>(theRawValue);
       const float    anIntensity = float(aPixel) / 255.0f;
       return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f); // opaque
     }
-    case Image_Format_Alpha: {
+    case Image_Format_Alpha:
+    {
       const uint8_t& aPixel = *reinterpret_cast<const uint8_t*>(theRawValue);
       return Quantity_ColorRGBA(1.0f, 1.0f, 1.0f, float(aPixel) / 255.0f);
     }
-    case Image_Format_Gray16: {
+    case Image_Format_Gray16:
+    {
       const uint16_t& aPixel      = *reinterpret_cast<const uint16_t*>(theRawValue);
       const float     anIntensity = float(aPixel) / 65535.0f;
       return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f); // opaque
     }
-    case Image_Format_UNKNOWN: {
+    case Image_Format_UNKNOWN:
+    {
       break;
     }
   }
@@ -470,21 +474,25 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
   const NCollection_Vec4<float>& aColor = theColor;
   switch (theFormat)
   {
-    case Image_Format_GrayF: {
+    case Image_Format_GrayF:
+    {
       *reinterpret_cast<float*>(theRawValue) = aColor.r();
       return;
     }
-    case Image_Format_AlphaF: {
+    case Image_Format_AlphaF:
+    {
       *reinterpret_cast<float*>(theRawValue) = aColor.a();
       return;
     }
-    case Image_Format_RGF: {
+    case Image_Format_RGF:
+    {
       Image_ColorRGF& aPixel = *reinterpret_cast<Image_ColorRGF*>(theRawValue);
       aPixel.r()             = aColor.r();
       aPixel.g()             = aColor.g();
       return;
     }
-    case Image_Format_RGBAF: {
+    case Image_Format_RGBAF:
+    {
       Image_ColorRGBAF& aPixel = *reinterpret_cast<Image_ColorRGBAF*>(theRawValue);
       aPixel.r()               = aColor.r();
       aPixel.g()               = aColor.g();
@@ -492,7 +500,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a()               = aColor.a();
       return;
     }
-    case Image_Format_BGRAF: {
+    case Image_Format_BGRAF:
+    {
       Image_ColorBGRAF& aPixel = *reinterpret_cast<Image_ColorBGRAF*>(theRawValue);
       aPixel.r()               = aColor.r();
       aPixel.g()               = aColor.g();
@@ -500,33 +509,38 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a()               = aColor.a();
       return;
     }
-    case Image_Format_RGBF: {
+    case Image_Format_RGBF:
+    {
       Image_ColorRGBF& aPixel = *reinterpret_cast<Image_ColorRGBF*>(theRawValue);
       aPixel.r()              = aColor.r();
       aPixel.g()              = aColor.g();
       aPixel.b()              = aColor.b();
       return;
     }
-    case Image_Format_BGRF: {
+    case Image_Format_BGRF:
+    {
       Image_ColorBGRF& aPixel = *reinterpret_cast<Image_ColorBGRF*>(theRawValue);
       aPixel.r()              = aColor.r();
       aPixel.g()              = aColor.g();
       aPixel.b()              = aColor.b();
       return;
     }
-    case Image_Format_GrayF_half: {
+    case Image_Format_GrayF_half:
+    {
       uint16_t& aPixel = *reinterpret_cast<uint16_t*>(theRawValue);
       aPixel           = ConvertToHalfFloat(aColor.r());
       return;
     }
-    case Image_Format_RGF_half: {
+    case Image_Format_RGF_half:
+    {
       NCollection_Vec2<uint16_t>& aPixel =
         *reinterpret_cast<NCollection_Vec2<uint16_t>*>(theRawValue);
       aPixel.x() = ConvertToHalfFloat(aColor.r());
       aPixel.y() = ConvertToHalfFloat(aColor.g());
       return;
     }
-    case Image_Format_RGBAF_half: {
+    case Image_Format_RGBAF_half:
+    {
       NCollection_Vec4<uint16_t>& aPixel =
         *reinterpret_cast<NCollection_Vec4<uint16_t>*>(theRawValue);
       aPixel.r() = ConvertToHalfFloat(aColor.r());
@@ -535,7 +549,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a() = ConvertToHalfFloat(aColor.a());
       return;
     }
-    case Image_Format_RGBA: {
+    case Image_Format_RGBA:
+    {
       Image_ColorRGBA& aPixel = *reinterpret_cast<Image_ColorRGBA*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -555,7 +570,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a() = static_cast<uint8_t>(aColor.a() * 255.0f);
       return;
     }
-    case Image_Format_BGRA: {
+    case Image_Format_BGRA:
+    {
       Image_ColorBGRA& aPixel = *reinterpret_cast<Image_ColorBGRA*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -575,7 +591,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a() = static_cast<uint8_t>(aColor.a() * 255.0f);
       return;
     }
-    case Image_Format_RGB32: {
+    case Image_Format_RGB32:
+    {
       Image_ColorRGB32& aPixel = *reinterpret_cast<Image_ColorRGB32*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -595,7 +612,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a_() = 255;
       return;
     }
-    case Image_Format_BGR32: {
+    case Image_Format_BGR32:
+    {
       Image_ColorBGR32& aPixel = *reinterpret_cast<Image_ColorBGR32*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -615,7 +633,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       aPixel.a_() = 255;
       return;
     }
-    case Image_Format_RGB: {
+    case Image_Format_RGB:
+    {
       Image_ColorRGB& aPixel = *reinterpret_cast<Image_ColorRGB*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -634,7 +653,8 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       }
       return;
     }
-    case Image_Format_BGR: {
+    case Image_Format_BGR:
+    {
       Image_ColorBGR& aPixel = *reinterpret_cast<Image_ColorBGR*>(theRawValue);
       if (theToDeLinearize)
       {
@@ -653,19 +673,23 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
       }
       return;
     }
-    case Image_Format_Gray: {
+    case Image_Format_Gray:
+    {
       *reinterpret_cast<uint8_t*>(theRawValue) = static_cast<uint8_t>(aColor.r() * 255.0f);
       return;
     }
-    case Image_Format_Alpha: {
+    case Image_Format_Alpha:
+    {
       *reinterpret_cast<uint8_t*>(theRawValue) = static_cast<uint8_t>(aColor.a() * 255.0f);
       return;
     }
-    case Image_Format_Gray16: {
+    case Image_Format_Gray16:
+    {
       *reinterpret_cast<uint16_t*>(theRawValue) = uint16_t(aColor.r() * 65535.0f);
       return;
     }
-    case Image_Format_UNKNOWN: {
+    case Image_Format_UNKNOWN:
+    {
       return;
     }
   }
@@ -680,7 +704,8 @@ bool Image_PixMap::SwapRgbaBgra(Image_PixMap& theImage)
     case Image_Format_BGR32:
     case Image_Format_RGB32:
     case Image_Format_BGRA:
-    case Image_Format_RGBA: {
+    case Image_Format_RGBA:
+    {
       const bool toResetAlpha =
         theImage.Format() == Image_Format_BGR32 || theImage.Format() == Image_Format_RGB32;
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
@@ -704,7 +729,8 @@ bool Image_PixMap::SwapRgbaBgra(Image_PixMap& theImage)
       return true;
     }
     case Image_Format_BGR:
-    case Image_Format_RGB: {
+    case Image_Format_RGB:
+    {
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {
         for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
@@ -724,7 +750,8 @@ bool Image_PixMap::SwapRgbaBgra(Image_PixMap& theImage)
     case Image_Format_BGRF:
     case Image_Format_RGBF:
     case Image_Format_BGRAF:
-    case Image_Format_RGBAF: {
+    case Image_Format_RGBAF:
+    {
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {
         for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
@@ -753,7 +780,8 @@ void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
   switch (theImage.Format())
   {
     case Image_Format_Gray:
-    case Image_Format_Alpha: {
+    case Image_Format_Alpha:
+    {
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {
         for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
@@ -770,7 +798,8 @@ void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
       }
       break;
     }
-    case Image_Format_Gray16: {
+    case Image_Format_Gray16:
+    {
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {
         for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
@@ -792,7 +821,8 @@ void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
     case Image_Format_RGB32:
     case Image_Format_BGR32:
     case Image_Format_RGBA:
-    case Image_Format_BGRA: {
+    case Image_Format_BGRA:
+    {
       const NCollection_Vec3<uint8_t> aWhite24(255, 255, 255);
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {
@@ -811,7 +841,8 @@ void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
       }
       break;
     }
-    default: {
+    default:
+    {
       const Quantity_ColorRGBA aWhiteRgba(1.0f, 1.0f, 1.0f, 1.0f);
       for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
       {

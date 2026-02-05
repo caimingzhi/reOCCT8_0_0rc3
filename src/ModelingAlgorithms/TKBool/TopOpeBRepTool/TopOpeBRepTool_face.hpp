@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -31,4 +30,3 @@ private:
   bool        myfinite;
   TopoDS_Face myFfinite;
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2017-07-25
-// Created by: Anastasia BOBYLEVA
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_ViewCube.hpp>
 
 #include <AIS_AnimationCamera.hpp>
@@ -36,23 +21,23 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_ViewCubeSensitive, Select3D_SensitivePrimitiveArr
 
 namespace
 {
-constexpr int THE_NB_ROUND_SPLITS   = 8;
-constexpr int THE_NB_DISK_SLICES    = 20;
-constexpr int THE_NB_ARROW_FACETTES = 20;
+  constexpr int THE_NB_ROUND_SPLITS   = 8;
+  constexpr int THE_NB_DISK_SLICES    = 20;
+  constexpr int THE_NB_ARROW_FACETTES = 20;
 
-//! Return the number of non-zero components.
-static int nbDirectionComponents(const gp_Dir& theDir)
-{
-  int aNbComps = 0;
-  for (int aCompIter = 1; aCompIter <= 3; ++aCompIter)
+  //! Return the number of non-zero components.
+  static int nbDirectionComponents(const gp_Dir& theDir)
   {
-    if (std::abs(theDir.Coord(aCompIter)) > gp::Resolution())
+    int aNbComps = 0;
+    for (int aCompIter = 1; aCompIter <= 3; ++aCompIter)
     {
-      ++aNbComps;
+      if (std::abs(theDir.Coord(aCompIter)) > gp::Resolution())
+      {
+        ++aNbComps;
+      }
     }
+    return aNbComps;
   }
-  return aNbComps;
-}
 } // namespace
 
 //=================================================================================================

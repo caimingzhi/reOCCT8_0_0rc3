@@ -26,79 +26,79 @@
 namespace
 {
 
-// Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
-class QuadraticFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
-
-  bool Value(const math_Vector& theX, double& theF) override
+  // Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
+  class QuadraticFunction : public math_MultipleVarFunction
   {
-    double dx = theX(1) - 1.0;
-    double dy = theX(2) - 2.0;
-    theF      = dx * dx + dy * dy;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// Multi-modal function with multiple local minima: f(x,y) = sin(x) + sin(y) + 0.1*(x^2 + y^2)
-class MultiModalFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double dx = theX(1) - 1.0;
+      double dy = theX(2) - 2.0;
+      theF      = dx * dx + dy * dy;
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // Multi-modal function with multiple local minima: f(x,y) = sin(x) + sin(y) + 0.1*(x^2 + y^2)
+  class MultiModalFunction : public math_MultipleVarFunction
   {
-    double x = theX(1);
-    double y = theX(2);
-    theF     = sin(x) + sin(y) + 0.1 * (x * x + y * y);
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// 1D function: f(x) = sin(x) + 0.5*sin(3*x) with multiple local minima
-class MultiModal1DFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 1; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x = theX(1);
+      double y = theX(2);
+      theF     = sin(x) + sin(y) + 0.1 * (x * x + y * y);
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // 1D function: f(x) = sin(x) + 0.5*sin(3*x) with multiple local minima
+  class MultiModal1DFunction : public math_MultipleVarFunction
   {
-    double x = theX(1);
-    theF     = sin(x) + 0.5 * sin(3.0 * x);
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 1; }
 
-// Rosenbrock function in 2D: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
-class RosenbrockFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x = theX(1);
+      theF     = sin(x) + 0.5 * sin(3.0 * x);
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // Rosenbrock function in 2D: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
+  class RosenbrockFunction : public math_MultipleVarFunction
   {
-    double x  = theX(1);
-    double y  = theX(2);
-    double dx = 1.0 - x;
-    double dy = y - x * x;
-    theF      = dx * dx + 100.0 * dy * dy;
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-// Simple linear function: f(x,y) = x + y (minimum at bounds)
-class LinearFunction : public math_MultipleVarFunction
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      double x  = theX(1);
+      double y  = theX(2);
+      double dx = 1.0 - x;
+      double dy = y - x * x;
+      theF      = dx * dx + 100.0 * dy * dy;
+      return true;
+    }
+  };
 
-  bool Value(const math_Vector& theX, double& theF) override
+  // Simple linear function: f(x,y) = x + y (minimum at bounds)
+  class LinearFunction : public math_MultipleVarFunction
   {
-    theF = theX(1) + theX(2);
-    return true;
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
+
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      theF = theX(1) + theX(2);
+      return true;
+    }
+  };
 
 } // anonymous namespace
 

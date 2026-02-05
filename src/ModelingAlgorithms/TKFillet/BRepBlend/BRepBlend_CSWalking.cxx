@@ -936,7 +936,8 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
 
     switch (State)
     {
-      case Blend_OK: {
+      case Blend_OK:
+      {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -982,7 +983,8 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_StepTooLarge: {
+      case Blend_StepTooLarge:
+      {
         stepw = stepw / 2.;
         if (std::abs(stepw) < tolgui)
         {
@@ -1012,7 +1014,8 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_StepTooSmall: {
+      case Blend_StepTooSmall:
+      {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -1058,7 +1061,8 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_OnRst1: {
+      case Blend_OnRst1:
+      {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -1083,7 +1087,8 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_SamePoints: {
+      case Blend_SamePoints:
+      {
         // On arrete
         std::cout << " Points confondus dans le cheminement" << std::endl;
         /*

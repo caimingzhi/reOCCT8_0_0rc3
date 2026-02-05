@@ -1,19 +1,3 @@
-// Created on: 1991-07-24
-// Created by: Christophe MARION
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepPrim_OneAxis.hpp>
 
 #include <BRepPrim_Builder.hpp>
@@ -33,85 +17,85 @@
 
 namespace
 {
-//! Multiplier for Precision::Confusion() to separate overlapping pcurves
-//! when heights at VMin and VMax are equal.
-constexpr double THE_PCURVE_OFFSET_FACTOR = 10.0;
+  //! Multiplier for Precision::Confusion() to separate overlapping pcurves
+  //! when heights at VMin and VMax are equal.
+  constexpr double THE_PCURVE_OFFSET_FACTOR = 10.0;
 
-//! Vertex array indices.
-enum VertexIndex
-{
-  VAXISTOP = 0,
-  VAXISBOT,
-  VTOPSTART,
-  VTOPEND,
-  VBOTSTART,
-  VBOTEND,
-  NBVERTICES
-};
+  //! Vertex array indices.
+  enum VertexIndex
+  {
+    VAXISTOP = 0,
+    VAXISBOT,
+    VTOPSTART,
+    VTOPEND,
+    VBOTSTART,
+    VBOTEND,
+    NBVERTICES
+  };
 
-//! Edge array indices.
-enum EdgeIndex
-{
-  EAXIS = 0,
-  ESTART,
-  EEND,
-  ETOPSTART,
-  ETOPEND,
-  EBOTSTART,
-  EBOTEND,
-  ETOP,
-  EBOTTOM,
-  NBEDGES
-};
+  //! Edge array indices.
+  enum EdgeIndex
+  {
+    EAXIS = 0,
+    ESTART,
+    EEND,
+    ETOPSTART,
+    ETOPEND,
+    EBOTSTART,
+    EBOTEND,
+    ETOP,
+    EBOTTOM,
+    NBEDGES
+  };
 
-//! Wire array indices.
-//! Note: Index 4 is intentionally skipped to preserve historical array sizing.
-enum WireIndex
-{
-  WLATERAL      = 0,
-  WLATERALSTART = WLATERAL,
-  WLATERALEND,
-  WTOP,
-  WBOTTOM,
-  WSTART = 5,
-  WAXISSTART,
-  WEND,
-  WAXISEND,
-  NBWIRES
-};
+  //! Wire array indices.
+  //! Note: Index 4 is intentionally skipped to preserve historical array sizing.
+  enum WireIndex
+  {
+    WLATERAL      = 0,
+    WLATERALSTART = WLATERAL,
+    WLATERALEND,
+    WTOP,
+    WBOTTOM,
+    WSTART = 5,
+    WAXISSTART,
+    WEND,
+    WAXISEND,
+    NBWIRES
+  };
 
-//! Face array indices.
-enum FaceIndex
-{
-  FLATERAL = 0,
-  FTOP,
-  FBOTTOM,
-  FSTART,
-  FEND,
-  NBFACES
-};
+  //! Face array indices.
+  enum FaceIndex
+  {
+    FLATERAL = 0,
+    FTOP,
+    FBOTTOM,
+    FSTART,
+    FEND,
+    NBFACES
+  };
 
-//=======================================================================
-// function : BRepPrim_OneAxis_Check
-// purpose  : raise Standard_DomainError if something was built
-//=======================================================================
+  //=======================================================================
+  // function : BRepPrim_OneAxis_Check
+  // purpose  : raise Standard_DomainError if something was built
+  //=======================================================================
 
-static void BRepPrim_OneAxis_Check(const bool V[], const bool E[], const bool W[], const bool F[])
-{
-  int i;
-  for (i = 0; i < NBVERTICES; i++)
-    if (V[i])
-      throw Standard_DomainError();
-  for (i = 0; i < NBEDGES; i++)
-    if (E[i])
-      throw Standard_DomainError();
-  for (i = 0; i < NBWIRES; i++)
-    if (W[i])
-      throw Standard_DomainError();
-  for (i = 0; i < NBFACES; i++)
-    if (F[i])
-      throw Standard_DomainError();
-}
+  static void BRepPrim_OneAxis_Check(const bool V[], const bool E[], const bool W[], const bool F[])
+  {
+    int i;
+    for (i = 0; i < NBVERTICES; i++)
+      if (V[i])
+        throw Standard_DomainError();
+    for (i = 0; i < NBEDGES; i++)
+      if (E[i])
+        throw Standard_DomainError();
+    for (i = 0; i < NBWIRES; i++)
+      if (W[i])
+        throw Standard_DomainError();
+    for (i = 0; i < NBFACES; i++)
+      if (F[i])
+        throw Standard_DomainError();
+  }
 } // namespace
 
 //=================================================================================================

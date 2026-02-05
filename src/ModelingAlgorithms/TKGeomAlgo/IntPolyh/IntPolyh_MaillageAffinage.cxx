@@ -1,28 +1,3 @@
-// Created on: 1999-03-05
-// Created by: Fabrice SERVANT
-// Copyright (c) 1999-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  modified by Edward AGAPOV (eap) Tue Jan 22 2002 (bug occ53)
-//  - improve SectionLine table management (avoid memory reallocation)
-//  - some protection against arrays overflow
-//  modified by Edward AGAPOV (eap) Thu Feb 14 2002 (occ139)
-//  - make Section Line parts rightly connected (prepend 2nd part to the 1st)
-//  - TriangleShape() for debugging purpose
-//  Modified by skv - Thu Sep 25 17:42:42 2003 OCC567
-//  modified by ofv Thu Apr  8 14:58:13 2004 fip
-
 #include <Adaptor3d_Surface.hpp>
 #include <Bnd_BoundSortBox.hpp>
 #include <Bnd_Box.hpp>

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
@@ -31,4 +30,3 @@ protected:
   //! Constructor.
   IMeshTools_CurveTessellator() {}
 };
-

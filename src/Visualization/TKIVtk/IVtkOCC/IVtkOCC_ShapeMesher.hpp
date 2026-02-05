@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtkOCC_Shape.hpp>
 #include <IVtk_IShapeMesher.hpp>
 #include <gp_Pnt.hpp>
@@ -107,4 +106,3 @@ private:
 private:
   NCollection_DataMap<TopoDS_Shape, IVtk_MeshType, TopTools_ShapeMapHasher> myEdgesTypes;
 };
-

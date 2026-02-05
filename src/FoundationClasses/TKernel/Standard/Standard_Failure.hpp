@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_OStream.hpp>
 #include <Standard_SStream.hpp>
@@ -41,6 +40,7 @@ public:
 
   //! Returns error message
   Standard_DEPRECATED("Use what() instead")
+
   const char* GetMessageString() const noexcept { return what(); }
 
   //! Returns the exception type name.
@@ -100,4 +100,3 @@ inline Standard_OStream& operator<<(Standard_OStream& theStream, const Standard_
   theFailure.Print(theStream);
   return theStream;
 }
-

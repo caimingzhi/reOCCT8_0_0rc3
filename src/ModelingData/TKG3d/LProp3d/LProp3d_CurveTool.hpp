@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -59,4 +58,3 @@ public:
   //! FirstParameter must be less than LastParamenter.
   Standard_EXPORT static double LastParameter(const occ::handle<Adaptor3d_Curve>& C);
 };
-

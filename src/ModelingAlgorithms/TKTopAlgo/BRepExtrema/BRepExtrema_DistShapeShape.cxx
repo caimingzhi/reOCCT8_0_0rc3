@@ -1,21 +1,3 @@
-// Created on: 1996-04-22
-// Created by: Herve LOUESSARD
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Modified: Mps(10-04-97) portage WNT
-
 #include <BRepExtrema_DistShapeShape.hpp>
 
 #include <Standard_OStream.hpp>
@@ -46,65 +28,66 @@
 namespace
 {
 
-static void Decomposition(const TopoDS_Shape&                                            S,
-                          NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapV,
-                          NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapE,
-                          NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapF)
-{
-  MapV.Clear();
-  MapE.Clear();
-  MapF.Clear();
-  TopExp::MapShapes(S, TopAbs_VERTEX, MapV);
-  TopExp::MapShapes(S, TopAbs_EDGE, MapE);
-  TopExp::MapShapes(S, TopAbs_FACE, MapF);
-}
-
-static void BoxCalculation(const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Map,
-                           NCollection_Array1<Bnd_Box>& SBox)
-{
-  for (int i = 1; i <= Map.Extent(); i++)
+  static void Decomposition(const TopoDS_Shape&                                            S,
+                            NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapV,
+                            NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapE,
+                            NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapF)
   {
-    Bnd_Box box;
-    BRepBndLib::Add(Map(i), box);
-    SBox[i] = box;
-  }
-}
-
-inline double DistanceInitiale(const TopoDS_Vertex& V1, const TopoDS_Vertex& V2)
-{
-  return (BRep_Tool::Pnt(V1).Distance(BRep_Tool::Pnt(V2)));
-}
-
-//! Pair of objects to check extrema.
-struct BRepExtrema_CheckPair
-{
-  int    Index1;   //!< Index of the 1st sub-shape
-  int    Index2;   //!< Index of the 2nd sub-shape
-  double Distance; //!< Distance between sub-shapes
-
-  //! Uninitialized constructor for collection.
-  BRepExtrema_CheckPair()
-      : Index1(0),
-        Index2(0),
-        Distance(0.0)
-  {
+    MapV.Clear();
+    MapE.Clear();
+    MapF.Clear();
+    TopExp::MapShapes(S, TopAbs_VERTEX, MapV);
+    TopExp::MapShapes(S, TopAbs_EDGE, MapE);
+    TopExp::MapShapes(S, TopAbs_FACE, MapF);
   }
 
-  //! Creates new pair of sub-shapes.
-  BRepExtrema_CheckPair(int theIndex1, int theIndex2, double theDistance)
-      : Index1(theIndex1),
-        Index2(theIndex2),
-        Distance(theDistance)
+  static void BoxCalculation(
+    const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Map,
+    NCollection_Array1<Bnd_Box>&                                         SBox)
   {
+    for (int i = 1; i <= Map.Extent(); i++)
+    {
+      Bnd_Box box;
+      BRepBndLib::Add(Map(i), box);
+      SBox[i] = box;
+    }
   }
-};
 
-// Used by std::sort function
-static bool BRepExtrema_CheckPair_Comparator(const BRepExtrema_CheckPair& theLeft,
-                                             const BRepExtrema_CheckPair& theRight)
-{
-  return (theLeft.Distance < theRight.Distance);
-}
+  inline double DistanceInitiale(const TopoDS_Vertex& V1, const TopoDS_Vertex& V2)
+  {
+    return (BRep_Tool::Pnt(V1).Distance(BRep_Tool::Pnt(V2)));
+  }
+
+  //! Pair of objects to check extrema.
+  struct BRepExtrema_CheckPair
+  {
+    int    Index1;   //!< Index of the 1st sub-shape
+    int    Index2;   //!< Index of the 2nd sub-shape
+    double Distance; //!< Distance between sub-shapes
+
+    //! Uninitialized constructor for collection.
+    BRepExtrema_CheckPair()
+        : Index1(0),
+          Index2(0),
+          Distance(0.0)
+    {
+    }
+
+    //! Creates new pair of sub-shapes.
+    BRepExtrema_CheckPair(int theIndex1, int theIndex2, double theDistance)
+        : Index1(theIndex1),
+          Index2(theIndex2),
+          Distance(theDistance)
+    {
+    }
+  };
+
+  // Used by std::sort function
+  static bool BRepExtrema_CheckPair_Comparator(const BRepExtrema_CheckPair& theLeft,
+                                               const BRepExtrema_CheckPair& theRight)
+  {
+    return (theLeft.Distance < theRight.Distance);
+  }
 } // namespace
 
 //=================================================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -202,4 +201,3 @@ private:
   gp_Pnt2d                     pointStartBis;
   gp_Pnt2d                     pointEndBis;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_NotImplemented.hpp>
 #include <Standard_NullValue.hpp>
 
@@ -170,4 +169,3 @@ inline void StdLPersistent_HArray1::
   for (int i = myArray->Lower(); i <= myArray->Upper(); ++i)
     theChildren.Append(myArray->Value(i));
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Document.hpp>
 
 class LDOM_DocumentType;
@@ -17,4 +16,3 @@ public:
                                                       const LDOMString&        aQualifiedName,
                                                       const LDOM_DocumentType& aDocType);
 };
-

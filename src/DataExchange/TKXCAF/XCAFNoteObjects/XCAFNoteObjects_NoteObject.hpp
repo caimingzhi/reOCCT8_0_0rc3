@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2.hpp>
 #include <gp_Pnt.hpp>
 #include <Standard.hpp>
@@ -64,4 +63,3 @@ private:
   bool         myHasPnt;
   bool         myHasPntTxt;
 };
-

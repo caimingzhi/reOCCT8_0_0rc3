@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -104,4 +103,3 @@ private:
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> myEmptyLOI;
   TCollection_AsciiString                                  myDummyAsciiString;
 };
-

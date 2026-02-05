@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepExtrema_ProximityDistTool.hpp>
 #include <BRepExtrema_TriangleSet.hpp>
 #include <NCollection_CellFilter.hpp>
@@ -212,4 +211,3 @@ private:
   //! Proximity points' status
   ProxPnt_Status myPntStatus1, myPntStatus2;
 };
-

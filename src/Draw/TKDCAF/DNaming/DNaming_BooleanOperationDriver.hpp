@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -51,4 +50,3 @@ private:
   Standard_EXPORT bool CheckAndLoad(BRepAlgoAPI_BooleanOperation&          theMkOpe,
                                     const occ::handle<TFunction_Function>& theFunction) const;
 };
-

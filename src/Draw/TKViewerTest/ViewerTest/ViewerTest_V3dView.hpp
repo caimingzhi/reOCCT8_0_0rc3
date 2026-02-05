@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <V3d_View.hpp>
 
 //! Setting additional flag to store 2D mode of the View to avoid scene rotation by mouse/key events
@@ -33,4 +32,3 @@ public:
 private:
   bool myIs2dMode; //!< 2D mode flag
 };
-

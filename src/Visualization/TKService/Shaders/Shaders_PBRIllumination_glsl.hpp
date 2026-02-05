@@ -25,7 +25,8 @@ static const char Shaders_PBRIllumination_glsl[] =
   "  aDiffuse *= INV_PI;\n"
   "  aDiffuse *= theBaseColor.rgb;\n"
   "  aDiffuse = mix (vec3(0.0), aDiffuse, theBaseColor.a);\n"
-  "  return (aDiffuse + aSpecular) * theLightColor * theLightIntensity * max(0.0, dot(theLight, theNormal));\n"
+  "  return (aDiffuse + aSpecular) * theLightColor * theLightIntensity * max(0.0, dot(theLight, "
+  "theNormal));\n"
   "}\n";
 
 // clang-format on

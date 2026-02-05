@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObject_gp_Vectors.hpp>
 
 #include <gp_Ax2d.hpp>
@@ -131,4 +130,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData, const 
   theWriteData << anAx << aYDir << aXDir;
   return theWriteData;
 }
-

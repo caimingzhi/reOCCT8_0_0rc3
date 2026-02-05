@@ -30,221 +30,221 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-9;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-9;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-// ============================================================================
-// Adapter classes for old API (inherit from math_FunctionWithDerivative)
-// ============================================================================
+  // ============================================================================
+  // Adapter classes for old API (inherit from math_FunctionWithDerivative)
+  // ============================================================================
 
-//! f(x) = x^2 - 2, f'(x) = 2x
-//! Root at sqrt(2)
-class SqrtTwoFuncOld : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^2 - 2, f'(x) = 2x
+  //! Root at sqrt(2)
+  class SqrtTwoFuncOld : public math_FunctionWithDerivative
   {
-    theF = theX * theX - 2.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX - 2.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = 2.0 * theX;
+      return true;
+    }
+
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = theX * theX - 2.0;
+      theD = 2.0 * theX;
+      return true;
+    }
+  };
+
+  //! f(x) = cos(x) - x, f'(x) = -sin(x) - 1
+  //! Root at approximately 0.739085
+  class CosMinusXFuncOld : public math_FunctionWithDerivative
   {
-    theD = 2.0 * theX;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::cos(theX) - theX;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = -std::sin(theX) - 1.0;
+      return true;
+    }
+
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = std::cos(theX) - theX;
+      theD = -std::sin(theX) - 1.0;
+      return true;
+    }
+  };
+
+  //! f(x) = sin(x), f'(x) = cos(x)
+  //! Roots at n*PI
+  class SinFuncOld : public math_FunctionWithDerivative
   {
-    theF = theX * theX - 2.0;
-    theD = 2.0 * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::sin(theX);
+      return true;
+    }
 
-//! f(x) = cos(x) - x, f'(x) = -sin(x) - 1
-//! Root at approximately 0.739085
-class CosMinusXFuncOld : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = std::cos(theX);
+      return true;
+    }
+
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = std::sin(theX);
+      theD = std::cos(theX);
+      return true;
+    }
+  };
+
+  //! f(x) = x^3 - x - 2, f'(x) = 3x^2 - 1
+  //! Root at approximately 1.5214
+  class CubicFuncOld : public math_FunctionWithDerivative
   {
-    theF = std::cos(theX) - theX;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX * theX - theX - 2.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = 3.0 * theX * theX - 1.0;
+      return true;
+    }
+
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = theX * theX * theX - theX - 2.0;
+      theD = 3.0 * theX * theX - 1.0;
+      return true;
+    }
+  };
+
+  //! f(x) = e^x - 3, f'(x) = e^x
+  //! Root at ln(3)
+  class ExpMinusThreeFuncOld : public math_FunctionWithDerivative
   {
-    theD = -std::sin(theX) - 1.0;
-    return true;
-  }
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::exp(theX) - 3.0;
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
+    bool Derivative(const double theX, double& theD) override
+    {
+      theD = std::exp(theX);
+      return true;
+    }
+
+    bool Values(const double theX, double& theF, double& theD) override
+    {
+      theF = std::exp(theX) - 3.0;
+      theD = std::exp(theX);
+      return true;
+    }
+  };
+
+  // ============================================================================
+  // Function classes for new API (simple structs with Value/Values methods)
+  // ============================================================================
+
+  struct SqrtTwoFuncNew
   {
-    theF = std::cos(theX) - theX;
-    theD = -std::sin(theX) - 1.0;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX - 2.0;
+      return true;
+    }
 
-//! f(x) = sin(x), f'(x) = cos(x)
-//! Roots at n*PI
-class SinFuncOld : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = theX * theX - 2.0;
+      theDf = 2.0 * theX;
+      return true;
+    }
+  };
+
+  struct CosMinusXFuncNew
   {
-    theF = std::sin(theX);
-    return true;
-  }
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX) - theX;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::cos(theX) - theX;
+      theDf = -std::sin(theX) - 1.0;
+      return true;
+    }
+  };
+
+  struct SinFuncNew
   {
-    theD = std::cos(theX);
-    return true;
-  }
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(theX);
+      return true;
+    }
 
-  bool Values(const double theX, double& theF, double& theD) override
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::sin(theX);
+      theDf = std::cos(theX);
+      return true;
+    }
+  };
+
+  struct CubicFuncNew
   {
-    theF = std::sin(theX);
-    theD = std::cos(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX * theX - theX - 2.0;
+      return true;
+    }
 
-//! f(x) = x^3 - x - 2, f'(x) = 3x^2 - 1
-//! Root at approximately 1.5214
-class CubicFuncOld : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = theX * theX * theX - theX - 2.0;
+      theDf = 3.0 * theX * theX - 1.0;
+      return true;
+    }
+  };
+
+  struct ExpMinusThreeFuncNew
   {
-    theF = theX * theX * theX - theX - 2.0;
-    return true;
-  }
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX) - 3.0;
+      return true;
+    }
 
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = 3.0 * theX * theX - 1.0;
-    return true;
-  }
-
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = theX * theX * theX - theX - 2.0;
-    theD = 3.0 * theX * theX - 1.0;
-    return true;
-  }
-};
-
-//! f(x) = e^x - 3, f'(x) = e^x
-//! Root at ln(3)
-class ExpMinusThreeFuncOld : public math_FunctionWithDerivative
-{
-public:
-  bool Value(const double theX, double& theF) override
-  {
-    theF = std::exp(theX) - 3.0;
-    return true;
-  }
-
-  bool Derivative(const double theX, double& theD) override
-  {
-    theD = std::exp(theX);
-    return true;
-  }
-
-  bool Values(const double theX, double& theF, double& theD) override
-  {
-    theF = std::exp(theX) - 3.0;
-    theD = std::exp(theX);
-    return true;
-  }
-};
-
-// ============================================================================
-// Function classes for new API (simple structs with Value/Values methods)
-// ============================================================================
-
-struct SqrtTwoFuncNew
-{
-  bool Value(double theX, double& theF) const
-  {
-    theF = theX * theX - 2.0;
-    return true;
-  }
-
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = theX * theX - 2.0;
-    theDf = 2.0 * theX;
-    return true;
-  }
-};
-
-struct CosMinusXFuncNew
-{
-  bool Value(double theX, double& theF) const
-  {
-    theF = std::cos(theX) - theX;
-    return true;
-  }
-
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::cos(theX) - theX;
-    theDf = -std::sin(theX) - 1.0;
-    return true;
-  }
-};
-
-struct SinFuncNew
-{
-  bool Value(double theX, double& theF) const
-  {
-    theF = std::sin(theX);
-    return true;
-  }
-
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::sin(theX);
-    theDf = std::cos(theX);
-    return true;
-  }
-};
-
-struct CubicFuncNew
-{
-  bool Value(double theX, double& theF) const
-  {
-    theF = theX * theX * theX - theX - 2.0;
-    return true;
-  }
-
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = theX * theX * theX - theX - 2.0;
-    theDf = 3.0 * theX * theX - 1.0;
-    return true;
-  }
-};
-
-struct ExpMinusThreeFuncNew
-{
-  bool Value(double theX, double& theF) const
-  {
-    theF = std::exp(theX) - 3.0;
-    return true;
-  }
-
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::exp(theX) - 3.0;
-    theDf = std::exp(theX);
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::exp(theX) - 3.0;
+      theDf = std::exp(theX);
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Prs3d_ToolQuadric.hpp>
 
 //! Standard presentation algorithm that outputs graphical primitives for torus surface.
@@ -199,4 +198,3 @@ protected:
   double myVMin;        //!< first angle to create a torus ring segment
   double myVMax;        //!< second angle to create a torus ring segment
 };
-

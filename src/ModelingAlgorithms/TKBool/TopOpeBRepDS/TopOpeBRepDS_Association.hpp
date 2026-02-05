@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopOpeBRepDS_Interference.hpp>
@@ -38,4 +37,3 @@ private:
                       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>>
     myMap;
 };
-

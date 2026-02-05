@@ -1,19 +1,3 @@
-// Created on: 1995-10-19
-// Created by: Andre LIEUTIER
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <gp_XY.hpp>
 #include <math_Gauss.hpp>
 #include <math_Matrix.hpp>
@@ -1282,7 +1266,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 0:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           DUV = pr * L;
         }
         break;
@@ -1295,12 +1280,14 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 1:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           DUV = 2 * pr * U * (1 + L * mm1);
         }
         break;
 
-        case 1: {
+        case 1:
+        {
           double m2 = m * m;
           // DUV = 4*pr*U*V*(-3+2*L+2*m-3*L*m+L*m2);
           DUV = 4 * pr * U * V * ((2 * m - 3) + (m2 - 3 * m + 2) * L);
@@ -1315,7 +1302,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 2:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           double m2 = m * m;
           DUV       = 2 * pr
                 * (R - L * R + L * m * R - 6 * U2 + 4 * L * U2 + 4 * m * U2 - 6 * L * m * U2
@@ -1323,7 +1311,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 1: {
+        case 1:
+        {
           double m2 = m * m;
           double m3 = m2 * m;
           DUV = -3 * R + 2 * L * R + 2 * m * R - 3 * L * m * R + L * m2 * R + 22 * U2 - 12 * L * U2
@@ -1332,7 +1321,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 2: {
+        case 2:
+        {
           double m2 = m * m;
           double m3 = m2 * m;
           double m4 = m2 * m2;
@@ -1359,7 +1349,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 3:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           double m2 = m * m;
           double m3 = m2 * m;
           DUV       = -9 * R + 6 * L * R + 6 * m * R - 9 * L * m * R + 3 * L * m2 * R + 22 * U2
@@ -1369,7 +1360,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 1: {
+        case 1:
+        {
           double m2 = m * m;
           double m3 = m2 * m;
           double m4 = m2 * m2;
@@ -1381,7 +1373,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 2: {
+        case 2:
+        {
           double m2   = m * m;
           double m3   = m2 * m;
           double m4   = m2 * m2;
@@ -1407,7 +1400,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 3: {
+        case 3:
+        {
           double m2   = m * m;
           double m3   = m2 * m;
           double m4   = m2 * m2;
@@ -1444,7 +1438,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 4:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           double m2 = m * m;
           double m3 = m2 * m;
           double m4 = m2 * m2;
@@ -1460,7 +1455,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 1: {
+        case 1:
+        {
           double m2  = m * m;
           double m3  = m2 * m;
           double m4  = m2 * m2;
@@ -1481,7 +1477,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 2: {
+        case 2:
+        {
           double m2    = m * m;
           double m3    = m2 * m;
           double m4    = m2 * m2;
@@ -1519,7 +1516,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 3: {
+        case 3:
+        {
           double m2    = m * m;
           double m3    = m2 * m;
           double m4    = m2 * m2;
@@ -1570,7 +1568,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 5:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           double m2  = m * m;
           double m3  = m2 * m;
           double m4  = m2 * m2;
@@ -1591,7 +1590,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 1: {
+        case 1:
+        {
           double m2  = m * m;
           double m3  = m2 * m;
           double m4  = m2 * m2;
@@ -1615,7 +1615,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         }
         break;
 
-        case 2: {
+        case 2:
+        {
           double m2    = m * m;
           double m3    = m2 * m;
           double m4    = m2 * m2;
@@ -1667,7 +1668,8 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
     case 6:
       switch (IV)
       {
-        case 0: {
+        case 0:
+        {
           double m2   = m * m;
           double m3   = m2 * m;
           double m4   = m2 * m2;

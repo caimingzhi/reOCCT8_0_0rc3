@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepLProp_SLProps.hpp>
 #include <NCollection_DataMap.hpp>
 #include <Poly_Triangulation.hpp>
@@ -119,4 +118,3 @@ protected:
   TopAbs_ShapeEnum   myShapeType; //!< type of shape
   bool               myHasColor;  //!< flag indicating that current shape has assigned color
 };
-

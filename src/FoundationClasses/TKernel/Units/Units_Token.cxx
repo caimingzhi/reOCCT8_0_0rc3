@@ -1,29 +1,3 @@
-// Created on: 1992-06-24
-// Created by: Gilles DEBARBOUILLE
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// Updated:	Gerard GRAS le 090597
-//		reason is PRO6934 -> plantage sur HP 10.2
-//		changes are : Replace the field theword,themean from HAsciiString
-//			      to AsciiString.
-//		because the compiler try to destroies the handle of HAsciiString to early
-//		due to inline use probably.
-//		See also Units_Token_1.hpp
-//		Mauvaise construction d'un token par copie
-//		plantatoire sur HP.
-
 #include <Standard_Type.hpp>
 #include <Units_Operators.hpp>
 #include <Units_Token.hpp>

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -41,4 +40,3 @@ public:
   //! returns Value as a Real (0.0 if not a Real)
   Standard_EXPORT double ParameterValue() const;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Media_Packet.hpp>
 
 struct AVCodec;
@@ -81,4 +80,3 @@ protected:
   int             myStreamIndex;      //!< stream index
   float           myPixelAspectRatio; //!< pixel aspect ratio
 };
-

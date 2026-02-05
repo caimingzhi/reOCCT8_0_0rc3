@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepVisual_SurfaceStyleReflectanceAmbientDiffuse.hpp>
 #include <StepVisual_Colour.hpp>
 

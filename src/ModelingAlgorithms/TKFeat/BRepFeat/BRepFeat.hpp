@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -101,4 +100,3 @@ public:
   Standard_EXPORT static Standard_OStream& Print(const BRepFeat_StatusError SE,
                                                  Standard_OStream&          S);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -34,4 +33,3 @@ public:
   //! Returns the TopoDS Shape of the top of the sweep.
   Standard_EXPORT virtual TopoDS_Shape LastShape() = 0;
 };
-

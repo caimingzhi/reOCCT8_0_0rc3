@@ -1,19 +1,3 @@
-// Created on: 1995-02-07
-// Created by: Jacques GOUSSARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <algorithm>
 
 #include <Adaptor2d_Curve2d.hpp>
@@ -745,16 +729,19 @@ void AdjustPeriodic(const occ::handle<GeomAdaptor_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Case of periodic biparameters is processed upstream
       myHS1IsUPeriodic = myHS1IsVPeriodic = false;
       break;
@@ -766,16 +753,19 @@ void AdjustPeriodic(const occ::handle<GeomAdaptor_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Case of periodic biparameters is processed upstream
       myHS2IsUPeriodic = myHS2IsVPeriodic = false;
       break;

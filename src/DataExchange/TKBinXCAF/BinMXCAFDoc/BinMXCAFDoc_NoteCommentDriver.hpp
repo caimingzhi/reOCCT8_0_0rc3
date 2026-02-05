@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMXCAFDoc_NoteDriver.hpp>
 
 class BinMXCAFDoc_NoteCommentDriver : public BinMXCAFDoc_NoteDriver
@@ -25,4 +24,3 @@ protected:
   BinMXCAFDoc_NoteCommentDriver(const occ::handle<Message_Messenger>& theMsgDriver,
                                 const char*                           theName);
 };
-

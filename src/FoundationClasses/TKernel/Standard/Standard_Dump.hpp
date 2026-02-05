@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_List.hpp>
 #include <Standard_OStream.hpp>
@@ -470,4 +469,3 @@ private:
                                                const Standard_JsonKey         theCloseKey,
                                                const Standard_JsonKey         theOpenKey);
 };
-

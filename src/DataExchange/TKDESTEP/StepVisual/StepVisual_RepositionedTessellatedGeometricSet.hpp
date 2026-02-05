@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepVisual_TessellatedGeometricSet.hpp>
 
 class StepGeom_Axis2Placement3d;

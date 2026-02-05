@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepElement_CurveElementPurposeMember.hpp>
@@ -46,4 +45,3 @@ private:
     occ::handle<NCollection_HSequence<occ::handle<StepElement_CurveElementPurposeMember>>>>>
     thePurpose;
 };
-

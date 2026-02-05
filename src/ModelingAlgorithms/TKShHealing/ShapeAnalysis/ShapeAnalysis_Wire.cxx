@@ -1,35 +1,3 @@
-// Created on: 2000-01-20
-// Created by: data exchange team
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//: pdn 11.12.98: FixDegenerated improved
-//: pdn 05.01.99: renaming method CheckLittle to CheckSmall
-//: l0 abv 10.01.99: CATIA01 #1727: fix intersecting edges always if edge is lacking
-//: n2 abv 22.01.99: ma-test5.igs: IGES read (pref3d): remove degen edge with no pcurve
-//: o4 abv 17.02.99: r0301_db.stp #53082: adding parameter isClosed to CheckOrder
-//    rln 03.03.99  S4135: using updated ShapeAnalysis_Surface for checking of singularities
-//: p9 abv 11.03.99: PRO7226 #489490: fix :i9 moved to allow fixing a set of degenerated edges
-// #77 rln 11.03.99: S4135: using singularity which has minimum gap between singular point and input
-// 3D point #84 rln 18.03.99: inserting degenerated edge between ends of pcurves pdn 12.03.99 S4135
-// check degenerated applies minimal tolerance first. pdn 16.03.99 S4135 adding check of non
-// adjacent edjes. #83 rln 19.03.99: processing segments in intersection as in BRepCheck %15
-// pdn 15.03.99  checking of small area wire added #2 smh 26.03.99  S4163 Zero divide #4 szv S4163
-// optimizing
-//: r6 abv 08.04.99: protect FixIE against working out of curve range
-//: s1 abv 22.04.99: PRO7226 #489490: ensure fixing of degenerated edge
-// #9 smh 14.12.99 BUC60615 Using tolerance of verteces during checking degenerated edge.
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <Bnd_Box2d.hpp>
 #include <NCollection_Array1.hpp>

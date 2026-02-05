@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Types.hpp>
 #include <BRepMesh_Circle.hpp>
 #include <gp_XY.hpp>
@@ -102,4 +101,3 @@ private:
   IMeshData::VectorOfCircle myCircles;
   gp_XY                     myPoint;
 };
-

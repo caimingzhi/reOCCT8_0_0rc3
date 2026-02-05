@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_Attribute.hpp>
 
 class TObj_Model;
@@ -64,5 +63,5 @@ public:
 //! Define handle class for TObj_TModel
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

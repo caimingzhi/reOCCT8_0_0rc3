@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -205,4 +204,3 @@ public:
   //! sub-elements.
   Standard_EXPORT static void PreBuildBVH(const occ::handle<SelectMgr_Selection>& theSelection);
 };
-

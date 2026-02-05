@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Element.hpp>
 
 class OpenGl_StencilTest : public OpenGl_Element
@@ -29,4 +28,3 @@ private:
 public:
   DEFINE_STANDARD_ALLOC
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -270,4 +269,3 @@ private:
   NCollection_Sequence<int>                             thekind;
   NCollection_Sequence<TCollection_AsciiString>         thednam;
 };
-

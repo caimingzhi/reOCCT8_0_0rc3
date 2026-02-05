@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax22d.hpp>
 #include <gp_Ax2d.hpp>
 #include <gp_Pnt2d.hpp>
@@ -341,4 +340,3 @@ inline gp_Circ2d gp_Circ2d::Transformed(const gp_Trsf2d& theT) const
   aCirc.pos.Transform(theT);
   return aCirc;
 }
-

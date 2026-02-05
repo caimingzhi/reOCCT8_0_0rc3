@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomFill_PipeError.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -97,4 +96,3 @@ protected:
   occ::handle<Adaptor3d_Curve> myCurve;
   occ::handle<Adaptor3d_Curve> myTrimmed;
 };
-

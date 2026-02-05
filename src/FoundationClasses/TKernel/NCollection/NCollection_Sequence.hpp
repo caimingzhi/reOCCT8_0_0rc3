@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseSequence.hpp>
 #include <NCollection_StlIterator.hpp>
 
@@ -453,4 +452,3 @@ private:
     }
   }
 };
-

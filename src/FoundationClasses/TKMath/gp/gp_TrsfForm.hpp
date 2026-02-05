@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies the type of a geometric transformation.
 enum gp_TrsfForm
 {
@@ -14,4 +13,3 @@ enum gp_TrsfForm
   gp_CompoundTrsf, //!< Combination of the above transformations
   gp_Other         //!< Transformation with not-orthogonal matrix
 };
-

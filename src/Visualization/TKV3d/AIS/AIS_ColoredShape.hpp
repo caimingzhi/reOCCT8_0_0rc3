@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 #include <Prs3d_Drawer.hpp>
 #include <Quantity_Color.hpp>
 
@@ -68,7 +67,6 @@ public: //! @name list of overridden properties
   bool myHasOwnTransp;
   bool myHasOwnWidth;
 };
-
 
 #include <NCollection_DataMap.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
@@ -246,4 +244,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(AIS_ColoredShape, AIS_Shape)
 };
-

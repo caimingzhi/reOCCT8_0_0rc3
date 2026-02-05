@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Simple linear interpolation tool (also known as mix() in GLSL).
 //! The main purpose of this template class is making interpolation routines more readable.
 template <class T>
@@ -51,4 +50,3 @@ private:
   T myStart;
   T myEnd;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -90,4 +89,3 @@ private:
   NCollection_List<BRepFill_OffsetWire> myLeft;
   NCollection_List<BRepFill_OffsetWire> myRight;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <Standard_IStream.hpp>
 
@@ -23,4 +22,3 @@ public:
   //! @return True if reading is successful
   Standard_EXPORT bool Read(TopoDS_Shape& theShape, Standard_IStream& theStream);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 
 #include <TDataStd_Directory.hpp>
@@ -53,4 +52,3 @@ inline const char* StdLPersistent_Void::instance<TDataStd_NoteBook>::PName() con
 {
   return "PDataStd_Notebook";
 }
-

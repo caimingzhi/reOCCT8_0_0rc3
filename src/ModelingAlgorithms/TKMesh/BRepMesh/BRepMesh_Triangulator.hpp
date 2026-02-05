@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pln.hpp>
 #include <Poly_Triangulation.hpp>
 #include <IMeshData_Types.hpp>
@@ -64,4 +63,3 @@ private:
   NCollection_DataMap<int, int>               myTmpMap;
   Handle(IMeshData::VectorOfInteger)          myIndices;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedItem.hpp>
@@ -48,4 +47,3 @@ private:
   occ::handle<StepVisual_CoordinatesList> myCoordinates;
   occ::handle<NCollection_HArray1<int>>   myPointList;
 };
-

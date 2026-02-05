@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -72,4 +71,3 @@ public:
   Standard_EXPORT static occ::handle<Geom_Curve> To3d(const occ::handle<Geom2d_Curve>& C,
                                                       const gp_Pln&                    P);
 };
-

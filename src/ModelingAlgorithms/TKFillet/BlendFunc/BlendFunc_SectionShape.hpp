@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum BlendFunc_SectionShape
 {
   BlendFunc_Rational,
@@ -8,4 +7,3 @@ enum BlendFunc_SectionShape
   BlendFunc_Polynomial,
   BlendFunc_Linear
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <XmlMDF_ADriver.hpp>
@@ -33,4 +32,3 @@ public:
 private:
   void GetReal(Standard_IStream& IS, double& theValue) const;
 };
-

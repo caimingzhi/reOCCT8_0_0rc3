@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -112,4 +111,3 @@ private:
   occ::handle<IGESGeom_Plane> theBackPlane;
   occ::handle<IGESGeom_Plane> theFrontPlane;
 };
-

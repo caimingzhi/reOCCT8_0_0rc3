@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -53,4 +52,3 @@ private:
   NCollection_IndexedDataMap<TopoDS_Shape, Bnd_Box2d>                             mymapsbox2d;
   NCollection_DataMap<TopoDS_Shape, TopOpeBRepTool_face, TopTools_ShapeMapHasher> mymapsface;
 };
-

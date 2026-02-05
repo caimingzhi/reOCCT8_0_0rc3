@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP214_PresentedItemSelect.hpp>
@@ -34,4 +33,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP214_PresentedItemSelect>> items;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Plate_D2.hpp>
@@ -30,4 +29,3 @@ public:
 private:
   Plate_D2 myG2Target;
 };
-

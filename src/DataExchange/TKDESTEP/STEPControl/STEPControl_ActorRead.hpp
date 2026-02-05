@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -214,4 +213,3 @@ private:
   occ::handle<StepRepr_Representation>  mySRContext;
   occ::handle<Interface_InterfaceModel> myModel;
 };
-

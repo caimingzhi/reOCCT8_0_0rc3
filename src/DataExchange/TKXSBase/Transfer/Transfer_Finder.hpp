@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
@@ -134,4 +133,3 @@ private:
   size_t                                                                        thecode;
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> theattrib;
 };
-

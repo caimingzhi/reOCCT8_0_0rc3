@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vector.hpp>
 #include <stdio.h>
 
@@ -202,4 +201,3 @@ protected:
   int                   myIncrement;
   IntPolyh_VectorOfType myVectorOfType;
 };
-

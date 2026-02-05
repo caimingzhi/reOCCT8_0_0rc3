@@ -1,21 +1,3 @@
-// Created on: 1999-03-09
-// Created by: data exchange team
-// Copyright (c) 1999-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-// sln 19.11.2001. Bug 2: Correction of output of 'statshape' draw function.
-
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
 #include <BRepBuilderAPI.hpp>
@@ -1351,7 +1333,8 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Surface>          aRes;
   switch (aTargets[isurf])
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln aPln;
       if (aSampleSurf.GetType() == GeomAbs_Plane)
         aPln = aSampleSurf.Plane();
@@ -1359,7 +1342,8 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
         aRes = new Geom_Plane(aPln);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_Cylinder:
+    {
       gp_Cylinder aCyl;
       if (aSampleSurf.GetType() == GeomAbs_Cylinder)
         aCyl = aSampleSurf.Cylinder();
@@ -1367,7 +1351,8 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
         aRes = new Geom_CylindricalSurface(aCyl);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       gp_Cone aCon;
       if (aSampleSurf.GetType() == GeomAbs_Cone)
         aCon = aSampleSurf.Cone();
@@ -1375,7 +1360,8 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
         aRes = new Geom_ConicalSurface(aCon);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       gp_Sphere aSph;
       if (aSampleSurf.GetType() == GeomAbs_Sphere)
         aSph = aSampleSurf.Sphere();
@@ -1440,19 +1426,22 @@ int getanacurve(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Curve>            aRes;
   switch (aTargets[icurv])
   {
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       gp_Lin aLin;
       if (aCanonRec.IsLine(tol, aLin))
         aRes = new Geom_Line(aLin);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       gp_Circ aCirc;
       if (aCanonRec.IsCircle(tol, aCirc))
         aRes = new Geom_Circle(aCirc);
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       gp_Elips anElips;
       if (aCanonRec.IsEllipse(tol, anElips))
         aRes = new Geom_Ellipse(anElips);

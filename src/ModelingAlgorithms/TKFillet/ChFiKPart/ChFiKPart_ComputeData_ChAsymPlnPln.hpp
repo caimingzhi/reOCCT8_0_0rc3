@@ -1,6 +1,5 @@
 #pragma once
 
-
 bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pl1,
@@ -13,4 +12,3 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const double                        First,
                           const TopAbs_Orientation            Of1,
                           const bool                          DisOnP1);
-

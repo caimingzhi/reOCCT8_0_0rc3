@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -77,4 +76,3 @@ private:
   occ::handle<Standard_Persistent> myObject;
   int                              myRef;
 };
-

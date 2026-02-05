@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepRepr_CharacterizedDefinition.hpp>
@@ -51,4 +50,3 @@ private:
   StepRepr_CharacterizedDefinition      theDefinition;
   bool                                  defDescription;
 };
-

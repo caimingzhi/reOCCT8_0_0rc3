@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -106,4 +105,3 @@ private:
   bool                                  theDoDontFlag;
   occ::handle<NCollection_HArray1<int>> thePositions;
 };
-

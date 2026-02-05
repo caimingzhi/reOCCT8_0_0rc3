@@ -1,18 +1,3 @@
-// Created on: 2014-08-15
-// Created by: Varvara POSKONINA
-// Copyright (c) 2005-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <gp_XYZ.hpp>
 
 #include <Select3D_InteriorSensitivePointSet.hpp>
@@ -22,45 +7,45 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_InteriorSensitivePointSet, Select3D_Sensitiv
 namespace
 {
 
-// Internal class for creation of planar polygons
-class Select3D_Plane
-{
-public:
-  Select3D_Plane()
-      : myPlane(0.0),
-        myIsInitialized(false)
+  // Internal class for creation of planar polygons
+  class Select3D_Plane
   {
-  }
+  public:
+    Select3D_Plane()
+        : myPlane(0.0),
+          myIsInitialized(false)
+    {
+    }
 
-  bool Contains(const gp_Pnt& thePnt) const
-  {
-    if (!myIsInitialized)
-      return false;
+    bool Contains(const gp_Pnt& thePnt) const
+    {
+      if (!myIsInitialized)
+        return false;
 
-    double aRes =
-      myPlane.x() * thePnt.X() + myPlane.y() * thePnt.Y() + myPlane.z() * thePnt.Z() + myPlane.w();
+      double aRes = myPlane.x() * thePnt.X() + myPlane.y() * thePnt.Y() + myPlane.z() * thePnt.Z()
+                    + myPlane.w();
 
-    return aRes < Precision::Confusion();
-  }
+      return aRes < Precision::Confusion();
+    }
 
-  void MakePlane(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2, const gp_Pnt& thePnt3)
-  {
-    const gp_XYZ& aVec1 = thePnt2.XYZ() - thePnt1.XYZ();
-    const gp_XYZ& aVec2 = thePnt3.XYZ() - thePnt1.XYZ();
-    const gp_XYZ& aDir  = aVec1.Crossed(aVec2);
-    double        aD    = aDir.Dot(thePnt1.XYZ().Reversed());
-    myPlane             = NCollection_Vec4<double>(aDir.X(), aDir.Y(), aDir.Z(), aD);
-    myIsInitialized     = true;
-  }
+    void MakePlane(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2, const gp_Pnt& thePnt3)
+    {
+      const gp_XYZ& aVec1 = thePnt2.XYZ() - thePnt1.XYZ();
+      const gp_XYZ& aVec2 = thePnt3.XYZ() - thePnt1.XYZ();
+      const gp_XYZ& aDir  = aVec1.Crossed(aVec2);
+      double        aD    = aDir.Dot(thePnt1.XYZ().Reversed());
+      myPlane             = NCollection_Vec4<double>(aDir.X(), aDir.Y(), aDir.Z(), aD);
+      myIsInitialized     = true;
+    }
 
-  void Invalidate() { myIsInitialized = false; }
+    void Invalidate() { myIsInitialized = false; }
 
-  bool IsValid() const { return myIsInitialized; }
+    bool IsValid() const { return myIsInitialized; }
 
-private:
-  NCollection_Vec4<double> myPlane;
-  bool                     myIsInitialized;
-};
+  private:
+    NCollection_Vec4<double> myPlane;
+    bool                     myIsInitialized;
+  };
 
 } // anonymous namespace
 

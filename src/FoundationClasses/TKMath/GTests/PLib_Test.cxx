@@ -26,24 +26,24 @@
 
 namespace
 {
-// Helper function for comparing points with tolerance
-void checkPointsEqual(const gp_Pnt& thePnt1,
-                      const gp_Pnt& thePnt2,
-                      const double  theTolerance = Precision::Confusion())
-{
-  EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
-  EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
-  EXPECT_NEAR(thePnt1.Z(), thePnt2.Z(), theTolerance) << "Z coordinates differ";
-}
+  // Helper function for comparing points with tolerance
+  void checkPointsEqual(const gp_Pnt& thePnt1,
+                        const gp_Pnt& thePnt2,
+                        const double  theTolerance = Precision::Confusion())
+  {
+    EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
+    EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
+    EXPECT_NEAR(thePnt1.Z(), thePnt2.Z(), theTolerance) << "Z coordinates differ";
+  }
 
-// Helper function for comparing 2D points with tolerance
-void checkPoint2dEqual(const gp_Pnt2d& thePnt1,
-                       const gp_Pnt2d& thePnt2,
-                       const double    theTolerance = Precision::Confusion())
-{
-  EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
-  EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
-}
+  // Helper function for comparing 2D points with tolerance
+  void checkPoint2dEqual(const gp_Pnt2d& thePnt1,
+                         const gp_Pnt2d& thePnt2,
+                         const double    theTolerance = Precision::Confusion())
+  {
+    EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
+    EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
+  }
 } // namespace
 
 // Test class for PLib tests

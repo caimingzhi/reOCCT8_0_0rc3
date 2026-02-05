@@ -22,122 +22,122 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-10;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-10;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-//! Function with derivative: f(x) = x^2 - 2, f'(x) = 2x
-//! Root at x = sqrt(2) ~= 1.41421356...
-class SqrtTwoFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Function with derivative: f(x) = x^2 - 2, f'(x) = 2x
+  //! Root at x = sqrt(2) ~= 1.41421356...
+  class SqrtTwoFunc
   {
-    theF = theX * theX - 2.0;
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX - 2.0;
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = theX * theX - 2.0;
-    theDf = 2.0 * theX;
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = theX * theX - 2.0;
+      theDf = 2.0 * theX;
+      return true;
+    }
+  };
 
-//! Function: f(x) = cos(x) - x
-//! Root at x ~= 0.739085...
-class CosMinusXFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Function: f(x) = cos(x) - x
+  //! Root at x ~= 0.739085...
+  class CosMinusXFunc
   {
-    theF = std::cos(theX) - theX;
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX) - theX;
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::cos(theX) - theX;
-    theDf = -std::sin(theX) - 1.0;
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::cos(theX) - theX;
+      theDf = -std::sin(theX) - 1.0;
+      return true;
+    }
+  };
 
-//! Function: f(x) = x^3 - x - 2
-//! Root at x ~= 1.5214...
-class CubicFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Function: f(x) = x^3 - x - 2
+  //! Root at x ~= 1.5214...
+  class CubicFunc
   {
-    theF = theX * theX * theX - theX - 2.0;
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX * theX - theX - 2.0;
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = theX * theX * theX - theX - 2.0;
-    theDf = 3.0 * theX * theX - 1.0;
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = theX * theX * theX - theX - 2.0;
+      theDf = 3.0 * theX * theX - 1.0;
+      return true;
+    }
+  };
 
-//! Function: f(x) = sin(x)
-//! Roots at x = n*PI for integer n
-class SinFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Function: f(x) = sin(x)
+  //! Roots at x = n*PI for integer n
+  class SinFunc
   {
-    theF = std::sin(theX);
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(theX);
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::sin(theX);
-    theDf = std::cos(theX);
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::sin(theX);
+      theDf = std::cos(theX);
+      return true;
+    }
+  };
 
-//! Function: f(x) = e^x - 3
-//! Root at x = ln(3) ~= 1.0986...
-class ExpMinusThreeFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Function: f(x) = e^x - 3
+  //! Root at x = ln(3) ~= 1.0986...
+  class ExpMinusThreeFunc
   {
-    theF = std::exp(theX) - 3.0;
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX) - 3.0;
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = std::exp(theX) - 3.0;
-    theDf = std::exp(theX);
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = std::exp(theX) - 3.0;
+      theDf = std::exp(theX);
+      return true;
+    }
+  };
 
-//! Linear function: f(x) = 2x - 4
-//! Root at x = 2
-class LinearFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Linear function: f(x) = 2x - 4
+  //! Root at x = 2
+  class LinearFunc
   {
-    theF = 2.0 * theX - 4.0;
-    return true;
-  }
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = 2.0 * theX - 4.0;
+      return true;
+    }
 
-  bool Values(double theX, double& theF, double& theDf) const
-  {
-    theF  = 2.0 * theX - 4.0;
-    theDf = 2.0;
-    return true;
-  }
-};
+    bool Values(double theX, double& theF, double& theDf) const
+    {
+      theF  = 2.0 * theX - 4.0;
+      theDf = 2.0;
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

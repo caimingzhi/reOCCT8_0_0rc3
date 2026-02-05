@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -95,4 +94,3 @@ private:
   NCollection_Sequence<double>          mySqDist;
   GeomAbs_SurfaceType                   myStype;
 };
-

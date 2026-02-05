@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Map.hpp>
@@ -184,4 +183,3 @@ protected:
   bool myHasPartId;
   bool myHasFaceId;
 };
-

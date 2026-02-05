@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! This enumeration defines packed image plane formats
 enum Image_Format
 {
@@ -31,4 +30,3 @@ enum
 {
   Image_Format_NB = Image_Format_Gray16 + 1
 };
-

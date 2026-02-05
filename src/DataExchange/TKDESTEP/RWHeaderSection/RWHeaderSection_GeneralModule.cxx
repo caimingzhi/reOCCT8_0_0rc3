@@ -64,7 +64,8 @@ void RWHeaderSection_GeneralModule::CopyCase(const int                          
   switch (CN)
   {
 
-    case 1: {
+    case 1:
+    {
       int i;
       DeclareAndCast(HeaderSection_FileName, enfr, entfrom);
       DeclareAndCast(HeaderSection_FileName, ento, entto);
@@ -90,7 +91,8 @@ void RWHeaderSection_GeneralModule::CopyCase(const int                          
     }
     break;
 
-    case 2: {
+    case 2:
+    {
       int i;
       DeclareAndCast(HeaderSection_FileDescription, enfr, entfrom);
       DeclareAndCast(HeaderSection_FileDescription, ento, entto);
@@ -105,7 +107,8 @@ void RWHeaderSection_GeneralModule::CopyCase(const int                          
     }
     break;
 
-    case 3: {
+    case 3:
+    {
       int i;
       DeclareAndCast(HeaderSection_FileSchema, enfr, entfrom);
       DeclareAndCast(HeaderSection_FileSchema, ento, entto);
@@ -118,7 +121,8 @@ void RWHeaderSection_GeneralModule::CopyCase(const int                          
     }
     break;
 
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(StepData_UndefinedEntity, undfrom, entfrom);
       DeclareAndCast(StepData_UndefinedEntity, undto, entto);
       undto->GetFromAnother(undfrom, TC); //  On pourrait rapatrier cela

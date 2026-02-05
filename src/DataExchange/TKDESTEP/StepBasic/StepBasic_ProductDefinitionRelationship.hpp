@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -94,4 +93,3 @@ private:
   StepBasic_ProductDefinitionOrReference theRelatedProductDefinition;
   bool                                   defDescription;
 };
-

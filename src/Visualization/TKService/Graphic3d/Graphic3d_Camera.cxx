@@ -1,18 +1,3 @@
-// Created on: 2013-05-29
-// Created by: Anton POLETAEV
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_Camera.hpp>
 
 #include <gp_Pln.hpp>
@@ -31,44 +16,44 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Camera, Standard_Transient)
 
 namespace
 {
-// (degrees -> radians) * 0.5
-constexpr double DTR_HALF = 0.5 * 0.0174532925;
+  // (degrees -> radians) * 0.5
+  constexpr double DTR_HALF = 0.5 * 0.0174532925;
 
-// default property values
-constexpr double DEFAULT_ZNEAR = 0.001;
-constexpr double DEFAULT_ZFAR  = 3000.0;
+  // default property values
+  constexpr double DEFAULT_ZNEAR = 0.001;
+  constexpr double DEFAULT_ZFAR  = 3000.0;
 
-// atomic state counter
-static std::atomic<size_t> THE_STATE_COUNTER(0);
+  // atomic state counter
+  static std::atomic<size_t> THE_STATE_COUNTER(0);
 
-// z-range tolerance compatible with for floating point.
-static double zEpsilon()
-{
-  return FLT_EPSILON;
-}
-
-// relative z-range tolerance compatible with for floating point.
-static double zEpsilon(const double theValue)
-{
-  double anAbsValue = std::abs(theValue);
-  if (anAbsValue <= (double)FLT_MIN)
+  // z-range tolerance compatible with for floating point.
+  static double zEpsilon()
   {
-    return FLT_MIN;
+    return FLT_EPSILON;
   }
-  double aLogRadix = std::log10(anAbsValue) / std::log10(FLT_RADIX);
-  double aExp      = std::floor(aLogRadix);
-  return FLT_EPSILON * std::pow(FLT_RADIX, aExp);
-}
 
-//! Convert camera definition to Ax3
-gp_Ax3 cameraToAx3(const Graphic3d_Camera& theCamera)
-{
-  const gp_Dir aBackDir = -theCamera.Direction();
-  const gp_Dir anXAxis(theCamera.Up().Crossed(aBackDir));
-  const gp_Dir anYAxis(aBackDir.Crossed(anXAxis));
-  const gp_Dir aZAxis(anXAxis.Crossed(anYAxis));
-  return gp_Ax3(gp_Pnt(0.0, 0.0, 0.0), aZAxis, anXAxis);
-}
+  // relative z-range tolerance compatible with for floating point.
+  static double zEpsilon(const double theValue)
+  {
+    double anAbsValue = std::abs(theValue);
+    if (anAbsValue <= (double)FLT_MIN)
+    {
+      return FLT_MIN;
+    }
+    double aLogRadix = std::log10(anAbsValue) / std::log10(FLT_RADIX);
+    double aExp      = std::floor(aLogRadix);
+    return FLT_EPSILON * std::pow(FLT_RADIX, aExp);
+  }
+
+  //! Convert camera definition to Ax3
+  gp_Ax3 cameraToAx3(const Graphic3d_Camera& theCamera)
+  {
+    const gp_Dir aBackDir = -theCamera.Direction();
+    const gp_Dir anXAxis(theCamera.Up().Crossed(aBackDir));
+    const gp_Dir anYAxis(aBackDir.Crossed(anXAxis));
+    const gp_Dir aZAxis(anXAxis.Crossed(anYAxis));
+    return gp_Ax3(gp_Pnt(0.0, 0.0, 0.0), aZAxis, anXAxis);
+  }
 } // namespace
 
 //=================================================================================================
@@ -353,7 +338,8 @@ void Graphic3d_Camera::SetScale(const double theScale)
     case Projection_Perspective:
     case Projection_Stereo:
     case Projection_MonoLeftEye:
-    case Projection_MonoRightEye: {
+    case Projection_MonoRightEye:
+    {
       double aDistance = theScale * 0.5 / myFOVyTan;
       SetDistance(aDistance);
     }
@@ -1011,14 +997,16 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
   }
   switch (myProjType)
   {
-    case Projection_Orthographic: {
+    case Projection_Orthographic:
+    {
       if (!myIsCustomProjMatM)
       {
         orthoProj(theProjM, anLRBT, aZNear, aZFar);
       }
       break;
     }
-    case Projection_Perspective: {
+    case Projection_Perspective:
+    {
       if (!myIsCustomProjMatM)
       {
         perspectiveProj(theProjM, anLRBT, aZNear, aZFar);
@@ -1027,7 +1015,8 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
     }
     case Projection_MonoLeftEye:
     case Projection_MonoRightEye:
-    case Projection_Stereo: {
+    case Projection_Stereo:
+    {
       if (!myIsCustomProjMatM)
       {
         perspectiveProj(theProjM, anLRBT, aZNear, aZFar);

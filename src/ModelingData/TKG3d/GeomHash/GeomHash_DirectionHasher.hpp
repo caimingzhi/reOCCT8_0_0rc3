@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <gp_Dir.hpp>
 #include <cmath>
@@ -32,4 +31,3 @@ struct GeomHash_DirectionHasher
            && std::abs(theDirection1.Z() - theDirection2.Z()) <= aTolerance;
   }
 };
-

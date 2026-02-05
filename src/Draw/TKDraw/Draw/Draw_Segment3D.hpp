@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt.hpp>
@@ -31,4 +30,3 @@ private:
   gp_Pnt     myLast;
   Draw_Color myColor;
 };
-

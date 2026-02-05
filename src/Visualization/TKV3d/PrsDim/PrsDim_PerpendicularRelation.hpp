@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_Relation.hpp>
 
 //! A framework to display constraints of perpendicularity
@@ -46,4 +45,3 @@ private:
   gp_Pnt myFAttach;
   gp_Pnt mySAttach;
 };
-

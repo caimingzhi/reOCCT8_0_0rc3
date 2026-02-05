@@ -1,17 +1,3 @@
-// Created on: 2013-09-16
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <StdPrs_BRepFont.hpp>
 
 #include <BRep_Tool.hpp>
@@ -55,65 +41,65 @@ IMPLEMENT_STANDARD_RTTIEXT(StdPrs_BRepFont, Standard_Transient)
 
 namespace
 {
-// pre-defined font rendering options
-static const unsigned int      THE_FONT_SIZE      = 72;
-static const unsigned int      THE_RESOLUTION_DPI = 4800;
-static const Font_FTFontParams THE_FONT_PARAMS(THE_FONT_SIZE, THE_RESOLUTION_DPI);
+  // pre-defined font rendering options
+  static const unsigned int      THE_FONT_SIZE      = 72;
+  static const unsigned int      THE_RESOLUTION_DPI = 4800;
+  static const Font_FTFontParams THE_FONT_PARAMS(THE_FONT_SIZE, THE_RESOLUTION_DPI);
 
-// compute scaling factor for specified font size
-inline double getScale(const double theSize)
-{
-  return theSize / double(THE_FONT_SIZE) * 72.0 / double(THE_RESOLUTION_DPI);
-}
+  // compute scaling factor for specified font size
+  inline double getScale(const double theSize)
+  {
+    return theSize / double(THE_FONT_SIZE) * 72.0 / double(THE_RESOLUTION_DPI);
+  }
 
 #ifdef HAVE_FREETYPE
-//! Auxiliary method to convert FT_Vector to gp_XY
-static gp_XY readFTVec(const FT_Vector& theVec,
-                       const double     theScaleUnits,
-                       const double     theWidthScaling = 1.0)
-{
-  return gp_XY(theScaleUnits * double(theVec.x) * theWidthScaling / 64.0,
-               theScaleUnits * double(theVec.y) / 64.0);
-}
-
-//! Auxiliary method for classification wire theW2 with respect to wire theW1
-static TopAbs_State classifyWW(const TopoDS_Wire& theW1,
-                               const TopoDS_Wire& theW2,
-                               const TopoDS_Face& theF)
-{
-  TopAbs_State aRes = TopAbs_UNKNOWN;
-
-  TopoDS_Face aF = TopoDS::Face(theF.EmptyCopied());
-  aF.Orientation(TopAbs_FORWARD);
-  BRep_Builder aB;
-  aB.Add(aF, theW1);
-  BRepTopAdaptor_FClass2d aClass2d(aF, ::Precision::PConfusion());
-  for (TopoDS_Iterator anEdgeIter(theW2); anEdgeIter.More(); anEdgeIter.Next())
+  //! Auxiliary method to convert FT_Vector to gp_XY
+  static gp_XY readFTVec(const FT_Vector& theVec,
+                         const double     theScaleUnits,
+                         const double     theWidthScaling = 1.0)
   {
-    const TopoDS_Edge&        anEdge  = TopoDS::Edge(anEdgeIter.Value());
-    double                    aPFirst = 0.0, aPLast = 0.0;
-    occ::handle<Geom2d_Curve> aCurve2d = BRep_Tool::CurveOnSurface(anEdge, theF, aPFirst, aPLast);
-    if (aCurve2d.IsNull())
-    {
-      continue;
-    }
-
-    gp_Pnt2d     aPnt2d = aCurve2d->Value((aPFirst + aPLast) / 2.0);
-    TopAbs_State aState = aClass2d.Perform(aPnt2d, false);
-    if (aState == TopAbs_OUT || aState == TopAbs_IN)
-    {
-      if (aRes == TopAbs_UNKNOWN)
-      {
-        aRes = aState;
-      }
-      else if (aRes != aState)
-      {
-        return TopAbs_UNKNOWN;
-      }
-    }
+    return gp_XY(theScaleUnits * double(theVec.x) * theWidthScaling / 64.0,
+                 theScaleUnits * double(theVec.y) / 64.0);
   }
-  return aRes;
-}
+
+  //! Auxiliary method for classification wire theW2 with respect to wire theW1
+  static TopAbs_State classifyWW(const TopoDS_Wire& theW1,
+                                 const TopoDS_Wire& theW2,
+                                 const TopoDS_Face& theF)
+  {
+    TopAbs_State aRes = TopAbs_UNKNOWN;
+
+    TopoDS_Face aF = TopoDS::Face(theF.EmptyCopied());
+    aF.Orientation(TopAbs_FORWARD);
+    BRep_Builder aB;
+    aB.Add(aF, theW1);
+    BRepTopAdaptor_FClass2d aClass2d(aF, ::Precision::PConfusion());
+    for (TopoDS_Iterator anEdgeIter(theW2); anEdgeIter.More(); anEdgeIter.Next())
+    {
+      const TopoDS_Edge&        anEdge  = TopoDS::Edge(anEdgeIter.Value());
+      double                    aPFirst = 0.0, aPLast = 0.0;
+      occ::handle<Geom2d_Curve> aCurve2d = BRep_Tool::CurveOnSurface(anEdge, theF, aPFirst, aPLast);
+      if (aCurve2d.IsNull())
+      {
+        continue;
+      }
+
+      gp_Pnt2d     aPnt2d = aCurve2d->Value((aPFirst + aPLast) / 2.0);
+      TopAbs_State aState = aClass2d.Perform(aPnt2d, false);
+      if (aState == TopAbs_OUT || aState == TopAbs_IN)
+      {
+        if (aRes == TopAbs_UNKNOWN)
+        {
+          aRes = aState;
+        }
+        else if (aRes != aState)
+        {
+          return TopAbs_UNKNOWN;
+        }
+      }
+    }
+    return aRes;
+  }
 #endif
 } // namespace
 

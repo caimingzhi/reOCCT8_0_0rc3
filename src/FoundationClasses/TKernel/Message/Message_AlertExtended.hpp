@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Alert.hpp>
 #include <Message_Gravity.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -78,4 +77,3 @@ protected:
   // clang-format on
   occ::handle<Message_Attribute> myAttribute; //!< container of the alert attributes
 };
-

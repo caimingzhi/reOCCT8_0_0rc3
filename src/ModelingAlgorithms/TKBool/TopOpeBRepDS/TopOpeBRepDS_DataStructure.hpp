@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -329,4 +328,3 @@ private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myMapOfRejectedShapesObj;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myMapOfRejectedShapesTool;
 };
-

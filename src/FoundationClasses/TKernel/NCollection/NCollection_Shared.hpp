@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DefineAlloc.hpp>
 
 //! Template defining a class derived from the specified base class and
@@ -79,4 +78,3 @@ public:
     {}
   */
 };
-

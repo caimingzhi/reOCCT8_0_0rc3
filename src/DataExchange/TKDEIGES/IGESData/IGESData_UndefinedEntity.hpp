@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -89,4 +88,3 @@ private:
   int                                     thedstat;
   occ::handle<Interface_UndefinedContent> thecont;
 };
-

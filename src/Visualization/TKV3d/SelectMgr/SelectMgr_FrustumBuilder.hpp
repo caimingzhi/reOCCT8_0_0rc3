@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Camera.hpp>
 #include <Precision.hpp>
 #include <gp_Trsf.hpp>
@@ -57,4 +56,3 @@ private:
   NCollection_Vec4<double>      myViewport;
   bool                          myIsViewportSet;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Real.hpp>
@@ -354,4 +353,3 @@ public:
   //! infinite. Use -Infinite() for a negative big number.
   static constexpr double Infinite() { return 2.e+100; }
 };
-

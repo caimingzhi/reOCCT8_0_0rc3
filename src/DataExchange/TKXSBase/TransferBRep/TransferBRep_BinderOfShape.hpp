@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TopoDS_Shape.hpp>
@@ -55,4 +54,3 @@ public:
 private:
   TopoDS_Shape theres;
 };
-

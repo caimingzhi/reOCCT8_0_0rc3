@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRepFill_Edge3DLaw.hpp>
@@ -21,4 +20,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepFill_DraftLaw, BRepFill_Edge3DLaw)
 };
-

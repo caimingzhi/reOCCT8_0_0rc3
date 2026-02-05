@@ -22,7 +22,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CLight, Standard_Transient)
 
 namespace
 {
-static std::atomic<int> THE_LIGHT_COUNTER(0);
+  static std::atomic<int> THE_LIGHT_COUNTER(0);
 }
 
 //=================================================================================================
@@ -67,20 +67,24 @@ Graphic3d_CLight::Graphic3d_CLight(Graphic3d_TypeOfLightSource theType)
 {
   switch (theType)
   {
-    case Graphic3d_TypeOfLightSource_Ambient: {
+    case Graphic3d_TypeOfLightSource_Ambient:
+    {
       break;
     }
-    case Graphic3d_TypeOfLightSource_Directional: {
+    case Graphic3d_TypeOfLightSource_Directional:
+    {
       mySmoothness = 0.2f;
       myIntensity  = 20.0f;
       break;
     }
-    case Graphic3d_TypeOfLightSource_Positional: {
+    case Graphic3d_TypeOfLightSource_Positional:
+    {
       changeConstAttenuation()  = 1.0f;
       changeLinearAttenuation() = 0.0f;
       break;
     }
-    case Graphic3d_TypeOfLightSource_Spot: {
+    case Graphic3d_TypeOfLightSource_Spot:
+    {
       changeConstAttenuation()  = 1.0f;
       changeLinearAttenuation() = 0.0f;
       changeConcentration()     = 1.0f;

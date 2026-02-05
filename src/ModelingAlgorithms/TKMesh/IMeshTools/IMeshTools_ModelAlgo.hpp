@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_ErrorHandler.hpp>
 #include <Message_ProgressRange.hpp>
@@ -43,4 +42,3 @@ protected:
                                                const IMeshTools_Parameters&        theParameters,
                                                const Message_ProgressRange&        theRange) = 0;
 };
-

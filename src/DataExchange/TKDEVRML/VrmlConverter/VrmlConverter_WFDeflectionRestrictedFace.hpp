@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <Standard_OStream.hpp>
 
@@ -42,4 +41,3 @@ public:
                                   const int                                NBViso,
                                   const occ::handle<VrmlConverter_Drawer>& aDrawer);
 };
-

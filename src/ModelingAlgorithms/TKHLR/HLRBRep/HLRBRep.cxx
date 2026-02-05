@@ -1,19 +1,3 @@
-// Created on: 1992-08-27
-// Created by: Christophe MARION
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <HLRBRep.hpp>
 
 #include <BRep_Builder.hpp>
@@ -62,7 +46,8 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
       Edg = BRepLib_MakeEdge2d(ec.Parabola(), sta, end);
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       NCollection_Array1<gp_Pnt2d>    Poles(1, ec.NbPoles());
       occ::handle<Geom2d_BezierCurve> ec2d;
       if (ec.IsRational())
@@ -82,7 +67,8 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       occ::handle<Geom2d_BSplineCurve> ec2d;
       GeomAdaptor_Curve                GAcurve = ec.GetCurve().Curve();
       TopoDS_Edge                      anEdge  = ec.GetCurve().Edge();
@@ -149,7 +135,8 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
         Edg = mke2d.Edge();
       break;
     }
-    default: {
+    default:
+    {
       const int                    nbPnt = 15;
       NCollection_Array1<gp_Pnt2d> Poles(1, nbPnt);
       NCollection_Array1<double>   knots(1, nbPnt);

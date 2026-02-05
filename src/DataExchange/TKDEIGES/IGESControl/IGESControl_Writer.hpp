@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapeProcess.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -151,4 +150,3 @@ private:
   XSAlgo_ShapeProcessor::ProcessingFlags myShapeProcFlags; //!< Flags defining operations to be performed on shapes.
   // clang-format on
 };
-

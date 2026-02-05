@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -28,4 +27,3 @@ public:
 private:
   double radius;
 };
-

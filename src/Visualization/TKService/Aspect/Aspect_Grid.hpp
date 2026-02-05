@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Quantity_Color.hpp>
@@ -105,4 +104,3 @@ protected:
   bool                myIsActive;
   Aspect_GridDrawMode myDrawMode;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -91,4 +90,3 @@ private:
   NCollection_Sequence<IntCurveSurface_IntersectionPoint>   lpnt;
   NCollection_Sequence<IntCurveSurface_IntersectionSegment> lseg;
 };
-

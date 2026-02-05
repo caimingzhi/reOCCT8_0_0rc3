@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <Geom2dAdaptor_Curve.hpp>
 #include <TopAbs_Orientation.hpp>
@@ -65,4 +64,3 @@ private:
   Geom2dAdaptor_Curve myCurve;
   bool                myHasNullCurves;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -51,4 +50,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> items;
   occ::handle<StepRepr_RepresentationContext>                                contextOfItems;
 };
-

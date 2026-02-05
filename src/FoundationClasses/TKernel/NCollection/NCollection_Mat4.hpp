@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Vec4.hpp>
 // Copyright (c) 2020 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <NCollection_Vec3.hpp>
 #include <Standard_ConstructionError.hpp>
@@ -560,8 +558,6 @@ static_assert(std::is_standard_layout<NCollection_Mat3<float>>::value,
 static_assert(sizeof(NCollection_Mat3<float>) == sizeof(float) * 9,
               "NCollection_Mat3 is not packed/aligned!");
 #endif
-
-
 
 //! Generic matrix of 4 x 4 elements.
 //! To be used in conjunction with NCollection_Vec4 entities.
@@ -1274,4 +1270,3 @@ static_assert(std::is_standard_layout<NCollection_Mat4<float>>::value,
 static_assert(sizeof(NCollection_Mat4<float>) == sizeof(float) * 16,
               "NCollection_Mat4 is not packed/aligned!");
 #endif
-

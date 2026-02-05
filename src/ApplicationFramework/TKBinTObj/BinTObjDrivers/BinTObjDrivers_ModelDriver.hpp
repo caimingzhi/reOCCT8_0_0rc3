@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinMDF_ADriver.hpp>
 
 class BinTObjDrivers_ModelDriver : public BinMDF_ADriver
@@ -40,5 +39,5 @@ public:
 // Define handle class
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

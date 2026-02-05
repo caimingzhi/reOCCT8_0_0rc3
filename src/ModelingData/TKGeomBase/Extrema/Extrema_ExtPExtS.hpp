@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Extrema_GenExtPS.hpp>
 #include <Extrema_FuncPSNorm.hpp>
 #include <Extrema_POnSurf.hpp>
@@ -84,4 +83,3 @@ private:
   double                                            mySqDist[4];
   Extrema_POnSurf                                   myPoint[4];
 };
-

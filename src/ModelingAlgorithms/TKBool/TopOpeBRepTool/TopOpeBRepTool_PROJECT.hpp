@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopAbs_ShapeEnum.hpp>
 
 #include <TopAbs_Orientation.hpp>
@@ -108,4 +107,3 @@ Standard_EXPORT bool FUN_tool_projPonF(const gp_Pnt&         P,
                                        double&               dist,
                                        const Extrema_ExtFlag anExtFlag = Extrema_ExtFlag_MINMAX,
                                        const Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo_Grad);
-

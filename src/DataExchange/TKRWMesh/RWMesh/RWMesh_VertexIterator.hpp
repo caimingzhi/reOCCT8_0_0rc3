@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <Poly_Polygon3D.hpp>
 #include <RWMesh_ShapeIterator.hpp>
@@ -94,4 +93,3 @@ private:
   TopoDS_Vertex myVertex; //!< current vertex
   gp_Pnt        myPoint;  //!< geometry of current vertex
 };
-

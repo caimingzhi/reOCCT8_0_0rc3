@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 
 class Graphic3d_ArrayOfSegments;
@@ -60,4 +59,3 @@ protected:
   occ::handle<Graphic3d_ArrayOfTriangles> myTriangles;   //!< Triangles for camera frustum filling
   occ::handle<Graphic3d_ArrayOfSegments>  myBorders;     //!< Segments for camera frustum borders
 };
-

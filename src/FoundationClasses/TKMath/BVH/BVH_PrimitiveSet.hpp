@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Object.hpp>
 #include <BVH_Builder.hpp>
 #include <BVH_BinnedBuilder.hpp>
@@ -95,4 +94,3 @@ protected:
 
   mutable BVH_Box<T, N> myBox; //!< Cached bounding box of geometric primitives
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <DBRep_DrawableShape.hpp>
@@ -40,4 +39,3 @@ private:
   occ::handle<Draw_Text3D> myText;
   Draw_Color               myTextColor;
 };
-

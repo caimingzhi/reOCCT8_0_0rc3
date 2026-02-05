@@ -1,19 +1,3 @@
-// Created on: 1997-10-06
-// Created by: Roman BORISOV
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Approx_CurveOnSurface.hpp>
 
 #include <Adaptor2d_Curve2d.hpp>
@@ -100,7 +84,8 @@ void Approx_CurveOnSurface_Eval::Evaluate(int*    Dimension,
 
   switch (*Order)
   {
-    case 0: {
+    case 0:
+    {
       fonct2d->D0(par, pnt2d);
       fonct->D0(par, pnt);
       Result[0] = pnt2d.X();
@@ -110,7 +95,8 @@ void Approx_CurveOnSurface_Eval::Evaluate(int*    Dimension,
       Result[4] = pnt.Z();
       break;
     }
-    case 1: {
+    case 1:
+    {
       gp_Vec   v1;
       gp_Vec2d v21;
       fonct2d->D1(par, pnt2d, v21);
@@ -122,7 +108,8 @@ void Approx_CurveOnSurface_Eval::Evaluate(int*    Dimension,
       Result[4] = v1.Z();
       break;
     }
-    case 2: {
+    case 2:
+    {
       gp_Vec   v1, v2;
       gp_Vec2d v21, v22;
       fonct2d->D2(par, pnt2d, v21, v22);
@@ -201,7 +188,8 @@ void Approx_CurveOnSurface_Eval3d::Evaluate(int*    Dimension,
       Result[1] = pnt.Y();
       Result[2] = pnt.Z();
       break;
-    case 1: {
+    case 1:
+    {
       gp_Vec v1;
       fonct->D1(par, pnt, v1);
       Result[0] = v1.X();
@@ -209,7 +197,8 @@ void Approx_CurveOnSurface_Eval3d::Evaluate(int*    Dimension,
       Result[2] = v1.Z();
       break;
     }
-    case 2: {
+    case 2:
+    {
       gp_Vec v1, v2;
       fonct->D2(par, pnt, v1, v2);
       Result[0] = v2.X();
@@ -278,20 +267,23 @@ void Approx_CurveOnSurface_Eval2d::Evaluate(int*    Dimension,
 
   switch (*Order)
   {
-    case 0: {
+    case 0:
+    {
       pnt       = fonct2d->Value(par);
       Result[0] = pnt.X();
       Result[1] = pnt.Y();
       break;
     }
-    case 1: {
+    case 1:
+    {
       gp_Vec2d v1;
       fonct2d->D1(par, pnt, v1);
       Result[0] = v1.X();
       Result[1] = v1.Y();
       break;
     }
-    case 2: {
+    case 2:
+    {
       gp_Vec2d v1, v2;
       fonct2d->D2(par, pnt, v1, v2);
       Result[0] = v2.X();

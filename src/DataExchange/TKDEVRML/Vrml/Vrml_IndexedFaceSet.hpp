@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -55,4 +54,3 @@ private:
   occ::handle<NCollection_HArray1<int>> myNormalIndex;
   occ::handle<NCollection_HArray1<int>> myTextureCoordIndex;
 };
-

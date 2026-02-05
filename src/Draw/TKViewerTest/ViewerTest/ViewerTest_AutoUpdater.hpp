@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveContext.hpp>
 #include <V3d_View.hpp>
 
@@ -41,4 +40,3 @@ private:
   ViewerTest_AutoUpdater::RedrawMode  myToUpdate;
   bool                                myWasAutoUpdate;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_UVParamRangeSplitter.hpp>
 #include <IMeshData_Types.hpp>
 #include <IMeshTools_Parameters.hpp>
@@ -80,4 +79,3 @@ private:
 private:
   GeomAbs_SurfaceType mySurfaceType;
 };
-

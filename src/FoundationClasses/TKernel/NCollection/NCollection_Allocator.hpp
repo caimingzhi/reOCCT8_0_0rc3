@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <NCollection_BaseAllocator.hpp>
 
@@ -123,4 +122,3 @@ constexpr bool operator==(const NCollection_Allocator<U>&, const NCollection_All
 {
   return true;
 }
-

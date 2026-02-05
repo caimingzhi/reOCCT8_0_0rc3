@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWObj_Reader.hpp>
 
 #include <Poly_Triangulation.hpp>
@@ -105,4 +104,3 @@ protected:
   TCollection_AsciiString myLastFaceMaterial; //!< last face material name
   bool                    myToCreateShapes;   //!< create a single triangulation
 };
-

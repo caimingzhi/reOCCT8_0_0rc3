@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Appli.hpp>
 #include <Standard_PCharacter.hpp>
 
@@ -46,4 +45,3 @@ Standard_EXPORT int Draw_WinMain(HINSTANCE             hInstance,
     }
 
 #endif
-

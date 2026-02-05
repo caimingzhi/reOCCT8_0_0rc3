@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_ReadData.hpp>
 #include <StdObjMgt_WriteData.hpp>
 #include <StdObjMgt_Persistent.hpp>
@@ -47,4 +46,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData&      theWriteData,
   StdObjMgt_WriteData::ObjectSentry aSentry(theWriteData);
   return theWriteData << theLocation.myData;
 }
-

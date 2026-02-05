@@ -1,11 +1,11 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepElement_VolumeElementPurposeMember.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -19,7 +19,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 enum StepElement_Volume3dElementShape
 {
   StepElement_Hexahedron,
@@ -27,7 +26,6 @@ enum StepElement_Volume3dElementShape
   StepElement_Tetrahedron,
   StepElement_Pyramid
 };
-
 
 #include <StepElement_ElementDescriptor.hpp>
 #include <StepElement_ElementOrder.hpp>
@@ -71,4 +69,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>> thePurpose;
   StepElement_Volume3dElementShape                                                      theShape;
 };
-

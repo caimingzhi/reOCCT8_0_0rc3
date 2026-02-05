@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -68,4 +67,3 @@ private:
   int                                   myNbNodes;
   int                                   myNbTriangles;
 };
-

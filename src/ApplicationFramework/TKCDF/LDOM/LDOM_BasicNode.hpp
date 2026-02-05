@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <LDOM_Node.hpp>
 
 class LDOM_NullPtr;
@@ -66,4 +65,3 @@ protected:
   LDOM_Node::NodeType   myNodeType;
   const LDOM_BasicNode* mySibling;
 };
-

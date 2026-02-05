@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -155,6 +154,7 @@ private:
   double myLastParam;
   double myDu;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -203,5 +203,3 @@ inline gp_Pnt CPnts_UniformDeflection::Point() const
   StdFail_NotDone_Raise_if(!myDone, "CPnts_UniformDeflection::Point() - no result");
   return myPoints[myIPoint + 1];
 }
-
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -102,4 +101,3 @@ private:
     NCollection_DataMap<occ::handle<TDF_Attribute>, occ::handle<TDF_Attribute>>& aAttMap,
     const NCollection_Map<occ::handle<TDF_Attribute>>&                           aSrcAttributeMap);
 };
-

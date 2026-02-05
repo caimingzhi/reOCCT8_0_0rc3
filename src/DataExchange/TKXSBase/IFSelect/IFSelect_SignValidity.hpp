@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IFSelect_Signature.hpp>
@@ -33,4 +32,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IFSelect_SignValidity, IFSelect_Signature)
 };
-

@@ -124,14 +124,16 @@ void gp_Trsf::SetRotationPart(const gp_Quaternion& theR)
 
   switch (shape)
   {
-    case gp_Identity: {
+    case gp_Identity:
+    {
       if (hasRotation)
       {
         shape = gp_Rotation;
       }
       break;
     }
-    case gp_Rotation: {
+    case gp_Rotation:
+    {
       if (!hasRotation)
       {
         shape = gp_Identity;
@@ -144,7 +146,8 @@ void gp_Trsf::SetRotationPart(const gp_Quaternion& theR)
     case gp_Ax2Mirror:
     case gp_Scale:
     case gp_CompoundTrsf:
-    case gp_Other: {
+    case gp_Other:
+    {
       if (hasRotation)
       {
         shape = gp_CompoundTrsf;

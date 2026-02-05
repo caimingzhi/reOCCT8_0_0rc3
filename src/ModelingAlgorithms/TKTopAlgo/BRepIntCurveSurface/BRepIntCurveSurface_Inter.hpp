@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Curve.hpp>
 #include <IntCurveSurface_HInter.hpp>
 #include <TopoDS_Shape.hpp>
@@ -123,4 +122,3 @@ private:
   NCollection_Sequence<TopoDS_Shape>        myFaces;
   occ::handle<NCollection_HArray1<Bnd_Box>> myFaceBoxes;
 };
-

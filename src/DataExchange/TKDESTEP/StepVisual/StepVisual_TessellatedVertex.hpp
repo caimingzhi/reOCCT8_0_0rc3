@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedStructuredItem.hpp>
@@ -54,4 +53,3 @@ private:
   int                                     myPointIndex;
   bool myHasTopologicalLink; //!< flag "is TopologicalLink defined"
 };
-

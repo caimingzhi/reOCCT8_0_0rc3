@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Some fields of an IGES entity may be
 //! - Undefined
 //! - Defined as a single item
@@ -25,4 +24,3 @@ enum IGESData_DefList
   IGESData_ErrorOne,
   IGESData_ErrorSeveral
 };
-

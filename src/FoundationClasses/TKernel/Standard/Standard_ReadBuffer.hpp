@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_ProgramError.hpp>
 
 #include <iostream>
@@ -138,4 +137,3 @@ private:
   size_t      myBufferLen;    //!< effective length of the buffer to be read at once (multiple of chunk length)
   // clang-format on
 };
-

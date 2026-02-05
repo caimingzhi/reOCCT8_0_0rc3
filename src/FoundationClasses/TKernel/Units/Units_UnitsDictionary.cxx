@@ -1,19 +1,3 @@
-// Created on: 1992-06-24
-// Created by: Gilles DEBARBOUILLE
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Units_UnitsDictionary.hpp>
 
 #include <OSD.hpp>
@@ -54,43 +38,43 @@ Units_UnitsDictionary::Units_UnitsDictionary() = default;
 namespace
 {
 
-//! Auxiliary method removing trailing spaces.
-static bool strrightadjust(char* str)
-{
-  for (size_t len = strlen(str); len > 0 && IsSpace(str[len - 1]); len--)
+  //! Auxiliary method removing trailing spaces.
+  static bool strrightadjust(char* str)
   {
-    str[len - 1] = '\0';
-  }
-  return str[0] != '\0';
-}
-
-//! Auxiliary method for iterating string line-by-line.
-static const char* readLine(TCollection_AsciiString& theLine, const char* theString)
-{
-  theLine.Clear();
-  if (theString == nullptr)
-  {
-    return nullptr;
+    for (size_t len = strlen(str); len > 0 && IsSpace(str[len - 1]); len--)
+    {
+      str[len - 1] = '\0';
+    }
+    return str[0] != '\0';
   }
 
-  for (const char* aCharIter = theString;; ++aCharIter)
+  //! Auxiliary method for iterating string line-by-line.
+  static const char* readLine(TCollection_AsciiString& theLine, const char* theString)
   {
-    if (*aCharIter == '\0')
+    theLine.Clear();
+    if (theString == nullptr)
     {
       return nullptr;
     }
 
-    if (*aCharIter == '\n')
+    for (const char* aCharIter = theString;; ++aCharIter)
     {
-      const int aLineLen = int(aCharIter - theString);
-      if (aLineLen != 0)
+      if (*aCharIter == '\0')
       {
-        theLine = TCollection_AsciiString(theString, aLineLen);
+        return nullptr;
       }
-      return aCharIter + 1;
+
+      if (*aCharIter == '\n')
+      {
+        const int aLineLen = int(aCharIter - theString);
+        if (aLineLen != 0)
+        {
+          theLine = TCollection_AsciiString(theString, aLineLen);
+        }
+        return aCharIter + 1;
+      }
     }
   }
-}
 
 } // namespace
 

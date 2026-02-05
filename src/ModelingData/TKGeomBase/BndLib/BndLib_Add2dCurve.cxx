@@ -511,7 +511,8 @@ int BndLib_Box2dCurve::NbSamples()
   int N;
   switch (myTypeBase)
   {
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       occ::handle<Geom2d_BezierCurve> aCBz = occ::down_cast<Geom2d_BezierCurve>(myCurveBase);
       N                                    = aCBz->NbPoles();
       // By default parametric range of Bezier curv is [0, 1]
@@ -523,7 +524,8 @@ int BndLib_Box2dCurve::NbSamples()
       }
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       occ::handle<Geom2d_BSplineCurve> aCBS = occ::down_cast<Geom2d_BSplineCurve>(myCurveBase);
       N                                     = (aCBS->Degree() + 1) * (aCBS->NbKnots() - 1);
       double umin = aCBS->FirstParameter(), umax = aCBS->LastParameter();

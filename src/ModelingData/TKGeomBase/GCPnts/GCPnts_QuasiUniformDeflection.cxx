@@ -334,11 +334,13 @@ static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
       return GCPnts_Linear;
     case GeomAbs_Circle:
       return GCPnts_Circular;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBS = theC.BSpline();
       return (aBS->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBZ = theC.Bezier();
       return (aBZ->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
     }
@@ -604,19 +606,23 @@ void GCPnts_QuasiUniformDeflection::initialize(const TheCurve&     theC,
 
   switch (aType)
   {
-    case GCPnts_Linear: {
+    case GCPnts_Linear:
+    {
       myDone = PerformLinear(theC, myParams, myPoints, aU1, aU2);
       break;
     }
-    case GCPnts_Circular: {
+    case GCPnts_Circular:
+    {
       myDone = PerformCircular(theC, myParams, myPoints, theDeflection, aU1, aU2);
       break;
     }
-    case GCPnts_Curved: {
+    case GCPnts_Curved:
+    {
       myDone = PerformCurve(myParams, myPoints, theC, theDeflection, aU1, aU2, anEPSILON, myCont);
       break;
     }
-    case GCPnts_DefComposite: {
+    case GCPnts_DefComposite:
+    {
       myDone =
         PerformComposite(myParams, myPoints, theC, theDeflection, aU1, aU2, anEPSILON, myCont);
       break;

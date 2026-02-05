@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -33,4 +32,3 @@ private:
   occ::handle<StepBasic_Person>       thePerson;
   occ::handle<StepBasic_Organization> theOrganization;
 };
-

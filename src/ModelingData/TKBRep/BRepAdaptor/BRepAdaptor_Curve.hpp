@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <gp_Trsf.hpp>
 #include <GeomAdaptor_Curve.hpp>
@@ -202,4 +201,3 @@ private:
   occ::handle<Adaptor3d_CurveOnSurface> myConSurf;
   TopoDS_Edge                           myEdge;
 };
-

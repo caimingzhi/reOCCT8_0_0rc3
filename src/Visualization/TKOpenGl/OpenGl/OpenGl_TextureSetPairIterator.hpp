@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_TextureSet.hpp>
 
 //! Class for iterating pair of texture sets through each defined texture slot.
@@ -80,4 +79,3 @@ private:
   int                         myUnitUpper;
   int                         myUnitCurrent;
 };
-

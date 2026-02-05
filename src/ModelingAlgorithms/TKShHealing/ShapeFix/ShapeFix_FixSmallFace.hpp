@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -73,4 +72,3 @@ private:
   int                          myStatus;
   ShapeAnalysis_CheckSmallFace myAnalyzer;
 };
-

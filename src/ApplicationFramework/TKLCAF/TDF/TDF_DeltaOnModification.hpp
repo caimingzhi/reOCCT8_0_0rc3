@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_AttributeDelta.hpp>
@@ -24,4 +23,3 @@ protected:
   //! Initializes a TDF_DeltaOnModification.
   Standard_EXPORT TDF_DeltaOnModification(const occ::handle<TDF_Attribute>& anAttribute);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <HLRBRep_InternalAlgo.hpp>
@@ -74,4 +73,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(HLRBRep_Algo, HLRBRep_InternalAlgo)
 };
-

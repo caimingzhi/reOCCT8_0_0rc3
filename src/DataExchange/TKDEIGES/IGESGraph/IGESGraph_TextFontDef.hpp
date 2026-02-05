@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -116,4 +115,3 @@ private:
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger> thePenMovesToX;
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger> thePenMovesToY;
 };
-

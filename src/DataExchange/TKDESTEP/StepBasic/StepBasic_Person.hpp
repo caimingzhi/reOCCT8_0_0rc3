@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_HAsciiString.hpp>
@@ -108,4 +107,3 @@ private:
   bool                                                                    hasPrefixTitles;
   bool                                                                    hasSuffixTitles;
 };
-

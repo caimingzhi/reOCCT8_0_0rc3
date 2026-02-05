@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <STEPControl_Reader.hpp>
 #include <StepData_Factors.hpp>
 #include <IFSelect_ReturnStatus.hpp>
@@ -512,4 +511,3 @@ private:
   bool                                                            myViewMode;
   NCollection_DataMap<occ::handle<Standard_Transient>, TDF_Label> myGDTMap;
 };
-

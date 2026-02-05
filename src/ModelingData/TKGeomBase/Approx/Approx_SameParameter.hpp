@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <Adaptor3d_Surface.hpp>
 
@@ -155,4 +154,3 @@ private:
   occ::handle<Adaptor3d_Surface>        mySurf;
   occ::handle<Adaptor3d_CurveOnSurface> myCurveOnSurface;
 };
-

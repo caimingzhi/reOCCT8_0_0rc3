@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -93,4 +92,3 @@ private:
   occ::handle<NCollection_HArray1<TDF_Label>> myArray;
   Standard_GUID                               myID;
 };
-

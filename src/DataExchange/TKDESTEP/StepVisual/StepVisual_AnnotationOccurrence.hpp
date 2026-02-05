@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_StyledItem.hpp>
@@ -14,4 +13,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_AnnotationOccurrence, StepVisual_StyledItem)
 };
-

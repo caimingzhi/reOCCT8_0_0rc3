@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IntTools_CommonPrt.hpp>
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_Vector.hpp>
@@ -701,4 +700,3 @@ public:
   ~BOPDS_InterfZZ() override = default;
   //
 };
-

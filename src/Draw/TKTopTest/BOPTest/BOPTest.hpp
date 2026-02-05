@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -54,4 +53,3 @@ public:
   //! For numeric values, the number correspond to the order in enum.
   Standard_EXPORT static BOPAlgo_Operation GetOperationType(const char* theOp);
 };
-

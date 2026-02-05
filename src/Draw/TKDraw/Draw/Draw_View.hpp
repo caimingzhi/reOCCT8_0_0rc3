@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Trsf.hpp>
 #include <Draw_Window.hpp>
 
@@ -96,4 +95,3 @@ protected:
   int          myFrameX1;
   int          myFrameY1;
 };
-

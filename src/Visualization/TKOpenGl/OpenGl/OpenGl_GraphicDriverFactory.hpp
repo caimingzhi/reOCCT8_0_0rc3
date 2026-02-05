@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_GraphicDriverFactory.hpp>
 #include <OpenGl_Caps.hpp>
 
@@ -25,4 +24,3 @@ public:
 protected:
   occ::handle<OpenGl_Caps> myDefaultCaps;
 };
-

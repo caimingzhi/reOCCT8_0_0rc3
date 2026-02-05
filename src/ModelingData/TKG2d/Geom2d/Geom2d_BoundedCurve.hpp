@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -42,4 +41,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Geom2d_BoundedCurve, Geom2d_Curve)
 };
-

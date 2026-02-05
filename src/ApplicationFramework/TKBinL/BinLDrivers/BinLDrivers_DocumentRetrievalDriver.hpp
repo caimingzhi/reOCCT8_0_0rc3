@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BinObjMgt_Persistent.hpp>
@@ -107,4 +106,3 @@ private:
   NCollection_Vector<BinLDrivers_DocumentSection> mySections;
   NCollection_Map<int>                            myUnresolvedLinks;
 };
-

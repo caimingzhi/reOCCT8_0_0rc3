@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Standard coordinate system definition.
 //! Open CASCADE does not force application using specific coordinate system,
 //! although Draw Harness and samples define +Z-up +Y-forward coordinate system for camera view
@@ -22,4 +21,3 @@ enum RWMesh_CoordinateSystem
   RWMesh_CoordinateSystem_Yup =
     RWMesh_CoordinateSystem_glTF, //!< Y-up coordinate system (-ZForward+Yup+Xright)
 };
-

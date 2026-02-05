@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_SharedObject.hpp>
 #include <StdObjMgt_Persistent.hpp>
 #include <StdObject_Location.hpp>
@@ -63,4 +62,3 @@ public:
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
-

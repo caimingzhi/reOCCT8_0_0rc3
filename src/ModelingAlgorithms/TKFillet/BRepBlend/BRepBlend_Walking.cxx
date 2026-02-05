@@ -536,7 +536,8 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
   State = TestArret(Func, State, false);
   switch (State)
   {
-    case Blend_OnRst1: {
+    case Blend_OnRst1:
+    {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -551,7 +552,8 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     }
     break;
 
-    case Blend_OnRst2: {
+    case Blend_OnRst2:
+    {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -566,7 +568,8 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     }
     break;
 
-    case Blend_OnRst12: {
+    case Blend_OnRst12:
+    {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -577,7 +580,8 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
       MakeExtremity(Ext2, false, Index2, solrst2(1), Isvtx2, Vtx2);
     }
     break;
-    default: {
+    default:
+    {
       throw Standard_Failure("BRepBlend_Walking::PerformFirstSection : echec");
     }
   }
@@ -2213,7 +2217,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
 #endif
     switch (State)
     {
-      case Blend_OK: {
+      case Blend_OK:
+      {
         // Mettre a jour la ligne.
         if (sens > 0.)
         {
@@ -2251,7 +2256,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_StepTooLarge: {
+      case Blend_StepTooLarge:
+      {
         stepw = stepw / 2.;
         if (std::abs(stepw) < tolgui)
         {
@@ -2279,7 +2285,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_StepTooSmall: {
+      case Blend_StepTooSmall:
+      {
         // Mettre a jour la ligne.
         if (sens > 0.)
         {
@@ -2317,7 +2324,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst1: {
+      case Blend_OnRst1:
+      {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2343,7 +2351,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst2: {
+      case Blend_OnRst2:
+      {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2369,7 +2378,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst12: {
+      case Blend_OnRst12:
+      {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2402,7 +2412,8 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_SamePoints: {
+      case Blend_SamePoints:
+      {
         // On arrete
 #ifdef OCCT_DEBUG
         std::cout << " Points confondus dans le cheminement" << std::endl;

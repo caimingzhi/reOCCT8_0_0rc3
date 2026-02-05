@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <gp_Pnt.hpp>
@@ -300,4 +299,3 @@ public:
     const double                          theParam,
     const bool                            theIsForward);
 };
-

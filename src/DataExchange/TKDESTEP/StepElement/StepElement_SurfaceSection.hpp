@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepElement_MeasureOrUnspecifiedValue.hpp>
@@ -46,4 +45,3 @@ private:
   StepElement_MeasureOrUnspecifiedValue theNonStructuralMass;
   StepElement_MeasureOrUnspecifiedValue theNonStructuralMassOffset;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -45,4 +44,3 @@ private:
   int                                   theFuncDescripCode;
   occ::handle<TCollection_HAsciiString> theFuncDescrip;
 };
-

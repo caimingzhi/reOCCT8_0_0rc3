@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -370,13 +369,12 @@ private:
 
 namespace std
 {
-template <>
-struct hash<TCollection_ExtendedString>
-{
-  size_t operator()(const TCollection_ExtendedString& theString) const
+  template <>
+  struct hash<TCollection_ExtendedString>
   {
-    return theString.HashCode();
-  }
-};
+    size_t operator()(const TCollection_ExtendedString& theString) const
+    {
+      return theString.HashCode();
+    }
+  };
 } // namespace std
-

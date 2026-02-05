@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_CurveType.hpp>
@@ -195,4 +194,3 @@ private:
   occ::handle<NCollection_HSequence<double>> myIntervals;
   GeomAbs_Shape                              myIntCont;
 };
-

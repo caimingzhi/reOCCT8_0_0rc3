@@ -1,17 +1,3 @@
-// Created on: 2015-02-03
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_ColorScale.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -35,69 +21,72 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_ColorScale, AIS_InteractiveObject)
 
 namespace
 {
-//! Method to add colored quad into array of triangles.
-static void addColoredQuad(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
-                           const int                                      theXLeft,
-                           const int                                      theYBottom,
-                           const int                                      theSizeX,
-                           const int                                      theSizeY,
-                           const Quantity_Color&                          theColorBottom,
-                           const Quantity_Color&                          theColorTop)
-{
-  const int aVertIndex = theTris->VertexNumber() + 1;
-  theTris->AddVertex(gp_Pnt(theXLeft, theYBottom, 0.0), theColorBottom);
-  theTris->AddVertex(gp_Pnt(theXLeft + theSizeX, theYBottom, 0.0), theColorBottom);
-  theTris->AddVertex(gp_Pnt(theXLeft, theYBottom + theSizeY, 0.0), theColorTop);
-  theTris->AddVertex(gp_Pnt(theXLeft + theSizeX, theYBottom + theSizeY, 0.0), theColorTop);
-  theTris->AddEdges(aVertIndex, aVertIndex + 1, aVertIndex + 2);
-  theTris->AddEdges(aVertIndex + 1, aVertIndex + 2, aVertIndex + 3);
-}
-
-//! Compute hue angle from specified value.
-static Quantity_Color colorFromValueEx(const double                    theValue,
-                                       const double                    theMin,
-                                       const double                    theMax,
-                                       const NCollection_Vec3<double>& theHlsMin,
-                                       const NCollection_Vec3<double>& theHlsMax)
-{
-  const double aValueDelta = theMax - theMin;
-  double       aValue      = 0.0;
-  if (aValueDelta != 0.0)
+  //! Method to add colored quad into array of triangles.
+  static void addColoredQuad(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
+                             const int                                      theXLeft,
+                             const int                                      theYBottom,
+                             const int                                      theSizeX,
+                             const int                                      theSizeY,
+                             const Quantity_Color&                          theColorBottom,
+                             const Quantity_Color&                          theColorTop)
   {
-    aValue = (theValue - theMin) / aValueDelta;
+    const int aVertIndex = theTris->VertexNumber() + 1;
+    theTris->AddVertex(gp_Pnt(theXLeft, theYBottom, 0.0), theColorBottom);
+    theTris->AddVertex(gp_Pnt(theXLeft + theSizeX, theYBottom, 0.0), theColorBottom);
+    theTris->AddVertex(gp_Pnt(theXLeft, theYBottom + theSizeY, 0.0), theColorTop);
+    theTris->AddVertex(gp_Pnt(theXLeft + theSizeX, theYBottom + theSizeY, 0.0), theColorTop);
+    theTris->AddEdges(aVertIndex, aVertIndex + 1, aVertIndex + 2);
+    theTris->AddEdges(aVertIndex + 1, aVertIndex + 2, aVertIndex + 3);
   }
 
-  double aHue        = NCollection_Lerp<double>::Interpolate(theHlsMin[0], theHlsMax[0], aValue);
-  double aLightness  = NCollection_Lerp<double>::Interpolate(theHlsMin[1], theHlsMax[1], aValue);
-  double aSaturation = NCollection_Lerp<double>::Interpolate(theHlsMin[2], theHlsMax[2], aValue);
-  return Quantity_Color(AIS_ColorScale::hueToValidRange(aHue),
-                        aLightness,
-                        aSaturation,
-                        Quantity_TOC_HLS);
-}
-
-//! Return the index of discrete interval for specified value.
-//! Note that when value lies exactly on the border between two intervals,
-//! determining which interval to return is undefined operation;
-//! Current implementation returns the following interval in this case.
-//! @param theValue [in] value to map
-//! @param theMin   [in] values range, lower value
-//! @param theMax   [in] values range, upper value
-//! @param theNbIntervals [in] number of discrete intervals
-//! @return index of interval within [1, theNbIntervals] range
-static int colorDiscreteInterval(double theValue, double theMin, double theMax, int theNbIntervals)
-{
-  if (std::abs(theMax - theMin) <= Precision::Approximation())
+  //! Compute hue angle from specified value.
+  static Quantity_Color colorFromValueEx(const double                    theValue,
+                                         const double                    theMin,
+                                         const double                    theMax,
+                                         const NCollection_Vec3<double>& theHlsMin,
+                                         const NCollection_Vec3<double>& theHlsMax)
   {
-    return 1;
+    const double aValueDelta = theMax - theMin;
+    double       aValue      = 0.0;
+    if (aValueDelta != 0.0)
+    {
+      aValue = (theValue - theMin) / aValueDelta;
+    }
+
+    double aHue        = NCollection_Lerp<double>::Interpolate(theHlsMin[0], theHlsMax[0], aValue);
+    double aLightness  = NCollection_Lerp<double>::Interpolate(theHlsMin[1], theHlsMax[1], aValue);
+    double aSaturation = NCollection_Lerp<double>::Interpolate(theHlsMin[2], theHlsMax[2], aValue);
+    return Quantity_Color(AIS_ColorScale::hueToValidRange(aHue),
+                          aLightness,
+                          aSaturation,
+                          Quantity_TOC_HLS);
   }
 
-  int anInterval =
-    1 + (int)std::floor(double(theNbIntervals) * (theValue - theMin) / (theMax - theMin));
-  // map the very upper value (theValue==theMax) to the largest color interval
-  anInterval = std::min(anInterval, theNbIntervals);
-  return anInterval;
-}
+  //! Return the index of discrete interval for specified value.
+  //! Note that when value lies exactly on the border between two intervals,
+  //! determining which interval to return is undefined operation;
+  //! Current implementation returns the following interval in this case.
+  //! @param theValue [in] value to map
+  //! @param theMin   [in] values range, lower value
+  //! @param theMax   [in] values range, upper value
+  //! @param theNbIntervals [in] number of discrete intervals
+  //! @return index of interval within [1, theNbIntervals] range
+  static int colorDiscreteInterval(double theValue,
+                                   double theMin,
+                                   double theMax,
+                                   int    theNbIntervals)
+  {
+    if (std::abs(theMax - theMin) <= Precision::Approximation())
+    {
+      return 1;
+    }
+
+    int anInterval =
+      1 + (int)std::floor(double(theNbIntervals) * (theValue - theMin) / (theMax - theMin));
+    // map the very upper value (theValue==theMax) to the largest color interval
+    anInterval = std::min(anInterval, theNbIntervals);
+    return anInterval;
+  }
 } // namespace
 
 //=================================================================================================
@@ -758,14 +747,17 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
   switch (myLabelPos)
   {
     case Aspect_TOCSP_NONE:
-    case Aspect_TOCSP_LEFT: {
+    case Aspect_TOCSP_LEFT:
+    {
       break;
     }
-    case Aspect_TOCSP_CENTER: {
+    case Aspect_TOCSP_CENTER:
+    {
       anXLeft += (theColorBreadth - theMaxLabelWidth) / 2;
       break;
     }
-    case Aspect_TOCSP_RIGHT: {
+    case Aspect_TOCSP_RIGHT:
+    {
       anXLeft += theColorBreadth + mySpacing;
       break;
     }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_TessellatedShape.hpp>
 #include <IMeshData_StatusOwner.hpp>
 #include <Standard_Type.hpp>
@@ -58,4 +57,3 @@ protected:
 private:
   mutable occ::handle<BRepAdaptor_Surface> mySurface;
 };
-

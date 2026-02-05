@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_ToleranceMethodDefinition.hpp>
@@ -32,4 +31,3 @@ private:
   StepShape_ToleranceMethodDefinition theRange;
   StepShape_DimensionalCharacteristic theTolerancedDimension;
 };
-

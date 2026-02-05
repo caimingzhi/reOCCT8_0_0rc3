@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -88,20 +87,6 @@ private:
   IntTools_CurveRangeSample myRangeU;
   IntTools_CurveRangeSample myRangeV;
 };
-// Created on: 2005-10-05
-// Created by: Mikhail KLOKOV
-// Copyright (c) 2005-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Standard_HashUtils.hpp>
 
@@ -216,18 +201,16 @@ inline int IntTools_SurfaceRangeSample::GetRangeIndexVDeeper(const int theNbSamp
 
 namespace std
 {
-template <>
-struct hash<IntTools_SurfaceRangeSample>
-{
-  size_t operator()(const IntTools_SurfaceRangeSample& theSurfaceRangeSample) const noexcept
+  template <>
+  struct hash<IntTools_SurfaceRangeSample>
   {
-    // Combine two int values into a single hash value.
-    size_t aCombination[2]{
-      std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeU()),
-      std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeV())};
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+    size_t operator()(const IntTools_SurfaceRangeSample& theSurfaceRangeSample) const noexcept
+    {
+      // Combine two int values into a single hash value.
+      size_t aCombination[2]{
+        std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeU()),
+        std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeV())};
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
+    }
+  };
 } // namespace std
-
-

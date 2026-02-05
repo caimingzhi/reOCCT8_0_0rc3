@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 
 class BRepTopAdaptor_TopolTool;
@@ -37,4 +36,3 @@ private:
   occ::handle<BRepTopAdaptor_TopolTool> myTopolTool;
   occ::handle<Adaptor3d_Surface>        myHSurface;
 };
-

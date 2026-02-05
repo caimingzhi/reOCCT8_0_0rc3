@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! @file
 //! Include this file to disable GCC warning -Wcast-function-type introduced in GCC 8.1.
 //!
@@ -16,4 +15,3 @@
     #pragma GCC diagnostic ignored "-Wcast-function-type"
   #endif
 #endif
-

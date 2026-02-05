@@ -47,12 +47,14 @@ int BRepGProp_Face::UIntegrationOrder() const
       Nu = 4;
       break;
 
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       Nu = (*((occ::handle<Geom_BezierSurface>*)&((mySurface.Surface()).Surface())))->UDegree() + 1;
       Nu = std::max(4, Nu);
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       int a =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.Surface()).Surface())))->UDegree() + 1;
       int b =
@@ -80,13 +82,15 @@ int BRepGProp_Face::VIntegrationOrder() const
       Nv = 4;
       break;
 
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_BezierSurface:
+    {
       Nv = (*((occ::handle<Geom_BezierSurface>*)&((mySurface.Surface()).Surface())))->VDegree() + 1;
       Nv = std::max(4, Nv);
     }
     break;
 
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       int a =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.Surface()).Surface())))->VDegree() + 1;
       int b =
@@ -125,12 +129,14 @@ int BRepGProp_Face::IntegrationOrder() const
       N = 9;
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_BezierCurve:
+    {
       N = (*((occ::handle<Geom2d_BezierCurve>*)&(myCurve.Curve())))->Degree() + 1;
     }
     break;
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       int a = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->Degree() + 1;
       int b = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->NbKnots() - 1;
       N     = a * b;

@@ -14,7 +14,7 @@
 // commercial license or contractual agreement.
 
 #ifndef _BVH_Constants_Header
-#define _BVH_Constants_Header
+  #define _BVH_Constants_Header
 
 enum
 {
@@ -43,8 +43,8 @@ enum
 
 namespace BVH
 {
-//! Minimum node size to split.
-constexpr double THE_NODE_MIN_SIZE = 1e-5;
+  //! Minimum node size to split.
+  constexpr double THE_NODE_MIN_SIZE = 1e-5;
 } // namespace BVH
 
 #endif // _BVH_Constants_Header
@@ -396,87 +396,87 @@ protected:
 
 namespace BVH
 {
-//! Tool class for calculating box center along the given axis.
-//! \tparam T Numeric data type
-//! \tparam N Vector dimension
-template <class T, int N>
-struct CenterAxis
-{
-  //! Returns the center of the box along the specified axis using array access.
-  static inline T Center(const BVH_Box<T, N>& theBox, const int theAxis)
+  //! Tool class for calculating box center along the given axis.
+  //! \tparam T Numeric data type
+  //! \tparam N Vector dimension
+  template <class T, int N>
+  struct CenterAxis
   {
-    return (theBox.CornerMin()[theAxis] + theBox.CornerMax()[theAxis]) * static_cast<T>(0.5);
-  }
-};
-
-//! Tool class for calculating surface area of the box.
-//! For N=1, computes length (degenerate case).
-//! For N=2, computes area (or perimeter for degenerate boxes).
-//! For N>=3, computes 3D surface area using X, Y, Z components only.
-//! The W component (4th dimension) is intentionally ignored as BVH surface area
-//! heuristic (SAH) operates in 3D geometric space regardless of additional dimensions.
-//! \tparam T Numeric data type
-//! \tparam N Vector dimension
-template <class T, int N>
-struct SurfaceCalculator
-{
-  static inline T Area(const typename BVH_Box<T, N>::BVH_VecNt& theSize)
-  {
-    if constexpr (N == 1)
+    //! Returns the center of the box along the specified axis using array access.
+    static inline T Center(const BVH_Box<T, N>& theBox, const int theAxis)
     {
-      // For 1D, return the length
-      return std::abs(theSize[0]);
+      return (theBox.CornerMin()[theAxis] + theBox.CornerMax()[theAxis]) * static_cast<T>(0.5);
     }
-    else if constexpr (N == 2)
+  };
+
+  //! Tool class for calculating surface area of the box.
+  //! For N=1, computes length (degenerate case).
+  //! For N=2, computes area (or perimeter for degenerate boxes).
+  //! For N>=3, computes 3D surface area using X, Y, Z components only.
+  //! The W component (4th dimension) is intentionally ignored as BVH surface area
+  //! heuristic (SAH) operates in 3D geometric space regardless of additional dimensions.
+  //! \tparam T Numeric data type
+  //! \tparam N Vector dimension
+  template <class T, int N>
+  struct SurfaceCalculator
+  {
+    static inline T Area(const typename BVH_Box<T, N>::BVH_VecNt& theSize)
     {
-      const T anArea = std::abs(theSize.x() * theSize.y());
-      if (anArea < std::numeric_limits<T>::epsilon())
+      if constexpr (N == 1)
       {
-        return std::abs(theSize.x()) + std::abs(theSize.y());
+        // For 1D, return the length
+        return std::abs(theSize[0]);
       }
-      return anArea;
-    }
-    else
-    {
-      // For N >= 3, compute standard 3D surface area.
-      const T anArea = (std::abs(theSize.x() * theSize.y()) + std::abs(theSize.x() * theSize.z())
-                        + std::abs(theSize.z() * theSize.y()))
-                       * static_cast<T>(2.0);
-      if (anArea < std::numeric_limits<T>::epsilon())
+      else if constexpr (N == 2)
       {
-        return std::abs(theSize.x()) + std::abs(theSize.y()) + std::abs(theSize.z());
+        const T anArea = std::abs(theSize.x() * theSize.y());
+        if (anArea < std::numeric_limits<T>::epsilon())
+        {
+          return std::abs(theSize.x()) + std::abs(theSize.y());
+        }
+        return anArea;
       }
-      return anArea;
+      else
+      {
+        // For N >= 3, compute standard 3D surface area.
+        const T anArea = (std::abs(theSize.x() * theSize.y()) + std::abs(theSize.x() * theSize.z())
+                          + std::abs(theSize.z() * theSize.y()))
+                         * static_cast<T>(2.0);
+        if (anArea < std::numeric_limits<T>::epsilon())
+        {
+          return std::abs(theSize.x()) + std::abs(theSize.y()) + std::abs(theSize.z());
+        }
+        return anArea;
+      }
     }
-  }
-};
+  };
 
-//! Tool class for computing component-wise vector minimum and maximum.
-//! \tparam T Numeric data type
-//! \tparam N Vector dimension
-template <class T, int N>
-struct BoxMinMax
-{
-  typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
-
-  //! Computes component-wise minimum in-place.
-  static inline void CwiseMin(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
+  //! Tool class for computing component-wise vector minimum and maximum.
+  //! \tparam T Numeric data type
+  //! \tparam N Vector dimension
+  template <class T, int N>
+  struct BoxMinMax
   {
-    for (int i = 0; i < N; ++i)
-    {
-      theVec1[i] = (std::min)(theVec1[i], theVec2[i]);
-    }
-  }
+    typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
-  //! Computes component-wise maximum in-place.
-  static inline void CwiseMax(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
-  {
-    for (int i = 0; i < N; ++i)
+    //! Computes component-wise minimum in-place.
+    static inline void CwiseMin(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
     {
-      theVec1[i] = (std::max)(theVec1[i], theVec2[i]);
+      for (int i = 0; i < N; ++i)
+      {
+        theVec1[i] = (std::min)(theVec1[i], theVec2[i]);
+      }
     }
-  }
-};
+
+    //! Computes component-wise maximum in-place.
+    static inline void CwiseMax(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
+    {
+      for (int i = 0; i < N; ++i)
+      {
+        theVec1[i] = (std::max)(theVec1[i], theVec2[i]);
+      }
+    }
+  };
 } // namespace BVH
 
 //=================================================================================================
@@ -516,4 +516,3 @@ T BVH_Box<T, N>::Center(const int theAxis) const
 {
   return BVH::CenterAxis<T, N>::Center(*this, theAxis);
 }
-

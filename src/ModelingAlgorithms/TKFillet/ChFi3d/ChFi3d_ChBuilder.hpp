@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepAdaptor_Surface.hpp>
 #include <ChFi3d_Builder.hpp>
 #include <ChFiDS_ChamfMethod.hpp>
@@ -392,4 +391,3 @@ private:
 
   ChFiDS_ChamfMode myMode;
 };
-

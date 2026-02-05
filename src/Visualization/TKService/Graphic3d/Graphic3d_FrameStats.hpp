@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_FrameStatsData.hpp>
 #include <Graphic3d_RenderingParams.hpp>
 #include <Standard_Type.hpp>
@@ -144,4 +143,3 @@ protected:
   bool myIsLongLineFormat;        //!< prefer longer lines over greater number of lines
   // clang-format on
 };
-

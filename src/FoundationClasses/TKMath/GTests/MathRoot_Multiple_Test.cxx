@@ -20,8 +20,8 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1e-8;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1e-8;
+  constexpr double THE_PI        = 3.14159265358979323846;
 } // namespace
 
 //==================================================================================================
@@ -142,10 +142,12 @@ TEST(MathRoot_Multiple, FindAllRoots_NullFunction)
 TEST(MathRoot_Multiple, FindAllRoots_LambdaFunction)
 {
   // f(x) = cos(x) - 0.5, roots where cos(x) = 0.5
-  auto aFunc = MathUtils::MakeScalar([](double x, double& y) {
-    y = std::cos(x) - 0.5;
-    return true;
-  });
+  auto aFunc = MathUtils::MakeScalar(
+    [](double x, double& y)
+    {
+      y = std::cos(x) - 0.5;
+      return true;
+    });
 
   MathRoot::MultipleConfig aConfig;
   aConfig.NbSamples = 100;
@@ -291,10 +293,12 @@ TEST(MathRoot_Multiple, FindAllRoots_ConvenienceOverload)
 TEST(MathRoot_Multiple, FindAllRoots_Exponential)
 {
   // f(x) = exp(x) - 2, root at ln(2) ~= 0.693
-  auto aFunc = MathUtils::MakeScalar([](double x, double& y) {
-    y = std::exp(x) - 2.0;
-    return true;
-  });
+  auto aFunc = MathUtils::MakeScalar(
+    [](double x, double& y)
+    {
+      y = std::exp(x) - 2.0;
+      return true;
+    });
 
   auto aResult = MathRoot::FindAllRoots(aFunc, -1.0, 2.0, 50);
   EXPECT_TRUE(aResult.IsDone());

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureMap.hpp>
 #include <NCollection_Array1.hpp>
 
@@ -33,4 +32,3 @@ public:
 protected:
   NCollection_Array1<TCollection_AsciiString> myPaths;
 };
-

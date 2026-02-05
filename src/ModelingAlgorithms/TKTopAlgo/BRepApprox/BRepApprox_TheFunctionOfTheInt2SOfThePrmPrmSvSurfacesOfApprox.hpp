@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -105,4 +104,3 @@ private:
 #undef ThePSurfaceTool_hxx
 #undef IntImp_ZerParFunc
 #undef IntImp_ZerParFunc_hxx
-

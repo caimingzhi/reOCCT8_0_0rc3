@@ -1,19 +1,3 @@
-// Created on: 1995-08-02
-// Created by: Arnaud BOUZY/Odile Olivier
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_Plane.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -194,7 +178,8 @@ void AIS_Plane::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   switch (theMode)
   {
-    case 0: {
+    case 0:
+    {
       if (!myIsXYZPlane)
       {
         ComputeFrame();
@@ -210,7 +195,8 @@ void AIS_Plane::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
       break;
     }
-    case 1: {
+    case 1:
+    {
       if (!myIsXYZPlane)
       {
         ComputeFrame();
@@ -534,7 +520,8 @@ void AIS_Plane::ComputeFields()
 
     switch (myTypeOfPlane)
     {
-      case AIS_TOPL_XYPlane: {
+      case AIS_TOPL_XYPlane:
+      {
         gp_Pln XYP(0, 0, 1, 0);
         myComponent = new Geom_Plane(XYP);
         x4          = xo + x1 * DS1;
@@ -545,7 +532,8 @@ void AIS_Plane::ComputeFields()
         z5          = zo + z2 * DS2;
         break;
       }
-      case AIS_TOPL_XZPlane: {
+      case AIS_TOPL_XZPlane:
+      {
         gp_Pln XZP(0, 1, 0, 0);
         myComponent = new Geom_Plane(XZP);
         x4          = xo + x1 * DS1;
@@ -556,7 +544,8 @@ void AIS_Plane::ComputeFields()
         z5          = zo + z3 * DS3;
         break;
       }
-      case AIS_TOPL_YZPlane: {
+      case AIS_TOPL_YZPlane:
+      {
         gp_Pln XZP(1, 0, 0, 0);
         myComponent = new Geom_Plane(XZP);
         x4          = xo + x2 * DS2;

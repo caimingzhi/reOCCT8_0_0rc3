@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Poly_Triangulation.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -27,4 +26,3 @@ public:
   Standard_DEPRECATED("This method is very inefficient; see RWStl class for better alternative")
   Standard_EXPORT static bool Read(TopoDS_Shape& theShape, const char* aFile);
 };
-

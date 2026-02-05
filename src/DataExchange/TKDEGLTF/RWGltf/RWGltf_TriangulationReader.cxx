@@ -29,72 +29,72 @@
 
 namespace
 {
-static const int   THE_LOWER_TRI_INDEX  = 1;
-static const int   THE_LOWER_NODE_INDEX = 1;
-static const float THE_NORMAL_PREC2     = 0.001f;
+  static const int   THE_LOWER_TRI_INDEX  = 1;
+  static const int   THE_LOWER_NODE_INDEX = 1;
+  static const float THE_NORMAL_PREC2     = 0.001f;
 
 #ifdef HAVE_DRACO
-//! Return array type from Draco attribute type.
-static RWGltf_GltfArrayType arrayTypeFromDraco(draco::GeometryAttribute::Type theType)
-{
-  switch (theType)
+  //! Return array type from Draco attribute type.
+  static RWGltf_GltfArrayType arrayTypeFromDraco(draco::GeometryAttribute::Type theType)
   {
-    case draco::GeometryAttribute::POSITION:
-      return RWGltf_GltfArrayType_Position;
-    case draco::GeometryAttribute::NORMAL:
-      return RWGltf_GltfArrayType_Normal;
-    case draco::GeometryAttribute::COLOR:
-      return RWGltf_GltfArrayType_Color;
-    case draco::GeometryAttribute::TEX_COORD:
-      return RWGltf_GltfArrayType_TCoord0;
-    default:
-      return RWGltf_GltfArrayType_UNKNOWN;
+    switch (theType)
+    {
+      case draco::GeometryAttribute::POSITION:
+        return RWGltf_GltfArrayType_Position;
+      case draco::GeometryAttribute::NORMAL:
+        return RWGltf_GltfArrayType_Normal;
+      case draco::GeometryAttribute::COLOR:
+        return RWGltf_GltfArrayType_Color;
+      case draco::GeometryAttribute::TEX_COORD:
+        return RWGltf_GltfArrayType_TCoord0;
+      default:
+        return RWGltf_GltfArrayType_UNKNOWN;
+    }
   }
-}
 
-//! Return layout from Draco number of components.
-static RWGltf_GltfAccessorLayout layoutFromDraco(int8_t theNbComps)
-{
-  switch (theNbComps)
+  //! Return layout from Draco number of components.
+  static RWGltf_GltfAccessorLayout layoutFromDraco(int8_t theNbComps)
   {
-    case 1:
-      return RWGltf_GltfAccessorLayout_Scalar;
-    case 2:
-      return RWGltf_GltfAccessorLayout_Vec2;
-    case 3:
-      return RWGltf_GltfAccessorLayout_Vec3;
-    case 4:
-      return RWGltf_GltfAccessorLayout_Vec4;
+    switch (theNbComps)
+    {
+      case 1:
+        return RWGltf_GltfAccessorLayout_Scalar;
+      case 2:
+        return RWGltf_GltfAccessorLayout_Vec2;
+      case 3:
+        return RWGltf_GltfAccessorLayout_Vec3;
+      case 4:
+        return RWGltf_GltfAccessorLayout_Vec4;
+    }
+    return RWGltf_GltfAccessorLayout_UNKNOWN;
   }
-  return RWGltf_GltfAccessorLayout_UNKNOWN;
-}
 
-//! Return component type from Draco data type.
-static RWGltf_GltfAccessorCompType compTypeFromDraco(draco::DataType theType)
-{
-  switch (theType)
+  //! Return component type from Draco data type.
+  static RWGltf_GltfAccessorCompType compTypeFromDraco(draco::DataType theType)
   {
-    case draco::DT_INT8:
-      return RWGltf_GltfAccessorCompType_Int8;
-    case draco::DT_UINT8:
-      return RWGltf_GltfAccessorCompType_UInt8;
-    case draco::DT_INT16:
-      return RWGltf_GltfAccessorCompType_Int16;
-    case draco::DT_UINT16:
-      return RWGltf_GltfAccessorCompType_UInt16;
-    case draco::DT_INT32:
-    case draco::DT_UINT32:
-      return RWGltf_GltfAccessorCompType_UInt32;
-    // case draco::DT_INT64:
-    // case draco::DT_UINT64:
-    case draco::DT_FLOAT32:
-      return RWGltf_GltfAccessorCompType_Float32;
-    // case draco::DT_FLOAT64:
-    // case draco::DT_BOOL:
-    default:
-      return RWGltf_GltfAccessorCompType_UNKNOWN;
+    switch (theType)
+    {
+      case draco::DT_INT8:
+        return RWGltf_GltfAccessorCompType_Int8;
+      case draco::DT_UINT8:
+        return RWGltf_GltfAccessorCompType_UInt8;
+      case draco::DT_INT16:
+        return RWGltf_GltfAccessorCompType_Int16;
+      case draco::DT_UINT16:
+        return RWGltf_GltfAccessorCompType_UInt16;
+      case draco::DT_INT32:
+      case draco::DT_UINT32:
+        return RWGltf_GltfAccessorCompType_UInt32;
+      // case draco::DT_INT64:
+      // case draco::DT_UINT64:
+      case draco::DT_FLOAT32:
+        return RWGltf_GltfAccessorCompType_Float32;
+      // case draco::DT_FLOAT64:
+      // case draco::DT_BOOL:
+      default:
+        return RWGltf_GltfAccessorCompType_UNKNOWN;
+    }
   }
-}
 #endif
 } // namespace
 
@@ -301,7 +301,8 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
     const RWGltf_GltfAccessorCompType aWrapCompType = compTypeFromDraco(anAttrib->data_type());
     switch (aWrapType)
     {
-      case RWGltf_GltfArrayType_Position: {
+      case RWGltf_GltfArrayType_Position:
+      {
         if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout_Vec3)
         {
@@ -326,7 +327,8 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         }
         break;
       }
-      case RWGltf_GltfArrayType_Normal: {
+      case RWGltf_GltfArrayType_Normal:
+      {
         if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout_Vec3)
         {
@@ -366,7 +368,8 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         }
         break;
       }
-      case RWGltf_GltfArrayType_TCoord0: {
+      case RWGltf_GltfArrayType_TCoord0:
+      {
         if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout_Vec2)
         {
@@ -398,7 +401,8 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         }
         break;
       }
-      default: {
+      default:
+      {
         break;
       }
     }
@@ -586,7 +590,8 @@ bool RWGltf_TriangulationReader::ReadStream(
 
   switch (theType)
   {
-    case RWGltf_GltfArrayType_Indices: {
+    case RWGltf_GltfArrayType_Indices:
+    {
       if (theAccessor.Type != RWGltf_GltfAccessorLayout_Scalar)
       {
         break;
@@ -824,7 +829,8 @@ bool RWGltf_TriangulationReader::ReadStream(
 
       break;
     }
-    case RWGltf_GltfArrayType_Position: {
+    case RWGltf_GltfArrayType_Position:
+    {
       if (theAccessor.ComponentType != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout_Vec3)
       {
@@ -883,7 +889,8 @@ bool RWGltf_TriangulationReader::ReadStream(
       }
       break;
     }
-    case RWGltf_GltfArrayType_Normal: {
+    case RWGltf_GltfArrayType_Normal:
+    {
       if (theAccessor.ComponentType != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout_Vec3)
       {
@@ -954,7 +961,8 @@ bool RWGltf_TriangulationReader::ReadStream(
       }
       break;
     }
-    case RWGltf_GltfArrayType_TCoord0: {
+    case RWGltf_GltfArrayType_TCoord0:
+    {
       if (theAccessor.ComponentType != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout_Vec2)
       {
@@ -996,10 +1004,12 @@ bool RWGltf_TriangulationReader::ReadStream(
     case RWGltf_GltfArrayType_Color:
     case RWGltf_GltfArrayType_TCoord1:
     case RWGltf_GltfArrayType_Joint:
-    case RWGltf_GltfArrayType_Weight: {
+    case RWGltf_GltfArrayType_Weight:
+    {
       return true;
     }
-    case RWGltf_GltfArrayType_UNKNOWN: {
+    case RWGltf_GltfArrayType_UNKNOWN:
+    {
       return false;
     }
   }

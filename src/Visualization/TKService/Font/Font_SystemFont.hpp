@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Font_FontAspect.hpp>
 #include <Standard.hpp>
 #include <NCollection_DefineAlloc.hpp>
@@ -126,15 +125,14 @@ private:
 
 namespace std
 {
-template <>
-struct hash<occ::handle<Font_SystemFont>>
-{
-  size_t operator()(const occ::handle<Font_SystemFont>& theLink) const noexcept
+  template <>
+  struct hash<occ::handle<Font_SystemFont>>
   {
-    if (theLink.IsNull())
-      return 0;
-    return std::hash<TCollection_AsciiString>{}(theLink->FontKey());
-  }
-};
+    size_t operator()(const occ::handle<Font_SystemFont>& theLink) const noexcept
+    {
+      if (theLink.IsNull())
+        return 0;
+      return std::hash<TCollection_AsciiString>{}(theLink->FontKey());
+    }
+  };
 }; // namespace std
-

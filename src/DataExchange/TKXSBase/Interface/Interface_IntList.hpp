@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -124,4 +123,3 @@ private:
   occ::handle<NCollection_HArray1<int>> theents;
   occ::handle<NCollection_HArray1<int>> therefs;
 };
-

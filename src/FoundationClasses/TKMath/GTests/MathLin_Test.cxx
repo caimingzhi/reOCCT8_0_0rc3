@@ -29,95 +29,95 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-10;
+  constexpr double THE_TOLERANCE = 1.0e-10;
 
-//! Create identity matrix.
-math_Matrix CreateIdentity(int theN)
-{
-  math_Matrix aMat(1, theN, 1, theN, 0.0);
-  for (int i = 1; i <= theN; ++i)
+  //! Create identity matrix.
+  math_Matrix CreateIdentity(int theN)
   {
-    aMat(i, i) = 1.0;
-  }
-  return aMat;
-}
-
-//! Create symmetric positive definite matrix.
-math_Matrix CreateSPD(int theN)
-{
-  math_Matrix aMat(1, theN, 1, theN, 0.0);
-  for (int i = 1; i <= theN; ++i)
-  {
-    for (int j = 1; j <= theN; ++j)
+    math_Matrix aMat(1, theN, 1, theN, 0.0);
+    for (int i = 1; i <= theN; ++i)
     {
-      aMat(i, j) = 1.0 / (i + j - 1); // Hilbert matrix
+      aMat(i, i) = 1.0;
     }
-    aMat(i, i) += static_cast<double>(theN); // Make well-conditioned
+    return aMat;
   }
-  return aMat;
-}
 
-//! Create random matrix.
-math_Matrix CreateRandom(int theM, int theN, int theSeed = 42)
-{
-  math_Matrix aMat(1, theM, 1, theN);
-  srand(static_cast<unsigned int>(theSeed));
-  for (int i = 1; i <= theM; ++i)
+  //! Create symmetric positive definite matrix.
+  math_Matrix CreateSPD(int theN)
   {
-    for (int j = 1; j <= theN; ++j)
+    math_Matrix aMat(1, theN, 1, theN, 0.0);
+    for (int i = 1; i <= theN; ++i)
     {
-      aMat(i, j) = static_cast<double>(rand()) / RAND_MAX * 2.0 - 1.0;
-    }
-  }
-  return aMat;
-}
-
-//! Compute L2 norm of vector.
-double VectorNorm(const math_Vector& theVec)
-{
-  double aNorm = 0.0;
-  for (int i = theVec.Lower(); i <= theVec.Upper(); ++i)
-  {
-    aNorm += theVec(i) * theVec(i);
-  }
-  return std::sqrt(aNorm);
-}
-
-//! Matrix multiplication A*B.
-math_Matrix MatMul(const math_Matrix& theA, const math_Matrix& theB)
-{
-  const int   aM = theA.RowNumber();
-  const int   aN = theB.ColNumber();
-  const int   aK = theA.ColNumber();
-  math_Matrix aResult(1, aM, 1, aN, 0.0);
-  for (int i = 1; i <= aM; ++i)
-  {
-    for (int j = 1; j <= aN; ++j)
-    {
-      for (int k = 1; k <= aK; ++k)
+      for (int j = 1; j <= theN; ++j)
       {
-        aResult(i, j) += theA(i, k) * theB(k, j);
+        aMat(i, j) = 1.0 / (i + j - 1); // Hilbert matrix
+      }
+      aMat(i, i) += static_cast<double>(theN); // Make well-conditioned
+    }
+    return aMat;
+  }
+
+  //! Create random matrix.
+  math_Matrix CreateRandom(int theM, int theN, int theSeed = 42)
+  {
+    math_Matrix aMat(1, theM, 1, theN);
+    srand(static_cast<unsigned int>(theSeed));
+    for (int i = 1; i <= theM; ++i)
+    {
+      for (int j = 1; j <= theN; ++j)
+      {
+        aMat(i, j) = static_cast<double>(rand()) / RAND_MAX * 2.0 - 1.0;
       }
     }
+    return aMat;
   }
-  return aResult;
-}
 
-//! Transpose matrix.
-math_Matrix Transpose(const math_Matrix& theMat)
-{
-  const int   aM = theMat.RowNumber();
-  const int   aN = theMat.ColNumber();
-  math_Matrix aResult(1, aN, 1, aM);
-  for (int i = 1; i <= aM; ++i)
+  //! Compute L2 norm of vector.
+  double VectorNorm(const math_Vector& theVec)
   {
-    for (int j = 1; j <= aN; ++j)
+    double aNorm = 0.0;
+    for (int i = theVec.Lower(); i <= theVec.Upper(); ++i)
     {
-      aResult(j, i) = theMat(i, j);
+      aNorm += theVec(i) * theVec(i);
     }
+    return std::sqrt(aNorm);
   }
-  return aResult;
-}
+
+  //! Matrix multiplication A*B.
+  math_Matrix MatMul(const math_Matrix& theA, const math_Matrix& theB)
+  {
+    const int   aM = theA.RowNumber();
+    const int   aN = theB.ColNumber();
+    const int   aK = theA.ColNumber();
+    math_Matrix aResult(1, aM, 1, aN, 0.0);
+    for (int i = 1; i <= aM; ++i)
+    {
+      for (int j = 1; j <= aN; ++j)
+      {
+        for (int k = 1; k <= aK; ++k)
+        {
+          aResult(i, j) += theA(i, k) * theB(k, j);
+        }
+      }
+    }
+    return aResult;
+  }
+
+  //! Transpose matrix.
+  math_Matrix Transpose(const math_Matrix& theMat)
+  {
+    const int   aM = theMat.RowNumber();
+    const int   aN = theMat.ColNumber();
+    math_Matrix aResult(1, aN, 1, aM);
+    for (int i = 1; i <= aM; ++i)
+    {
+      for (int j = 1; j <= aN; ++j)
+      {
+        aResult(j, i) = theMat(i, j);
+      }
+    }
+    return aResult;
+  }
 
 } // namespace
 

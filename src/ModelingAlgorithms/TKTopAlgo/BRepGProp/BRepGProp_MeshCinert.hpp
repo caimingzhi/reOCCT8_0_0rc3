@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -37,4 +36,3 @@ public:
   Standard_EXPORT static void PreparePolygon(const TopoDS_Edge&                        theE,
                                              occ::handle<NCollection_HArray1<gp_Pnt>>& thePolyg);
 };
-

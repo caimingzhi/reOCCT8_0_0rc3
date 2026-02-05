@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_TrsfForm.hpp>
 #include <gp_Mat2d.hpp>
 #include <gp_XY.hpp>
@@ -322,4 +321,3 @@ inline constexpr void gp_Trsf2d::Transforms(gp_XY& theCoord) const noexcept
   }
   theCoord.Add(loc);
 }
-

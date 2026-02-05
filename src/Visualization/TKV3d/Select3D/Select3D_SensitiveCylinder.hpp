@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Select3D_SensitiveEntity.hpp>
 
 //! A framework to define selection by a sensitive cylinder or cone.
@@ -62,4 +61,3 @@ protected:
   double  myHeight;       //!< cylinder height
   bool    myIsHollow;     //!< true if the cylinder is empty inside
 };
-

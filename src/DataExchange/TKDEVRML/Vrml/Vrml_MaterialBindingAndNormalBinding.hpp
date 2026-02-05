@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Vrml_MaterialBindingAndNormalBinding
 {
   Vrml_DEFAULT,
@@ -12,4 +11,3 @@ enum Vrml_MaterialBindingAndNormalBinding
   Vrml_PER_VERTEX,
   Vrml_PER_VERTEX_INDEXED
 };
-

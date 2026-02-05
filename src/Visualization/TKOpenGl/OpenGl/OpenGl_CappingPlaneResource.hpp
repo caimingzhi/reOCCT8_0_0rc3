@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_PrimitiveArray.hpp>
 #include <OpenGl_Resource.hpp>
 #include <OpenGl_Aspects.hpp>
@@ -70,4 +69,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_CappingPlaneResource, OpenGl_Resource) // Type definition
 };
-

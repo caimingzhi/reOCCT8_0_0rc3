@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepTools_Modification.hpp>
 #include <Geom2d_Curve.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -173,4 +172,3 @@ private:
   //! Tolerance.
   double myTolerance;
 };
-

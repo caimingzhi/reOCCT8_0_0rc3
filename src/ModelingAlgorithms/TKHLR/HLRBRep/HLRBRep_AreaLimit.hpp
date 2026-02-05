@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -69,4 +68,3 @@ private:
   occ::handle<HLRBRep_AreaLimit> myPrevious;
   occ::handle<HLRBRep_AreaLimit> myNext;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum TFunction_ExecutionStatus
 {
   TFunction_ES_WrongDefinition,
@@ -9,4 +8,3 @@ enum TFunction_ExecutionStatus
   TFunction_ES_Succeeded,
   TFunction_ES_Failed
 };
-

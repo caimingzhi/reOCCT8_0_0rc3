@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ShapeFixParameters.hpp>
 #include <Resource_FormatType.hpp>
 #include <STEPControl_StepModelType.hpp>
@@ -194,4 +193,3 @@ public:
   bool WriteScalingTrsf = true; //<! Indicates if scaling should be written as Cartesian Operator or skipped
   // clang-format on
 };
-

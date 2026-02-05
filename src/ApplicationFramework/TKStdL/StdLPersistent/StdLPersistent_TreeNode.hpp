@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 
 #include <TDataStd_TreeNode.hpp>
@@ -37,4 +36,3 @@ private:
   Handle(dynamic)                      myDynamicData;
   occ::handle<StdLPersistent_TreeNode> myNext;
 };
-

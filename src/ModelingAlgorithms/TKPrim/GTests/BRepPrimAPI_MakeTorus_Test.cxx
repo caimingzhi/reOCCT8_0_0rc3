@@ -28,31 +28,31 @@
 namespace
 {
 
-//! Helper function to create partial torus and check validity.
-//! @param theR1 Major radius
-//! @param theR2 Minor radius
-//! @param theAngle1 First angle on the minor circle (V parameter)
-//! @param theAngle2 Second angle on the minor circle (V parameter)
-//! @param theAngle Angle around the major circle (U parameter), default 2*PI
-//! @return true if the resulting shape is valid
-bool createAndCheckPartialTorus(double theR1,
-                                double theR2,
-                                double theAngle1,
-                                double theAngle2,
-                                double theAngle = 2.0 * M_PI)
-{
-  gp_Ax2                anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
-  BRepPrimAPI_MakeTorus aMakeTorus(anAxis, theR1, theR2, theAngle1, theAngle2, theAngle);
-  TopoDS_Shape          aShape = aMakeTorus.Shape();
-
-  if (!aMakeTorus.IsDone() || aShape.IsNull())
+  //! Helper function to create partial torus and check validity.
+  //! @param theR1 Major radius
+  //! @param theR2 Minor radius
+  //! @param theAngle1 First angle on the minor circle (V parameter)
+  //! @param theAngle2 Second angle on the minor circle (V parameter)
+  //! @param theAngle Angle around the major circle (U parameter), default 2*PI
+  //! @return true if the resulting shape is valid
+  bool createAndCheckPartialTorus(double theR1,
+                                  double theR2,
+                                  double theAngle1,
+                                  double theAngle2,
+                                  double theAngle = 2.0 * M_PI)
   {
-    return false;
-  }
+    gp_Ax2                anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
+    BRepPrimAPI_MakeTorus aMakeTorus(anAxis, theR1, theR2, theAngle1, theAngle2, theAngle);
+    TopoDS_Shape          aShape = aMakeTorus.Shape();
 
-  BRepCheck_Analyzer anAnalyzer(aShape);
-  return anAnalyzer.IsValid();
-}
+    if (!aMakeTorus.IsDone() || aShape.IsNull())
+    {
+      return false;
+    }
+
+    BRepCheck_Analyzer anAnalyzer(aShape);
+    return anAnalyzer.IsValid();
+  }
 
 } // namespace
 

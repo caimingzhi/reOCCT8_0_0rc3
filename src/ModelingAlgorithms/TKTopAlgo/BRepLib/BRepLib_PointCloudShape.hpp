@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 #include <Standard_Integer.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
@@ -99,4 +98,3 @@ protected:
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher>    myFacePoints;
   int                                                                myNbPoints;
 };
-

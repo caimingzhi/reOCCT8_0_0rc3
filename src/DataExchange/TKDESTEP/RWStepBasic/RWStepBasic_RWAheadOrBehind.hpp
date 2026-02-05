@@ -1,56 +1,54 @@
 #pragma once
 
-
 #include <StepBasic_AheadOrBehind.hpp>
 #include <Standard_CString.hpp>
 
 namespace RWStepBasic_RWAheadOrBehind
 {
-static constexpr char aobAhead[]  = ".AHEAD.";
-static constexpr char aobExact[]  = ".EXACT.";
-static constexpr char aobBehind[] = ".BEHIND.";
+  static constexpr char aobAhead[]  = ".AHEAD.";
+  static constexpr char aobExact[]  = ".EXACT.";
+  static constexpr char aobBehind[] = ".BEHIND.";
 
-//! Convert StepBasic_AheadOrBehind to string
-//! @param theSourceEnum The StepBasic_AheadOrBehind value to convert
-//! @return The corresponding string representation or nullptr if not found
-inline const char* ConvertToString(const StepBasic_AheadOrBehind theSourceEnum)
-{
-  switch (theSourceEnum)
+  //! Convert StepBasic_AheadOrBehind to string
+  //! @param theSourceEnum The StepBasic_AheadOrBehind value to convert
+  //! @return The corresponding string representation or nullptr if not found
+  inline const char* ConvertToString(const StepBasic_AheadOrBehind theSourceEnum)
   {
-    case StepBasic_aobAhead:
-      return aobAhead;
-    case StepBasic_aobExact:
-      return aobExact;
-    case StepBasic_aobBehind:
-      return aobBehind;
+    switch (theSourceEnum)
+    {
+      case StepBasic_aobAhead:
+        return aobAhead;
+      case StepBasic_aobExact:
+        return aobExact;
+      case StepBasic_aobBehind:
+        return aobBehind;
+    }
+    return nullptr;
   }
-  return nullptr;
-}
 
-//! Convert string to StepBasic_AheadOrBehind
-//! @param theAheadOrBehindStr The string to convert
-//! @param theResultEnum The corresponding StepBasic_AheadOrBehind value
-//! @return true if the conversion was successful, false otherwise
-inline bool ConvertToEnum(const char* theAheadOrBehindStr, StepBasic_AheadOrBehind& theResultEnum)
-{
-  if (IsEqual(theAheadOrBehindStr, aobAhead))
+  //! Convert string to StepBasic_AheadOrBehind
+  //! @param theAheadOrBehindStr The string to convert
+  //! @param theResultEnum The corresponding StepBasic_AheadOrBehind value
+  //! @return true if the conversion was successful, false otherwise
+  inline bool ConvertToEnum(const char* theAheadOrBehindStr, StepBasic_AheadOrBehind& theResultEnum)
   {
-    theResultEnum = StepBasic_aobAhead;
+    if (IsEqual(theAheadOrBehindStr, aobAhead))
+    {
+      theResultEnum = StepBasic_aobAhead;
+    }
+    else if (IsEqual(theAheadOrBehindStr, aobExact))
+    {
+      theResultEnum = StepBasic_aobExact;
+    }
+    else if (IsEqual(theAheadOrBehindStr, aobBehind))
+    {
+      theResultEnum = StepBasic_aobBehind;
+    }
+    else
+    {
+      return false;
+    }
+    return true;
   }
-  else if (IsEqual(theAheadOrBehindStr, aobExact))
-  {
-    theResultEnum = StepBasic_aobExact;
-  }
-  else if (IsEqual(theAheadOrBehindStr, aobBehind))
-  {
-    theResultEnum = StepBasic_aobBehind;
-  }
-  else
-  {
-    return false;
-  }
-  return true;
-}
 
 } // namespace RWStepBasic_RWAheadOrBehind
-

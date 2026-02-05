@@ -1,55 +1,17 @@
 #pragma once
 
-
 #include <Graphic3d_CStructure.hpp>
 #include <NCollection_Map.hpp>
 #include <Graphic3d_Group.hpp>
 #include <NCollection_Sequence.hpp>
 #include <Graphic3d_SequenceOfHClipPlane.hpp>
-// Created on: 1993-03-31
-// Created by: NW,JPB,CAL
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-
-//! To manage the connections between the structures.
 enum Graphic3d_TypeOfConnection
 {
   Graphic3d_TOC_ANCESTOR,
   Graphic3d_TOC_DESCENDANT
 };
 
-
-// Created on: 1993-03-31
-// Created by: NW,JPB,CAL
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
-//! Structural attribute indicating if it can be displayed
-//! in wireframe, shadow mode, or both.
 enum Graphic3d_TypeOfStructure
 {
   Graphic3d_TOS_WIREFRAME,
@@ -57,7 +19,6 @@ enum Graphic3d_TypeOfStructure
   Graphic3d_TOS_COMPUTED,
   Graphic3d_TOS_ALL
 };
-
 
 #include <Graphic3d_TransformPers.hpp>
 #include <Graphic3d_ZLayerId.hpp>
@@ -120,6 +81,7 @@ public:
 
   Standard_DEPRECATED("Deprecated since OCCT7.7, Graphic3d_DisplayPriority should be passed "
                       "instead of integer number to SetDisplayPriority()")
+
   void SetDisplayPriority(const int thePriority)
   {
     SetDisplayPriority((Graphic3d_DisplayPriority)thePriority);
@@ -355,6 +317,7 @@ public:
                                bool                       theWithCheck = false);
 
   Standard_DEPRECATED("Deprecated short-cut")
+
   void Connect(const occ::handle<Graphic3d_Structure>& thePrs)
   {
     Connect(thePrs.get(), Graphic3d_TOC_DESCENDANT);
@@ -367,6 +330,7 @@ public:
   Standard_EXPORT void Disconnect(Graphic3d_Structure* theStructure);
 
   Standard_DEPRECATED("Deprecated alias for Disconnect()")
+
   void Remove(const occ::handle<Graphic3d_Structure>& thePrs) { Disconnect(thePrs.get()); }
 
   //! If Atype is TOC_DESCENDANT then suppress all
@@ -376,6 +340,7 @@ public:
   Standard_EXPORT void DisconnectAll(const Graphic3d_TypeOfConnection AType);
 
   Standard_DEPRECATED("Deprecated alias for DisconnectAll()")
+
   void RemoveAll() { DisconnectAll(Graphic3d_TOC_DESCENDANT); }
 
   //! Returns <ASet> the group of structures :
@@ -547,4 +512,3 @@ protected:
   Graphic3d_TypeOfStructure                    myVisual;
   Graphic3d_TypeOfStructure                    myComputeVisual;
 };
-

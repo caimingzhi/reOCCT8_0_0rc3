@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 #include <TopLoc_Location.hpp>
 #include <TopoDS_TShape.hpp>
@@ -312,16 +311,15 @@ private:
 
 namespace std
 {
-template <>
-struct hash<TopoDS_Shape>
-{
-  size_t operator()(const TopoDS_Shape& theShape) const noexcept
+  template <>
+  struct hash<TopoDS_Shape>
   {
-    const size_t aHL = std::hash<TopLoc_Location>{}(theShape.Location());
-    return aHL == 0
-             ? opencascade::hash(theShape.TShape().get())
-             : opencascade::MurmurHash::hash_combine(theShape.TShape().get(), sizeof(void*), aHL);
-  }
-};
+    size_t operator()(const TopoDS_Shape& theShape) const noexcept
+    {
+      const size_t aHL = std::hash<TopLoc_Location>{}(theShape.Location());
+      return aHL == 0
+               ? opencascade::hash(theShape.TShape().get())
+               : opencascade::MurmurHash::hash_combine(theShape.TShape().get(), sizeof(void*), aHL);
+    }
+  };
 } // namespace std
-

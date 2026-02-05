@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <VrmlData_ArrayVec3d.hpp>
 #include <Quantity_Color.hpp>
 #include <gp_XYZ.hpp>

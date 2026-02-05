@@ -1,19 +1,3 @@
-// Created on: 1998-11-12
-// Created by: Robert COUBLANC
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ViewerTest.hpp>
 
 #include <AIS_Circle.hpp>
@@ -743,7 +727,8 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
   occ::handle<PrsDim_Dimension> aDim;
   switch (aKindOfDimension)
   {
-    case PrsDim_KOD_LENGTH: {
+    case PrsDim_KOD_LENGTH:
+    {
       if (aShapes.Extent() == 1)
       {
         occ::handle<AIS_Shape> aFirstShapePrs = occ::down_cast<AIS_Shape>(aShapes.First());
@@ -826,10 +811,12 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
 
       break;
     }
-    case PrsDim_KOD_PLANEANGLE: {
+    case PrsDim_KOD_PLANEANGLE:
+    {
       switch (aShapes.Extent())
       {
-        case 1: {
+        case 1:
+        {
           if (occ::handle<AIS_Shape> aShape = occ::down_cast<AIS_Shape>(aShapes.First()))
           {
             if (aShape->Shape().ShapeType() == TopAbs_FACE)
@@ -839,7 +826,8 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
           }
           break;
         }
-        case 2: {
+        case 2:
+        {
           occ::handle<AIS_Shape> aShape1 = occ::down_cast<AIS_Shape>(aShapes.First());
           occ::handle<AIS_Shape> aShape2 = occ::down_cast<AIS_Shape>(aShapes.Last());
           if (!aShape1.IsNull() && !aShape2.IsNull() && aShape1->Shape().ShapeType() == TopAbs_EDGE
@@ -855,7 +843,8 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
           }
           break;
         }
-        case 3: {
+        case 3:
+        {
           gp_Pnt aPnts[3];
           int    aPntIndex = 0;
           for (NCollection_List<occ::handle<AIS_InteractiveObject>>::Iterator aPntIter(aShapes);
@@ -931,7 +920,8 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
       }
       break;
     }
-    case PrsDim_KOD_DIAMETER: {
+    case PrsDim_KOD_DIAMETER:
+    {
       if (aShapes.Extent() == 1)
       {
         if (aShapes.First()->DynamicType() == STANDARD_TYPE(AIS_Circle))
@@ -959,7 +949,8 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
 
       break;
     }
-    default: {
+    default:
+    {
       Message::SendFail("Error: wrong type of dimension. Type help for more information");
       return 1;
     }
@@ -984,17 +975,17 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
 
 namespace
 {
-//! If the given shapes are edges then check whether they are parallel else return true.
-bool IsParallel(const TopoDS_Shape& theShape1, const TopoDS_Shape& theShape2)
-{
-  if (theShape1.ShapeType() == TopAbs_EDGE && theShape2.ShapeType() == TopAbs_EDGE)
+  //! If the given shapes are edges then check whether they are parallel else return true.
+  bool IsParallel(const TopoDS_Shape& theShape1, const TopoDS_Shape& theShape2)
   {
-    BRepExtrema_ExtCC aDelta(TopoDS::Edge(theShape1), TopoDS::Edge(theShape2));
-    return aDelta.IsParallel();
-  }
+    if (theShape1.ShapeType() == TopAbs_EDGE && theShape2.ShapeType() == TopAbs_EDGE)
+    {
+      BRepExtrema_ExtCC aDelta(TopoDS::Edge(theShape1), TopoDS::Edge(theShape2));
+      return aDelta.IsParallel();
+    }
 
-  return true;
-}
+    return true;
+  }
 } // namespace
 
 //=======================================================================
@@ -1061,7 +1052,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
   occ::handle<PrsDim_Relation> aRelation;
   switch (aKindOfRelation)
   {
-    case PrsDim_KOR_CONCENTRIC: {
+    case PrsDim_KOR_CONCENTRIC:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1088,7 +1080,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_EQUALDISTANCE: {
+    case PrsDim_KOR_EQUALDISTANCE:
+    {
       if (aShapes.Extent() != 4)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1159,7 +1152,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_EQUALRADIUS: {
+    case PrsDim_KOR_EQUALRADIUS:
+    {
       if (aShapes.Extent() != 2 && aShapes.Extent() != 1)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1185,7 +1179,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_EqualRadiusRelation(anEdge1, anEdge2, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_FIX: {
+    case PrsDim_KOR_FIX:
+    {
       if (aShapes.Extent() != 1)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1210,7 +1205,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_FixRelation(anEdge, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_IDENTIC: {
+    case PrsDim_KOR_IDENTIC:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1279,7 +1275,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_IdenticRelation(aShapeA, aShapeB, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_OFFSET: {
+    case PrsDim_KOR_OFFSET:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1310,7 +1307,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_OffsetDimension(aFace1, aFace2, aDist, aMessage);
       break;
     }
-    case PrsDim_KOR_PARALLEL: {
+    case PrsDim_KOR_PARALLEL:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: wrong number of selected shapes");
@@ -1372,7 +1370,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       }
       break;
     }
-    case PrsDim_KOR_PERPENDICULAR: {
+    case PrsDim_KOR_PERPENDICULAR:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1423,7 +1422,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_TANGENT: {
+    case PrsDim_KOR_TANGENT:
+    {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1473,7 +1473,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       }
       break;
     }
-    case PrsDim_KOR_SYMMETRIC: {
+    case PrsDim_KOR_SYMMETRIC:
+    {
       if (aShapes.Extent() != 3)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1539,7 +1540,8 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_NONE: {
+    case PrsDim_KOR_NONE:
+    {
       Message::SendFail("Error: Unknown type of relation!");
       return 1;
     }
@@ -1932,9 +1934,8 @@ void ViewerTest::RelationCommands(Draw_Interpretor& theCommands)
   const char* aGroup    = "AIS Viewer";
   const char* aFileName = __FILE__;
   auto        addCmd =
-    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp) {
-      theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup);
-    };
+    [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
+  { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
   addCmd("vdimension", VDimBuilder, /* [vdimension] */ R"(
 vdimension name {-angle|-length|-radius|-diameter}

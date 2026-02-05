@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -25,4 +24,3 @@ public:
   //! Allows to name type of non-handled objects
   Standard_EXPORT static const char* TypeName(const occ::handle<Standard_Transient>& ent);
 };
-

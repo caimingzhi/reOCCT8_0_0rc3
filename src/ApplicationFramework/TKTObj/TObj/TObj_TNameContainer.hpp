@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_HExtendedString.hpp>
@@ -92,5 +91,5 @@ public:
 //! Define handle class for TObj_TObject
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

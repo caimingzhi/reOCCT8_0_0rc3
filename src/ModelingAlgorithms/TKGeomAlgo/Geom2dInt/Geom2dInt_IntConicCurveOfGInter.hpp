@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -157,4 +156,3 @@ private:
   IntCurve_IntConicConic             intconiconi;
   Geom2dInt_TheIntConicCurveOfGInter intconicurv;
 };
-

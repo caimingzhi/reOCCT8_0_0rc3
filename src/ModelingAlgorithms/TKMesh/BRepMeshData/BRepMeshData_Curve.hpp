@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Curve.hpp>
 #include <Standard_Type.hpp>
 #include <NCollection_IncAllocator.hpp>
@@ -51,4 +50,3 @@ private:
   IMeshData::Model::SequenceOfPnt  myPoints;
   IMeshData::Model::SequenceOfReal myParameters;
 };
-

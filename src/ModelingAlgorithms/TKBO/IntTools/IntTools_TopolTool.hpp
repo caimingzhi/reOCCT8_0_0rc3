@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_TopolTool.hpp>
 #include <Adaptor3d_Surface.hpp>
 
@@ -65,4 +64,3 @@ private:
   double myDU;
   double myDV;
 };
-

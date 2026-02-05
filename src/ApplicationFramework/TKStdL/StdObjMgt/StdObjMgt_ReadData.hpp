@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Storage_BaseDriver.hpp>
 #include <NCollection_Array1.hpp>
@@ -90,4 +89,3 @@ private:
 
 Standard_EXPORT StdObjMgt_ReadData& operator>>(StdObjMgt_ReadData& theReadData,
                                                Standard_GUID&      theGUID);
-

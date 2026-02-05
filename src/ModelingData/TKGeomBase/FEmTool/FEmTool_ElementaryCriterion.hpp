@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Array2.hpp>
@@ -48,4 +47,3 @@ protected:
   double                                   myFirst;
   double                                   myLast;
 };
-

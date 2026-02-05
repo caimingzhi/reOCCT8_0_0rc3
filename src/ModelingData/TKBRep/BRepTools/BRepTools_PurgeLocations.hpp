@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Transient.hpp>
 #include <BRepTools_ReShape.hpp>
@@ -37,4 +36,3 @@ private:
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myMapNewShapes;
   occ::handle<BRepTools_ReShape>                                           myReShape;
 };
-

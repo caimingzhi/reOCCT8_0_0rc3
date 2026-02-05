@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <TDF_DerivedAttribute.hpp>
@@ -79,4 +78,3 @@ private:
   double                  myUnitScaleValue;
   TCollection_AsciiString myUnitName;
 };
-

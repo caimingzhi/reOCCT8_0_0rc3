@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_AsciiString.hpp>
@@ -50,4 +49,3 @@ public:
 private:
   TCollection_AsciiString thename;
 };
-

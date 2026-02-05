@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 
@@ -122,4 +121,3 @@ public:
   //! of the intersection problem.
   Standard_EXPORT static bool IsAllSolution(const occ::handle<Adaptor2d_Curve2d>& C);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <BRepAdaptor_Curve2d.hpp>
@@ -117,4 +116,3 @@ private:
   double                                                      myDU;
   double                                                      myDV;
 };
-

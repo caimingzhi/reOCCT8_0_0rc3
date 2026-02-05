@@ -1,19 +1,3 @@
-// Created on: 1995-07-19
-// Created by: Modelistation
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_Surface.hpp>
 #include <ElCLib.hpp>
 #include <Extrema_ExtSS.hpp>
@@ -119,15 +103,18 @@ void Extrema_ExtSS::Perform(const Adaptor3d_Surface& S1,
   switch (myS1type)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
 
       switch (myStype)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           myExtElSS.Perform(S1.Plane(), myS2->Plane());
         }
         break;
-        default: {
+        default:
+        {
           Extrema_GenExtSS Ext(S1, *myS2, NbU, NbV, mytolS1, mytolS2);
           myDone = Ext.IsDone();
           if (myDone)
@@ -168,7 +155,8 @@ void Extrema_ExtSS::Perform(const Adaptor3d_Surface& S1,
       }
       break;
     }
-    default: {
+    default:
+    {
       Extrema_GenExtSS Ext(S1, *myS2, NbU, NbV, mytolS1, mytolS2);
       myDone = Ext.IsDone();
       if (myDone)

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -245,4 +244,3 @@ private:
   double majorRadius;
   double minorRadius;
 };
-

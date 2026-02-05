@@ -1,19 +1,3 @@
-// Created on: 1997-03-21
-// Created by: Yves FRICAUD
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Builder.hpp>
 #include <BRepBuilderAPI_MakeFace.hpp>
 #include <BRepBuilderAPI_MakeSolid.hpp>
@@ -400,7 +384,8 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
     {
       case TopAbs_VERTEX: // can't do something from vertex
         break;
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         // make wire from edges
         if (theType <= TopAbs_SOLID)
           break;
@@ -415,7 +400,8 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
-      case TopAbs_WIRE: {
+      case TopAbs_WIRE:
+      {
         // make faceS from wires (one per one)
         if (theType < TopAbs_SOLID)
           break;
@@ -436,7 +422,8 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         // make shell from faces
         if (theType < TopAbs_SOLID)
           break;
@@ -453,7 +440,8 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         // make solids from shells (one per one)
         NCollection_List<TopoDS_Shape> aSolids;
         for (; aListIter.More(); aListIter.Next())
@@ -472,7 +460,8 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
-      case TopAbs_SOLID: {
+      case TopAbs_SOLID:
+      {
         // make compsolid from solids
         BRep_Builder     aCompBuilder;
         TopoDS_CompSolid aCompSolid;
@@ -2289,47 +2278,58 @@ bool TNaming_Name::Solve(const TDF_Label& aLab, const NCollection_Map<TDF_Label>
     OCC_CATCH_SIGNALS
     switch (myType)
     {
-      case TNaming_UNKNOWN: {
+      case TNaming_UNKNOWN:
+      {
         break;
       }
-      case TNaming_IDENTITY: {
+      case TNaming_IDENTITY:
+      {
         Done = Identity(aLab, Valid, myArgs, myShapeType);
         break;
       }
-      case TNaming_MODIFUNTIL: {
+      case TNaming_MODIFUNTIL:
+      {
         Done = ModifUntil(aLab, Valid, myArgs, myStop);
         break;
       }
-      case TNaming_GENERATION: {
+      case TNaming_GENERATION:
+      {
         Done = Generated(aLab, Valid, myArgs);
         break;
       }
-      case TNaming_INTERSECTION: {
+      case TNaming_INTERSECTION:
+      {
         Done = Intersection(aLab, Valid, myArgs, myStop, myShapeType, myIndex);
         break;
       }
-      case TNaming_UNION: {
+      case TNaming_UNION:
+      {
         Done = Union(aLab, Valid, myArgs, myStop, myShapeType, myContextLabel);
         break;
       }
-      case TNaming_SUBSTRACTION: {
+      case TNaming_SUBSTRACTION:
+      {
         throw Standard_NotImplemented();
         //      Done = Substraction (aLab,Valid,myArgs);
         break;
       }
-      case TNaming_CONSTSHAPE: {
+      case TNaming_CONSTSHAPE:
+      {
         Done = ConstShape(aLab, Valid, myArgs, myStop, myIndex);
         break;
       }
-      case TNaming_FILTERBYNEIGHBOURGS: {
+      case TNaming_FILTERBYNEIGHBOURGS:
+      {
         Done = FilterByNeighbourgs(aLab, Valid, myArgs, myStop, myShapeType);
         break;
       }
-      case TNaming_ORIENTATION: {
+      case TNaming_ORIENTATION:
+      {
         Done = ORientation(aLab, Valid, myArgs, myStop, myIndex);
         break;
       }
-      case TNaming_WIREIN: {
+      case TNaming_WIREIN:
+      {
 #ifdef OCCT_DEBUG_WIN
         std::cout << "Name::Solve: NameType = " << myType << "  ";
         PrintEntry(aLab);
@@ -2337,7 +2337,8 @@ bool TNaming_Name::Solve(const TDF_Label& aLab, const NCollection_Map<TDF_Label>
         Done = WireIN(aLab, Valid, myArgs, myStop, myIndex);
         break;
       }
-      case TNaming_SHELLIN: {
+      case TNaming_SHELLIN:
+      {
 #ifdef OCCT_DEBUG_SHELL
         std::cout << "Name::Solve: NameType = " << myType << "  ";
         PrintEntry(aLab);

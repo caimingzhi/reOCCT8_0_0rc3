@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_IndexedDataMap.hpp>
@@ -448,4 +447,3 @@ private:
   occ::handle<Transfer_ActorOfProcessForTransient> theactor;
   NCollection_IndexedDataMap<occ::handle<Standard_Transient>, occ::handle<Transfer_Binder>> themap;
 };
-

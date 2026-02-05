@@ -1,19 +1,3 @@
-// Created on: 1995-07-02
-// Created by: Laurent BUCHARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_HVertex.hpp>
 #include <Extrema_EPCOfExtPC2d.hpp>
 #include <Extrema_POnCurv2d.hpp>
@@ -44,7 +28,8 @@ int IntPatch_HInterTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
       return 2;
     case GeomAbs_BezierSurface:
       return (3 + S->NbVPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       int nbs = S->NbVKnots();
       nbs *= S->VDegree();
       if (!S->IsVRational())
@@ -79,7 +64,8 @@ int IntPatch_HInterTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
       return 2;
     case GeomAbs_BezierSurface:
       return (3 + S->NbUPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_BSplineSurface:
+    {
       int nbs = S->NbUKnots();
       nbs *= S->UDegree();
       if (!S->IsURational())
@@ -241,7 +227,8 @@ int IntPatch_HInterTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
     case GeomAbs_BezierCurve:
       nbsOnC = A->NbPoles();
       break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_BSplineCurve:
+    {
       //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;

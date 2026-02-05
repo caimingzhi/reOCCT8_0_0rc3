@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -83,4 +82,3 @@ public:
   //! else the list is cleared)
   Standard_EXPORT bool OwnCorrect(const occ::handle<IGESDraw_ViewsVisible>& ent) const;
 };
-

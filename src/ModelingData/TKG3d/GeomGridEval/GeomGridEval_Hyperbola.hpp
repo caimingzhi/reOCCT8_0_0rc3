@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Hyperbola.hpp>
 #include <GeomGridEval.hpp>
 #include <NCollection_Array1.hpp>
@@ -78,4 +77,3 @@ public:
 private:
   occ::handle<Geom_Hyperbola> myGeom;
 };
-

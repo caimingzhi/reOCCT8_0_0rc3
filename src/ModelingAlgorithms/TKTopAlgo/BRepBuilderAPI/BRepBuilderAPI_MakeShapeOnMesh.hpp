@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepBuilderAPI_MakeShape.hpp>
 #include <Poly_Triangulation.hpp>
 
@@ -26,4 +25,3 @@ public:
 private:
   occ::handle<Poly_Triangulation> myMesh;
 };
-

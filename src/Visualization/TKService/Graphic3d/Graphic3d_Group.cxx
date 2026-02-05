@@ -1,18 +1,3 @@
-// Created by: NW,JPB,CAL
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_Group.hpp>
 
 #include <gp_Ax2.hpp>
@@ -238,7 +223,8 @@ void Graphic3d_Group::AddPrimitiveArray(const Graphic3d_TypeOfPrimitiveArray the
 
   switch (theAttribs->Attribute(anAttribIndex).DataType)
   {
-    case Graphic3d_TOD_VEC2: {
+    case Graphic3d_TOD_VEC2:
+    {
       for (int aVertIter = 0; aVertIter < aNbVerts; ++aVertIter)
       {
         const NCollection_Vec2<float>& aVert =
@@ -248,7 +234,8 @@ void Graphic3d_Group::AddPrimitiveArray(const Graphic3d_TypeOfPrimitiveArray the
       break;
     }
     case Graphic3d_TOD_VEC3:
-    case Graphic3d_TOD_VEC4: {
+    case Graphic3d_TOD_VEC4:
+    {
       for (int aVertIter = 0; aVertIter < aNbVerts; ++aVertIter)
       {
         const NCollection_Vec3<float>& aVert =

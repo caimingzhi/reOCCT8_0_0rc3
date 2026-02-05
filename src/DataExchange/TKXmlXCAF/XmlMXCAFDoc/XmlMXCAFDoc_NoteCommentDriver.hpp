@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMXCAFDoc_NoteDriver.hpp>
 
 //! Attribute Driver.
@@ -26,4 +25,3 @@ protected:
   XmlMXCAFDoc_NoteCommentDriver(const occ::handle<Message_Messenger>& theMsgDriver,
                                 const char*                           theName);
 };
-

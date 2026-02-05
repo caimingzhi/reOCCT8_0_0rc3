@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -31,4 +30,3 @@ public:
   //! returns Value as a Direction (Null if another type)
   Standard_EXPORT occ::handle<StepGeom_Direction> Direction() const;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 #include <OSD_Thread.hpp>
 #include <Standard_Condition.hpp>
@@ -342,4 +341,3 @@ private:
   int  myNbDefThreads; //!< maximum number of threads to be locked by a single Launcher by default
   bool myShutDown;     //!< flag to shut down (destroy) the thread pool
 };
-

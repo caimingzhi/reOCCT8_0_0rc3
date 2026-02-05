@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_Interface.hpp>
 #include <IVtk_IShape.hpp>
 #include <IVtk_IShapeData.hpp>
@@ -32,4 +31,3 @@ protected:
   IVtk_IShape::Handle     myShapeObj;
   IVtk_IShapeData::Handle myShapeData;
 };
-

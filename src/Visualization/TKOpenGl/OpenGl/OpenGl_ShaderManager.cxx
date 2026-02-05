@@ -1,18 +1,3 @@
-// Created on: 2013-09-26
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_ShaderManager.hpp>
 
 #include <Graphic3d_CubeMapPacked.hpp>
@@ -29,107 +14,111 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_ShaderManager, Graphic3d_ShaderManager)
 
 namespace
 {
-static const GLfloat THE_DEFAULT_AMBIENT[4]    = {0.0f, 0.0f, 0.0f, 1.0f};
-static const GLfloat THE_DEFAULT_SPOT_DIR[3]   = {0.0f, 0.0f, -1.0f};
-static const GLfloat THE_DEFAULT_SPOT_EXPONENT = 0.0f;
-static const GLfloat THE_DEFAULT_SPOT_CUTOFF   = 180.0f;
+  static const GLfloat THE_DEFAULT_AMBIENT[4]    = {0.0f, 0.0f, 0.0f, 1.0f};
+  static const GLfloat THE_DEFAULT_SPOT_DIR[3]   = {0.0f, 0.0f, -1.0f};
+  static const GLfloat THE_DEFAULT_SPOT_EXPONENT = 0.0f;
+  static const GLfloat THE_DEFAULT_SPOT_CUTOFF   = 180.0f;
 
-//! Bind FFP light source.
-static void bindLight(const Graphic3d_CLight&        theLight,
-                      const GLenum                   theLightGlId,
-                      const NCollection_Mat4<float>& theModelView,
-                      OpenGl_Context*                theCtx)
-{
-  // the light is a headlight?
-  if (theLight.IsHeadlight())
+  //! Bind FFP light source.
+  static void bindLight(const Graphic3d_CLight&        theLight,
+                        const GLenum                   theLightGlId,
+                        const NCollection_Mat4<float>& theModelView,
+                        OpenGl_Context*                theCtx)
   {
-    theCtx->core11ffp->glMatrixMode(GL_MODELVIEW);
-    theCtx->core11ffp->glLoadIdentity();
+    // the light is a headlight?
+    if (theLight.IsHeadlight())
+    {
+      theCtx->core11ffp->glMatrixMode(GL_MODELVIEW);
+      theCtx->core11ffp->glLoadIdentity();
+    }
+
+    // setup light type
+    const NCollection_Vec4<float>& aLightColor = theLight.PackedColor();
+    switch (theLight.Type())
+    {
+      case Graphic3d_TypeOfLightSource_Ambient:
+      {
+        break; // handled by separate if-clause at beginning of method
+      }
+      case Graphic3d_TypeOfLightSource_Directional:
+      {
+        // if the last parameter of GL_POSITION, is zero, the corresponding light source is a
+        // Directional one
+        const NCollection_Vec4<float> anInfDir = -theLight.PackedDirectionRange();
+
+        // to create a realistic effect,  set the GL_SPECULAR parameter to the same value as the
+        // GL_DIFFUSE.
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, anInfDir.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_SPOT_DIRECTION, THE_DEFAULT_SPOT_DIR);
+        theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_EXPONENT, THE_DEFAULT_SPOT_EXPONENT);
+        theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_CUTOFF, THE_DEFAULT_SPOT_CUTOFF);
+        break;
+      }
+      case Graphic3d_TypeOfLightSource_Positional:
+      {
+        // to create a realistic effect, set the GL_SPECULAR parameter to the same value as the
+        // GL_DIFFUSE
+        const NCollection_Vec4<float> aPosition(static_cast<float>(theLight.Position().X()),
+                                                static_cast<float>(theLight.Position().Y()),
+                                                static_cast<float>(theLight.Position().Z()),
+                                                1.0f);
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, aPosition.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_SPOT_DIRECTION, THE_DEFAULT_SPOT_DIR);
+        theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_EXPONENT, THE_DEFAULT_SPOT_EXPONENT);
+        theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_CUTOFF, THE_DEFAULT_SPOT_CUTOFF);
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_CONSTANT_ATTENUATION,
+                                    theLight.ConstAttenuation());
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_LINEAR_ATTENUATION,
+                                    theLight.LinearAttenuation());
+        theCtx->core11ffp->glLightf(theLightGlId, GL_QUADRATIC_ATTENUATION, 0.0f);
+        break;
+      }
+      case Graphic3d_TypeOfLightSource_Spot:
+      {
+        const NCollection_Vec4<float> aPosition(static_cast<float>(theLight.Position().X()),
+                                                static_cast<float>(theLight.Position().Y()),
+                                                static_cast<float>(theLight.Position().Z()),
+                                                1.0f);
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, aPosition.GetData());
+        theCtx->core11ffp->glLightfv(theLightGlId,
+                                     GL_SPOT_DIRECTION,
+                                     theLight.PackedDirectionRange().GetData());
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_SPOT_EXPONENT,
+                                    theLight.Concentration() * 128.0f);
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_SPOT_CUTOFF,
+                                    (theLight.Angle() * 180.0f) / GLfloat(M_PI));
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_CONSTANT_ATTENUATION,
+                                    theLight.ConstAttenuation());
+        theCtx->core11ffp->glLightf(theLightGlId,
+                                    GL_LINEAR_ATTENUATION,
+                                    theLight.LinearAttenuation());
+        theCtx->core11ffp->glLightf(theLightGlId, GL_QUADRATIC_ATTENUATION, 0.0f);
+        break;
+      }
+    }
+
+    // restore matrix in case of headlight
+    if (theLight.IsHeadlight())
+    {
+      theCtx->core11ffp->glLoadMatrixf(theModelView.GetData());
+    }
+
+    theCtx->core11fwd->glEnable(theLightGlId);
   }
-
-  // setup light type
-  const NCollection_Vec4<float>& aLightColor = theLight.PackedColor();
-  switch (theLight.Type())
-  {
-    case Graphic3d_TypeOfLightSource_Ambient: {
-      break; // handled by separate if-clause at beginning of method
-    }
-    case Graphic3d_TypeOfLightSource_Directional: {
-      // if the last parameter of GL_POSITION, is zero, the corresponding light source is a
-      // Directional one
-      const NCollection_Vec4<float> anInfDir = -theLight.PackedDirectionRange();
-
-      // to create a realistic effect,  set the GL_SPECULAR parameter to the same value as the
-      // GL_DIFFUSE.
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, anInfDir.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_SPOT_DIRECTION, THE_DEFAULT_SPOT_DIR);
-      theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_EXPONENT, THE_DEFAULT_SPOT_EXPONENT);
-      theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_CUTOFF, THE_DEFAULT_SPOT_CUTOFF);
-      break;
-    }
-    case Graphic3d_TypeOfLightSource_Positional: {
-      // to create a realistic effect, set the GL_SPECULAR parameter to the same value as the
-      // GL_DIFFUSE
-      const NCollection_Vec4<float> aPosition(static_cast<float>(theLight.Position().X()),
-                                              static_cast<float>(theLight.Position().Y()),
-                                              static_cast<float>(theLight.Position().Z()),
-                                              1.0f);
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, aPosition.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_SPOT_DIRECTION, THE_DEFAULT_SPOT_DIR);
-      theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_EXPONENT, THE_DEFAULT_SPOT_EXPONENT);
-      theCtx->core11ffp->glLightf(theLightGlId, GL_SPOT_CUTOFF, THE_DEFAULT_SPOT_CUTOFF);
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_CONSTANT_ATTENUATION,
-                                  theLight.ConstAttenuation());
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_LINEAR_ATTENUATION,
-                                  theLight.LinearAttenuation());
-      theCtx->core11ffp->glLightf(theLightGlId, GL_QUADRATIC_ATTENUATION, 0.0f);
-      break;
-    }
-    case Graphic3d_TypeOfLightSource_Spot: {
-      const NCollection_Vec4<float> aPosition(static_cast<float>(theLight.Position().X()),
-                                              static_cast<float>(theLight.Position().Y()),
-                                              static_cast<float>(theLight.Position().Z()),
-                                              1.0f);
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_AMBIENT, THE_DEFAULT_AMBIENT);
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_DIFFUSE, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_SPECULAR, aLightColor.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId, GL_POSITION, aPosition.GetData());
-      theCtx->core11ffp->glLightfv(theLightGlId,
-                                   GL_SPOT_DIRECTION,
-                                   theLight.PackedDirectionRange().GetData());
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_SPOT_EXPONENT,
-                                  theLight.Concentration() * 128.0f);
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_SPOT_CUTOFF,
-                                  (theLight.Angle() * 180.0f) / GLfloat(M_PI));
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_CONSTANT_ATTENUATION,
-                                  theLight.ConstAttenuation());
-      theCtx->core11ffp->glLightf(theLightGlId,
-                                  GL_LINEAR_ATTENUATION,
-                                  theLight.LinearAttenuation());
-      theCtx->core11ffp->glLightf(theLightGlId, GL_QUADRATIC_ATTENUATION, 0.0f);
-      break;
-    }
-  }
-
-  // restore matrix in case of headlight
-  if (theLight.IsHeadlight())
-  {
-    theCtx->core11ffp->glLoadMatrixf(theModelView.GetData());
-  }
-
-  theCtx->core11fwd->glEnable(theLightGlId);
-}
 } // namespace
 
 // =======================================================================
@@ -501,10 +490,12 @@ void OpenGl_ShaderManager::pushLightSourceState(
     aLightParams.Parameters = aLight.PackedParams();
     switch (aLight.Type())
     {
-      case Graphic3d_TypeOfLightSource_Ambient: {
+      case Graphic3d_TypeOfLightSource_Ambient:
+      {
         break;
       }
-      case Graphic3d_TypeOfLightSource_Directional: {
+      case Graphic3d_TypeOfLightSource_Directional:
+      {
         if (aLight.IsHeadlight())
         {
           const NCollection_Mat4<float>& anOrientInv = myWorldViewState.WorldViewMatrixInverse();
@@ -518,7 +509,8 @@ void OpenGl_ShaderManager::pushLightSourceState(
         }
         break;
       }
-      case Graphic3d_TypeOfLightSource_Spot: {
+      case Graphic3d_TypeOfLightSource_Spot:
+      {
         if (aLight.IsHeadlight())
         {
           const NCollection_Mat4<float>& anOrientInv = myWorldViewState.WorldViewMatrixInverse();
@@ -532,7 +524,8 @@ void OpenGl_ShaderManager::pushLightSourceState(
         }
       }
         [[fallthrough]];
-      case Graphic3d_TypeOfLightSource_Positional: {
+      case Graphic3d_TypeOfLightSource_Positional:
+      {
         if (aLight.IsHeadlight())
         {
           aLightParams.Position.x()                  = static_cast<float>(aLight.Position().X());

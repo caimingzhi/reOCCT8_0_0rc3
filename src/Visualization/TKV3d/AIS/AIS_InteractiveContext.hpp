@@ -1,36 +1,19 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <AIS_GlobalStatus.hpp>
 #include <NCollection_DataMap.hpp>
 #include <AIS_DisplayMode.hpp>
-// Created on: 1996-12-11
-// Created by: Robert COUBLANC
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 #include <PrsMgr_DisplayStatus.hpp>
 
 //! To give the display status of an Interactive Object.
 typedef PrsMgr_DisplayStatus AIS_DisplayStatus;
 
-
 #include <AIS_KindOfInteractive.hpp>
 #include <NCollection_List.hpp>
 #include <AIS_Selection.hpp>
+
 // Copyright (c) 2017 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -43,7 +26,6 @@ typedef PrsMgr_DisplayStatus AIS_DisplayStatus;
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 //! The mode specifying how multiple active Selection Modes should be treated during activation of
 //! new one.
@@ -58,24 +40,7 @@ enum AIS_SelectionModesConcurrency
   AIS_SelectionModesConcurrency_Multiple, //!< any combination of selection modes can be activated
 };
 
-
 #include <AIS_SelectionScheme.hpp>
-// Created on: 1996-12-11
-// Created by: Robert COUBLANC
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 
 enum AIS_StatusOfDetection
 {
@@ -88,24 +53,6 @@ enum AIS_StatusOfDetection
   AIS_SOD_SeveralGood
 };
 
-
-// Created on: 1996-12-11
-// Created by: Robert COUBLANC
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
 enum AIS_StatusOfPick
 {
   AIS_SOP_Error,
@@ -115,25 +62,6 @@ enum AIS_StatusOfPick
   AIS_SOP_SeveralSelected
 };
 
-
-// Created on: 1996-12-11
-// Created by: Robert COUBLANC
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-
-//! Declares the type of isoparameter displayed.
 enum AIS_TypeOfIso
 {
   AIS_TOI_IsoU,
@@ -141,11 +69,11 @@ enum AIS_TypeOfIso
   AIS_TOI_Both
 };
 
-
 #include <Aspect_TypeOfFacingModel.hpp>
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
 #include <Prs3d_Drawer.hpp>
+
 // Copyright (c) 2016 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -159,7 +87,6 @@ enum AIS_TypeOfIso
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Type of highlighting to apply specific style.
 enum Prs3d_TypeOfHighlight
 {
@@ -172,12 +99,12 @@ enum Prs3d_TypeOfHighlight
   Prs3d_TypeOfHighlight_NB
 };
 
-
 #include <PrsMgr_PresentationManager.hpp>
 #include <SelectMgr_AndOrFilter.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_Shared.hpp>
 #include <SelectMgr_Filter.hpp>
+
 // Copyright (c) 2017 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -191,7 +118,6 @@ enum Prs3d_TypeOfHighlight
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Enumeration defines picking strategy - which entities detected by picking line will be accepted,
 //! considering selection filters.
 enum SelectMgr_PickingStrategy
@@ -201,7 +127,6 @@ enum SelectMgr_PickingStrategy
   SelectMgr_PickingStrategy_OnlyTopmost //!< only topmost detected entity passing selection filter
                                         //!< is accepted
 };
-
 
 #include <SelectMgr_SelectionManager.hpp>
 #include <StdSelect_ViewerSelector3d.hpp>
@@ -479,6 +404,7 @@ public: //! @name object presence management (View affinity, Layer, Priority)
 
   Standard_DEPRECATED("Deprecated since OCCT7.7, Graphic3d_DisplayPriority should be passed "
                       "instead of integer number to SetDisplayPriority()")
+
   void SetDisplayPriority(const occ::handle<AIS_InteractiveObject>& theIObj, const int thePriority)
   {
     SetDisplayPriority(theIObj, (Graphic3d_DisplayPriority)thePriority);
@@ -736,6 +662,7 @@ public: //! @name Selection management
   Standard_EXPORT Bnd_Box BoundingBoxOfSelection(const occ::handle<V3d_View>& theView) const;
 
   Standard_DEPRECATED("BoundingBoxOfSelection() should be called with View argument")
+
   Bnd_Box BoundingBoxOfSelection() const { return BoundingBoxOfSelection(occ::handle<V3d_View>()); }
 
   //! Sets list of owner selected/deselected using specified selection scheme.
@@ -1401,6 +1328,7 @@ public: //! @name iso-line display attributes
 public:
   Standard_DEPRECATED("Deprecated method Display() with obsolete argument "
                       "theToAllowDecomposition")
+
   void Display(const occ::handle<AIS_InteractiveObject>& theIObj,
                const int                                 theDispMode,
                const int                                 theSelectionMode,
@@ -1414,6 +1342,7 @@ public:
 
   Standard_DEPRECATED("Deprecated method Load() with obsolete last argument "
                       "theToAllowDecomposition")
+
   void Load(const occ::handle<AIS_InteractiveObject>& theObj, int theSelectionMode, bool)
   {
     Load(theObj, theSelectionMode);
@@ -1423,6 +1352,7 @@ public:
   //! On dynamic detection by the mouse cursor, sensitive primitives are highlighted.
   //! The highlight color of entities detected by mouse movement is white by default.
   Standard_DEPRECATED("Deprecated method Hilight()")
+
   void Hilight(const occ::handle<AIS_InteractiveObject>& theObj, const bool theIsToUpdateViewer)
   {
     return HilightWithColor(theObj, myStyles[Prs3d_TypeOfHighlight_Dynamic], theIsToUpdateViewer);
@@ -1491,6 +1421,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void SetCurrentObject(const occ::handle<AIS_InteractiveObject>& theIObj,
                         const bool                                theToUpdateViewer)
   {
@@ -1503,6 +1434,7 @@ public:
   //! object, if 0 selection of the object is empty this method simply does nothing.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void AddOrRemoveCurrentObject(const occ::handle<AIS_InteractiveObject>& theObj,
                                 const bool                                theIsToUpdateViewer)
   {
@@ -1514,6 +1446,7 @@ public:
   //! current objects; those selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void UpdateCurrent() { UpdateSelected(true); }
 
   //! Returns true if there is a non-null interactive object in Neutral Point.
@@ -1521,6 +1454,7 @@ public:
   //! those selected in open local context, selected objects.
   Standard_DEPRECATED(
     "Local Context is deprecated - local selection should be used without Local Context")
+
   bool IsCurrent(const occ::handle<AIS_InteractiveObject>& theObject) const
   {
     return IsSelected(theObject);
@@ -1531,6 +1465,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void InitCurrent() { InitSelected(); }
 
   //! Returns true if there is another object found by the scan of the list of current objects.
@@ -1538,6 +1473,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED(
     "Local Context is deprecated - local selection should be used without Local Context")
+
   bool MoreCurrent() const { return MoreSelected(); }
 
   //! Continues the scan to the next object in the list of current objects.
@@ -1545,6 +1481,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void NextCurrent() { NextSelected(); }
 
   //! Returns the current interactive object.
@@ -1552,10 +1489,12 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED(
     "Local Context is deprecated - local selection should be used without Local Context")
+
   occ::handle<AIS_InteractiveObject> Current() const { return SelectedInteractive(); }
 
   Standard_DEPRECATED(
     "Local Context is deprecated - local selection should be used without Local Context")
+
   int NbCurrents() { return NbSelected(); }
 
   //! Highlights current objects.
@@ -1563,6 +1502,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void HilightCurrents(const bool theToUpdateViewer) { HilightSelected(theToUpdateViewer); }
 
   //! Removes highlighting from current objects.
@@ -1570,6 +1510,7 @@ public:
   //! selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void UnhilightCurrents(const bool theToUpdateViewer) { UnhilightSelected(theToUpdateViewer); }
 
   //! Empties previous current objects in order to get the current objects detected by the selector
@@ -1577,6 +1518,7 @@ public:
   //! objects; those selected in open local context, selected objects.
   Standard_DEPRECATED("Local Context is deprecated - local selection should be used without Local "
                       "Context")
+
   void ClearCurrents(const bool theToUpdateViewer) { ClearSelected(theToUpdateViewer); }
 
   //! @return current mouse-detected shape or empty (null) shape, if current interactive object
@@ -1835,4 +1777,3 @@ protected: //! @name internal fields
   bool                      myAutoHilight;
   bool                      myIsAutoActivateSelMode;
 };
-

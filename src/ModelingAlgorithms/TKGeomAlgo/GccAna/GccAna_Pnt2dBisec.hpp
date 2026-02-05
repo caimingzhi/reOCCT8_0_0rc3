@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -39,4 +38,3 @@ private:
   bool     HasSol;
   gp_Lin2d linsol;
 };
-

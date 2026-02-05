@@ -1,18 +1,3 @@
-// Created on: 2000-08-21
-// Created by: Andrey BETENEV
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ShapeProcess.hpp>
 
 #include <NCollection_DataMap.hpp>
@@ -31,27 +16,27 @@ static NCollection_DataMap<TCollection_AsciiString, occ::handle<ShapeProcess_Ope
 
 namespace
 {
-//! Simple RAII class to lock the scope of the current operation.
-class ScopeLock
-{
-public:
-  //! Constructor.
-  //! Locks the scope of the current operation.
-  //! @param theContext the context to lock.
-  //! @param theScopeName the name of the scope to lock.
-  ScopeLock(ShapeProcess_Context& theContext, const char* theScopeName)
-      : myContext(theContext)
+  //! Simple RAII class to lock the scope of the current operation.
+  class ScopeLock
   {
-    myContext.SetScope(theScopeName);
-  }
+  public:
+    //! Constructor.
+    //! Locks the scope of the current operation.
+    //! @param theContext the context to lock.
+    //! @param theScopeName the name of the scope to lock.
+    ScopeLock(ShapeProcess_Context& theContext, const char* theScopeName)
+        : myContext(theContext)
+    {
+      myContext.SetScope(theScopeName);
+    }
 
-  //! Destructor.
-  //! Unlocks the scope of the current operation.
-  ~ScopeLock() { myContext.UnSetScope(); }
+    //! Destructor.
+    //! Unlocks the scope of the current operation.
+    ~ScopeLock() { myContext.UnSetScope(); }
 
-private:
-  ShapeProcess_Context& myContext; //!< The context to lock.
-};
+  private:
+    ShapeProcess_Context& myContext; //!< The context to lock.
+  };
 } // namespace
 
 //=================================================================================================

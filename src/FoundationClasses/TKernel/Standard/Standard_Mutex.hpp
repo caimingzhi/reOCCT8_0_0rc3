@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Integer.hpp>
 #include <Standard_Boolean.hpp>
 #include <Standard_ErrorHandler.hpp>
@@ -164,4 +163,3 @@ inline void Standard_Mutex::Unlock()
   pthread_mutex_unlock(&myMutex);
 #endif
 }
-

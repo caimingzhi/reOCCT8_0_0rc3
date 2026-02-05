@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum MoniTool_ValueType
 {
   MoniTool_ValueMisc,
@@ -15,4 +14,3 @@ enum MoniTool_ValueType
   MoniTool_ValueHexa,
   MoniTool_ValueBinary
 };
-

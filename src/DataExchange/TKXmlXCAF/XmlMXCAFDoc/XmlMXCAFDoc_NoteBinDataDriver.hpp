@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <XmlMXCAFDoc_NoteDriver.hpp>
 
 //! Attribute Driver.
@@ -22,4 +21,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteBinDataDriver, XmlMXCAFDoc_NoteDriver)
 };
-

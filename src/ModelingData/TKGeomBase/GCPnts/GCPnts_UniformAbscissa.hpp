@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdFail_NotDone.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
@@ -240,4 +239,3 @@ private:
   double                                   myAbscissa;
   occ::handle<NCollection_HArray1<double>> myParams;
 };
-

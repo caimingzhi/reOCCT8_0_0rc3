@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Define buffers available for dump
 enum Graphic3d_BufferType
 {
@@ -11,4 +10,3 @@ enum Graphic3d_BufferType
   Graphic3d_BT_Red,                 //!< color buffer, red channel
   Graphic3d_BT_ShadowMap,           //!< buffer with shadow map
 };
-

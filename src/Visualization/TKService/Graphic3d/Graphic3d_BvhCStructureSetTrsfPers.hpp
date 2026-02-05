@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_BndBox3d.hpp>
 #include <NCollection_Mat4.hpp>
 #include <Standard_TypeDef.hpp>
@@ -21,14 +20,13 @@
 // commercial license or contractual agreement.
 
 #ifndef _BVH_Builder3d_Header
-#define _BVH_Builder3d_Header
+  #define _BVH_Builder3d_Header
 
-#include <BVH_Builder.hpp>
+  #include <BVH_Builder.hpp>
 
 typedef BVH_Builder<double, 3> BVH_Builder3d;
 
 #endif // _BVH_Builder3d_Header
-
 
 class Graphic3d_Camera;
 class Graphic3d_CStructure;
@@ -118,4 +116,3 @@ private:
   //! boxes.
   Graphic3d_WorldViewProjState myStructBoxesState;
 };
-

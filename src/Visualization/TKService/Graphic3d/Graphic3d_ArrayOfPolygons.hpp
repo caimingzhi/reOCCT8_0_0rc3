@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
 //! Contains polygons array definition.
@@ -112,4 +111,3 @@ public:
   {
   }
 };
-

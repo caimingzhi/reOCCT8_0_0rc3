@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Messenger.hpp>
 #include <Message_Gravity.hpp>
 #include <Message_MetricType.hpp>
@@ -132,4 +131,3 @@ public:
   static Standard_EXPORT bool ToMessageMetric(const OSD_MemInfo::Counter theMemInfo,
                                               Message_MetricType&        theMetric);
 };
-

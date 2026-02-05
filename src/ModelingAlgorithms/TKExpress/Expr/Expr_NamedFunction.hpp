@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -78,4 +77,3 @@ private:
   occ::handle<Expr_GeneralExpression>                myExp;
   NCollection_Array1<occ::handle<Expr_NamedUnknown>> myVariables;
 };
-

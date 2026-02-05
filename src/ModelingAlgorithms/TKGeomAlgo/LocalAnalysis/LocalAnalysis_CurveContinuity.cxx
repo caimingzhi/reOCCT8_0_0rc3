@@ -217,13 +217,15 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
 
   switch (Order)
   {
-    case GeomAbs_C0: { // TypeCont=GeomAbs_C0;
+    case GeomAbs_C0:
+    { // TypeCont=GeomAbs_C0;
       GeomLProp_CLProps Curve1(Curv1, u1, 0, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 0, myepsnul);
       CurvC0(Curve1, Curve2);
     }
     break;
-    case GeomAbs_C1: { // TypeCont=GeomAbs_C1;
+    case GeomAbs_C1:
+    { // TypeCont=GeomAbs_C1;
 
       GeomLProp_CLProps Curve1(Curv1, u1, 1, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 1, myepsnul);
@@ -231,7 +233,8 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
       CurvC1(Curve1, Curve2);
     }
     break;
-    case GeomAbs_C2: { // TypeCont=GeomAbs_C2;
+    case GeomAbs_C2:
+    { // TypeCont=GeomAbs_C2;
 
       GeomLProp_CLProps Curve1(Curv1, u1, 2, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 2, myepsnul);
@@ -240,14 +243,16 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
       CurvC2(Curve1, Curve2);
     }
     break;
-    case GeomAbs_G1: { // TypeCont=GeomAbs_G1;
+    case GeomAbs_G1:
+    { // TypeCont=GeomAbs_G1;
       GeomLProp_CLProps Curve1(Curv1, u1, 1, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 1, myepsnul);
       CurvC0(Curve1, Curve2);
       CurvG1(Curve1, Curve2);
     }
     break;
-    case GeomAbs_G2: { // TypeCont=GeomAbs_G2;
+    case GeomAbs_G2:
+    { // TypeCont=GeomAbs_G2;
       GeomLProp_CLProps Curve1(Curv1, u1, 2, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 2, myepsnul);
       CurvC0(Curve1, Curve2);
@@ -255,7 +260,8 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
       CurvG2(Curve1, Curve2);
     }
     break;
-    default: {
+    default:
+    {
     }
   }
 }

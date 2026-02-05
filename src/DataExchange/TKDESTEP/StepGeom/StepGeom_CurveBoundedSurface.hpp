@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepGeom_SurfaceBoundary.hpp>
@@ -52,4 +51,3 @@ private:
   occ::handle<NCollection_HArray1<StepGeom_SurfaceBoundary>> theBoundaries;
   bool                                                       theImplicitOuter;
 };
-

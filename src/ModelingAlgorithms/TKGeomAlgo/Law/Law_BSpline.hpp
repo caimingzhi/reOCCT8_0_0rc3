@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -540,4 +539,3 @@ private:
   occ::handle<NCollection_HArray1<double>> knots;
   occ::handle<NCollection_HArray1<int>>    mults;
 };
-

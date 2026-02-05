@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepBasic_MeasureWithUnit.hpp>
@@ -14,4 +13,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(StepBasic_PlaneAngleMeasureWithUnit, StepBasic_MeasureWithUnit)
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_DirectionHasher.hpp>
 
 #include <Standard_HashUtils.hpp>
@@ -53,4 +52,3 @@ struct StepTidy_VectorHasher
     return StepTidy_DirectionHasher{}(theVector1->Orientation(), theVector2->Orientation());
   }
 };
-

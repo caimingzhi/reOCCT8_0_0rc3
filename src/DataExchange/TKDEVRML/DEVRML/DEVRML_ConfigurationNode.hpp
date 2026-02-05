@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ConfigurationNode.hpp>
 #include <RWMesh_CoordinateSystem.hpp>
 
@@ -97,4 +96,3 @@ public:
 
   } InternalParameters;
 };
-

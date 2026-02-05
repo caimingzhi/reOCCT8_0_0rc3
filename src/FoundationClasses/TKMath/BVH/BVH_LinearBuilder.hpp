@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_RadixSorter.hpp>
 #include <NCollection_Vector.hpp>
 #include <Standard_Assert.hpp>
@@ -141,143 +140,143 @@ int BVH_LinearBuilder<T, N>::emitHierachy(
 
 namespace BVH
 {
-//! Calculates bounding boxes (AABBs) for the given BVH tree.
-template <class T, int N>
-int UpdateBounds(BVH_Set<T, N>* theSet, BVH_Tree<T, N>* theTree, const int theNode = 0)
-{
-  const BVH_Vec4i aData = theTree->NodeInfoBuffer()[theNode];
-  if (aData.x() == 0)
+  //! Calculates bounding boxes (AABBs) for the given BVH tree.
+  template <class T, int N>
+  int UpdateBounds(BVH_Set<T, N>* theSet, BVH_Tree<T, N>* theTree, const int theNode = 0)
   {
-    const int aLftChild = theTree->NodeInfoBuffer()[theNode].y();
-    const int aRghChild = theTree->NodeInfoBuffer()[theNode].z();
-
-    const int aLftDepth = UpdateBounds(theSet, theTree, aLftChild);
-    const int aRghDepth = UpdateBounds(theSet, theTree, aRghChild);
-
-    typename BVH_Box<T, N>::BVH_VecNt aLftMinPoint = theTree->MinPointBuffer()[aLftChild];
-    typename BVH_Box<T, N>::BVH_VecNt aLftMaxPoint = theTree->MaxPointBuffer()[aLftChild];
-    typename BVH_Box<T, N>::BVH_VecNt aRghMinPoint = theTree->MinPointBuffer()[aRghChild];
-    typename BVH_Box<T, N>::BVH_VecNt aRghMaxPoint = theTree->MaxPointBuffer()[aRghChild];
-
-    BVH::BoxMinMax<T, N>::CwiseMin(aLftMinPoint, aRghMinPoint);
-    BVH::BoxMinMax<T, N>::CwiseMax(aLftMaxPoint, aRghMaxPoint);
-
-    theTree->MinPointBuffer()[theNode] = aLftMinPoint;
-    theTree->MaxPointBuffer()[theNode] = aLftMaxPoint;
-    return (std::max)(aLftDepth, aRghDepth) + 1;
-  }
-  else
-  {
-    typename BVH_Box<T, N>::BVH_VecNt& aMinPoint = theTree->MinPointBuffer()[theNode];
-    typename BVH_Box<T, N>::BVH_VecNt& aMaxPoint = theTree->MaxPointBuffer()[theNode];
-    for (int aPrimIdx = aData.y(); aPrimIdx <= aData.z(); ++aPrimIdx)
+    const BVH_Vec4i aData = theTree->NodeInfoBuffer()[theNode];
+    if (aData.x() == 0)
     {
-      const BVH_Box<T, N> aBox = theSet->Box(aPrimIdx);
-      if (aPrimIdx == aData.y())
-      {
-        aMinPoint = aBox.CornerMin();
-        aMaxPoint = aBox.CornerMax();
-      }
-      else
-      {
-        BVH::BoxMinMax<T, N>::CwiseMin(aMinPoint, aBox.CornerMin());
-        BVH::BoxMinMax<T, N>::CwiseMax(aMaxPoint, aBox.CornerMax());
-      }
-    }
-  }
-  return 0;
-}
+      const int aLftChild = theTree->NodeInfoBuffer()[theNode].y();
+      const int aRghChild = theTree->NodeInfoBuffer()[theNode].z();
 
-template <class T, int N>
-struct BoundData
-{
-  BVH_Set<T, N>*  mySet;    //!< Set of geometric objects
-  BVH_Tree<T, N>* myBVH;    //!< BVH tree built over the set
-  int             myNode;   //!< BVH node to update bounding box
-  int             myLevel;  //!< Level of the processed BVH node
-  int*            myHeight; //!< Height of the processed BVH node
-};
+      const int aLftDepth = UpdateBounds(theSet, theTree, aLftChild);
+      const int aRghDepth = UpdateBounds(theSet, theTree, aRghChild);
 
-//! Task for parallel bounds updating.
-template <class T, int N>
-class UpdateBoundTask
-{
-public:
-  UpdateBoundTask(const bool isParallel)
-      : myIsParallel(isParallel)
-  {
-  }
-
-  //! Executes the task.
-  void operator()(const BoundData<T, N>& theData) const
-  {
-    if (theData.myBVH->IsOuter(theData.myNode) || theData.myLevel > 2)
-    {
-      *theData.myHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, theData.myNode);
-    }
-    else
-    {
-      int aLftHeight = 0;
-      int aRghHeight = 0;
-
-      const int aLftChild = theData.myBVH->NodeInfoBuffer()[theData.myNode].y();
-      const int aRghChild = theData.myBVH->NodeInfoBuffer()[theData.myNode].z();
-
-      NCollection_Vector<BoundData<T, N>> aList(2);
-      if (!theData.myBVH->IsOuter(aLftChild))
-      {
-        BoundData<T, N> aBoundData = {theData.mySet,
-                                      theData.myBVH,
-                                      aLftChild,
-                                      theData.myLevel + 1,
-                                      &aLftHeight};
-        aList.Append(aBoundData);
-      }
-      else
-      {
-        aLftHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, aLftChild);
-      }
-
-      if (!theData.myBVH->IsOuter(aRghChild))
-      {
-        BoundData<T, N> aBoundData = {theData.mySet,
-                                      theData.myBVH,
-                                      aRghChild,
-                                      theData.myLevel + 1,
-                                      &aRghHeight};
-        aList.Append(aBoundData);
-      }
-      else
-      {
-        aRghHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, aRghChild);
-      }
-
-      if (aList.Size() > 0)
-      {
-        OSD_Parallel::ForEach(aList.begin(),
-                              aList.end(),
-                              UpdateBoundTask<T, N>(myIsParallel),
-                              !myIsParallel);
-      }
-
-      typename BVH_Box<T, N>::BVH_VecNt aLftMinPoint = theData.myBVH->MinPointBuffer()[aLftChild];
-      typename BVH_Box<T, N>::BVH_VecNt aLftMaxPoint = theData.myBVH->MaxPointBuffer()[aLftChild];
-      typename BVH_Box<T, N>::BVH_VecNt aRghMinPoint = theData.myBVH->MinPointBuffer()[aRghChild];
-      typename BVH_Box<T, N>::BVH_VecNt aRghMaxPoint = theData.myBVH->MaxPointBuffer()[aRghChild];
+      typename BVH_Box<T, N>::BVH_VecNt aLftMinPoint = theTree->MinPointBuffer()[aLftChild];
+      typename BVH_Box<T, N>::BVH_VecNt aLftMaxPoint = theTree->MaxPointBuffer()[aLftChild];
+      typename BVH_Box<T, N>::BVH_VecNt aRghMinPoint = theTree->MinPointBuffer()[aRghChild];
+      typename BVH_Box<T, N>::BVH_VecNt aRghMaxPoint = theTree->MaxPointBuffer()[aRghChild];
 
       BVH::BoxMinMax<T, N>::CwiseMin(aLftMinPoint, aRghMinPoint);
       BVH::BoxMinMax<T, N>::CwiseMax(aLftMaxPoint, aRghMaxPoint);
 
-      theData.myBVH->MinPointBuffer()[theData.myNode] = aLftMinPoint;
-      theData.myBVH->MaxPointBuffer()[theData.myNode] = aLftMaxPoint;
-
-      *theData.myHeight = (std::max)(aLftHeight, aRghHeight) + 1;
+      theTree->MinPointBuffer()[theNode] = aLftMinPoint;
+      theTree->MaxPointBuffer()[theNode] = aLftMaxPoint;
+      return (std::max)(aLftDepth, aRghDepth) + 1;
     }
+    else
+    {
+      typename BVH_Box<T, N>::BVH_VecNt& aMinPoint = theTree->MinPointBuffer()[theNode];
+      typename BVH_Box<T, N>::BVH_VecNt& aMaxPoint = theTree->MaxPointBuffer()[theNode];
+      for (int aPrimIdx = aData.y(); aPrimIdx <= aData.z(); ++aPrimIdx)
+      {
+        const BVH_Box<T, N> aBox = theSet->Box(aPrimIdx);
+        if (aPrimIdx == aData.y())
+        {
+          aMinPoint = aBox.CornerMin();
+          aMaxPoint = aBox.CornerMax();
+        }
+        else
+        {
+          BVH::BoxMinMax<T, N>::CwiseMin(aMinPoint, aBox.CornerMin());
+          BVH::BoxMinMax<T, N>::CwiseMax(aMaxPoint, aBox.CornerMax());
+        }
+      }
+    }
+    return 0;
   }
 
-private:
-  bool myIsParallel;
-};
+  template <class T, int N>
+  struct BoundData
+  {
+    BVH_Set<T, N>*  mySet;    //!< Set of geometric objects
+    BVH_Tree<T, N>* myBVH;    //!< BVH tree built over the set
+    int             myNode;   //!< BVH node to update bounding box
+    int             myLevel;  //!< Level of the processed BVH node
+    int*            myHeight; //!< Height of the processed BVH node
+  };
+
+  //! Task for parallel bounds updating.
+  template <class T, int N>
+  class UpdateBoundTask
+  {
+  public:
+    UpdateBoundTask(const bool isParallel)
+        : myIsParallel(isParallel)
+    {
+    }
+
+    //! Executes the task.
+    void operator()(const BoundData<T, N>& theData) const
+    {
+      if (theData.myBVH->IsOuter(theData.myNode) || theData.myLevel > 2)
+      {
+        *theData.myHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, theData.myNode);
+      }
+      else
+      {
+        int aLftHeight = 0;
+        int aRghHeight = 0;
+
+        const int aLftChild = theData.myBVH->NodeInfoBuffer()[theData.myNode].y();
+        const int aRghChild = theData.myBVH->NodeInfoBuffer()[theData.myNode].z();
+
+        NCollection_Vector<BoundData<T, N>> aList(2);
+        if (!theData.myBVH->IsOuter(aLftChild))
+        {
+          BoundData<T, N> aBoundData = {theData.mySet,
+                                        theData.myBVH,
+                                        aLftChild,
+                                        theData.myLevel + 1,
+                                        &aLftHeight};
+          aList.Append(aBoundData);
+        }
+        else
+        {
+          aLftHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, aLftChild);
+        }
+
+        if (!theData.myBVH->IsOuter(aRghChild))
+        {
+          BoundData<T, N> aBoundData = {theData.mySet,
+                                        theData.myBVH,
+                                        aRghChild,
+                                        theData.myLevel + 1,
+                                        &aRghHeight};
+          aList.Append(aBoundData);
+        }
+        else
+        {
+          aRghHeight = BVH::UpdateBounds(theData.mySet, theData.myBVH, aRghChild);
+        }
+
+        if (aList.Size() > 0)
+        {
+          OSD_Parallel::ForEach(aList.begin(),
+                                aList.end(),
+                                UpdateBoundTask<T, N>(myIsParallel),
+                                !myIsParallel);
+        }
+
+        typename BVH_Box<T, N>::BVH_VecNt aLftMinPoint = theData.myBVH->MinPointBuffer()[aLftChild];
+        typename BVH_Box<T, N>::BVH_VecNt aLftMaxPoint = theData.myBVH->MaxPointBuffer()[aLftChild];
+        typename BVH_Box<T, N>::BVH_VecNt aRghMinPoint = theData.myBVH->MinPointBuffer()[aRghChild];
+        typename BVH_Box<T, N>::BVH_VecNt aRghMaxPoint = theData.myBVH->MaxPointBuffer()[aRghChild];
+
+        BVH::BoxMinMax<T, N>::CwiseMin(aLftMinPoint, aRghMinPoint);
+        BVH::BoxMinMax<T, N>::CwiseMax(aLftMaxPoint, aRghMaxPoint);
+
+        theData.myBVH->MinPointBuffer()[theData.myNode] = aLftMinPoint;
+        theData.myBVH->MaxPointBuffer()[theData.myNode] = aLftMaxPoint;
+
+        *theData.myHeight = (std::max)(aLftHeight, aRghHeight) + 1;
+      }
+    }
+
+  private:
+    bool myIsParallel;
+  };
 } // namespace BVH
 
 //=================================================================================================
@@ -317,4 +316,3 @@ void BVH_LinearBuilder<T, N>::Build(BVH_Set<T, N>*       theSet,
 
   BVH_Builder<T, N>::updateDepth(theBVH, aHeight);
 }
-

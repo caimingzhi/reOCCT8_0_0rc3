@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
@@ -328,23 +327,22 @@ private:
 
 namespace std
 {
-template <>
-struct hash<Poly_MakeLoops::Link>
-{
-  size_t operator()(const Poly_MakeLoops::Link& theLink) const noexcept
+  template <>
+  struct hash<Poly_MakeLoops::Link>
   {
-    return Poly_MakeLoops::Hasher{}(theLink);
-  }
-};
+    size_t operator()(const Poly_MakeLoops::Link& theLink) const noexcept
+    {
+      return Poly_MakeLoops::Hasher{}(theLink);
+    }
+  };
 
-template <>
-struct equal_to<Poly_MakeLoops::Link>
-{
-  bool operator()(const Poly_MakeLoops::Link& theLink1,
-                  const Poly_MakeLoops::Link& theLink2) const noexcept
+  template <>
+  struct equal_to<Poly_MakeLoops::Link>
   {
-    return theLink1 == theLink2;
-  }
-};
+    bool operator()(const Poly_MakeLoops::Link& theLink1,
+                    const Poly_MakeLoops::Link& theLink2) const noexcept
+    {
+      return theLink1 == theLink2;
+    }
+  };
 } // namespace std
-

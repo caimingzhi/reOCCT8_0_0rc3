@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! this enumeration defines several modes of chamfer
 enum ChFiDS_ChamfMode
 {
@@ -19,4 +18,3 @@ enum ChFiDS_ChamfMode
   //! the length of the leg from apex to top is constant - it is throat
   ChFiDS_ConstThroatWithPenetrationChamfer
 };
-

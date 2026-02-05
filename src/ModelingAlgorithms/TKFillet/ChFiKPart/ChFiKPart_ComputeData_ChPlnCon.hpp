@@ -1,6 +1,5 @@
 #pragma once
 
-
 bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
                            const occ::handle<ChFiDS_SurfData>& Data,
                            const ChFiDS_ChamfMode              theMode,
@@ -16,4 +15,3 @@ bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
                            const double                        First,
                            const TopAbs_Orientation            Ofpl,
                            const bool                          plandab);
-

@@ -22,28 +22,28 @@
 
 namespace
 {
-//=================================================================================================
+  //=================================================================================================
 
-static void SetReaderParameters(RWGltf_CafReader&                            theReader,
-                                const occ::handle<DEGLTF_ConfigurationNode>& theNode)
-{
-  theReader.SetDoublePrecision(!theNode->InternalParameters.ReadSinglePrecision);
-  theReader.SetSystemLengthUnit(theNode->GlobalParameters.LengthUnit / 1000);
-  theReader.SetSystemCoordinateSystem(theNode->InternalParameters.SystemCS);
-  theReader.SetFileLengthUnit(theNode->InternalParameters.FileLengthUnit);
-  theReader.SetFileCoordinateSystem(theNode->InternalParameters.FileCS);
-  theReader.SetRootPrefix(theNode->InternalParameters.ReadRootPrefix);
-  theReader.SetMemoryLimitMiB(theNode->InternalParameters.ReadMemoryLimitMiB);
+  static void SetReaderParameters(RWGltf_CafReader&                            theReader,
+                                  const occ::handle<DEGLTF_ConfigurationNode>& theNode)
+  {
+    theReader.SetDoublePrecision(!theNode->InternalParameters.ReadSinglePrecision);
+    theReader.SetSystemLengthUnit(theNode->GlobalParameters.LengthUnit / 1000);
+    theReader.SetSystemCoordinateSystem(theNode->InternalParameters.SystemCS);
+    theReader.SetFileLengthUnit(theNode->InternalParameters.FileLengthUnit);
+    theReader.SetFileCoordinateSystem(theNode->InternalParameters.FileCS);
+    theReader.SetRootPrefix(theNode->InternalParameters.ReadRootPrefix);
+    theReader.SetMemoryLimitMiB(theNode->InternalParameters.ReadMemoryLimitMiB);
 
-  theReader.SetParallel(theNode->InternalParameters.ReadParallel);
-  theReader.SetSkipEmptyNodes(theNode->InternalParameters.ReadSkipEmptyNodes);
-  theReader.SetLoadAllScenes(theNode->InternalParameters.ReadLoadAllScenes);
-  theReader.SetMeshNameAsFallback(theNode->InternalParameters.ReadUseMeshNameAsFallback);
-  theReader.SetToSkipLateDataLoading(theNode->InternalParameters.ReadSkipLateDataLoading);
-  theReader.SetToKeepLateData(theNode->InternalParameters.ReadKeepLateData);
-  theReader.SetToPrintDebugMessages(theNode->InternalParameters.ReadPrintDebugMessages);
-  theReader.SetToApplyScale(theNode->InternalParameters.ReadApplyScale);
-}
+    theReader.SetParallel(theNode->InternalParameters.ReadParallel);
+    theReader.SetSkipEmptyNodes(theNode->InternalParameters.ReadSkipEmptyNodes);
+    theReader.SetLoadAllScenes(theNode->InternalParameters.ReadLoadAllScenes);
+    theReader.SetMeshNameAsFallback(theNode->InternalParameters.ReadUseMeshNameAsFallback);
+    theReader.SetToSkipLateDataLoading(theNode->InternalParameters.ReadSkipLateDataLoading);
+    theReader.SetToKeepLateData(theNode->InternalParameters.ReadKeepLateData);
+    theReader.SetToPrintDebugMessages(theNode->InternalParameters.ReadPrintDebugMessages);
+    theReader.SetToApplyScale(theNode->InternalParameters.ReadApplyScale);
+  }
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(DEGLTF_Provider, DE_Provider)

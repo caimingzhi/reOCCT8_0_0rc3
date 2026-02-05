@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 
 #include <NCollection_Allocator.hpp>
@@ -112,4 +111,3 @@ Standard_EXPORT int Jacobi(math_Matrix& a, math_Vector& d, math_Matrix& v, int& 
 // the number of Jacobi rotations that were required.
 // Eigenvalues are sorted into descending order, and eigenvectors are
 // arranges correspondingly.
-

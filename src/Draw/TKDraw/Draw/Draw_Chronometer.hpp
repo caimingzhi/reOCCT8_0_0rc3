@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Drawable3D.hpp>
 #include <OSD_Timer.hpp>
 
@@ -29,4 +28,3 @@ public:
 private:
   OSD_Timer myTimer;
 };
-

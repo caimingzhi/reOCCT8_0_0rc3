@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopTools_FormatVersion.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
@@ -372,4 +371,3 @@ public:
   Standard_EXPORT static void CheckLocations(const TopoDS_Shape&             theS,
                                              NCollection_List<TopoDS_Shape>& theProblemShapes);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -184,4 +183,3 @@ public:
   //! the Stream <S> and returns <S>.
   Standard_EXPORT static Standard_OStream& Print(const TDF_Label& ACCESS, Standard_OStream& S);
 };
-

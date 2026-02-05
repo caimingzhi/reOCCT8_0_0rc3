@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BinTools.hpp>
 #include <BinTools_ObjectType.hpp>
 #include <TopAbs_ShapeEnum.hpp>
@@ -74,4 +73,3 @@ private:
   int    myIntBuf[3];         ///< buffer for 3 integers storage
   float  myFloatBuf[3];       ///< buffer for 3 floats storage
 };
-

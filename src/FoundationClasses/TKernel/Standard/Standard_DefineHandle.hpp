@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! @file
 //! This file provides obsolete low-level helper macros used to define OCCT handles and types,
 //! for compatibility with previous versions of OCCT.
@@ -22,4 +21,3 @@ class Standard_Type;
 #define IMPLEMENT_STANDARD_SUPERTYPE_ARRAY()
 #define IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_END()
 #define IMPLEMENT_STANDARD_TYPE_END(C1)
-

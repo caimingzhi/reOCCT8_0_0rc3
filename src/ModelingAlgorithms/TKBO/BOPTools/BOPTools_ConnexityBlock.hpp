@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
@@ -47,4 +46,3 @@ protected:
   NCollection_List<TopoDS_Shape>         myShapes;
   NCollection_List<TopoDS_Shape>         myLoops;
 };
-

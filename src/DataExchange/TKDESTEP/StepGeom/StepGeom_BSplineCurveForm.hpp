@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepGeom_BSplineCurveForm
 {
   StepGeom_bscfPolylineForm,
@@ -10,4 +9,3 @@ enum StepGeom_BSplineCurveForm
   StepGeom_bscfHyperbolicArc,
   StepGeom_bscfUnspecified
 };
-

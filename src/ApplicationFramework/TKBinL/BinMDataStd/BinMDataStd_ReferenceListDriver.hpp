@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BinMDF_ADriver.hpp>
@@ -31,4 +30,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BinMDataStd_ReferenceListDriver, BinMDF_ADriver)
 };
-

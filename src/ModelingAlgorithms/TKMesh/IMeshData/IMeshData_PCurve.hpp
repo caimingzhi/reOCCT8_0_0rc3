@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_ParametersList.hpp>
 #include <Standard_Type.hpp>
 #include <IMeshData_Face.hpp>
@@ -59,4 +58,3 @@ private:
   IMeshData::IFacePtr myDFace;
   TopAbs_Orientation  myOrientation;
 };
-

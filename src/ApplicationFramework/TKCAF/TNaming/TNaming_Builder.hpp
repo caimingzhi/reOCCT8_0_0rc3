@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -61,4 +60,3 @@ private:
   occ::handle<TNaming_UsedShapes> myShapes;
   occ::handle<TNaming_NamedShape> myAtt;
 };
-

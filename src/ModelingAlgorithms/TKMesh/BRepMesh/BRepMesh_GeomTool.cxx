@@ -1,19 +1,3 @@
-// Created on: 1993-09-29
-// Created by: Isabelle GRIGNON
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_GeomTool.hpp>
 
 #include <BRepMesh_DefaultRangeSplitter.hpp>
@@ -29,115 +13,118 @@
 
 namespace
 {
-void ComputeErrFactors(const double                          theDeflection,
-                       const occ::handle<Adaptor3d_Surface>& theFace,
-                       double&                               theErrFactorU,
-                       double&                               theErrFactorV)
-{
-  theErrFactorU = theDeflection * 10.;
-  theErrFactorV = theDeflection * 10.;
-
-  switch (theFace->GetType())
+  void ComputeErrFactors(const double                          theDeflection,
+                         const occ::handle<Adaptor3d_Surface>& theFace,
+                         double&                               theErrFactorU,
+                         double&                               theErrFactorV)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-      break;
+    theErrFactorU = theDeflection * 10.;
+    theErrFactorV = theDeflection * 10.;
 
-    case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_SurfaceOfRevolution: {
+    switch (theFace->GetType())
+    {
+      case GeomAbs_Cylinder:
+      case GeomAbs_Cone:
+      case GeomAbs_Sphere:
+      case GeomAbs_Torus:
+        break;
+
+      case GeomAbs_SurfaceOfExtrusion:
+      case GeomAbs_SurfaceOfRevolution:
+      {
+        occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
+        if (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() > 2)
+        {
+          theErrFactorV /= (aCurve->Degree() * aCurve->NbKnots());
+        }
+        break;
+      }
+      case GeomAbs_BezierSurface:
+      {
+        if (theFace->UDegree() > 2)
+        {
+          theErrFactorU /= (theFace->UDegree());
+        }
+        if (theFace->VDegree() > 2)
+        {
+          theErrFactorV /= (theFace->VDegree());
+        }
+        break;
+      }
+      case GeomAbs_BSplineSurface:
+      {
+        if (theFace->UDegree() > 2)
+        {
+          theErrFactorU /= (theFace->UDegree() * theFace->NbUKnots());
+        }
+        if (theFace->VDegree() > 2)
+        {
+          theErrFactorV /= (theFace->VDegree() * theFace->NbVKnots());
+        }
+        break;
+      }
+
+      case GeomAbs_Plane:
+      default:
+        theErrFactorU = theErrFactorV = 1.;
+    }
+  }
+
+  void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
+                         const int                             theNbVertices,
+                         int&                                  theCellsCountU,
+                         int&                                  theCellsCountV)
+  {
+    const GeomAbs_SurfaceType aType = theFace->GetType();
+    if (aType == GeomAbs_OtherSurface)
+    {
+      // fallback to the default behavior
+      theCellsCountU = theCellsCountV = -1;
+      return;
+    }
+
+    double aSqNbVert = theNbVertices;
+    if (aType == GeomAbs_Plane)
+    {
+      theCellsCountU = theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+    }
+    else if (aType == GeomAbs_Cylinder || aType == GeomAbs_Cone)
+    {
+      theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+    }
+    else if (aType == GeomAbs_SurfaceOfExtrusion || aType == GeomAbs_SurfaceOfRevolution)
+    {
       occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
-      if (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() > 2)
+      if (aCurve->GetType() == GeomAbs_Line
+          || (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() < 2))
       {
-        theErrFactorV /= (aCurve->Degree() * aCurve->NbKnots());
+        // planar, cylindrical, conical cases
+        if (aType == GeomAbs_SurfaceOfExtrusion)
+          theCellsCountU = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+        else
+          theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
       }
-      break;
-    }
-    case GeomAbs_BezierSurface: {
-      if (theFace->UDegree() > 2)
-      {
-        theErrFactorU /= (theFace->UDegree());
-      }
-      if (theFace->VDegree() > 2)
-      {
-        theErrFactorV /= (theFace->VDegree());
-      }
-      break;
-    }
-    case GeomAbs_BSplineSurface: {
-      if (theFace->UDegree() > 2)
-      {
-        theErrFactorU /= (theFace->UDegree() * theFace->NbUKnots());
-      }
-      if (theFace->VDegree() > 2)
-      {
-        theErrFactorV /= (theFace->VDegree() * theFace->NbVKnots());
-      }
-      break;
-    }
-
-    case GeomAbs_Plane:
-    default:
-      theErrFactorU = theErrFactorV = 1.;
-  }
-}
-
-void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
-                       const int                             theNbVertices,
-                       int&                                  theCellsCountU,
-                       int&                                  theCellsCountV)
-{
-  const GeomAbs_SurfaceType aType = theFace->GetType();
-  if (aType == GeomAbs_OtherSurface)
-  {
-    // fallback to the default behavior
-    theCellsCountU = theCellsCountV = -1;
-    return;
-  }
-
-  double aSqNbVert = theNbVertices;
-  if (aType == GeomAbs_Plane)
-  {
-    theCellsCountU = theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
-  }
-  else if (aType == GeomAbs_Cylinder || aType == GeomAbs_Cone)
-  {
-    theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
-  }
-  else if (aType == GeomAbs_SurfaceOfExtrusion || aType == GeomAbs_SurfaceOfRevolution)
-  {
-    occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
-    if (aCurve->GetType() == GeomAbs_Line
-        || (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() < 2))
-    {
-      // planar, cylindrical, conical cases
       if (aType == GeomAbs_SurfaceOfExtrusion)
-        theCellsCountU = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
-      else
+      {
+        // V is always a line
         theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+      }
     }
-    if (aType == GeomAbs_SurfaceOfExtrusion)
+    else if (aType == GeomAbs_BezierSurface || aType == GeomAbs_BSplineSurface)
     {
-      // V is always a line
-      theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+      if (theFace->UDegree() < 2)
+      {
+        theCellsCountU = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+      }
+      if (theFace->VDegree() < 2)
+      {
+        theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
+      }
     }
-  }
-  else if (aType == GeomAbs_BezierSurface || aType == GeomAbs_BSplineSurface)
-  {
-    if (theFace->UDegree() < 2)
-    {
-      theCellsCountU = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
-    }
-    if (theFace->VDegree() < 2)
-    {
-      theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
-    }
-  }
 
-  theCellsCountU = std::max(theCellsCountU, 2);
-  theCellsCountV = std::max(theCellsCountV, 2);
-}
+    theCellsCountU = std::max(theCellsCountU, 2);
+    theCellsCountV = std::max(theCellsCountV, 2);
+  }
 } // namespace
 
 //=================================================================================================

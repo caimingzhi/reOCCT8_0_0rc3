@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_EntityOwner.hpp>
 #include <PrsMgr_PresentationManager.hpp>
 
@@ -66,4 +65,3 @@ private:
   occ::handle<TColStd_HPackedMapOfInteger> myDetectedElems;
   int                                      myLastID;
 };
-

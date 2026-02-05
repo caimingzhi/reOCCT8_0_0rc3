@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Sequence.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <Select3D_SensitiveSet.hpp>
@@ -158,4 +157,3 @@ private:
   NCollection_Vector<int> myBVHPrimIndexes;     //!< Vector of sub-entities indexes for BVH tree build
   // clang-format on
 };
-

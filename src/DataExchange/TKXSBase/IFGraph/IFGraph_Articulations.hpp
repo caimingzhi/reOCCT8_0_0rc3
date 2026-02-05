@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -52,4 +51,3 @@ private:
   int                                     thenow;
   occ::handle<NCollection_HSequence<int>> thelist;
 };
-

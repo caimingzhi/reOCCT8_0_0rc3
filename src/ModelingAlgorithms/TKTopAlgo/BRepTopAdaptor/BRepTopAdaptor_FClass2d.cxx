@@ -1,19 +1,3 @@
-// Created on: 1995-03-22
-// Created by: Laurent BUCHARD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #define No_Standard_OutOfRange
 
 #include <BRep_Tool.hpp>
@@ -46,43 +30,43 @@
 
 namespace
 {
-// Increments @p theValue by @p theIncrement towards @p theDirection, ensuring that the result is
-// different from @p theValue. For large values of theValue with small theIncrement the result of
-// theValue + theIncrement can be equal to theValue due to the limited resolution of double
-// precision. This function guarantees to return the next representable value in the direction of
-// theDirection in such cases.
-inline double safeIncrement(const double theValue,
-                            const double theDirection,
-                            const double theIncrement)
-{
-  const double aNextValue = theValue + theIncrement;
-  return aNextValue == theValue ? std::nextafter(theValue, theDirection) : aNextValue;
-}
-
-//==================================================================================================
-
-// Checks whether the curve is degenerated between theStartParam and theEndParam.
-// The check is performed by sampling the curve at several points and measuring the distance to the
-// start point. If all sampled points are closer than Precision::Confusion() to the start point, the
-// curve is considered degenerated.
-bool isDegenerated(const BRepAdaptor_Curve& theCurve,
-                   const double             theStartParam,
-                   const double             theEndParam)
-{
-  const double aParametricStep = (theEndParam - theStartParam) * 0.1;
-  const gp_Pnt aStartPoint     = theCurve.Value(theStartParam);
-  for (double aCurrParam = theStartParam; aCurrParam < theEndParam;
-       aCurrParam        = safeIncrement(aCurrParam, theEndParam, aParametricStep))
+  // Increments @p theValue by @p theIncrement towards @p theDirection, ensuring that the result is
+  // different from @p theValue. For large values of theValue with small theIncrement the result of
+  // theValue + theIncrement can be equal to theValue due to the limited resolution of double
+  // precision. This function guarantees to return the next representable value in the direction of
+  // theDirection in such cases.
+  inline double safeIncrement(const double theValue,
+                              const double theDirection,
+                              const double theIncrement)
   {
-    const gp_Pnt aCurrentPoint = theCurve.Value(aCurrParam);
-    if (aStartPoint.SquareDistance(aCurrentPoint) > Precision::Confusion())
-    {
-      return false;
-    }
+    const double aNextValue = theValue + theIncrement;
+    return aNextValue == theValue ? std::nextafter(theValue, theDirection) : aNextValue;
   }
 
-  return true;
-}
+  //==================================================================================================
+
+  // Checks whether the curve is degenerated between theStartParam and theEndParam.
+  // The check is performed by sampling the curve at several points and measuring the distance to
+  // the start point. If all sampled points are closer than Precision::Confusion() to the start
+  // point, the curve is considered degenerated.
+  bool isDegenerated(const BRepAdaptor_Curve& theCurve,
+                     const double             theStartParam,
+                     const double             theEndParam)
+  {
+    const double aParametricStep = (theEndParam - theStartParam) * 0.1;
+    const gp_Pnt aStartPoint     = theCurve.Value(theStartParam);
+    for (double aCurrParam = theStartParam; aCurrParam < theEndParam;
+         aCurrParam        = safeIncrement(aCurrParam, theEndParam, aParametricStep))
+    {
+      const gp_Pnt aCurrentPoint = theCurve.Value(aCurrParam);
+      if (aStartPoint.SquareDistance(aCurrentPoint) > Precision::Confusion())
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
 } // namespace
 
 BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const double TolUV)

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -154,4 +153,3 @@ private:
   Convert_ParameterisationType myTConv;
   bool                         myreverse;
 };
-

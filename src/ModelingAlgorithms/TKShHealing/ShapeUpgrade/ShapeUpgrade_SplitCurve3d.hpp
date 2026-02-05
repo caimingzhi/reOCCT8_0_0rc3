@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -41,4 +40,3 @@ protected:
   occ::handle<Geom_Curve>                                   myCurve;
   occ::handle<NCollection_HArray1<occ::handle<Geom_Curve>>> myResultingCurves;
 };
-

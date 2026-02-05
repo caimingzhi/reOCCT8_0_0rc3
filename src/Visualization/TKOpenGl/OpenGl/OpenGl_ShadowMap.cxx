@@ -76,10 +76,12 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
 
   switch (myShadowLight->Type())
   {
-    case Graphic3d_TypeOfLightSource_Ambient: {
+    case Graphic3d_TypeOfLightSource_Ambient:
+    {
       return false; // not applicable
     }
-    case Graphic3d_TypeOfLightSource_Directional: {
+    case Graphic3d_TypeOfLightSource_Directional:
+    {
       if (theOrigin != nullptr)
       {
         NCollection_Mat4<double> aTrans;
@@ -121,11 +123,13 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
       myLightMatrix = myShadowCamera->ProjectionMatrixF() * myShadowCamera->OrientationMatrixF();
       return true;
     }
-    case Graphic3d_TypeOfLightSource_Positional: {
+    case Graphic3d_TypeOfLightSource_Positional:
+    {
       // render into cubemap shadowmap texture
       return false; // not implemented
     }
-    case Graphic3d_TypeOfLightSource_Spot: {
+    case Graphic3d_TypeOfLightSource_Spot:
+    {
       if (theOrigin != nullptr)
       {
         NCollection_Mat4<double> aTrans;

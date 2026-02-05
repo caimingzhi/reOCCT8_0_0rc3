@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_ToroidalSurface.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -35,4 +34,3 @@ struct GeomHash_ToroidalSurfaceHasher
            && std::abs(theTorus1->MinorRadius() - theTorus2->MinorRadius()) <= aTolerance;
   }
 };
-

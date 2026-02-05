@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -61,4 +60,3 @@ public:
   //! in case of error
   Standard_EXPORT static void GetReal(Standard_IStream& IS, double& theValue);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <AIS_KindOfInteractive.hpp>
 
@@ -124,4 +123,3 @@ private:
 protected:
   occ::handle<SelectMgr_EntityOwner> myAssemblyOwner;
 };
-

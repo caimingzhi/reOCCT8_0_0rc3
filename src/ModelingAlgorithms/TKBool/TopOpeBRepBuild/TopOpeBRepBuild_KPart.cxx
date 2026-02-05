@@ -1,19 +1,3 @@
-// Created on: 1994-08-30
-// Created by: Jean Yves LEBEY
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepClass3d.hpp>
 #include <BRepClass3d_SolidExplorer.hpp>
 #include <BRepTools.hpp>
@@ -2182,7 +2166,8 @@ static void LocalKPisdisjanalyse(const TopAbs_State                     Stsol1,
 
   switch (theOperation)
   {
-    case TopOpeBRepBuild_KPart_Operation_Fuse: {
+    case TopOpeBRepBuild_KPart_Operation_Fuse:
+    {
       if (Stsol1 == TopAbs_OUT && Stsol2 == TopAbs_OUT)
       {
         ires  = RESSHAPE12;
@@ -2200,7 +2185,8 @@ static void LocalKPisdisjanalyse(const TopAbs_State                     Stsol1,
       }
       break;
     }
-    case TopOpeBRepBuild_KPart_Operation_Cut12: {
+    case TopOpeBRepBuild_KPart_Operation_Cut12:
+    {
       if (Stsol1 == TopAbs_OUT && Stsol2 == TopAbs_OUT)
       {
         ires  = RESSHAPE1;
@@ -2220,7 +2206,8 @@ static void LocalKPisdisjanalyse(const TopAbs_State                     Stsol1,
       }
       break;
     }
-    case TopOpeBRepBuild_KPart_Operation_Cut21: {
+    case TopOpeBRepBuild_KPart_Operation_Cut21:
+    {
       if (Stsol1 == TopAbs_OUT && Stsol2 == TopAbs_OUT)
       {
         ires  = RESSHAPE2;
@@ -2240,7 +2227,8 @@ static void LocalKPisdisjanalyse(const TopAbs_State                     Stsol1,
       }
       break;
     }
-    case TopOpeBRepBuild_KPart_Operation_Common: {
+    case TopOpeBRepBuild_KPart_Operation_Common:
+    {
       if (Stsol1 == TopAbs_OUT && Stsol2 == TopAbs_OUT)
       {
         ires  = RESNULL;
@@ -2260,7 +2248,8 @@ static void LocalKPisdisjanalyse(const TopAbs_State                     Stsol1,
       }
       break;
     }
-    default: {
+    default:
+    {
       std::cout << "Warning: given operation is unknown" << std::endl;
       break;
     }
@@ -2577,24 +2566,29 @@ static bool disjPerformCommon(
       }
       switch (ires)
       {
-        case RESNULL: {
+        case RESNULL:
+        {
           continue;
         }
-        case RESSHAPE12: {
+        case RESSHAPE12:
+        {
           aMapOfCommonOfCouple.Add(sol1);
           aMapOfCommonOfCouple.Add(sol2);
           continue;
         }
-        case RESSHAPE1: {
+        case RESSHAPE1:
+        {
           aMapOfCommonOfCouple.Add(sol1);
           continue;
         }
-        case RESSHAPE2: {
+        case RESSHAPE2:
+        {
           aMapOfCommonOfCouple.Add(sol2);
           break;
         }
         case RESNEWSHA1:
-        case RESNEWSHA2: {
+        case RESNEWSHA2:
+        {
           TopoDS_Solid newsol =
             BuildNewSolid(sol1, sol2, stsol1, stsol2, ires, icla1, icla2, TopAbs_IN, TopAbs_IN);
           aMapOfCommonOfCouple.Add(newsol);
@@ -2670,24 +2664,29 @@ static bool disjPerformCut(
       }
       switch (ires)
       {
-        case RESNULL: {
+        case RESNULL:
+        {
           NullResult = true;
           break;
         }
-        case RESSHAPE12: {
+        case RESSHAPE12:
+        {
           NullResult = true;
           break;
         }
-        case RESSHAPE1: {
+        case RESSHAPE1:
+        {
           NullResult = false;
           break;
         }
-        case RESSHAPE2: {
+        case RESSHAPE2:
+        {
           NullResult = true;
           break;
         }
         case RESNEWSHA1:
-        case RESNEWSHA2: {
+        case RESNEWSHA2:
+        {
           TopoDS_Solid newsol = BuildNewSolid(acurrentsolid,
                                               sol2,
                                               stsol1,

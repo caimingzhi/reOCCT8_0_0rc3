@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_IShapePickerAlgo.hpp>
 #include <IVtkOCC_ViewerSelector.hpp>
 
@@ -104,4 +103,3 @@ private:
   gp_Pnt                                                          myTopPickedPoint;
   occ::handle<IVtkOCC_ViewerSelector>                             myViewerSelector;
 };
-

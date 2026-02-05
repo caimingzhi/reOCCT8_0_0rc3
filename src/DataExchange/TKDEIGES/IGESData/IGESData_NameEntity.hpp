@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <IGESData_IGESEntity.hpp>
@@ -18,4 +17,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(IGESData_NameEntity, IGESData_IGESEntity)
 };
-

@@ -1,21 +1,3 @@
-// Created by: CKY / Contract Toubro-Larsen
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//--------------------------------------------------------------------
-//--------------------------------------------------------------------
-
 #include <IGESData_DirChecker.hpp>
 #include <IGESData_IGESDumper.hpp>
 #include <IGESData_IGESReaderData.hpp>
@@ -55,25 +37,29 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
     Message_Msg Msg174("XSTEP_174");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_ReferenceError:
+      {
         Message_Msg Msg216("IGES_216");
         Msg174.Arg(Msg216.Value());
         PR.SendFail(Msg174);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_EntityError:
+      {
         Message_Msg Msg217("IGES_217");
         Msg174.Arg(Msg217.Value());
         PR.SendFail(Msg174);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_TypeError:
+      {
         Message_Msg Msg218("IGES_218");
         Msg174.Arg(Msg218.Value());
         PR.SendFail(Msg174);
         break;
       }
-      default: {
+      default:
+      {
       }
     }
   }
@@ -86,25 +72,29 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
     Message_Msg Msg175("XSTEP_175");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_ReferenceError:
+      {
         Message_Msg Msg216("IGES_216");
         Msg175.Arg(Msg216.Value());
         PR.SendFail(Msg175);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_EntityError:
+      {
         Message_Msg Msg217("IGES_217");
         Msg175.Arg(Msg217.Value());
         PR.SendFail(Msg175);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_TypeError:
+      {
         Message_Msg Msg218("IGES_218");
         Msg175.Arg(Msg218.Value());
         PR.SendFail(Msg175);
         break;
       }
-      default: {
+      default:
+      {
       }
     }
   }
@@ -120,25 +110,29 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
       Message_Msg Msg176("XSTEP_176");
       switch (aStatus)
       {
-        case IGESData_ReferenceError: {
+        case IGESData_ReferenceError:
+        {
           Message_Msg Msg216("IGES_216");
           Msg176.Arg(Msg216.Value());
           PR.SendFail(Msg176);
           break;
         }
-        case IGESData_EntityError: {
+        case IGESData_EntityError:
+        {
           Message_Msg Msg217("IGES_217");
           Msg176.Arg(Msg217.Value());
           PR.SendFail(Msg176);
           break;
         }
-        case IGESData_TypeError: {
+        case IGESData_TypeError:
+        {
           Message_Msg Msg218("IGES_218");
           Msg176.Arg(Msg218.Value());
           PR.SendFail(Msg176);
           break;
         }
-        default: {
+        default:
+        {
         }
       }
     }

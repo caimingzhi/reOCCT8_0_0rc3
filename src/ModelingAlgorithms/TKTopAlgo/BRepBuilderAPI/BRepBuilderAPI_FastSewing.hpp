@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <BRep_Builder.hpp>
 
@@ -273,4 +272,3 @@ private:
   //! Bits of computation status
   FS_VARStatuses myStatusList;
 };
-

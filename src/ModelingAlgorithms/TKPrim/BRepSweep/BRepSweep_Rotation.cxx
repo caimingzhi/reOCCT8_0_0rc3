@@ -1,19 +1,3 @@
-// Created on: 1993-02-15
-// Created by: Laurent BOURESCHE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepSweep_Rotation.hpp>
 
 #include <GeomAdaptor_SurfaceOfRevolution.hpp>
@@ -317,32 +301,38 @@ TopoDS_Shape BRepSweep_Rotation::MakeEmptyFace(const TopoDS_Shape&   aGenS,
     GeomAdaptor_SurfaceOfRevolution AS(HC, myAxe);
     switch (AS.GetType())
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_Plane:
+      {
         occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
         S                          = Pl;
       }
       break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_Cylinder:
+      {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }
       break;
-      case GeomAbs_Sphere: {
+      case GeomAbs_Sphere:
+      {
         occ::handle<Geom_SphericalSurface> Sp = new Geom_SphericalSurface(AS.Sphere());
         S                                     = Sp;
       }
       break;
-      case GeomAbs_Cone: {
+      case GeomAbs_Cone:
+      {
         occ::handle<Geom_ConicalSurface> Co = new Geom_ConicalSurface(AS.Cone());
         S                                   = Co;
       }
       break;
-      case GeomAbs_Torus: {
+      case GeomAbs_Torus:
+      {
         occ::handle<Geom_ToroidalSurface> To = new Geom_ToroidalSurface(AS.Torus());
         S                                    = To;
       }
       break;
-      default: {
+      default:
+      {
         occ::handle<Geom_SurfaceOfRevolution> Se = new Geom_SurfaceOfRevolution(C, myAxe);
         S                                        = Se;
       }
@@ -509,7 +499,8 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
   switch (AS.GetType())
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_Plane:
+    {
       gp_Pln pln = AS.Plane();
       gp_Ax3 ax3 = pln.Position();
       gp_Pnt p1  = pln.Location();
@@ -523,7 +514,8 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_Cone:
+    {
       gp_Cone cone = AS.Cone();
       ElSLib::ConeParameters(cone.Position(), cone.RefRadius(), cone.SemiAngle(), p2, u, v);
       p22d.SetCoord(0., v);
@@ -533,7 +525,8 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       gp_Sphere sph = AS.Sphere();
       ElSLib::SphereParameters(sph.Position(), sph.Radius(), p2, u, v);
       p22d.SetCoord(0., v);
@@ -543,7 +536,8 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       gp_Pnt            p1;
       double            u1, u2, v1, v2;
       gp_Torus          tor = AS.Torus();
@@ -588,7 +582,8 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    default: {
+    default:
+    {
       p22d.SetCoord(0., par);
       gp_Lin2d                 L(p22d, gp::DX2d());
       occ::handle<Geom2d_Line> GL = new Geom2d_Line(L);

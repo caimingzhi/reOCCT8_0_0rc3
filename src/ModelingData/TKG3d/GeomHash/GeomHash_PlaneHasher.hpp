@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_HashUtils.hpp>
 #include <Geom_Plane.hpp>
 #include <GeomHash_AxisPlacement.hpp>
@@ -24,4 +23,3 @@ struct GeomHash_PlaneHasher
     return anAxisHasher(thePlane1->Position().Ax2(), thePlane2->Position().Ax2());
   }
 };
-

@@ -1,18 +1,3 @@
-// Created on: 2001-06-28
-// Created by: Alexander GRIGORIEV
-// Copyright (c) 2001-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <LDOM_XmlWriter.hpp>
 #include <LDOM_Document.hpp>
 #include <LDOM_CharReference.hpp>
@@ -213,7 +198,8 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
     case LDOM_Node::TEXT_NODE:
       Write(theOStream, aNodeValue);
       break;
-    case LDOM_Node::ELEMENT_NODE: {
+    case LDOM_Node::ELEMENT_NODE:
+    {
       const int   aMaxNSpaces = 40;
       static char aSpaces[]   = {chSpace, chSpace, chSpace, chSpace, chSpace, chSpace,     chSpace,
                                  chSpace, chSpace, chSpace, chSpace, chSpace, chSpace,     chSpace,
@@ -305,13 +291,15 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
       }
       break;
     }
-    case LDOM_Node::CDATA_SECTION_NODE: {
+    case LDOM_Node::CDATA_SECTION_NODE:
+    {
       Write(theOStream, gStartCDATA);
       Write(theOStream, aNodeValue);
       Write(theOStream, gEndCDATA);
       break;
     }
-    case LDOM_Node::COMMENT_NODE: {
+    case LDOM_Node::COMMENT_NODE:
+    {
       Write(theOStream, gStartComment);
       Write(theOStream, aNodeValue);
       Write(theOStream, gEndComment);
@@ -333,7 +321,8 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& 
 {
   switch (theString.Type())
   {
-    case LDOMBasicString::LDOM_Integer: {
+    case LDOMBasicString::LDOM_Integer:
+    {
       int aValue;
       theString.GetInteger(aValue);
 
@@ -343,7 +332,8 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& 
       break;
     }
     case LDOMBasicString::LDOM_AsciiHashed: // attr names and element tags
-    case LDOMBasicString::LDOM_AsciiDocClear: {
+    case LDOMBasicString::LDOM_AsciiDocClear:
+    {
       const char* aStr = theString.GetString();
       if (aStr)
       {
@@ -356,7 +346,8 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& 
     }
     break;
     case LDOMBasicString::LDOM_AsciiFree:
-    case LDOMBasicString::LDOM_AsciiDoc: {
+    case LDOMBasicString::LDOM_AsciiDoc:
+    {
       const char* aStr = theString.GetString();
       if (aStr)
       {

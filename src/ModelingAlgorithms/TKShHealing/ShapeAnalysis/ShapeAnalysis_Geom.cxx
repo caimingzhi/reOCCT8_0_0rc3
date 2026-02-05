@@ -83,7 +83,8 @@ bool ShapeAnalysis_Geom::NearestPlane(const NCollection_Array1<gp_Pnt>& Pnts,
 
   switch (It)
   {
-    case 1: {
+    case 1:
+    {
       // szv#4:S4163:12Mar99 optimized
       if ((2. * Dev1 > Dev2) || (2. * Dev1 > Dev3))
         It = 0;
@@ -91,7 +92,8 @@ bool ShapeAnalysis_Geom::NearestPlane(const NCollection_Array1<gp_Pnt>& Pnts,
         aPln = gp_Pln(g, V1);
       break;
     }
-    case 2: {
+    case 2:
+    {
       // szv#4:S4163:12Mar99 optimized
       if ((2. * Dev2 > Dev1) || (2. * Dev2 > Dev3))
         It = 0;
@@ -99,7 +101,8 @@ bool ShapeAnalysis_Geom::NearestPlane(const NCollection_Array1<gp_Pnt>& Pnts,
         aPln = gp_Pln(g, V2);
       break;
     }
-    case 3: {
+    case 3:
+    {
       // szv#4:S4163:12Mar99 optimized
       if ((2. * Dev3 > Dev2) || (2. * Dev3 > Dev1))
         It = 0;

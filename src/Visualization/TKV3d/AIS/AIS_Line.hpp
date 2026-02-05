@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <AIS_KindOfInteractive.hpp>
 
@@ -92,4 +91,3 @@ private:
   occ::handle<Geom_Point> myEndPoint;
   bool                    myLineIsSegment;
 };
-

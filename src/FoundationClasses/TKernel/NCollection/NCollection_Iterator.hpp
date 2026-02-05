@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Assert.hpp>
 #include <iterator>
 
@@ -108,4 +107,3 @@ private:
   typename Container::iterator myCur;
   typename Container::iterator myLast;
 };
-

@@ -150,7 +150,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -158,7 +159,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -166,7 +168,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -174,7 +177,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -182,7 +186,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -190,7 +195,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, anent, ent);
       if (anent.IsNull())
         return;
@@ -198,7 +204,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, anent, ent);
       if (anent.IsNull())
         return;
@@ -206,7 +213,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -214,7 +222,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -222,7 +231,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -230,7 +240,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, anent, ent);
       if (anent.IsNull())
         return;
@@ -238,7 +249,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -246,7 +258,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, anent, ent);
       if (anent.IsNull())
         return;
@@ -254,7 +267,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, anent, ent);
       if (anent.IsNull())
         return;
@@ -262,7 +276,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -270,7 +285,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -278,7 +294,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -286,7 +303,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -294,7 +312,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -302,7 +321,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -310,7 +330,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, anent, ent);
       if (anent.IsNull())
         return;
@@ -318,7 +339,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, anent, ent);
       if (anent.IsNull())
         return;
@@ -326,7 +348,8 @@ void IGESDimen_ReadWriteModule::ReadOwnParams(const int                         
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -345,7 +368,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDimen_AngularDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -353,7 +377,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDimen_BasicDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -361,7 +386,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDimen_CenterLine, anent, ent);
       if (anent.IsNull())
         return;
@@ -369,7 +395,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDimen_CurveDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -377,7 +404,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDimen_DiameterDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -385,7 +413,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDimen_DimensionDisplayData, anent, ent);
       if (anent.IsNull())
         return;
@@ -393,7 +422,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDimen_DimensionTolerance, anent, ent);
       if (anent.IsNull())
         return;
@@ -401,7 +431,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESDimen_DimensionUnits, anent, ent);
       if (anent.IsNull())
         return;
@@ -409,7 +440,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESDimen_DimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -417,7 +449,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESDimen_FlagNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -425,7 +458,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESDimen_GeneralLabel, anent, ent);
       if (anent.IsNull())
         return;
@@ -433,7 +467,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESDimen_GeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -441,7 +476,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESDimen_GeneralSymbol, anent, ent);
       if (anent.IsNull())
         return;
@@ -449,7 +485,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESDimen_LeaderArrow, anent, ent);
       if (anent.IsNull())
         return;
@@ -457,7 +494,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESDimen_LinearDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -465,7 +503,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESDimen_NewDimensionedGeometry, anent, ent);
       if (anent.IsNull())
         return;
@@ -473,7 +512,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESDimen_NewGeneralNote, anent, ent);
       if (anent.IsNull())
         return;
@@ -481,7 +521,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESDimen_OrdinateDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -489,7 +530,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESDimen_PointDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -497,7 +539,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESDimen_RadiusDimension, anent, ent);
       if (anent.IsNull())
         return;
@@ -505,7 +548,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESDimen_Section, anent, ent);
       if (anent.IsNull())
         return;
@@ -513,7 +557,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESDimen_SectionedArea, anent, ent);
       if (anent.IsNull())
         return;
@@ -521,7 +566,8 @@ void IGESDimen_ReadWriteModule::WriteOwnParams(const int                        
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESDimen_WitnessLine, anent, ent);
       if (anent.IsNull())
         return;

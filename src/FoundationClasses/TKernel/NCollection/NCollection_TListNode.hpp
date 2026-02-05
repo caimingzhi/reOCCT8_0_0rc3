@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_ListNode.hpp>
 #include <utility>
 
@@ -41,4 +40,3 @@ public:
 protected:
   TheItemType myValue; //!< The item stored in the node
 };
-

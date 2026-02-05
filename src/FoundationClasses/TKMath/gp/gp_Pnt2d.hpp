@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -228,4 +227,3 @@ inline constexpr gp_Pnt2d gp_Pnt2d::Translated(const gp_Vec2d& theV) const noexc
   aP.coord.Add(theV.XY());
   return aP;
 }
-

@@ -114,10 +114,12 @@ static void GetGoodShape(TopoDS_Shape& theShape)
   switch (theShape.ShapeType())
   {
     case TopAbs_EDGE:
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       return;
     }
-    default: {
+    default:
+    {
       TopExp_Explorer anExp(theShape, TopAbs_EDGE);
       if (anExp.More())
       {

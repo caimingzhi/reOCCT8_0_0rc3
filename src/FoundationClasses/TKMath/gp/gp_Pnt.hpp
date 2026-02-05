@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -203,37 +202,38 @@ private:
 
 namespace std
 {
-template <>
-struct hash<gp_Pnt>
-{
-  size_t operator()(const gp_Pnt& thePnt) const noexcept
+  template <>
+  struct hash<gp_Pnt>
   {
-    union {
-      double R[3];
-      int    I[6];
-    } U;
+    size_t operator()(const gp_Pnt& thePnt) const noexcept
+    {
+      union
+      {
+        double R[3];
+        int    I[6];
+      } U;
 
-    thePnt.Coord(U.R[0], U.R[1], U.R[2]);
+      thePnt.Coord(U.R[0], U.R[1], U.R[2]);
 
-    return std::hash<double>{}(U.I[0] / 23 + U.I[1] / 19 + U.I[2] / 17 + U.I[3] / 13 + U.I[4] / 11
-                               + U.I[5] / 7);
-  }
-};
+      return std::hash<double>{}(U.I[0] / 23 + U.I[1] / 19 + U.I[2] / 17 + U.I[3] / 13 + U.I[4] / 11
+                                 + U.I[5] / 7);
+    }
+  };
 
-template <>
-struct equal_to<gp_Pnt>
-{
-  bool operator()(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2) const noexcept
+  template <>
+  struct equal_to<gp_Pnt>
   {
-    if (std::abs(thePnt1.X() - thePnt2.X()) > Epsilon(thePnt2.X()))
-      return false;
-    if (std::abs(thePnt1.Y() - thePnt2.Y()) > Epsilon(thePnt2.Y()))
-      return false;
-    if (std::abs(thePnt1.Z() - thePnt2.Z()) > Epsilon(thePnt2.Z()))
-      return false;
-    return true;
-  }
-};
+    bool operator()(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2) const noexcept
+    {
+      if (std::abs(thePnt1.X() - thePnt2.X()) > Epsilon(thePnt2.X()))
+        return false;
+      if (std::abs(thePnt1.Y() - thePnt2.Y()) > Epsilon(thePnt2.Y()))
+        return false;
+      if (std::abs(thePnt1.Z() - thePnt2.Z()) > Epsilon(thePnt2.Z()))
+        return false;
+      return true;
+    }
+  };
 } // namespace std
 
 #include <gp_Trsf.hpp>
@@ -291,4 +291,3 @@ inline constexpr gp_Pnt gp_Pnt::Translated(const gp_Vec& theV) const noexcept
   aP.coord.Add(theV.XYZ());
   return aP;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Attribute.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DefineAlloc.hpp>
@@ -29,4 +28,3 @@ public:
 private:
   occ::handle<Standard_Transient> myObject; //!< alert object
 };
-

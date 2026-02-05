@@ -319,16 +319,19 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Le cas de biparametrees periodiques est gere en amont
       myHS1IsUPeriodic = myHS1IsVPeriodic = false;
       break;
@@ -340,16 +343,19 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   {
     case GeomAbs_Cylinder:
     case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_Sphere:
+    {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_Torus:
+    {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
-    default: {
+    default:
+    {
       //-- Le cas de biparametrees periodiques est gere en amont
       myHS2IsUPeriodic = myHS2IsVPeriodic = false;
       break;
@@ -1129,7 +1135,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
 
     switch (typarc)
     {
-      case IntPatch_Lin: {
+      case IntPatch_Lin:
+      {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Line(), Psurf);
         if (para <= upper && para >= lower)
         {
@@ -1144,7 +1151,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Circle: {
+      case IntPatch_Circle:
+      {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Circle(), Psurf);
         if ((para <= upper && para >= lower)
             || (para + 2. * M_PI <= upper && para + 2. * M_PI >= lower)
@@ -1161,7 +1169,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Ellipse: {
+      case IntPatch_Ellipse:
+      {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Ellipse(), Psurf);
         if ((para <= upper && para >= lower)
             || (para + 2. * M_PI <= upper && para + 2. * M_PI >= lower)
@@ -1178,7 +1187,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Parabola: {
+      case IntPatch_Parabola:
+      {
         //-- Le calcul du parametre sur une parabole est mal fait ds ElCLib. Il ne tient pas compte
         //-- de la meilleure facon de calculer (axe X ou axe Y). Bilan : Si la parabole est tres
         //-- pointue (focal de l'ordre de 1e-2 et si le point est a un parametre grand, ca foire. )
@@ -1226,7 +1236,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Hyperbola: {
+      case IntPatch_Hyperbola:
+      {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), Psurf);
         if (para <= upper && para >= lower)
         {
@@ -1242,7 +1253,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       }
       break;
 
-      case IntPatch_Analytic: {
+      case IntPatch_Analytic:
+      {
         occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(lin));
         NCollection_List<double>    aLParams;
         alin->FindParameter(Psurf, aLParams);
@@ -1347,7 +1359,8 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         ElCLib::DN(aParaInt, (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Hyperbola(), 1);
       break;
 
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       if (!occ::down_cast<IntPatch_ALine>(slin(theLineIdx))->D1(theLParams.Last(), pt, Vtgtint))
       {
         // Previously (before the fix #29807) this code tried to process case
@@ -1413,7 +1426,8 @@ bool SingleLine(const gp_Pnt&                     Psurf,
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), ptproj, tgint);
       break;
-    case IntPatch_Analytic: {
+    case IntPatch_Analytic:
+    {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(lin));
       NCollection_List<double>    aLParams;
       alin->FindParameter(Psurf, aLParams);
@@ -2533,7 +2547,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   //
   switch (iTT)
   {
-    case 11: { // Plane/Plane
+    case 11:
+    { // Plane/Plane
       if (!IntPP(quad1, quad2, Tolang, TolTang, SameSurf, slin))
       {
         return;
@@ -2542,7 +2557,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 12:
-    case 21: { // Plane/Cylinder
+    case 21:
+    { // Plane/Cylinder
       double VMin, VMax, H;
       //
       const occ::handle<Adaptor3d_Surface>& aSCyl = bReverse ? S1 : S2;
@@ -2561,7 +2577,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 13:
-    case 31: { // Plane/Cone
+    case 31:
+    { // Plane/Cone
       if (!IntPCo(quad1, quad2, Tolang, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2571,7 +2588,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 14:
-    case 41: { // Plane/Sphere
+    case 41:
+    { // Plane/Sphere
       if (!IntPSp(quad1, quad2, Tolang, TolTang, bReverse, empt, slin, spnt))
       {
         return;
@@ -2581,7 +2599,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 15:
-    case 51: { // Plane/Torus
+    case 51:
+    { // Plane/Torus
       if (!IntPTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2590,7 +2609,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       break;
     }
     //
-    case 22: { // Cylinder/Cylinder
+    case 22:
+    { // Cylinder/Cylinder
       Bnd_Box2d aBox1, aBox2;
 
       const double aU1f = S1->FirstUParameter();
@@ -2640,7 +2660,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 23:
-    case 32: { // Cylinder/Cone
+    case 32:
+    { // Cylinder/Cone
       if (!IntCyCo(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2650,7 +2671,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 24:
-    case 42: { // Cylinder/Sphere
+    case 42:
+    { // Cylinder/Sphere
       if (!IntCySp(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2660,7 +2682,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 25:
-    case 52: { // Cylinder/Torus
+    case 52:
+    { // Cylinder/Torus
       if (!IntCyTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2669,7 +2692,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       break;
     }
     //
-    case 33: { // Cone/Cone
+    case 33:
+    { // Cone/Cone
       if (!IntCoCo(quad1, quad2, TolTang, empt, SameSurf, multpoint, slin, spnt))
       {
         return;
@@ -2679,7 +2703,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 34:
-    case 43: { // Cone/Sphere
+    case 43:
+    { // Cone/Sphere
       if (!IntCoSp(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2689,7 +2714,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 35:
-    case 53: { // Cone/Torus
+    case 53:
+    { // Cone/Torus
       if (!IntCoTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2697,7 +2723,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       break;
     }
     //
-    case 44: { // Sphere/Sphere
+    case 44:
+    { // Sphere/Sphere
       if (!IntSpSp(quad1, quad2, TolTang, empt, SameSurf, slin, spnt))
       {
         return;
@@ -2707,7 +2734,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     }
     //
     case 45:
-    case 54: { // Sphere/Torus
+    case 54:
+    { // Sphere/Torus
       if (!IntSpTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2716,7 +2744,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       break;
     }
     //
-    case 55: { // Torus/Torus
+    case 55:
+    { // Torus/Torus
       if (!IntToTo(quad1, quad2, TolTang, SameSurf, empt, slin))
       {
         return;
@@ -2725,7 +2754,8 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       break;
     }
     //
-    default: {
+    default:
+    {
       throw Standard_ConstructionError();
       break;
     }
@@ -2835,23 +2865,28 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
       switch (typs1)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_Plane:
+        {
           Ptreference = (S1->Plane()).Location();
         }
         break;
-        case GeomAbs_Cylinder: {
+        case GeomAbs_Cylinder:
+        {
           Ptreference = ElSLib::Value(0., 0., S1->Cylinder());
         }
         break;
-        case GeomAbs_Sphere: {
+        case GeomAbs_Sphere:
+        {
           Ptreference = ElSLib::Value(M_PI / 4., M_PI / 4., S1->Sphere());
         }
         break;
-        case GeomAbs_Cone: {
+        case GeomAbs_Cone:
+        {
           Ptreference = ElSLib::Value(0., 10., S1->Cone());
         }
         break;
-        case GeomAbs_Torus: {
+        case GeomAbs_Torus:
+        {
           Ptreference = ElSLib::Value(0., 0., S1->Torus());
         }
         break;
@@ -3153,12 +3188,14 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_Line:
+    {
       gp_Lin linsol = inter.Line(1);
       gp_Pnt orig(linsol.Location());
       if (NbSol == 1)
@@ -3251,7 +3288,8 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
     }
     break;
       //
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       gp_Circ cirsol;
       gp_Pnt  ptref;
       gp_Vec  Tgt;
@@ -3277,7 +3315,8 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
     }
     break;
       //
-    case IntAna_Ellipse: {
+    case IntAna_Ellipse:
+    {
       gp_Elips elipsol = inter.Ellipse(1);
       gp_Pnt   ptref;
       gp_Vec   Tgt;
@@ -3298,7 +3337,8 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
     }
     break;
       //
-    default: {
+    default:
+    {
       return false; // on ne doit pas passer ici
     }
   }
@@ -3351,12 +3391,14 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
       //
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol = inter.Point(1);
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -3368,7 +3410,8 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
     }
     break;
       //
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       cirsol = inter.Circle(1);
       // modified by NIZNHY-PKV Thu Sep 15 11:30:03 2011f
       AdjustToSeam(Sp, cirsol, Tolang);
@@ -3392,7 +3435,8 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false; // on ne doit pas passer ici
     }
   }
@@ -3449,7 +3493,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol = inter.Point(1);
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -3461,7 +3506,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_Line:
+    {
       gp_Lin linsol = inter.Line(1);
       if (linsol.Direction().Dot(Co.Axis().Direction()) < 0.)
       {
@@ -3638,7 +3684,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       gp_Circ cirsol = inter.Circle(1);
       // modified by NIZNHY-PKV Thu Sep 15 11:34:04 2011f
       AdjustToSeam(Co, cirsol);
@@ -3662,7 +3709,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_Ellipse:
+    {
       gp_Elips elipsol = inter.Ellipse(1);
       gp_Pnt   ptref;
       gp_Vec   Tgt;
@@ -3683,7 +3731,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Parabola: {
+    case IntAna_Parabola:
+    {
       gp_Parab parabsol = inter.Parabola(1);
 
       gp_Vec Tgtorig(parabsol.YAxis().Direction());
@@ -3708,7 +3757,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Hyperbola: {
+    case IntAna_Hyperbola:
+    {
       gp_Pnt tophypr;
       gp_Vec Tgttop;
 
@@ -3739,7 +3789,8 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -3776,7 +3827,8 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
       bEmpty = true;
       break;
     //
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Pnt            ptref;
@@ -4090,7 +4142,8 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
   {
     case COE12:
       break;
-    case COE23: {
+    case COE23:
+    {
       math_Vector aVTemp(mVecA1);
       mVecA1(1) = aVTemp(2);
       mVecA1(2) = aVTemp(3);
@@ -4128,7 +4181,8 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
 
       break;
     }
-    case COE13: {
+    case COE13:
+    {
       math_Vector aVTemp = mVecA1;
       mVecA1(2)          = aVTemp(3);
       mVecA1(3)          = aVTemp(2);
@@ -4825,17 +4879,20 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_Same:
+    {
       Same = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol(theInter.Point(1));
       ptsol.SetValue(psol, Tol, true);
 
@@ -4848,7 +4905,8 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_Line:
+    {
       gp_Pnt ptref;
       if (NbSol == 1)
       { // Cylinders are tangent to each other by line
@@ -4969,7 +5027,8 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_Ellipse:
+    {
       gp_Vec         Tgt;
       gp_Pnt         ptref;
       IntPatch_Point pmult1, pmult2;
@@ -7992,12 +8051,14 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -8008,7 +8069,8 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       cirsol = inter.Circle(1);
       gp_Vec Tgt;
       gp_Pnt ptref;
@@ -8105,7 +8167,8 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_NoGeometricSolution:
+    {
       gp_Pnt             psol;
       double             U1, V1, U2, V2;
       IntAna_IntQuadQuad anaint(Cy, Sp, Tol);
@@ -8207,7 +8270,8 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -8260,12 +8324,14 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -8276,7 +8342,8 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       gp_Vec Tgt;
       gp_Pnt ptref;
       int    j;
@@ -8307,7 +8374,8 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_NoGeometricSolution:
+    {
       gp_Pnt             psol;
       double             U1, V1, U2, V2;
       IntAna_IntQuadQuad anaint(Cy, Co, Tol);
@@ -8548,18 +8616,21 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_Same:
+    {
       Same = true;
     }
     break;
 
       // modified by NIZNHY-PKV Wed Nov 30 12:56:06 2005f
-    case IntAna_Line: {
+    case IntAna_Line:
+    {
       double                      para, aDot;
       gp_Pnt                      aPApex1, aPApex2, ptbid;
       gp_Lin                      linsol;
@@ -8673,7 +8744,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     break;
       // modified by NIZNHY-PKV Wed Nov 30 12:56:10 2005t
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt ptcontact;
       gp_Pnt apex1(Co1.Apex());
       gp_Pnt apex2(Co2.Apex());
@@ -8707,7 +8779,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       IntPatch_Point aPtsol;
       gp_Vec         Tgt;
       gp_Pnt         ptref;
@@ -8746,7 +8819,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_Ellipse:
+    {
       IntPatch_Point aPtsol;
       gp_Elips       elipsol = inter.Ellipse(1);
 
@@ -8784,7 +8858,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Hyperbola: {
+    case IntAna_Hyperbola:
+    {
       IntPatch_Point aPtsol;
       gp_Vec         Tgt;
       gp_Pnt         ptref;
@@ -8823,7 +8898,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Parabola: {
+    case IntAna_Parabola:
+    {
       IntPatch_Point aPtsol;
       gp_Parab       parabsol = inter.Parabola(1);
 
@@ -8860,7 +8936,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_NoGeometricSolution:
+    {
       gp_Pnt             psol;
       IntAna_IntQuadQuad anaint(Co1, Co2, Tol);
       if (!anaint.IsDone())
@@ -8980,7 +9057,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -9059,12 +9137,14 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt ptcontact;
       gp_Pnt apex(Co.Apex());
       double param;
@@ -9094,7 +9174,8 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       gp_Vec Tgt;
       gp_Pnt ptref;
 
@@ -9128,7 +9209,8 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_PointAndCircle: {
+    case IntAna_PointAndCircle:
+    {
       gp_Vec Tgt;
       gp_Pnt ptref;
       gp_Pnt apex(Co.Apex());
@@ -9187,7 +9269,8 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_NoGeometricSolution:
+    {
       gp_Pnt             psol;
       IntAna_IntQuadQuad anaint(Co, Sp, Tol);
       if (!anaint.IsDone())
@@ -9302,7 +9385,8 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false;
     }
   }
@@ -9339,17 +9423,20 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_Empty:
+    {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_Same:
+    {
       Same = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_Point:
+    {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -9361,7 +9448,8 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       gp_Circ cirsol = inter.Circle(1);
       gp_Pnt  ptref;
       gp_Vec  Tgt;
@@ -9387,7 +9475,8 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    default: {
+    default:
+    {
       return false; // on ne doit pas passer ici
     }
   }
@@ -9509,7 +9598,8 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
       bEmpty = true;
       break;
     //
-    case IntAna_Circle: {
+    case IntAna_Circle:
+    {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Vec            Tgt;

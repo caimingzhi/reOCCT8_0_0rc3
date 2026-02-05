@@ -1,18 +1,3 @@
-// Created on: 2014-10-08
-// Created by: Denis BOGOLEPOV
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <OpenGl_Sampler.hpp>
 
 #include <OpenGl_ArbSamplerObject.hpp>
@@ -229,20 +214,24 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
     GLint       aDegree;
     switch (theParams->AnisoFilter())
     {
-      case Graphic3d_LOTA_QUALITY: {
+      case Graphic3d_LOTA_QUALITY:
+      {
         aDegree = aMaxDegree;
         break;
       }
-      case Graphic3d_LOTA_MIDDLE: {
+      case Graphic3d_LOTA_MIDDLE:
+      {
         aDegree = (aMaxDegree <= 4) ? 2 : (aMaxDegree / 2);
         break;
       }
-      case Graphic3d_LOTA_FAST: {
+      case Graphic3d_LOTA_FAST:
+      {
         aDegree = 2;
         break;
       }
       case Graphic3d_LOTA_OFF:
-      default: {
+      default:
+      {
         aDegree = 1;
         break;
       }
@@ -283,7 +272,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
   // setup generation of texture coordinates
   switch (theParams->GenMode())
   {
-    case Graphic3d_TOTM_OBJECT: {
+    case Graphic3d_TOTM_OBJECT:
+    {
       theCtx->core11ffp->glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
       theCtx->core11ffp->glTexGenfv(GL_S, GL_OBJECT_PLANE, theParams->GenPlaneS().GetData());
       if (theTexture.GetTarget() != GL_TEXTURE_1D)
@@ -293,7 +283,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       }
       break;
     }
-    case Graphic3d_TOTM_SPHERE: {
+    case Graphic3d_TOTM_SPHERE:
+    {
       theCtx->core11ffp->glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
       if (theTexture.GetTarget() != GL_TEXTURE_1D)
       {
@@ -301,7 +292,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       }
       break;
     }
-    case Graphic3d_TOTM_EYE: {
+    case Graphic3d_TOTM_EYE:
+    {
       theCtx->WorldViewState.Push();
       theCtx->WorldViewState.SetIdentity();
       theCtx->ApplyWorldViewMatrix();
@@ -317,7 +309,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       theCtx->WorldViewState.Pop();
       break;
     }
-    case Graphic3d_TOTM_SPRITE: {
+    case Graphic3d_TOTM_SPRITE:
+    {
       if (theCtx->core20fwd != nullptr)
       {
         theCtx->core11fwd->glEnable(GL_POINT_SPRITE);
@@ -336,7 +329,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
 
   switch (theTexture.GetTarget())
   {
-    case GL_TEXTURE_1D: {
+    case GL_TEXTURE_1D:
+    {
       if (theParams->GenMode() != Graphic3d_TOTM_MANUAL)
       {
         theCtx->core11fwd->glEnable(GL_TEXTURE_GEN_S);
@@ -344,7 +338,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       theCtx->core11fwd->glEnable(GL_TEXTURE_1D);
       break;
     }
-    case GL_TEXTURE_2D: {
+    case GL_TEXTURE_2D:
+    {
       if (theParams->GenMode() != Graphic3d_TOTM_MANUAL)
       {
         theCtx->core11fwd->glEnable(GL_TEXTURE_GEN_S);
@@ -354,7 +349,8 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       break;
     }
     case GL_TEXTURE_3D:
-    default: {
+    default:
+    {
       break;
     }
   }
@@ -380,7 +376,8 @@ void OpenGl_Sampler::resetGlobalTextureParams(const occ::handle<OpenGl_Context>&
 
   switch (theTexture.GetTarget())
   {
-    case GL_TEXTURE_1D: {
+    case GL_TEXTURE_1D:
+    {
       if (theParams->GenMode() != GL_NONE)
       {
         theCtx->core11fwd->glDisable(GL_TEXTURE_GEN_S);
@@ -388,7 +385,8 @@ void OpenGl_Sampler::resetGlobalTextureParams(const occ::handle<OpenGl_Context>&
       theCtx->core11fwd->glDisable(GL_TEXTURE_1D);
       break;
     }
-    case GL_TEXTURE_2D: {
+    case GL_TEXTURE_2D:
+    {
       if (theParams->GenMode() != GL_NONE)
       {
         theCtx->core11fwd->glDisable(GL_TEXTURE_GEN_S);
@@ -402,7 +400,8 @@ void OpenGl_Sampler::resetGlobalTextureParams(const occ::handle<OpenGl_Context>&
       break;
     }
     case GL_TEXTURE_3D:
-    default: {
+    default:
+    {
       break;
     }
   }

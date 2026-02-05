@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -36,6 +35,7 @@ public:
 private:
   occ::handle<MoniTool_Timer> myTimer;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -93,5 +93,3 @@ inline void MoniTool_TimerSentry::Stop()
     myTimer->Stop();
   myTimer.Nullify();
 }
-
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <Geom2d_Curve.hpp>
 
@@ -90,4 +89,3 @@ public:
   //! For all other types of surface method returns "false".
   Standard_EXPORT static bool IsAnaSurf(const occ::handle<Adaptor3d_Surface>& theAS);
 };
-

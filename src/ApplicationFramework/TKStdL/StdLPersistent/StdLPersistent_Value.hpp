@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HString.hpp>
 
@@ -108,4 +107,3 @@ inline const char* StdObjMgt_Attribute<TDataStd_Comment>::Simple<
 {
   return "PDataStd_Comment";
 }
-

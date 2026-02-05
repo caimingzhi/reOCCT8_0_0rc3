@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -94,4 +93,3 @@ private:
   NCollection_Sequence<TCollection_AsciiString> thesignlist;
   NCollection_Sequence<int>                     thesignmode;
 };
-

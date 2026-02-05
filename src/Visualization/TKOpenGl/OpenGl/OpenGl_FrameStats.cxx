@@ -23,11 +23,11 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameStats, Graphic3d_FrameStats)
 
 namespace
 {
-//! Return estimated data size.
-static size_t estimatedDataSize(const occ::handle<OpenGl_Resource>& theRes)
-{
-  return !theRes.IsNull() ? theRes->EstimatedDataSize() : 0;
-}
+  //! Return estimated data size.
+  static size_t estimatedDataSize(const occ::handle<OpenGl_Resource>& theRes)
+  {
+    return !theRes.IsNull() ? theRes->EstimatedDataSize() : 0;
+  }
 } // namespace
 
 //=================================================================================================

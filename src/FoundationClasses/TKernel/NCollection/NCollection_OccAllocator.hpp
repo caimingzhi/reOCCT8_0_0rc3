@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <Standard.hpp>
 
@@ -184,4 +183,3 @@ bool operator==(const NCollection_OccAllocator<U>& theFirst,
 {
   return theFirst.Allocator() == theSecond.Allocator();
 }
-

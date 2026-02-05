@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -71,4 +70,3 @@ private:
                                  const double                     Tol,
                                  const bool                       Reverse);
 };
-

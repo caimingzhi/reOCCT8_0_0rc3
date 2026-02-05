@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_SStream.hpp>
 #include <Standard_DomainError.hpp>
 
@@ -13,4 +12,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(Quantity_DateDefinitionError, Standard_DomainError)
-

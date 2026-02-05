@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -51,4 +50,3 @@ private:
   gp_Dir                                                             myngf;
   gp_Dir                                                             myngfi;
 };
-

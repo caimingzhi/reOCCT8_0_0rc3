@@ -257,14 +257,16 @@ bool Interface_CheckIterator::Complies(const Interface_CheckStatus stat) const
     int                                nbf = ach->NbFails(), nbw = ach->NbWarnings();
     switch (stat)
     {
-      case Interface_CheckOK: {
+      case Interface_CheckOK:
+      {
         if (nbf + nbw > 0)
         {
           return false;
         }
         break;
       }
-      case Interface_CheckWarning: {
+      case Interface_CheckWarning:
+      {
         if (nbf > 0)
         {
           return false;
@@ -275,24 +277,28 @@ bool Interface_CheckIterator::Complies(const Interface_CheckStatus stat) const
         }
         break;
       }
-      case Interface_CheckFail: {
+      case Interface_CheckFail:
+      {
         if (nbf > 0)
         {
           return true;
         }
         break;
       }
-      case Interface_CheckAny: {
+      case Interface_CheckAny:
+      {
         return true;
       }
-      case Interface_CheckMessage: {
+      case Interface_CheckMessage:
+      {
         if (nbf + nbw > 0)
         {
           return true;
         }
         break;
       }
-      case Interface_CheckNoFail: {
+      case Interface_CheckNoFail:
+      {
         if (nbf > 0)
         {
           return false;

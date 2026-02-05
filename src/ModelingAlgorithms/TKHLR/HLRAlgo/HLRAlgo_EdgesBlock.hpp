@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -144,4 +143,3 @@ private:
   NCollection_Array1<int> myFlags;
   MinMaxIndices           myMinMax;
 };
-

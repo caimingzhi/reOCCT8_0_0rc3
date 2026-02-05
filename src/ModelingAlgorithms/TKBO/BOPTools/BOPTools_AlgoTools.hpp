@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -543,4 +542,3 @@ public: //! @name Other methods
   //! Returns true if the shell <theShell> is open
   Standard_EXPORT static bool IsOpenShell(const TopoDS_Shell& theShell);
 };
-

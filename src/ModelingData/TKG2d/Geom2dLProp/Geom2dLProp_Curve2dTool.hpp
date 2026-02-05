@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -58,4 +57,3 @@ public:
   //! FirstParameter must be less than LastParameter.
   Standard_EXPORT static double LastParameter(const occ::handle<Geom2d_Curve>& C);
 };
-

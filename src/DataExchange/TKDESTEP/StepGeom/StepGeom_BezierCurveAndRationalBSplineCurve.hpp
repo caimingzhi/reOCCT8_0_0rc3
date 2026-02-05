@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -66,4 +65,3 @@ private:
   occ::handle<StepGeom_BezierCurve>          bezierCurve;
   occ::handle<StepGeom_RationalBSplineCurve> rationalBSplineCurve;
 };
-

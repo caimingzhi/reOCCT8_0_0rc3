@@ -454,13 +454,15 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
     TopAbs_ShapeEnum shapeEnum1 = shape1.ShapeType();
     switch (shapeEnum1)
     {
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         TopoDS_Edge edge1 = TopoDS::Edge(shape1);
         ReparamCurve(edge1);
         nbEdges1 = 1;
       }
       break;
-      case TopAbs_WIRE: {
+      case TopAbs_WIRE:
+      {
         wire1    = TopoDS::Wire(shape1);
         nbEdges1 = 0;
         for (TopoDS_Iterator hulot(wire1); hulot.More(); hulot.Next())
@@ -471,7 +473,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
         }
       }
       break;
-      default: {
+      default:
+      {
         // AddFail(st, "Curve Conversion Error."); This message can not occur.
         return res;
       }
@@ -512,7 +515,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
     TopAbs_ShapeEnum shapeEnum2 = shape2.ShapeType();
     switch (shapeEnum2)
     {
-      case TopAbs_EDGE: {
+      case TopAbs_EDGE:
+      {
         TopoDS_Edge edge2 = TopoDS::Edge(shape2);
         ReparamCurve(edge2);
         if (dirflag == 1)
@@ -520,7 +524,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
         nbEdges2 = 1;
       }
       break;
-      case TopAbs_WIRE: {
+      case TopAbs_WIRE:
+      {
         wire2    = TopoDS::Wire(shape2);
         nbEdges2 = 0;
         for (TopoDS_Iterator cousto(wire2); cousto.More(); cousto.Next())
@@ -538,7 +543,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
         }
       }
       break;
-      default: {
+      default:
+      {
         // AddFail(st, "Curve Conversion Error.");
         return res;
       }
@@ -1055,11 +1061,13 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferOffsetSurface(
   TopAbs_ShapeEnum shapeEnum = igesShape.ShapeType();
   switch (shapeEnum)
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       face = TopoDS::Face(igesShape);
       break;
     }
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       TopoDS_Iterator dabovil(igesShape);
       if (dabovil.More())
       {
@@ -1070,7 +1078,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferOffsetSurface(
       /* else  AddF("... */
     }
       [[fallthrough]];
-    default: {
+    default:
+    {
       Message_Msg                           msg1156("IGES_1156");
       const char*                           typeName("basis surface");
       occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(igesSrf);
@@ -1225,12 +1234,14 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferTrimmedSurface(
     shapeEnum = myshape.ShapeType();
     switch (shapeEnum)
     {
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         face    = TopoDS::Face(myshape);
         faceres = face;
         break;
       }
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         TopoDS_Iterator IT(myshape);
         int             nbfaces = 0;
         for (; IT.More(); IT.Next())
@@ -1252,7 +1263,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferTrimmedSurface(
         }
       }
       break;
-      default: {
+      default:
+      {
         Message_Msg                           msg1156("IGES_1156");
         const char*                           typeName("basis surface");
         occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(igesSurface);
@@ -1403,11 +1415,13 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferBoundedSurface(
     shapeEnum = myshape.ShapeType();
     switch (shapeEnum)
     {
-      case TopAbs_FACE: {
+      case TopAbs_FACE:
+      {
         face = TopoDS::Face(myshape);
       }
       break;
-      case TopAbs_SHELL: {
+      case TopAbs_SHELL:
+      {
         TopoDS_Iterator IT(myshape);
         int             nbfaces = 0;
         for (; IT.More(); IT.Next())
@@ -1429,7 +1443,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferBoundedSurface(
         }
       }
       break;
-      default: {
+      default:
+      {
         Message_Msg                           msg1156("IGES_1156");
         const char*                           typeName("basis surface");
         occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(igesSrf);
@@ -1664,18 +1679,21 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferPlaneParts(const occ::handle<IGESGe
           TopAbs_ShapeEnum shapeEnum = shape.ShapeType();
           switch (shapeEnum)
           {
-            case TopAbs_EDGE: {
+            case TopAbs_EDGE:
+            {
               TopoDS_Edge                       edge = TopoDS::Edge(shape);
               occ::handle<ShapeExtend_WireData> sewd = new ShapeExtend_WireData;
               sewd->Add(edge);
               wire = sewd->Wire();
             }
             break;
-            case TopAbs_WIRE: {
+            case TopAbs_WIRE:
+            {
               wire = TopoDS::Wire(shape);
             }
             break;
-            default: {
+            default:
+            {
               Message_Msg                           msg1156("IGES_1156");
               const char*                           typeName("Bounding curve");
               occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(crv);
@@ -1768,11 +1786,13 @@ TopoDS_Shape IGESToBRep_TopoSurface::ParamSurface(const occ::handle<IGESData_IGE
   TopoDS_Face face;
   switch (shapeEnum)
   {
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       face = TopoDS::Face(basisSurface);
       break;
     }
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       TopoDS_Iterator IT(basisSurface);
       int             nbfaces = 0;
       for (; IT.More(); IT.Next())
@@ -1793,7 +1813,8 @@ TopoDS_Shape IGESToBRep_TopoSurface::ParamSurface(const occ::handle<IGESData_IGE
       }
     }
     break;
-    default: {
+    default:
+    {
       // AddFail(st, "Basis Surface Transfer Error.");
       return res;
     }

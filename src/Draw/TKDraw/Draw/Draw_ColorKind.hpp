@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum Draw_ColorKind
 {
   Draw_blanc,
@@ -19,4 +18,3 @@ enum Draw_ColorKind
   Draw_kaki,
   Draw_corail
 };
-

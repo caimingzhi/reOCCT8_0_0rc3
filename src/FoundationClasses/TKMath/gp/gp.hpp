@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -100,4 +99,3 @@ public:
   //! and its unit vector coordinates are Y = 1.0, X = 0.0
   Standard_EXPORT static const gp_Ax2d& OY2d() noexcept;
 };
-

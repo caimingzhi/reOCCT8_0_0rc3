@@ -2592,11 +2592,11 @@ void IntWalk_IWalking::ComputeCloseLine(const NCollection_Sequence<double>& Umul
 
 namespace
 {
-static const double CosRef3D = 0.98;    // rule by tests in U4
-                                        // correspond to  11.478 d
-static const double CosRef2D    = 0.88; // correspond to 25 d
-static const int    MaxDivision = 60;   // max number of step division
-                                        // because the angle is too great in 2d (U4)
+  static const double CosRef3D = 0.98;    // rule by tests in U4
+                                          // correspond to  11.478 d
+  static const double CosRef2D    = 0.88; // correspond to 25 d
+  static const int    MaxDivision = 60;   // max number of step division
+                                          // because the angle is too great in 2d (U4)
 } // namespace
 
 IntWalk_StatusDeflection IntWalk_IWalking::TestDeflection(

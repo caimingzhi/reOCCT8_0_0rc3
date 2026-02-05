@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_BufferType.hpp>
 #include <Graphic3d_PresentationAttributes.hpp>
 
@@ -219,4 +218,3 @@ public: //! @name type definition
   DEFINE_STANDARD_RTTIEXT(OpenGl_Workspace, Standard_Transient)
   DEFINE_STANDARD_ALLOC
 };
-

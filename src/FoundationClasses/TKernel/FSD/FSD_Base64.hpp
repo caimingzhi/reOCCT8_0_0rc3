@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Buffer.hpp>
 #include <TCollection_AsciiString.hpp>
 
@@ -52,4 +51,3 @@ public:
   Standard_EXPORT static occ::handle<NCollection_Buffer> Decode(const char*  theStr,
                                                                 const size_t theLen);
 };
-

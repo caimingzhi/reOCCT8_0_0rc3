@@ -1,19 +1,3 @@
-// Created on: 1998-01-07
-// Created by: Philippe MANGIN
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <Approx_CurveOnSurface.hpp>
 #include <Approx_SameParameter.hpp>
@@ -110,7 +94,8 @@ static int NumberOfPoles(const TopoDS_Wire& W)
 
     switch (c.GetType())
     {
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_BezierCurve:
+      {
         // Put all poles for bezier
         occ::handle<Geom_BezierCurve> GC     = c.Bezier();
         int                           iNbPol = GC->NbPoles();
@@ -118,7 +103,8 @@ static int NumberOfPoles(const TopoDS_Wire& W)
           NbPoints += iNbPol;
         break;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_BSplineCurve:
+      {
         // Put all poles for bspline
         occ::handle<Geom_BSplineCurve> GC     = c.BSpline();
         int                            iNbPol = GC->NbPoles();
@@ -126,14 +112,16 @@ static int NumberOfPoles(const TopoDS_Wire& W)
           NbPoints += iNbPol;
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_Line:
+      {
         NbPoints += 2;
         break;
       }
       case GeomAbs_Circle:
       case GeomAbs_Ellipse:
       case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola: {
+      case GeomAbs_Parabola:
+      {
         NbPoints += 4;
         break;
       }

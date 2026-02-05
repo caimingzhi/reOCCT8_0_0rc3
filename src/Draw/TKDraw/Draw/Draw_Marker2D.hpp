@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <gp_Pnt2d.hpp>
@@ -40,4 +39,3 @@ private:
   Draw_MarkerShape myTyp;
   int              mySiz;
 };
-

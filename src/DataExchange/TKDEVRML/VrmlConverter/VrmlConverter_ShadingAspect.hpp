@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -53,4 +52,3 @@ private:
   bool                       myHasNormals;
   bool                       myHasMaterial;
 };
-

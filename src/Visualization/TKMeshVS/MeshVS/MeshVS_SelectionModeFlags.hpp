@@ -1,6 +1,5 @@
 #pragma once
 
-
 typedef enum
 {
   MeshVS_SMF_Mesh   = 0x0000,
@@ -16,4 +15,3 @@ typedef enum
   MeshVS_SMF_Group = 0x0100
 
 } MeshVS_SelectionModeFlags;
-

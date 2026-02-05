@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Camera.hpp>
 #include <NCollection_Vec4.hpp>
 #include <Standard_TypeDef.hpp>
@@ -296,4 +295,3 @@ protected:
   double                   myCamScale;  //!< camera scale for size culling
   double                   myPixelSize; //!< pixel size for size culling
 };
-

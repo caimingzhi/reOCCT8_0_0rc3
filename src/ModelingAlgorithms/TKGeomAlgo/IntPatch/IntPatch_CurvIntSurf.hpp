@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IntPatch_CSFunction.hpp>
 
 class Adaptor3d_HSurfaceTool;
@@ -85,4 +84,3 @@ private:
   double              v;
   double              tol;
 };
-

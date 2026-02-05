@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -54,4 +53,3 @@ private:
   occ::handle<StepBasic_MeasureWithUnit>                     myMeasure;
   occ::handle<NCollection_HArray1<StepShape_ValueQualifier>> theQualifiers;
 };
-

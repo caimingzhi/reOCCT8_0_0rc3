@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <GeomFill_PipeError.hpp>
@@ -148,4 +147,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(GeomFill_LocationLaw, Standard_Transient)
 };
-

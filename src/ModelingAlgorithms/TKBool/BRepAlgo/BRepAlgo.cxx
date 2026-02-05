@@ -1,19 +1,3 @@
-// Created on: 1997-03-10
-// Created by: Stagiaire Francois DUMONT
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
 #include <BRepBuilderAPI_MakeEdge.hpp>
@@ -58,18 +42,18 @@ static const double MINIMAL_TOLERANCE = 0.0001;
 namespace
 {
 
-struct OrientedCurve
-{
-  occ::handle<Geom2d_TrimmedCurve> Curve;
-  bool                             IsReverse;
-
-  inline gp_Pnt2d Point(const bool isEnd) const
+  struct OrientedCurve
   {
-    if (isEnd == IsReverse)
-      return Curve->StartPoint();
-    return Curve->EndPoint();
-  }
-};
+    occ::handle<Geom2d_TrimmedCurve> Curve;
+    bool                             IsReverse;
+
+    inline gp_Pnt2d Point(const bool isEnd) const
+    {
+      if (isEnd == IsReverse)
+        return Curve->StartPoint();
+      return Curve->EndPoint();
+    }
+  };
 
 } // namespace
 
@@ -449,7 +433,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
       {
         switch (aType)
         {
-          case GeomAbs_Line: {
+          case GeomAbs_Line:
+          {
             gp_Lin aLine    = aGACurve.Line();
             gp_Lin PrevLine = GAprevcurve.Line();
 
@@ -465,7 +450,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Circle: {
+          case GeomAbs_Circle:
+          {
             gp_Circ aCircle    = aGACurve.Circle();
             gp_Circ PrevCircle = GAprevcurve.Circle();
 
@@ -482,7 +468,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Ellipse: {
+          case GeomAbs_Ellipse:
+          {
             gp_Elips anEllipse   = aGACurve.Ellipse();
             gp_Elips PrevEllipse = GAprevcurve.Ellipse();
 
@@ -501,7 +488,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Hyperbola: {
+          case GeomAbs_Hyperbola:
+          {
             gp_Hypr aHypr    = aGACurve.Hyperbola();
             gp_Hypr PrevHypr = GAprevcurve.Hyperbola();
 
@@ -520,7 +508,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Parabola: {
+          case GeomAbs_Parabola:
+          {
             gp_Parab aParab    = aGACurve.Parabola();
             gp_Parab PrevParab = GAprevcurve.Parabola();
 

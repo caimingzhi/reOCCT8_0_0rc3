@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -61,4 +60,3 @@ public:
   Standard_EXPORT occ::handle<NCollection_HArray1<double>>
                   FeaColumnNormalisedMonoclinicSymmetricTensor43d() const;
 };
-

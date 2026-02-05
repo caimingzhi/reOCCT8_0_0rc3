@@ -1,9 +1,9 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
+
 // Copyright (c) 2022 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -17,13 +17,11 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 enum StepToTopoDS_TranslateSolidError
 {
   StepToTopoDS_TranslateSolidDone,
   StepToTopoDS_TranslateSolidOther
 };
-
 
 #include <TopoDS_Shape.hpp>
 #include <StepToTopoDS_Root.hpp>
@@ -59,4 +57,3 @@ private:
   StepToTopoDS_TranslateSolidError myError;
   TopoDS_Shape                     myResult;
 };
-

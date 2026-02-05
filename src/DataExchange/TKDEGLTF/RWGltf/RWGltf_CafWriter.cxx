@@ -55,116 +55,120 @@ IMPLEMENT_STANDARD_RTTIEXT(RWGltf_CafWriter, Standard_Transient)
 
 namespace
 {
-//! Write three float values.
-static void writeVec3(std::ostream& theStream, const gp_XYZ& theVec3)
-{
-  NCollection_Vec3<float> aVec3(float(theVec3.X()), float(theVec3.Y()), float(theVec3.Z()));
-  theStream.write((const char*)aVec3.GetData(), sizeof(aVec3));
-}
+  //! Write three float values.
+  static void writeVec3(std::ostream& theStream, const gp_XYZ& theVec3)
+  {
+    NCollection_Vec3<float> aVec3(float(theVec3.X()), float(theVec3.Y()), float(theVec3.Z()));
+    theStream.write((const char*)aVec3.GetData(), sizeof(aVec3));
+  }
 
-//! Write three float values.
-static void writeVec3(std::ostream& theStream, const NCollection_Vec3<float>& theVec3)
-{
-  theStream.write((const char*)theVec3.GetData(), sizeof(theVec3));
-}
+  //! Write three float values.
+  static void writeVec3(std::ostream& theStream, const NCollection_Vec3<float>& theVec3)
+  {
+    theStream.write((const char*)theVec3.GetData(), sizeof(theVec3));
+  }
 
-//! Write two float values.
-static void writeVec2(std::ostream& theStream, const gp_XY& theVec2)
-{
-  NCollection_Vec2<float> aVec2(float(theVec2.X()), float(theVec2.Y()));
-  theStream.write((const char*)aVec2.GetData(), sizeof(aVec2));
-}
+  //! Write two float values.
+  static void writeVec2(std::ostream& theStream, const gp_XY& theVec2)
+  {
+    NCollection_Vec2<float> aVec2(float(theVec2.X()), float(theVec2.Y()));
+    theStream.write((const char*)aVec2.GetData(), sizeof(aVec2));
+  }
 
-//! General function to write triangle indices.
-template <typename VecType>
-static void writeTriangle(std::ostream& theStream, const VecType& theTri)
-{
-  theStream.write(reinterpret_cast<const char*>(theTri.GetData()), sizeof(theTri));
-}
+  //! General function to write triangle indices.
+  template <typename VecType>
+  static void writeTriangle(std::ostream& theStream, const VecType& theTri)
+  {
+    theStream.write(reinterpret_cast<const char*>(theTri.GetData()), sizeof(theTri));
+  }
 
-//! General function to write vertex index.
-template <typename T>
-static void writeVertex(std::ostream& theStream, const T& theVertex)
-{
-  theStream.write(reinterpret_cast<const char*>(&theVertex), sizeof(T));
-}
+  //! General function to write vertex index.
+  template <typename T>
+  static void writeVertex(std::ostream& theStream, const T& theVertex)
+  {
+    theStream.write(reinterpret_cast<const char*>(&theVertex), sizeof(T));
+  }
 
 #ifdef HAVE_DRACO
-//! Write nodes to Draco mesh
-static void writeNodesToDracoMesh(draco::Mesh&                                theMesh,
-                                  const std::vector<NCollection_Vec3<float>>& theNodes)
-{
-  if (theNodes.empty())
+  //! Write nodes to Draco mesh
+  static void writeNodesToDracoMesh(draco::Mesh&                                theMesh,
+                                    const std::vector<NCollection_Vec3<float>>& theNodes)
   {
-    return;
+    if (theNodes.empty())
+    {
+      return;
+    }
+
+    draco::PointAttribute anAttr;
+    anAttr.Init(draco::GeometryAttribute::POSITION, 3, draco::DT_FLOAT32, false, sizeof(float) * 3);
+    const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theNodes.size()));
+    draco::PointAttribute* aPtr = theMesh.attribute(anId);
+    draco::PointIndex      anIndex(0);
+    for (size_t aNodeInd = 0; aNodeInd < theNodes.size(); ++aNodeInd, ++anIndex)
+    {
+      aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theNodes[aNodeInd].GetData());
+    }
   }
 
-  draco::PointAttribute anAttr;
-  anAttr.Init(draco::GeometryAttribute::POSITION, 3, draco::DT_FLOAT32, false, sizeof(float) * 3);
-  const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theNodes.size()));
-  draco::PointAttribute* aPtr = theMesh.attribute(anId);
-  draco::PointIndex      anIndex(0);
-  for (size_t aNodeInd = 0; aNodeInd < theNodes.size(); ++aNodeInd, ++anIndex)
+  //! Write normals to Draco mesh
+  static void writeNormalsToDracoMesh(draco::Mesh&                                theMesh,
+                                      const std::vector<NCollection_Vec3<float>>& theNormals)
   {
-    aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theNodes[aNodeInd].GetData());
-  }
-}
+    if (theNormals.empty())
+    {
+      return;
+    }
 
-//! Write normals to Draco mesh
-static void writeNormalsToDracoMesh(draco::Mesh&                                theMesh,
-                                    const std::vector<NCollection_Vec3<float>>& theNormals)
-{
-  if (theNormals.empty())
-  {
-    return;
-  }
-
-  draco::PointAttribute anAttr;
-  anAttr.Init(draco::GeometryAttribute::NORMAL, 3, draco::DT_FLOAT32, false, sizeof(float) * 3);
-  const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theNormals.size()));
-  draco::PointAttribute* aPtr = theMesh.attribute(anId);
-  draco::PointIndex      anIndex(0);
-  for (size_t aNormInd = 0; aNormInd < theNormals.size(); ++aNormInd, ++anIndex)
-  {
-    aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theNormals[aNormInd].GetData());
-  }
-}
-
-//! Write texture UV coordinates to Draco mesh
-static void writeTexCoordsToDracoMesh(draco::Mesh&                                theMesh,
-                                      const std::vector<NCollection_Vec2<float>>& theTexCoord)
-{
-  if (theTexCoord.empty())
-  {
-    return;
+    draco::PointAttribute anAttr;
+    anAttr.Init(draco::GeometryAttribute::NORMAL, 3, draco::DT_FLOAT32, false, sizeof(float) * 3);
+    const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theNormals.size()));
+    draco::PointAttribute* aPtr = theMesh.attribute(anId);
+    draco::PointIndex      anIndex(0);
+    for (size_t aNormInd = 0; aNormInd < theNormals.size(); ++aNormInd, ++anIndex)
+    {
+      aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theNormals[aNormInd].GetData());
+    }
   }
 
-  draco::PointAttribute anAttr;
-  anAttr.Init(draco::GeometryAttribute::TEX_COORD, 2, draco::DT_FLOAT32, false, sizeof(float) * 2);
-  const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theTexCoord.size()));
-  draco::PointAttribute* aPtr = theMesh.attribute(anId);
-  draco::PointIndex      anIndex(0);
-  for (size_t aTexInd = 0; aTexInd < theTexCoord.size(); ++aTexInd, ++anIndex)
+  //! Write texture UV coordinates to Draco mesh
+  static void writeTexCoordsToDracoMesh(draco::Mesh&                                theMesh,
+                                        const std::vector<NCollection_Vec2<float>>& theTexCoord)
   {
-    aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theTexCoord[aTexInd].GetData());
-  }
-}
+    if (theTexCoord.empty())
+    {
+      return;
+    }
 
-//! Write indices to Draco mesh
-static void writeIndicesToDracoMesh(draco::Mesh&                      theMesh,
-                                    const std::vector<Poly_Triangle>& theIndices)
-{
-  draco::Mesh::Face aFace;
-  int               anIndex = 0;
-  for (size_t anInd = 0; anInd < theIndices.size(); ++anInd, ++anIndex)
-  {
-    const Poly_Triangle& anElem = theIndices[anInd];
-    aFace[0]                    = anElem.Value(1);
-    aFace[1]                    = anElem.Value(2);
-    aFace[2]                    = anElem.Value(3);
-    theMesh.SetFace(draco::FaceIndex(anIndex), aFace);
+    draco::PointAttribute anAttr;
+    anAttr.Init(draco::GeometryAttribute::TEX_COORD,
+                2,
+                draco::DT_FLOAT32,
+                false,
+                sizeof(float) * 2);
+    const int              anId = theMesh.AddAttribute(anAttr, true, uint32_t(theTexCoord.size()));
+    draco::PointAttribute* aPtr = theMesh.attribute(anId);
+    draco::PointIndex      anIndex(0);
+    for (size_t aTexInd = 0; aTexInd < theTexCoord.size(); ++aTexInd, ++anIndex)
+    {
+      aPtr->SetAttributeValue(aPtr->mapped_index(anIndex), theTexCoord[aTexInd].GetData());
+    }
   }
-}
+
+  //! Write indices to Draco mesh
+  static void writeIndicesToDracoMesh(draco::Mesh&                      theMesh,
+                                      const std::vector<Poly_Triangle>& theIndices)
+  {
+    draco::Mesh::Face aFace;
+    int               anIndex = 0;
+    for (size_t anInd = 0; anInd < theIndices.size(); ++anInd, ++anIndex)
+    {
+      const Poly_Triangle& anElem = theIndices[anInd];
+      aFace[0]                    = anElem.Value(1);
+      aFace[1]                    = anElem.Value(2);
+      aFace[2]                    = anElem.Value(3);
+      theMesh.SetFace(draco::FaceIndex(anIndex), aFace);
+    }
+  }
 #endif
 } // namespace
 
@@ -759,14 +763,16 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
   {
     switch (theArrType)
     {
-      case RWGltf_GltfArrayType_Position: {
+      case RWGltf_GltfArrayType_Position:
+      {
         // clang-format off
         theGltfFace.NbIndexedNodes = 0; // reset to zero before RWGltf_GltfArrayType_Indices step
         // clang-format on
         saveNodes(theGltfFace, theBinFile, theShapeIter, theAccessorNb, theMesh);
         break;
       }
-      case RWGltf_GltfArrayType_Normal: {
+      case RWGltf_GltfArrayType_Normal:
+      {
         if (const RWMesh_FaceIterator* aFaceIter =
               dynamic_cast<const RWMesh_FaceIterator*>(&theShapeIter))
         {
@@ -774,7 +780,8 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
         }
         break;
       }
-      case RWGltf_GltfArrayType_TCoord0: {
+      case RWGltf_GltfArrayType_TCoord0:
+      {
         if (const RWMesh_FaceIterator* aFaceIter =
               dynamic_cast<const RWMesh_FaceIterator*>(&theShapeIter))
         {
@@ -782,11 +789,13 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
         }
         break;
       }
-      case RWGltf_GltfArrayType_Indices: {
+      case RWGltf_GltfArrayType_Indices:
+      {
         saveIndices(theGltfFace, theBinFile, theShapeIter, theAccessorNb, theMesh);
         break;
       }
-      default: {
+      default:
+      {
         break;
       }
     }
@@ -969,23 +978,28 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
         {
           switch (anArrType)
           {
-            case RWGltf_GltfArrayType_Position: {
+            case RWGltf_GltfArrayType_Position:
+            {
               aGltfFace->NodePos = anOldGltfFace->NodePos;
               break;
             }
-            case RWGltf_GltfArrayType_Normal: {
+            case RWGltf_GltfArrayType_Normal:
+            {
               aGltfFace->NodeNorm = anOldGltfFace->NodeNorm;
               break;
             }
-            case RWGltf_GltfArrayType_TCoord0: {
+            case RWGltf_GltfArrayType_TCoord0:
+            {
               aGltfFace->NodeUV = anOldGltfFace->NodeUV;
               break;
             }
-            case RWGltf_GltfArrayType_Indices: {
+            case RWGltf_GltfArrayType_Indices:
+            {
               aGltfFace->Indices = anOldGltfFace->Indices;
               break;
             }
-            default: {
+            default:
+            {
               break;
             }
           }
@@ -998,7 +1012,8 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
 
         switch (shapeType)
         {
-          case TopAbs_EDGE: {
+          case TopAbs_EDGE:
+          {
             RWMesh_EdgeIterator anIter(aGltfFace->Shape, aGltfFace->Style);
             if (!writeShapesToBin(*aGltfFace,
                                   *aBinFile,
@@ -1013,7 +1028,8 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
             wasWrittenNonFace = true;
             break;
           }
-          case TopAbs_VERTEX: {
+          case TopAbs_VERTEX:
+          {
             RWMesh_VertexIterator anIter(aGltfFace->Shape, aGltfFace->Style);
             if (!writeShapesToBin(*aGltfFace,
                                   *aBinFile,
@@ -1028,7 +1044,8 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
             wasWrittenNonFace = true;
             break;
           }
-          default: {
+          default:
+          {
             RWMesh_FaceIterator anIter(aGltfFace->Shape, aGltfFace->Style);
             if (!writeShapesToBin(*aGltfFace,
                                   *aBinFile,
@@ -1259,7 +1276,8 @@ bool RWGltf_CafWriter::writeJson(
     bool hasShapeData = false;
     if (!aDocNode.IsAssembly)
     {
-      auto checkShapeData = [&](RWMesh_ShapeIterator& anIter) {
+      auto checkShapeData = [&](RWMesh_ShapeIterator& anIter)
+      {
         for (; anIter.More(); anIter.Next())
         {
           if (!toSkipShape(anIter))
@@ -1462,7 +1480,8 @@ void RWGltf_CafWriter::writeAccessors(const RWGltf_GltfSceneNodeMap&)
         const occ::handle<RWGltf_GltfFace>& aGltfFace = aFaceIter.Value();
         switch (anArrType)
         {
-          case RWGltf_GltfArrayType_Position: {
+          case RWGltf_GltfArrayType_Position:
+          {
             const int anAccessorId = aGltfFace->NodePos.Id;
             if (anAccessorId == RWGltf_GltfAccessor::INVALID_ID || !aWrittenIds.Add(anAccessorId))
             {
@@ -1477,7 +1496,8 @@ void RWGltf_CafWriter::writeAccessors(const RWGltf_GltfSceneNodeMap&)
             writePositions(*aGltfFace);
             break;
           }
-          case RWGltf_GltfArrayType_Normal: {
+          case RWGltf_GltfArrayType_Normal:
+          {
             const int anAccessorId = aGltfFace->NodeNorm.Id;
             if (anAccessorId == RWGltf_GltfAccessor::INVALID_ID || !aWrittenIds.Add(anAccessorId))
             {
@@ -1492,7 +1512,8 @@ void RWGltf_CafWriter::writeAccessors(const RWGltf_GltfSceneNodeMap&)
             writeNormals(*aGltfFace);
             break;
           }
-          case RWGltf_GltfArrayType_TCoord0: {
+          case RWGltf_GltfArrayType_TCoord0:
+          {
             const int anAccessorId = aGltfFace->NodeUV.Id;
             if (anAccessorId == RWGltf_GltfAccessor::INVALID_ID || !aWrittenIds.Add(anAccessorId))
             {
@@ -1507,7 +1528,8 @@ void RWGltf_CafWriter::writeAccessors(const RWGltf_GltfSceneNodeMap&)
             writeTextCoords(*aGltfFace);
             break;
           }
-          case RWGltf_GltfArrayType_Indices: {
+          case RWGltf_GltfArrayType_Indices:
+          {
             const int anAccessorId = aGltfFace->Indices.Id;
             if (anAccessorId == RWGltf_GltfAccessor::INVALID_ID || !aWrittenIds.Add(anAccessorId))
             {
@@ -1522,7 +1544,8 @@ void RWGltf_CafWriter::writeAccessors(const RWGltf_GltfSceneNodeMap&)
             writeIndices(*aGltfFace);
             break;
           }
-          default: {
+          default:
+          {
             break;
           }
         }

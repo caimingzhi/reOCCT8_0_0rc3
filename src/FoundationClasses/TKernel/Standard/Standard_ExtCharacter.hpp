@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_TypeDef.hpp>
 
 // ===============
@@ -40,4 +39,3 @@ inline bool IsEqual(const char16_t One, const char16_t Two)
 {
   return One == Two;
 }
-

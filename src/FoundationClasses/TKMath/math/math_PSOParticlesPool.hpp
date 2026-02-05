@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Array1.hpp>
 
 //! Describes particle pool for using in PSO algorithm.
@@ -48,4 +47,3 @@ private:
   int                              myParticlesCount;
   int                              myDimensionCount;
 };
-

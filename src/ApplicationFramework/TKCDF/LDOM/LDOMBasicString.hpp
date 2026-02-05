@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_ExtendedString.hpp>
@@ -113,11 +112,11 @@ protected:
 
   StringType myType;
 
-  union {
+  union
+  {
     int   i;
     void* ptr;
   } myVal;
 
   friend char* db_pretty_print(const LDOMBasicString*, int, char*);
 };
-

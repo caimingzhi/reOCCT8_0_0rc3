@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Quantity_Color.hpp>
 
 struct MeshVS_TwoColors
@@ -23,32 +22,31 @@ struct MeshVS_TwoColors
 
 namespace std
 {
-template <>
-struct hash<MeshVS_TwoColors>
-{
-  size_t operator()(const MeshVS_TwoColors& TwoColors) const noexcept
+  template <>
+  struct hash<MeshVS_TwoColors>
   {
-    unsigned int aHash = 0;
-    meshprsHashByte(aHash, TwoColors.r1);
-    meshprsHashByte(aHash, TwoColors.g1);
-    meshprsHashByte(aHash, TwoColors.b1);
-    meshprsHashByte(aHash, TwoColors.r2);
-    meshprsHashByte(aHash, TwoColors.g2);
-    meshprsHashByte(aHash, TwoColors.b2);
-    return std::hash<unsigned int>{}(aHash);
-  }
+    size_t operator()(const MeshVS_TwoColors& TwoColors) const noexcept
+    {
+      unsigned int aHash = 0;
+      meshprsHashByte(aHash, TwoColors.r1);
+      meshprsHashByte(aHash, TwoColors.g1);
+      meshprsHashByte(aHash, TwoColors.b1);
+      meshprsHashByte(aHash, TwoColors.r2);
+      meshprsHashByte(aHash, TwoColors.g2);
+      meshprsHashByte(aHash, TwoColors.b2);
+      return std::hash<unsigned int>{}(aHash);
+    }
 
-private:
-  void meshprsHashByte(unsigned int& theHash, const unsigned int theValues) const noexcept
-  {
-    theHash += (theValues);
-    theHash += (theHash << 10);
-    theHash ^= (theHash >> 6);
-  }
-};
+  private:
+    void meshprsHashByte(unsigned int& theHash, const unsigned int theValues) const noexcept
+    {
+      theHash += (theValues);
+      theHash += (theHash << 10);
+      theHash ^= (theHash >> 6);
+    }
+  };
 } // namespace std
 
 Standard_EXPORT MeshVS_TwoColors BindTwoColors(const Quantity_Color&, const Quantity_Color&);
 Standard_EXPORT Quantity_Color   ExtractColor(MeshVS_TwoColors&, const int);
 Standard_EXPORT void             ExtractColors(MeshVS_TwoColors&, Quantity_Color&, Quantity_Color&);
-

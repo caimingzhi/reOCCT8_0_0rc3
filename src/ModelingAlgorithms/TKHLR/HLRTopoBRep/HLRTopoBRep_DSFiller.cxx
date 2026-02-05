@@ -1,19 +1,3 @@
-// Created on: 1993-08-10
-// Created by: Christophe MARION
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AppDef_BSplineCompute.hpp>
 #include <AppDef_MultiLine.hpp>
 #include <AppParCurves_MultiBSpCurve.hpp>
@@ -200,7 +184,8 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
             switch (Line.TypeContour())
             {
 
-              case Contap_Lin: {
+              case Contap_Lin:
+              {
                 C = new Geom_Line(Line.Line());
                 if (withPCurve)
                 {
@@ -211,7 +196,8 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Circle: {
+              case Contap_Circle:
+              {
                 C = new Geom_Circle(Line.Circle());
                 if (withPCurve)
                 {
@@ -227,7 +213,8 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Walking: {
+              case Contap_Walking:
+              {
                 // copy the points
                 int ipF = int(parF);
                 int ipL = int(parL);
@@ -466,7 +453,8 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Restriction: {
+              case Contap_Restriction:
+              {
                 throw Standard_ProgramError("HLRTopoBRep_DSFiller::InsertFace : Restriction");
               }
               break;

@@ -1,19 +1,3 @@
-// Created on: 1998-08-27
-// Created by: Robert COUBLANC
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ViewerTest_EventManager.hpp>
 
 #include <AIS_AnimationCamera.hpp>
@@ -426,7 +410,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_F: {
+    case Aspect_VKey_F:
+    {
       if (myCtx->NbSelected() > 0)
       {
         myCtx->FitSelected(myView);
@@ -482,7 +467,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       break;
     }
     case (unsigned int)Aspect_VKey_S | (unsigned int)Aspect_VKeyFlags_CTRL:
-    case (unsigned int)Aspect_VKey_W | (unsigned int)Aspect_VKeyFlags_CTRL: {
+    case (unsigned int)Aspect_VKey_W | (unsigned int)Aspect_VKeyFlags_CTRL:
+    {
       int aDispMode = AIS_Shaded;
       if (theKey == ((unsigned int)Aspect_VKey_S | (unsigned int)Aspect_VKeyFlags_CTRL))
       {
@@ -526,44 +512,51 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_T: {
+    case Aspect_VKey_T:
+    {
       if (!ViewerTest_V3dView::IsCurrentViewIn2DMode())
       {
         myView->SetProj(V3d_TypeOfOrientation_Zup_Top);
       }
       break;
     }
-    case Aspect_VKey_B: {
+    case Aspect_VKey_B:
+    {
       if (!ViewerTest_V3dView::IsCurrentViewIn2DMode())
       {
         myView->SetProj(V3d_TypeOfOrientation_Zup_Bottom);
       }
       break;
     }
-    case Aspect_VKey_L: {
+    case Aspect_VKey_L:
+    {
       if (!ViewerTest_V3dView::IsCurrentViewIn2DMode())
       {
         myView->SetProj(V3d_TypeOfOrientation_Zup_Left);
       }
       break;
     }
-    case Aspect_VKey_R: {
+    case Aspect_VKey_R:
+    {
       if (!ViewerTest_V3dView::IsCurrentViewIn2DMode())
       {
         myView->SetProj(V3d_TypeOfOrientation_Zup_Right);
       }
       break;
     }
-    case Aspect_VKey_Comma: {
+    case Aspect_VKey_Comma:
+    {
       myCtx->HilightNextDetected(myView);
       break;
     }
-    case Aspect_VKey_Period: {
+    case Aspect_VKey_Period:
+    {
       myCtx->HilightPreviousDetected(myView);
       break;
     }
     case Aspect_VKey_Slash:
-    case Aspect_VKey_NumpadDivide: {
+    case Aspect_VKey_NumpadDivide:
+    {
       occ::handle<Graphic3d_Camera> aCamera = myView->Camera();
       if (aCamera->IsStereo())
       {
@@ -572,7 +565,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_NumpadMultiply: {
+    case Aspect_VKey_NumpadMultiply:
+    {
       occ::handle<Graphic3d_Camera> aCamera = myView->Camera();
       if (aCamera->IsStereo())
       {
@@ -581,14 +575,16 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_Delete: {
+    case Aspect_VKey_Delete:
+    {
       if (!myCtx.IsNull() && myCtx->NbSelected() > 0)
       {
         Draw_Interprete("verase");
       }
       break;
     }
-    case Aspect_VKey_Escape: {
+    case Aspect_VKey_Escape:
+    {
       if (!myCtx.IsNull() && ViewerTest_EventManager::ToCloseViewOnEscape())
       {
         Draw_Interprete(ViewerTest_EventManager::ToExitOnCloseView() ? "exit" : "vclose");
@@ -596,7 +592,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       break;
     }
     case Aspect_VKey_NavSpeedDecrease:
-    case Aspect_VKey_NavSpeedIncrease: {
+    case Aspect_VKey_NavSpeedIncrease:
+    {
       // handle slide speed
       float aNewSpeed = theKey == Aspect_VKey_NavSpeedDecrease ? myWalkSpeedRelative * 0.5f
                                                                : myWalkSpeedRelative * 2.0f;

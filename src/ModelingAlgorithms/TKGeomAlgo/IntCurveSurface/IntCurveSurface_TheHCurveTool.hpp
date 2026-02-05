@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <GeomAbs_CurveType.hpp>
 #include <GeomAbs_Shape.hpp>
@@ -158,4 +157,3 @@ public:
                                          const int                                 NbMin,
                                          occ::handle<NCollection_HArray1<double>>& Pars);
 };
-

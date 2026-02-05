@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <BRepCheck_Status.hpp>
 #include <NCollection_List.hpp>
@@ -35,4 +34,3 @@ public:
   //! Returns the resolution on the surface
   Standard_EXPORT static double PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf);
 };
-

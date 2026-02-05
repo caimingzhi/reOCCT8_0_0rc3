@@ -22,12 +22,12 @@
 
 namespace
 {
-constexpr int TheUDegree  = 2;
-constexpr int TheVDegree  = 2;
-constexpr int MaxNbUKnots = 4;
-constexpr int MaxNbVKnots = 4;
-constexpr int MaxNbUPoles = 7;
-constexpr int MaxNbVPoles = 7;
+  constexpr int TheUDegree  = 2;
+  constexpr int TheVDegree  = 2;
+  constexpr int MaxNbUKnots = 4;
+  constexpr int MaxNbVKnots = 4;
+  constexpr int MaxNbUPoles = 7;
+  constexpr int MaxNbVPoles = 7;
 } // namespace
 
 static void ComputePoles(const double                R,

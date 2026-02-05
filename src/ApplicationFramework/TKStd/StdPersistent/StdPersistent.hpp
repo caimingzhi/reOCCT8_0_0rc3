@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 class StdObjMgt_MapOfInstantiators;
 
@@ -10,4 +9,3 @@ public:
   //! Register types.
   Standard_EXPORT static void BindTypes(StdObjMgt_MapOfInstantiators& theMap);
 };
-

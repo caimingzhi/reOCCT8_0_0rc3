@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapePersistent_Geom.hpp>
 
 #include <Geom2d_CartesianPoint.hpp>
@@ -138,4 +137,3 @@ inline const char* ShapePersistent_Geom::geometryBase<Geom2d_Curve>::PName() con
 {
   return "PGeom2d_Curve";
 }
-

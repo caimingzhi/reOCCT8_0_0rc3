@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Transient.hpp>
 #include <Standard_Macro.hpp>
 #include <Standard_Handle.hpp>
@@ -71,4 +70,3 @@ private:
   occ::handle<StdStorage_TypeData>   myTypeData;
   occ::handle<StdStorage_RootData>   myRootData;
 };
-

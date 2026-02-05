@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseMap.hpp>
 #include <NCollection_TListNode.hpp>
 #include <NCollection_StlIterator.hpp>
@@ -485,4 +484,3 @@ protected:
 protected:
   Hasher myHasher;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -46,4 +45,3 @@ private:
   double             angle;
   ChFiDS_ChamfMethod mChamf;
 };
-

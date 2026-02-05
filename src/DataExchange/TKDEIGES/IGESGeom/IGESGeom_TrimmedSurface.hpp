@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -72,4 +71,3 @@ private:
   occ::handle<IGESGeom_CurveOnSurface>                                   theOuterCurve;
   occ::handle<NCollection_HArray1<occ::handle<IGESGeom_CurveOnSurface>>> theInnerCurves;
 };
-

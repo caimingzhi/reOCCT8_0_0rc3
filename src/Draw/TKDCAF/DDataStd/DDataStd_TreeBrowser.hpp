@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -51,4 +50,3 @@ private:
 
   TDF_Label myRoot;
 };
-

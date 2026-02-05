@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Draw_Color.hpp>
@@ -34,4 +33,3 @@ protected:
   double     myValue;
   Draw_Color myTextColor;
 };
-

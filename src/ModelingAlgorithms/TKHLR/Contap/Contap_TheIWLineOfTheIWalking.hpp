@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -300,4 +299,3 @@ inline bool Contap_TheIWLineOfTheIWalking::IsTangentAtEnd() const
 {
   return istgtend;
 }
-

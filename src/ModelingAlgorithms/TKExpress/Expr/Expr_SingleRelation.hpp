@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -52,4 +51,3 @@ private:
   occ::handle<Expr_GeneralExpression> myFirstMember;
   occ::handle<Expr_GeneralExpression> mySecondMember;
 };
-

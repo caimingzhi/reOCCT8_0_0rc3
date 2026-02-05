@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <math_Matrix.hpp>
 #include <math_Vector.hpp>
@@ -41,4 +40,3 @@ private:
   const Adaptor3d_Curve*   myC;
   const Adaptor3d_Surface* myS;
 };
-

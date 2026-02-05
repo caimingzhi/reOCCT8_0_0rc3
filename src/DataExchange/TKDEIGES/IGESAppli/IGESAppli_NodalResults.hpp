@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -87,4 +86,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<IGESAppli_Node>>> theNodes;
   occ::handle<NCollection_HArray2<double>>                      theData;
 };
-

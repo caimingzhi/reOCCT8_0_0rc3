@@ -77,7 +77,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -85,7 +86,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -93,7 +95,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         return;
@@ -101,7 +104,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         return;
@@ -109,7 +113,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -117,7 +122,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         return;
@@ -125,7 +131,8 @@ void IGESDefs_ReadWriteModule::ReadOwnParams(const int                          
       tool.ReadOwnParams(anent, IR, PR);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         return;
@@ -144,7 +151,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESDefs_AssociativityDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -152,7 +160,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESDefs_AttributeDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -160,7 +169,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESDefs_AttributeTable, anent, ent);
       if (anent.IsNull())
         return;
@@ -168,7 +178,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESDefs_GenericData, anent, ent);
       if (anent.IsNull())
         return;
@@ -176,7 +187,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESDefs_MacroDef, anent, ent);
       if (anent.IsNull())
         return;
@@ -184,7 +196,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESDefs_TabularData, anent, ent);
       if (anent.IsNull())
         return;
@@ -192,7 +205,8 @@ void IGESDefs_ReadWriteModule::WriteOwnParams(const int                         
       tool.WriteOwnParams(anent, IW);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESDefs_UnitsData, anent, ent);
       if (anent.IsNull())
         return;

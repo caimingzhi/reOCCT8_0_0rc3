@@ -1,18 +1,3 @@
-// Created on: 2011-10-20
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #if defined(_WIN32)
   #include <windows.h> // for UWP
 #endif
@@ -74,102 +59,103 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_GraphicDriver, Graphic3d_GraphicDriver)
 
 namespace
 {
-static const occ::handle<OpenGl_Context> TheNullGlCtx;
+  static const occ::handle<OpenGl_Context> TheNullGlCtx;
 
 #if defined(HAVE_EGL)
-//! Wrapper over eglChooseConfig() called with preferred defaults.
-static EGLConfig chooseEglSurfConfig(EGLDisplay theDisplay, const occ::handle<OpenGl_Caps>& theCaps)
-{
-  EGLConfig aCfg       = NULL;
-  EGLint    aNbConfigs = 0;
-  for (int aGlesVer = 3; aGlesVer >= 2; --aGlesVer)
+  //! Wrapper over eglChooseConfig() called with preferred defaults.
+  static EGLConfig chooseEglSurfConfig(EGLDisplay                      theDisplay,
+                                       const occ::handle<OpenGl_Caps>& theCaps)
   {
-    bool   isDeepColor      = theCaps->buffersDeepColor;
-    EGLint aConfigAttribs[] = {EGL_RED_SIZE,
-                               isDeepColor ? 10 : 8,
-                               EGL_GREEN_SIZE,
-                               isDeepColor ? 10 : 8,
-                               EGL_BLUE_SIZE,
-                               isDeepColor ? 10 : 8,
-                               EGL_ALPHA_SIZE,
-                               0,
-                               EGL_DEPTH_SIZE,
-                               24,
-                               EGL_STENCIL_SIZE,
-                               8,
+    EGLConfig aCfg       = NULL;
+    EGLint    aNbConfigs = 0;
+    for (int aGlesVer = 3; aGlesVer >= 2; --aGlesVer)
+    {
+      bool   isDeepColor      = theCaps->buffersDeepColor;
+      EGLint aConfigAttribs[] = {EGL_RED_SIZE,
+                                 isDeepColor ? 10 : 8,
+                                 EGL_GREEN_SIZE,
+                                 isDeepColor ? 10 : 8,
+                                 EGL_BLUE_SIZE,
+                                 isDeepColor ? 10 : 8,
+                                 EGL_ALPHA_SIZE,
+                                 0,
+                                 EGL_DEPTH_SIZE,
+                                 24,
+                                 EGL_STENCIL_SIZE,
+                                 8,
   #if defined(OpenGl_USE_GLES2)
-                               EGL_RENDERABLE_TYPE,
-                               EGL_OPENGL_ES2_BIT,
+                                 EGL_RENDERABLE_TYPE,
+                                 EGL_OPENGL_ES2_BIT,
   #else
-                               EGL_RENDERABLE_TYPE,
-                               EGL_OPENGL_BIT,
+                                 EGL_RENDERABLE_TYPE,
+                                 EGL_OPENGL_BIT,
   #endif
-                               EGL_NONE};
+                                 EGL_NONE};
 
   #if defined(OpenGl_USE_GLES2)
-    aConfigAttribs[6 * 2 + 1] = aGlesVer == 3 ? EGL_OPENGL_ES3_BIT : EGL_OPENGL_ES2_BIT;
+      aConfigAttribs[6 * 2 + 1] = aGlesVer == 3 ? EGL_OPENGL_ES3_BIT : EGL_OPENGL_ES2_BIT;
   #else
-    if (aGlesVer == 2)
-    {
-      break;
-    }
+      if (aGlesVer == 2)
+      {
+        break;
+      }
   #endif
 
-    if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
-        && aCfg != NULL)
-    {
-      return aCfg;
-    }
-    eglGetError();
-
-    if (isDeepColor)
-    {
-      // try config with smaller color buffer
-      aConfigAttribs[0 * 2 + 1] = 8;
-      aConfigAttribs[1 * 2 + 1] = 8;
-      aConfigAttribs[2 * 2 + 1] = 8;
       if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
           && aCfg != NULL)
       {
         return aCfg;
       }
       eglGetError();
-    }
 
-    {
-      // try config with smaller depth buffer
-      aConfigAttribs[4 * 2 + 1] = 16;
-      if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
-          && aCfg != NULL)
+      if (isDeepColor)
       {
-        return aCfg;
+        // try config with smaller color buffer
+        aConfigAttribs[0 * 2 + 1] = 8;
+        aConfigAttribs[1 * 2 + 1] = 8;
+        aConfigAttribs[2 * 2 + 1] = 8;
+        if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
+            && aCfg != NULL)
+        {
+          return aCfg;
+        }
+        eglGetError();
       }
-      eglGetError();
+
+      {
+        // try config with smaller depth buffer
+        aConfigAttribs[4 * 2 + 1] = 16;
+        if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
+            && aCfg != NULL)
+        {
+          return aCfg;
+        }
+        eglGetError();
+      }
     }
+    return aCfg;
   }
-  return aCfg;
-}
 #elif defined(HAVE_XLIB)
-//! Search for RGBA double-buffered visual with stencil buffer.
-static int TheDoubleBuffVisual[] =
-  {GLX_RGBA, GLX_DEPTH_SIZE, 16, GLX_STENCIL_SIZE, 1, GLX_DOUBLEBUFFER, None};
+  //! Search for RGBA double-buffered visual with stencil buffer.
+  static int TheDoubleBuffVisual[] =
+    {GLX_RGBA, GLX_DEPTH_SIZE, 16, GLX_STENCIL_SIZE, 1, GLX_DOUBLEBUFFER, None};
 
-//! Search for RGBA double-buffered visual with stencil buffer.
-static int TheDoubleBuffFBConfig[] = {GLX_X_RENDERABLE,
-                                      True,
-                                      GLX_DRAWABLE_TYPE,
-                                      GLX_WINDOW_BIT,
-                                      GLX_RENDER_TYPE,
-                                      GLX_RGBA_BIT,
-                                      GLX_X_VISUAL_TYPE,
-                                      GLX_TRUE_COLOR,
-                                      GLX_DEPTH_SIZE,
-                                      16,
-                                      GLX_STENCIL_SIZE,
-                                      1,
-                                      GLX_DOUBLEBUFFER,
-                                      True,
-                                      None};
+  //! Search for RGBA double-buffered visual with stencil buffer.
+  static int TheDoubleBuffFBConfig[] = {GLX_X_RENDERABLE,
+                                        True,
+                                        GLX_DRAWABLE_TYPE,
+                                        GLX_WINDOW_BIT,
+                                        GLX_RENDER_TYPE,
+                                        GLX_RGBA_BIT,
+                                        GLX_X_VISUAL_TYPE,
+                                        GLX_TRUE_COLOR,
+                                        GLX_DEPTH_SIZE,
+                                        16,
+                                        GLX_STENCIL_SIZE,
+                                        1,
+                                        GLX_DOUBLEBUFFER,
+                                        True,
+                                        None};
 #endif
 
 } // namespace

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Color.hpp>
 #include <Draw_MarkerShape.hpp>
 
@@ -48,4 +47,3 @@ public:
   {
   }
 };
-

@@ -359,13 +359,15 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
   // szv#4:S4163:12Mar99 optimized
   switch (aShape.ShapeType())
   {
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       const TopoDS_Edge& curEdge = TopoDS::Edge(aShape);
       TopoDS_Face        nulFace;
       result = GetTrimmedCurveFromEdge(curEdge, nulFace, aMap, aCurveList, theLocalFactors);
       break;
     }
-    case TopAbs_WIRE: {
+    case TopAbs_WIRE:
+    {
       TopoDS_Face     nulFace;
       TopoDS_Shape    curShape;
       TopoDS_Edge     curEdge;
@@ -380,12 +382,14 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
       }
       break;
     }
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       const TopoDS_Face& curFace = TopoDS::Face(aShape);
       result = GetTrimmedCurveFromFace(curFace, aMap, aCurveList, theLocalFactors);
       break;
     }
-    case TopAbs_SHELL: {
+    case TopAbs_SHELL:
+    {
       TopoDS_Shell Sh = TopoDS::Shell(aShape);
       It.Initialize(Sh);
       for (; It.More(); It.Next())
@@ -403,7 +407,8 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
       }
       break;
     }
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       It.Initialize(aShape);
       for (; It.More(); It.Next())
       {
@@ -415,7 +420,8 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
       }
       break;
     }
-    case TopAbs_COMPOUND: {
+    case TopAbs_COMPOUND:
+    {
       It.Initialize(aShape);
       for (; It.More(); It.Next())
       {

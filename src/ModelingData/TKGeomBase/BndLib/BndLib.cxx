@@ -39,107 +39,108 @@ static int ComputeBox(const gp_Hypr& aHypr, const double aT1, const double aT2, 
 
 namespace
 {
-//! Cosine of M_PI/8 (22.5 degrees) - used for 8-point polygon approximation.
-constexpr double THE_COS_PI8 = 0.92387953251128674;
+  //! Cosine of M_PI/8 (22.5 degrees) - used for 8-point polygon approximation.
+  constexpr double THE_COS_PI8 = 0.92387953251128674;
 
-//! Cosine (and sine) of M_PI/4 (45 degrees) - used for diagonal points.
-constexpr double THE_COS_PI4 = 0.70710678118654746;
+  //! Cosine (and sine) of M_PI/4 (45 degrees) - used for diagonal points.
+  constexpr double THE_COS_PI4 = 0.70710678118654746;
 
-//! Compute method
-template <class PointType, class BndBoxType>
-void Compute(const double     theP1,
-             const double     theP2,
-             const double     theRa,
-             const double     theRb,
-             const PointType& theXd,
-             const PointType& theYd,
-             const PointType& theO,
-             BndBoxType&      theB)
-{
-  double aTeta1;
-  double aTeta2;
-  if (theP2 < theP1)
+  //! Compute method
+  template <class PointType, class BndBoxType>
+  void Compute(const double     theP1,
+               const double     theP2,
+               const double     theRa,
+               const double     theRb,
+               const PointType& theXd,
+               const PointType& theYd,
+               const PointType& theO,
+               BndBoxType&      theB)
   {
-    aTeta1 = theP2;
-    aTeta2 = theP1;
-  }
-  else
-  {
-    aTeta1 = theP1;
-    aTeta2 = theP2;
-  }
-
-  double aDelta = std::abs(aTeta2 - aTeta1);
-  if (aDelta > 2. * M_PI)
-  {
-    aTeta1 = 0.;
-    aTeta2 = 2. * M_PI;
-  }
-  else
-  {
-    // Normalize aTeta1 to [0, 2*PI) range
-    aTeta1 = std::fmod(aTeta1, 2. * M_PI);
-    if (aTeta1 < 0.)
+    double aTeta1;
+    double aTeta2;
+    if (theP2 < theP1)
     {
-      aTeta1 += 2. * M_PI;
+      aTeta1 = theP2;
+      aTeta2 = theP1;
     }
-    aTeta2 = aTeta1 + aDelta;
+    else
+    {
+      aTeta1 = theP1;
+      aTeta2 = theP2;
+    }
+
+    double aDelta = std::abs(aTeta2 - aTeta1);
+    if (aDelta > 2. * M_PI)
+    {
+      aTeta1 = 0.;
+      aTeta2 = 2. * M_PI;
+    }
+    else
+    {
+      // Normalize aTeta1 to [0, 2*PI) range
+      aTeta1 = std::fmod(aTeta1, 2. * M_PI);
+      if (aTeta1 < 0.)
+      {
+        aTeta1 += 2. * M_PI;
+      }
+      aTeta2 = aTeta1 + aDelta;
+    }
+
+    // One places already both ends
+    double aCn1, aSn1, aCn2, aSn2;
+    aCn1 = std::cos(aTeta1);
+    aSn1 = std::sin(aTeta1);
+    aCn2 = std::cos(aTeta2);
+    aSn2 = std::sin(aTeta2);
+    theB.Add(PointType(theO.Coord() + theRa * aCn1 * theXd.Coord() + theRb * aSn1 * theYd.Coord()));
+    theB.Add(PointType(theO.Coord() + theRa * aCn2 * theXd.Coord() + theRb * aSn2 * theYd.Coord()));
+
+    double aRam, aRbm;
+    if (aDelta > M_PI / 8.)
+    {
+      // Main radiuses to take into account only 8 points (/cos(Pi/8.))
+      aRam = theRa / THE_COS_PI8;
+      aRbm = theRb / THE_COS_PI8;
+    }
+    else
+    {
+      // Main radiuses to take into account the arrow
+      double aTc = std::cos(aDelta / 2);
+      aRam       = theRa / aTc;
+      aRbm       = theRb / aTc;
+    }
+    theB.Add(PointType(theO.Coord() + aRam * aCn1 * theXd.Coord() + aRbm * aSn1 * theYd.Coord()));
+    theB.Add(PointType(theO.Coord() + aRam * aCn2 * theXd.Coord() + aRbm * aSn2 * theYd.Coord()));
+
+    // X and Y multipliers for 8 polygon points at 45-degree intervals (0, 45, 90, ..., 315
+    // degrees). Point i corresponds to angle i * 45 degrees.
+    constexpr double aXMult[8] =
+      {1., THE_COS_PI4, 0., -THE_COS_PI4, -1., -THE_COS_PI4, 0., THE_COS_PI4};
+    constexpr double aYMult[8] =
+      {0., THE_COS_PI4, 1., THE_COS_PI4, 0., -THE_COS_PI4, -1., -THE_COS_PI4};
+
+    // Lambda to add polygon point by index (0-7).
+    const auto addPoint = [&](int theIdx)
+    {
+      theB.Add(PointType(theO.Coord() + aRam * aXMult[theIdx] * theXd.Coord()
+                         + aRbm * aYMult[theIdx] * theYd.Coord()));
+    };
+
+    int aDeb = static_cast<int>(aTeta1 / (M_PI / 4.));
+    int aFin = static_cast<int>(aTeta2 / (M_PI / 4.));
+    aDeb++;
+
+    if (aDeb > aFin)
+    {
+      return;
+    }
+
+    // Add polygon points from aDeb to aFin, wrapping around using modulo 8.
+    for (int i = aDeb; i <= aFin; ++i)
+    {
+      addPoint(i % 8);
+    }
   }
-
-  // One places already both ends
-  double aCn1, aSn1, aCn2, aSn2;
-  aCn1 = std::cos(aTeta1);
-  aSn1 = std::sin(aTeta1);
-  aCn2 = std::cos(aTeta2);
-  aSn2 = std::sin(aTeta2);
-  theB.Add(PointType(theO.Coord() + theRa * aCn1 * theXd.Coord() + theRb * aSn1 * theYd.Coord()));
-  theB.Add(PointType(theO.Coord() + theRa * aCn2 * theXd.Coord() + theRb * aSn2 * theYd.Coord()));
-
-  double aRam, aRbm;
-  if (aDelta > M_PI / 8.)
-  {
-    // Main radiuses to take into account only 8 points (/cos(Pi/8.))
-    aRam = theRa / THE_COS_PI8;
-    aRbm = theRb / THE_COS_PI8;
-  }
-  else
-  {
-    // Main radiuses to take into account the arrow
-    double aTc = std::cos(aDelta / 2);
-    aRam       = theRa / aTc;
-    aRbm       = theRb / aTc;
-  }
-  theB.Add(PointType(theO.Coord() + aRam * aCn1 * theXd.Coord() + aRbm * aSn1 * theYd.Coord()));
-  theB.Add(PointType(theO.Coord() + aRam * aCn2 * theXd.Coord() + aRbm * aSn2 * theYd.Coord()));
-
-  // X and Y multipliers for 8 polygon points at 45-degree intervals (0, 45, 90, ..., 315 degrees).
-  // Point i corresponds to angle i * 45 degrees.
-  constexpr double aXMult[8] =
-    {1., THE_COS_PI4, 0., -THE_COS_PI4, -1., -THE_COS_PI4, 0., THE_COS_PI4};
-  constexpr double aYMult[8] =
-    {0., THE_COS_PI4, 1., THE_COS_PI4, 0., -THE_COS_PI4, -1., -THE_COS_PI4};
-
-  // Lambda to add polygon point by index (0-7).
-  const auto addPoint = [&](int theIdx) {
-    theB.Add(PointType(theO.Coord() + aRam * aXMult[theIdx] * theXd.Coord()
-                       + aRbm * aYMult[theIdx] * theYd.Coord()));
-  };
-
-  int aDeb = static_cast<int>(aTeta1 / (M_PI / 4.));
-  int aFin = static_cast<int>(aTeta2 / (M_PI / 4.));
-  aDeb++;
-
-  if (aDeb > aFin)
-  {
-    return;
-  }
-
-  // Add polygon points from aDeb to aFin, wrapping around using modulo 8.
-  for (int i = aDeb; i <= aFin; ++i)
-  {
-    addPoint(i % 8);
-  }
-}
 } // end namespace
 
 static void OpenMin(const gp_Dir& V, Bnd_Box& B)
@@ -1544,7 +1545,8 @@ void BndLib::Add(const gp_Torus& S,
     {0., THE_COS_PI4, 1., THE_COS_PI4, 0., -THE_COS_PI4, -1., -THE_COS_PI4};
 
   // Lambda to add torus cross-section point by index (0-7).
-  const auto addTorusPoint = [&](int theIdx) {
+  const auto addTorusPoint = [&](int theIdx)
+  {
     const double aRadius = Ra + Ri * aRadiusMult[theIdx];
     const gp_Pnt aCenter(aLocXYZ + (Ri * aZMult[theIdx]) * aZDir);
     Compute(UMin, UMax, aRadius, aRadius, aXd, aYd, aCenter, B);

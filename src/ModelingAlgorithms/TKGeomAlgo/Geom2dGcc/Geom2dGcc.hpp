@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -95,4 +94,3 @@ public:
   //! myQCurve = Geom2dGcc::Outside(Obj);
   Standard_EXPORT static Geom2dGcc_QualifiedCurve Outside(const Geom2dAdaptor_Curve& Obj);
 };
-

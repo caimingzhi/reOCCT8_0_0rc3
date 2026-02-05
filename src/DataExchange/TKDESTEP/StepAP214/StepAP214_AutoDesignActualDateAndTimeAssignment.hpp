@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP214_AutoDesignDateAndTimeItem.hpp>
@@ -40,4 +39,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP214_AutoDesignDateAndTimeItem>> items;
 };
-

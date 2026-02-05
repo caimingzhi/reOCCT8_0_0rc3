@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <RWMesh_CoordinateSystem.hpp>
 
 #include <gp_Ax3.hpp>
@@ -185,4 +184,3 @@ private:
                       // clang-format on
   bool myIsEmpty;     //!< flag indicating that transformation is empty
 };
-

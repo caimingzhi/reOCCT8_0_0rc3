@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdLPersistent_HString.hpp>
 
@@ -74,4 +73,3 @@ public:
     int myMode;
   };
 };
-

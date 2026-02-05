@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshData_Shape.hpp>
 #include <Standard_Type.hpp>
 #include <TopoDS_Shape.hpp>
@@ -37,4 +36,3 @@ protected:
 private:
   double myDeflection;
 };
-

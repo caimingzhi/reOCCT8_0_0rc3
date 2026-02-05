@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Ax2d.hpp>
 #include <gp_Dir2d.hpp>
 #include <gp_Pnt2d.hpp>
@@ -351,4 +350,3 @@ inline void gp_Ax22d::Transform(const gp_Trsf2d& theT) noexcept
   vxdir.Transform(theT);
   vydir.Transform(theT);
 }
-

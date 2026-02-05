@@ -1,18 +1,3 @@
-// Created on: 2011-09-20
-// Created by: Sergey ZERCHANINOV
-// Copyright (c) 2011-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #if defined(_WIN32)
   #include <windows.h>
 #endif
@@ -49,7 +34,7 @@ namespace
   //
   #elif defined(_WIN32)
 
-  // WGL_ARB_pixel_format
+    // WGL_ARB_pixel_format
     #ifndef WGL_NUMBER_PIXEL_FORMATS_ARB
       #define WGL_NUMBER_PIXEL_FORMATS_ARB 0x2000
       #define WGL_DRAW_TO_WINDOW_ARB 0x2001
@@ -105,7 +90,7 @@ namespace
       #define WGL_TYPE_COLORINDEX_ARB 0x202C
     #endif // WGL_NUMBER_PIXEL_FORMATS_ARB
 
-  // WGL_ARB_create_context_profile
+    // WGL_ARB_create_context_profile
     #ifndef WGL_CONTEXT_MAJOR_VERSION_ARB
       #define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
       #define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
@@ -122,13 +107,13 @@ namespace
       #define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
     #endif // WGL_CONTEXT_MAJOR_VERSION_ARB
 
-static LRESULT CALLBACK wndProcDummy(HWND theWin, UINT theMsg, WPARAM theParamW, LPARAM theParamL)
-{
-  return DefWindowProcW(theWin, theMsg, theParamW, theParamL);
-}
+  static LRESULT CALLBACK wndProcDummy(HWND theWin, UINT theMsg, WPARAM theParamW, LPARAM theParamL)
+  {
+    return DefWindowProcW(theWin, theMsg, theParamW, theParamL);
+  }
   #elif defined(HAVE_XLIB)
 
-  // GLX_ARB_create_context
+    // GLX_ARB_create_context
     #ifndef GLX_CONTEXT_MAJOR_VERSION_ARB
       #define GLX_CONTEXT_DEBUG_BIT_ARB 0x00000001
       #define GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x00000002
@@ -142,22 +127,22 @@ static LRESULT CALLBACK wndProcDummy(HWND theWin, UINT theMsg, WPARAM theParamW,
       #define GLX_CONTEXT_PROFILE_MASK_ARB 0x9126
     #endif
 
-//! Dummy XError handler which just skips errors
-static int xErrorDummyHandler(Display* /*theDisplay*/, XErrorEvent* /*theErrorEvent*/)
-{
-  return 0;
-}
-
-//! Auxiliary method to format list.
-static void addMsgToList(TCollection_ExtendedString&       theList,
-                         const TCollection_ExtendedString& theMsg)
-{
-  if (!theList.IsEmpty())
+  //! Dummy XError handler which just skips errors
+  static int xErrorDummyHandler(Display* /*theDisplay*/, XErrorEvent* /*theErrorEvent*/)
   {
-    theList += ", ";
+    return 0;
   }
-  theList += theMsg;
-}
+
+  //! Auxiliary method to format list.
+  static void addMsgToList(TCollection_ExtendedString&       theList,
+                           const TCollection_ExtendedString& theMsg)
+  {
+    if (!theList.IsEmpty())
+    {
+      theList += ", ";
+    }
+    theList += theMsg;
+  }
   #endif
 
 } // namespace

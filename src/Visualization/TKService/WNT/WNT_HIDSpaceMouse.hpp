@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_VKey.hpp>
 #include <NCollection_Vec2.hpp>
 #include <Standard_TypeDef.hpp>
@@ -161,4 +160,3 @@ private:
   unsigned long   myProductId;  //!< product id
   mutable int16_t myValueRange; //!< RAW value range
 };
-

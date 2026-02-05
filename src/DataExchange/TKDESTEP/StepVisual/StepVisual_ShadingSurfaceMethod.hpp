@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepVisual_ShadingSurfaceMethod
 {
   StepVisual_ssmConstantShading,

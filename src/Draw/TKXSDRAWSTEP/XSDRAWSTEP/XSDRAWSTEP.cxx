@@ -54,8 +54,8 @@
 
 namespace
 {
-using ExternalFileMap =
-  NCollection_DataMap<TCollection_AsciiString, occ::handle<STEPCAFControl_ExternFile>>;
+  using ExternalFileMap =
+    NCollection_DataMap<TCollection_AsciiString, occ::handle<STEPCAFControl_ExternFile>>;
 }
 
 //=================================================================================================
@@ -317,42 +317,47 @@ static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** the
   DESTEP_Parameters     aParameters;
   aParameters.InitFromStatic();
   int aNbSubShape = 0;
-  OSD_Parallel::For(0, aSize, [&](const int theIndex) {
-    STEPControl_Reader                    aReader;
-    XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
-      XSAlgo_ShapeProcessor::ReadProcessingData("read.step.resource.name", "read.step.sequence");
-    aReader.SetShapeFixParameters(std::move(aProcessingData.first));
-    aReader.SetShapeProcessFlags(aProcessingData.second);
-    aReader.SetSystemLengthUnit(UnitsMethods::GetCasCadeLengthUnit());
-    if (useStream)
+  OSD_Parallel::For(
+    0,
+    aSize,
+    [&](const int theIndex)
     {
-      std::ifstream aStream;
-      OSD_OpenStream(aStream, aFileNames[theIndex].ToCString(), std::ios::in | std::ios::binary);
-      TCollection_AsciiString aFolder, aFileNameShort;
-      OSD_Path::FolderAndFileFromPath(aFileNames[theIndex].ToCString(), aFolder, aFileNameShort);
-      aReadStat = aReader.ReadStream(aFileNameShort.ToCString(), aParameters, aStream);
-    }
-    else
-    {
-      aReadStat = aReader.ReadFile(aFileNames[theIndex].ToCString(), aParameters);
-    }
-    if (aReadStat == IFSelect_RetDone)
-    {
-      aReader.TransferRoots();
-      aShapes[theIndex] = aReader.OneShape();
-      TCollection_AsciiString aName(aShName);
-      if (aSize > 1)
+      STEPControl_Reader                    aReader;
+      XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
+        XSAlgo_ShapeProcessor::ReadProcessingData("read.step.resource.name", "read.step.sequence");
+      aReader.SetShapeFixParameters(std::move(aProcessingData.first));
+      aReader.SetShapeProcessFlags(aProcessingData.second);
+      aReader.SetSystemLengthUnit(UnitsMethods::GetCasCadeLengthUnit());
+      if (useStream)
       {
-        aName += theIndex;
+        std::ifstream aStream;
+        OSD_OpenStream(aStream, aFileNames[theIndex].ToCString(), std::ios::in | std::ios::binary);
+        TCollection_AsciiString aFolder, aFileNameShort;
+        OSD_Path::FolderAndFileFromPath(aFileNames[theIndex].ToCString(), aFolder, aFileNameShort);
+        aReadStat = aReader.ReadStream(aFileNameShort.ToCString(), aParameters, aStream);
       }
-      aShapesMap.Bind(aName, aShapes[theIndex]);
-      aNbSubShape += aReader.NbShapes();
-    }
-    else
-    {
-      theDI << "Error: Problem with reading shape by file: " << "[" << aFileNames[theIndex] << "]";
-    }
-  });
+      else
+      {
+        aReadStat = aReader.ReadFile(aFileNames[theIndex].ToCString(), aParameters);
+      }
+      if (aReadStat == IFSelect_RetDone)
+      {
+        aReader.TransferRoots();
+        aShapes[theIndex] = aReader.OneShape();
+        TCollection_AsciiString aName(aShName);
+        if (aSize > 1)
+        {
+          aName += theIndex;
+        }
+        aShapesMap.Bind(aName, aShapes[theIndex]);
+        aNbSubShape += aReader.NbShapes();
+      }
+      else
+      {
+        theDI << "Error: Problem with reading shape by file: " << "[" << aFileNames[theIndex]
+              << "]";
+      }
+    });
   NCollection_DataMap<TCollection_AsciiString, TopoDS_Shape>::Iterator anIt(aShapesMap);
   for (; anIt.More(); anIt.Next())
   {
@@ -548,41 +553,46 @@ static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   DESTEP_Parameters aParameters;
   aParameters.InitFromStatic();
 
-  OSD_Parallel::For(0, aSize, [&](const int theIndex) {
-    STEPControl_Writer                    aWriter;
-    XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
-      XSAlgo_ShapeProcessor::ReadProcessingData("write.step.resource.name", "write.step.sequence");
-    aWriter.SetShapeFixParameters(std::move(aProcessingData.first));
-    aWriter.SetShapeProcessFlags(aProcessingData.second);
+  OSD_Parallel::For(
+    0,
+    aSize,
+    [&](const int theIndex)
+    {
+      STEPControl_Writer                    aWriter;
+      XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
+        XSAlgo_ShapeProcessor::ReadProcessingData("write.step.resource.name",
+                                                  "write.step.sequence");
+      aWriter.SetShapeFixParameters(std::move(aProcessingData.first));
+      aWriter.SetShapeProcessFlags(aProcessingData.second);
 
-    if (aWriter.Transfer(aShape, STEPControl_AsIs, aParameters) != IFSelect_RetDone)
-    {
-      theDI << "Error: Can't transfer input shape";
-      return;
-    }
-    IFSelect_ReturnStatus aStat = IFSelect_RetDone;
-    if (useStream)
-    {
-      std::ofstream aStream;
-      OSD_OpenStream(aStream, aFileNames[theIndex], std::ios::out | std::ios::binary);
-      if (!aStream.good())
+      if (aWriter.Transfer(aShape, STEPControl_AsIs, aParameters) != IFSelect_RetDone)
       {
-        theDI << "Error: Problem with opening stream by file: " << "[" << aFileNames[theIndex]
-              << "]";
+        theDI << "Error: Can't transfer input shape";
         return;
       }
-      aStat = aWriter.WriteStream(aStream);
-    }
-    else
-    {
-      aStat = aWriter.Write(aFileNames[theIndex].ToCString());
-    }
-    if (aStat != IFSelect_RetDone)
-    {
-      theDI << "Error on writing file: " << "[" << aFileNames[theIndex] << "]";
-      return;
-    }
-  });
+      IFSelect_ReturnStatus aStat = IFSelect_RetDone;
+      if (useStream)
+      {
+        std::ofstream aStream;
+        OSD_OpenStream(aStream, aFileNames[theIndex], std::ios::out | std::ios::binary);
+        if (!aStream.good())
+        {
+          theDI << "Error: Problem with opening stream by file: " << "[" << aFileNames[theIndex]
+                << "]";
+          return;
+        }
+        aStat = aWriter.WriteStream(aStream);
+      }
+      else
+      {
+        aStat = aWriter.Write(aFileNames[theIndex].ToCString());
+      }
+      if (aStat != IFSelect_RetDone)
+      {
+        theDI << "Error on writing file: " << "[" << aFileNames[theIndex] << "]";
+        return;
+      }
+    });
   theDI << "File(s) are Written";
   return 0;
 }
@@ -918,7 +928,8 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
         case '4':
           aMode = STEPControl_GeometricCurveSet;
           break;
-        default: {
+        default:
+        {
           theDI << "Syntax error: mode '" << theArgVec[anArgIter] << "' is incorrect [give fsmw]";
           return 1;
         }
@@ -1051,11 +1062,13 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
   switch (aStat)
   {
-    case IFSelect_RetVoid: {
+    case IFSelect_RetVoid:
+    {
       theDI << "Error: no file written";
       break;
     }
-    case IFSelect_RetDone: {
+    case IFSelect_RetDone:
+    {
       theDI << "File " << aFilePath << " written\n";
 
       XSDRAW::CollectActiveWorkSessions(aFilePath);
@@ -1067,7 +1080,8 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
       }
       break;
     }
-    default: {
+    default:
+    {
       theDI << "Error on writing file";
       break;
     }
@@ -1077,12 +1091,12 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
 namespace
 {
-// Singleton to ensure DESTEP plugin is registered only once
-void DESTEPSingleton()
-{
-  static DE_PluginHolder<DESTEP_ConfigurationNode> aHolder;
-  (void)aHolder;
-}
+  // Singleton to ensure DESTEP plugin is registered only once
+  void DESTEPSingleton()
+  {
+    static DE_PluginHolder<DESTEP_ConfigurationNode> aHolder;
+    (void)aHolder;
+  }
 } // namespace
 
 //=================================================================================================

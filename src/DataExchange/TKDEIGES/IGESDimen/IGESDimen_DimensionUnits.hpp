@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -79,4 +78,3 @@ private:
   int                                   theFractionFlag;
   int                                   thePrecision;
 };
-

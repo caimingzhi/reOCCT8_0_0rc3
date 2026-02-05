@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <OpenGl_Texture.hpp>
 #include <OpenGl_Vec.hpp>
 
@@ -107,4 +106,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_Font, OpenGl_Resource) // Type definition
 };
-

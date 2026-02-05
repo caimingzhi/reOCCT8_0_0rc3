@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_LocalArray.hpp>
 #include <NCollection_Array1.hpp>
 #include <Standard_HashUtils.hpp>
@@ -534,4 +533,3 @@ struct NCollection_CellFilter_InspectorXY
     return Point(thePnt.X() + theTol, thePnt.Y() + theTol);
   }
 };
-

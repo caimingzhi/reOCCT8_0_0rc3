@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressScope.hpp>
 
 //! Progress scope with lazy updates and abort fetches.
@@ -60,4 +59,3 @@ protected:
   double myPatchProgress;
   bool   myIsLazyAborted;
 };
-

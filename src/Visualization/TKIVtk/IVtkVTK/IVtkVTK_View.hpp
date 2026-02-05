@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IVtk_IView.hpp>
 #include <vtkSmartPointer.h>
 
@@ -87,4 +86,3 @@ public:
 private:
   vtkSmartPointer<vtkRenderer> myRenderer;
 };
-

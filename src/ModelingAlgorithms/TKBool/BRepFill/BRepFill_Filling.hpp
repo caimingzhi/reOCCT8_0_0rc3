@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepFill_EdgeFaceAndOrder.hpp>
 #include <NCollection_Sequence.hpp>
 #include <BRepFill_FaceAndOrder.hpp>
@@ -213,4 +212,3 @@ private:
   bool                                                                     myIsInitFaceGiven;
   bool                                                                     myIsDone;
 };
-

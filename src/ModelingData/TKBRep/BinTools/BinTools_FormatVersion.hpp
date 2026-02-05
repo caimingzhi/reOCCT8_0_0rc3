@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defined BinTools format version
 enum BinTools_FormatVersion
 {
@@ -22,4 +21,3 @@ enum
   BinTools_FormatVersion_LOWER = BinTools_FormatVersion_VERSION_1,
   BinTools_FormatVersion_UPPER = BinTools_FormatVersion_VERSION_4
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1994-02-25
-// Created by: Bruno DUMORTIER
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <GeomFill.hpp>
 
 #include <Geom_Circle.hpp>
@@ -191,19 +175,22 @@ void GeomFill::GetShape(const double                  MaxAng,
 {
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_QuasiAngular:
+    {
       NbPoles = 7;
       NbKnots = 2;
       Degree  = 6;
     }
     break;
-    case Convert_Polynomial: {
+    case Convert_Polynomial:
+    {
       NbPoles = 8;
       NbKnots = 2;
       Degree  = 7;
     }
     break;
-    default: {
+    default:
+    {
       int NbSpan = (int)(std::ceil(3. * std::abs(MaxAng) / 2. / M_PI));
       NbPoles    = 2 * NbSpan + 1;
       NbKnots    = NbSpan + 1;
@@ -290,18 +277,21 @@ void GeomFill::Mults(const Convert_ParameterisationType TConv, NCollection_Array
 {
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_QuasiAngular:
+    {
       TMults(1) = 7;
       TMults(2) = 7;
     }
     break;
-    case Convert_Polynomial: {
+    case Convert_Polynomial:
+    {
       TMults(1) = 8;
       TMults(2) = 8;
     }
     break;
 
-    default: {
+    default:
+    {
       // Cas rational classsique
       int i;
       TMults(TMults.Lower()) = 3;
@@ -391,20 +381,23 @@ void GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_QuasiAngular:
+    {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1, Center, nplan, Angle, Poles, Weights);
       break;
     }
-    case Convert_Polynomial: {
+    case Convert_Polynomial:
+    {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1, Center, nplan, Angle, Poles);
       Weights.Init(1);
       break;
     }
-    default: {
+    default:
+    {
       // Cas Rational, on utilise une expression directe beaucoup plus
       // performente que GeomConvert
       int NbSpan = (Poles.Length() - 1) / 2;
@@ -513,7 +506,8 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_QuasiAngular:
+    {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1,
@@ -530,7 +524,8 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
                          DWeights);
       return true;
     }
-    case Convert_Polynomial: {
+    case Convert_Polynomial:
+    {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1, tang1, Center, DCenter, nplan, dnplan, Angle, DAngle, Poles, DPoles);
@@ -693,7 +688,8 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_QuasiAngular:
+    {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1,
@@ -716,7 +712,8 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
                          D2Weights);
       return true;
     }
-    case Convert_Polynomial: {
+    case Convert_Polynomial:
+    {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1,
@@ -740,7 +737,8 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
       return true;
     }
 
-    default: {
+    default:
+    {
       np2   = nplan.Crossed(ns1);
       dnp2  = dnplan.Crossed(ns1).Added(nplan.Crossed(dn1w));
       d2np2 = d2nplan.Crossed(ns1).Added(nplan.Crossed(dn2w));

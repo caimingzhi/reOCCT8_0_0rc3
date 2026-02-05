@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Wire.hpp>
 #include <Geom_Curve.hpp>
@@ -40,4 +39,3 @@ private:
   double                  myStart1, myEnd1, myStart2, myEnd2;
   bool                    myCommonStart1, myCommonStart2;
 };
-

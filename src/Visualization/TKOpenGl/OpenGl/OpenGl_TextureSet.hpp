@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_TextureSet.hpp>
 #include <Graphic3d_TextureSetBits.hpp>
 
@@ -156,4 +155,3 @@ protected:
   NCollection_Array1<TextureSlot> myTextures;
   int                             myTextureSetBits;
 };
-

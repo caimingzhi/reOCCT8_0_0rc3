@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Macro.hpp>
 #include <TopAbs_ShapeEnum.hpp>
 
@@ -70,4 +69,3 @@ struct DE_ShapeFixParameters
   FixMode          FixVertexPositionMode               = FixMode::NotFix;
   FixMode          FixVertexToleranceMode              = FixMode::FixOrNot;
 };
-

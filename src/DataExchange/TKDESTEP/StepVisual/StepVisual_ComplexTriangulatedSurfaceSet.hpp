@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <StepVisual_TessellatedSurfaceSet.hpp>
@@ -70,4 +69,3 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> myTriangleStrips;
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> myTriangleFans;
 };
-

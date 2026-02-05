@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 #include <Resource_FormatType.hpp>
@@ -456,4 +455,3 @@ private:
   occ::handle<Interface_Check>                    thecheck;
   Resource_FormatType                             mySourceCodePage;
 };
-

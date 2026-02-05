@@ -1,19 +1,3 @@
-// Created on: 1993-07-19
-// Created by: Remi LEQUETTE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Geom_BezierSurface.hpp>
 #include <Geom_ConicalSurface.hpp>
 #include <Geom_CylindricalSurface.hpp>
@@ -928,84 +912,96 @@ occ::handle<Geom_Surface> GeomTools_SurfaceSet::ReadSurface(Standard_IStream& IS
     switch (stype)
     {
 
-      case PLANE: {
+      case PLANE:
+      {
         occ::handle<Geom_Plane> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case CYLINDER: {
+      case CYLINDER:
+      {
         occ::handle<Geom_CylindricalSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case CONE: {
+      case CONE:
+      {
         occ::handle<Geom_ConicalSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case SPHERE: {
+      case SPHERE:
+      {
         occ::handle<Geom_SphericalSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case TORUS: {
+      case TORUS:
+      {
         occ::handle<Geom_ToroidalSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case LINEAREXTRUSION: {
+      case LINEAREXTRUSION:
+      {
         occ::handle<Geom_SurfaceOfLinearExtrusion> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case REVOLUTION: {
+      case REVOLUTION:
+      {
         occ::handle<Geom_SurfaceOfRevolution> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case BEZIER: {
+      case BEZIER:
+      {
         occ::handle<Geom_BezierSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case BSPLINE: {
+      case BSPLINE:
+      {
         occ::handle<Geom_BSplineSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case RECTANGULAR: {
+      case RECTANGULAR:
+      {
         occ::handle<Geom_RectangularTrimmedSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      case OFFSET: {
+      case OFFSET:
+      {
         occ::handle<Geom_OffsetSurface> SS;
         IS >> SS;
         S = SS;
       }
       break;
 
-      default: {
+      default:
+      {
         occ::handle<Geom_Surface> SS;
         GeomTools::GetUndefinedTypeHandler()->ReadSurface(stype, IS, SS);
         S = SS;

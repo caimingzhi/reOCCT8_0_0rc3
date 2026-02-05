@@ -800,7 +800,8 @@ bool AIS_ViewController::UpdateMouseButtons(const NCollection_Vec2<int>& thePoin
       switch (myMouseActiveGesture)
       {
         case AIS_MouseGesture_RotateView:
-        case AIS_MouseGesture_RotateOrbit: {
+        case AIS_MouseGesture_RotateOrbit:
+        {
           if (myToAllowRotation)
           {
             myUpdateStartPointRot = true;
@@ -811,7 +812,8 @@ bool AIS_ViewController::UpdateMouseButtons(const NCollection_Vec2<int>& thePoin
           }
           break;
         }
-        case AIS_MouseGesture_Pan: {
+        case AIS_MouseGesture_Pan:
+        {
           if (myToAllowPanning)
           {
             myUpdateStartPointPan = true;
@@ -824,21 +826,25 @@ bool AIS_ViewController::UpdateMouseButtons(const NCollection_Vec2<int>& thePoin
         }
         case AIS_MouseGesture_Zoom:
         case AIS_MouseGesture_ZoomWindow:
-        case AIS_MouseGesture_ZoomVertical: {
+        case AIS_MouseGesture_ZoomVertical:
+        {
           if (!myToAllowZooming)
           {
             myMouseActiveGesture = AIS_MouseGesture_NONE;
           }
           break;
         }
-        case AIS_MouseGesture_SelectRectangle: {
+        case AIS_MouseGesture_SelectRectangle:
+        {
           break;
         }
-        case AIS_MouseGesture_SelectLasso: {
+        case AIS_MouseGesture_SelectLasso:
+        {
           UpdatePolySelection(thePoint, true);
           break;
         }
-        case AIS_MouseGesture_Drag: {
+        case AIS_MouseGesture_Drag:
+        {
           if (myToAllowDragging)
           {
             myUI.Dragging.ToStart    = true;
@@ -850,7 +856,8 @@ bool AIS_ViewController::UpdateMouseButtons(const NCollection_Vec2<int>& thePoin
           }
           break;
         }
-        case AIS_MouseGesture_NONE: {
+        case AIS_MouseGesture_NONE:
+        {
           break;
         }
       }
@@ -946,7 +953,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
   switch (myMouseActiveGesture)
   {
     case AIS_MouseGesture_SelectRectangle:
-    case AIS_MouseGesture_ZoomWindow: {
+    case AIS_MouseGesture_ZoomWindow:
+    {
       UpdateRubberBand(myMousePressPoint, thePoint);
       if (myMouseActiveGesture == AIS_MouseGesture_ZoomWindow)
       {
@@ -955,13 +963,15 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       toUpdateView = true;
       break;
     }
-    case AIS_MouseGesture_SelectLasso: {
+    case AIS_MouseGesture_SelectLasso:
+    {
       UpdatePolySelection(thePoint, true);
       toUpdateView = true;
       break;
     }
     case AIS_MouseGesture_RotateOrbit:
-    case AIS_MouseGesture_RotateView: {
+    case AIS_MouseGesture_RotateView:
+    {
       if (!myToAllowRotation)
       {
         break;
@@ -1013,7 +1023,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       break;
     }
     case AIS_MouseGesture_Zoom:
-    case AIS_MouseGesture_ZoomVertical: {
+    case AIS_MouseGesture_ZoomVertical:
+    {
       if (!myToAllowZooming)
       {
         break;
@@ -1036,7 +1047,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       }
       break;
     }
-    case AIS_MouseGesture_Pan: {
+    case AIS_MouseGesture_Pan:
+    {
       if (!myToAllowPanning)
       {
         break;
@@ -1073,7 +1085,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       }
       break;
     }
-    case AIS_MouseGesture_Drag: {
+    case AIS_MouseGesture_Drag:
+    {
       if (!myToAllowDragging)
       {
         break;
@@ -1098,7 +1111,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       }
       break;
     }
-    default: {
+    default:
+    {
       break;
     }
   }
@@ -1964,7 +1978,8 @@ gp_Pnt AIS_ViewController::GravityPoint(const occ::handle<AIS_InteractiveContext
   switch (myRotationMode)
   {
     case AIS_RotationMode_PickLast:
-    case AIS_RotationMode_PickCenter: {
+    case AIS_RotationMode_PickCenter:
+    {
       NCollection_Vec2<int> aCursor((int)myGL.OrbitRotation.PointStart.x(),
                                     (int)myGL.OrbitRotation.PointStart.y());
       if (myRotationMode == AIS_RotationMode_PickCenter)
@@ -1981,11 +1996,13 @@ gp_Pnt AIS_ViewController::GravityPoint(const occ::handle<AIS_InteractiveContext
       }
       break;
     }
-    case AIS_RotationMode_CameraAt: {
+    case AIS_RotationMode_CameraAt:
+    {
       const occ::handle<Graphic3d_Camera>& aCam = theView->Camera();
       return aCam->Center();
     }
-    case AIS_RotationMode_BndBoxScene: {
+    case AIS_RotationMode_BndBoxScene:
+    {
       Bnd_Box aBndBox = theView->View()->MinMaxValues(false);
       if (!aBndBox.IsVoid())
       {
@@ -2740,7 +2757,8 @@ void AIS_ViewController::OnObjectDragged(const occ::handle<AIS_InteractiveContex
 {
   switch (theAction)
   {
-    case AIS_DragAction_Start: {
+    case AIS_DragAction_Start:
+    {
       myDragObject.Nullify();
       myDragOwner.Nullify();
       if (!theCtx->HasDetected())
@@ -2764,7 +2782,8 @@ void AIS_ViewController::OnObjectDragged(const occ::handle<AIS_InteractiveContex
       }
       return;
     }
-    case AIS_DragAction_Confirmed: {
+    case AIS_DragAction_Confirmed:
+    {
       if (myDragObject.IsNull())
       {
         return;
@@ -2778,7 +2797,8 @@ void AIS_ViewController::OnObjectDragged(const occ::handle<AIS_InteractiveContex
                                     theAction);
       return;
     }
-    case AIS_DragAction_Update: {
+    case AIS_DragAction_Update:
+    {
       if (myDragObject.IsNull())
       {
         return;
@@ -2798,7 +2818,8 @@ void AIS_ViewController::OnObjectDragged(const occ::handle<AIS_InteractiveContex
       theView->Invalidate();
       return;
     }
-    case AIS_DragAction_Abort: {
+    case AIS_DragAction_Abort:
+    {
       if (myDragObject.IsNull())
       {
         return;
@@ -2815,7 +2836,8 @@ void AIS_ViewController::OnObjectDragged(const occ::handle<AIS_InteractiveContex
                                     theAction);
       [[fallthrough]];
     }
-    case AIS_DragAction_Stop: {
+    case AIS_DragAction_Stop:
+    {
       if (myDragObject.IsNull())
       {
         return;

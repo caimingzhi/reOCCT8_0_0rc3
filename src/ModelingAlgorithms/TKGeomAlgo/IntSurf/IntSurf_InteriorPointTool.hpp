@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -34,6 +33,7 @@ public:
   //! is associated to the value2d
   static gp_Dir2d Direction2d(const IntSurf_InteriorPoint& PStart);
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -77,5 +77,3 @@ inline gp_Dir2d IntSurf_InteriorPointTool::Direction2d(const IntSurf_InteriorPoi
 
   return PStart.Direction2d();
 }
-
-

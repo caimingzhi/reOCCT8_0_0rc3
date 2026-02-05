@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Poly_Connect.hpp>
 #include <Poly_Triangulation.hpp>
 
@@ -31,4 +30,3 @@ public:
                                              const occ::handle<Poly_Triangulation>& theTris,
                                              Poly_Connect&                          thePolyConnect);
 };
-

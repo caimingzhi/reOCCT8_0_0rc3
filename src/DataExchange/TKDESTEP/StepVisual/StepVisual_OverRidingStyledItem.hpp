@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepVisual_StyledItem.hpp>
@@ -33,4 +32,3 @@ public:
 private:
   occ::handle<StepVisual_StyledItem> overRiddenStyle;
 };
-

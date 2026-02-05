@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 #include <OSD_Path.hpp>
 #include <Graphic3d_TypeOfTexture.hpp>
@@ -148,4 +147,3 @@ protected:
   bool                myHasMipmaps; //!< Indicates whether mipmaps should be generated or not
   // clang-format on
 };
-

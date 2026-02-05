@@ -1,6 +1,5 @@
 #pragma once
 
-
 typedef enum
 {
   MeshVS_ET_NONE   = 0x00,
@@ -14,4 +13,3 @@ typedef enum
   MeshVS_ET_All     = MeshVS_ET_Element | MeshVS_ET_Node
 
 } MeshVS_EntityType;
-

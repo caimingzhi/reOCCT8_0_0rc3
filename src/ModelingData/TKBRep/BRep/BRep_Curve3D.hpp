@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <BRep_GCurve.hpp>
@@ -38,4 +37,3 @@ public:
 private:
   occ::handle<Geom_Curve> myCurve;
 };
-

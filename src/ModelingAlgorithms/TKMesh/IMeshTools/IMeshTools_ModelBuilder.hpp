@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Algorithm.hpp>
 #include <Standard_ErrorHandler.hpp>
 #include <Standard_Failure.hpp>
@@ -53,4 +52,3 @@ protected:
     const TopoDS_Shape&          theShape,
     const IMeshTools_Parameters& theParameters) = 0;
 };
-

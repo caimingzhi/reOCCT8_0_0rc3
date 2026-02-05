@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -35,4 +34,3 @@ private:
   occ::handle<StepVisual_PresentationLayerAssignment> theAssignment;
   occ::handle<StepVisual_PresentationRepresentation>  thePresentation;
 };
-

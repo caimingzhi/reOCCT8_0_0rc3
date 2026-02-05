@@ -24,144 +24,144 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-7;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-7;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-// ============================================================================
-// Adapter classes for old API (inherit from math_Function)
-// ============================================================================
+  // ============================================================================
+  // Adapter classes for old API (inherit from math_Function)
+  // ============================================================================
 
-//! f(x) = (x - 3)^2 + 1
-//! Minimum at x = 3, f(3) = 1
-class ParabolaFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = (x - 3)^2 + 1
+  //! Minimum at x = 3, f(3) = 1
+  class ParabolaFuncOld : public math_Function
   {
-    theF = (theX - 3.0) * (theX - 3.0) + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = (theX - 3.0) * (theX - 3.0) + 1.0;
+      return true;
+    }
+  };
 
-//! f(x) = x^2 - 4x + 3
-//! Minimum at x = 2, f(2) = -1
-class ParabolaFunc2Old : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^2 - 4x + 3
+  //! Minimum at x = 2, f(2) = -1
+  class ParabolaFunc2Old : public math_Function
   {
-    theF = theX * theX - 4.0 * theX + 3.0;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX - 4.0 * theX + 3.0;
+      return true;
+    }
+  };
 
-//! f(x) = cos(x)
-//! Local minimum at x = PI, f(PI) = -1
-class CosFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = cos(x)
+  //! Local minimum at x = PI, f(PI) = -1
+  class CosFuncOld : public math_Function
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-//! f(x) = x^4 - 2x^2
-//! Local minima at x = -1 and x = 1, f(-1) = f(1) = -1
-class QuarticFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^4 - 2x^2
+  //! Local minima at x = -1 and x = 1, f(-1) = f(1) = -1
+  class QuarticFuncOld : public math_Function
   {
-    const double aX2 = theX * theX;
-    theF             = aX2 * aX2 - 2.0 * aX2;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      const double aX2 = theX * theX;
+      theF             = aX2 * aX2 - 2.0 * aX2;
+      return true;
+    }
+  };
 
-//! f(x) = e^x + e^(-x)
-//! Minimum at x = 0, f(0) = 2
-class CoshLikeFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = e^x + e^(-x)
+  //! Minimum at x = 0, f(0) = 2
+  class CoshLikeFuncOld : public math_Function
   {
-    theF = std::exp(theX) + std::exp(-theX);
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = std::exp(theX) + std::exp(-theX);
+      return true;
+    }
+  };
 
-//! f(x) = x^2
-//! Minimum at x = 0, f(0) = 0
-class SquareFuncOld : public math_Function
-{
-public:
-  bool Value(const double theX, double& theF) override
+  //! f(x) = x^2
+  //! Minimum at x = 0, f(0) = 0
+  class SquareFuncOld : public math_Function
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(const double theX, double& theF) override
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 
-// ============================================================================
-// Function classes for new API
-// ============================================================================
+  // ============================================================================
+  // Function classes for new API
+  // ============================================================================
 
-struct ParabolaFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct ParabolaFuncNew
   {
-    theF = (theX - 3.0) * (theX - 3.0) + 1.0;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = (theX - 3.0) * (theX - 3.0) + 1.0;
+      return true;
+    }
+  };
 
-struct ParabolaFunc2New
-{
-  bool Value(double theX, double& theF) const
+  struct ParabolaFunc2New
   {
-    theF = theX * theX - 4.0 * theX + 3.0;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX - 4.0 * theX + 3.0;
+      return true;
+    }
+  };
 
-struct CosFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct CosFuncNew
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-struct QuarticFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct QuarticFuncNew
   {
-    const double aX2 = theX * theX;
-    theF             = aX2 * aX2 - 2.0 * aX2;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      const double aX2 = theX * theX;
+      theF             = aX2 * aX2 - 2.0 * aX2;
+      return true;
+    }
+  };
 
-struct CoshLikeFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct CoshLikeFuncNew
   {
-    theF = std::exp(theX) + std::exp(-theX);
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX) + std::exp(-theX);
+      return true;
+    }
+  };
 
-struct SquareFuncNew
-{
-  bool Value(double theX, double& theF) const
+  struct SquareFuncNew
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

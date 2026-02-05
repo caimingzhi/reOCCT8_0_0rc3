@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Builder.hpp>
 
 #include <NCollection_Sequence.hpp>
@@ -91,4 +90,3 @@ private:
   //! Current queue size (atomic for lock-free reads).
   std::atomic<int> mySize;
 };
-

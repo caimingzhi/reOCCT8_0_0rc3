@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TCollection_AsciiString.hpp>
 #include <DE_ConfigurationNode.hpp>
 #include <DE_Provider.hpp>
@@ -93,4 +92,3 @@ public:
   Standard_EXPORT static bool CreateContentBuffer(std::istream&                    theStream,
                                                   occ::handle<NCollection_Buffer>& theBuffer);
 };
-

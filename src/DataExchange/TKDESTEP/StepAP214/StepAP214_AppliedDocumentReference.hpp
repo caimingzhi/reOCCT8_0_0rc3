@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP214_DocumentReferenceItem.hpp>
@@ -37,4 +36,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP214_DocumentReferenceItem>> items;
 };
-

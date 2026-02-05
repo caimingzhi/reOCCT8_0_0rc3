@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 #include <OSD_Path.hpp>
 #include <Poly_Triangulation.hpp>
@@ -16,4 +15,3 @@ public:
     const char*                  theFile,
     const Message_ProgressRange& aProgress = Message_ProgressRange());
 };
-

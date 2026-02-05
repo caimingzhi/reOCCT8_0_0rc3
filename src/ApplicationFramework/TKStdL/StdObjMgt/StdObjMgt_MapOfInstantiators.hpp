@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Persistent.hpp>
 #include <NCollection_DataMap.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -19,4 +18,3 @@ public:
 
   DEFINE_STANDARD_ALLOC
 };
-

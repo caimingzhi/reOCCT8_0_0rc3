@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_StructureManager.hpp>
 #include <Graphic3d_TransformPers.hpp>
 #include <Prs3d_LineAspect.hpp>
@@ -151,4 +150,3 @@ protected:
   bool   myIsWireframe;
   bool   myToCompute;
 };
-

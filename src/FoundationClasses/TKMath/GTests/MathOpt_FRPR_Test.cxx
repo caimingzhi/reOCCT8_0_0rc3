@@ -23,195 +23,195 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-6;
+  constexpr double THE_TOLERANCE = 1.0e-6;
 
-// ============================================================================
-// Test function classes for new API
-// ============================================================================
+  // ============================================================================
+  // Test function classes for new API
+  // ============================================================================
 
-//! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
-//! Minimum at (1, 2) with f = 0
-struct QuadraticFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
+  //! Minimum at (1, 2) with f = 0
+  struct QuadraticFunc
   {
-    const double aDx = theX(1) - 1.0;
-    const double aDy = theX(2) - 2.0;
-    theF             = aDx * aDx + aDy * aDy;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    theGrad(1) = 2.0 * (theX(1) - 1.0);
-    theGrad(2) = 2.0 * (theX(2) - 2.0);
-    return true;
-  }
-};
-
-//! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-//! Minimum at (1, 1) with f = 0
-struct RosenbrockFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aY - aX * aX;
-    const double aT2 = 1.0 - aX;
-    theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    const double aX = theX(1);
-    const double aY = theX(2);
-    theGrad(1)      = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
-    theGrad(2)      = 200.0 * (aY - aX * aX);
-    return true;
-  }
-};
-
-//! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-//! Minimum at (1, 3) with f = 0
-struct BoothFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theF             = aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
-
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aX + 2.0 * aY - 7.0;
-    const double aT2 = 2.0 * aX + aY - 5.0;
-    theGrad(1)       = 2.0 * aT1 + 4.0 * aT2;
-    theGrad(2)       = 4.0 * aT1 + 2.0 * aT2;
-    return true;
-  }
-};
-
-//! Sphere function in N dimensions: f(x) = sum(x_i^2)
-//! Minimum at origin with f = 0
-struct SphereFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
-  {
-    theF = 0.0;
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Value(const math_Vector& theX, double& theF)
     {
-      theF += theX(i) * theX(i);
+      const double aDx = theX(1) - 1.0;
+      const double aDy = theX(2) - 2.0;
+      theF             = aDx * aDx + aDy * aDy;
+      return true;
     }
-    return true;
-  }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
-  {
-    for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
     {
-      theGrad(i) = 2.0 * theX(i);
+      theGrad(1) = 2.0 * (theX(1) - 1.0);
+      theGrad(2) = 2.0 * (theX(2) - 2.0);
+      return true;
     }
-    return true;
-  }
-};
+  };
 
-//! Beale function: f(x,y) = (1.5 - x + xy)^2 + (2.25 - x + xy^2)^2 + (2.625 - x + xy^3)^2
-//! Minimum at (3, 0.5) with f = 0
-struct BealeFunc
-{
-  bool Value(const math_Vector& theX, double& theF)
+  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
+  //! Minimum at (1, 1) with f = 0
+  struct RosenbrockFunc
   {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = 1.5 - aX * (1.0 - aY);
-    const double aT2 = 2.25 - aX * (1.0 - aY * aY);
-    const double aT3 = 2.625 - aX * (1.0 - aY * aY * aY);
-    theF             = aT1 * aT1 + aT2 * aT2 + aT3 * aT3;
-    return true;
-  }
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aY - aX * aX;
+      const double aT2 = 1.0 - aX;
+      theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      const double aX = theX(1);
+      const double aY = theX(2);
+      theGrad(1)      = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
+      theGrad(2)      = 200.0 * (aY - aX * aX);
+      return true;
+    }
+  };
+
+  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
+  //! Minimum at (1, 3) with f = 0
+  struct BoothFunc
   {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aY2 = aY * aY;
-    const double aY3 = aY2 * aY;
-    const double aT1 = 1.5 - aX * (1.0 - aY);
-    const double aT2 = 2.25 - aX * (1.0 - aY2);
-    const double aT3 = 2.625 - aX * (1.0 - aY3);
-    theGrad(1)       = -2.0 * aT1 * (1.0 - aY) - 2.0 * aT2 * (1.0 - aY2) - 2.0 * aT3 * (1.0 - aY3);
-    theGrad(2)       = 2.0 * aT1 * aX + 2.0 * aT2 * 2.0 * aX * aY + 2.0 * aT3 * 3.0 * aX * aY2;
-    return true;
-  }
-};
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theF             = aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
 
-// ============================================================================
-// Old API adapter class
-// ============================================================================
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aX + 2.0 * aY - 7.0;
+      const double aT2 = 2.0 * aX + aY - 5.0;
+      theGrad(1)       = 2.0 * aT1 + 4.0 * aT2;
+      theGrad(2)       = 4.0 * aT1 + 2.0 * aT2;
+      return true;
+    }
+  };
 
-class QuadraticFuncOld : public math_MultipleVarFunctionWithGradient
-{
-public:
-  int NbVariables() const override { return 2; }
-
-  bool Value(const math_Vector& theX, double& theF) override
+  //! Sphere function in N dimensions: f(x) = sum(x_i^2)
+  //! Minimum at origin with f = 0
+  struct SphereFunc
   {
-    const double aDx = theX(1) - 1.0;
-    const double aDy = theX(2) - 2.0;
-    theF             = aDx * aDx + aDy * aDy;
-    return true;
-  }
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      theF = 0.0;
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theF += theX(i) * theX(i);
+      }
+      return true;
+    }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      for (int i = theX.Lower(); i <= theX.Upper(); ++i)
+      {
+        theGrad(i) = 2.0 * theX(i);
+      }
+      return true;
+    }
+  };
+
+  //! Beale function: f(x,y) = (1.5 - x + xy)^2 + (2.25 - x + xy^2)^2 + (2.625 - x + xy^3)^2
+  //! Minimum at (3, 0.5) with f = 0
+  struct BealeFunc
   {
-    theG(1) = 2.0 * (theX(1) - 1.0);
-    theG(2) = 2.0 * (theX(2) - 2.0);
-    return true;
-  }
+    bool Value(const math_Vector& theX, double& theF)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = 1.5 - aX * (1.0 - aY);
+      const double aT2 = 2.25 - aX * (1.0 - aY * aY);
+      const double aT3 = 2.625 - aX * (1.0 - aY * aY * aY);
+      theF             = aT1 * aT1 + aT2 * aT2 + aT3 * aT3;
+      return true;
+    }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    bool Gradient(const math_Vector& theX, math_Vector& theGrad)
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aY2 = aY * aY;
+      const double aY3 = aY2 * aY;
+      const double aT1 = 1.5 - aX * (1.0 - aY);
+      const double aT2 = 2.25 - aX * (1.0 - aY2);
+      const double aT3 = 2.625 - aX * (1.0 - aY3);
+      theGrad(1) = -2.0 * aT1 * (1.0 - aY) - 2.0 * aT2 * (1.0 - aY2) - 2.0 * aT3 * (1.0 - aY3);
+      theGrad(2) = 2.0 * aT1 * aX + 2.0 * aT2 * 2.0 * aX * aY + 2.0 * aT3 * 3.0 * aX * aY2;
+      return true;
+    }
+  };
+
+  // ============================================================================
+  // Old API adapter class
+  // ============================================================================
+
+  class QuadraticFuncOld : public math_MultipleVarFunctionWithGradient
   {
-    return Value(theX, theF) && Gradient(theX, theG);
-  }
-};
+  public:
+    int NbVariables() const override { return 2; }
 
-class RosenbrockFuncOld : public math_MultipleVarFunctionWithGradient
-{
-public:
-  int NbVariables() const override { return 2; }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      const double aDx = theX(1) - 1.0;
+      const double aDy = theX(2) - 2.0;
+      theF             = aDx * aDx + aDy * aDy;
+      return true;
+    }
 
-  bool Value(const math_Vector& theX, double& theF) override
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      theG(1) = 2.0 * (theX(1) - 1.0);
+      theG(2) = 2.0 * (theX(2) - 2.0);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      return Value(theX, theF) && Gradient(theX, theG);
+    }
+  };
+
+  class RosenbrockFuncOld : public math_MultipleVarFunctionWithGradient
   {
-    const double aX  = theX(1);
-    const double aY  = theX(2);
-    const double aT1 = aY - aX * aX;
-    const double aT2 = 1.0 - aX;
-    theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
-    return true;
-  }
+  public:
+    int NbVariables() const override { return 2; }
 
-  bool Gradient(const math_Vector& theX, math_Vector& theG) override
-  {
-    const double aX = theX(1);
-    const double aY = theX(2);
-    theG(1)         = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
-    theG(2)         = 200.0 * (aY - aX * aX);
-    return true;
-  }
+    bool Value(const math_Vector& theX, double& theF) override
+    {
+      const double aX  = theX(1);
+      const double aY  = theX(2);
+      const double aT1 = aY - aX * aX;
+      const double aT2 = 1.0 - aX;
+      theF             = 100.0 * aT1 * aT1 + aT2 * aT2;
+      return true;
+    }
 
-  bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
-  {
-    return Value(theX, theF) && Gradient(theX, theG);
-  }
-};
+    bool Gradient(const math_Vector& theX, math_Vector& theG) override
+    {
+      const double aX = theX(1);
+      const double aY = theX(2);
+      theG(1)         = -400.0 * aX * (aY - aX * aX) - 2.0 * (1.0 - aX);
+      theG(2)         = 200.0 * (aY - aX * aX);
+      return true;
+    }
+
+    bool Values(const math_Vector& theX, double& theF, math_Vector& theG) override
+    {
+      return Value(theX, theF) && Gradient(theX, theG);
+    }
+  };
 
 } // namespace
 

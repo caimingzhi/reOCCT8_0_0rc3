@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Designates how many arrows will be displayed and
 //! where they will be displayed in presenting a length.
 enum DsgPrs_ArrowSide
@@ -15,4 +14,3 @@ enum DsgPrs_ArrowSide
   DsgPrs_AS_FIRSTAR_LASTPT,
   DsgPrs_AS_FIRSTPT_LASTAR
 };
-

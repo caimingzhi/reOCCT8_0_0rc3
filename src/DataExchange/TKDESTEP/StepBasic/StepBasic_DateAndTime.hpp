@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -32,4 +31,3 @@ private:
   occ::handle<StepBasic_Date>      dateComponent;
   occ::handle<StepBasic_LocalTime> timeComponent;
 };
-

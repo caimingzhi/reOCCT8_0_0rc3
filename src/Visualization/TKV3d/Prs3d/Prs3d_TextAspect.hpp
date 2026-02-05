@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_AspectText3d.hpp>
 #include <Graphic3d_TextPath.hpp>
 #include <Graphic3d_HorizontalTextAlignment.hpp>
@@ -99,4 +98,3 @@ protected:
   Graphic3d_VerticalTextAlignment     myVerticalJustification;
   Graphic3d_TextPath                  myOrientation;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum BOPAlgo_Operation
 {
   BOPAlgo_COMMON,
@@ -10,4 +9,3 @@ enum BOPAlgo_Operation
   BOPAlgo_SECTION,
   BOPAlgo_UNKNOWN
 };
-

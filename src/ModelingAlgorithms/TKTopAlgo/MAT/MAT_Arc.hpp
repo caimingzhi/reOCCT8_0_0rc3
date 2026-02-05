@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -90,4 +89,3 @@ private:
   void*                     secondArcRight;
   void*                     secondArcLeft;
 };
-

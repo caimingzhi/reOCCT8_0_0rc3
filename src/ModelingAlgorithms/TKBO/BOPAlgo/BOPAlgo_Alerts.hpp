@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_AlertWithShape.hpp>
 
 //! Boolean operation was stopped by user
@@ -128,4 +127,3 @@ DEFINE_ALERT_WITH_SHAPE(BOPAlgo_AlertShapeIsNotPeriodic)
 
 //! Unable to make closed edge on face (to make a seam)
 DEFINE_ALERT_WITH_SHAPE(BOPAlgo_AlertUnableToMakeClosedEdgeOnFace)
-

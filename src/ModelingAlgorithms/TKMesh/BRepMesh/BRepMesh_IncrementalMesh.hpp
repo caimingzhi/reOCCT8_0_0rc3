@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BRepMesh_DiscretRoot.hpp>
 #include <IMeshTools_Context.hpp>
 #include <Standard_NumericError.hpp>
@@ -121,4 +120,3 @@ protected:
   bool                  myModified;
   int                   myStatus;
 };
-

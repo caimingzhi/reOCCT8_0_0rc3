@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -188,4 +187,3 @@ private:
   int                                                               thenbreps;
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> thereports;
 };
-

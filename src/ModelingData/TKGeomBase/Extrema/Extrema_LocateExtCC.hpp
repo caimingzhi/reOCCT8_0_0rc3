@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -42,4 +41,3 @@ private:
   Extrema_POnCurv myPoint1;
   Extrema_POnCurv myPoint2;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Pnt2d.hpp>
 #include <NCollection_Array1.hpp>
 #include <Standard_Transient.hpp>
@@ -65,4 +64,3 @@ private:
   double                       myDeflection;
   NCollection_Array1<gp_Pnt2d> myNodes;
 };
-

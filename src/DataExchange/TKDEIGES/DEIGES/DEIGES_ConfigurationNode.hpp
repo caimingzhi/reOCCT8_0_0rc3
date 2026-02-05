@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DEIGES_Parameters.hpp>
 #include <DE_ShapeFixConfigurationNode.hpp>
 #include <UnitsMethods_LengthUnit.hpp>
@@ -73,4 +72,3 @@ public:
 public:
   DEIGES_Parameters InternalParameters;
 };
-

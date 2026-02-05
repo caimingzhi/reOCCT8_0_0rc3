@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <NCollection_Sequence.hpp>
@@ -136,4 +135,3 @@ private:
   NCollection_Sequence<occ::handle<XCAFDoc_GraphNode>> myChildren;
   Standard_GUID                                        myGraphID;
 };
-

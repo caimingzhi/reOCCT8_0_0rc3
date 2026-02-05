@@ -1,18 +1,3 @@
-// Created on: 2014-04-24
-// Created by: Kirill Gavrilov
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <AIS_ColoredShape.hpp>
 
 #include <AIS_InteractiveContext.hpp>
@@ -42,19 +27,19 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_ColoredDrawer, Prs3d_Drawer)
 
 namespace
 {
-//! Collect all sub-compounds into map.
-static void collectSubCompounds(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap,
-                                const TopoDS_Shape&                                     theShape)
-{
-  for (TopoDS_Iterator aChildIter(theShape); aChildIter.More(); aChildIter.Next())
+  //! Collect all sub-compounds into map.
+  static void collectSubCompounds(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap,
+                                  const TopoDS_Shape&                                     theShape)
   {
-    const TopoDS_Shape& aShape = aChildIter.Value();
-    if (aShape.ShapeType() == TopAbs_COMPOUND && theMap.Add(aShape))
+    for (TopoDS_Iterator aChildIter(theShape); aChildIter.More(); aChildIter.Next())
     {
-      collectSubCompounds(theMap, aShape);
+      const TopoDS_Shape& aShape = aChildIter.Value();
+      if (aShape.ShapeType() == TopAbs_COMPOUND && theMap.Add(aShape))
+      {
+        collectSubCompounds(theMap, aShape);
+      }
     }
   }
-}
 } // namespace
 
 //=================================================================================================
@@ -331,7 +316,8 @@ void AIS_ColoredShape::Compute(const occ::handle<PrsMgr_PresentationManager>& th
 
   switch (theMode)
   {
-    case AIS_WireFrame: {
+    case AIS_WireFrame:
+    {
       StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(myshape, myDrawer, true);
 
       // After this call if type of deflection is relative
@@ -339,7 +325,8 @@ void AIS_ColoredShape::Compute(const occ::handle<PrsMgr_PresentationManager>& th
       StdPrs_ToolTriangulatedShape::GetDeflection(myshape, myDrawer);
       break;
     }
-    case AIS_Shaded: {
+    case AIS_Shaded:
+    {
       if (myDrawer->IsAutoTriangulation())
       {
         // compute mesh for entire shape beforehand to ensure consistency and optimizations
@@ -358,11 +345,13 @@ void AIS_ColoredShape::Compute(const occ::handle<PrsMgr_PresentationManager>& th
       }
       break;
     }
-    case 2: {
+    case 2:
+    {
       AIS_Shape::Compute(thePrsMgr, thePrs, theMode);
       return;
     }
-    default: {
+    default:
+    {
       return;
     }
   }

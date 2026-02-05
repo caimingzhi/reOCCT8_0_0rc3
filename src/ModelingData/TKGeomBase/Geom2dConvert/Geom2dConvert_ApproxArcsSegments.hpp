@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom2d_Curve.hpp>
 #include <NCollection_Sequence.hpp>
 #include <Geom2dConvert_PPoint.hpp>
@@ -87,4 +86,3 @@ private:
   //! Protection against compiler warning
   void operator=(const Geom2dConvert_ApproxArcsSegments&) = delete;
 };
-

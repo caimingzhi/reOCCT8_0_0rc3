@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopAbs.hpp>
 #include <TopAbs_ShapeEnum.hpp>
 #include <NCollection_List.hpp>
@@ -161,4 +160,3 @@ private:
   NCollection_List<TopoDS_Shape> myShapes;
   int                            myFlags;
 };
-

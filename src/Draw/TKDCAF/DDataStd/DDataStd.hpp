@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -51,4 +50,3 @@ public:
   Standard_EXPORT static void DumpConstraint(const occ::handle<TDataXtd_Constraint>& C,
                                              Standard_OStream&                       S);
 };
-

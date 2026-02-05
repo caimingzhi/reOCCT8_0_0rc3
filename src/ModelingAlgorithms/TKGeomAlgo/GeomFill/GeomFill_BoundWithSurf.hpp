@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Adaptor3d_CurveOnSurface.hpp>
@@ -85,4 +84,3 @@ private:
   Adaptor3d_CurveOnSurface  myConS;
   occ::handle<Law_Function> myPar;
 };
-

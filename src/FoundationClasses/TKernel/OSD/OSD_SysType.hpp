@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Thisd is a set of possible system types.
 //! 'Default' means SysType of machine operating this process.
 //! This can be used with the Path class.
@@ -23,4 +22,3 @@ enum OSD_SysType
   OSD_LinuxREDHAT,
   OSD_Aix
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DataMap.hpp>
 
 //! An internal class for calculation of current largest tolerance value which will be applied for
@@ -51,4 +50,3 @@ private:
   int                           myLargestKey;
   int                           myCustomTolerance;
 };
-

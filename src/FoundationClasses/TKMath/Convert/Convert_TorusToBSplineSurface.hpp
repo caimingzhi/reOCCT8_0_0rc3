@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -49,4 +48,3 @@ public:
   //! torus in the U and V parametric directions.
   Standard_EXPORT Convert_TorusToBSplineSurface(const gp_Torus& T);
 };
-

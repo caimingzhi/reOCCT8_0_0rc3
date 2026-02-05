@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -65,6 +64,7 @@ private:
   FairCurve_DistributionOfSagging MySagging;
   FairCurve_AnalysisCode          MyStatus;
 };
+
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
 // This file is part of Open CASCADE Technology software library.
@@ -87,5 +87,3 @@ inline FairCurve_AnalysisCode FairCurve_EnergyOfBatten::Status() const
 {
   return MyStatus;
 }
-
-

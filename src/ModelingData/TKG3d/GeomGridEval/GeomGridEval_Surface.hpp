@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <GeomAbs_SurfaceType.hpp>
 #include <Geom_Surface.hpp>
@@ -226,4 +225,3 @@ private:
   GeomAbs_SurfaceType    mySurfaceType;
   std::optional<gp_Trsf> myTrsf; //!< Optional transformation for BRepAdaptor surfaces
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -89,4 +88,3 @@ private:
   double          pararg1;
   double          pararg2;
 };
-

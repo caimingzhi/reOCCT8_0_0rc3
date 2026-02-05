@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
@@ -540,4 +539,3 @@ int NCollection_UBTree<TheObjType, TheBndType>::Select(const TreeNode& theBranch
   DEFINE_STANDARD_HANDLE(_HUBTREE, _HPARENT)
 
 #define IMPLEMENT_HUBTREE(_HUBTREE, _HPARENT)
-

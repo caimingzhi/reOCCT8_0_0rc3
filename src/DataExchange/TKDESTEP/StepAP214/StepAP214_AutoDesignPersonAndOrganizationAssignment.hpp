@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepAP214_AutoDesignGeneralOrgItem.hpp>
@@ -41,4 +40,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepAP214_AutoDesignGeneralOrgItem>> items;
 };
-

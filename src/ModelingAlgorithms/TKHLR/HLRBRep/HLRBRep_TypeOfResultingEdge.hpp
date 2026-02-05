@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Identifies the type of resulting edge of HLRBRep_Algo
 enum HLRBRep_TypeOfResultingEdge
 {
@@ -21,4 +20,3 @@ enum HLRBRep_TypeOfResultingEdge
   //! sharp edge (of C0-continuity)
   HLRBRep_Sharp
 };
-

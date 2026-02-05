@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_ProgressRange.hpp>
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>

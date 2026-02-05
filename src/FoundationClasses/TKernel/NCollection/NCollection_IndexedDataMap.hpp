@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseMap.hpp>
 #include <NCollection_TListNode.hpp>
 #include <Standard_TypeMismatch.hpp>
@@ -685,4 +684,3 @@ protected:
 protected:
   Hasher myHasher;
 };
-

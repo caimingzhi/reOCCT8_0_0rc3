@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_InteractiveObject.hpp>
 #include <Graphic3d_ArrayOfPolylines.hpp>
 #include <Graphic3d_ArrayOfTriangles.hpp>

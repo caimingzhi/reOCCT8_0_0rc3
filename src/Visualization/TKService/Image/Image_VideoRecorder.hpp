@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Image_PixMap.hpp>
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DataMap.hpp>
@@ -130,4 +129,3 @@ protected:
   VideoRational myFrameRate;  //!< video framerate
   int64_t       myFrameCount; //!< current frame index
 };
-

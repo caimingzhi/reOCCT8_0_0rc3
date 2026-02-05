@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -34,4 +33,3 @@ protected:
   occ::handle<NCollection_HArray2<gp_Pnt>> myPoles;
   occ::handle<NCollection_HArray2<double>> myWeights;
 };
-

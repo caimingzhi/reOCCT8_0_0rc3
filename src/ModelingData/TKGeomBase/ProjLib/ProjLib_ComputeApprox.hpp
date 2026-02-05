@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
 #include <AppParCurves_Constraint.hpp>
@@ -73,4 +72,3 @@ private:
   int                              myMaxSegments;
   AppParCurves_Constraint          myBndPnt;
 };
-

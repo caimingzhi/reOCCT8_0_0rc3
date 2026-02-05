@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -13,4 +12,3 @@ public:
   //! enforced the initialisation of the libraries
   Standard_EXPORT static void Init();
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <DE_ShapeFixParameters.hpp>
 #include <ShapeProcess.hpp>
 #include <Standard.hpp>
@@ -344,4 +343,3 @@ private:
   occ::handle<XSControl_WorkSession> thesession;
   NCollection_Sequence<TopoDS_Shape> theshapes;
 };
-

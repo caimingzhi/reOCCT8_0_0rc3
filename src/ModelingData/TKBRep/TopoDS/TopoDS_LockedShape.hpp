@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineException.hpp>
 #include <Standard_SStream.hpp>
 #include <Standard_DomainError.hpp>
@@ -17,4 +16,3 @@
 #endif
 
 DEFINE_STANDARD_EXCEPTION(TopoDS_LockedShape, Standard_DomainError)
-

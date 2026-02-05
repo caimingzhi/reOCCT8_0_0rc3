@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -77,4 +76,3 @@ private:
   double          mySqDist[4];
   Extrema_POnSurf myPoint[4];
 };
-

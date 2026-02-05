@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <PrsDim_EllipseRadiusDimension.hpp>
 #include <DsgPrs_ArrowSide.hpp>
 
@@ -43,4 +42,3 @@ private:
   gp_Pnt myApexN;
   gp_Pnt myEndOfArrow;
 };
-

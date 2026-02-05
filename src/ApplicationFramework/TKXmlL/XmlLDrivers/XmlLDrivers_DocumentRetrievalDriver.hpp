@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -65,4 +64,3 @@ protected:
   XmlObjMgt_RRelocationTable       myRelocTable;
   TCollection_ExtendedString       myFileName;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       pl,
@@ -11,4 +10,3 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                           const TopAbs_Orientation            opl2,
                           const double                        r,
                           const TopAbs_Orientation            ofpl);
-

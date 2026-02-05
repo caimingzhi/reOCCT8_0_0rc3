@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_PrimitiveSet.hpp>
 
 //! Implements easy to use interfaces for adding the elements into
@@ -91,4 +90,3 @@ protected:                                             //! @name Fields
   std::vector<DataType>                    myElements; //!< Elements
   std::vector<BVH_Box<NumType, Dimension>> myBoxes;    //!< Boxes for the elements
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdLPersistent_HArray2.hpp>
 #include <StdObject_gp_Vectors.hpp>
 #include <StdObject_gp_Curves.hpp>
@@ -32,4 +31,3 @@ public:
   typedef instance<NCollection_HArray2<gp_Lin2d>>  Lin2d;
   typedef instance<NCollection_HArray2<gp_Circ2d>> Circ2d;
 };
-

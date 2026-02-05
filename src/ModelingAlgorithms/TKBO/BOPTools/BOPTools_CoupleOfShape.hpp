@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //=================================================================================================
@@ -29,4 +28,3 @@ protected:
   TopoDS_Shape myShape1;
   TopoDS_Shape myShape2;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Qualifies an execution status :
 //! RetVoid  : normal execution which created nothing, or
 //! no data to process
@@ -16,4 +15,3 @@ enum IFSelect_ReturnStatus
   IFSelect_RetFail,
   IFSelect_RetStop
 };
-

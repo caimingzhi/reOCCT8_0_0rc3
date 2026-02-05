@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <ShapePersistent_Geom.hpp>
 #include <ShapePersistent_HArray2.hpp>
 #include <StdLPersistent_HArray1.hpp>
@@ -431,4 +430,3 @@ void ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
   Geom_ToroidalSurface,
   gp_Torus>::Write(StdObjMgt_WriteData& theWriteData) const;
-

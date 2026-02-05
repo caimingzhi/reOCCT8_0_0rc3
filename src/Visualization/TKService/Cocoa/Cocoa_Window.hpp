@@ -1,6 +1,5 @@
 #pragma once
 
-
 #if defined(__APPLE__)
   #import <TargetConditionals.h>
 #endif
@@ -137,4 +136,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(Cocoa_Window, Aspect_Window)
 };
-

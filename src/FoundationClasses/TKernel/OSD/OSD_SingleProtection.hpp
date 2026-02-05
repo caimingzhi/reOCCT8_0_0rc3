@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Access rights for files.
 //! R means Read, W means Write, X means eXecute and D means Delete.
 //! On UNIX, the right to Delete is combined with Write access.
@@ -25,4 +24,3 @@ enum OSD_SingleProtection
   OSD_WXD,
   OSD_RWXD
 };
-

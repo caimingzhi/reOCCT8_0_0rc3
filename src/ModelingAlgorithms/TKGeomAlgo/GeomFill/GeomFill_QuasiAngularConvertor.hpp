@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -75,4 +74,3 @@ private:
   math_Vector Vy;
   math_Vector Vw;
 };
-

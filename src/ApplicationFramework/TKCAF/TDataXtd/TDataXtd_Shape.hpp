@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDataStd_GenericEmpty.hpp>
 class TopoDS_Shape;
 class TDF_DataSet;
@@ -45,4 +44,3 @@ public:
 
   DEFINE_DERIVED_ATTRIBUTE(TDataXtd_Shape, TDataStd_GenericEmpty)
 };
-

@@ -86,7 +86,8 @@ void Standard_ErrorHandler::Raise()
 
   // Visit the variant and throw the appropriate exception type
   std::visit(
-    [](auto&& theException) {
+    [](auto&& theException)
+    {
       using T = std::decay_t<decltype(theException)>;
       if constexpr (!std::is_same_v<T, std::monostate>)
       {

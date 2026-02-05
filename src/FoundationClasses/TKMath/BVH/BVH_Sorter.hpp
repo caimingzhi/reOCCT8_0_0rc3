@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BVH_Set.hpp>
 
 //! Tool object to sort abstract primitive set.
@@ -32,4 +31,3 @@ public:
 private:
   bool myIsParallel;
 };
-

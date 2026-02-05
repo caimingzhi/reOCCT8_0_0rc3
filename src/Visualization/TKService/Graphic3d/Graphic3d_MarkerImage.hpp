@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Aspect_TypeOfMarker.hpp>
 #include <NCollection_Vec4.hpp>
 #include <Standard_TypeDef.hpp>
@@ -95,4 +94,3 @@ private:
   int myWidth;  //!< marker width
   int myHeight; //!< marker height
 };
-

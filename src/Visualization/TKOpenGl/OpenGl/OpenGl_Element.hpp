@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 class Graphic3d_FrameStatsDataTmp;
@@ -70,4 +69,3 @@ protected:
 public:
   DEFINE_STANDARD_ALLOC
 };
-

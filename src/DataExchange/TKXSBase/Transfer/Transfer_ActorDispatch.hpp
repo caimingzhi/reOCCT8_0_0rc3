@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -62,4 +61,3 @@ public:
 private:
   Transfer_TransferDispatch thetool;
 };
-

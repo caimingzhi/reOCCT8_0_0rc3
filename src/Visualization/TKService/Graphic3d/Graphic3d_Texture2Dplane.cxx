@@ -1,19 +1,3 @@
-// Created on: 1997-07-28
-// Created by: Pierre CHALAMET
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_Texture2Dplane.hpp>
 #include <Graphic3d_TextureParams.hpp>
 #include <Graphic3d_TypeOfTextureMode.hpp>
@@ -84,19 +68,22 @@ void Graphic3d_Texture2Dplane::SetPlane(const Graphic3d_NameOfTexturePlane thePl
 {
   switch (thePlane)
   {
-    case Graphic3d_NOTP_XY: {
+    case Graphic3d_NOTP_XY:
+    {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f),
                            NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
       break;
     }
-    case Graphic3d_NOTP_YZ: {
+    case Graphic3d_NOTP_YZ:
+    {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f),
                            NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f));
       break;
     }
-    case Graphic3d_NOTP_ZX: {
+    case Graphic3d_NOTP_ZX:
+    {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f),
                            NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f));

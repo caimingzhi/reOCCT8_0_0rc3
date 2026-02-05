@@ -1,23 +1,3 @@
-// Created on: 1995-10-27
-// Created by: Yves FRICAUD
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//  Modified by skv - Tue Mar 15 16:20:43 2005
-// Add methods for supporting history.
-//  Modified by skv - Mon Jan 12 11:50:02 2004 OCC4455
-
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <BRep_Builder.hpp>
 #include <BRep_PointRepresentation.hpp>
@@ -207,41 +187,41 @@ static void DEBVerticesControl(
 
 namespace
 {
-//=======================================================================
-// function : BRepOffset_PIOperation
-// purpose  : List of operations to be supported by the Progress Indicator
-//=======================================================================
-enum BRepOffset_PIOperation
-{
-  PIOperation_CheckInputData = 0,
-  PIOperation_Analyse,
-  PIOperation_BuildOffsetBy,
-  PIOperation_Intersection,
-  PIOperation_MakeMissingWalls,
-  PIOperation_MakeShells,
-  PIOperation_MakeSolid,
-  PIOperation_Sewing,
-  PIOperation_Last
-};
-
-//=======================================================================
-// function : normalizeSteps
-// purpose  : Normalization of progress steps
-//=======================================================================
-static void normalizeSteps(const double theWhole, NCollection_Array1<double>& theSteps)
-{
-  double aSum = 0.;
-  for (int i = theSteps.Lower(); i <= theSteps.Upper(); ++i)
+  //=======================================================================
+  // function : BRepOffset_PIOperation
+  // purpose  : List of operations to be supported by the Progress Indicator
+  //=======================================================================
+  enum BRepOffset_PIOperation
   {
-    aSum += theSteps(i);
-  }
+    PIOperation_CheckInputData = 0,
+    PIOperation_Analyse,
+    PIOperation_BuildOffsetBy,
+    PIOperation_Intersection,
+    PIOperation_MakeMissingWalls,
+    PIOperation_MakeShells,
+    PIOperation_MakeSolid,
+    PIOperation_Sewing,
+    PIOperation_Last
+  };
 
-  // Normalize steps
-  for (int i = theSteps.Lower(); i <= theSteps.Upper(); ++i)
+  //=======================================================================
+  // function : normalizeSteps
+  // purpose  : Normalization of progress steps
+  //=======================================================================
+  static void normalizeSteps(const double theWhole, NCollection_Array1<double>& theSteps)
   {
-    theSteps(i) = theWhole * theSteps(i) / aSum;
+    double aSum = 0.;
+    for (int i = theSteps.Lower(); i <= theSteps.Upper(); ++i)
+    {
+      aSum += theSteps(i);
+    }
+
+    // Normalize steps
+    for (int i = theSteps.Lower(); i <= theSteps.Upper(); ++i)
+    {
+      theSteps(i) = theWhole * theSteps(i) / aSum;
+    }
   }
-}
 
 } // namespace
 
@@ -5034,7 +5014,8 @@ const NCollection_List<TopoDS_Shape>& BRepOffset_MakeOffset::Generated(const Top
   const TopAbs_ShapeEnum aType = theS.ShapeType();
   switch (aType)
   {
-    case TopAbs_VERTEX: {
+    case TopAbs_VERTEX:
+    {
       if (myAnalyse.HasAncestor(theS))
       {
         NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence;
@@ -5064,14 +5045,16 @@ const NCollection_List<TopoDS_Shape>& BRepOffset_MakeOffset::Generated(const Top
       }
     }
       [[fallthrough]];
-    case TopAbs_EDGE: {
+    case TopAbs_EDGE:
+    {
       if (myInitOffsetEdge.HasImage(theS))
       {
         myInitOffsetEdge.LastImage(theS, myGenerated);
       }
     }
       [[fallthrough]];
-    case TopAbs_FACE: {
+    case TopAbs_FACE:
+    {
       TopoDS_Shape        aS        = theS;
       const TopoDS_Shape* aPlanface = myFacePlanfaceMap.Seek(aS);
       if (aPlanface)
@@ -5092,7 +5075,8 @@ const NCollection_List<TopoDS_Shape>& BRepOffset_MakeOffset::Generated(const Top
       }
       break;
     }
-    case TopAbs_SOLID: {
+    case TopAbs_SOLID:
+    {
       if (theS.IsSame(myShape))
         myGenerated.Append(myOffsetShape);
       break;

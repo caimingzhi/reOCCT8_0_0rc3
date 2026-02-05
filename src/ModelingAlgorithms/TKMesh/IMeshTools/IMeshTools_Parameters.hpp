@@ -13,7 +13,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
 //! Enumerates built-in meshing algorithms factories implementing IMeshTools_MeshAlgoFactory
 //! interface.
 enum IMeshTools_MeshAlgoType
@@ -25,7 +24,6 @@ enum IMeshTools_MeshAlgoType
   IMeshTools_MeshAlgoType_Delabella, //!< generate 2D Delaunay triangulation based on Delabella
                                      //!< algorithm (BRepMesh_DelabellaMeshAlgoFactory)
 };
-
 
 #include <Precision.hpp>
 
@@ -112,4 +110,3 @@ struct IMeshTools_Parameters
   //! over the existing one.
   bool AllowQualityDecrease;
 };
-

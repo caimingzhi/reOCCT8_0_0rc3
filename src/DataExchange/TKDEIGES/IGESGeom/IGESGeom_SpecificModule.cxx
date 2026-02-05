@@ -75,7 +75,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
 {
   switch (CN)
   {
-    case 1: {
+    case 1:
+    {
       DeclareAndCast(IGESGeom_BSplineCurve, anent, ent);
       if (anent.IsNull())
         return;
@@ -83,7 +84,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 2: {
+    case 2:
+    {
       DeclareAndCast(IGESGeom_BSplineSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -91,7 +93,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESGeom_Boundary, anent, ent);
       if (anent.IsNull())
         return;
@@ -99,7 +102,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 4: {
+    case 4:
+    {
       DeclareAndCast(IGESGeom_BoundedSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -107,7 +111,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 5: {
+    case 5:
+    {
       DeclareAndCast(IGESGeom_CircularArc, anent, ent);
       if (anent.IsNull())
         return;
@@ -115,7 +120,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 6: {
+    case 6:
+    {
       DeclareAndCast(IGESGeom_CompositeCurve, anent, ent);
       if (anent.IsNull())
         return;
@@ -123,7 +129,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESGeom_ConicArc, anent, ent);
       if (anent.IsNull())
         return;
@@ -131,7 +138,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 8: {
+    case 8:
+    {
       DeclareAndCast(IGESGeom_CopiousData, anent, ent);
       if (anent.IsNull())
         return;
@@ -139,7 +147,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESGeom_CurveOnSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -147,7 +156,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 10: {
+    case 10:
+    {
       DeclareAndCast(IGESGeom_Direction, anent, ent);
       if (anent.IsNull())
         return;
@@ -155,7 +165,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESGeom_Flash, anent, ent);
       if (anent.IsNull())
         return;
@@ -163,7 +174,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 12: {
+    case 12:
+    {
       DeclareAndCast(IGESGeom_Line, anent, ent);
       if (anent.IsNull())
         return;
@@ -171,7 +183,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESGeom_OffsetCurve, anent, ent);
       if (anent.IsNull())
         return;
@@ -179,7 +192,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 14: {
+    case 14:
+    {
       DeclareAndCast(IGESGeom_OffsetSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -187,7 +201,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 15: {
+    case 15:
+    {
       DeclareAndCast(IGESGeom_Plane, anent, ent);
       if (anent.IsNull())
         return;
@@ -195,7 +210,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 16: {
+    case 16:
+    {
       DeclareAndCast(IGESGeom_Point, anent, ent);
       if (anent.IsNull())
         return;
@@ -203,7 +219,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 17: {
+    case 17:
+    {
       DeclareAndCast(IGESGeom_RuledSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -211,7 +228,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 18: {
+    case 18:
+    {
       DeclareAndCast(IGESGeom_SplineCurve, anent, ent);
       if (anent.IsNull())
         return;
@@ -219,7 +237,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 19: {
+    case 19:
+    {
       DeclareAndCast(IGESGeom_SplineSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -227,7 +246,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 20: {
+    case 20:
+    {
       DeclareAndCast(IGESGeom_SurfaceOfRevolution, anent, ent);
       if (anent.IsNull())
         return;
@@ -235,7 +255,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 21: {
+    case 21:
+    {
       DeclareAndCast(IGESGeom_TabulatedCylinder, anent, ent);
       if (anent.IsNull())
         return;
@@ -243,7 +264,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESGeom_TransformationMatrix, anent, ent);
       if (anent.IsNull())
         return;
@@ -251,7 +273,8 @@ void IGESGeom_SpecificModule::OwnDump(const int                               CN
       tool.OwnDump(anent, dumper, S, own);
     }
     break;
-    case 23: {
+    case 23:
+    {
       DeclareAndCast(IGESGeom_TrimmedSurface, anent, ent);
       if (anent.IsNull())
         return;
@@ -270,42 +293,48 @@ bool IGESGeom_SpecificModule::OwnCorrect(const int                              
   //   Applies only on some types
   switch (CN)
   {
-    case 3: {
+    case 3:
+    {
       DeclareAndCast(IGESGeom_Boundary, anent, ent);
       if (anent.IsNull())
         break;
       IGESGeom_ToolBoundary tool;
       return tool.OwnCorrect(anent);
     }
-    case 7: {
+    case 7:
+    {
       DeclareAndCast(IGESGeom_ConicArc, anent, ent);
       if (anent.IsNull())
         break;
       IGESGeom_ToolConicArc tool;
       return tool.OwnCorrect(anent);
     }
-    case 9: {
+    case 9:
+    {
       DeclareAndCast(IGESGeom_Boundary, anent, ent);
       if (anent.IsNull())
         break;
       IGESGeom_ToolBoundary tool;
       return tool.OwnCorrect(anent);
     }
-    case 11: {
+    case 11:
+    {
       DeclareAndCast(IGESGeom_Flash, anent, ent);
       if (anent.IsNull())
         break;
       IGESGeom_ToolFlash tool;
       return tool.OwnCorrect(anent);
     }
-    case 13: {
+    case 13:
+    {
       DeclareAndCast(IGESGeom_OffsetCurve, anent, ent);
       if (anent.IsNull())
         break;
       IGESGeom_ToolOffsetCurve tool;
       return tool.OwnCorrect(anent);
     }
-    case 22: {
+    case 22:
+    {
       DeclareAndCast(IGESGeom_TransformationMatrix, anent, ent);
       if (anent.IsNull())
         break;

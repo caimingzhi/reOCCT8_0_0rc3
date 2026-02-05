@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Surface.hpp>
 #include <IntPatch_WLine.hpp>
 #include <IntPatch_Line.hpp>
@@ -34,4 +33,3 @@ public:
     NCollection_Sequence<occ::handle<IntPatch_Line>>& theNewLines,
     const occ::handle<IntTools_Context>&);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 
 class Graphic3d_Structure;
@@ -19,4 +18,3 @@ public:
     const gp_Trsf&                              theLoc,
     const occ::handle<Graphic3d_TransformPers>& theTrsfPers);
 };
-

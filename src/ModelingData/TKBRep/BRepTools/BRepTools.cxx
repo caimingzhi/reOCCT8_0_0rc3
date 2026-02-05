@@ -1,19 +1,3 @@
-// Created on: 1993-01-21
-// Created by: Remi LEQUETTE
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepTools.hpp>
 
 #include <Adaptor3d_CurveOnSurface.hpp>
@@ -1330,82 +1314,82 @@ TopAbs_Orientation BRepTools::OriEdgeInFace(const TopoDS_Edge& E, const TopoDS_F
 
 namespace
 {
-//=======================================================================
-// function : findInternalsToKeep
-// purpose  : Looks for internal sub-shapes which has to be kept to preserve
-//           topological connectivity.
-//=======================================================================
-static void findInternalsToKeep(
-  const TopoDS_Shape&                                     theS,
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theAllNonInternals,
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theAllInternals,
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theShapesToKeep)
-{
-  for (TopoDS_Iterator it(theS, true); it.More(); it.Next())
+  //=======================================================================
+  // function : findInternalsToKeep
+  // purpose  : Looks for internal sub-shapes which has to be kept to preserve
+  //           topological connectivity.
+  //=======================================================================
+  static void findInternalsToKeep(
+    const TopoDS_Shape&                                     theS,
+    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theAllNonInternals,
+    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theAllInternals,
+    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theShapesToKeep)
   {
-    const TopoDS_Shape& aSS = it.Value();
-    findInternalsToKeep(aSS, theAllNonInternals, theAllInternals, theShapesToKeep);
-
-    if (aSS.Orientation() == TopAbs_INTERNAL)
-      theAllInternals.Add(aSS);
-    else
-      theAllNonInternals.Add(aSS);
-
-    if (theAllNonInternals.Contains(aSS) && theAllInternals.Contains(aSS))
-      theShapesToKeep.Add(aSS);
-  }
-}
-
-//=======================================================================
-// function : removeShapes
-// purpose  : Removes sub-shapes from the shape
-//=======================================================================
-static void removeShapes(TopoDS_Shape& theS, const NCollection_List<TopoDS_Shape>& theLS)
-{
-  BRep_Builder aBB;
-  bool         isFree = theS.Free();
-  theS.Free(true);
-
-  for (NCollection_List<TopoDS_Shape>::Iterator it(theLS); it.More(); it.Next())
-  {
-    aBB.Remove(theS, it.Value());
-  }
-  theS.Free(isFree);
-}
-
-//=======================================================================
-// function : removeInternals
-// purpose  : Removes recursively all internal sub-shapes from the given shape.
-//           Returns true if all sub-shapes have been removed from the shape.
-//=======================================================================
-static bool removeInternals(
-  TopoDS_Shape&                                                 theS,
-  const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>* theShapesToKeep)
-{
-  NCollection_List<TopoDS_Shape> aLRemove;
-  for (TopoDS_Iterator it(theS, true); it.More(); it.Next())
-  {
-    const TopoDS_Shape& aSS = it.Value();
-    if (aSS.Orientation() == TopAbs_INTERNAL)
+    for (TopoDS_Iterator it(theS, true); it.More(); it.Next())
     {
-      if (!theShapesToKeep || !theShapesToKeep->Contains(aSS))
-        aLRemove.Append(aSS);
-    }
-    else
-    {
-      if (removeInternals(*(TopoDS_Shape*)&aSS, theShapesToKeep))
-        aLRemove.Append(aSS);
+      const TopoDS_Shape& aSS = it.Value();
+      findInternalsToKeep(aSS, theAllNonInternals, theAllInternals, theShapesToKeep);
+
+      if (aSS.Orientation() == TopAbs_INTERNAL)
+        theAllInternals.Add(aSS);
+      else
+        theAllNonInternals.Add(aSS);
+
+      if (theAllNonInternals.Contains(aSS) && theAllInternals.Contains(aSS))
+        theShapesToKeep.Add(aSS);
     }
   }
 
-  int aNbSToRemove = aLRemove.Extent();
-  if (aNbSToRemove)
+  //=======================================================================
+  // function : removeShapes
+  // purpose  : Removes sub-shapes from the shape
+  //=======================================================================
+  static void removeShapes(TopoDS_Shape& theS, const NCollection_List<TopoDS_Shape>& theLS)
   {
-    removeShapes(theS, aLRemove);
-    return (theS.NbChildren() == 0);
+    BRep_Builder aBB;
+    bool         isFree = theS.Free();
+    theS.Free(true);
+
+    for (NCollection_List<TopoDS_Shape>::Iterator it(theLS); it.More(); it.Next())
+    {
+      aBB.Remove(theS, it.Value());
+    }
+    theS.Free(isFree);
   }
-  return false;
-}
+
+  //=======================================================================
+  // function : removeInternals
+  // purpose  : Removes recursively all internal sub-shapes from the given shape.
+  //           Returns true if all sub-shapes have been removed from the shape.
+  //=======================================================================
+  static bool removeInternals(
+    TopoDS_Shape&                                                 theS,
+    const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>* theShapesToKeep)
+  {
+    NCollection_List<TopoDS_Shape> aLRemove;
+    for (TopoDS_Iterator it(theS, true); it.More(); it.Next())
+    {
+      const TopoDS_Shape& aSS = it.Value();
+      if (aSS.Orientation() == TopAbs_INTERNAL)
+      {
+        if (!theShapesToKeep || !theShapesToKeep->Contains(aSS))
+          aLRemove.Append(aSS);
+      }
+      else
+      {
+        if (removeInternals(*(TopoDS_Shape*)&aSS, theShapesToKeep))
+          aLRemove.Append(aSS);
+      }
+    }
+
+    int aNbSToRemove = aLRemove.Extent();
+    if (aNbSToRemove)
+    {
+      removeShapes(theS, aLRemove);
+      return (theS.NbChildren() == 0);
+    }
+    return false;
+  }
 
 } // namespace
 

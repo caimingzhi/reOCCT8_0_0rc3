@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp.hpp>
 #include <gp_Mat.hpp>
 #include <Standard_ConstructionError.hpp>
@@ -606,4 +605,3 @@ inline constexpr gp_XYZ operator*(const double theScalar, const gp_XYZ& theCoord
 {
   return theCoord1.Multiplied(theScalar);
 }
-

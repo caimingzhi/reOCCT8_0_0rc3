@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_Label.hpp>
 #include <RWMesh_NameFormat.hpp>
 
@@ -19,4 +18,3 @@ public:
                                                             const TDF_Label&  theLabel,
                                                             const TDF_Label&  theRefLabel);
 };
-

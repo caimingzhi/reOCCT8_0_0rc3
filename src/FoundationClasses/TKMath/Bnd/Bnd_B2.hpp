@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Real.hpp>
@@ -626,4 +625,3 @@ using Bnd_B2d = Bnd_B2<double>;
 
 //! 2D bounding box with single precision
 using Bnd_B2f = Bnd_B2<float>;
-

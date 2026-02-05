@@ -27,10 +27,10 @@
 
 namespace
 {
-static inline double SQR(const double a)
-{
-  return a * a;
-}
+  static inline double SQR(const double a)
+  {
+    return a * a;
+  }
 } // namespace
 
 class DirFunctionBis : public math_Function

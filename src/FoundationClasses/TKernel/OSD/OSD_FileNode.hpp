@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <OSD_Path.hpp>
@@ -84,4 +83,3 @@ protected:
   OSD_Path  myPath;
   OSD_Error myError;
 };
-

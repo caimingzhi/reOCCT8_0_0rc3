@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum ChFiDS_TypeOfConcavity
 {
   ChFiDS_Concave,
@@ -10,4 +9,3 @@ enum ChFiDS_TypeOfConcavity
   ChFiDS_Other,
   ChFiDS_Mixed
 };
-

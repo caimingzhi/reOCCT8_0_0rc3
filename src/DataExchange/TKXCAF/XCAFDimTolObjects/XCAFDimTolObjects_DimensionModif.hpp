@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines modifirs
 enum XCAFDimTolObjects_DimensionModif
 {
@@ -29,4 +28,3 @@ enum XCAFDimTolObjects_DimensionModif
   XCAFDimTolObjects_DimensionModif_FreeStateCondition,
   XCAFDimTolObjects_DimensionModif_Between
 };
-

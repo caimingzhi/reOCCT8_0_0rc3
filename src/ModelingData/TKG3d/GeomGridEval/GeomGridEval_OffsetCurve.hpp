@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Geom_Curve.hpp>
 #include <Geom_OffsetCurve.hpp>
 #include <GeomGridEval.hpp>
@@ -94,4 +93,3 @@ private:
   double                        myOffset;
   gp_Dir                        myDirection;
 };
-

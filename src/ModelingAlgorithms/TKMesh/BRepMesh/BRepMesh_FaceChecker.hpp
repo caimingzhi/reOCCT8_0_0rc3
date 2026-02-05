@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <IMeshTools_Parameters.hpp>
 #include <Standard_Transient.hpp>
 #include <IMeshData_Face.hpp>
@@ -91,4 +90,3 @@ private:
   occ::handle<ArrayOfMapOfIEdgePtr> myWiresIntersectingEdges;
   Handle(IMeshData::MapOfIEdgePtr)  myIntersectingEdges;
 };
-

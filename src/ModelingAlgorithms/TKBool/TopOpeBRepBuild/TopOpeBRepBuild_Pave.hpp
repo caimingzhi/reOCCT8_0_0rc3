@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -51,4 +50,3 @@ private:
   TopoDS_Shape      mySameDomain;
   TopOpeBRepDS_Kind myIntType;
 };
-

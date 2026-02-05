@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_ColoredShape.hpp>
 
 #include <TDF_Label.hpp>
@@ -60,4 +59,3 @@ protected:
 public:
   DEFINE_STANDARD_RTTIEXT(XCAFPrs_AISObject, AIS_ColoredShape)
 };
-

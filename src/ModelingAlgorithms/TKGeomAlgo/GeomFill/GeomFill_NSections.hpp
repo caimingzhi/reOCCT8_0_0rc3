@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Real.hpp>
@@ -199,4 +198,3 @@ private:
   occ::handle<Geom_BSplineSurface>              mySurface;
   occ::handle<Geom_BSplineSurface>              myRefSurf;
 };
-

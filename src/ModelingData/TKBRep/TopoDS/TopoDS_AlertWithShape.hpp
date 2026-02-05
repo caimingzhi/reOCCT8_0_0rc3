@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Message_Alert.hpp>
 #include <TopoDS_Shape.hpp>
 
@@ -41,4 +40,3 @@ private:
     }                                                                                              \
     DEFINE_STANDARD_RTTI_INLINE(Alert, TopoDS_AlertWithShape)                                      \
   };
-

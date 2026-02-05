@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Error that can occur during the fillet construction on planar wire.
 enum ChFi2d_ConstructionError
 {
@@ -21,4 +20,3 @@ enum ChFi2d_ConstructionError
   ChFi2d_NotAuthorized //!< One or the two edges connected to the vertex is a fillet or a chamfer;
                        //!< One or the two edges connected to the vertex is not a line or a circle
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -40,4 +39,3 @@ public:
   //! False otherwise.
   Standard_EXPORT virtual bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) = 0;
 };
-

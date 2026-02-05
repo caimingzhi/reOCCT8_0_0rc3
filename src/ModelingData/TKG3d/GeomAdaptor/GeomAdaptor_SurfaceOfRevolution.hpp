@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <GeomAdaptor_Surface.hpp>
 
 class gp_Pln;
@@ -161,4 +160,3 @@ private:
   bool                         myHaveAxis;   ///< whether axis of revolution is initialized
   gp_Ax3                       myAxeRev; ///< auxiliary trihedron according to the curve position
 };
-

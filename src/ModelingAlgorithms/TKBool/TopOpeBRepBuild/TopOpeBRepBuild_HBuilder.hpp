@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -170,4 +169,3 @@ private:
   TopoDS_Shape                                                    myEmptyShape;
   NCollection_List<int>                                           myEmptyIntegerList;
 };
-

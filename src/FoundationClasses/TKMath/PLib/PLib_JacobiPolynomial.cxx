@@ -28,23 +28,24 @@ namespace
 #include "PLib_JacobiPolynomial_Data.hpp"
 #include "PLib_JacobiPolynomial_Coeffs.hpp"
 
-// The possible values for NbGaussPoints
-constexpr int THE_NB_GAUSS_POINTS_8 = 8, THE_NB_GAUSS_POINTS_10 = 10, THE_NB_GAUSS_POINTS_15 = 15,
-              THE_NB_GAUSS_POINTS_20 = 20, THE_NB_GAUSS_POINTS_25 = 25, THE_NB_GAUSS_POINTS_30 = 30,
-              THE_NB_GAUSS_POINTS_40 = 40, THE_NB_GAUSS_POINTS_50 = 50, THE_NB_GAUSS_POINTS_61 = 61;
+  // The possible values for NbGaussPoints
+  constexpr int THE_NB_GAUSS_POINTS_8 = 8, THE_NB_GAUSS_POINTS_10 = 10, THE_NB_GAUSS_POINTS_15 = 15,
+                THE_NB_GAUSS_POINTS_20 = 20, THE_NB_GAUSS_POINTS_25 = 25,
+                THE_NB_GAUSS_POINTS_30 = 30, THE_NB_GAUSS_POINTS_40 = 40,
+                THE_NB_GAUSS_POINTS_50 = 50, THE_NB_GAUSS_POINTS_61 = 61;
 
-constexpr int THE_INVALID_VALUE = -999;
+  constexpr int THE_INVALID_VALUE = -999;
 
-// Maximum supported polynomial degree
-constexpr int THE_MAX_DEGREE = 30;
+  // Maximum supported polynomial degree
+  constexpr int THE_MAX_DEGREE = 30;
 
-// Lookup tables for database pointers indexed by myNivConstr (constraint level)
-constexpr double const* THE_WEIGHTS_DB[3]    = {WeightsDB_C0, WeightsDB_C1, WeightsDB_C2};
-constexpr double const* THE_WEIGHTS_DB0[3]   = {WeightsDB0_C0, WeightsDB0_C1, WeightsDB0_C2};
-constexpr double const* THE_MAX_VALUES_DB[3] = {MaxValuesDB_C0, MaxValuesDB_C1, MaxValuesDB_C2};
-constexpr double const* THE_TRANS_MATRIX[3]  = {&TransMatrix_C0[0][0],
-                                                &TransMatrix_C1[0][0],
-                                                &TransMatrix_C2[0][0]};
+  // Lookup tables for database pointers indexed by myNivConstr (constraint level)
+  constexpr double const* THE_WEIGHTS_DB[3]    = {WeightsDB_C0, WeightsDB_C1, WeightsDB_C2};
+  constexpr double const* THE_WEIGHTS_DB0[3]   = {WeightsDB0_C0, WeightsDB0_C1, WeightsDB0_C2};
+  constexpr double const* THE_MAX_VALUES_DB[3] = {MaxValuesDB_C0, MaxValuesDB_C1, MaxValuesDB_C2};
+  constexpr double const* THE_TRANS_MATRIX[3]  = {&TransMatrix_C0[0][0],
+                                                  &TransMatrix_C1[0][0],
+                                                  &TransMatrix_C2[0][0]};
 } // namespace
 
 //=================================================================================================

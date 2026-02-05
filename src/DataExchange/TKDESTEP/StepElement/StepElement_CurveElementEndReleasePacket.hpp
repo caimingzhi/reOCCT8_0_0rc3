@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepElement_CurveElementFreedom.hpp>
@@ -37,4 +36,3 @@ private:
   StepElement_CurveElementFreedom theReleaseFreedom;
   double                          theReleaseStiffness;
 };
-

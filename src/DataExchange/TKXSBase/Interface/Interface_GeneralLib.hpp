@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -77,4 +76,3 @@ private:
   occ::handle<Interface_NodeOfGeneralLib> thelist;
   occ::handle<Interface_NodeOfGeneralLib> thecurr;
 };
-

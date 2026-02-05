@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Plate_D1.hpp>
@@ -37,4 +36,3 @@ private:
   Plate_D1 myG1Target;
   int      myOrientation;
 };
-

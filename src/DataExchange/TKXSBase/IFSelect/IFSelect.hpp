@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -38,4 +37,3 @@ public:
   Standard_EXPORT static bool RestoreSession(const occ::handle<IFSelect_WorkSession>& WS,
                                              const char*                              file);
 };
-

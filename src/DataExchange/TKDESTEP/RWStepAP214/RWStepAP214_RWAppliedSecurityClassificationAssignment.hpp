@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -33,4 +32,3 @@ public:
     const occ::handle<StepAP214_AppliedSecurityClassificationAssignment>& ent,
     Interface_EntityIterator&                                             iter) const;
 };
-

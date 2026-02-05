@@ -80,19 +80,23 @@ Storage_Error FSD_File::Open(const TCollection_AsciiString& aName, const Storage
     std::ios_base::openmode anOpenMode = std::ios_base::openmode{};
     switch (aMode)
     {
-      case Storage_VSNone: {
+      case Storage_VSNone:
+      {
         break;
       }
-      case Storage_VSRead: {
+      case Storage_VSRead:
+      {
         // std::ios::nocreate is not portable
         anOpenMode = std::ios::in;
         break;
       }
-      case Storage_VSWrite: {
+      case Storage_VSWrite:
+      {
         anOpenMode = std::ios::out;
         break;
       }
-      case Storage_VSReadWrite: {
+      case Storage_VSReadWrite:
+      {
         anOpenMode = std::ios::in | std::ios::out;
         break;
       }
@@ -1313,7 +1317,8 @@ Storage_Position FSD_File::Tell()
       return (Storage_Position)myStream.tellp();
     case Storage_VSWrite:
       return (Storage_Position)myStream.tellg();
-    case Storage_VSReadWrite: {
+    case Storage_VSReadWrite:
+    {
       Storage_Position aPosR = (Storage_Position)myStream.tellp();
       Storage_Position aPosW = (Storage_Position)myStream.tellg();
       if (aPosR < aPosW)

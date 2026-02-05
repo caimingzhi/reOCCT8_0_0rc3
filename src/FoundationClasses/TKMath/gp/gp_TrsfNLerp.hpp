@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Trsf.hpp>
 #include <gp_QuaternionNLerp.hpp>
 #include <NCollection_Lerp.hpp>
@@ -72,4 +71,3 @@ private:
   gp_Trsf                  myTrsfStart;
   gp_Trsf                  myTrsfEnd;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Defines modifirs
 enum XCAFDimTolObjects_DatumModifWithValue
 {
@@ -10,4 +9,3 @@ enum XCAFDimTolObjects_DatumModifWithValue
   XCAFDimTolObjects_DatumModifWithValue_Projected,
   XCAFDimTolObjects_DatumModifWithValue_Spherical
 };
-

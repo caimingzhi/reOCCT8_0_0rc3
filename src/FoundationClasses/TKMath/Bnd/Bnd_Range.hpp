@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_ConstructionError.hpp>
 
 #include <NCollection_List.hpp>
@@ -233,4 +232,3 @@ private:
   double myFirst; //!< Start of range
   double myLast;  //!< End   of range
 };
-

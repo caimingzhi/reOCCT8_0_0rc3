@@ -1,18 +1,3 @@
-// Created on: 2016-04-19
-// Copyright (c) 2016 OPEN CASCADE SAS
-// Created by: Oleg AGASHIN
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <BRepMesh_NURBSRangeSplitter.hpp>
 
 #include <algorithm>
@@ -25,268 +10,268 @@
 
 namespace
 {
-class AnalyticalFilter
-{
-public:
-  //! Constructor.
-  AnalyticalFilter(const IMeshData::IFaceHandle&            theDFace,
-                   const GeomAbs_IsoType                    theIsoType,
-                   const Handle(IMeshData::SequenceOfReal)& theParams,
-                   const Handle(IMeshData::SequenceOfReal)& theControlParams,
-                   const Handle(IMeshData::MapOfReal)&      theParamsForbiddenToRemove,
-                   const Handle(IMeshData::MapOfReal)&      theControlParamsForbiddenToRemove)
-      : myDFace(theDFace),
-        mySurface(myDFace->GetSurface()->Surface().Surface()),
-        myIsoU(theIsoType == GeomAbs_IsoU),
-        myParams(theParams),
-        myControlParams(theControlParams),
-        myParamsForbiddenToRemove(theParamsForbiddenToRemove),
-        myControlParamsForbiddenToRemove(theControlParamsForbiddenToRemove),
-        myAllocator(new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE)),
-        myControlParamsToRemove(new IMeshData::MapOfReal(1, myAllocator)),
-        myCurrParam(0.0),
-        myCurrControlParam(0.0),
-        myPrevControlParam(0.0)
+  class AnalyticalFilter
   {
-  }
-
-  //! Returns map of parameters supposed to be removed.
-  const Handle(IMeshData::MapOfReal)& GetControlParametersToRemove(
-    const IMeshTools_Parameters& theParameters)
-  {
-    myParameters = theParameters;
-
-    int aStartIndex, aEndIndex;
-    if (myIsoU)
+  public:
+    //! Constructor.
+    AnalyticalFilter(const IMeshData::IFaceHandle&            theDFace,
+                     const GeomAbs_IsoType                    theIsoType,
+                     const Handle(IMeshData::SequenceOfReal)& theParams,
+                     const Handle(IMeshData::SequenceOfReal)& theControlParams,
+                     const Handle(IMeshData::MapOfReal)&      theParamsForbiddenToRemove,
+                     const Handle(IMeshData::MapOfReal)&      theControlParamsForbiddenToRemove)
+        : myDFace(theDFace),
+          mySurface(myDFace->GetSurface()->Surface().Surface()),
+          myIsoU(theIsoType == GeomAbs_IsoU),
+          myParams(theParams),
+          myControlParams(theControlParams),
+          myParamsForbiddenToRemove(theParamsForbiddenToRemove),
+          myControlParamsForbiddenToRemove(theControlParamsForbiddenToRemove),
+          myAllocator(new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE)),
+          myControlParamsToRemove(new IMeshData::MapOfReal(1, myAllocator)),
+          myCurrParam(0.0),
+          myCurrControlParam(0.0),
+          myPrevControlParam(0.0)
     {
-      aStartIndex = 1;
-      aEndIndex   = myParams->Length();
-    }
-    else
-    {
-      aStartIndex = 2;
-      aEndIndex   = myParams->Length() - 1;
     }
 
-    for (int i = aStartIndex; i <= aEndIndex; ++i)
+    //! Returns map of parameters supposed to be removed.
+    const Handle(IMeshData::MapOfReal)& GetControlParametersToRemove(
+      const IMeshTools_Parameters& theParameters)
     {
-      myCurrParam = myParams->Value(i);
-      myIso =
-        new GeomAdaptor_Curve(myIsoU ? mySurface->UIso(myCurrParam) : mySurface->VIso(myCurrParam));
+      myParameters = theParameters;
 
-      myPrevControlParam = myControlParams->Value(1);
-      myIso->D1(myPrevControlParam, myPrevControlPnt, myPrevControlVec);
-      for (int j = 2; j <= myControlParams->Length();)
+      int aStartIndex, aEndIndex;
+      if (myIsoU)
       {
-        j += checkControlPointAndMoveOn(j);
-      }
-    }
-
-    return myControlParamsToRemove;
-  }
-
-private:
-  //! Checks the given control point for deviation.
-  //! Returns number of steps to be used to move point iterator.
-  int checkControlPointAndMoveOn(const int theIndex)
-  {
-    int aMoveSteps     = 0;
-    myCurrControlParam = myControlParams->Value(theIndex);
-    myIso->D1(myCurrControlParam, myCurrControlPnt, myCurrControlVec);
-
-    const double aMidParam = 0.5 * (myPrevControlParam + myCurrControlParam);
-    const gp_Pnt aMidPnt   = myIso->Value(aMidParam);
-
-    const double aSqDist =
-      BRepMesh_GeomTool::SquareDeflectionOfSegment(myPrevControlPnt, myCurrControlPnt, aMidPnt);
-
-    double anAngle = 0.0;
-
-    if ((myPrevControlVec.SquareMagnitude() > Precision::SquareConfusion())
-        && (myCurrControlVec.SquareMagnitude() > Precision::SquareConfusion()))
-    {
-      anAngle = myPrevControlVec.Angle(myCurrControlVec);
-    }
-
-    const double aSqMaxDeflection = myDFace->GetDeflection() * myDFace->GetDeflection();
-
-    if (((aSqDist > aSqMaxDeflection) || (anAngle > myParameters.AngleInterior))
-        && aSqDist > myParameters.MinSize * myParameters.MinSize)
-    {
-      // insertion
-      myControlParams->InsertBefore(theIndex, aMidParam);
-    }
-    else
-    {
-      // Here we should leave at least 3 parameters as far as
-      // we must have at least one parameter related to surface
-      // internals in order to prevent movement of triangle body
-      // outside the surface in case of highly curved ones, e.g.
-      // BSpline springs.
-      if (((aSqDist < aSqMaxDeflection) || (anAngle < myParameters.AngleInterior))
-          && myControlParams->Length() > 3 && theIndex < myControlParams->Length())
-      {
-        // Remove too dense points
-        const double aTmpParam = myControlParams->Value(theIndex + 1);
-        if (checkParameterForDeflectionAndUpdateCache(aTmpParam))
-        {
-          ++aMoveSteps;
-        }
-      }
-
-      myPrevControlParam = myCurrControlParam;
-      myPrevControlPnt   = myCurrControlPnt;
-      myPrevControlVec   = myCurrControlVec;
-
-      ++aMoveSteps;
-    }
-
-    return aMoveSteps;
-  }
-
-  //! Checks whether the given param suits specified deflection. Updates cache.
-  bool checkParameterForDeflectionAndUpdateCache(const double theParam)
-  {
-    gp_Pnt aTmpPnt;
-    gp_Vec aTmpVec;
-    myIso->D1(theParam, aTmpPnt, aTmpVec);
-
-    const double aTmpMidParam = 0.5 * (myPrevControlParam + theParam);
-    const gp_Pnt aTmpMidPnt   = myIso->Value(aTmpMidParam);
-
-    // Lets check next parameter.
-    // If it also fits deflection, we can remove previous parameter.
-    const double aSqDist =
-      BRepMesh_GeomTool::SquareDeflectionOfSegment(myPrevControlPnt, aTmpPnt, aTmpMidPnt);
-
-    if (aSqDist < myDFace->GetDeflection() * myDFace->GetDeflection())
-    {
-      // Lets check parameters for angular deflection.
-      if (myPrevControlVec.SquareMagnitude() < gp::Resolution()
-          || aTmpVec.SquareMagnitude() < gp::Resolution()
-          || myPrevControlVec.Angle(aTmpVec) < myParameters.AngleInterior)
-      {
-        // For current Iso line we can remove this parameter.
-        myControlParamsToRemove->Add(myCurrControlParam);
-        myCurrControlParam = theParam;
-        myCurrControlPnt   = aTmpPnt;
-        myCurrControlVec   = aTmpVec;
-        return true;
+        aStartIndex = 1;
+        aEndIndex   = myParams->Length();
       }
       else
       {
-        // We have found a place on the surface refusing
-        // removement of this parameter.
-        myParamsForbiddenToRemove->Add(myCurrParam);
-        myControlParamsForbiddenToRemove->Add(myCurrControlParam);
+        aStartIndex = 2;
+        aEndIndex   = myParams->Length() - 1;
       }
+
+      for (int i = aStartIndex; i <= aEndIndex; ++i)
+      {
+        myCurrParam = myParams->Value(i);
+        myIso       = new GeomAdaptor_Curve(myIsoU ? mySurface->UIso(myCurrParam)
+                                             : mySurface->VIso(myCurrParam));
+
+        myPrevControlParam = myControlParams->Value(1);
+        myIso->D1(myPrevControlParam, myPrevControlPnt, myPrevControlVec);
+        for (int j = 2; j <= myControlParams->Length();)
+        {
+          j += checkControlPointAndMoveOn(j);
+        }
+      }
+
+      return myControlParamsToRemove;
     }
 
-    return false;
-  }
-
-private:
-  IMeshData::IFaceHandle            myDFace;
-  occ::handle<Geom_Surface>         mySurface;
-  bool                              myIsoU;
-  Handle(IMeshData::SequenceOfReal) myParams;
-  Handle(IMeshData::SequenceOfReal) myControlParams;
-
-  Handle(IMeshData::MapOfReal) myParamsForbiddenToRemove;
-  Handle(IMeshData::MapOfReal) myControlParamsForbiddenToRemove;
-
-  occ::handle<NCollection_IncAllocator> myAllocator;
-  Handle(IMeshData::MapOfReal)          myControlParamsToRemove;
-
-  IMeshTools_Parameters                 myParameters;
-  NCollection_Handle<GeomAdaptor_Curve> myIso;
-
-  double myCurrParam;
-
-  double myCurrControlParam;
-  gp_Pnt myCurrControlPnt;
-  gp_Vec myCurrControlVec;
-
-  double myPrevControlParam;
-  gp_Pnt myPrevControlPnt;
-  gp_Vec myPrevControlVec;
-};
-
-//! Adds param to map if it fits specified range.
-bool addParam(const double&                    theParam,
-              const std::pair<double, double>& theRange,
-              IMeshData::IMapOfReal&           theParams)
-{
-  if (theParam < theRange.first || theParam > theRange.second)
-  {
-    return false;
-  }
-
-  theParams.Add(theParam);
-  return true;
-}
-
-//! Initializes parameters map using CN intervals.
-bool initParamsFromIntervals(const NCollection_Array1<double>& theIntervals,
-                             const std::pair<double, double>&  theRange,
-                             const bool                        isSplitIntervals,
-                             IMeshData::IMapOfReal&            theParams)
-{
-  bool isAdded = false;
-
-  for (int i = theIntervals.Lower(); i <= theIntervals.Upper(); ++i)
-  {
-    const double aStartParam = theIntervals.Value(i);
-    if (addParam(aStartParam, theRange, theParams))
+  private:
+    //! Checks the given control point for deviation.
+    //! Returns number of steps to be used to move point iterator.
+    int checkControlPointAndMoveOn(const int theIndex)
     {
-      isAdded = true;
+      int aMoveSteps     = 0;
+      myCurrControlParam = myControlParams->Value(theIndex);
+      myIso->D1(myCurrControlParam, myCurrControlPnt, myCurrControlVec);
+
+      const double aMidParam = 0.5 * (myPrevControlParam + myCurrControlParam);
+      const gp_Pnt aMidPnt   = myIso->Value(aMidParam);
+
+      const double aSqDist =
+        BRepMesh_GeomTool::SquareDeflectionOfSegment(myPrevControlPnt, myCurrControlPnt, aMidPnt);
+
+      double anAngle = 0.0;
+
+      if ((myPrevControlVec.SquareMagnitude() > Precision::SquareConfusion())
+          && (myCurrControlVec.SquareMagnitude() > Precision::SquareConfusion()))
+      {
+        anAngle = myPrevControlVec.Angle(myCurrControlVec);
+      }
+
+      const double aSqMaxDeflection = myDFace->GetDeflection() * myDFace->GetDeflection();
+
+      if (((aSqDist > aSqMaxDeflection) || (anAngle > myParameters.AngleInterior))
+          && aSqDist > myParameters.MinSize * myParameters.MinSize)
+      {
+        // insertion
+        myControlParams->InsertBefore(theIndex, aMidParam);
+      }
+      else
+      {
+        // Here we should leave at least 3 parameters as far as
+        // we must have at least one parameter related to surface
+        // internals in order to prevent movement of triangle body
+        // outside the surface in case of highly curved ones, e.g.
+        // BSpline springs.
+        if (((aSqDist < aSqMaxDeflection) || (anAngle < myParameters.AngleInterior))
+            && myControlParams->Length() > 3 && theIndex < myControlParams->Length())
+        {
+          // Remove too dense points
+          const double aTmpParam = myControlParams->Value(theIndex + 1);
+          if (checkParameterForDeflectionAndUpdateCache(aTmpParam))
+          {
+            ++aMoveSteps;
+          }
+        }
+
+        myPrevControlParam = myCurrControlParam;
+        myPrevControlPnt   = myCurrControlPnt;
+        myPrevControlVec   = myCurrControlVec;
+
+        ++aMoveSteps;
+      }
+
+      return aMoveSteps;
     }
 
-    if (isSplitIntervals && i < theIntervals.Upper())
+    //! Checks whether the given param suits specified deflection. Updates cache.
+    bool checkParameterForDeflectionAndUpdateCache(const double theParam)
     {
-      const double aMidParam = (aStartParam + theIntervals.Value(i + 1)) / 2.;
-      if (addParam(aMidParam, theRange, theParams))
+      gp_Pnt aTmpPnt;
+      gp_Vec aTmpVec;
+      myIso->D1(theParam, aTmpPnt, aTmpVec);
+
+      const double aTmpMidParam = 0.5 * (myPrevControlParam + theParam);
+      const gp_Pnt aTmpMidPnt   = myIso->Value(aTmpMidParam);
+
+      // Lets check next parameter.
+      // If it also fits deflection, we can remove previous parameter.
+      const double aSqDist =
+        BRepMesh_GeomTool::SquareDeflectionOfSegment(myPrevControlPnt, aTmpPnt, aTmpMidPnt);
+
+      if (aSqDist < myDFace->GetDeflection() * myDFace->GetDeflection())
+      {
+        // Lets check parameters for angular deflection.
+        if (myPrevControlVec.SquareMagnitude() < gp::Resolution()
+            || aTmpVec.SquareMagnitude() < gp::Resolution()
+            || myPrevControlVec.Angle(aTmpVec) < myParameters.AngleInterior)
+        {
+          // For current Iso line we can remove this parameter.
+          myControlParamsToRemove->Add(myCurrControlParam);
+          myCurrControlParam = theParam;
+          myCurrControlPnt   = aTmpPnt;
+          myCurrControlVec   = aTmpVec;
+          return true;
+        }
+        else
+        {
+          // We have found a place on the surface refusing
+          // removement of this parameter.
+          myParamsForbiddenToRemove->Add(myCurrParam);
+          myControlParamsForbiddenToRemove->Add(myCurrControlParam);
+        }
+      }
+
+      return false;
+    }
+
+  private:
+    IMeshData::IFaceHandle            myDFace;
+    occ::handle<Geom_Surface>         mySurface;
+    bool                              myIsoU;
+    Handle(IMeshData::SequenceOfReal) myParams;
+    Handle(IMeshData::SequenceOfReal) myControlParams;
+
+    Handle(IMeshData::MapOfReal) myParamsForbiddenToRemove;
+    Handle(IMeshData::MapOfReal) myControlParamsForbiddenToRemove;
+
+    occ::handle<NCollection_IncAllocator> myAllocator;
+    Handle(IMeshData::MapOfReal)          myControlParamsToRemove;
+
+    IMeshTools_Parameters                 myParameters;
+    NCollection_Handle<GeomAdaptor_Curve> myIso;
+
+    double myCurrParam;
+
+    double myCurrControlParam;
+    gp_Pnt myCurrControlPnt;
+    gp_Vec myCurrControlVec;
+
+    double myPrevControlParam;
+    gp_Pnt myPrevControlPnt;
+    gp_Vec myPrevControlVec;
+  };
+
+  //! Adds param to map if it fits specified range.
+  bool addParam(const double&                    theParam,
+                const std::pair<double, double>& theRange,
+                IMeshData::IMapOfReal&           theParams)
+  {
+    if (theParam < theRange.first || theParam > theRange.second)
+    {
+      return false;
+    }
+
+    theParams.Add(theParam);
+    return true;
+  }
+
+  //! Initializes parameters map using CN intervals.
+  bool initParamsFromIntervals(const NCollection_Array1<double>& theIntervals,
+                               const std::pair<double, double>&  theRange,
+                               const bool                        isSplitIntervals,
+                               IMeshData::IMapOfReal&            theParams)
+  {
+    bool isAdded = false;
+
+    for (int i = theIntervals.Lower(); i <= theIntervals.Upper(); ++i)
+    {
+      const double aStartParam = theIntervals.Value(i);
+      if (addParam(aStartParam, theRange, theParams))
       {
         isAdded = true;
       }
+
+      if (isSplitIntervals && i < theIntervals.Upper())
+      {
+        const double aMidParam = (aStartParam + theIntervals.Value(i + 1)) / 2.;
+        if (addParam(aMidParam, theRange, theParams))
+        {
+          isAdded = true;
+        }
+      }
     }
+
+    return isAdded;
   }
 
-  return isAdded;
-}
-
-//! Checks whether intervals should be split.
-//! Returns true in case if it is impossible to compute normal
-//! directly on intervals, false is returned elsewhere.
-bool toSplitIntervals(const occ::handle<Geom_Surface>& theSurf,
-                      const NCollection_Array1<double> (&theIntervals)[2])
-{
-  int aIntervalU = theIntervals[0].Lower();
-  for (; aIntervalU <= theIntervals[0].Upper(); ++aIntervalU)
+  //! Checks whether intervals should be split.
+  //! Returns true in case if it is impossible to compute normal
+  //! directly on intervals, false is returned elsewhere.
+  bool toSplitIntervals(const occ::handle<Geom_Surface>& theSurf,
+                        const NCollection_Array1<double> (&theIntervals)[2])
   {
-    const double aParamU = theIntervals[0].Value(aIntervalU);
-    if (Precision::IsInfinite(aParamU))
-      continue;
-
-    int aIntervalV = theIntervals[1].Lower();
-    for (; aIntervalV <= theIntervals[1].Upper(); ++aIntervalV)
+    int aIntervalU = theIntervals[0].Lower();
+    for (; aIntervalU <= theIntervals[0].Upper(); ++aIntervalU)
     {
-      gp_Dir       aNorm;
-      const double aParamV = theIntervals[1].Value(aIntervalV);
-      if (Precision::IsInfinite(aParamV))
+      const double aParamU = theIntervals[0].Value(aIntervalU);
+      if (Precision::IsInfinite(aParamU))
         continue;
 
-      if (GeomLib::NormEstim(theSurf, gp_Pnt2d(aParamU, aParamV), Precision::Confusion(), aNorm)
-          != 0)
+      int aIntervalV = theIntervals[1].Lower();
+      for (; aIntervalV <= theIntervals[1].Upper(); ++aIntervalV)
       {
-        return true;
-      }
-      // TODO: do not split intervals if there is no normal in the middle of interval.
-    }
-  }
+        gp_Dir       aNorm;
+        const double aParamV = theIntervals[1].Value(aIntervalV);
+        if (Precision::IsInfinite(aParamV))
+          continue;
 
-  return false;
-}
+        if (GeomLib::NormEstim(theSurf, gp_Pnt2d(aParamU, aParamV), Precision::Confusion(), aNorm)
+            != 0)
+        {
+          return true;
+        }
+        // TODO: do not split intervals if there is no normal in the middle of interval.
+      }
+    }
+
+    return false;
+  }
 } // namespace
 
 //=================================================================================================

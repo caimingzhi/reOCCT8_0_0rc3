@@ -14,24 +14,35 @@ AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveDeclarations: Consecutive
 AlignTrailingComments: true
-AllowShortFunctionsOnASingleLine: Inline
 AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeTernaryOperators: true
-ColumnLimit: 100
 ContinuationIndentWidth: 2
-IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
-IndentWidth: 2
 IndentWrappedFunctionNames: true
 PackConstructorInitializers: Never
 PointerAlignment: Left
 ReferenceAlignment: Left
 SeparateDefinitionBlocks: Always
-SortIncludes: false
+
+IndentWidth: 2
+TabWidth: 2
 UseTab: Never
+IndentCaseLabels: true
+AccessModifierOffset: -2
+
+NamespaceIndentation: All
+FixNamespaceComments: true
+
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+ColumnLimit: 100
+SortIncludes: false
+
 #
 # OCCT specific settings
 StatementMacros:

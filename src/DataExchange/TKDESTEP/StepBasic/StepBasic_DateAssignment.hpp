@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -29,4 +28,3 @@ private:
   occ::handle<StepBasic_Date>     assignedDate;
   occ::handle<StepBasic_DateRole> role;
 };
-

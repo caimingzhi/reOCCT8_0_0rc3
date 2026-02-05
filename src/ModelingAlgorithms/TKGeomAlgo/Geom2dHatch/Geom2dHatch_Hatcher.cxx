@@ -1,19 +1,3 @@
-// Created on: 1993-11-04
-// Created by: Jean Marc LACHAUME
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Geom2dAdaptor_Curve.hpp>
 #include <Geom2dHatch_Classifier.hpp>
 #include <Geom2dHatch_Element.hpp>
@@ -645,36 +629,44 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
         PntE.SetParameter((Pnt1.ParamOnSecond() + Pnt2.ParamOnSecond()) / 2.);
         switch (TrsPnt1E.PositionOnCurve())
         {
-          case IntRes2d_Head: {
+          case IntRes2d_Head:
+          {
             PntE.SetPosition(TopAbs_FORWARD);
             break;
           }
-          case IntRes2d_Middle: {
+          case IntRes2d_Middle:
+          {
             switch (TrsPnt2E.PositionOnCurve())
             {
-              case IntRes2d_Head: {
+              case IntRes2d_Head:
+              {
                 PntE.SetPosition(TopAbs_FORWARD);
                 break;
               }
-              case IntRes2d_Middle: {
+              case IntRes2d_Middle:
+              {
                 PntE.SetPosition(TopAbs_INTERNAL);
                 break;
               }
-              case IntRes2d_End: {
+              case IntRes2d_End:
+              {
                 PntE.SetPosition(TopAbs_REVERSED);
                 break;
               }
-              default: {
+              default:
+              {
                 break;
               }
             }
             break;
           }
-          case IntRes2d_End: {
+          case IntRes2d_End:
+          {
             PntE.SetPosition(TopAbs_REVERSED);
             break;
           }
-          default: {
+          default:
+          {
             break;
           }
         }
@@ -688,36 +680,44 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
         PntH.SetParameter((Pnt1.ParamOnFirst() + Pnt2.ParamOnFirst()) / 2.);
         switch (TrsPnt1H.PositionOnCurve())
         {
-          case IntRes2d_Head: {
+          case IntRes2d_Head:
+          {
             PntH.SetPosition(TopAbs_FORWARD);
             break;
           }
-          case IntRes2d_Middle: {
+          case IntRes2d_Middle:
+          {
             switch (TrsPnt2H.PositionOnCurve())
             {
-              case IntRes2d_Head: {
+              case IntRes2d_Head:
+              {
                 PntH.SetPosition(TopAbs_FORWARD);
                 break;
               }
-              case IntRes2d_Middle: {
+              case IntRes2d_Middle:
+              {
                 PntH.SetPosition(TopAbs_INTERNAL);
                 break;
               }
-              case IntRes2d_End: {
+              case IntRes2d_End:
+              {
                 PntH.SetPosition(TopAbs_REVERSED);
                 break;
               }
-              default: {
+              default:
+              {
                 break;
               }
             }
             break;
           }
-          case IntRes2d_End: {
+          case IntRes2d_End:
+          {
             PntH.SetPosition(TopAbs_REVERSED);
             break;
           }
-          default: {
+          default:
+          {
             break;
           }
         }

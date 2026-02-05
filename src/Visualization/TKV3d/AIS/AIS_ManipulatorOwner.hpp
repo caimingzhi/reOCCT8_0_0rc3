@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <AIS_Manipulator.hpp>
 
 #include <SelectMgr_EntityOwner.hpp>
@@ -36,4 +35,3 @@ protected:
   int                 myIndex; //!< index of manipulator axis.
   AIS_ManipulatorMode myMode;  //!< manipulation (highlight) mode.
 };
-

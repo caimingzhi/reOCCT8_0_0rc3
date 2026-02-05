@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -126,4 +125,3 @@ private:
   gp_GTrsf myGTrsf;
   double   myGScale;
 };
-

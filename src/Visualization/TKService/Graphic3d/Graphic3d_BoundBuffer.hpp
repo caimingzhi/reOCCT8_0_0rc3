@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Buffer.hpp>
 
 //! Bounds buffer.
@@ -65,4 +64,3 @@ public:
   int                      NbBounds;    //!< number of bounds
   int                      NbMaxBounds; //!< number of allocated bounds
 };
-

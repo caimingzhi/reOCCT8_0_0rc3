@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
 //! Contains quadrangles strip array definition.
@@ -67,4 +66,3 @@ public:
   {
   }
 };
-

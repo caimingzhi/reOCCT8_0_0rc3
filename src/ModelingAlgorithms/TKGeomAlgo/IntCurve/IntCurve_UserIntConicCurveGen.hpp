@@ -376,7 +376,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
   switch (typ2)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Lin1, D1, ThePCurveTool::Line(C2), D2, TolConf, Tol);
       if (Composite)
@@ -390,7 +391,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Lin1, D1, ThePCurveTool::Circle(C2), D2, TolConf, Tol);
       if (Composite)
@@ -404,7 +406,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Lin1, D1, ThePCurveTool::Ellipse(C2), D2, TolConf, Tol);
       if (Composite)
@@ -418,7 +421,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Lin1, D1, ThePCurveTool::Parabola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -432,7 +436,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Lin1, D1, ThePCurveTool::Hyperbola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -446,7 +451,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     }
     break;
 
-    default: {
+    default:
+    {
       intconicurv.SetReversedParameters(false);
       intconicurv.Perform(Lin1, D1, C2, D2, TolConf, Tol);
       if (Composite)
@@ -478,7 +484,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
   switch (typ2)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Line(C2), D2, Circ1, D1, TolConf, Tol);
       if (Composite)
@@ -492,7 +499,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Circ1, D1, ThePCurveTool::Circle(C2), D2, TolConf, Tol);
       if (Composite)
@@ -506,7 +514,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Circ1, D1, ThePCurveTool::Ellipse(C2), D2, TolConf, Tol);
       if (Composite)
@@ -520,7 +529,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Circ1, D1, ThePCurveTool::Parabola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -534,7 +544,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Circ1, D1, ThePCurveTool::Hyperbola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -548,7 +559,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
     }
     break;
 
-    default: {
+    default:
+    {
       intconicurv.SetReversedParameters(false);
       intconicurv.Perform(Circ1, D1, C2, D2, TolConf, Tol);
       if (Composite)
@@ -580,7 +592,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
   switch (typ2)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Line(C2), D2, Elips1, D1, TolConf, Tol);
       if (Composite)
@@ -594,7 +607,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Circle(C2), D2, Elips1, D1, TolConf, Tol);
       if (Composite)
@@ -608,7 +622,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Elips1, D1, ThePCurveTool::Ellipse(C2), D2, TolConf, Tol);
       if (Composite)
@@ -622,7 +637,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Elips1, D1, ThePCurveTool::Parabola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -636,7 +652,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Elips1, D1, ThePCurveTool::Hyperbola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -650,7 +667,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     }
     break;
 
-    default: {
+    default:
+    {
       intconicurv.SetReversedParameters(false);
       intconicurv.Perform(Elips1, D1, C2, D2, TolConf, Tol);
       if (Composite)
@@ -682,7 +700,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
   switch (typ2)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Line(C2), D2, Parab1, D1, TolConf, Tol);
       if (Composite)
@@ -696,7 +715,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Circle(C2), D2, Parab1, D1, TolConf, Tol);
       if (Composite)
@@ -710,7 +730,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Ellipse(C2), D2, Parab1, D1, TolConf, Tol);
       if (Composite)
@@ -724,7 +745,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Parab1, D1, ThePCurveTool::Parabola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -738,7 +760,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Parab1, D1, ThePCurveTool::Hyperbola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -752,7 +775,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
     }
     break;
 
-    default: {
+    default:
+    {
       intconicurv.SetReversedParameters(false);
       intconicurv.Perform(Parab1, D1, C2, D2, TolConf, Tol);
       if (Composite)
@@ -784,7 +808,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
   switch (typ2)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_Line:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Line(C2), D2, Hyper1, D1, TolConf, Tol);
       if (Composite)
@@ -798,7 +823,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_Circle:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Circle(C2), D2, Hyper1, D1, TolConf, Tol);
       if (Composite)
@@ -812,7 +838,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_Ellipse:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Ellipse(C2), D2, Hyper1, D1, TolConf, Tol);
       if (Composite)
@@ -826,7 +853,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_Parabola:
+    {
       intconiconi.SetReversedParameters(true);
       intconiconi.Perform(ThePCurveTool::Parabola(C2), D2, Hyper1, D1, TolConf, Tol);
       if (Composite)
@@ -840,7 +868,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_Hyperbola:
+    {
       intconiconi.SetReversedParameters(false);
       intconiconi.Perform(Hyper1, D1, ThePCurveTool::Hyperbola(C2), D2, TolConf, Tol);
       if (Composite)
@@ -854,7 +883,8 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     }
     break;
 
-    default: {
+    default:
+    {
       intconicurv.SetReversedParameters(false);
       intconicurv.Perform(Hyper1, D1, C2, D2, TolConf, Tol);
       if (Composite)

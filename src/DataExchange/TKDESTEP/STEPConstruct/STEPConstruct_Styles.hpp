@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -173,4 +172,3 @@ private:
   NCollection_IndexedMap<occ::handle<Standard_Transient>> myRootStyles;
   NCollection_Sequence<occ::handle<Standard_Transient>>   myPSA;
 };
-

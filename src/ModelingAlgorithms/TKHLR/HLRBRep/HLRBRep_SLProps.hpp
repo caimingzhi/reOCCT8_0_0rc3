@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -154,4 +153,3 @@ private:
   LProp_Status       myNormalStatus;
   LProp_Status       myCurvatureStatus;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_BaseMap.hpp>
 #include <NCollection_TListNode.hpp>
 #include <Standard_MultiplyDefined.hpp>
@@ -521,4 +520,3 @@ protected:
   Hasher1 myHasher1;
   Hasher2 myHasher2;
 };
-

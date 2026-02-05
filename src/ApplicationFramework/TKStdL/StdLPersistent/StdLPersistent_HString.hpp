@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Persistent.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -49,4 +48,3 @@ public:
     inline const char* PName() const override { return "PCollection_HExtendedString"; }
   };
 };
-

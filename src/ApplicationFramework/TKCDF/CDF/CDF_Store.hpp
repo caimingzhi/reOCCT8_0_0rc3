@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -111,4 +110,3 @@ private:
   TCollection_ExtendedString myText;
   PCDM_StoreStatus           myStatus;
 };
-

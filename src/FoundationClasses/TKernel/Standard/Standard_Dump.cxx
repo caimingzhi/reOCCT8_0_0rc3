@@ -424,11 +424,13 @@ bool Standard_Dump::SplitJson(
     bool aProcessed = false;
     switch (aKey)
     {
-      case Standard_JsonKey_Quote: {
+      case Standard_JsonKey_Quote:
+      {
         aProcessed = splitKeyToValue(theStreamStr, aNextIndex, aNextIndex, theKeyToValues);
         break;
       }
-      case Standard_JsonKey_OpenChild: {
+      case Standard_JsonKey_OpenChild:
+      {
         int aStartIndex = aNextIndex;
         int aClosePos   = nextClosePosition(theStreamStr,
                                           aStartIndex,
@@ -445,7 +447,8 @@ bool Standard_Dump::SplitJson(
         aNextIndex = aClosePos + int(JsonKeyLength(Standard_JsonKey_CloseChild));
         break;
       }
-      case Standard_JsonKey_SeparatorValueToValue: {
+      case Standard_JsonKey_SeparatorValueToValue:
+      {
         continue;
       }
       default:
@@ -507,7 +510,8 @@ bool Standard_Dump::splitKeyToValue(
   theNextIndex = -1;
   switch (aKey)
   {
-    case Standard_JsonKey_OpenChild: {
+    case Standard_JsonKey_OpenChild:
+    {
       aCloseIndex = nextClosePosition(theStreamStr,
                                       aStartIndex,
                                       Standard_JsonKey_OpenChild,
@@ -517,7 +521,8 @@ bool Standard_Dump::splitKeyToValue(
       theNextIndex = aCloseIndex + 1;
       break;
     }
-    case Standard_JsonKey_OpenContainer: {
+    case Standard_JsonKey_OpenContainer:
+    {
       aCloseIndex = nextClosePosition(theStreamStr,
                                       aStartIndex,
                                       Standard_JsonKey_OpenContainer,
@@ -527,7 +532,8 @@ bool Standard_Dump::splitKeyToValue(
       theNextIndex = aCloseIndex + 1;
       break;
     }
-    case Standard_JsonKey_Quote: {
+    case Standard_JsonKey_Quote:
+    {
       Standard_JsonKey aKeyTmp = Standard_JsonKey_None;
       if (jsonKey(theStreamStr, aStartIndex, aCloseIndex, aKeyTmp)
           && aKeyTmp == Standard_JsonKey_Quote) // emptyValue
@@ -546,7 +552,8 @@ bool Standard_Dump::splitKeyToValue(
       }
       break;
     }
-    case Standard_JsonKey_None: {
+    case Standard_JsonKey_None:
+    {
       if (aStartIndex == theStreamStr.Length())
       {
         aSplitValue =

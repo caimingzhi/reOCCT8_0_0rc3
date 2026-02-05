@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -33,21 +32,20 @@ private:
 
 namespace std
 {
-template <>
-struct hash<StepToTopoDS_PointPair>
-{
-  size_t operator()(const StepToTopoDS_PointPair& thePointPair) const noexcept
+  template <>
+  struct hash<StepToTopoDS_PointPair>
   {
-    // Combine two int values into a single hash value.
-    size_t aCombination[2];
-    aCombination[0] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint1());
-    aCombination[1] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint2());
-    if (aCombination[0] > aCombination[1])
+    size_t operator()(const StepToTopoDS_PointPair& thePointPair) const noexcept
     {
-      std::swap(aCombination[0], aCombination[1]);
+      // Combine two int values into a single hash value.
+      size_t aCombination[2];
+      aCombination[0] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint1());
+      aCombination[1] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint2());
+      if (aCombination[0] > aCombination[1])
+      {
+        std::swap(aCombination[0], aCombination[1]);
+      }
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+  };
 } // namespace std
-

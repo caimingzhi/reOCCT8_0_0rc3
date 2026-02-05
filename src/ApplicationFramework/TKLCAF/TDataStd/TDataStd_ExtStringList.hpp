@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TCollection_ExtendedString.hpp>
@@ -98,4 +97,3 @@ private:
   NCollection_List<TCollection_ExtendedString> myList;
   Standard_GUID                                myID;
 };
-

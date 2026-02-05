@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Extrema_GFuncExtPC.hpp>
 #include <Extrema_POnCurv2d.hpp>
 #include <HLRBRep_TypeDef.hpp>
@@ -18,4 +17,3 @@ using HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter =
                      gp_Pnt2d,
                      gp_Vec2d,
                      NCollection_Sequence<Extrema_POnCurv2d>>;
-

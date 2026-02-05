@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -51,4 +50,3 @@ private:
   occ::handle<StepGeom_GeometricRepresentationContext>  geometricRepresentationContext;
   occ::handle<StepRepr_ParametricRepresentationContext> parametricRepresentationContext;
 };
-

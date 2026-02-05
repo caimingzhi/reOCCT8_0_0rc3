@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StepTidy_EntityReducer.hpp>
 // Copyright (c) 2025 OPEN CASCADE SAS
 //
@@ -14,7 +13,6 @@
 //
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
-
 
 #include <StepTidy_Axis2Placement3dHasher.hpp>
 
@@ -59,8 +57,6 @@ struct StepTidy_PlaneHasher
   }
 };
 
-
-
 #include <StepGeom_Plane.hpp>
 
 //! Processor for merging StepGeom_Plane entities.
@@ -93,4 +89,3 @@ private:
                             const occ::handle<StepGeom_Plane>&     theNewEntity,
                             const occ::handle<Standard_Transient>& theSharing);
 };
-

@@ -1,19 +1,3 @@
-// Created on: 1992-01-20
-// Created by: Remi GILET
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ElCLib.hpp>
 #include <Geom2dGcc_CurveTool.hpp>
 #include <Geom2dGcc_FunctionTanCuCuCu.hpp>
@@ -38,33 +22,38 @@ void Geom2dGcc_FunctionTanCuCuCu::InitDerivative(const math_Vector& X,
 {
   switch (TheType)
   {
-    case Geom2dGcc_CiCuCu: {
+    case Geom2dGcc_CiCuCu:
+    {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CiCiCu: {
+    case Geom2dGcc_CiCiCu:
+    {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       ElCLib::D2(X(2), Circ2, Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CiLiCu: {
+    case Geom2dGcc_CiLiCu:
+    {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       ElCLib::D1(X(2), Lin2, Point2, Tan2);
       D22 = gp_Vec2d(0., 0.);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_LiCuCu: {
+    case Geom2dGcc_LiCuCu:
+    {
       ElCLib::D1(X(1), Lin1, Point1, Tan1);
       D21 = gp_Vec2d(0., 0.);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_LiLiCu: {
+    case Geom2dGcc_LiLiCu:
+    {
       ElCLib::D1(X(1), Lin1, Point1, Tan1);
       D21 = gp_Vec2d(0., 0.);
       ElCLib::D1(X(2), Lin2, Point2, Tan2);
@@ -72,13 +61,15 @@ void Geom2dGcc_FunctionTanCuCuCu::InitDerivative(const math_Vector& X,
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CuCuCu: {
+    case Geom2dGcc_CuCuCu:
+    {
       Geom2dGcc_CurveTool::D2(Curv1, X(1), Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    default: {
+    default:
+    {
       throw Standard_ConstructionError();
     }
   }

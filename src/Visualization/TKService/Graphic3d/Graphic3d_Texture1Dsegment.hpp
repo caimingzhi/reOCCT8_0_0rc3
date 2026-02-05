@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Graphic3d_Texture1D.hpp>
@@ -52,4 +51,3 @@ private:
   float myY2;
   float myZ2;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_Map.hpp>
 #include <Poly_Triangulation.hpp>
 #include <Standard_HashUtils.hpp>
@@ -332,4 +331,3 @@ private:
   bool   myToDropDegenerative; //!< flag to filter our degenerate elements
   bool   myToMergeElems;       //!< flag to merge elements
 };
-

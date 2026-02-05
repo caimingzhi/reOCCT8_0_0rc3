@@ -1,6 +1,5 @@
 #pragma once
 
-
 //! Allows great accuracy for error management.
 //! This is private.
 enum OSD_WhoAmI
@@ -21,4 +20,3 @@ enum OSD_WhoAmI
   OSD_WPackage,
   OSD_WEnvironmentIterator
 };
-

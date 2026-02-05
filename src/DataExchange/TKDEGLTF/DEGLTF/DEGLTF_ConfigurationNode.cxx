@@ -20,11 +20,11 @@ IMPLEMENT_STANDARD_RTTIEXT(DEGLTF_ConfigurationNode, DE_ConfigurationNode)
 
 namespace
 {
-static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
-{
-  static const TCollection_AsciiString aScope = "provider";
-  return aScope;
-}
+  static const TCollection_AsciiString& THE_CONFIGURATION_SCOPE()
+  {
+    static const TCollection_AsciiString aScope = "provider";
+    return aScope;
+  }
 
 } // namespace
 

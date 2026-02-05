@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Draw_Interpretor.hpp>
 #include <NCollection_Map.hpp>
 #include <Quantity_ColorRGBA.hpp>
@@ -258,4 +257,3 @@ protected:
                                         Quantity_ColorRGBA& theColor,
                                         bool                theToParseAlpha);
 };
-

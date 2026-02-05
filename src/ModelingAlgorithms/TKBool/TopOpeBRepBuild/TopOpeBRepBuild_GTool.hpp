@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -42,4 +41,3 @@ public:
 
   Standard_EXPORT static void Dump(Standard_OStream& OS);
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Bnd_OBB.hpp>
@@ -40,4 +39,3 @@ private:
   //! Color value
   Draw_Color myColor;
 };
-

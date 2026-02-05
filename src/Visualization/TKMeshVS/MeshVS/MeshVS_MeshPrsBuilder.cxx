@@ -1,18 +1,3 @@
-// Created on: 2003-09-16
-// Created by: Alexander SOLOVYOV
-// Copyright (c) 2003-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Graphic3d_ArrayOfPoints.hpp>
 #include <Graphic3d_ArrayOfPolygons.hpp>
 #include <Graphic3d_ArrayOfPrimitives.hpp>
@@ -51,79 +36,79 @@ IMPLEMENT_STANDARD_RTTIEXT(MeshVS_MeshPrsBuilder, MeshVS_PrsBuilder)
 
 namespace
 {
-//================================================================
-// Function : ProcessFace
-// Purpose  : Fill array with triangles for the face
-//================================================================
-static void ProcessFace(const NCollection_Sequence<int>&                theFaceNodes,
-                        const NCollection_Array1<double>&               theNodes,
-                        const double*                                   theCenter,
-                        const double                                    theShrinkCoef,
-                        const bool                                      theIsShrinked,
-                        const bool                                      theIsShaded,
-                        const occ::handle<Graphic3d_ArrayOfPrimitives>& theArray)
-{
-  const int aNbPolyNodes = theFaceNodes.Length();
-
-  double* aPolyNodesBuf = (double*)alloca((3 * aNbPolyNodes + 1) * sizeof(double));
-  NCollection_Array1<double> aPolyNodes(*aPolyNodesBuf, 0, 3 * aNbPolyNodes);
-
-  for (int aNodeIdx = 0; aNodeIdx < aNbPolyNodes; ++aNodeIdx)
+  //================================================================
+  // Function : ProcessFace
+  // Purpose  : Fill array with triangles for the face
+  //================================================================
+  static void ProcessFace(const NCollection_Sequence<int>&                theFaceNodes,
+                          const NCollection_Array1<double>&               theNodes,
+                          const double*                                   theCenter,
+                          const double                                    theShrinkCoef,
+                          const bool                                      theIsShrinked,
+                          const bool                                      theIsShaded,
+                          const occ::handle<Graphic3d_ArrayOfPrimitives>& theArray)
   {
-    int anIdx = theFaceNodes.Value(aNodeIdx + 1);
+    const int aNbPolyNodes = theFaceNodes.Length();
 
-    double aX = theNodes.Value(theNodes.Lower() + 3 * anIdx + 0);
-    double aY = theNodes.Value(theNodes.Lower() + 3 * anIdx + 1);
-    double aZ = theNodes.Value(theNodes.Lower() + 3 * anIdx + 2);
+    double* aPolyNodesBuf = (double*)alloca((3 * aNbPolyNodes + 1) * sizeof(double));
+    NCollection_Array1<double> aPolyNodes(*aPolyNodesBuf, 0, 3 * aNbPolyNodes);
 
-    if (theIsShrinked)
+    for (int aNodeIdx = 0; aNodeIdx < aNbPolyNodes; ++aNodeIdx)
     {
-      aX = theCenter[0] + theShrinkCoef * (aX - theCenter[0]);
-      aY = theCenter[1] + theShrinkCoef * (aY - theCenter[1]);
-      aZ = theCenter[2] + theShrinkCoef * (aZ - theCenter[2]);
+      int anIdx = theFaceNodes.Value(aNodeIdx + 1);
+
+      double aX = theNodes.Value(theNodes.Lower() + 3 * anIdx + 0);
+      double aY = theNodes.Value(theNodes.Lower() + 3 * anIdx + 1);
+      double aZ = theNodes.Value(theNodes.Lower() + 3 * anIdx + 2);
+
+      if (theIsShrinked)
+      {
+        aX = theCenter[0] + theShrinkCoef * (aX - theCenter[0]);
+        aY = theCenter[1] + theShrinkCoef * (aY - theCenter[1]);
+        aZ = theCenter[2] + theShrinkCoef * (aZ - theCenter[2]);
+      }
+
+      aPolyNodes.SetValue(3 * aNodeIdx + 1, aX);
+      aPolyNodes.SetValue(3 * aNodeIdx + 2, aY);
+      aPolyNodes.SetValue(3 * aNodeIdx + 3, aZ);
     }
 
-    aPolyNodes.SetValue(3 * aNodeIdx + 1, aX);
-    aPolyNodes.SetValue(3 * aNodeIdx + 2, aY);
-    aPolyNodes.SetValue(3 * aNodeIdx + 3, aZ);
-  }
+    gp_Vec aNorm;
 
-  gp_Vec aNorm;
-
-  if (theIsShaded)
-  {
-    aPolyNodes.SetValue(0, aNbPolyNodes);
-
-    if (!MeshVS_Tool::GetAverageNormal(aPolyNodes, aNorm))
+    if (theIsShaded)
     {
-      aNorm.SetCoord(0.0, 0.0, 1.0);
-    }
-  }
+      aPolyNodes.SetValue(0, aNbPolyNodes);
 
-  // clang-format off
+      if (!MeshVS_Tool::GetAverageNormal(aPolyNodes, aNorm))
+      {
+        aNorm.SetCoord(0.0, 0.0, 1.0);
+      }
+    }
+
+    // clang-format off
     for (int aNodeIdx = 0; aNodeIdx < aNbPolyNodes - 2; ++aNodeIdx) // triangulate polygon
-  // clang-format on
-  {
-    for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx) // generate sub-triangle
+    // clang-format on
     {
-      if (theIsShaded)
+      for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx) // generate sub-triangle
       {
-        theArray->AddVertex(aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
-                            aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
-                            aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 3),
-                            aNorm.X(),
-                            aNorm.Y(),
-                            aNorm.Z());
-      }
-      else
-      {
-        theArray->AddVertex(aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
-                            aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
-                            aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 3));
+        if (theIsShaded)
+        {
+          theArray->AddVertex(aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
+                              aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
+                              aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 3),
+                              aNorm.X(),
+                              aNorm.Y(),
+                              aNorm.Z());
+        }
+        else
+        {
+          theArray->AddVertex(aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
+                              aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
+                              aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 3));
+        }
       }
     }
   }
-}
 } // namespace
 
 //=================================================================================================
@@ -422,7 +407,8 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
 
     switch (aType)
     {
-      case MeshVS_ET_Volume: {
+      case MeshVS_ET_Volume:
+      {
         if (IsExcludingOn())
           IDsToExclude.Add(aKey);
 
@@ -457,7 +443,8 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
       }
       break;
 
-      case MeshVS_ET_Link: {
+      case MeshVS_ET_Link:
+      {
         if (IsExcludingOn())
           IDsToExclude.Add(aKey);
 
@@ -468,7 +455,8 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
       }
       break;
 
-      case MeshVS_ET_Face: {
+      case MeshVS_ET_Face:
+      {
         if (IsExcludingOn())
           IDsToExclude.Add(aKey);
 
@@ -550,7 +538,8 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
       }
       break;
 
-      default: {
+      default:
+      {
         aCustomElements.Add(aKey);
       }
     }
@@ -632,7 +621,8 @@ void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation
 
   switch (aType)
   {
-    case MeshVS_ET_Node: {
+    case MeshVS_ET_Node:
+    {
       aHilightGroup->SetPrimitivesAspect(aNodeMark);
       occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
       anArrayOfPoints->AddVertex(aCoords(1), aCoords(2), aCoords(3));
@@ -640,7 +630,8 @@ void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation
     }
     break;
 
-    case MeshVS_ET_Link: {
+    case MeshVS_ET_Link:
+    {
       aHilightGroup->SetPrimitivesAspect(aBeam);
       occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(2);
       aPrims->AddVertex(aCoords(1), aCoords(2), aCoords(3));
@@ -693,7 +684,8 @@ void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation
       }
       break;
 
-    default: {
+    default:
+    {
       TColStd_PackedMapOfInteger tmp;
       CustomBuild(Prs, IDs, tmp, MeshVS_DMF_HilightPrs);
     }

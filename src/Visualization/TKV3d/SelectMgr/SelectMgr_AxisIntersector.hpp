@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SelectMgr_BaseIntersector.hpp>
 
 #include <gp_Ax1.hpp>
@@ -189,4 +188,3 @@ protected:
 private:
   gp_Ax1 myAxis;
 };
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 

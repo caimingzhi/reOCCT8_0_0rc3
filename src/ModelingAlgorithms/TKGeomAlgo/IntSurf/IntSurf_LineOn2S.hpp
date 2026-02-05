@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Bnd_Box.hpp>
@@ -70,6 +69,7 @@ private:
   Bnd_Box2d                             myBuv2;
   Bnd_Box                               myBxyz;
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -119,5 +119,3 @@ inline void IntSurf_LineOn2S::Clear()
   myBuv2.SetWhole();
   myBxyz.SetWhole();
 }
-
-

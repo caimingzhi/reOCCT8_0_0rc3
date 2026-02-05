@@ -21,142 +21,142 @@
 
 namespace
 {
-constexpr double THE_TOLERANCE = 1.0e-10;
-constexpr double THE_PI        = 3.14159265358979323846;
+  constexpr double THE_TOLERANCE = 1.0e-10;
+  constexpr double THE_PI        = 3.14159265358979323846;
 
-//! Constant function: f(x) = 5
-//! Integral from a to b = 5*(b-a)
-class ConstantFunc
-{
-public:
-  bool Value(double, double& theF) const
+  //! Constant function: f(x) = 5
+  //! Integral from a to b = 5*(b-a)
+  class ConstantFunc
   {
-    theF = 5.0;
-    return true;
-  }
-};
+  public:
+    bool Value(double, double& theF) const
+    {
+      theF = 5.0;
+      return true;
+    }
+  };
 
-//! Linear function: f(x) = 2x + 1
-//! Integral from a to b = x^2 + x |_a^b
-class LinearFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Linear function: f(x) = 2x + 1
+  //! Integral from a to b = x^2 + x |_a^b
+  class LinearFunc
   {
-    theF = 2.0 * theX + 1.0;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = 2.0 * theX + 1.0;
+      return true;
+    }
+  };
 
-//! Quadratic function: f(x) = x^2
-//! Integral from 0 to 1 = 1/3
-class QuadraticFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Quadratic function: f(x) = x^2
+  //! Integral from 0 to 1 = 1/3
+  class QuadraticFunc
   {
-    theF = theX * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = theX * theX;
+      return true;
+    }
+  };
 
-//! Sine function: f(x) = sin(x)
-//! Integral from 0 to PI = 2
-class SinFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Sine function: f(x) = sin(x)
+  //! Integral from 0 to PI = 2
+  class SinFunc
   {
-    theF = std::sin(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(theX);
+      return true;
+    }
+  };
 
-//! Cosine function: f(x) = cos(x)
-//! Integral from 0 to PI/2 = 1
-class CosFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Cosine function: f(x) = cos(x)
+  //! Integral from 0 to PI/2 = 1
+  class CosFunc
   {
-    theF = std::cos(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::cos(theX);
+      return true;
+    }
+  };
 
-//! Exponential function: f(x) = e^x
-//! Integral from 0 to 1 = e - 1
-class ExpFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Exponential function: f(x) = e^x
+  //! Integral from 0 to 1 = e - 1
+  class ExpFunc
   {
-    theF = std::exp(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(theX);
+      return true;
+    }
+  };
 
-//! Polynomial: f(x) = x^5 - 3x^3 + 2x
-//! Gauss quadrature should be exact for polynomials up to degree 2n-1
-class PolynomialFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Polynomial: f(x) = x^5 - 3x^3 + 2x
+  //! Gauss quadrature should be exact for polynomials up to degree 2n-1
+  class PolynomialFunc
   {
-    const double aX2 = theX * theX;
-    const double aX3 = aX2 * theX;
-    theF             = aX2 * aX3 - 3.0 * aX3 + 2.0 * theX;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      const double aX2 = theX * theX;
+      const double aX3 = aX2 * theX;
+      theF             = aX2 * aX3 - 3.0 * aX3 + 2.0 * theX;
+      return true;
+    }
+  };
 
-//! Gaussian function: f(x) = e^(-x^2)
-//! Integral from -inf to inf = sqrt(PI)
-class GaussianFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Gaussian function: f(x) = e^(-x^2)
+  //! Integral from -inf to inf = sqrt(PI)
+  class GaussianFunc
   {
-    theF = std::exp(-theX * theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::exp(-theX * theX);
+      return true;
+    }
+  };
 
-//! Reciprocal function: f(x) = 1/x
-//! Integral from 1 to e = 1
-class ReciprocalFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Reciprocal function: f(x) = 1/x
+  //! Integral from 1 to e = 1
+  class ReciprocalFunc
   {
-    theF = 1.0 / theX;
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = 1.0 / theX;
+      return true;
+    }
+  };
 
-//! Oscillatory function: f(x) = sin(10x)
-//! Requires more points or subdivision
-class OscillatoryFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Oscillatory function: f(x) = sin(10x)
+  //! Requires more points or subdivision
+  class OscillatoryFunc
   {
-    theF = std::sin(10.0 * theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sin(10.0 * theX);
+      return true;
+    }
+  };
 
-//! Square root: f(x) = sqrt(x)
-//! Integral from 0 to 1 = 2/3
-class SqrtFunc
-{
-public:
-  bool Value(double theX, double& theF) const
+  //! Square root: f(x) = sqrt(x)
+  //! Integral from 0 to 1 = 2/3
+  class SqrtFunc
   {
-    theF = std::sqrt(theX);
-    return true;
-  }
-};
+  public:
+    bool Value(double theX, double& theF) const
+    {
+      theF = std::sqrt(theX);
+      return true;
+    }
+  };
 } // namespace
 
 // ============================================================================

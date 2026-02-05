@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Expr_UnaryExpression.hpp>
@@ -46,4 +45,3 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Expr_Exponential, Expr_UnaryExpression)
 };
-

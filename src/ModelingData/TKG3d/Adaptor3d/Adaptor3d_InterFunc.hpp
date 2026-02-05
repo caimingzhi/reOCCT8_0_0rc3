@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <math_FunctionWithDerivative.hpp>
 
 class Adaptor2d_Curve2d;
@@ -43,4 +42,3 @@ private:
   double                         myFixVal;
   int                            myFix;
 };
-

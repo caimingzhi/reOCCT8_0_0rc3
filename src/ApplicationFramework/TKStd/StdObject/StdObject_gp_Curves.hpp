@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObject_gp_Axes.hpp>
 
 #include <gp_Lin2d.hpp>
@@ -220,4 +219,3 @@ inline StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData, const 
   theWriteData << anAx << aFocalLength;
   return theWriteData;
 }
-

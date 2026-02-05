@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <NCollection_DefineAlloc.hpp>
 #include <NCollection_BaseAllocator.hpp>
 #include <Standard_OStream.hpp>
@@ -113,4 +112,3 @@ public:
     BOM_GB18030
   };
 };
-

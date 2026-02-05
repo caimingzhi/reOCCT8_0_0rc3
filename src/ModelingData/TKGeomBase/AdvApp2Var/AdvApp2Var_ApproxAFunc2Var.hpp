@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -265,6 +264,7 @@ private:
   occ::handle<NCollection_HArray1<double>>                    my3DVFrontError;
   double                                                      myCriterionError;
 };
+
 // Copyright (c) 1996-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -314,5 +314,3 @@ inline int AdvApp2Var_ApproxAFunc2Var::NumSubSpaces(const int Dimension) const
 {
   return myNumSubSpaces[Dimension - 1];
 }
-
-

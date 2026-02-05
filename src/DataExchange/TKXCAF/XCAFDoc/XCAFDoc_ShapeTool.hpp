@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <TDF_Label.hpp>
@@ -503,4 +502,3 @@ private:
   NCollection_DataMap<TopoDS_Shape, TDF_Label, TopTools_ShapeMapHasher> mySimpleShapes;
   bool                                                                  hasSimpleShapes;
 };
-

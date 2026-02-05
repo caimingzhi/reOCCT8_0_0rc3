@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_CLight.hpp>
 
 //! Class defining the set of light sources.
@@ -194,4 +193,3 @@ protected:
   size_t myRevision;      //!< current revision of light source set
   size_t myCacheRevision; //!< revision of cached state
 };
-

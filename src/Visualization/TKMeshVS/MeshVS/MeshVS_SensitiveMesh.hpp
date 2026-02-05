@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Select3D_SensitiveEntity.hpp>
@@ -41,4 +40,3 @@ private:
   int               myMode;
   Select3D_BndBox3d myBndBox;
 };
-

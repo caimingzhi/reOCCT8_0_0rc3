@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -121,4 +120,3 @@ public:
 #undef TheMultiMPoint_hxx
 #undef ApproxInt_MultiLineTool
 #undef ApproxInt_MultiLineTool_hxx
-

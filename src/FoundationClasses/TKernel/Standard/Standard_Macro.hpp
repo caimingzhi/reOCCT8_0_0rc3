@@ -1,6 +1,5 @@
 #pragma once
 
-
 #if defined(_MSC_VER) && (_MSC_VER < 1600)
   #error C++11 compatible compiler is required (Visual Studio 2010 or newer)
 #endif
@@ -208,9 +207,9 @@
 
 #if defined(_WIN32) && !defined(OCCT_STATIC_BUILD) && !defined(HAVE_NO_DLL)
 
-  //======================================================
-  // Windows-specific definitions
-  //======================================================
+//======================================================
+// Windows-specific definitions
+//======================================================
 
   #ifndef Standard_EXPORT
     #define Standard_EXPORT __declspec(dllexport)
@@ -226,9 +225,9 @@
 
 #else /* UNIX */
 
-  //======================================================
-  // UNIX / static library definitions
-  //======================================================
+//======================================================
+// UNIX / static library definitions
+//======================================================
 
   #ifndef Standard_EXPORT
     #define Standard_EXPORT

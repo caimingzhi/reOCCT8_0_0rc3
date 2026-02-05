@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TopoDS_Shape.hpp>
 
 //! Interface class representing model with associated TopoDS_Shape.
@@ -33,4 +32,3 @@ protected:
 private:
   TopoDS_Shape myShape;
 };
-

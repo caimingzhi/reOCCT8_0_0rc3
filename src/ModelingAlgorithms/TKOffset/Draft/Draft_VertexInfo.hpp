@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -42,4 +41,3 @@ private:
   NCollection_List<double>                 myParams;
   NCollection_List<TopoDS_Shape>::Iterator myItEd;
 };
-

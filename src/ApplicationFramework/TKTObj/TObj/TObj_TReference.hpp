@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <TDF_Attribute.hpp>
 #include <TDF_Label.hpp>
 
@@ -106,5 +105,5 @@ public:
 //! Define handle class for TObj_TReference
 
 #ifdef _MSC_VER
-#pragma once
+  #pragma once
 #endif

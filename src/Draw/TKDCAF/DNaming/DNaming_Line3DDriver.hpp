@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Type.hpp>
 
@@ -49,4 +48,3 @@ private:
                                     const NCollection_Array1<TopoDS_Shape>& theVertexes,
                                     const bool                              isClosed = false) const;
 };
-

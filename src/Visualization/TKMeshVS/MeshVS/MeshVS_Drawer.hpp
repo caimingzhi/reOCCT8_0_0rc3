@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <Standard_Integer.hpp>
@@ -70,4 +69,3 @@ private:
   NCollection_DataMap<int, Graphic3d_MaterialAspect> myMaterials;
   NCollection_DataMap<int, TCollection_AsciiString>  myAsciiString;
 };
-

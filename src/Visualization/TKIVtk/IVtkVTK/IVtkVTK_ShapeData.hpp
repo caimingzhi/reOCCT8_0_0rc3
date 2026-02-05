@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <gp_Dir.hpp>
 #include <gp_Pnt.hpp>
 #include <IVtk_IShapeData.hpp>
@@ -105,4 +104,3 @@ private:
   vtkSmartPointer<vtkIdTypeArray> mySubShapeIDs; //!< Array of sub-shapes ids
   vtkSmartPointer<vtkIdTypeArray> myMeshTypes;   //!< Array of type codes of mesh parts
 };
-

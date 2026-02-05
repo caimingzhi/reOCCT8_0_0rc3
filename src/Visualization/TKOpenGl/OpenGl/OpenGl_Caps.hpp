@@ -1,25 +1,10 @@
 #pragma once
 
-
 #include <Standard_Type.hpp>
 #include <Standard_Transient.hpp>
-// Created on: 2018-10-04
-// Created by: Maxim NEVROV
-// Copyright (c) 2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #ifndef _OpenGl_ShaderProgramDumpLevel_H__
-#define _OpenGl_ShaderProgramDumpLevel_H__
+  #define _OpenGl_ShaderProgramDumpLevel_H__
 
 //! Definition of shader programs source code dump levels.
 enum OpenGl_ShaderProgramDumpLevel
@@ -31,7 +16,6 @@ enum OpenGl_ShaderProgramDumpLevel
 };
 
 #endif // _OpenGl_ShaderProgramDumpLevel_H__
-
 
 //! Class to define graphic driver capabilities.
 //! Notice that these options will be ignored if particular functionality does not provided by GL
@@ -214,4 +198,3 @@ private:
 public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_Caps, Standard_Transient) // Type definition
 };
-

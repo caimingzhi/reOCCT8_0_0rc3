@@ -21,8 +21,8 @@
 
 namespace
 {
-//! Global parameter defining default length of stack trace.
-static int Standard_Failure_DefaultStackTraceLength = 0;
+  //! Global parameter defining default length of stack trace.
+  static int Standard_Failure_DefaultStackTraceLength = 0;
 } // namespace
 
 //=================================================================================================

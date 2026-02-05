@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
@@ -35,4 +34,3 @@ protected:
   AdvApp2Var_CriterionType        myType;
   AdvApp2Var_CriterionRepartition myRepartition;
 };
-

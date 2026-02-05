@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdObjMgt_Attribute.hpp>
 #include <StdObjMgt_Persistent.hpp>
 #include <StdPersistent_HArray1.hpp>
@@ -151,4 +150,3 @@ public:
 
   typedef Naming Naming_2;
 };
-

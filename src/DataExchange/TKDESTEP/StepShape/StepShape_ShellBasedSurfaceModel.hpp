@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 
 #include <StepShape_Shell.hpp>
@@ -35,4 +34,3 @@ public:
 private:
   occ::handle<NCollection_HArray1<StepShape_Shell>> sbsmBoundary;
 };
-

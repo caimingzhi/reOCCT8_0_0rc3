@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <BSplCLib_Cache.hpp>
 #include <Geom_BezierCurve.hpp>
 #include <GeomGridEval.hpp>
@@ -76,4 +75,3 @@ public:
 private:
   occ::handle<Geom_BezierCurve> myGeom;
 };
-

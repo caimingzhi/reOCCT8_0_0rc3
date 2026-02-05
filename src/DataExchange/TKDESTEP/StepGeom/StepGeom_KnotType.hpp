@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum StepGeom_KnotType
 {
   StepGeom_ktUniformKnots,
@@ -8,4 +7,3 @@ enum StepGeom_KnotType
   StepGeom_ktQuasiUniformKnots,
   StepGeom_ktPiecewiseBezierKnots
 };
-

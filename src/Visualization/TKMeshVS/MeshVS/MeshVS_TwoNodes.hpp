@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_Macro.hpp>
 #include <Standard_HashUtils.hpp>
@@ -27,19 +26,18 @@ struct MeshVS_TwoNodes
 
 namespace std
 {
-template <>
-struct hash<MeshVS_TwoNodes>
-{
-  size_t operator()(const MeshVS_TwoNodes& theTwoNodes) const noexcept
+  template <>
+  struct hash<MeshVS_TwoNodes>
   {
-    // Combine two int values into a single hash value.
-    int aCombination[2]{theTwoNodes.First, theTwoNodes.Second};
-    if (aCombination[0] > aCombination[1])
+    size_t operator()(const MeshVS_TwoNodes& theTwoNodes) const noexcept
     {
-      std::swap(aCombination[0], aCombination[1]);
+      // Combine two int values into a single hash value.
+      int aCombination[2]{theTwoNodes.First, theTwoNodes.Second};
+      if (aCombination[0] > aCombination[1])
+      {
+        std::swap(aCombination[0], aCombination[1]);
+      }
+      return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
-    return opencascade::hashBytes(aCombination, sizeof(aCombination));
-  }
-};
+  };
 } // namespace std
-

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Curve.hpp>
 #include <gp_Ax3.hpp>
 #include <gp_Dir.hpp>
@@ -194,4 +193,3 @@ private:
   occ::handle<GeomAdaptor_Curve> myResult;
   bool                           myIsApprox;
 };
-

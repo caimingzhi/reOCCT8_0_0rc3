@@ -1,18 +1,3 @@
-// Created on: 2008-01-20
-// Created by: Alexander A. BORODIN
-// Copyright (c) 2008-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Font_FontMgr.hpp>
 
 #include <Font_NameOfFont.hpp>
@@ -45,8 +30,8 @@ IMPLEMENT_STANDARD_RTTIEXT(Font_FontMgr, Standard_Transient)
 
 namespace
 {
-// list of supported extensions
-static const char* Font_FontMgr_Extensions[] = {"ttf", "otf", "ttc", NULL};
+  // list of supported extensions
+  static const char* Font_FontMgr_Extensions[] = {"ttf", "otf", "ttc", NULL};
 } // namespace
 
 #else
@@ -61,25 +46,25 @@ static const char* Font_FontMgr_Extensions[] = {"ttf", "otf", "ttc", NULL};
 namespace
 {
 
-// list of supported extensions
-static const char* Font_FontMgr_Extensions[] = {"ttf",
-                                                "otf",
-                                                "ttc",
-                                                "pfa",
-                                                "pfb",
+  // list of supported extensions
+  static const char* Font_FontMgr_Extensions[] = {"ttf",
+                                                  "otf",
+                                                  "ttc",
+                                                  "pfa",
+                                                  "pfb",
   #ifdef __APPLE__
   // Datafork TrueType (OS X), obsolete
   //"dfont",
   #endif
-                                                nullptr};
+                                                  nullptr};
 
   #if defined(HAVE_FREETYPE) && !defined(__ANDROID__) && !defined(__APPLE__)                       \
     && !defined(__EMSCRIPTEN__)
-// X11 configuration file in plain text format (obsolete - doesn't exists in modern distributives)
-static const char* myFontServiceConf[] = {"/etc/X11/fs/config",
-                                          "/usr/X11R6/lib/X11/fs/config",
-                                          "/usr/X11/lib/X11/fs/config",
-                                          nullptr};
+  // X11 configuration file in plain text format (obsolete - doesn't exists in modern distributives)
+  static const char* myFontServiceConf[] = {"/etc/X11/fs/config",
+                                            "/usr/X11R6/lib/X11/fs/config",
+                                            "/usr/X11/lib/X11/fs/config",
+                                            nullptr};
 
     // Although fontconfig library can be built for various platforms,
     // practically it is useful only on desktop Linux distributions, where it is always packaged.
@@ -87,41 +72,41 @@ static const char* myFontServiceConf[] = {"/etc/X11/fs/config",
   #endif
 
   #ifdef __APPLE__
-// default fonts paths in Mac OS X
-static const char* myDefaultFontsDirs[] = {"/System/Library/Fonts", "/Library/Fonts", nullptr};
+  // default fonts paths in Mac OS X
+  static const char* myDefaultFontsDirs[] = {"/System/Library/Fonts", "/Library/Fonts", nullptr};
   #else
-// default fonts paths in most Unix systems (Linux and others)
-static const char* myDefaultFontsDirs[] = {"/system/fonts", // Android
-                                           "/usr/share/fonts",
-                                           "/usr/local/share/fonts",
-                                           nullptr};
+  // default fonts paths in most Unix systems (Linux and others)
+  static const char* myDefaultFontsDirs[] = {"/system/fonts", // Android
+                                             "/usr/share/fonts",
+                                             "/usr/local/share/fonts",
+                                             nullptr};
   #endif
 
-static void addDirsRecursively(const OSD_Path&                           thePath,
-                               NCollection_Map<TCollection_AsciiString>& theDirsMap)
-{
-  TCollection_AsciiString aDirName;
-  thePath.SystemName(aDirName);
-  if (!theDirsMap.Add(aDirName))
+  static void addDirsRecursively(const OSD_Path&                           thePath,
+                                 NCollection_Map<TCollection_AsciiString>& theDirsMap)
   {
-    return;
-  }
-
-  for (OSD_DirectoryIterator aDirIterator(thePath, "*"); aDirIterator.More(); aDirIterator.Next())
-  {
-    OSD_Path aChildDirPath;
-    aDirIterator.Values().Path(aChildDirPath);
-
-    TCollection_AsciiString aChildDirName;
-    aChildDirPath.SystemName(aChildDirName);
-    if (!aChildDirName.IsEqual(".") && !aChildDirName.IsEqual(".."))
+    TCollection_AsciiString aDirName;
+    thePath.SystemName(aDirName);
+    if (!theDirsMap.Add(aDirName))
     {
-      aChildDirName = aDirName + "/" + aChildDirName;
-      OSD_Path aPath(aChildDirName);
-      addDirsRecursively(aPath, theDirsMap);
+      return;
+    }
+
+    for (OSD_DirectoryIterator aDirIterator(thePath, "*"); aDirIterator.More(); aDirIterator.Next())
+    {
+      OSD_Path aChildDirPath;
+      aDirIterator.Values().Path(aChildDirPath);
+
+      TCollection_AsciiString aChildDirName;
+      aChildDirPath.SystemName(aChildDirName);
+      if (!aChildDirName.IsEqual(".") && !aChildDirName.IsEqual(".."))
+      {
+        aChildDirName = aDirName + "/" + aChildDirName;
+        OSD_Path aPath(aChildDirName);
+        addDirsRecursively(aPath, theDirsMap);
+      }
     }
   }
-}
 
 } // anonymous namespace
 

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <StdPrs_HLRShapeI.hpp>
 
 //! Computes the presentation of objects with removal of their hidden lines for a specific

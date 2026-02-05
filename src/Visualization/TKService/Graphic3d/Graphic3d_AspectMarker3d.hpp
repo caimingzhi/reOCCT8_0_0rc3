@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Graphic3d_Aspects.hpp>
 
 //! Creates and updates an attribute group for marker type primitives.
@@ -62,4 +61,3 @@ public:
                                  const int                                        theHeight,
                                  const occ::handle<NCollection_HArray1<uint8_t>>& theTexture);
 };
-

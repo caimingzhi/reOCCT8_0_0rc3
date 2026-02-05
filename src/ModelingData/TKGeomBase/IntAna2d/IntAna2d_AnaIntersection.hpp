@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -114,6 +113,7 @@ private:
   int               nbp;
   IntAna2d_IntPoint lpnt[4];
 };
+
 // Copyright (c) 1995-1999 Matra Datavision
 // Copyright (c) 1999-2014 OPEN CASCADE SAS
 //
@@ -195,5 +195,3 @@ inline const IntAna2d_IntPoint& IntAna2d_AnaIntersection::Point(const int N) con
     }
   }
 }
-
-

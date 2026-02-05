@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
@@ -26,4 +25,3 @@ public:
   //! Loads commands defined in ShapeUpgrade
   Standard_EXPORT static void InitCommands(Draw_Interpretor& theCommands);
 };
-

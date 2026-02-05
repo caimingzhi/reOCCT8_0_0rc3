@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Adaptor3d_Surface.hpp>
 #include <BRepBlend_PointOnRst.hpp>
 #include <NCollection_Sequence.hpp>
@@ -194,4 +193,3 @@ private:
   bool                              twistflag1;
   bool                              twistflag2;
 };
-

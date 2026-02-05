@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Standard_Handle.hpp>
 
 class Standard_Transient;
@@ -22,4 +21,3 @@ public:
   //! Register types.
   Standard_EXPORT static void BindTypes(StdObjMgt_MapOfInstantiators& theMap);
 };
-
