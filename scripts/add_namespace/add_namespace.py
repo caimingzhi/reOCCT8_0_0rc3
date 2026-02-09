@@ -8,6 +8,7 @@ import clang.cindex
 from clang.cindex import CursorKind, TokenKind, TranslationUnit
 
 # ================= 配置区域 =================
+# 如果需要，取消下面一行的注释并指向你的 LLVM bin 目录
 # clang.cindex.Config.set_library_path(r'C:\Program Files\LLVM\bin')
 EXTENSIONS = {'.cxx', '.hpp', '.cpp', '.h', '.cc', '.c'}
 # ===========================================
@@ -44,10 +45,8 @@ class RefactorWorker:
         self.mapping_keys_bytes = [k.encode('utf-8') for k in mapping.keys()]
 
     def process_file(self, file_path):
-        abs_path = os.path.abspath(file_path)
+        abs_path = os.path.normpath(os.path.abspath(file_path))
         
-        # 优化 1: 快速预筛选 (Fast Triage)
-        # 如果文件二进制内容里连类名字符串都没有，直接跳过，不调用 Clang
         try:
             with open(abs_path, 'rb') as f:
                 content = f.read()
@@ -55,92 +54,119 @@ class RefactorWorker:
                 return False, file_path
         except: return False, file_path
 
-        # 优化 2: 这里的 Index 在每个进程内初始化一次
         index = clang.cindex.Index.create()
         
-        # 标记预处理行
-        protected_lines = set()
+        # 只屏蔽 #include 行，不屏蔽宏定义/调用行
+        skip_lines = set()
         lines = content.split(b'\n')
-        is_ml_pp = False
         for i, line in enumerate(lines):
-            s = line.strip()
-            if s.startswith(b'#') or is_ml_pp:
-                protected_lines.add(i + 1)
-                is_ml_pp = s.endswith(b'\\')
-            else: is_ml_pp = False
+            if line.strip().startswith(b'#include'):
+                skip_lines.add(i + 1)
 
         try:
-            # 优化 3: 使用 PARSE_SKIP_FUNCTION_BODIES
-            # 既然是改类定义和类型前缀，函数体内部的局部变量通常不需要 AST 深度解析
-            # 如果你的引用出现在函数内部，这个标志可能会漏掉，
-            # 但配合我们的 Token 扫描（Token 扫描是不受此标志影响的），可以兼顾速度与准度。
+            # 必须包含 DETAILED_PROCESSING_RECORD 才能在 Token 中处理宏
             tu = index.parse(abs_path, 
-                             args=['-std=c++17', '-D_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH', '-fms-compatibility'] + self.header_args,
-                             options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD | 
-                                     TranslationUnit.PARSE_SKIP_FUNCTION_BODIES)
+                             args=['-std=c++17', '-fms-compatibility'] + self.header_args,
+                             options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
         except: return False, file_path
 
         replacements = []
         protected_offsets = []
 
-        # AST 扫描 (处理包裹)
+        # 1. AST 扫描：处理类定义的 namespace 包裹
         def walk(cursor):
-            if cursor.location.file and os.path.abspath(cursor.location.file.name) != abs_path: return
+            if not cursor.location.file or os.path.normpath(cursor.location.file.name) != abs_path:
+                return
+            
+            # 记录字符串位置，防止修改字符串内容
             if cursor.kind == CursorKind.STRING_LITERAL:
                 protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+
+            # 识别类声明/定义
             if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL] and cursor.spelling in self.mapping:
+                # 只有在顶层（TU或Namespace）的类定义才需要包裹
                 if cursor.is_definition() or (cursor.lexical_parent and cursor.lexical_parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]):
+                    # 记录类名本身的位置，防止 Token 扫描阶段在类定义处重复加前缀
+                    # 这里只保护类名开头到类定义结束的范围
                     protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
-                    # 查找分号并记录替换
+                    
                     target_ns = self.mapping[cursor.spelling]
                     pre, suf = generate_namespace_wrappers_bytes(target_ns)
+                    
+                    # 寻找末尾的分号
                     end_off = cursor.extent.end.offset
                     scan_pos = end_off
                     limit = min(end_off + 200, len(content))
+                    found_semicolon = False
                     while scan_pos < limit:
-                        if content[scan_pos] == 59: { scan_pos := scan_pos + 1 }; break
-                        elif content[scan_pos] not in (9, 10, 13, 32): break
+                        if content[scan_pos] == 59: # ';'
+                            scan_pos += 1
+                            found_semicolon = True
+                            break
+                        elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
+                            break
                         scan_pos += 1
+                    
                     replacements.append((cursor.extent.start.offset, 0, pre))
-                    replacements.append((scan_pos, 0, suf))
-            for child in cursor.get_children(): walk(child)
+                    replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
+            
+            for child in cursor.get_children():
+                walk(child)
 
         walk(tu.cursor)
 
-        # Token 扫描 (处理引用)
-        prev = None
-        for t in tu.cursor.get_tokens():
-            if t.location.file and os.path.abspath(t.location.file.name) == abs_path:
-                if t.location.line in protected_lines: continue
-                if any(s <= t.location.offset < e for s, e in protected_offsets): continue
-                if t.kind == TokenKind.IDENTIFIER and t.spelling in self.mapping:
-                    if not (prev and prev.spelling in ['::', '~']):
-                        new_bytes = f"{self.mapping[t.spelling]}::{t.spelling}".encode('utf-8')
-                        replacements.append((t.location.offset, len(t.spelling.encode('utf-8')), new_bytes))
-                prev = t
+        # 2. Token 扫描：处理宏参数和引用
+        prev_t = None
+        for t in tu.get_tokens(extent=tu.cursor.extent):
+            loc = t.location
+            # 这里的 loc 已经是物理文件位置
+            if not loc.file or os.path.normpath(loc.file.name) != abs_path:
+                continue
+            
+            # 跳过 #include 行
+            if loc.line in skip_lines: continue
+            
+            # 跳过字符串内部和已处理的类定义头部
+            if any(s <= loc.offset < e for s, e in protected_offsets): continue
+            
+            if t.kind == TokenKind.IDENTIFIER and t.spelling in self.mapping:
+                # 检查是否已经是 NS::Class 或析构函数 ~Class 或成员调用 .Class
+                is_qualified = False
+                if prev_t:
+                    if prev_t.spelling in ['::', '~', '.', '->']:
+                        is_qualified = True
+                
+                if not is_qualified:
+                    ns_prefix = self.mapping[t.spelling]
+                    new_text = f"{ns_prefix}::{t.spelling}".encode('utf-8')
+                    replacements.append((loc.offset, len(t.spelling.encode('utf-8')), new_text))
+            
+            prev_t = t
 
         if not replacements: return False, file_path
         
-        # 应用修改
+        # 3. 应用修改
         replacements.sort(key=lambda x: x[0], reverse=True)
         new_data = bytearray(content)
-        seen = set()
+        seen_offsets = set()
         for off, leng, txt in replacements:
-            if off in seen: continue
+            if off in seen_offsets: continue
             new_data[off:off+leng] = txt
-            seen.add(off)
+            seen_offsets.add(off)
         
-        with open(abs_path, 'wb') as f: f.write(new_data)
+        with open(abs_path, 'wb') as f:
+            f.write(new_data)
         return True, file_path
 
-# 多进程包装函数
 def global_worker(task):
     file_path, mapping, header_args = task
     worker = RefactorWorker(mapping, header_args)
     return worker.process_file(file_path)
 
 def main():
-    if len(sys.argv) < 4: return
+    if len(sys.argv) < 4:
+        print("Usage: python add_namespace.py <src_dir> <csv_file> <log_file>")
+        return
     src_dir, csv_file, log_file = sys.argv[1], sys.argv[2], sys.argv[3]
     
     logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s %(message)s')
@@ -153,10 +179,9 @@ def main():
             if os.path.splitext(file)[1].lower() in EXTENSIONS:
                 tasks.append((os.path.join(root, file), mapping, header_args))
 
-    print(f"Total tasks: {len(tasks)}. Processing with {multiprocessing.cpu_count()} cores...")
+    print(f"Total tasks: {len(tasks)}. Processing...")
     
     mod_count = 0
-    # 优化 4: 使用进程池
     with ProcessPoolExecutor() as executor:
         results = executor.map(global_worker, tasks)
         for i, (modified, path) in enumerate(results):
